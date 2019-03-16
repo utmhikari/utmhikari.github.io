@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="从dict开始说起学python的时候，我们一定会接触到dict（字典）这个数据结构。 dict结构展示了数据间（key与value）一一对应的关系，key作为一个查询索引，是不允许有重复的，而不同key所对应的value，则允许重复值的存在。 比如说，我们定义一群boys&amp;amp;girls，打出整个dict，再打出girls有哪些，可以这样操作： 12345678import pprintd">
+<meta name="keywords" content="python,教程,函数式编程,高阶函数,映射">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Easy Python】第二话：映射——输入、输出与函数的纽带">
+<meta property="og:url" content="http://utmhikari.github.io/2019/03/16/easypython_ii/index.html">
+<meta property="og:site_name" content="HiKariのTechLab">
+<meta property="og:description" content="从dict开始说起学python的时候，我们一定会接触到dict（字典）这个数据结构。 dict结构展示了数据间（key与value）一一对应的关系，key作为一个查询索引，是不允许有重复的，而不同key所对应的value，则允许重复值的存在。 比如说，我们定义一群boys&amp;amp;girls，打出整个dict，再打出girls有哪些，可以这样操作： 12345678import pprintd">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-03-16T11:40:57.168Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【Easy Python】第二话：映射——输入、输出与函数的纽带">
+<meta name="twitter:description" content="从dict开始说起学python的时候，我们一定会接触到dict（字典）这个数据结构。 dict结构展示了数据间（key与value）一一对应的关系，key作为一个查询索引，是不允许有重复的，而不同key所对应的value，则允许重复值的存在。 比如说，我们定义一群boys&amp;amp;girls，打出整个dict，再打出girls有哪些，可以这样操作： 12345678import pprintd">
+
+
+
+
+
+
+  <link rel="canonical" href="http://utmhikari.github.io/2019/03/16/easypython_ii/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>【Easy Python】第二话：映射——输入、输出与函数的纽带 | HiKariのTechLab</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HiKariのTechLab</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">光の技术屋</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+  
+
+  
+
+  <a href="https://github.com/utmhikari" class="github-corner" title="关注HiKariのGithub" aria-label="关注HiKariのGithub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2019/03/16/easypython_ii/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="光の屋，走心的技术博客">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【Easy Python】第二话：映射——输入、输出与函数的纽带
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-16 18:16:11 / 修改时间：19:40:57" itemprop="dateCreated datePublished" datetime="2019-03-16T18:16:11+08:00">2019-03-16</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Easy-Python/" itemprop="url" rel="index"><span itemprop="name">Easy Python</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="从dict开始说起"><a href="#从dict开始说起" class="headerlink" title="从dict开始说起"></a>从dict开始说起</h1><p>学python的时候，我们一定会接触到dict（字典）这个数据结构。</p>
+<p>dict结构展示了数据间（key与value）一一对应的关系，key作为一个查询索引，是不允许有重复的，而不同key所对应的value，则允许重复值的存在。</p>
+<p>比如说，我们定义一群boys&amp;girls，打出整个dict，再打出girls有哪些，可以这样操作：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pprint</span><br><span class="line">d = dict()</span><br><span class="line">d[<span class="string">'girl'</span>] = [<span class="string">'迪丽热巴'</span>, <span class="string">'王鸥'</span>, <span class="string">'鬼鬼'</span>]</span><br><span class="line">d[<span class="string">'boy'</span>] = [<span class="string">'大碗宽面'</span>]</span><br><span class="line"><span class="comment"># 用pprint.pprint函数打印数据结构，使得其排版更加pretty~</span></span><br><span class="line">pprint.pprint(d, indent=<span class="number">2</span>)</span><br><span class="line"><span class="comment"># 单用pprint.pformat，可以返回一个排版过后的字符串，打印出来要额外print操作~</span></span><br><span class="line">print(<span class="string">'Girls are: %s'</span> % pprint.pformat(d[<span class="string">'girl'</span>]))</span><br></pre></td></tr></table></figure>
+<p>打出来的效果是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;&apos;boy&apos;: [&apos;大碗宽面&apos;], &apos;girl&apos;: [&apos;迪丽热巴&apos;, &apos;王鸥&apos;, &apos;鬼鬼&apos;]&#125;</span><br><span class="line">Girls are: [&apos;迪丽热巴&apos;, &apos;王鸥&apos;, &apos;鬼鬼&apos;]</span><br></pre></td></tr></table></figure>
+<p>我们可以很直观地看到这种对应关系</p>
+<h1 id="映射"><a href="#映射" class="headerlink" title="映射"></a>映射</h1><p>像dict数据结构给我们展现的一样，数据间的对应关系，我们可以统称为：映射（Mapping）</p>
+<p>如同第一话所说，程序的本质即为输入-&gt;函数-&gt;输出。输入和输出，就是一种映射关系，而实现这种映射的规则，就是函数。在dict里面，实现映射的函数，可以简化如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_value</span><span class="params">(key)</span>:</span></span><br><span class="line">	memory_address_of_value = hash(key)</span><br><span class="line">	<span class="keyword">return</span> get_data_from_address(memory_address_of_value)</span><br></pre></td></tr></table></figure>
+<p>为了让我们便捷地从一个key访问到对应的value，dict不可能把所有的key都过一遍找，那样费时费力。</p>
+<p>取而代之，dict可以直接通过一种算法函数，称之为hash，就可以把key计算（映射）为一个数值，即value的内存地址。我们通过这个内存地址，就可以取出对应的value数据了，非常简单粗暴。</p>
+<h1 id="数据处理小需求"><a href="#数据处理小需求" class="headerlink" title="数据处理小需求"></a>数据处理小需求</h1><p>现在，让我们看这样一个需求。我们的输入是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">input_list = [<span class="number">11</span>, <span class="number">2</span>, <span class="number">12</span>, <span class="number">15</span>, <span class="number">5</span>, <span class="number">10</span>, <span class="number">7</span>, <span class="number">14</span>, <span class="number">6</span>, <span class="number">9</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">13</span>, <span class="number">8</span>, <span class="number">4</span>]</span><br></pre></td></tr></table></figure>
+<p>也就是1~15的乱序。现在我们想输出这样的结果：</p>
+<ul>
+<li>如果大于10， 输出字符串——这个数字大于10</li>
+<li>如果小于等于10，输出字符串——这个数字小于等于10</li>
+<li>被3整除的奇数不录入</li>
+</ul>
+<p>这个需求并不难，我们可以轻易地打出以下的代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">output_list = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> input_list:</span><br><span class="line">    <span class="keyword">if</span> i % <span class="number">2</span> == <span class="number">0</span> <span class="keyword">or</span> i % <span class="number">3</span> != <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">if</span> i &gt; <span class="number">10</span>:</span><br><span class="line">            output_list.append(<span class="string">'%d: 大于10！'</span> % i)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            output_list.append(<span class="string">'%d: 小于等于10！'</span> % i)</span><br></pre></td></tr></table></figure>
+<p>打出来的结果是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">11: 大于10！</span><br><span class="line">2: 小于等于10！</span><br><span class="line">12: 大于10！</span><br><span class="line">5: 小于等于10！</span><br><span class="line">10: 小于等于10！</span><br><span class="line">7: 小于等于10！</span><br><span class="line">14: 大于10！</span><br><span class="line">6: 小于等于10！</span><br><span class="line">1: 小于等于10！</span><br><span class="line">13: 大于10！</span><br><span class="line">8: 小于等于10！</span><br><span class="line">4: 小于等于10！</span><br></pre></td></tr></table></figure>
+<p>但是我把这个代码给我敬爱的领导看了之后，领导居然看不懂，觉得我的层次不够清晰。唔妈呀，代码都这么短了，那该怎么办呀</p>
+<p>于是，只好改成了一个逻辑层次清晰一点的结构，顺带给排了个序：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">output = map(</span><br><span class="line">    <span class="keyword">lambda</span> x: <span class="string">'%d: 大于10！'</span> % x <span class="keyword">if</span> x &gt; <span class="number">10</span> <span class="keyword">else</span> <span class="string">'%d: 小于等于10！'</span> % x,</span><br><span class="line">    filter(</span><br><span class="line">        <span class="keyword">lambda</span> x: x % <span class="number">2</span> == <span class="number">0</span> <span class="keyword">or</span> x % <span class="number">3</span> != <span class="number">0</span>,</span><br><span class="line">        sorted(input_list),</span><br><span class="line">    )</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>打出来这个结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">1: 小于等于10！</span><br><span class="line">2: 小于等于10！</span><br><span class="line">4: 小于等于10！</span><br><span class="line">5: 小于等于10！</span><br><span class="line">6: 小于等于10！</span><br><span class="line">7: 小于等于10！</span><br><span class="line">8: 小于等于10！</span><br><span class="line">10: 小于等于10！</span><br><span class="line">11: 大于10！</span><br><span class="line">12: 大于10！</span><br><span class="line">13: 大于10！</span><br><span class="line">14: 大于10！</span><br></pre></td></tr></table></figure>
+<p>这回领导终于满意啦~~</p>
+<h1 id="分解过程，持续映射"><a href="#分解过程，持续映射" class="headerlink" title="分解过程，持续映射"></a>分解过程，持续映射</h1><p>让一个普通的数据处理过程变得层次清晰，其实是有方法的，得益于python内置的高阶函数，如果你写过js，玩转es6或者lodash，绝对章口就莱。</p>
+<p>上一段代码中，不难发现多了3个新函数：map、filter跟sorted。我们这就一一来看：</p>
+<p>map，就是映射啦~它的输入参数是一个函数（映射规则）以及我们的一堆输入值，只要给定函数跟相应的一堆输入值，我们就可以构建映射输出。</p>
+<p>然而，map的却并不是返回所有映射输出结果，而是单纯的一个可迭代（Iterable）的对象，这个对象具有一个叫迭代器（Iterator）的东东可以让我们访问输出的结果。迭代器，就像我敬爱的领导懒洋洋的那样，不去理它，它啥都不干，只有调用它，它才会屁颠屁颠地把下一个map输出值给取出来。这种“懒人操作”，其实是很有必要的。如果输入数据量大，我们需要的输出数据量小的话，先把所有输出都给出来，再过一遍输出数据，那要猴年马月呀！</p>
+<p>filter，跟map一样，输入也是一个函数跟一堆输入值，基本机制都差不多，勉强算是一种映射的形式，但输出总有差别——顾名思义，filter是过滤、筛选之意，满足条件的选择，不满足条件的抛弃。因此，输入函数（规则）的返回值，应当是True或者False</p>
+<p>sorted，顾名思义，就“排序”之意，其输入是任意可迭代的对象，以及每个元素要拿来比较的值（key），还有是否逆序（reverse）的选项。清晰易懂。</p>
+<p>说完这些，回到我们的需求：</p>
+<ul>
+<li>如果大于10， 输出字符串——这个数字大于10</li>
+<li>如果小于等于10，输出字符串——这个数字小于等于10</li>
+<li>被3整除的奇数不录入</li>
+</ul>
+<p>要解决这个需求，我们应当：</p>
+<ol>
+<li>先排个序，好看点——<code>sorted(input_list)</code></li>
+<li>筛选数字——<code>filter(函数：输入值-&gt;是or不是被3整除奇数-&gt; False or True, 一堆输入值：第一步的输出)</code></li>
+<li>根据大小输出字符串——<code>map(函数：输入值-&gt;大于10 | 小于10 -&gt; 输出啥啥啥, 一堆输入值：第二步的输出)</code></li>
+</ol>
+<p>然后串起来，就是这些啦：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">output = map(</span><br><span class="line">    <span class="keyword">lambda</span> x: <span class="string">'%d: 大于10！'</span> % x <span class="keyword">if</span> x &gt; <span class="number">10</span> <span class="keyword">else</span> <span class="string">'%d: 小于等于10！'</span> % x,</span><br><span class="line">    filter(</span><br><span class="line">        <span class="keyword">lambda</span> x: x % <span class="number">2</span> == <span class="number">0</span> <span class="keyword">or</span> x % <span class="number">3</span> != <span class="number">0</span>,</span><br><span class="line">        sorted(input_list),</span><br><span class="line">    )</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>是不是很清晰？那就在以后码码的时候，多试试看这种style吧~</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>接触编程的同学们，总会听过两个词：面向对象编程（Object Oriented Programming）与函数式编程（Functional Programming），甚至有许多人鼓吹函数式编程，贬低面向对象云云，引起一番争论。</p>
+<p>面向对象旨在把代码世界打造成我们熟悉的物以类（class）聚的现实世界。这样，整个代码架构就更容易被人理解，可维护性就更强了。因此，面向对象，是一个相对宏观的概念。</p>
+<p>函数式编程，顾名思义，函数即为程序的基础。正如第一话所说的那样，函数，不仅是输入到输出的映射规则，而且就像活字印刷一样，是一个可复现的过程。因此，不管多长多短、多大多小的程序，都可以看做是一个或是多个函数的繁复联系，就比如说，咱们吃火龙果之后……采用函数式编程，能够极大增强程序的条理性，因此可以说，相对于面向对象，函数式编程是一个微观的概念。</p>
+<p>面向对象与函数式编程，是你中有我、我中有你的关系，并不存在所谓的对立面。作为一个既支持面向对象又支持函数式编程的语言，Python还是很人性化滴！第二话虽然讲述的多是函数式编程相关的概念，但实际使用时，尤其代码量增大时，就需要应用面向对象的方法与设计模式，收拾一下你的项目啦~</p>
+<p>实践出真知，希望咱们一起进步~</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+      <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center;">
+  <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="ひかり.HDQ wechat" style="width: 200px; max-width: 100%;">
+  <div>欢迎关注我的微信公众号：HiKari小屋~</div>
+</div>
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/教程/" rel="tag"># 教程</a>
+          
+            <a href="/tags/函数式编程/" rel="tag"># 函数式编程</a>
+          
+            <a href="/tags/高阶函数/" rel="tag"># 高阶函数</a>
+          
+            <a href="/tags/映射/" rel="tag"># 映射</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/10/luatalk_luacov/" rel="next" title="【Lua杂谈】解锁lua代码覆盖率测试：luacov源码分析">
+                <i class="fa fa-chevron-left"></i> 【Lua杂谈】解锁lua代码覆盖率测试：luacov源码分析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="ひかり.HDQ">
+            
+              <p class="site-author-name" itemprop="name">ひかり.HDQ</p>
+              <div class="site-description motion-element" itemprop="description">光の屋，走心的技术博客</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/utmhikari" title="GitHub &rarr; https://github.com/utmhikari" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#从dict开始说起"><span class="nav-number">1.</span> <span class="nav-text">从dict开始说起</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#映射"><span class="nav-number">2.</span> <span class="nav-text">映射</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据处理小需求"><span class="nav-number">3.</span> <span class="nav-text">数据处理小需求</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分解过程，持续映射"><span class="nav-number">4.</span> <span class="nav-text">分解过程，持续映射</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ひかり.HDQ</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.0.1</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.1"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.1"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+if ($('body').find('pre.mermaid').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      mermaid.initialize({
+        theme: 'forest',
+        logLevel: 3,
+        flowchart: { curve: 'linear' },
+        gantt: { axisFormat: '%m/%d/%Y' },
+        sequence: { actorMargin: 50 }
+      });
+    }
+  });
+}
+</script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
