@@ -46,10 +46,10 @@ cache:
 # For example, you put your favicons into `hexo-site/source/images` directory.
 # Then need to rename & redefine them on any other names, otherwise icons from Next will rewrite your custom icons in Hexo.
 favicon:
-  small: /images/favicon-16x16-next.png
-  medium: /images/favicon-32x32-next.png
-  apple_touch_icon: /images/apple-touch-icon-next.png
-  safari_pinned_tab: /images/logo.svg
+  small: /uploads/favicon-16x16.png
+  medium: /uploads/favicon-32x32.png
+  apple_touch_icon: /uploads/apple-touch.png
+  #safari_pinned_tab: /images/logo.svg
   #android_manifest: /images/manifest.json
   #ms_browserconfig: /images/browserconfig.xml
 
@@ -61,7 +61,7 @@ rss:
 footer:
   # Specify the date when the site was setup.
   # If not defined, current year will be used.
-  #since: 2015
+  since: 2019
 
   # Icon between year and copyright info.
   icon:
@@ -189,7 +189,7 @@ site_state: true
 # Value after `||` delimeter is the name of FontAwesome icon. If icon (with or without delimeter) is not specified, globe icon will be loaded.
 social:
   GitHub: https://github.com/utmhikari || github
-  #E-Mail: mailto:yourname@gmail.com || envelope
+  E-Mail: mailto:hdq940623@126.com || envelope
   #Weibo: https://weibo.com/yourname || weibo
   #Google: https://plus.google.com/yourname || google
   #Twitter: https://twitter.com/yourname || twitter
@@ -388,7 +388,7 @@ android_chrome_color: "#222"
 # Do not support Scheme Mist currently.
 custom_logo:
   enable: false
-  image: #/uploads/custom-logo.jpg
+  image: #/uploads/logo.png
 
 # Code Highlight theme
 # Available values: normal | night | night eighties | night blue | night bright
@@ -401,7 +401,7 @@ cheers: true
 # TagCloud settings for tags page.
 tagcloud:
   # If true, font size, font color and amount of tags can be customized
-  enable: false
+  enable: true
 
   # All values below are same as default, change them by yourself
   min: 12 # min font size in px
@@ -436,7 +436,7 @@ font:
   # Global font settings used for all elements in <body>.
   global:
     external: true
-    family: Lato
+    family: Hiragino Sans GB
     size:
 
   # Font settings for Headlines (H1, H2, H3, H4, H5, H6).
@@ -462,7 +462,7 @@ font:
   # Font settings for <code> and code blocks.
   codes:
     external: true
-    family:
+    family: Fantasque Sans Mono
     size:
 
 
@@ -778,7 +778,7 @@ busuanzi_count:
 #tencent_mta:
 
 # Enable baidu push so that the blog will push the url to baidu automatically which is very helpful for SEO.
-baidu_push: false
+baidu_push: true
 
 # Google Calendar
 # Share your recent schedule to others via calendar page.
@@ -823,7 +823,7 @@ local_search:
 # Bookmark Support
 # Dependencies: https://github.com/theme-next/theme-next-bookmark
 bookmark:
-  enable: false
+  enable: true
   # If auto, save the reading position when closing the page or clicking the bookmark-icon.
   # If manual, only save it by clicking the bookmark-icon.
   save: auto
@@ -831,7 +831,7 @@ bookmark:
 # Reading progress bar
 # Dependencies: https://github.com/theme-next/theme-next-reading-progress
 reading_progress:
-  enable: false
+  enable: true
   color: "#37c6c0"
   height: 2px
 
@@ -863,7 +863,7 @@ note:
   #  - modern    bs-callout new (v2-v3) alert style.
   #  - flat      flat callout style with background, like on Mozilla or StackOverflow.
   #  - disabled  disable all CSS styles import of note tag.
-  style: simple
+  style: modern
   icons: false
   border_radius: 3
   # Offset lighter of background in % for modern and flat styles (modern: -12 | 12; flat: -18 | 6).

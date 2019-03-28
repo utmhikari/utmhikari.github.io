@@ -17,6 +17,8 @@ Lua 杂谈系列，就以代码覆盖率测试的 luacov 开头吧
 在[干货｜使用 luacov 统计 lua 代码覆盖率](https:--blog.csdn.net/O4dC8OjO7ZL6/article/details/78373117)一文中，介绍了基本的 luacov 用法，但是缺少对 luacov 深入挖掘的相关内容。并且同时，原生的 luacov 提供了一套简洁的覆盖率测试实现以及报告输出形式，但是在实际许多场景中，采用原生 luacov 还是远远满足不了需求的
 因此，本文旨在通过分析 luacov 的实现，帮助希望了解 lua 代码覆盖率测试或是使用、二次开发 luacov 的同学尽快上手
 
+<!-- more -->
+
 ## 获取代码覆盖率数据
 
 luacov 获取代码覆盖率数据，得益于 lua 自带的 debug 库。我们从 luacov 的主类 runner 中，可以一探究竟
