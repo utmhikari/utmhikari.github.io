@@ -82,7 +82,7 @@ However, you can bypass update errors by using the `Commit`, `Stash` or `Reset` 
 
 ## Known Bugs
 
-For those who also encounter **«[Error: Cannot find module 'hexo-util'](https://github.com/iissnan/hexo-theme-next/issues/1490)»**, please check your NPM version.
+For those who also enu **«[Error: Cannot find module 'hexo-util'](https://github.com/iissnan/hexo-theme-next/issues/1490)»**, please check your NPM version.
 
 * `> 3`: Still not work? Please remove `node_modules` directory and reinstall using `npm install`.
 * `< 3`: Please add `hexo-util` explicitly via `npm install --save-dev hexo-util` to you site package deps.

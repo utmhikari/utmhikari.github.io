@@ -48,7 +48,7 @@ def get_start_url(page):
 
 因此首先，我们去给上述所有电影列表页面发请求，获取所有网页数据。在python3里，我们可以通过requests库发送http/https请求，获得请求的响应（Response）数据，提取网页信息。
 
-```python3
+```python
 import requests
 for i in range(10):
 	url = get_start_url(i)  # 就用上面说的get_start_url函数
