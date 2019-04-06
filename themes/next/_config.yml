@@ -406,7 +406,7 @@ tagcloud:
   # All values below are same as default, change them by yourself
   min: 12 # min font size in px
   max: 30 # max font size in px
-  start: "#ccc" # start color (hex, rgba, hsla or color keywords)
+  start: "#999" # start color (hex, rgba, hsla or color keywords)
   end: "#111" # end color (hex, rgba, hsla or color keywords)
   amount: 200 # amount of tags, chage it if you have more than 200 tags
 
@@ -423,7 +423,7 @@ tagcloud:
 # ---------------------------------------------------------------
 
 font:
-  enable: false
+  enable: true
 
   # Uri of fonts host, e.g. //fonts.googleapis.com (Default).
   host:
