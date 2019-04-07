@@ -7,6 +7,8 @@ tags:
 - lua
 - 测试
 - 代码覆盖率
+- debug
+- luacov
 ---
 
 Lua 杂谈系列，就以代码覆盖率测试的 luacov 开头吧
