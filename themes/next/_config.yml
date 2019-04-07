@@ -127,11 +127,11 @@ github_banner:
 canonical: true
 
 # Change headers hierarchy on site-subtitle (will be main site description) and on all post / page titles for better SEO-optimization.
-seo: false
+seo: true
 
 # If true, will add site-subtitle to index page, added in main hexo config.
 # subtitle: Subtitle
-index_with_subtitle: false
+index_with_subtitle: true
 
 # Automatically add external URL with BASE64 encrypt & decrypt.
 exturl: false
@@ -600,21 +600,21 @@ gitment:
   cleanly: false # Hide 'Powered by ...' on footer, and more
   language: # Force language, or auto switch by theme
   github_user: utmhikari # MUST HAVE, Your Github Username
-  github_repo: # MUST HAVE, The name of the repo you use to store Gitment comments
-  client_id: # MUST HAVE, Github client id for the Gitment
-  client_secret: # EITHER this or proxy_gateway, Github access secret token for the Gitment
+  github_repo: utmhikari_blog_comments # MUST HAVE, The name of the repo you use to store Gitment comments
+  client_id: 713d5683731fbcfb84a0 # MUST HAVE, Github client id for the Gitment
+  client_secret: 28b227a0a97ab233388d6bfa9368305e854c0c4d # EITHER this or proxy_gateway, Github access secret token for the Gitment
   proxy_gateway: # Address of api proxy, See: https://github.com/aimingoo/intersect
   redirect_protocol: # Protocol of redirect_uri with force_redirect_protocol when mint enabled
 
 # Gitalk
 # Demo: https://gitalk.github.io
 gitalk:
-  enable: false
-  github_id:  # Github repo owner
-  repo:  # Repository name to store issues
-  client_id:  # Github Application Client ID
-  client_secret:  # Github Application Client Secret
-  admin_user:  # GitHub repo owner and collaborators, only these guys can initialize github issues
+  enable: true
+  github_id: utmhikari # Github repo owner
+  repo: utmhikari_blog_comments # Repository name to store issues
+  client_id: 713d5683731fbcfb84a0 # Github Application Client ID
+  client_secret: 28b227a0a97ab233388d6bfa9368305e854c0c4d # Github Application Client Secret
+  admin_user: utmhikari # GitHub repo owner and collaborators, only these guys can initialize github issues
   distraction_free_mode: true # Facebook-like distraction free mode
   # Gitalk's display language depends on user's browser or system environment
   # If you want everyone visiting your site to see a uniform language, you can set a force language value
