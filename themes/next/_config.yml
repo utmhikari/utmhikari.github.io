@@ -336,9 +336,9 @@ codeblock:
 
 # Wechat Subscriber
 wechat_subscriber:
-  enable: true
-  qcode: /uploads/wechat.jpg
-  description: 欢迎关注我的微信公众号：HiKari小屋~
+  enable: false
+  qcode:
+  description:
 
 # Reward
 # If true, reward would be displayed in every article by default.

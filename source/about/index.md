@@ -6,20 +6,27 @@ type: about
 
 # 自我介绍
 
-HiKari，曾经的游戏爱好者，现为一介技术爱好者~
+HiKari，游戏&技术爱好者
 
 # 博客介绍
 
-HiKariのTechLab，致力于分享HiKari在技术探寻之路上的点滴，也是激励HiKari坚持技术之路的动力。走心，是唯一的诉求。
+HiKariのTechLab，致力于分享技术探寻中的点滴，亦是激励征程技术之路的动力。
+走心，是唯一的诉求。
 
 ## Easy Python
 
 Easy Python就如同茶余饭后的一碗水果捞，香甜美味，营养丰富
 对着工具书、教程网站啃python的时候，不妨小瞄一下Easy Python系列，说不定会激发你的灵感
-为什么说Easy Python？并非因为Python好学，而是因为Python能让我们更Easy地满足各种研发的需求
+为什么说Easy Python？并非因为好学，而是因为Python如同瑞士军刀一般，无所不能
 So, learn python, take it easy~
 
 ## lua杂谈
 
-lua杂谈系列较为随意，多数篇幅较短
-就如同小杯功夫茶，抿一口，图个清爽就好~
+lua，小巧精悍，无所不能
+lua杂谈系列，也多数篇幅较短，但却紧握重点
+就如同小杯功夫茶，抿一口，图个清爽，但又值得回味~
+
+## DIY小记
+
+日常用电脑的时候，是否曾为各系统问题跟日常需求而烦恼？
+那么，就来DIY小记探索吧~

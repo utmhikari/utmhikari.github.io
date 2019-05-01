@@ -11,16 +11,18 @@ tags:
 - 输出
 ---
 
+# 前言
+
 这个年代，连小学生都会Python了，我家领导还是一行代码都打不出。
 网上的Python教程一抓一大把，但出于让人更加深刻理解以及实用的目的（尤其是我家领导），Easy Python，开始挖坑！
 
-## 安装Python
+# 安装Python
 
 这个没有教程= =，请安装3.*最新版Python
 编辑器建议为vscode 、sublime之类（记得装插件），如若觉得装插件烦可直接上pycharm
 Easy Python系列不展现实时交互式命令~
 
-## HelloWorld
+# HelloWorld
 
 学程序的第一行代码，大概都是Hello World吧！
 
@@ -47,7 +49,7 @@ for i in range(100):
 
 <!-- more -->
 
-## 输入与输出
+# 输入与输出
 
 程序本质就是：输入 -> 函数（function）->输出。输入的raw data，经由一个叫函数的东西处理，就能输出我们想要的数据。
 如果一个函数，没有输入输出，也没关系。这样，函数就单纯是一个数据处理过程而已了。
@@ -78,7 +80,7 @@ for i in range(100):
 
 试试看吧~
 
-## 函数
+# 函数
 
 函数，function，就像活字印刷的活字跟流水线上的机械处理器一样，是可以复用的处理过程，是通用的功能。
 函数的输入叫做**参数**（arguments, args）；函数的输出可称作**返回**（return）。
@@ -99,7 +101,7 @@ def print(self, *args, sep=' ', end='\n', file=None):
     pass
 ```
 
-### 参数
+## 参数
 
 我们可以看到，print函数中，规定了这么些参数：*args, sep, end, file
 
@@ -143,7 +145,7 @@ print('Wo', 'Ai', 'Ni', sep='', file=open('woaini.txt', 'w'))
 
 打开python文件同目录下，是不是多了一个woaini.txt啦~快去瞧瞧吧！
 
-### 返回
+## 返回
 
 说到这么多，print的返回值，真的是上面所说的"命令行中打出Hello World"嘛
 当然不是拉= = = = == = = 
@@ -192,7 +194,7 @@ woaini
 - 过程：打出Hello World到标准输出流中，使得我们在命令行看到
 - 返回：None
 
-## 总结
+# 总结
 
 函数无处不在，不仅是print，就连你执行的python脚本，本身也可以当做一个函数。
 我们建一个文件：1.py，里面内容为：
