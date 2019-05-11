@@ -118,7 +118,7 @@ Multi-Thread: 18.119936
 
 ### 线程与进程
 
-首先，我们简要介绍一下[线程](https://en.wikipedia.org/wiki/Thread_(computing))与[进程](https://en.wikipedia.org/wiki/Process_(computing))。
+首先，我们简要介绍一下[线程](https://en.wikipedia.org/wiki/Thread_%28computing%29)与[进程](https://en.wikipedia.org/wiki/Process_%28computing%29)。
 
 - 线程（Thread）：操作系统调度最小单位，顺序执行的程序流
 - 进程（Process）：计算机程序的实例，线程的容器
