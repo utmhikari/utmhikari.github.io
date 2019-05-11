@@ -11,13 +11,13 @@ tags:
 - lfunctimer
 ---
 
-# 前言
+## 前言
 
 在白盒性能测试（profiling）中，函数时间统计是一项重要的指标。对于整个以lua为基础的系统架构而言，函数时间统计数据是性能优化的直接参照。
 
 因此，本次Lua杂谈，将会分享一种函数执行时间统计的实现~
 
-# 函数执行时间获取
+## 函数执行时间获取
 
 单个函数执行时间的获取相对较为简单，例子如下：
 
@@ -25,16 +25,16 @@ tags:
 
 ```lua
 local function test()
-	local start = os.clock()
-	...
-	local end = os.clock()
-	print(tostring(end - start))
+    local start = os.clock()
+    ...
+    local end = os.clock()
+    print(tostring(end - start))
 end
 ```
 
 在函数的开头与结尾调用lua内置的os.clock（内核实现为time.h的中`clock()`时间戳除以`CLOCKS_PER_SEC`统计量，单位为秒），可以轻而易举地获得该函数的执行时间
 
-# hook实现
+## hook实现
 
 在lua的debug库中，hook掩码包括line、call、return等几种，易知在call与return事件打hook，可以更精确地对函数时间进行统计。
 
@@ -59,10 +59,8 @@ elseif evt == "return" then
 end
 ```
 
-# 总结
+## 总结
 
 lua函数执行时间的统计从实现原理上并不难，甚至可以与曾经所提到的覆盖率统计模块精密结合
 
 因此，又是一个扩展性非常强的测试需求啦~
-
-

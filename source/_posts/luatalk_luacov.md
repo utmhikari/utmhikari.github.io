@@ -28,41 +28,41 @@ luacov 获取代码覆盖率数据，得益于 lua 自带的 debug 库。我们�
 ```lua
 -- 初始化runner
 function runner.init(configuration)
-	-- 读取设置
-	runner.configuration = runner.load_config(configuration)
-	-- 重载os.exit，在原生os.exit()前把剩下数据存掉，或者输出报告之类
-	os.exit = function(...)
-	   on_exit()
-	   raw_os_exit(...)
-	end
-	-- 在'l'事件加debug hook
-	debug.sethook(runner.debug_hook, "l")
-	-- 如果每个thread都有独立的hook
-	if has_hook_per_thread() then
-		-- 重载coroutine.create，打包函数之前先在'l'事件sethook
-		local rawcoroutinecreate = coroutine.create
-		coroutine.create = function(...)
-			local co = rawcoroutinecreate(...)
-			debug.sethook(co, runner.debug_hook, "l")
-			return co
-		end
-		-- coroutine.wrap用的error handler
-		local function safeassert(ok, ...)
-			if ok then
-			    return ...
-			else
-			    error(..., 0)
-			end
-		end
-		-- 重载coroutine.wrap，打包函数之前先在'l'事件sethook
-		coroutine.wrap = function(...)
-		    local co = rawcoroutinecreate(...)
-		    debug.sethook(co, runner.debug_hook, "l")
-		    return function(...)
-		       return safeassert(coroutine.resume(co, ...))
-		    end
-		end
-	end
+    -- 读取设置
+    runner.configuration = runner.load_config(configuration)
+    -- 重载os.exit，在原生os.exit()前把剩下数据存掉，或者输出报告之类
+    os.exit = function(...)
+        on_exit()
+        raw_os_exit(...)
+    end
+    -- 在'l'事件加debug hook
+    debug.sethook(runner.debug_hook, "l")
+    -- 如果每个thread都有独立的hook
+    if has_hook_per_thread() then
+        -- 重载coroutine.create，打包函数之前先在'l'事件sethook
+        local rawcoroutinecreate = coroutine.create
+        coroutine.create = function(...)
+            local co = rawcoroutinecreate(...)
+            debug.sethook(co, runner.debug_hook, "l")
+            return co
+        end
+        -- coroutine.wrap用的error handler
+        local function safeassert(ok, ...)
+            if ok then
+                return ...
+            else
+                error(..., 0)
+            end
+        end
+        -- 重载coroutine.wrap，打包函数之前先在'l'事件sethook
+        coroutine.wrap = function(...)
+            local co = rawcoroutinecreate(...)
+            debug.sethook(co, runner.debug_hook, "l")
+            return function(...)
+                return safeassert(coroutine.resume(co, ...))
+            end
+        end
+    end
 end
 ```
 
@@ -80,65 +80,65 @@ runner.debug_hook = require(cluacov_ok and "cluacov.hook" or "luacov.hook").new(
 
 ```lua
 function hook.new(runner)
-	-- 忽略的文件列表
-	local ignored_files = {}
-	-- hook执行的次数count
-	local steps_after_save = 0
-	-- hook函数参数为(事件evt, 行数line_nr, 栈层次level)
-	return function(_, line_nr, level)
-		-- level默认值为2
-		-- 栈层次为1位调用hook的luacov，栈层次为2即为待测覆盖率的文件
-		level = level or 2
-		-- 判断runner是否初始化
-		if not runner.initialized then
-		    return
-		end
-		-- 获取栈层次level的source源文件信息，即文件名
-		-- 这个时候，我们就已经获得了想要的信息：文件名name与行数line_nr
-		local name = debug.getinfo(level, "S").source
-		-- 判断文件名前面有没@，以及是不是loadstring读取的（不然就不是文件名）
-		local prefixed_name = string.match(name, "^@(.*)")
-		if prefixed_name then
-		    name = prefixed_name
-		elseif not runner.configuration.codefromstrings then
-		    return
-		end
-		-- 读取临时缓存runner.data里边的数据
-		local data = runner.data
-		local file = data[name]
-		-- 判断该文件的数据是否要存储
-		if not file then
-		    if ignored_files[name] then
-		        return
-		    elseif runner.file_included(name) then
-		        file = {max = 0, max_hits = 0}
-		        data[name] = file
-		    else
-		        ignored_files[name] = true
-		        return
-		    end
-		end
-		-- 修正该文件最大hit到的行数
-		if line_nr > file.max then
-		    file.max = line_nr
-		end
-		-- 更新该文件行的hit数
-		local hits = (file[line_nr] or 0) + 1
-		file[line_nr] = hits
-		if hits > file.max_hits then
-		    file.max_hits = hits
-		end
-		-- 判断tick步长，决定是否存储数据
-		if runner.tick then
-		    steps_after_save = steps_after_save + 1
-		    if steps_after_save == runner.configuration.savestepsize then
-		        steps_after_save = 0
-		        if not runner.paused then
-		        	runner.save_stats()
-		      	end
-		    end
-		end
-	end
+    -- 忽略的文件列表
+    local ignored_files = {}
+    -- hook执行的次数count
+    local steps_after_save = 0
+    -- hook函数参数为(事件evt, 行数line_nr, 栈层次level)
+    return function(_, line_nr, level)
+        -- level默认值为2
+        -- 栈层次为1位调用hook的luacov，栈层次为2即为待测覆盖率的文件
+        level = level or 2
+        -- 判断runner是否初始化
+        if not runner.initialized then
+            return
+        end
+        -- 获取栈层次level的source源文件信息，即文件名
+        -- 这个时候，我们就已经获得了想要的信息：文件名name与行数line_nr
+        local name = debug.getinfo(level, "S").source
+        -- 判断文件名前面有没@，以及是不是loadstring读取的（不然就不是文件名）
+        local prefixed_name = string.match(name, "^@(.*)")
+        if prefixed_name then
+            name = prefixed_name
+        elseif not runner.configuration.codefromstrings then
+            return
+        end
+        -- 读取临时缓存runner.data里边的数据
+        local data = runner.data
+        local file = data[name]
+        -- 判断该文件的数据是否要存储
+        if not file then
+            if ignored_files[name] then
+                return
+            elseif runner.file_included(name) then
+                file = {max = 0, max_hits = 0}
+                data[name] = file
+            else
+                ignored_files[name] = true
+                return
+            end
+        end
+        -- 修正该文件最大hit到的行数
+        if line_nr > file.max then
+            file.max = line_nr
+        end
+        -- 更新该文件行的hit数
+        local hits = (file[line_nr] or 0) + 1
+        file[line_nr] = hits
+        if hits > file.max_hits then
+            file.max_hits = hits
+        end
+        -- 判断tick步长，决定是否存储数据
+        if runner.tick then
+            steps_after_save = steps_after_save + 1
+            if steps_after_save == runner.configuration.savestepsize then
+                steps_after_save = 0
+                if not runner.paused then
+                    runner.save_stats()
+                end
+            end
+        end
+    end
 end
 ```
 

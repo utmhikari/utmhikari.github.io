@@ -11,7 +11,7 @@ tags:
 - newsgroup
 ---
 
-# 前言
+## 前言
 
 数据挖掘（Data Mining），一般指从海量抓取的数据中经过一定的数据处理、算法，从而提取出有价值的信息的过程。它大体基于统计学、机器学习（Machine Learning）等原理，辅佐了人类的信息处理工作，为人工智能（AI）铺下道路。
 
@@ -21,7 +21,7 @@ tags:
 
 <!-- more -->
 
-# 文本分类是什么？
+## 文本分类是什么？
 
 文本分类，更通常的理解，叫文本自动分类（auto-classification），是文本数据挖掘最普通不过的方法了。文本分类应用的例子比比皆是，比如某个新闻网站，爬到了海量外部的新闻文本，当人力不足以将其一个个归类时，就需要借助计算机的力量，将那些没有标注类别（category labelling）新闻自动归类到已有的类别当中。所以，我们的问题就是——怎样像人一样，去识别那些没有归类的新闻的类别呢？
 
@@ -29,17 +29,17 @@ tags:
 
 为此，要保证计算机的识别效果，完备优良的训练材料（training set）和精致缜密的训练方法（algorithm model）都必不可少。
 
-# 简单的例子——newsgroup文本分类
+## 简单的例子——newsgroup文本分类
 
 以下，我们就开始最简单的文本分类流程示例啦！我们采用[scikit-learn](https://scikit-learn.org/stable/)提供的工具进行文本分类流程模拟。
 
-## newsgroup数据集下载
+### newsgroup数据集下载
 
 文本分类数据集，我们采用最经典的新闻数据集：[20 newsgroup数据集](http://qwone.com/~jason/20Newsgroups/)进行模拟，使用的版本为[18828版](http://qwone.com/~jason/20Newsgroups/20news-18828.tar.gz)，记录了18828篇不重复的英文新闻。虽然`scikit-learn`库默认提供该数据集的下载处理，但是在这一话，我们就自己实现一遍吧~
 
 下载，解压，总共有`alt.atheism`到`talk.religion.misc`20个类别的文本。打开每一个类别文件夹，能看到以新闻编号为文件名（没有后缀名）的新闻文件。用记事本打开，就能够看到里面的新闻内容啦。
 
-## 新闻数据读取&预处理
+### 新闻数据读取&预处理
 
 要模拟文本分类，需要把每一个新闻跟它们的类别一一对应。在`scikit-learn`中，要实现newsgroup新闻内容与类别的对应，需要建立两个列表：
 
@@ -61,9 +61,9 @@ news_contents = list()
 news_labels = list()
 # traverse into directories
 for i in range(len(category_names)):
-	category = category_names[i]
-	category_dir = os.path.join(directory, category)
-	for file_name in os.listdir(category_dir):
+    category = category_names[i]
+    category_dir = os.path.join(directory, category)
+    for file_name in os.listdir(category_dir):
         file_path = os.path.join(category_dir, file_name)
         # get the word list of a single news file
         raw_content = open(file_path, encoding='latin1').read().strip()
@@ -105,7 +105,7 @@ def preprocess_content(content):
 
 `print`一下试试看吧~
 
-## 新闻文本分类
+### 新闻文本分类
 
 如上所说，要实现一个简单的文本分类流程，就需要准备好训练计算机的数据和用于测试计算机的数据。我们可以把刚刚处理好的新闻内容跟类别标签列表洗刷刷（shuffle），然后分隔一部分用于训练，一部分用于测试。这里，我们把训练跟测试数据集的比重设成1：1先啦~
 
@@ -178,7 +178,7 @@ report = classification_report(test_labels, result, target_names=category_names)
 
 试试看吧~
 
-# 总结
+## 总结
 
 用python进行newsgroup文本分类，不过是小菜花生。在数据挖掘、机器学习领域，更多的是数学的扎实程度，代码能力并非最为重要。
 
@@ -189,4 +189,3 @@ newsgroup的数据，总共不到两万，算是少之又少。更为海量的�
 我想反复说，为什么叫easy python？比python更容易上手的语言很多，lua就是其中一个。但是，lua现在支持那么多数据挖掘需求吗？并没有。
 
 easy python，因为它就如电子琴，能够让我们随心所欲，天马行空。
-

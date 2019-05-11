@@ -11,7 +11,7 @@ tags:
 - HTML
 ---
 
-# 前言
+## 前言
 
 一直以来，爬虫都是许多同学学Python的目的之一，就连我敬爱的领导，也经常不耻下问一些爬虫方面的问题。因此，我们开始实战——以[豆瓣Top 250](https://movie.douban.com/top250)为例，试水一下基础的爬虫。
 
@@ -19,7 +19,7 @@ tags:
 
 工欲善其事，必先利其器。以下浏览器操作，都基于最新版Chrome~
 
-# 获取电影列表网页数据
+## 获取电影列表网页数据
 
 爬虫爬虫，实质还是抓取网络数据= =爬虫不得急，可要一步步来——首先，我们希望获得每一个电影的链接，把它们存起来，留着后续爬取具体内容备用。
 
@@ -51,22 +51,22 @@ def get_start_url(page):
 ```python
 import requests
 for i in range(10):
-	url = get_start_url(i)  # 就用上面说的get_start_url函数
-	response = requests.get(url)
-	# HTTP/HTTPS协议里，response数据的不同状态码（status code）有不同含义
-	# 一般2字头表示整个请求&响应数据过程成功进行，200最常见
-	# 4字头表示请求有问题，无法获得想要的数据，也有可能是你被服务器小黑屋了
-	# 5字头表示服务器背锅，处理你的请求过程中bug了，或者是根本没法处理请求
-	if response.status_code == 200:
-		html = response.text  # 提取相应的文本信息，在此为网页数据
-		解析(html)
-		存储数据()
-	else:
-		print('Error at page %d with status %d!' %
-			  (i + 1, response.status_code))
+    url = get_start_url(i)  # 就用上面说的get_start_url函数
+    response = requests.get(url)
+    # HTTP/HTTPS协议里，response数据的不同状态码（status code）有不同含义
+    # 一般2字头表示整个请求&响应数据过程成功进行，200最常见
+    # 4字头表示请求有问题，无法获得想要的数据，也有可能是你被服务器小黑屋了
+    # 5字头表示服务器背锅，处理你的请求过程中bug了，或者是根本没法处理请求
+    if response.status_code == 200:
+        html = response.text  # 提取相应的文本信息，在此为网页数据
+        解析(html)
+        存储数据()
+    else:
+        print('Error at page %d with status %d!' %
+              (i + 1, response.status_code))
 ```
 
-# 解析提取电影URL
+## 解析提取电影URL
 
 获得了电影列表网页数据之后，我们需要通过某种规则，获取网页里边的电影链接。网页数据文本一般遵从HTML（超文本标记语言）格式，我们可以通过右键网页查看源代码看到，每一个网页的元素（Element），都被标签（Tag）包裹着，形式类似于这样——`<tag1><tag2>...</tag2>...</tag1>`，标签层层相扣，而最外层有一个`<html>`标签包裹着所有的内容，因此整一个网页数据类似于由标签、元素组成，以`<html>`标签为根的树状结构。在Python中，有许多第三方库（需要额外安装~）可以满足解析HTML的需求，这里以`bs4`的`BeautifulSoup`解析库以及`lxml`解析引擎为例，尝试提取豆瓣电影的链接。
 
@@ -91,15 +91,15 @@ soup = BeautifulSoup(html, html_parser)  # 基于网页数据构建一个解析�
 ```python
 movie_url_file = open('movie_urls.txt', 'w', encoding='utf-8')
 for movies in soup.find_all('div', class_='hd'):
-	# movies表示网页中每一个<div class="hd">标签下的元素
-	movie_url = movies.find('a')['href']  # 提取该元素下层<a>标签的href属性
-	movie_url_file.write(movie_url + '\n')  # 把链接写入文件
+    # movies表示网页中每一个<div class="hd">标签下的元素
+    movie_url = movies.find('a')['href']  # 提取该元素下层<a>标签的href属性
+    movie_url_file.write(movie_url + '\n')  # 把链接写入文件
 movie_url_file.close()
 ```
 
 通过这样的操作，我们就可以获得250个电影的url了。试试看吧~
 
-# 小结
+## 小结
 
 上半部分，初试爬虫，我们抓到了豆瓣250个电影的链接。
 

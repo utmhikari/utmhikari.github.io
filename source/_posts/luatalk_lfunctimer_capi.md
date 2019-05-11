@@ -11,7 +11,7 @@ tags:
 - debug
 ---
 
-# 前言
+## 前言
 
 昨天更新了一下[lfunctimer](https://github.com/utmhikari/lfunctimer)，主要把hook更改为c api的形式，并且初步加了util和config的扩展
 
@@ -21,7 +21,7 @@ tags:
 
 言归正传，利用lua原生的c api做debug相关操作会比lua自带的`debug.getinfo`来的快许多，我们可以来一探究竟
 
-# debug.getinfo源码分析
+## debug.getinfo源码分析
 
 我们可以从官方下载源码搜索`debug.getinfo`的实现，此处以版本5.3.5为例。
 
@@ -108,7 +108,7 @@ static int db_getinfo (lua_State *L) {
 
 可以看到如果在每次调用`debug.getinfo`会经历`参数检验——获取func或CallInfo信息——获取附加信息（what）`的过程，每次都会创建一个`lua_Debug`结构体，在lua中返回的是一个table，相对繁琐一些。为了提高效率，我们可以直接用`db_getinfo`中的`lua_getstack`跟`lua_getinfo`方法去在我们的c hook中获取函数信息。
 
-# 用C API重写lfunctimer的hook
+## 用C API重写lfunctimer的hook
 
 在新版lfunctimer中，第一版C Hook实现如下：
 
@@ -143,7 +143,7 @@ static int lfunctimer_getfuncname(lua_State *L) {
     if (strcmp(what, "C") == 0) {
         lua_pushfstring(L, "<Builtin> %s", ar.name);
     } else if (ar.namewhat[0] == '\0') {
-        lua_pushfstring(L, "<%s:%d> ::UNKNOWN::", ar.short_src, ar.linedefined); 
+        lua_pushfstring(L, "<%s:%d> ::UNKNOWN::", ar.short_src, ar.linedefined);
     } else {
         lua_pushfstring(L, "<%s:%d> %s", ar.short_src, ar.linedefined, ar.name);
     }
@@ -188,9 +188,6 @@ static int lfunctimer_debug_hook(lua_State *L) {
 }
 ```
 
-# 总结
+## 总结
 
 过后真的要多抽空研读下各种源码，打好基础= =mlgb的，最近为了领导毕业论文的事情，都憔悴了。
-
-
-

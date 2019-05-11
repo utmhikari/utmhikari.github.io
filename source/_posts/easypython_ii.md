@@ -11,7 +11,7 @@ tags:
 - 映射
 ---
 
-# 从dict开始说起
+## 从dict开始说起
 
 学python的时候，我们一定会接触到dict（字典）这个数据结构。
 
@@ -41,7 +41,7 @@ Girls are: ['迪丽热巴', '王鸥', '鬼鬼']
 
 <!-- more -->
 
-# 映射
+## 映射
 
 像dict数据结构给我们展现的一样，数据间的对应关系，我们可以统称为：映射（Mapping）
 
@@ -49,15 +49,15 @@ Girls are: ['迪丽热巴', '王鸥', '鬼鬼']
 
 ```python
 def get_value(key):
-	memory_address_of_value = hash(key)
-	return get_data_from_address(memory_address_of_value)
+    memory_address_of_value = hash(key)
+    return get_data_from_address(memory_address_of_value)
 ```
 
 为了让我们便捷地从一个key访问到对应的value，dict不可能把所有的key都过一遍找，那样费时费力。
 
 取而代之，dict可以直接通过一种算法函数，称之为hash，就可以把key计算（映射）为一个数值，即value的内存地址。我们通过这个内存地址，就可以取出对应的value数据了，非常简单粗暴。
 
-# 数据处理小需求
+## 数据处理小需求
 
 现在，让我们看这样一个需求。我们的输入是：
 
@@ -85,7 +85,7 @@ for i in input_list:
 
 打出来的结果是：
 
-```
+```plain
 11: 大于10！
 2: 小于等于10！
 12: 大于10！
@@ -116,7 +116,7 @@ output = map(
 
 打出来这个结果：
 
-```
+```plain
 1: 小于等于10！
 2: 小于等于10！
 4: 小于等于10！
@@ -133,7 +133,7 @@ output = map(
 
 这回领导终于满意啦~~
 
-# 分解过程，持续映射
+## 分解过程，持续映射
 
 让一个普通的数据处理过程变得层次清晰，其实是有方法的，得益于python内置的高阶函数，如果你写过js，玩转es6或者lodash，绝对章口就莱。
 
@@ -173,7 +173,7 @@ output = map(
 
 是不是很清晰？那就在以后码码的时候，多试试看这种style吧~
 
-# 总结
+## 总结
 
 接触编程的同学们，总会听过两个词：面向对象编程（Object Oriented Programming）与函数式编程（Functional Programming），甚至有许多人鼓吹函数式编程，贬低面向对象云云，引起一番争论。
 

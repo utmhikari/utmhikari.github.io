@@ -11,7 +11,7 @@ tags:
 - array
 ---
 
-# 前言
+## 前言
 
 最近一直在探索Lua的C API编程部分，上次实现了一个函数执行时间统计库：[lfunctimer](https://github.com/utmhikari/lfunctimer)，这次就果断写了一个`lnodelist`来玩玩。在这期间，遇到了许多纠结的问题，因此果断做下分享~
 
@@ -51,9 +51,9 @@ static const luaL_Reg lnodelist_f[] = {
 };
 ```
 
-# 踩坑记录
+## 踩坑记录
 
-## 数据结构与元表设计
+### 数据结构与元表设计
 
 `lnodelist`本身要实现为一个非lua的自定义的数据结构，在Lua里，这种数据结构属于`userdata`的类型，是一个可以被lua的GC（garbage collection，倒垃圾）机制检测回收的`struct`结构体数据块。从双向链表的设计上来看，初始化的`userdata`可以包含`size`、`*head`以及`*tail`三方面。通过`size`、`*head`以及`*tail`三个信息，我们就可以简单管理一个双向链表。而链表的每个结点内存则需要自己管理，其数据结构包含`type`、`*value`、`*prev`以及`*next`四个信息，分别是结点数据的类型、值跟链表里边上一个、下一个结点的指针。因此，`lnodelist`的`userdata`结构体跟结点结构体定义可以如下：
 
@@ -103,7 +103,7 @@ void new_list(lua_State *L) {
 }
 ```
 
-## 数据存取
+### 数据存取
 
 在lua中，采用`TValue`表示lua的数据
 
@@ -123,7 +123,7 @@ typedef union Value {
 } Value;
 
 
-#define TValuefields	Value value_; int tt_
+#define TValuefields Value value_; int tt_
 
 
 typedef struct lua_TValue {
@@ -200,7 +200,7 @@ void push_val(lua_State *L, l_node *node) {
 
 销毁数据（free）时，特殊的数据结构暂时需要在lua注册表里`unref`来取消索引。其中的优化方案，还要后续有空探究。
 
-## 遍历数据
+### 遍历数据
 
 lua本身遍历数据采用`pairs`与`ipairs`两种方式，但是对于`lnodelist`的链表来说，存在两个问题——首先，`pairs`跟`ipairs`是无状态的。对于列表类型，我们采用`ipairs`遍历时，通常为索引自增后再调用`ipair`函数执行，但对于链表，根据索引寻找会增加性能开销，并且`l_node`结点本身并非lua原生的数据类型。因此，现在暂时的解决方案是采用`Javascript`的模式call回调函数进行遍历。比如`foreach`的实现，可以如下：
 
@@ -224,7 +224,7 @@ static int list_foreach(lua_State *L) {
 
 这样就可以实现一次遍历，`map`等方法同理
 
-# 总结
+## 总结
 
 近期刷题少了，在写`lnodelist`的过程中也渐渐找回了一点感觉。总的来说能有个小demo也不错，要把它做得更好的话，还有很多方面需要调研与改进：
 
@@ -234,4 +234,3 @@ static int list_foreach(lua_State *L) {
 - 协程支持：既然要JS Style，那还是得增加对coroutine的支持
 
 要解决这些问题，还得再深入去研究呀！
-
