@@ -120,10 +120,11 @@ pre {
 
   .variable
   .attribute
+  .constant
   .tag
   .name
   .regexp
-  .ruby .constant
+  .ruby
   .xml .tag .title
   .xml .pi
   .xml .doctype
@@ -143,6 +144,10 @@ pre {
   .constant
   .command {
     color: $highlight-orange;
+  }
+
+  .constant {
+    color: $highlight-constant;
   }
 
   .ruby .class .title
