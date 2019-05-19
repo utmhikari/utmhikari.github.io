@@ -32,7 +32,7 @@ print('Girls are: %s' % pprint.pformat(d['girl']))
 
 打出来的效果是：
 
-```
+```plain
 {'boy': ['大碗宽面'], 'girl': ['迪丽热巴', '王鸥', '鬼鬼']}
 Girls are: ['迪丽热巴', '王鸥', '鬼鬼']
 ```
