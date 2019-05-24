@@ -1,8 +1,8 @@
 ---
-title: 【探索Github】python调试利器——pysnooper源码分析
+title: 【探索GitHub】python调试利器——pysnooper源码分析
 date: 2019/05/25 01:29:38
 categories:
-- 探索Github
+- 探索GitHub
 tags:
 - python
 - pysnooper
