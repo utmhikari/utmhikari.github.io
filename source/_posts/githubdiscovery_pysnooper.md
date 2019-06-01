@@ -1,8 +1,8 @@
 ---
-title: 【探索GitHub】python调试利器——pysnooper源码分析
+title: 【GitHub探索】python调试利器——pysnooper源码分析
 date: 2019/05/25 01:29:38
 categories:
-- 探索GitHub
+- GitHub探索
 tags:
 - python
 - pysnooper
@@ -13,7 +13,7 @@ tags:
 
 ## 前言
 
-这次又开了个新坑——探索GitHub，主要内容是试水当期GitHub上较火的repo
+这次又开了个新坑——GitHub探索，主要内容是试水当期GitHub上较火的repo
 
 虽然top榜上各路新手教程跟经典老不死项目占据了大半江山，但清流总是会有的。
 
