@@ -19,9 +19,9 @@ Easy Python终于来到完结，我的领导也夸奖我写作非常的卖力用
 
 为此，让我们一起重回首Easy Python系列，光荣收尾吧！
 
-<!-- more -->
-
 ## 回顾
+
+<!-- more -->
 
 ### [第一话：print('HelloWorld')——输入、输出与函数](https://utmhikari.github.io/2019/03/09/easypython_i/)
 

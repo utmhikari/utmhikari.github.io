@@ -21,8 +21,6 @@ tags:
 
 单个函数执行时间的获取相对较为简单，例子如下：
 
-<!-- more -->
-
 ```lua
 local function test()
     local start = os.clock()
@@ -35,6 +33,8 @@ end
 在函数的开头与结尾调用lua内置的os.clock（内核实现为time.h的中`clock()`时间戳除以`CLOCKS_PER_SEC`统计量，单位为秒），可以轻而易举地获得该函数的执行时间
 
 ## hook实现
+
+<!-- more -->
 
 在lua的debug库中，hook掩码包括line、call、return等几种，易知在call与return事件打hook，可以更精确地对函数时间进行统计。
 

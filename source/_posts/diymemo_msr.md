@@ -19,13 +19,13 @@ tags:
 
 坑也是要慢慢踩的。熬了两夜，终于成功解决了这个问题，将Win10升级到了最新版本。
 
-<!-- more -->
-
 ## 踩坑记录
 
 ### 原因分析
 
 遇到这个问题后，笔者第一时间google百度了下解决方案，看到了以下几条：
+
+<!-- more -->
 
 - [安装win10总是提示：我们无法更新系统保留的分区](https://answers.microsoft.com/zh-hans/windows/forum/windows8_1-update/%E5%AE%89%E8%A3%85win10%E6%80%BB%E6%98%AF%E6%8F%90/2f7bbdb4-33bd-4a7c-bd85-5771a5af16ce)
 - [此PC不能运行Windows 10 – 我们无法更新系统保留分区](http://mos86.com/41152.html)

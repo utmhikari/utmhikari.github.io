@@ -23,11 +23,11 @@ tags:
 
 废话不多说，进入正题~
 
-<!-- more -->
-
 ## pysnooper使用效果
 
 通常，我们可以在函数上用`pysnooper.snoop`装饰器，给这个函数包装一个额外功能，实现在标准错误流打印函数debug信息的效果。比如说：
+
+<!-- more -->
 
 ```python
 @pysnooper.snoop(depth=2)

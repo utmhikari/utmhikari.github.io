@@ -435,27 +435,27 @@ font:
 
   # Global font settings used for all elements in <body>.
   global:
-    external: true
-    family: Hiragino Sans GB
+    external: false
+    family:
     size:
 
   # Font settings for Headlines (H1, H2, H3, H4, H5, H6).
   # Fallback to `global` font settings.
   headings:
-    external: true
+    external: false
     family:
     size:
 
   # Font settings for posts.
   # Fallback to `global` font settings.
   posts:
-    external: true
+    external: false
     family:
 
   # Font settings for Logo.
   # Fallback to `global` font settings.
   logo:
-    external: true
+    external: false
     family:
     size:
 
