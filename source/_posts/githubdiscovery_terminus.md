@@ -1,11 +1,11 @@
 ---
-title: 【GitHub探索】新款终端软件terminus测试
+title: 【GitHub探索】新款命令行工具terminus测试
 date: 2019/06/22 22:45:17
 categories:
 - GitHub探索
 tags:
 - terminus
-- 终端软件
+- 命令行工具
 - terminal
 - shell
 - 测试
@@ -15,9 +15,9 @@ tags:
 
 六月的Github趋势榜单上，除去一些文书、教程性质的项目外，大部分项目并非自己所针对的领域。因此，果断试水了一款软件，
 
-Windows系统下的终端软件配置，一直是开发者们纠结的痛点。在这一块，[cmder](https://cmder.net/)、[MobaXTerm](https://mobaxterm.mobatek.net/)甚至即将上线的[Windows Terminal](https://github.com/microsoft/terminal)，都是不错的解决方案。然而今天，我们将介绍另一款多平台兼容的终端软件~
+Windows系统下的命令行工具配置，一直是开发者们纠结的痛点。在这一块，[cmder](https://cmder.net/)、[MobaXTerm](https://mobaxterm.mobatek.net/)甚至即将上线的[Windows Terminal](https://github.com/microsoft/terminal)，都是不错的解决方案。
 
-今天介绍的这一款软件——[terminus](https://github.com/Eugeny/terminus)，在六月份跻身趋势排行前十，则似乎更加符合我们对终端软件的影响。作为一个终端模拟器，terminus采用Angular + Electron开发，包含了终端模拟器软件必备的许多功能特性，兼具美观与实用性。我们可以首先来看看，terminus的界面长什么样子~
+而今天介绍的这一款软件——[terminus](https://github.com/Eugeny/terminus)，在六月份跻身趋势排行前十，则似乎更加符合我们对命令行工具的影响。作为一个终端模拟器，terminus采用Angular + Electron开发，包含了终端模拟器必备的许多功能，兼具美观与实用性。我们可以首先来看看，terminus的界面长什么样子~
 
 <!-- more -->
 
@@ -80,7 +80,7 @@ Windows系统下的终端软件配置，一直是开发者们纠结的痛点。�
 
 从开发的角度而言，先确定需求，写模版，后面出了具体bug再迭代，是一个妥善的路子。
 
-从试水结果看来，terminus为我们开发终端软件开辟了更加精致的思路，作为一个轻量级的软件，从功能的完备性而言，已经能够具备日常使用性。
+从试水结果看来，terminus为我们开发命令行工具开辟了更加精致的思路，作为一个轻量级的软件，从功能的完备性而言，已经能够具备日常使用性。
 
 虽然有些恶性bug，并且也有些GUI渲染上的瑕疵，但并不妨碍整个研发的大方向，因此我们期望开发人员能够后面抽空一个个补正。
 
