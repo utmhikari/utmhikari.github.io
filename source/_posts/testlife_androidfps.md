@@ -21,6 +21,8 @@ fps（frames per second），通常表示我们屏幕每秒展现的图片（帧
 
 首先，通过adb，我们可以导出SurfaceFlinger服务的运行时信息。
 
+<!-- more -->
+
 ```sh
 adb shell dumpsys SurfaceFlinger
 ```
