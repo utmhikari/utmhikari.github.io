@@ -45,7 +45,7 @@ func main() {
 }
 ```
 
-这个时候VSCode就会提示下一堆工具依赖了（linter、自动填充之类）。但是VSCode插件默认会从google下载。由于众所周知的不可抗力原因，本文不提供强行解决的方案，但有解决方法的：
+这个时候VSCode就会提示下一堆工具依赖了（linter、自动填充之类）。但是VSCode插件默认会从go source下载。由于众所周知的不可抗力一般下载不行，但有其它的解决方法：
 
 - 测一下github网速，实在不行请开启游戏加速器
 - 查看VSCode输出日志——看看哪些依赖安装失败。一般由于不可抗力，`golang.org/x/tools/`之类的google官方依赖会下不到。这个时候需要在`%GOPATH%\src`下建立`golang.org/x`目录，然后再从github上对应的仓库克隆`github.com/golang/tools`，然后go install。可以参考：[VSCode + Golang配置](https://blog.csdn.net/u013295518/article/details/78766086)
