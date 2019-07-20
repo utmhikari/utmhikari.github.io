@@ -19,7 +19,7 @@ tags:
 
 ## 安装与环境变量配置
 
-家里的电脑是Windows，从[官网](https://golang.org/)下Go跟相关资源还得改hosts，推荐github上的项目[hosts](https://github.com/googlehosts/hosts)。Go的版本为1.12。
+家里的电脑是Windows，从[官网](https://golang.org/)即可下载Win的安装包。Go的版本为1.12。
 
 下好后安装，安装完毕之后还需要设置环境变量（我的电脑——属性——高级系统设置）。`GOROOT`设置成Go的安装路径，还有一个关键的`GOPATH`，它表示你的工作目录，**一般所有的Go项目，甭管第三方的还是你的，都统一放到这个目录下**（从这点可以看出，Go的控制欲还是很强的）。`GOPATH`的一般结构如下：
 
