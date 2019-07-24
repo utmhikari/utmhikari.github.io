@@ -1,13 +1,13 @@
 ---
-title: 【从零单排Golang】第一话：第一行代码？环境配置与依赖管理踩坑
+title: 【从零单排Golang】第一话：HelloWorld？环境配置与依赖管理踩坑
 date: 2019/07/20 19:35:05
 categories:
 - 从零单排Golang
 tags:
-- Golang
-- Go环境变量
+- Go
+- 环境变量
 - VSCode Go
-- go import
+- go package
 - go mod
 ---
 

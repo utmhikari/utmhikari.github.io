@@ -1,5 +1,5 @@
 ---
-title: 【Easy Python】最终话：Python, 就是这么Easy！
+title: 【Easy Python】最终话：重回首知识点，让python真正easy！
 date: 2019/05/19 17:01:35
 categories:
 - Easy Python
