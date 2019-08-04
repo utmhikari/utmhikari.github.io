@@ -1,13 +1,13 @@
 ---
-title: 【从零单排Go】第一话：HelloWorld？环境配置与依赖管理踩坑
+title: 【从零单排Go】第一话：HelloWorld？环境依赖与目录结构踩坑
 date: 2019/07/20 19:35:05
 categories:
 - 从零单排Go
 tags:
 - Go
 - 环境变量
-- VSCode Go
-- go package
+- Go依赖
+- 目录结构
 - go mod
 ---
 
