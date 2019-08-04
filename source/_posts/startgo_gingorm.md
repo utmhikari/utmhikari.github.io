@@ -11,9 +11,9 @@ tags:
 - CRUD
 ---
 
-[Github传送门](https://github.com/utmhikari/gofromzero)
-
 ## 前言
+
+[Github传送门](https://github.com/utmhikari/gofromzero)
 
 学一门新语言，如果太专注于语法，那肯定学的不够快。如果有一定的需求目标，带着这个目标去学习一门新语言，这样才能学得快。
 
