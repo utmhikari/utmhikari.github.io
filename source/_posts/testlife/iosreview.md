@@ -38,4 +38,4 @@ ipa包本质是一个zip包。如果有同学好奇拆过的话，可以看到ip
 - 图片：需要保证有特定规格的图片存在，参考[Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines/ios/overview/themes/)
 - 二进制文件：需要保证[规格](https://help.apple.com/app-store-connect/?lang=zh-cn#/dev611e0a21f)，以及不得包含官方禁止开发者直接使用的api。二进制文件的扫描，相当于对iOS可执行文件的逆向。因此，需要对可执行文件[mach-o](https://www.jianshu.com/p/2eb351b0ce57)的结构以及相关逆向工具（比如[otool](https://blog.csdn.net/lovechris00/article/details/81561627)）的使用进行熟悉
 
-从整个App的审核来看，相对于人工检查，静态扫描的审核点覆盖度相对较低，但却可以对直接对某些审核痛点（比如禁止api）进行检测。因此，聪明的你，也一起来和苹果斗志斗勇吧~
+从整个App的审核来看，相对于人工检查，静态扫描的审核点覆盖度相对较低，但却可以对直接对某些审核痛点（比如禁止api）进行检测。因此，聪明的你，也一起来和苹果斗智斗勇吧~
