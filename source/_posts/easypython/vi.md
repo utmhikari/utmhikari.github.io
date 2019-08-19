@@ -33,7 +33,7 @@ tags:
 - 多进程 Multi Processing
 - 异步IO Async IO
 
-其中，异步IO的实现方法，我们在第四章[《玩转豆瓣二百五：下》](https://utmhikari.github.io/2019/03/31/easypython_iv/)中已经介绍过。多线程和多进程的实现方法，可以参考[Python官方文档](https://docs.python.org/zh-cn/3/)，或者干脆直接看下面的实例。
+其中，异步IO的实现方法，我们在第四章[《玩转豆瓣二百五：下》](https://utmhikari.github.io/2019/03/31/easypython/iv)中已经介绍过。多线程和多进程的实现方法，可以参考[Python官方文档](https://docs.python.org/zh-cn/3/)，或者干脆直接看下面的实例。
 
 通过一个简单的运行时间测试我们就可以发现，这三种方法中，哪些方法是能够真正利用并行的效率：
 

@@ -23,7 +23,7 @@ Easy Python终于来到完结，我的领导也夸奖我写作非常的卖力用
 
 <!-- more -->
 
-### [第一话：print('HelloWorld')——输入、输出与函数](https://utmhikari.github.io/2019/03/09/easypython_i/)
+### [第一话：print('HelloWorld')——输入、输出与函数](https://utmhikari.github.io/2019/03/09/easypython/i)
 
 HelloWorld，是代码世界的入口。当我们采用Python语言打下print('HelloWorld')的一刻，是否想过print——这个函数，到底表示什么呢？到底能怎么用呢？
 
@@ -35,7 +35,7 @@ HelloWorld，是代码世界的入口。当我们采用Python语言打下print('
 - 输入&参数&关键字/无关键字参数（input, arguments, *args & **kwargs）
 - 输出&返回（output & return）
 
-### [第二话：映射——输入、输出与函数的纽带](https://utmhikari.github.io/2019/03/16/easypython_ii/)
+### [第二话：映射——输入、输出与函数的纽带](https://utmhikari.github.io/2019/03/16/easypython/ii)
 
 映射代表了输入与输出的关系，而函数则实现了映射。在我们日常码码中，如果能用映射的方式表示一段程序，能够增强代码的可读性
 
@@ -45,7 +45,7 @@ HelloWorld，是代码世界的入口。当我们采用Python语言打下print('
 - 字典及其映射实现（dict & hash）
 - 函数式编程&python示例（functional programming with its example）
 
-### [第三话：爬虫初探——玩转豆瓣二百五（上）](https://utmhikari.github.io/2019/03/31/easypython_iii/)
+### [第三话：爬虫初探——玩转豆瓣二百五（上）](https://utmhikari.github.io/2019/03/31/easypython/iii)
 
 python在数据分析方面的应用非常广泛。在网上有非常多的爬虫教程，然而爬虫背后到底干了什么，我们却不易知晓。
 
@@ -57,7 +57,7 @@ python在数据分析方面的应用非常广泛。在网上有非常多的爬�
 - HTML网页与BeautifulSoup解析（HTML page & BeautifulSoup Parser）
 - Chrome开发者模式（Chrome Developer Mode）
 
-### [第四话：爬虫初探——玩转豆瓣二百五（下）](https://utmhikari.github.io/2019/03/31/easypython_iv/)
+### [第四话：爬虫初探——玩转豆瓣二百五（下）](https://utmhikari.github.io/2019/03/31/easypython/iv)
 
 豆瓣二百五的下篇相对于上篇，爬取了每一个电影链接中的具体电影信息。从编程角度而言，涉及的知识面就更广了：
 
@@ -68,7 +68,7 @@ python在数据分析方面的应用非常广泛。在网上有非常多的爬�
 
 注重代码工程化（强迫症）的同学们，千万不要错过~
 
-### [第五话：小试scikit-learn数据挖掘——newsgroup数据处理与文本分类](https://utmhikari.github.io/2019/04/14/easypython_v/)
+### [第五话：小试scikit-learn数据挖掘——newsgroup数据处理与文本分类](https://utmhikari.github.io/2019/04/14/easypython/v)
 
 第五话对数据处理&文本分析的基本操作做了讲解，简要地介绍了文本分类的概念与操作，并且打通了Python的机器学习库与我们自己的数据。
 
@@ -78,7 +78,7 @@ python在数据分析方面的应用非常广泛。在网上有非常多的爬�
 - 正则表达式（regular expression）
 - scikit-learn文本分类流水线（pipeline of text-classification via scikit-learn）
 
-### [第六话：解锁三头六臂——Python多进程并行](https://utmhikari.github.io/2019/05/11/easypython_vi/)
+### [第六话：解锁三头六臂——Python多进程并行](https://utmhikari.github.io/2019/05/11/easypython/vi)
 
 第六话，讲述了许多同学所关心，踩坑较多的并发编程，剖析了其中原理，并用python实现多任务并行操作。在这方面有疑惑的同学们，千万不要错过！
 

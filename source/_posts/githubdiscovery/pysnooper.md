@@ -91,7 +91,7 @@ Return value:.. 2
 
 ## pysnooper实现原理
 
-pysnooper的实现涉及到python底层debug相关的知识。在以前写过的一篇[lua的debug库源码分析](https://utmhikari.github.io/2019/04/07/luatalk_lfunctimer_capi/)中提到了lua获取debug信息的相关操作，而pysnooper实现上也是通过获取底层信息进行debug trace，从结果上来看，也收集了call、line、return以及变量定义之类的操作事件信息。虽然语言不同，但基本思想都一样滴~
+pysnooper的实现涉及到python底层debug相关的知识。在以前写过的一篇[lua的debug库源码分析](https://utmhikari.github.io/2019/04/07/luatalk/lfunctimer_capi)中提到了lua获取debug信息的相关操作，而pysnooper实现上也是通过获取底层信息进行debug trace，从结果上来看，也收集了call、line、return以及变量定义之类的操作事件信息。虽然语言不同，但基本思想都一样滴~
 
 因此，在逆向pyssnooper实现原理之时，也将先入为主地代入一些lua的相关概念。
 
