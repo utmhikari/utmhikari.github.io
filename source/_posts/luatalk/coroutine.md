@@ -43,6 +43,8 @@ static const luaL_Reg co_funcs[] = {
 
 基于这两种方式调度任务的代码写法大同小异。以下以`create`封装任务为例，我们一起看看会是怎样的进行——
 
+<!-- more -->
+
 ```lua
 local function output(co, ...)
     print("Info:")
