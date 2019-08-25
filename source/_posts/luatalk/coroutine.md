@@ -90,7 +90,9 @@ output(co, tostring(ok3) .. ": " .. tostring(ret3))
 - `coroutine.running`：返回当前线程以及是否为主线程的boolean。
 - `coroutine.isyieldable`：返回当前线程是否具有`yield`切出功能，如果是普通主线程，或者是不支持yield的C编写的线程，就不能切出。
 
-接下来我们定义协程`co`，采用`create`封装一个任务。我们先查看输出结果：
+之后定义了协程`co`，采用`create`封装一个任务。封装完之后，就试着跑一下。
+
+我们先看看最后的输出结果：
 
 ```plain
 Info:
