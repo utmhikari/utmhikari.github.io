@@ -183,7 +183,7 @@ end
 
 local function controller(ctx)
     if ctx.header["referer"] ~= "China" then
-        ctx.body.data = "Not a Chinese man!"
+        ctx.body.data = "You are not Chinese!"
     end
 end
 
@@ -198,6 +198,10 @@ handle(context, middleware_header, middleware_body, controller)
 在`body`中间件中，`context`为自己的`body`加上了`Chinese Hero`的数据，然后切出不管，并且打赌，如果切回来不是`Chinese Hero`的话，就告诉全世界，这个`user-agent`身份不能代表`Chinese Hero`。
 
 但在真正掌握控制大权的`controller`中，则不会为标榜`Chinese Hero`的非中国人买单。
+
+```plain
+ShangQi is not a Chinese Hero!
+```
 
 那么，怎样实现这一过程呢？我们看一下整一个代码：
 
