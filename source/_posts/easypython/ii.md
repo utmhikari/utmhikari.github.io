@@ -32,7 +32,7 @@ print('Girls are: %s' % pprint.pformat(d['girl']))
 
 打出来的效果是：
 
-```plain
+```text
 {'boy': ['大碗宽面'], 'girl': ['迪丽热巴', '王鸥', '鬼鬼']}
 Girls are: ['迪丽热巴', '王鸥', '鬼鬼']
 ```
@@ -85,7 +85,7 @@ for i in input_list:
 
 打出来的结果是：
 
-```plain
+```text
 11: 大于10！
 2: 小于等于10！
 12: 大于10！
@@ -116,7 +116,7 @@ output = map(
 
 打出来这个结果：
 
-```plain
+```text
 1: 小于等于10！
 2: 小于等于10！
 4: 小于等于10！

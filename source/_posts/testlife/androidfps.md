@@ -29,7 +29,7 @@ adb shell dumpsys SurfaceFlinger
 
 dump出的信息包含了每个图层经过SurfaceFlinger加工后的信息，以及在硬件显示层上的层次，例子如下：
 
-```plain
+```text
 + Layer 0x796c18e800 (com.supercell.clashroyale.kunlun/com.supercell.clashroyale.GameAppKunlun#0)
   Region transparentRegion (this=0x796c18eb90, count=1)
     [  0,   0, 1080, 2240]
@@ -51,7 +51,7 @@ adb shell dumpsys SurfaceFlinger --latency <图层名>
 
 如果成功的话，会显示出三列数据，大概是这样：
 
-```plain
+```text
 // 抠图 from chromium android pylib
 16954612
 ...

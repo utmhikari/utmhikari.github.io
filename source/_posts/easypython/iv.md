@@ -21,7 +21,7 @@ tags:
 
 对于每一个电影，我们选择爬取如下内容（虽然电影列表页就能爬得到= =）：
 
-```plain
+```text
 标题（title）、年份（year）、时长（time）、
 导演（director）、类型（genre）、评分（score）
 ```
@@ -76,7 +76,7 @@ HTTP请求支持我们通过代理发送数据，使得目标识别发送源为�
  # 初始化条件变量
 cond = None
 # 代理队列采用deque()数据结构，头尾都可以添加/删除，便于代理重复利用
-proxies = deque()  
+proxies = deque()
 # 存放当前正在使用的代理，如果同时被多个任务用的话，小心被豆瓣封= =
 proxies_used = set()
 
@@ -173,7 +173,7 @@ async def allocate_proxy(max_tasks):
                 # 如果到了最大值，说明全部任务都结束了
                 # 这个时候代理分配任务也就完成任务了
                 will_break = True
-            # 看代理队列还有木有可用的  
+            # 看代理队列还有木有可用的
             len_proxies = len(proxies)
             if len_proxies == 0:
                 if len(proxies_used) == 0:

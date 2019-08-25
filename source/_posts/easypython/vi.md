@@ -105,7 +105,7 @@ if __name__ == '__main__':
 
 结果出炉！
 
-```plain
+```text
 Sequential: 18.116519
 Multi-Process: 3.879628
 Async-IO: 18.225281

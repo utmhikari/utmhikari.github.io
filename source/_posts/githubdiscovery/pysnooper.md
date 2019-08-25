@@ -50,7 +50,7 @@ def main():
 
 执行main的效果就是：
 
-```plain
+```text
 Starting var:.. x = 2
 22:24:25.476753 call         5 def factorial(x):
 22:24:25.476753 line         6     if x == 0:

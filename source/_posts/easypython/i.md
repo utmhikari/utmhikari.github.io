@@ -32,7 +32,7 @@ print('Hello World!')
 
 然后命令行里，就会输出：
 
-```plain
+```text
 Hello World!
 ```
 
@@ -114,7 +114,7 @@ print('Wo', 'Ai', 'Ni')
 
 输入了三个无名参数，结果是：
 
-```plain
+```text
 Wo Ai Ni
 ```
 
@@ -124,7 +124,7 @@ Wo Ai Ni
 print('Wo', 'Ai', 'Ni', sep='')
 ```
 
-```plain
+```text
 WoAiNi
 ```
 
@@ -156,7 +156,7 @@ print(a)
 
 结果是：
 
-```plain
+```text
 woaini
 None
 ```
@@ -178,7 +178,7 @@ print(func(a, b))
 
 打出来
 
-```plain
+```text
 woaini
 2
 ```

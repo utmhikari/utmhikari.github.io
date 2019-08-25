@@ -94,7 +94,7 @@ output(co, tostring(ok3) .. ": " .. tostring(ret3))
 
 我们先看看最后的输出结果：
 
-```plain
+```text
 Info:
         STATUS: running
         RUNNING:        thread: 00000000006ee6b8        false
@@ -201,7 +201,7 @@ handle(context, middleware_header, middleware_body, controller)
 
 但在真正掌握控制大权的`controller`中，则不会为标榜`Chinese Hero`的非中国人买单。
 
-```plain
+```text
 ShangQi is not a Chinese Hero!
 ```
 
