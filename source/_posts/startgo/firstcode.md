@@ -1,13 +1,13 @@
 ---
-title: 【从零单排Go】第一话：HelloWorld？环境依赖与目录结构踩坑
+title: 【从零单排Golang】第一话：HelloWorld？环境变量、依赖与目录结构踩坑
 date: 2019/07/20 19:35:05
 categories:
-- 从零单排Go
+- 从零单排Golang
 tags:
-- Go
+- Golang
 - 环境变量
-- Go依赖
-- 目录结构
+- go目录结构
+- go依赖
 - go mod
 ---
 

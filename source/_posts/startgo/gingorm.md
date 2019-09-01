@@ -1,10 +1,10 @@
 ---
-title: 【从零单排Go】第二话：初探服务端CRUD，gin+gorm黄金搭档
+title: 【从零单排Golang】第二话：初探服务端CRUD，gin+gorm黄金搭档
 date: 2019/08/04 18:38:41
 categories:
-- 从零单排Go
+- 从零单排Golang
 tags:
-- Go
+- Golang
 - 服务端
 - gin
 - gorm
