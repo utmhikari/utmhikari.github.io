@@ -1,5 +1,5 @@
 ---
-title: 【从零单排Golang】第三话：利用docker客户端在本地部署MySQL
+title: 【从零单排Golang】第三话：利用docker client本地部署MySQL
 date: 2019/09/01 18:50:17
 categories:
 - 从零单排Golang
