@@ -25,7 +25,7 @@ Lua中协议选择有许多种，protobuf、json均可。但是今天，就稍�
 
 sproto的设计类似于[protobuf](https://developers.google.com/protocol-buffers/?hl=zh-CN)，基本类型为`string`、`binary`、`integer`以及`boolean`四种。对于array序列的支持，则加上引用星号`*`即可；对于非整数的支持方面，用户可以parse string来处理实数，或者指定integer的小数位数来处理小数（decimal）。除此之外，用户也可以像编程里面strcut那样自定义类型，类型与类型之间也可以嵌套。
 
-我们可以从readme中寻找各种例子。数据类型的例子如下：
+我们可以从[readme](https://github.com/cloudwu/sproto/blob/master/README.md)中寻找各种例子。数据类型的例子如下：
 
 <!-- more -->
 
@@ -64,7 +64,7 @@ foobar 1 { # define a new protocol (for RPC used) with tag 1
 
 这样，协议foobar（编号为1）请求与返回的协议数据格式便一目了然了。
 
-至于协议的序列化设计，在[《设计一种简化的 protocol buffer 协议》](https://blog.codingnow.com/2014/07/ejoyproto.html)的Wire Protocol与“0 压缩”章节中详尽描述，此处便不再赘述。
+至于协议的序列化设计，在云风所著[《设计一种简化的 protocol buffer 协议》](https://blog.codingnow.com/2014/07/ejoyproto.html)的Wire Protocol与“0 压缩”章节中已经详尽描述了，此处便不再赘述。
 
 ## sproto协议收发
 
