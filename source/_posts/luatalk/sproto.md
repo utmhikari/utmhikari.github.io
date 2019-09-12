@@ -27,6 +27,8 @@ sproto的设计类似于[protobuf](https://developers.google.com/protocol-buffer
 
 我们可以从readme中寻找各种例子。数据类型的例子如下：
 
+<!-- more -->
+
 ```protobuf
 .Person { # . means a user defined type
     name 0 : string # string is a build-in type.
