@@ -28,6 +28,8 @@ tags:
 
 ## minikube——在Win10本地搭建kubernetes
 
+<!-- more -->
+
 笔者的电脑为Win10，因此搭建环境的部分，只考虑Win10的情况。
 
 要在本地搭建kubernetes运维平台，首先建议安装docker，直接在官网下载[Docker Desktop](https://www.docker.com/products/docker-desktop)安装即可（提供了日常容器环境+Hyper-V虚拟机功能+kubectl客户端）。在此基础上，安装kubernetes的最好方式是采用官方提供的[minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/)工具。minikube提供了一套单节点kubernetes环境（实体为虚拟机），从而使得单机用户也可以享受kubernetes的所有功能。kubernetes厂商为Google，由于众所周知的原因，下载Google资源一直是一个难题。因此，我们需要一个魔改版本——[minikube阿里云版](https://yq.aliyun.com/go/articleRenderRedirect?spm=a2c4e.11153940.0.0.7dd54cecI1P5IU&url=http%3A%2F%2Fkubernetes.oss-cn-hangzhou.aliyuncs.com%2Fminikube%2Freleases%2Fv1.2.0%2Fminikube-windows-amd64.exe)，从而避免科学上网的烦恼。下载好，保存好，记得把minikube根目录加到`PATH环境变量`，这样就能在cmd/powershell里直接运行。
