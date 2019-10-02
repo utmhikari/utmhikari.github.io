@@ -15,11 +15,11 @@ tags:
 
 随着MTSC2019的召开，八月份各种测试工具相继开源，其中一款名为[SoloPi](https://github.com/alipay/SoloPi)的安卓自动化测试在月trending榜中排位靠前。移动App自动化测试是当前测试领域的风口之一，并且要开发一款兼容性好、需求适应多样的App，也并非三日之寒。为此，欢迎本期GitHub探索的主角——SoloPi！
 
-![SoloPi主界面](/uploads/githubdiscovery/solopi/main.png)
-
 测试环境为华为P20Pro，安卓版本8.1.0，SoloPi版本为0.9.1，下载地址可进入[GitHub Release](https://github.com/alipay/SoloPi/releases)查看。由于只有一个测试机，所以本次仅测试SoloPi的性能测试以及录制回放功能。下面，让我们开始试水吧~
 
 <!-- more -->
+
+![SoloPi主界面](/uploads/githubdiscovery/solopi/main.png)
 
 ## 准备工作
 

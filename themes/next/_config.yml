@@ -899,7 +899,7 @@ mermaid:
   # Available themes: default | dark | forest | neutral
   theme: dark
   # Use 8.0.0 as default, jsdelivr as default CDN, works everywhere even in China
-  cdn: //cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js
+  cdn: //cdn.bootcss.com/mermaid/8.0.0-rc.8/mermaid.min.js
   # CDNJS, provided by cloudflare, maybe the best CDN, but not works in China
   #cdn: //cdnjs.cloudflare.com/ajax/libs/mermaid/8.0.0/mermaid.min.js
 
@@ -1000,7 +1000,7 @@ vendors:
   # Example:
   # jquery: //cdn.jsdelivr.net/npm/jquery@2/dist/jquery.min.js
   # jquery: //cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js
-  jquery:
+  jquery: //cdn.bootcss.com/jquery/2.1.3/jquery.min.js
 
   # Internal version: 2.1.5 & 3.5.6
   # See: https://fancyapps.com/fancybox
@@ -1024,7 +1024,7 @@ vendors:
   # Example:
   # lazyload: //cdn.jsdelivr.net/npm/jquery-lazyload@1/jquery.lazyload.min.js
   # lazyload: //cdnjs.cloudflare.com/ajax/libs/jquery_lazyload/1.9.7/jquery.lazyload.min.js
-  lazyload:
+  lazyload: //cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js
 
   # Internal version: 1.2.1
   # See: http://velocityjs.org
@@ -1033,15 +1033,15 @@ vendors:
   # velocity: //cdnjs.cloudflare.com/ajax/libs/velocity/1.2.1/velocity.min.js
   # velocity_ui: //cdn.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js
   # velocity_ui: //cdnjs.cloudflare.com/ajax/libs/velocity/1.2.1/velocity.ui.min.js
-  velocity:
-  velocity_ui:
+  velocity: //cdn.bootcss.com/velocity/1.2.1/velocity.min.js
+  velocity_ui: //cdn.bootcss.com/velocity/1.2.1/velocity.ui.min.js
 
   # Internal version: 4.6.2
   # See: https://fontawesome.com
   # Example:
   # fontawesome: //cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css
   # fontawesome: //cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css
-  fontawesome:
+  fontawesome: //cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css
 
   # Internal version: 2.10.4
   # See: https://www.algolia.com
