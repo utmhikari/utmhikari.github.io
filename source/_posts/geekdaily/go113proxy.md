@@ -7,7 +7,7 @@ tags:
 - Golang
 - GOPROXY
 - go mod
-- sumdb
+- GOSUMDB
 - go env
 ---
 
