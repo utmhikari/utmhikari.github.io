@@ -89,7 +89,7 @@ minikube搭建完毕后，接下来就要实战了——在minikube中部署mong
 
 因此，创建mongodb的StatefulSet资源代码如下：
 
-```Go
+```go
 func createMongoStatefulSet(clientset *kubernetes.Clientset) (*appsv1.StatefulSet, error) {
     replicas := int32(1)
     terminationGracePeriodSeconds := int64(10)
@@ -136,7 +136,7 @@ func createMongoStatefulSet(clientset *kubernetes.Clientset) (*appsv1.StatefulSe
 
 另外我们也可以看到，这个StatefulSet有一个ServiceName字段，这是因为通过相应的Service，这个StatefulSet才会被集群内其它成员发现。因此，在创建StatefulSet之前，我们其实还需要创建一个相应的Service资源：
 
-```Go
+```go
 func createMongoService(clientset *kubernetes.Clientset) (*v1.Service, error) {
     service := v1.Service{
         ObjectMeta: metav1.ObjectMeta{
