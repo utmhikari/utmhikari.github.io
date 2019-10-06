@@ -11,7 +11,7 @@ tags:
 - go env
 ---
 
-在[从零单排Golang第一话](https://utmhikari.github.io/2019/09/01/gofromzero/dockerclient/)中讲到了Golang的基础开发环境配置，其中讲到了Go的依赖管理方面，提及了以后的趋势会采用官方的go mod进行管理。关于这一块，现在有了更加简单的方法。
+在[从零单排Golang第一话](https://utmhikari.github.io/2019/07/20/gofromzero/firstcode/)中讲到了Golang的基础开发环境配置，其中讲到了Go的依赖管理方面，提及了以后的趋势会采用官方的go mod进行管理。关于这一块，现在有了更加简单的方法。
 
 最新的Go1.13中已经将go mod列为默认的包管理方法，但国内用户go mod vendor时还是有可能会出错，这是因为在go get时会检查哈希值，需要访问官方的sumdb。由于众所周知的不可抗因素，sumdb没法直接访问，这样就会造成下载依赖失败。解决的方法也很简单，只需要一行终端命令即可：
 
