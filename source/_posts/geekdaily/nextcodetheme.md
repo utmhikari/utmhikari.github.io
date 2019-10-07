@@ -59,6 +59,8 @@ if $highlight_theme == "night"
 
 我们可以看到其实如果要增加一个自定义主题的话，其实加一段if跟其配色，然后在配置里配置theme的关键词就好了。那么自己配色的话应该怎样参考呢？我们可以在`source/css/highlight/highlight.styl`中找到答案：
 
+<!-- more -->
+
 ```styl
 pre {
 
