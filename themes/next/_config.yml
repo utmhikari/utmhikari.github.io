@@ -190,6 +190,9 @@ site_state: true
 social:
   GitHub: https://github.com/utmhikari || github
   Mail: mailto:hdq940623@126.com || envelope
+  TesterHome: https://testerhome.com/utmhikari || tumblr
+  CSDN: https://blog.csdn.net/u013842501 || copyright
+  Steam: https://steamcommunity.com/id/utmhikari || steam
   #Weibo: https://weibo.com/yourname || weibo
   #Google: https://plus.google.com/yourname || google
   #Twitter: https://twitter.com/yourname || twitter
@@ -207,11 +210,13 @@ social_icons:
 
 # Blog rolls
 links_icon: link
-links_title: 快速链接
+links_title: 传送门
 links_layout: block
 #links_layout: inline
 # links:
-#   CSDN博客: https://blog.csdn.net/u013842501
+#   TesterHome: https://testerhome.com
+#   吾爱破解: https://www.52pojie.cn/
+#   StackOverflow: https://stackoverflow.com/
 
 # Sidebar Avatar
 avatar:
