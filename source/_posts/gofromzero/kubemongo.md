@@ -83,7 +83,7 @@ minikube搭建完毕后，接下来就要实战了——在minikube中部署mong
 - 数据在哪里存储？（kubernetes的主机是minikube创建的虚拟机，所以在虚拟机里）
 - 如何暴露数据库的连接端口？（主机可访问节点，故将mongodb端口转发至节点端口）
 
-对于数据库集群而言，通常会将其封装成一类叫做StatefulSet（副本集）的资源。StatefulSet主要包含Pod的集合，以及和各个Pod关联的PersistentVolumeClaim（PVC）集合。Pod是kubernetes调度的单位，可以理解成单个应用实例，而PVC则是这些Pod各个对应的持久化存储空间的声明。在实际场景中，管理存储空间的人员会预先在kubernetes为许多实在的持久化存储空间打下标记，统称为PersistentVolume（PV），用户则只需要在StatefulSet声明怎样存储（PVC），kubernetes就在内部把各个Pod跟相应的PV绑定起来了。如果一个Pod发生故障，存储空间也不会消失，过后恢复的Pod也会跟原来一样，拥有和原来相同的标识，存储空间也和原来的PV对应。
+对于数据库集群而言，通常会将其封装成一类叫做StatefulSet（副本集）的资源。StatefulSet主要包含Pod的集合，以及和各个Pod关联的PersistentVolumeClaim（PVC）集合。Pod是kubernetes调度的单位，可以理解成单个应用实例，而PVC则是这些Pod各个对应的持久化存储空间的声明。在实际场景中，管理存储空间的人员会预先在kubernetes为许多实在的持久化存储空间打下标记，统称为Storage Class，用户则只需要在StatefulSet声明怎样存储（PVC），kubernetes就在内部把各个Pod根据相应的Storage Class及PVC从而分配空间（PV），绑定起来。如果一个Pod发生故障，存储空间也不会消失，过后恢复的Pod也会跟原来一样，拥有和原来相同的标识，存储空间也和原来的PV对应。
 
 而在笔者这里的例子里，创建多个数据库以及多个存储空间较为麻烦，因此也有其它的办法——在Pod的资源声明中，我们可以告诉kubernetes要在启动mongodb容器之时，挂载minikube虚拟机里面的一个目录进去存储数据库数据，这样容器宕机之后，数据依然不会消失。
 
