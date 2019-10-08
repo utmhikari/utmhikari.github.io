@@ -1,5 +1,5 @@
 ---
-title: 【Easy Python】第六话：解锁三头六臂——Python多进程并行
+title: 【Easy Python】第六话：multiprocessing——Python多进程并行
 date: 2019/05/11 19:47:50
 categories:
 - Easy Python
@@ -8,7 +8,7 @@ tags:
 - GIL
 - 并行
 - 并发
-- 多进程
+- multiprocessing
 ---
 
 ## 前言
