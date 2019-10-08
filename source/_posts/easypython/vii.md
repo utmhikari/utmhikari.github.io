@@ -78,7 +78,7 @@ python在数据分析方面的应用非常广泛。在网上有非常多的爬�
 - 正则表达式（regular expression）
 - scikit-learn文本分类流水线（pipeline of text-classification via scikit-learn）
 
-### [第六话：解锁三头六臂——Python多进程并行](https://utmhikari.github.io/2019/05/11/easypython/vi)
+### [第六话：multiprocessing——Python多进程并行](https://utmhikari.github.io/2019/05/11/easypython/vi)
 
 第六话，讲述了许多同学所关心，踩坑较多的并发编程，剖析了其中原理，并用python实现多任务并行操作。在这方面有疑惑的同学们，千万不要错过！
 

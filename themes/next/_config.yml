@@ -134,7 +134,7 @@ seo: true
 index_with_subtitle: true
 
 # Automatically add external URL with BASE64 encrypt & decrypt.
-exturl: false
+exturl: true
 
 
 # ---------------------------------------------------------------
@@ -153,8 +153,8 @@ menu:
   tags: /tags/ || tags
   categories: /categories/ || th
   archives: /archives/ || archive
+  sitemap: /sitemap.xml || sitemap
   # schedule: /schedule/ || calendar
-  # sitemap: /sitemap.xml || sitemap
   # commonweal: /404/ || heartbeat
 
 # Enable/Disable menu icons / item badges.
@@ -783,7 +783,7 @@ busuanzi_count:
 #tencent_mta:
 
 # Enable baidu push so that the blog will push the url to baidu automatically which is very helpful for SEO.
-baidu_push: false
+baidu_push: true
 
 # Google Calendar
 # Share your recent schedule to others via calendar page.
@@ -1167,3 +1167,7 @@ vendors:
 css: css
 js: js
 images: images
+sitemap:
+    path: sitemap.xml
+baidusitemap:
+    path: baidusitemap.xml
