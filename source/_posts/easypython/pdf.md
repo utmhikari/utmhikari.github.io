@@ -1,5 +1,5 @@
 ---
-title: 【Easy Python】另类实用Python教程——Easy Python精编版上线~
+title: 【Easy Python】另类实用Python教程——Easy Python精编版上线
 date: 2019/10/08 15:18:35
 categories:
 - Easy Python
