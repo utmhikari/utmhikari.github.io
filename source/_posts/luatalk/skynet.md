@@ -27,6 +27,8 @@ tags:
 
 因此在skynet底层中，不仅需要支持多个lua_State的运转，而且相对更有挑战性的是，如何让service之间能够相互交流。为了解决这个问题，我们可以看到，在底层中，每一个service都属于`snlua`类型。`snlua`除了包括自己的lua_State之外，还维护了一个称之为context的运行状态：
 
+<!-- more -->
+
 ```cpp
 // lua-skynet.c
 struct snlua {
