@@ -365,7 +365,7 @@ skynet_context_push(uint32_t handle, struct skynet_message *message) {
 
 通过这样的一顿操作，就可以把消息发送到指定service的消息队列里了，然后就等worker来取消息回调处理啦~
 
-那么第二个，如何实现获取处理结果的需求呢？这个是在lua层实现的，通过目标服务嗲用`skynet.ret`逻辑，`skynet.call`就可以获取返回值。我们来观察两边的逻辑：
+那么第二个，如何实现获取处理结果的需求呢？这个是在lua层实现的，通过目标服务调用`skynet.ret`逻辑，`skynet.call`就可以获取返回值。我们来观察两边的逻辑：
 
 ```lua
 -- skynet.lua
