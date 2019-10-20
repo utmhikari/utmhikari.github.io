@@ -21,7 +21,7 @@ tags:
 
 ## 准备工作
 
-在[第一话](https://utmhikari.github.io/2019/07/20/startgo_firstcode/)中已经大致了解了Go项目的生成，故本次gin+gorm的搭建也以此为基础。
+在[第一话](https://utmhikari.github.io/2019/07/20/gofromzero/first_code/)中已经大致了解了Go项目的生成，故本次gin+gorm的搭建也以此为基础。
 
 服务端领域的各种术语在不同的场景跟技术栈下有不同的含义。但总体来讲，一个简单的服务端App都会有以下的层次：
 
