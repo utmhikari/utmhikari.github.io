@@ -61,13 +61,15 @@ if __name__ == '__main__':
     d = dict()
     for doc in docs:
         n = doc['name']
-        if n not in d.keys():
+        if n not in d.keys():s
             d[n] = 0
         d[n] += 1
     pprint.pprint(d)
 ```
 
 最后结果是：
+
+<!-- more -->
 
 ```text
 {'aa': 9809, 'bb': 990191}
@@ -84,3 +86,7 @@ if __name__ == '__main__':
 第三种方法则是在每一个documents中加入version字段，在update的filter中去另外对比version版本号，从而保证最新版本的documents能够存入数据库。在这个思路下，也可以另外再加一个meta表存储最新version的信息（每一个doc里还是要version字段）。只有成功更新了meta表的version，才能updateMany数据表中的documents，否则阻止这个意向。
 
 第三种方法相对前两种方法可控性较低，因此实际场景中，暂推荐第一种以及第二种方法。（如果有其它更有效的方法，欢迎指正orz）
+
+---
+
+在第一种方法的基础上延伸，可以设置一定量的lock，而后将请求信息hash掉，mod进特定idx的lock。这样只需要控制lock的量，就能控制多个updateMany的需求了。
