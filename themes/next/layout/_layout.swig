@@ -17,7 +17,7 @@
 <html class="{{ html_class | lower }}" lang="{{ config.language }}">
 <head>
   <meta name="baidu-site-verification" content="sc1B5Cxcoz" />
-  <meta name="google-site-verification" content="Ej9IQDY-Mlq3bKCiO4VnCMbb60thoMocApOVm4mBNkg" />
+  <meta name="google-site-verification" content="OLcRj7lMnauxKrhFT3Q8Nvcexgv22NvlEmVZShKQKR8" />
   {{ partial('_partials/head/head.swig', {}, {cache: theme.cache.enable}) }}
   {% include '_partials/head/head-unique.swig' %}
   <title>{% block title %}{% endblock %}</title>

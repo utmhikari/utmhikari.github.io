@@ -78,6 +78,15 @@ theme: next
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-  type: git
+- type: git
   repo: git@github.com:utmhikari/utmhikari.github.io.git
   branch: master
+- type: baidu_url_submitter
+
+# 改一下源码，replace域名= =
+baidu_url_submit:
+  count: 100
+  host: utmhikari.top
+  token: XdemKSgnew1yrpba
+  path: baidu_urls.txt
+
