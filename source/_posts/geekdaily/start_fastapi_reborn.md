@@ -24,3 +24,7 @@ tags:
 最后是启动的优化。在start-fastapi的入口中采用uvicorn去启动app程序，但这里疏忽了一个点是uvicorn相当于重新loadfile去载入这个文件里面的python内容，因此如果不把fastapi app的初始化逻辑分离出去相当于加载了两次。分离到根目录`app.py`之后，这个问题就迎刃而解了。
 
 关于uvicorn、starlette、asgi相关的东西，还有许多坑暂时没时间踩，要有空再慢慢瞧瞧了。
+
+---
+
+更新：另外解决了一个分离config配置的原因，现在uvicorn application的配置被分离到`config/app`中，而`config/dev.cfg`与`config/prod.cfg`则是用户定义的配置，采用[python-dotenv](https://github.com/theskumar/python-dotenv)的格式。非常方便，用`os.getenv`就能获取到。
