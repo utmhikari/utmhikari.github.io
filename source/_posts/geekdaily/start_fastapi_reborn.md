@@ -27,4 +27,4 @@ tags:
 
 ---
 
-更新：另外解决了一个分离config配置的原因，现在uvicorn application的配置被分离到`config/app`中，而`config/dev.cfg`与`config/prod.cfg`则是用户定义的配置，采用[python-dotenv](https://github.com/theskumar/python-dotenv)的格式。非常方便，用`os.getenv`就能获取到。
+更新：另外解决了一个分离config配置的问题，现在uvicorn application的配置被分离到`config/app`中，而`config/dev.cfg`与`config/prod.cfg`则是用户定义的配置，采用[python-dotenv](https://github.com/theskumar/python-dotenv)的格式。非常方便，用`os.getenv`就能获取到。
