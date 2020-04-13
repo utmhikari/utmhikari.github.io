@@ -17,6 +17,8 @@ tags:
 
 登录gitpod，选择theia项目。项目的预设中会自动构建并在容器的3000端口启动theia。点击右侧的preview，就可以在gitpod的theia中打开原生的theia网页。当然也可以利用gitpod的open in browser方法，在自己浏览器的新标签页中打开原生的theia。
 
+<!-- more -->
+
 ![Gitpod中打开theia](/uploads/githubdiscovery/theia_and_gitpod/gitpod.png)
 
 theia是以vscode为基础制作的。我们可以看到原生的theia是不包含插件安装等功能的，而在gitpod中，又基于theia，支持了vsix插件的安装、项目网站构建preview以及支持用户主机与容器交互等一系列的额外功能。插件安装是IDE的核心功能之一，当前的gitpod对此的支持并非完善，以括号染色插件为例，bracket pair colorizer安装不能生效，而rainbow brackets可以生效。插件暂不支持visual studio marketplace检索，但是安装流程能够跑通，且插件可以持久化，应当说。
