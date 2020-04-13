@@ -21,7 +21,7 @@ tags:
 
 ![Gitpod中打开theia](/uploads/githubdiscovery/theia_and_gitpod/gitpod.png)
 
-theia是以vscode为基础制作的。我们可以看到原生的theia是不包含插件安装等功能的，而在gitpod中，又基于theia，支持了vsix插件的安装、项目网站构建preview以及支持用户主机与容器交互等一系列的额外功能。插件安装是IDE的核心功能之一，当前的gitpod对此的支持并非完善，以括号染色插件为例，bracket pair colorizer安装不能生效，而rainbow brackets可以生效。插件暂不支持visual studio marketplace检索，但是安装流程能够跑通，且插件可以持久化，应当说。
+theia是以vscode为基础制作的。我们可以看到原生的theia是不包含插件安装等功能的，而在gitpod中，又基于theia，支持了vsix插件的安装、项目网站构建preview以及支持用户主机与容器交互等一系列的额外功能。插件安装是IDE的核心功能之一，一定程度上决定了整个产品的生态。以之为例，安装流程能够跑通，且插件可以持久化（针对单用户），但也有兼容性问题，比如括号染色插件，bracket pair colorizer安装不能生效，而rainbow brackets可以生效。可以说这一part还需要继续观望。
 
 ![rainbow_brackets](/uploads/githubdiscovery/theia_and_gitpod/rainbow_brackets.png)
 
