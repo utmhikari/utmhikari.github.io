@@ -5,7 +5,7 @@ categories:
 - 极客日常
 tags:
 - hugo
-- 博客
+- 个人博客
 - bilibili
 - shortcode
 - iframe

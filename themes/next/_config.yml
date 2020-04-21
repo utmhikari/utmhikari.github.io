@@ -615,7 +615,7 @@ gitment:
 # Gitalk
 # Demo: https://gitalk.github.io
 gitalk:
-  enable: true
+  enable: false
   github_id: utmhikari # Github repo owner
   repo: utmhikari_blog_comments # Repository name to store issues
   # utmhikari.github.io
