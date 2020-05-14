@@ -17,8 +17,6 @@ tags:
 
 <!-- more -->
 
-由于GitHub上的GAutomator项目针对Unreal只支持简单的UMG支持，因此笔者也将Unreal插件单独fork到[GAutomatorUnrealSDK](https://github.com/utmhikari/GAutomatorUnrealSDK)项目中，修复intellisense的问题以及添加了一个获取指定Actor的功能样例。并且由于GAutomatorAndroid中的Python库和Unreal插件所提供的功能是高度耦合的，因此GAutomatorAndroid的相应基础库也需要更新。
-
 由于GAutomator原先对于Unity的支持较好，但笔者暂时没踩Unity的坑，因此仅针对Unreal而言，从第一次上手的体验来看，GAutomator还有许多优化点，比如：
 
 - GAutomator的设定更类似客户端中的一个内嵌的GM指令服务端，但当前的“客户端”是纯粹的Python库，因此需要因GAutomator插件实现的功能而进行维护更新。理想的方式是采用GUI+蓝图的用户体验实现，通过提交任务的方式交付给GAutomator Unreal插件，在插件内部执行对应的自动化任务。
