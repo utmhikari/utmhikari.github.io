@@ -217,4 +217,4 @@ bool IsUTF8JsonRequestContent(const FHttpServerRequest& Request)
 }
 ```
 
-这样，UE4的一个基本的C++ HTTP Web Server就成型了。
+这样，UE4的一个基本的C++ HTTP Web Server就成型了。笔者因之做了一个简单的模板，传送门在[UnrealHttpAutomator](https://github.com/utmhikari/UnrealHttpServer)~
