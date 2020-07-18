@@ -5,10 +5,10 @@ categories:
 - 测试人生
 tags:
 - scrcpy
-- 安卓
-- 游戏录屏
+- android
+- 游戏测试
 - 手机投屏
-- UI自动化测试
+- 游戏录屏
 ---
 
 手机投屏/录屏在测试领域的用途有很多，比如：
@@ -104,7 +104,7 @@ private boolean encode(MediaCodec codec, FileDescriptor fd) throws IOException {
 }
 ```
 
-如果只需要单纯实现录屏，采用原生scrcpy-client的no display选项就能够实现。如果用程序控制scrcpy的录屏，建议选择mkv格式录制，并通过`adb shell pkill app_process`杀死scrcpy-server来达到终止录屏的效果。否则可能造成视频损坏。
+如果只需要单纯实现录屏，采用原生scrcpy-client的no display选项就能够实现。如果用程序控制scrcpy的录屏，建议选择mkv格式录制，并通过`adb shell pkill app_process`杀死scrcpy-server来达到终止录屏的效果。否则可能造成视频损坏。如果采用系统的screenrecord方案，部分手机可能会不支持，因此可以考虑两者相辅相成。
 
 总之，scrcpy有很多用途值得挖掘，尤其在移动/游戏测试领域，scrcpy未来上应有和minicap相提并论的空间。
 
