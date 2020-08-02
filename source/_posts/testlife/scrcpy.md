@@ -5,7 +5,7 @@ categories:
 - 测试人生
 tags:
 - scrcpy
-- android
+- Android
 - 游戏测试
 - 手机投屏
 - 游戏录屏
