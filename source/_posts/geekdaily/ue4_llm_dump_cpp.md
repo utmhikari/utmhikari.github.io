@@ -88,6 +88,7 @@ TSharedPtr<FJsonObject> FProfileService::GetLLMStats()
     UE_LOG(LogUnrealAutomator, WARNING, TEXT("Cannot get LLM stats! STATS or ENABLE_LOW_LEVEL_MEM_TRACKER macro not enabled!"));
     return nullptr;
 #endif
+}
 ```
 
 LLM追踪内存，默认给了70多个tag，如果用户需要把自己的模块加进去可以加到custom tag里。用这个实现基本能导出这些tag的实时占用数据。
