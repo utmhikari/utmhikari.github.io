@@ -7,11 +7,15 @@ tags:
 - python
 - celery
 - 消息队列
-- 后台开发
+- web开发
 - start-fastapi
 ---
 
-python语言，一般适用于快速实现业务需求的用途，在大型架构方面其应用范围并没有Java、Golang以及C++那么丰富，因此相对来讲还没有形成非常统一的技术体系。在某些需求中可能需要开发多个服务，服务之间需要实现异步通信，甚至是调用对方的函数。[celery](https://docs.celeryproject.org/en/stable/)就是一个典型的例子，它提供了以将python函数注册到消息队列的方式暴露服务的方法，并且支持RabbitMQ、Redis等多种Broker中间代理形式。celery简便易用，本文笔者以自己整理的[start-fastapi](https://github.com/utmhikari/start-fastapi)为例，讲述接入celery的方法。
+python语言，一般适用于快速实现业务需求的用途，在大型架构方面其应用范围并没有Java、Golang以及C++那么丰富，因此相对来讲还没有形成非常统一的技术体系。在某些需求中可能需要开发多个服务，服务之间需要实现异步通信，甚至是调用对方的函数。[celery](https://docs.celeryproject.org/en/stable/)就是一个典型的例子，它提供了以将python函数注册到消息队列的方式暴露服务的方法，并且支持RabbitMQ、Redis等多种Broker中间代理形式。
+
+celery同时也支持多个python的web框架，在其[介绍页](https://docs.celeryproject.org/en/stable/getting-started/introduction.html)中，也明确说明了Tornado、Django、web2py等框架都有自己的celery实现方法，当然要知道其他框架的实践，可以上github上探查一番。
+
+celery简便易用，本文笔者以自己整理的[start-fastapi](https://github.com/utmhikari/start-fastapi)为例，讲述接入celery的方法。
 
 <!-- more -->
 
