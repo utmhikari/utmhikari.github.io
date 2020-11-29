@@ -85,4 +85,4 @@ def test_celery():
 
 我们通过`curl http://127.0.0.1:8000/v1/test/celery`来测试这个接口。结果也很显然，约3s之后，fastapi端打印了返回值到stdout中，然后curl接口返回了success。
 
-基本操作就是那么简单，后面再慢慢探索把~
+例子已经上传到[fastapi-celery-test](https://github.com/utmhikari/fastapi-celery-test)上，基本操作就系介样，后面再慢慢探索把~
