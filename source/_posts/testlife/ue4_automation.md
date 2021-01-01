@@ -29,13 +29,13 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FUnrealAutomatorWidgetTest, "UnrealAutomator.Wi
 bool FUnrealAutomatorWidgetTest::RunTest(const FString& Parameters)
 {
     // 查看当前是否存在UWidget
-	UE_LOG(LogUnrealAutomator, Log, TEXT("Start UA Widget Test..."));
-	auto WidgetJson = FUIService::GetWidgetTreeJson();
-	auto WidgetJsonString = FCommonUtil::JsonStringify(WidgetJson);
-	UE_LOG(LogUnrealAutomator, Log, TEXT("Current widget: %s"), *WidgetJsonString);
-	TSharedPtr<FJsonObject> DefaultJsonObj = MakeShareable(new FJsonObject());
-	return !WidgetJsonString.IsEmpty() &&
-		!WidgetJsonString.Equals(FCommonUtil::JsonStringify(DefaultJsonObj));
+    UE_LOG(LogUnrealAutomator, Log, TEXT("Start UA Widget Test..."));
+    auto WidgetJson = FUIService::GetWidgetTreeJson();
+    auto WidgetJsonString = FCommonUtil::JsonStringify(WidgetJson);
+    UE_LOG(LogUnrealAutomator, Log, TEXT("Current widget: %s"), *WidgetJsonString);
+    TSharedPtr<FJsonObject> DefaultJsonObj = MakeShareable(new FJsonObject());
+    return !WidgetJsonString.IsEmpty() &&
+        !WidgetJsonString.Equals(FCommonUtil::JsonStringify(DefaultJsonObj));
 }
 ```
 
