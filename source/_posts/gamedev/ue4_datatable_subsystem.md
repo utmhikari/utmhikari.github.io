@@ -15,7 +15,7 @@ tags:
 
 Data Driven Gameplay Elements讲述了一套通过DataTable数据表的asset驱动gameplay的方式。在C++代码中，我们可以预先定义好表结构所对应的USTRUCT，然后通过导入CSV文件的方式，去创建以该USTRUCT为结构基础的DataTable。这样在游戏里，如果需要读取配置数据的话，就可以直接在蓝图中添加获取DataTable以及获取行数据的节点，填写对应的asset路径与rowname（表格主键，以`---`为标题的列），就能够获得对应行的数据了。注意这种方式如果在需要热更的手游中是不适用的，需要用其他的方式（比如将表格配置转化为lua）
 
-Programming Subsystems讲述了UE的Subsystem编程模式。Subsystem重点解决了单例Manager在游戏中生命周期的问题，并且能够直接导出方法到蓝图中，供蓝图侧调用。
+Programming Subsystems讲述了UE的Subsystem编程模式。Subsystem重点解决了单例Manager在游戏中生命周期的问题，并且能够直接导出方法到蓝图中，供蓝图侧调用。因此，Subsystem一个很棒的用途，就是分担BlueprintFunctionLibrary的工作。
 
 以下，我们观察一个利用Subsystem模式在C++侧创建一个DataTable Manager的功能实例：
 
@@ -98,3 +98,5 @@ UDataTable* UTableSubsystem::LoadDataTableObj(const FString& TableName)
 在这个类中，我们需要假设已经导入了一个Monster表，并且定义了对应的USTRUCT。编译完成之后，就可以在蓝图中使用`GetDataTable`节点获取已经加载的表格数据了：
 
 ![获取表格数据](/uploads/gamedev/ue4_datatable_subsystem/bp.png ''获取表格数据'')
+
+开发的时候，所有系统的表格数据检索接口都可以写在TableSubsystem里。在蓝图中如果需要检索各个表格的数据，就可以统一调用TableSubsystem的接口了。
