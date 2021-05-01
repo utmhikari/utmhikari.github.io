@@ -5,7 +5,7 @@ categories:
 - 极客日常
 tags:
 - 前端开发
-- Vue
+- vue
 - vxe-table
 - 游戏测试
 - 测试开发
@@ -13,7 +13,7 @@ tags:
 
 excel-differ是游戏测试常用的测试工具。在有些业务场景下，excel-diff的结果可能需要通过web展示。Vue技术栈下的[vxe-table](https://gitee.com/xuliangzhan_admin/vxe-table)表格组件能够支持大量数据的展示，因此可以用vxe-table展示excel-diff的结果。
 
-excel-diff的算法本身，[先前的文章](https://utmhikari.top/2021/03/06/testlife/table_check/)已有讲解，在结果展示上会按file->sheet来分。为了让结果展示更加人性化，需要对表格的样式进行区分。在[vxe-table的api列表](https://xuliangzhan_admin.gitee.io/vxe-table/v4/table/api)中，我们可以通过`cell-class-name`的回调函数指定每个单元格的样式。针对excel-diff的结果可以这样设计样式：
+excel-diff的算法本身，[先前的文章](https://utmhikari.top/2020/01/23/testlife/excel_diff/)已有讲解，在结果展示上会按file->sheet来分。为了让结果展示更加人性化，需要对表格的样式进行区分。在[vxe-table的api列表](https://xuliangzhan_admin.gitee.io/vxe-table/v4/table/api)中，我们可以通过`cell-class-name`的回调函数指定每个单元格的样式。针对excel-diff的结果可以这样设计样式：
 
 <!-- more -->
 
