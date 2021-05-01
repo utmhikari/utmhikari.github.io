@@ -1,4 +1,4 @@
-# <div align="center">«NexT» Authors</div>
+<!-- # <div align="center">«NexT» Authors</div>
 
 NexT theme was initially developed by:
 
@@ -84,4 +84,4 @@ And best contributors from initially repository:
 
 It lives on as an open source project with many contributors, a self updating list is [here](https://github.com/theme-next/hexo-theme-next/graphs/contributors).
 
-P.S. If you was do some useful pulls/commits in original repository and you are not in list, let me know and you will be added here.
+P.S. If you was do some useful pulls/commits in original repository and you are not in list, let me know and you will be added here. -->
