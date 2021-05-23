@@ -1,6 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>【游戏开发】UE4联机渲染swarm agent配置</title>
+    <url>/2021/05/23/gamedev/ue4_swarm_build/</url>
+    <content><![CDATA[<p>UE4在构建场景光照时，会启动<code>swarm agent</code>进行构建，但如果只用一台电脑会出现构建速度较慢的情况。为了加快编译的效率，需要配置联机渲染。</p>
+<p>首先需要注意的是，在UE4中自动打开<code>swarm agent</code>和手动打开<code>swarm agent</code>会用到不同的配置。因此，建议的方法是手动打开<code>swarm agent</code>进行配置（对于所有机器），然后再开UE4。每个<code>swarm agent</code>以及调度器<code>swarm coordinator</code>的可执行文件位置，都在引擎的<code>Engine\Binaries\DotNET</code>下</p>
+<p>在官方文档中，有<code>Unreal Swarm</code>配置的<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnVucmVhbGVuZ2luZS5jb20vZW4tVVMvUmVuZGVyaW5nQW5kR3JhcGhpY3MvTGlnaHRtYXNzL1VucmVhbFN3YXJtT3ZlcnZpZXcvaW5kZXguaHRtbA==" title="https://docs.unrealengine.com/en-US/RenderingAndGraphics/Lightmass/UnrealSwarmOverview/index.html">例子<i class="fa fa-external-link"></i></span>可以参考。假设你有一台性能强劲的机子，和一台你日常工作但性能一般般的机子。这样可以如下配置：</p>
+<a id="more"></a>
+<p>1、两台机子都必须装UE4（最好同一版本），都会自带<code>swarm agent</code>。两台机子局域网互通（Windows的话，开启网络共享），用主机名就可以访问对方。</p>
+<p>2、<strong>将性能强劲的机子作为主机</strong>。在性能强劲的机子上，打开调度器<code>swarm coordinator</code>以及<code>swarm agent</code>，然后在<code>Settings -&gt; Distribution Settings</code>如下配置：</p>
+<p><img src="/uploads/gamedev/ue4_swarm_agent/master_agent.png" alt="主机Agent" title="&#39;主机Agent&#39;"></p>
+<p>配置项意义如下：</p>
+<ul>
+<li><code>AgentGroupName</code>：agent所属的组</li>
+<li><code>AllowedRemoteAgentGroup</code>：哪些组的agent可以接收自己下发的任务</li>
+<li><code>AllowedRemoteAgentNames</code>：哪些匹配名字的agent可以接收自己下发的任务</li>
+<li><code>AvoidLocalExecution</code>：避免本地执行，优先分发任务到其它Agent。如果任务里某些步骤只能只能本地执行，实测选择<code>true</code>不会跑满核，而选择<code>false</code>会跑满。</li>
+<li><code>CoordinatorRemotingHost</code>：调度器Host（主机名/域名/IP）</li>
+<li><code>EnableStandaloneMode</code>：启用独立模式（不下发/接收构建任务）</li>
+</ul>
+<p>对于主机而言，<code>AgentGroupName</code>和<code>AllowedRemoteAgentGroup</code>可以设置成一样的值<code>UE4Render</code>，表示主机属于<code>UE4Render</code>组，并且从主机下发任务到自己；<code>AllowedRemoteAgentNames</code>填写通配符<code>*</code>表示允许所有机子；<code>AvoidLocalExecution</code>填写默认<code>false</code>即可；<code>CoordinatorRemotingHost</code>填写主机自己在局域网上的名字（保证稳定连上自己即可）；<code>EnableStandaloneMode</code>填写<code>false</code></p>
+<p>填写完成之后，在主机的<code>swarm agent</code>上点击<code>Network -&gt; Ping Coordinator</code>，可以在调度器上看到主机的<code>swarm agent</code></p>
+<p>之后需要设置主机<code>swarm agent</code>的性能参数。在<code>Settings -&gt; Developer Settings</code>下，将<code>ShowDevelopMenu</code>选择为<code>true</code>，就能看到<code>DeveloperSettings</code>页签。选中该页签，在<code>Local Performance Settings</code>下，设置<code>LocalJobsDefaultProcessPriority</code>和<code>RemoteJobsDefaultProcessPriority</code>为<code>AboveNormal</code>（最高优先级），然后将<code>LocalJobsDefaultProcessorCount</code>和<code>RemoteJobsDefaultProcessorCount</code>设置为<code>&lt;=主机逻辑处理器数-2</code>的值（不然可能用主机的人会卡死）。这样就能保证局域网内其他机子发起任务，主机可以出力了。</p>
+<p>然后设置工作机的<code>swarm agent</code>，配置样例如下：</p>
+<p><img src="/uploads/gamedev/ue4_swarm_agent/worker_agent.png" alt="工作机Agent" title="&#39;工作机Agent&#39;"></p>
+<p>工作机和主机的<code>swarm agent</code>配置基本相同。工作机上，<code>AgentGroupName</code>和<code>AllowedRemoteAgentGroup</code>设置成为跟主机一样的值<code>UE4Render</code>；<code>AllowedRemoteAgentNames</code>填写通配符，允许任务下发到所有机子；<code>AvoidLocalExecution</code>可填写<code>true</code>，如果机子非常差的话，否则感觉工作机可以出力的话，就填写<code>false</code>，然后打开<code>DeveloperSettings</code>，将<code>LocalJobsDefaultProcessorCount</code>和<code>RemoteJobsDefaultProcessorCount</code>设置为<code>&lt;=工作机逻辑处理器数-2</code>的值，保证工作机在跑满一定核数的情况下，机子不会负载太高（这也是自己现在的设置）；<code>CoordinatorRemotingHost</code>填写局域网里主机的名称（最好不要填写IP，如果是自动分发的话）；<code>EnableStandaloneMode</code>填写<code>false</code>。工作机的<code>DeveloperSettings</code>下，和执行优先级相关的配置项可以保持和默认一样。</p>
+<p>这样整个小集群就搭建完成了，可以在两台机子的<code>swarm agent</code>里，通过<code>Network</code>选项下的<code>Ping Coordinator</code>和<code>Ping Remote Agents</code>检查agent和调度器以及其它agent的连通性，相关信息会在<code>Log</code>日志页签显示。配置完<code>swarm agent</code>，工作机打开UE4，点击<code>Build</code>构建光照，就能够看到分布式构建的效果了。</p>
+]]></content>
+      <categories>
+        <category>游戏开发</category>
+      </categories>
+      <tags>
+        <tag>UE4</tag>
+        <tag>游戏开发</tag>
+        <tag>swarm agent</tag>
+        <tag>联机渲染</tag>
+        <tag>分布式构建</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>【测试人生】副本自动化测试</title>
     <url>/2021/05/20/testlife/dungeon_autotest/</url>
     <content><![CDATA[<p>许多游戏，尤其是MMO，会包含“副本”这个概念，玩家通过打副本从而获得物品奖励及属性收益。通常来讲，单个游戏所涉及的副本数量/品种较多，因此在游戏测试过程当中，很难一次性全部遍历完所有副本的流程与玩法。为了解决这个问题，可以通过自动化测试的方式去冒烟副本玩法流程、检查奖励。为了让自动化测试用例执行更加稳定且易于维护，需要一套通用的逻辑模版去实现副本玩法自动化。自动化测试流程涉及多个部分，包括玩家账号的准备、副本的进入、副本流程、奖励检查，而本文主要考虑“副本流程”的实现。</p>
