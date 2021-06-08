@@ -104,7 +104,7 @@ func testDigitToString() {
     var ui64 uint64 = 901234567890
     var strInt string = fmt.Sprintf("%d", i)
     var strInt32 string = strconv.FormatInt(int64(i32), 10)
-    var	strUInt64 string = strconv.FormatUint(ui64, 10)
+    var strUInt64 string = strconv.FormatUint(ui64, 10)
     fmt.Printf("strInt: %s, strInt32: %s, strUInt64: %s\n",
         strInt, strInt32, strUInt64)
 
