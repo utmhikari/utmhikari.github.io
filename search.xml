@@ -1,6 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>【极客日常】python进程池ProcessPoolExecutor的用法与实现分析</title>
+    <url>/2021/06/08/geekdaily/python_processpoolexecutor/</url>
+    <content><![CDATA[<p>在python开发期间，由于GIL的原因，不能直接采用并行的方式处理代码逻辑。在multiprocessing库的支持下，python程序能够启动子进程执行特定的任务，但子进程的管理也成为了问题。为了简化用户开发成本，python在concurrent.futures下内置了ProcessPoolExecutor这一数据结构，实现了简单的进程管理及任务调度。如果没有特别的需求，开发者只需要用ProcessPoolExecutor即可实现并行执行任务。因此，本文简单对ProcessPoolExecutor的实现进行分析，帮助大家更加了解python开发中进程/任务调度的一种方式。</p>
+<p>首先来看ProcessPoolExecutor的用法，可以参考<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnB5dGhvbi5vcmcvMy9saWJyYXJ5L2NvbmN1cnJlbnQuZnV0dXJlcy5odG1s" title="https://docs.python.org/3/library/concurrent.futures.html">官方文档<i class="fa fa-external-link"></i></span></p>
+<ul>
+<li>constructor：构造器<ul>
+<li>max_workers：最大worker数量</li>
+<li>context：进程启动方式，比如spawn、fork等。可以参考<span class="exturl" data-url="aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9xdWVzdGlvbnMvNDM4MTg1MTkvd2hhdC1pcy10aGUtbWVhbmluZy1vZi1jb250ZXh0LWFyZ3VtZW50LWluLW11bHRpcHJvY2Vzc2luZy1wb29sLXBvb2wvNDM4MTg4Mjk=" title="https://stackoverflow.com/questions/43818519/what-is-the-meaning-of-context-argument-in-multiprocessing-pool-pool/43818829">这篇文章<i class="fa fa-external-link"></i></span></li>
+<li>initializer：初始化环境用的回调/钩子，会在传进去的任务执行之前调用（比如要import什么库，读取什么配置之类）</li>
+<li>initargs：初始化回调的参数</li>
+</ul>
+</li>
+<li>submit：提交特定任务，返回一个future实例（类似于js的promise）</li>
+<li>map：批量submit</li>
+<li>shutdown：关闭进程池并销毁资源</li>
+</ul>
+<p>可以看到用法非常简单，用户一侧只需要这样操作即可得到任务执行结果：</p>
+<a id="more"></a>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> concurrent.futures <span class="keyword">import</span> ProcessPoolExecutor</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">task</span><span class="params">(sleep_sec=<span class="number">10</span>, tag=<span class="string">'test'</span>)</span>:</span></span><br><span class="line">    print(<span class="string">'[%s] start sleep'</span> % tag)</span><br><span class="line">    time.sleep(sleep_sec)</span><br><span class="line">    print(<span class="string">'[%s] finish sleep'</span> % tag)</span><br><span class="line">    <span class="keyword">return</span> <span class="number">100</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    process_pool = ProcessPoolExecutor(max_workers=<span class="number">3</span>)</span><br><span class="line">    future = process_pool.submit(task, <span class="number">3</span>, tag=<span class="string">'TEST'</span>)</span><br><span class="line">    ret = future.result()</span><br><span class="line">    print(<span class="string">'result is %s'</span> % str(ret))</span><br><span class="line">    process_pool.shutdown()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+<p>然后就可以打印出以下内容：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[TEST] start sleep</span><br><span class="line">[TEST] finish sleep </span><br><span class="line">result is 100</span><br></pre></td></tr></table></figure>
+<p>其中，finish sleep在start sleep打印的3秒后才打印出来</p>
+<p>简单的入口后面肯定存在精巧的逻辑。在ProcessExecutorPool源码中，有很清晰的注释去阐述这一数据结构的实现，有兴趣的读者可以直接翻越源码，debug源码来探索其中的逻辑</p>
+<p>ProcessPoolExecutor的基础结构如下：</p>
+<p><img src="/uploads/geekdaily/python_processpoolexecutor/ProcessPoolExecutor.png" alt="python_processpoolexecutor"></p>
+<p>其中，Queue Management Thread（队列管理线程）是整个ProcessPoolExecutor的核心，不仅控制任务的收发，而且调度任务在不同进程中的执行，并且处理因为各种原因带来的进程池的异常。</p>
+<p>以上面代码为例，ProcessPoolExecutorl整个执行流程，可以如下所示：</p>
+<ul>
+<li>用户初始化ProcessPoolExecutor<ul>
+<li>检查worker数量合法性，设置进程启动方式context</li>
+<li>初始化WorkID队列、WorkID-&gt;WorkItem的缓存map、调用队列Call Queue、结果队列Result Queue</li>
+<li>初始化用来激活队列管理线程的pipe<ul>
+<li>队列管理线程会对一系列fd/pipe进行管理。pipe包括激活队列管理线程的以及结果队列的；fd则是进程池每个进程的</li>
+<li>队列管理线程会select这些fd/pipe，根据对应事件作出行为</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>用户submit任务（函数+参数）到ProcessPoolExecutor实例<ul>
+<li>自增WorkID，将任务所需的函数&amp;参数放到WorkItem，然后把这些信息缓存到到WorkID-&gt;WorkItem的map里</li>
+<li>若是未启动进程池，先启动进程池。然后启动队列管理线程</li>
+<li>唤醒队列管理线程工作<ul>
+<li>唤醒的方式：给主线程连到激活队列管理线程的pipe发二进制空字符串，会被select到</li>
+</ul>
+</li>
+<li>切到队列管理线程，线程内主循环先拿到WorkID&amp;WorkItem，同时侦测到被唤醒的signal，于是开始执行正常任务<ul>
+<li>把WorkID跟WorkItem结合为CallItem放到Call Queue里</li>
+<li>进程池每个进程会从Call Queue提取任务执行，将结果ResultItem放到Result Queue。如果进程异常，会直接把pid放到Result Queue</li>
+<li>队列管理线程有个is_broken变量控制是否整个进程池/队列坏了，如果坏了就不能正常执行任务，整个executor都得被销毁</li>
+</ul>
+</li>
+<li>队列管理线程select到Result Queue并读取其中内容。提取出运行结果后，和缓存的WorkID&amp;WorkItem对上。这样用户侧用future.result()就可以得到结果</li>
+</ul>
+</li>
+<li>用户销毁ProcessPoolExecutor<ul>
+<li>将关闭队列管理线程的flag置为true</li>
+<li>队列管理线程在主循环中发现flag置为true，默认会等待所有WorkItem执行完后执行销毁操作</li>
+<li>发送None给到进程池所有进程，这些进程收到None会返回pid，队列管理线程发现pid会自动除掉相应进程索引记录，并等待进程join</li>
+<li>关闭Call Queue，赋值Result Queue为None</li>
+<li>进程与Call Queue全部关闭后，队列管理线程跳出主循环，主线程等待队列管理线程join</li>
+<li>关闭激活队列管理线程的pipe</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>极客日常</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>并发</tag>
+        <tag>multiprocessing</tag>
+        <tag>ProcessPoolExecutor</tag>
+        <tag>进程池</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>【极客日常】Go语言string、int、float、rune、byte等数据类型的转换方法</title>
     <url>/2021/06/06/geekdaily/go_basic_data_types/</url>
     <content><![CDATA[<p>golang的数据类型转换是困惑新gopher的一大问题之一。相对于python，golang的数据类型转换可要麻烦的多，而且还不走寻常路地诞生了些新的方法跟名词。因此本文讲解golang常见数据类型string、int、rune等数据类型相互之间的转换方法，给大伙儿避坑。</p>
@@ -18,7 +95,7 @@
 <figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">testStringToDigit</span><span class="params">()</span></span> &#123;</span><br><span class="line">    fmt.Println(<span class="string">"=============== test string to digit =================="</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> s <span class="keyword">string</span> = <span class="string">"1234567"</span></span><br><span class="line">    <span class="keyword">var</span> i <span class="keyword">int</span></span><br><span class="line">    <span class="keyword">var</span> i32 <span class="keyword">int32</span></span><br><span class="line">    <span class="keyword">var</span> ui64 <span class="keyword">uint64</span></span><br><span class="line"></span><br><span class="line">    i, _ = strconv.Atoi(s)</span><br><span class="line">    i64, _ := strconv.ParseInt(s, <span class="number">10</span>, <span class="number">32</span>)</span><br><span class="line">    i32 = <span class="keyword">int32</span>(i64)</span><br><span class="line">    ui64, _ = strconv.ParseUint(s, <span class="number">10</span>, <span class="number">64</span>)</span><br><span class="line">    fmt.Printf(<span class="string">"string: %s, int: %d, int32:%d, uint64: %d\n"</span>,</span><br><span class="line">        s, i, i32, ui64)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> sf <span class="keyword">string</span> = <span class="string">"1234512345.12345678901234"</span></span><br><span class="line">    <span class="keyword">var</span> f32 <span class="keyword">float32</span></span><br><span class="line">    <span class="keyword">var</span> f64 <span class="keyword">float64</span></span><br><span class="line"></span><br><span class="line">    f64, _ = strconv.ParseFloat(sf, <span class="number">64</span>)</span><br><span class="line">    f32In64, _ := strconv.ParseFloat(sf, <span class="number">32</span>)</span><br><span class="line">    f32 = <span class="keyword">float32</span>(f32In64)</span><br><span class="line">    fmt.Printf(<span class="string">"string: %s, float32: %f, float64: %f\n"</span>,</span><br><span class="line">        sf, f32, f64)</span><br><span class="line"></span><br><span class="line">    fmt.Println(<span class="string">"===================================================="</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><code>string</code>到<code>int</code>用<code>strconv.Atoi</code>方法，而对于其它有bitSize限制的数据，则用<code>strconv.ParseInt</code>或者<code>strconv.ParseFloat</code>先转换成64位再调精度即可。</p>
 <p>然后看数值到<code>string</code>的转换：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">testDigitToString</span><span class="params">()</span></span> &#123;</span><br><span class="line">    fmt.Println(<span class="string">"=============== test digit to string =================="</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> i <span class="keyword">int</span> = <span class="number">12345</span></span><br><span class="line">    <span class="keyword">var</span> i32 <span class="keyword">int32</span> = <span class="number">-678</span></span><br><span class="line">    <span class="keyword">var</span> ui64 <span class="keyword">uint64</span> = <span class="number">901234567890</span></span><br><span class="line">    <span class="keyword">var</span> strInt <span class="keyword">string</span> = fmt.Sprintf(<span class="string">"%d"</span>, i)</span><br><span class="line">    <span class="keyword">var</span> strInt32 <span class="keyword">string</span> = strconv.FormatInt(<span class="keyword">int64</span>(i32), <span class="number">10</span>)</span><br><span class="line">    <span class="keyword">var</span>	strUInt64 <span class="keyword">string</span> = strconv.FormatUint(ui64, <span class="number">10</span>)</span><br><span class="line">    fmt.Printf(<span class="string">"strInt: %s, strInt32: %s, strUInt64: %s\n"</span>,</span><br><span class="line">        strInt, strInt32, strUInt64)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> f32 <span class="keyword">float32</span> = <span class="number">3.1415926</span></span><br><span class="line">    <span class="keyword">var</span> f64 <span class="keyword">float64</span> = <span class="number">-3.1415926535897</span></span><br><span class="line">    <span class="keyword">var</span> strFloat32 <span class="keyword">string</span> = fmt.Sprintf(<span class="string">"%.5f"</span>, f32)</span><br><span class="line">    <span class="keyword">var</span> strFloat64 <span class="keyword">string</span> = strconv.FormatFloat(f64, <span class="string">'f'</span>, <span class="number">10</span>, <span class="number">64</span>)</span><br><span class="line">    fmt.Printf(<span class="string">"strFloat32: %s, strFloat64: %s\n"</span>, strFloat32, strFloat64)</span><br><span class="line"></span><br><span class="line">    fmt.Println(<span class="string">"===================================================="</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">testDigitToString</span><span class="params">()</span></span> &#123;</span><br><span class="line">    fmt.Println(<span class="string">"=============== test digit to string =================="</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> i <span class="keyword">int</span> = <span class="number">12345</span></span><br><span class="line">    <span class="keyword">var</span> i32 <span class="keyword">int32</span> = <span class="number">-678</span></span><br><span class="line">    <span class="keyword">var</span> ui64 <span class="keyword">uint64</span> = <span class="number">901234567890</span></span><br><span class="line">    <span class="keyword">var</span> strInt <span class="keyword">string</span> = fmt.Sprintf(<span class="string">"%d"</span>, i)</span><br><span class="line">    <span class="keyword">var</span> strInt32 <span class="keyword">string</span> = strconv.FormatInt(<span class="keyword">int64</span>(i32), <span class="number">10</span>)</span><br><span class="line">    <span class="keyword">var</span> strUInt64 <span class="keyword">string</span> = strconv.FormatUint(ui64, <span class="number">10</span>)</span><br><span class="line">    fmt.Printf(<span class="string">"strInt: %s, strInt32: %s, strUInt64: %s\n"</span>,</span><br><span class="line">        strInt, strInt32, strUInt64)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> f32 <span class="keyword">float32</span> = <span class="number">3.1415926</span></span><br><span class="line">    <span class="keyword">var</span> f64 <span class="keyword">float64</span> = <span class="number">-3.1415926535897</span></span><br><span class="line">    <span class="keyword">var</span> strFloat32 <span class="keyword">string</span> = fmt.Sprintf(<span class="string">"%.5f"</span>, f32)</span><br><span class="line">    <span class="keyword">var</span> strFloat64 <span class="keyword">string</span> = strconv.FormatFloat(f64, <span class="string">'f'</span>, <span class="number">10</span>, <span class="number">64</span>)</span><br><span class="line">    fmt.Printf(<span class="string">"strFloat32: %s, strFloat64: %s\n"</span>, strFloat32, strFloat64)</span><br><span class="line"></span><br><span class="line">    fmt.Println(<span class="string">"===================================================="</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>数值到<code>string</code>，最简单粗暴的方法是<code>fmt.Sprintf</code>格式化字符串。如果需要精调，则得用<code>strconv.ParseInt</code>、<code>strconv.ParseFloat</code>等方式。值得一提的是<code>strconv.ParseFloat</code>注释了多种格式可供选择，有兴趣的同学可以看源码。</p>
 <p><code>string</code>和<code>rune</code>、<code>byte</code>之类数据的转换，可以如下：</p>
 <figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">testStringAndRuneAndByte</span><span class="params">()</span></span> &#123;</span><br><span class="line">    fmt.Println(<span class="string">"=============== test string &amp; rune &amp; byte =================="</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> s <span class="keyword">string</span> = <span class="string">"helloworld"</span></span><br><span class="line">    <span class="keyword">var</span> runes []<span class="keyword">rune</span> = []<span class="keyword">rune</span>(s)</span><br><span class="line">    <span class="keyword">var</span> bytes []<span class="keyword">byte</span> = []<span class="keyword">byte</span>(s)</span><br><span class="line">    fmt.Printf(<span class="string">"string: %s, runes: %v, bytes: %v\n"</span>, s, runes, bytes)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i, char := <span class="keyword">range</span> s &#123;</span><br><span class="line">        <span class="keyword">if</span> i &gt;= <span class="number">0</span> &#123;</span><br><span class="line">            fmt.Printf(<span class="string">"type of index: %T\n"</span>, i) <span class="comment">// int</span></span><br><span class="line">            fmt.Printf(<span class="string">"type of char: %T\n"</span>, char)  <span class="comment">// int32</span></span><br><span class="line">            fmt.Printf(<span class="string">"digit value of char: %d\n"</span>, char) <span class="comment">// 104</span></span><br><span class="line">            fmt.Printf(<span class="string">"output char: %c\n"</span>, char) <span class="comment">// h</span></span><br><span class="line">            fmt.Printf(<span class="string">"is equal with rune value: %v\n"</span>, <span class="string">'h'</span> == <span class="keyword">rune</span>(char)) <span class="comment">// true</span></span><br><span class="line">            fmt.Printf(<span class="string">"is equal with byte value: %v\n"</span>, <span class="string">'h'</span> == <span class="keyword">byte</span>(char)) <span class="comment">// true</span></span><br><span class="line">            <span class="comment">// invalid expression -&gt; rune: int32, byte: uint8</span></span><br><span class="line">            <span class="comment">// fmt.Printf("is rune &amp; byte equals: %v\n", rune(char) == byte(char))</span></span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fmt.Println(<span class="string">"===================================================="</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -173,8 +250,8 @@
       </categories>
       <tags>
         <tag>游戏测试</tag>
-        <tag>自动化测试</tag>
         <tag>测试</tag>
+        <tag>自动化测试</tag>
         <tag>游戏自动化</tag>
         <tag>副本自动化</tag>
       </tags>
@@ -326,10 +403,10 @@
       </categories>
       <tags>
         <tag>Golang</tag>
-        <tag>gin</tag>
         <tag>protobuf</tag>
         <tag>grpc</tag>
         <tag>后端开发</tag>
+        <tag>gin</tag>
       </tags>
   </entry>
   <entry>
@@ -413,8 +490,8 @@
         <category>代码艺廊</category>
       </categories>
       <tags>
-        <tag>工具开发</tag>
         <tag>后端开发</tag>
+        <tag>工具开发</tag>
         <tag>python</tag>
         <tag>fastapi</tag>
         <tag>start-fastapi</tag>
@@ -440,9 +517,9 @@
       </categories>
       <tags>
         <tag>Golang</tag>
+        <tag>gin</tag>
         <tag>工具开发</tag>
         <tag>git</tag>
-        <tag>gin</tag>
         <tag>go-git</tag>
       </tags>
   </entry>
@@ -552,9 +629,9 @@
       <tags>
         <tag>UE4</tag>
         <tag>C++</tag>
-        <tag>UE4插件</tag>
         <tag>LLM</tag>
         <tag>UnrealAutomator</tag>
+        <tag>UE4插件</tag>
       </tags>
   </entry>
   <entry>
@@ -592,8 +669,8 @@
       <tags>
         <tag>UE4</tag>
         <tag>游戏测试</tag>
-        <tag>UE4插件</tag>
         <tag>UnrealAutomator</tag>
+        <tag>UE4插件</tag>
         <tag>游戏自动化</tag>
       </tags>
   </entry>
@@ -824,9 +901,9 @@
       <tags>
         <tag>UE4</tag>
         <tag>C++</tag>
+        <tag>UE4插件</tag>
         <tag>HTTP Server</tag>
         <tag>Web开发</tag>
-        <tag>UE4插件</tag>
       </tags>
   </entry>
   <entry>
@@ -977,8 +1054,8 @@
         <category>极客日常</category>
       </categories>
       <tags>
-        <tag>前端</tag>
         <tag>vue</tag>
+        <tag>前端</tag>
         <tag>vuetify</tag>
         <tag>v-autocomplete</tag>
         <tag>v-model</tag>
@@ -1080,9 +1157,9 @@
         <category>极客日常</category>
       </categories>
       <tags>
-        <tag>并发</tag>
         <tag>mongodb</tag>
         <tag>pymongo</tag>
+        <tag>并发</tag>
         <tag>事务</tag>
         <tag>原子性</tag>
       </tags>
@@ -1627,8 +1704,8 @@
         <category>DIY小记</category>
       </categories>
       <tags>
-        <tag>CSGO</tag>
         <tag>Win10</tag>
+        <tag>CSGO</tag>
         <tag>NVIDIA</tag>
         <tag>游戏优化</tag>
         <tag>游戏设置</tag>
@@ -2062,9 +2139,9 @@
         <category>测试人生</category>
       </categories>
       <tags>
+        <tag>测试</tag>
         <tag>Android</tag>
         <tag>性能测试</tag>
-        <tag>测试</tag>
         <tag>fps</tag>
         <tag>SurfaceFlinger</tag>
       </tags>
@@ -2273,9 +2350,9 @@
         <category>DIY小记</category>
       </categories>
       <tags>
-        <tag>Win10</tag>
         <tag>字体</tag>
         <tag>编程</tag>
+        <tag>Win10</tag>
         <tag>主题</tag>
         <tag>皮肤</tag>
       </tags>
@@ -2481,9 +2558,9 @@
       </categories>
       <tags>
         <tag>python</tag>
+        <tag>并发</tag>
         <tag>GIL</tag>
         <tag>并行</tag>
-        <tag>并发</tag>
         <tag>multiprocessing</tag>
       </tags>
   </entry>
@@ -2696,8 +2773,8 @@
       </categories>
       <tags>
         <tag>lua</tag>
-        <tag>debug</tag>
         <tag>测试</tag>
+        <tag>debug</tag>
         <tag>lfunctimer</tag>
         <tag>lua C API</tag>
       </tags>
@@ -2818,9 +2895,9 @@
       </categories>
       <tags>
         <tag>lua</tag>
-        <tag>性能测试</tag>
-        <tag>debug</tag>
         <tag>测试</tag>
+        <tag>debug</tag>
+        <tag>性能测试</tag>
         <tag>lfunctimer</tag>
       </tags>
   </entry>
@@ -2917,8 +2994,8 @@
       </categories>
       <tags>
         <tag>lua</tag>
-        <tag>debug</tag>
         <tag>测试</tag>
+        <tag>debug</tag>
         <tag>代码覆盖率</tag>
         <tag>luacov</tag>
       </tags>

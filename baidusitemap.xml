@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://utmhikari.github.io/2021/06/08/geekdaily/python_processpoolexecutor/</loc>
+    <lastmod>2021-06-08</lastmod>
+  </url>  <url>
     <loc>http://utmhikari.github.io/2021/06/06/geekdaily/go_basic_data_types/</loc>
     <lastmod>2021-06-06</lastmod>
   </url>  <url>
@@ -178,10 +181,10 @@
     <loc>http://utmhikari.github.io/2019/09/12/luatalk/sproto/</loc>
     <lastmod>2019-09-12</lastmod>
   </url>  <url>
-    <loc>http://utmhikari.github.io/2019/03/16/easypython/ii/</loc>
+    <loc>http://utmhikari.github.io/2019/03/31/easypython/iv/</loc>
     <lastmod>2019-08-25</lastmod>
   </url>  <url>
-    <loc>http://utmhikari.github.io/2019/03/31/easypython/iv/</loc>
+    <loc>http://utmhikari.github.io/2019/03/16/easypython/ii/</loc>
     <lastmod>2019-08-25</lastmod>
   </url>  <url>
     <loc>http://utmhikari.github.io/2019/05/25/githubdiscovery/pysnooper/</loc>
