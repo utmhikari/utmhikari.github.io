@@ -1,6 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>【测试人生】python的excel库——openpyxl的用法</title>
+    <url>/2021/07/11/testlife/openpyxl/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在测试工具的开发过程中，可能会遇到需要生成excel文件的需求。笔者在自研excel-diff工具的过程中，也同样接到了需要生成excel文件来展示每个sheet的diff数据。每个包含diff的sheet需要生成1个excel文件，每个文件分成3个sheet，2个sheet用于展示sheet原先的数据与修改后的数据，1个sheet用于描述性统计和超链接每个diff的情况。要生成这样的excel文件，不用专门的excel库是不行的。基于python的技术栈，经过一番调研，笔者采用openpyxl作为生成excel的库，并且顺利完成了需求。</p>
+<p>学习openpyxl可以直接从<span class="exturl" data-url="aHR0cHM6Ly9vcGVucHl4bC5yZWFkdGhlZG9jcy5pby9lbi9zdGFibGUv" title="https://openpyxl.readthedocs.io/en/stable/">官方文档<i class="fa fa-external-link"></i></span>入手。一些基本操作如下：</p>
+<a id="more"></a>
+<h2 id="基础workbook与sheet操作"><a href="#基础workbook与sheet操作" class="headerlink" title="基础workbook与sheet操作"></a>基础workbook与sheet操作</h2><p>启动一个excel实例，直接构造<code>Workbook</code>实例即可：<code>wb = Workbook</code></p>
+<p><code>Workbook</code>实例默认会带一个sheet，名称即为Sheet，可以直接通过<code>ws = wb.worksheets[0]</code>获取到这个默认的sheet。如果要改标题，可以直接用<code>ws.title = &#39;xxx&#39;</code>来执行。</p>
+<p>为sheet添加数据有多种方法：</p>
+<ul>
+<li><code>ws.append(list_data)</code>，添加一行数据</li>
+<li><code>ws.cell(row, col, value)</code>，为某行某列（都从1开始算）的单元格赋一个值</li>
+</ul>
+<p>创建sheet，通过<code>wb.create_sheet(title=&#39;xxx&#39;)</code>接口即可实现；通过<code>ws = wb.active</code>，可以设置某个sheet为默认打开展示的。</p>
+<p>获取某行、某列以及单元格数据，可以通过<code>ws.iter_rows(row_idx, row_idx)</code>、<code>ws.iter_cols(col_idx, col_idx)</code>、<code>ws.cell(row_idx, col_idx)</code>获取，其中行、列索引均从1开始算。但如果只是要获取行、列实例，比如要调行列样式的话，需要通过<code>ws.row_dimensions[row_idx]</code>、<code>ws.col_dimensions[get_column_letter(col_idx)]</code>获取，其中<code>get_column_letter</code>是<code>openpyxl.util</code>中，通过列索引获得对应字母（A~Z，AA~AZ之类）的方法</p>
+<p>通过<code>load_workbook</code>、<code>save_workbook</code>接口，可以读取或存储为excel文件。需要注意的是，这两个操作在大数据量表的情况下会有时间开销。</p>
+<h2 id="样式设置"><a href="#样式设置" class="headerlink" title="样式设置"></a>样式设置</h2><p>调整excel表格样式，建议用<code>NamedStyle</code>定义各个不同的样式。一个<code>NamedStyle</code>可以应用单个单元格可支持的所有样式，包括：</p>
+<ul>
+<li>font：字体</li>
+<li>fill：背景颜色</li>
+<li>border：边框</li>
+<li>alignment：排版（水平垂直居中之类）</li>
+<li>etc</li>
+</ul>
+<p>单元格样式需要遍历每个单元格设置，比如：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">ns = NamedStyle(name=<span class="string">'test_style'</span>)</span><br><span class="line">ns.font = Font(bold=<span class="literal">True</span>)  <span class="comment"># 粗体</span></span><br><span class="line">ns.alignment = Alignment(wrapText=<span class="literal">True</span>)  <span class="comment"># 自动换行</span></span><br><span class="line">wb.add_named_style(ns)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> row_idx <span class="keyword">in</span> range(<span class="number">2</span>, <span class="number">6</span>):</span><br><span class="line">    <span class="keyword">for</span> col_idx <span class="keyword">in</span> range(<span class="number">3</span>, <span class="number">7</span>):</span><br><span class="line">        ws.cell(row_idx, col_idx).style = <span class="string">'test_style'</span></span><br></pre></td></tr></table></figure>
+<p>行、列样式，通过上述从<code>row_dimensions</code>、<code>col_dimensions</code>获取的实例，可以直接赋予<code>width</code>、<code>height</code>之类的行列样式属性</p>
+<p>如果要冻结行列，需要通过设置<code>ws.freeze_panes</code>为特定值，这个值是这样规定的。比如<code>ws.freeze_panes = &#39;D5&#39;</code>，则表示冻结D列之前的A~C列，同时冻结5行之前的1~4行。以此类推，如果<code>ws.freeze_panes = &#39;A1&#39;</code>，那就是没有冻结的行列了。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>openpyxl内部涵盖的功能非常丰富，笔者所讲述的只是冰山一角。有兴趣的同学可以尽情探索openpyxl的官方文档以及源代码，有问题也可直接google查阅~</p>
+]]></content>
+      <categories>
+        <category>测试人生</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>测试开发</tag>
+        <tag>excel</tag>
+        <tag>openpyxl</tag>
+        <tag>测试工具</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>【极客日常】python进程池ProcessPoolExecutor的用法与实现分析</title>
     <url>/2021/06/08/geekdaily/python_processpoolexecutor/</url>
     <content><![CDATA[<p>在python开发期间，由于GIL的原因，不能直接采用并行的方式处理代码逻辑。在multiprocessing库的支持下，python程序能够启动子进程执行特定的任务，但子进程的管理也成为了问题。为了简化用户开发成本，python在concurrent.futures下内置了ProcessPoolExecutor这一数据结构，实现了简单的进程管理及任务调度。如果没有特别的需求，开发者只需要用ProcessPoolExecutor即可实现并行执行任务。因此，本文简单对ProcessPoolExecutor的实现进行分析，帮助大家更加了解python开发中进程/任务调度的一种方式。</p>
