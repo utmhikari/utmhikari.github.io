@@ -1,12 +1,12 @@
 ---
-title: 【Python随笔】用C++编写Python的扩展
+title: 【Python随笔】用C++编写Python的扩展模块
 date: 2021/10/05 00:44:59
 categories:
 - Python随笔
 tags:
 - python
 - C++
-- python扩展
+- python扩展模块
 - Visual Studio
 - cplayground
 ---
