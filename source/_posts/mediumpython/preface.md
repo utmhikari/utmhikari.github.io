@@ -6,9 +6,9 @@ categories:
 tags:
 - python
 - 教程
-- Medium Python
+- 源码分析
 - Easy Python
-- 面试题
+- 面试
 ---
 
 python作为最流行的语言之一，我们对python的认知到底有多少呢？大胆猜测，95%的同学对python的了解都不超过5%吧！不用说python的c源码了，就算是python每个标准库的.py源码，都有很少人去关心。结论就是，我们对python本身的理解是远远不够的，比想象中还不够！当然，这也可能是python的语言特性导致的吧，在设计方面就不需要我们去多想。
