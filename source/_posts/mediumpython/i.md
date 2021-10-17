@@ -288,7 +288,7 @@ static PyMappingMethods tuple_as_mapping = {
 所以，list元素可变而tuple元素不可变，要解释这个问题可以这样阐述：**tuple作为`mapping`或者`sequence`，没有指定赋值操作的回调函数，所以其元素不可变。而list有对应的操作回调支持，所以可变。**
 ​
 
-### tuple的元素能够“可变”吗？
+## tuple的元素能够“可变”吗？
 
 当然可以，但是需要魔改Python源代码。我们可以仿写`list_ass_subscript`去实现tuple的赋值操作。
 
