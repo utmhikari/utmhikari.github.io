@@ -38,6 +38,8 @@ TypeError: 'tuple' object does not support item assignment
 
 这个问题要给出清晰的答案可并不容易，如果你直接检索网上资料的话，会发现很多文章都在说重复的话，没有什么深入的挖掘，导致这个问题无从解释。于是，今天这篇文章，就给大家把这个问题讲的干脆一点。以及，看完这篇文章之后，网上的那些垃圾大家也就没必要再看了。
 
+<!-- more -->
+
 ## 赋值操作的源码分析
 
 从官网的[Python-Source-Release](https://www.python.org/downloads/source/)页面中，我们能够下载到Python各个版本的源代码（笔者下载了3.9.7）。在源码的`PCBuild`文件夹下，有Visual Studio专属的`pcbuild.sln`项目文件，打开它就能看到python各个库的源代码的集合，以及各种文档和编译构建脚本。准备好了环境，就可以开始研究了。
