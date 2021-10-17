@@ -1,5 +1,5 @@
 ---
-title: 【Medium Python】第一话：为什么list可变，而tuple不可变
+title: 【Medium Python】第一话：为什么list“可变”，而tuple“不可变”？
 date: 2021/10/17 17:55:52
 categories:
 - Medium Python
@@ -8,7 +8,7 @@ tags:
 - 源码分析
 - list
 - tuple
-- 不可变
+- 元组
 ---
 
 ## 前言
@@ -34,9 +34,11 @@ TypeError: 'tuple' object does not support item assignment
 
 可以看到赋值操作报错，tuple不支持再次赋值，体现了其“不可变”的特性。
 
-但是，“不支持赋值”（不可变）的原因，到底是什么呢？不是说不支持就不支持吧！难道也没有支持的可能？
+但是，不支持赋值/不可变的原因，到底是什么呢？不是说不支持就不支持吧！难道也没有支持的可能？
 
-这个问题要给出清晰的答案可并不容易，如果你直接检索网上资料的话，会发现很多文章都在说重复的话，没有什么深入的挖掘，导致这个问题无从解释。于是，今天这篇文章，就给大家把这个问题讲的干脆一点。以及，看完这篇文章之后，网上的那些垃圾大家也就没必要再看了。
+这个问题要给出清晰的答案可并不容易，如果你直接检索网上资料的话，会发现很多文章都在说重复的话，没有什么深入的挖掘，导致这个问题无从解释。于是，今天这篇文章，就给大家把这个问题讲的干脆一点。
+
+以及，看完这篇文章之后，网上那些车轱辘话大家也就没有必要再看了。
 
 <!-- more -->
 
@@ -82,7 +84,7 @@ PyObject_SetItem(PyObject *o, PyObject *key, PyObject *value)
 }
 ```
 
-PyObject_SetItem函数涉及到`PyObject *o`、`PyObject* key`、`PyObject *value`三个入参，分别对应我们的tuple实例、索引以及待赋的值。这个函数是一个通用的接口，我们可以看到函数内首先尝试将实例o看作为`mapping`或者是`sequence`（`tp_as_mapping`、`tp_as_sequence`）。如果能作为`mapping`，就看是否能执行`mp_ass_subscript`回调实现赋值；如果作为`sequence`，会检查`key`并尝试执行`PySequence_SetItem`函数，在这个函数里也会尝试执行`Py_TYPE(o)->tp_as_sequence->sq_ass_item`回调实现赋值。
+`PyObject_SetItem`函数涉及到`PyObject *o`、`PyObject* key`、`PyObject *value`三个入参，分别对应我们的tuple实例、索引以及待赋的值。这个函数是一个通用的接口，我们可以看到函数内首先尝试将实例o看作为`mapping`或者是`sequence`（`tp_as_mapping`、`tp_as_sequence`）。如果能作为`mapping`，就看是否能执行`mp_ass_subscript`回调实现赋值；如果作为`sequence`，会检查`key`并尝试执行`PySequence_SetItem`函数，在这个函数里也会尝试执行`Py_TYPE(o)->tp_as_sequence->sq_ass_item`回调实现赋值。
 ​
 
 在研究tuple之前，我们可以通过对list实例进行断点调试，追踪list赋值操作的执行链路。断点直接断在`PyObject_SetItem`里面即可，测试代码如下：
@@ -144,7 +146,7 @@ list_ass_item(PyListObject *a, Py_ssize_t i, PyObject *v)
 }
 ```
 
-`list_ass_subscript`函数会判断索引Key的合法性并转换负值索引，然后调用`list_ass_item`处理赋值操作。`list_ass_item`也会再次检查索引边界，然后在list实例对应索引的位置赋新值，并调整引用计数。这样，list赋值操作就完成了。
+`list_ass_subscript`函数会判断索引`key`的合法性并转换负值索引，然后调用`list_ass_item`处理赋值操作。`list_ass_item`也会再次检查索引边界，然后在list实例对应索引的位置赋新值，并调整引用计数。这样，list赋值操作就完成了。
 
 ## tuple为什么不可变
 
