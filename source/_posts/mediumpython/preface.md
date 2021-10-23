@@ -20,3 +20,4 @@ python的岗位众多，网上的教材跟面试题也很多，然而很多都�
 ## Contents
 
 - [【Medium Python】第一话：为什么list“可变”，而tuple“不可变”？](https://utmhikari.top/2021/10/17/mediumpython/i/)
+- [【Medium Python】第二话：dict的keys()返回了什么数据类型？](https://utmhikari.top/2021/10/23/mediumpython/ii/)
