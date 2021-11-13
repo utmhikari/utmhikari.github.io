@@ -23,3 +23,4 @@ python的岗位众多，网上的教材跟面试题也很多，然而很多都�
 - [【Medium Python】第二话：dict的keys()返回了什么数据类型？](https://utmhikari.top/2021/10/23/mediumpython/ii/)
 - [【Medium Python】第三话：python多线程为什么不能并行？](https://utmhikari.top/2021/10/30/mediumpython/iii/)
 - [【Medium Python】第四话：类属性和实例属性是怎样的关系？](https://utmhikari.top/2021/11/06/mediumpython/iv/)
+- [【Medium Python】最终话：如何彻底理解with关键字的用法？](https://utmhikari.top/2021/11/13/mediumpython/v/)

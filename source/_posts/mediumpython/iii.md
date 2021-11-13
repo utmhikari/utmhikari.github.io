@@ -774,4 +774,5 @@ SET_GIL_DROP_REQUEST(PyInterpreterState *interp)
 ## 总结
 
 通过对线程启动机制、代码运行机制以及基于GIL的线程调度机制的剖析，我们可以“一图流”，解释“python多线程为什么不能并行”这个问题：
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/289368/1633435615060-10b135ab-b7c2-465a-82c7-08050c5b37b3.png#clientId=u8166d434-865c-4&from=paste&height=702&id=u10921066&margin=%5Bobject%20Object%5D&name=image.png&originHeight=702&originWidth=783&originalType=binary&ratio=1&size=59582&status=done&style=none&taskId=u1b6695b3-9665-4487-9f68-fe786b9c57b&width=783)
+
+![threads](/uploads/mediumpython/iii/threads.png ''threads'')
