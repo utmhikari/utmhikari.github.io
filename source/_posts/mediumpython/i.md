@@ -218,7 +218,7 @@ typedef struct {
 可以看到，在list类型定义中，`tp_as_mapping->list_as_mapping`已经包含了`PyMappingMethods`所定义的`mp_length`、`mp_subscript`以及`mp_ass_subscript`三个回调，而最后一个就是赋值操作所对应的回调。反观tuple的类型定义，这一块是缺失的：
 
 ```c
-// Objects/listobject.c
+// Objects/tupleobject.c
 
 PyTypeObject PyTuple_Type = {
     PyVarObject_HEAD_INIT(&PyType_Type, 0)
