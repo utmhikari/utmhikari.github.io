@@ -2,7 +2,7 @@
 title: 【Hard Python】前言
 date: 2022/01/08 14:04:51
 categories:
-- Medium Python
+- Hard Python
 tags:
 - python
 - 教程
