@@ -20,3 +20,8 @@ tags:
 在先前已经写过两个python系列，分别是[Easy Python](https://utmhikari.top/categories/Easy-Python/)以及[Medium Python](https://utmhikari.top/categories/Medium-Python/)。在Easy Python中，对python的各种基础概念以及实用场景介绍了相关案例；而在Medium Python中，通过源码分析的方式，剖析了python内部某些语言特性的实现，讲述了许多python相关的冷知识。这次Hard Python，还是回归本源，将会挑选一些python内部比较重点的基础模块进行深入剖析讲解，争取让每一位阅读本系列文章的同学对python这门语言有更加全新的理解。
 
 话不多说，准备上菜！
+
+## 目录
+
+- 第一章：多线程
+  - [1、Process，新进程的诞生](https://utmhikari.top/2022/01/16/hardpython/1_multiprocessing_1/)
