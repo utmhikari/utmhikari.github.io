@@ -26,3 +26,4 @@ tags:
 - 第一章：多线程
   - [1、Process，新进程的诞生](https://utmhikari.top/2022/01/16/hardpython/1_multiprocessing_1/)
   - [2、Pipe和Queue，进程间通信](https://utmhikari.top/2022/01/22/hardpython/1_multiprocessing_2/)
+  - [3、Pool，多任务并行进程池](https://utmhikari.top/2022/01/30/hardpython/1_multiprocessing_3/)
