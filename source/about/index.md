@@ -6,20 +6,26 @@ type: about
 
 ## 自我介绍
 
-HiKari，纯粹的技术派，geek，致力于用技术打破不可能的边界。
+HiKari，纯粹的技术派，geek，致力于用技术打破不可能的边界
 
 ## 兴趣爱好
 
-- 游戏：csgo、皇室战争、skyrim等等
+- 游戏：csgo、皇室战争、skyrim、国产三剑+河洛，各种品类基本都有涉猎
 - 体育：羽乒篮足
 - 休闲：K麻桌
 - 音乐：rock、metal
 
 ## 技术栈
 
-语言主python，其它主流的基本都会那么一些
+语言主python，其它主流的语言多多少少接触过一些。
 
-领域技术解决方案上偏游戏专项测试跟测试业务效能，也搞过一段时间的运维开发
+python写了几个专栏：
+
+- [Easy-Python](https://utmhikari.top/categories/Easy-Python/)：python一些需要掌握的基础内容以及编程思路
+- [Medium-Python](https://utmhikari.top/categories/Medium-Python/)：带C源码的python一些源码分析以及冷知识
+- [Hard-Python](https://utmhikari.top/categories/Hard-Python/)：连载中，主要对python的关键模块进行分析，平坑之作
+
+领域技术上，偏游戏专项测试跟测试业务效能，也搞过一段时间的运维开发
 
 ## 个人经历
 
@@ -29,10 +35,10 @@ HiKari，纯粹的技术派，geek，致力于用技术打破不可能的边界�
   - 技术研发
     - 框架基础是python<->adb<->UE4+UnLua，外加了GAutomator的支持
     - 自动化最关心的还是运行时间量问题。为了保持用例稳定性和自动化实用性做了以下几个事情：
-      - gameplay逻辑上UnLua、python根据游戏代码各抽了一层，提升代码复用性
+      - gameplay逻辑上UnLua、python根据游戏代码各抽了一层，提升代码复用性，简化用例逻辑编写
       - 截图、录屏、日志解析等周边功能模块全部加上，提升问题排查效率
       - 每个用例逻辑单独目录存放，减少协同开发时的代码冲突问题
-      - 框架加了许多约定，保证其他用例开发者不至于放飞自我= =
+      - 框架加了许多技术上的约定，保证其他用例开发者不至于放飞自我= =
   - 业务推进
     - 冒烟测试、全量测试等七七八八各种功能测试业务场景都用上了
   - 文章输出
@@ -44,8 +50,8 @@ HiKari，纯粹的技术派，geek，致力于用技术打破不可能的边界�
       - [【测试人生】游戏自动化该怎么做？](https://utmhikari.top/2020/09/06/testlife/game_autotest/)
       - [【测试人生】UE4游戏枪械自动化测试的一些设计](https://utmhikari.top/2021/04/17/testlife/ue4_weapon_autotest/)
       - [【测试人生】副本自动化测试](https://utmhikari.top/2021/05/20/testlife/dungeon_autotest/)
-- 测试工具
-  - 策划配置测试工具
+- 测试平台与工具
+  - 策划配置测试服务
     - 设计上是分离了策划配置git-repo管理和配置测试服务两方面
       - 除了解耦数据与服务之外，这样设计的好处是能够更方便实现一键对指定版本的配置数据进行测试操作。好比说，一键diff两个版本的excel表格。
       - repo管理服务负责管理多个本地仓库，以及通过自定义脚本以约定格式上传数据到redis。这样的好处是，上传的数据不仅限于excel数据了，编辑器导出数据也能自行支持
@@ -60,8 +66,8 @@ HiKari，纯粹的技术派，geek，致力于用技术打破不可能的边界�
       - [【极客日常】用vxe-table展示excel-diff的结果](https://utmhikari.top/2021/05/01/geekdaily/excel_diff_vxe-table/)
       - [【测试人生】游戏策划表格测试工具的技术实现](https://utmhikari.top/2021/06/01/testlife/table_test_tool/)
   - 游戏功能测试PC效率工具
-    - 主要通过adb搭桥，提供一键式工具集
-      - 装包、推资源、取日志、输命令、转表
+    - 主要通过adb搭桥，提供一键式工具集，提升功能测试同学的日常工作效率
+      - 装包、推资源、取日志、输命令、转表、投屏、录屏
 
 ### 阿里-游戏测试
 
