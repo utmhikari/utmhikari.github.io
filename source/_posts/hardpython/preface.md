@@ -29,3 +29,4 @@ tags:
   - [3、Pool，多任务并行进程池](https://utmhikari.top/2022/01/30/hardpython/1_multiprocessing_3/)
 - 第二章：异步IO
   - [1、asyncio事件循环的创建](https://utmhikari.top/2022/02/12/hardpython/2_asyncio_1/)
+  - [2、异步任务在事件循环中的执行](https://utmhikari.top/2022/02/20/hardpython/2_asyncio_2/)
