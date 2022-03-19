@@ -33,3 +33,4 @@ tags:
   - [3、async/await的源码实现](https://utmhikari.top/2022/02/26/hardpython/2_asyncio_3/)
 - 第三章：GC
   - [1、引用计数与内存释放机制](https://utmhikari.top/2022/03/12/hardpython/3_gc_1/)
+  - [2、python的GC流程](https://utmhikari.top/2022/03/19/hardpython/3_gc_2/)
