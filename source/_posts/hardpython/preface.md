@@ -36,3 +36,4 @@ tags:
   - [2、python的GC流程](https://utmhikari.top/2022/03/19/hardpython/3_gc_2/)
 - 第四章：日志
   - [1、Logger与Manager的源码实现](https://utmhikari.top/2022/04/09/hardpython/4_log_1/)
+  - [2、日志消费者Handler的实现](https://utmhikari.top/2022/04/16/hardpython/4_log_2/)
