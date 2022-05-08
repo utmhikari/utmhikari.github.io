@@ -314,7 +314,7 @@ class TimedRotatingFileHandler(BaseRotatingHandler):
 
 在初始化的过程中，首先会解析时间设定计算时间间隔`interval`，然后通过`computeRollover`初始化`rolloverAt`，也就是翻篇的时间点。在`emit`的时候，也会直接通过当前时间判断是否超过翻篇时间，超过的话，就会执行`doRollover`。
 
-`doRollover`总共做了这么几件事情：
+`doRollover`总共做了这几件事情：
 
 - 关闭当前文件流
 - 根据当前时间生成需要归档的日志文件名

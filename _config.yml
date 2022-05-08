@@ -83,7 +83,7 @@ deploy:
   branch: master
 - type: baidu_url_submitter
 
-# 改一下源码，replace域名= =
+# 改一下baidu_url_submitter的generator的源码，replace域名= =
 baidu_url_submit:
   count: 100
   host: utmhikari.top
