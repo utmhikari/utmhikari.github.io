@@ -39,3 +39,4 @@ tags:
   - [2、日志消费者Handler的实现](https://utmhikari.top/2022/04/16/hardpython/4_log_2/)
 - 第五章：字符串
   - [1、unicode，py3的字符串实现](https://utmhikari.top/2022/05/08/hardpython/5_str_1/)
+  - [2、re，正则表达式源码详解](https://utmhikari.top/2022/05/14/hardpython/5_str_2/)
