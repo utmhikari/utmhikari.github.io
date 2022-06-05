@@ -66,7 +66,7 @@ python写了几个专栏：
       - [【极客日常】用vxe-table展示excel-diff的结果](https://utmhikari.top/2021/05/01/geekdaily/excel_diff_vxe-table/)
       - [【测试人生】游戏策划表格测试工具的技术实现](https://utmhikari.top/2021/06/01/testlife/table_test_tool/)
   - 游戏功能测试PC效率工具
-    - 主要通过adb搭桥，提供一键式工具集，提升功能测试同学的日常工作效率
+    - 主要通过adb搭桥，PyQt5研发，提供一键式工具集，提升功能测试同学的日常工作效率
       - 装包、推资源、取日志、输命令、转表、投屏、录屏
 
 ### 阿里-游戏测试
