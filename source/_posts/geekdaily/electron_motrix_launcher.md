@@ -332,7 +332,7 @@ function init (config) {
 ```
 这一段代码主要设置`Vue`的内部属性并起了`Vue`实例赋予`global.app`。在其中，加载了`App.vue`中`id=app`的页面内容，包括这些：
 
-```vue
+```html
 <template>
   <div id="app">
     <mo-title-bar
