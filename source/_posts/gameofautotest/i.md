@@ -2,7 +2,7 @@
 title: 【Game Of AutoTest】1、再度启程，重识游戏自动化测试
 date: 2022/08/02 21:46:25
 categories:
-- gameofautotest
+- Game Of AutoTest
 tags:
 - 自动化测试
 - 游戏测试
