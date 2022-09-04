@@ -68,27 +68,27 @@ tags:
 ```python
 # testcases/testcase_1/main.py
 def run(r: RunnerHandle, d: DeviceHandle, s: ScriptHandle, u: UIHandle) -> Result:
-	"""
+    """
     main entry of testcase logic
     handles will be automatically injected by the autotest framework
     :param r: handle of current runner, use this instance to log or get env-vars of testcase runtime
- 	:param d: handle of device
+     :param d: handle of device
     :param s: handle of script-based autotest
     :param u: handle of ui-based autotest
     :return: testcase result
     """
     # 用例：关闭商城界面
     r.logger.info('start testcase_1!')
-	s.send('print("helloworld")')
+    s.send('print("helloworld")')
     d.screenshot('before_close')
-	if u.find_and_click(name='BtnClose_Mall'):
+    if u.find_and_click(name='BtnClose_Mall'):
         r.logger.info('found and clicked close-btn of mall panel')
         time.sleep(3)
         d.screenshot('after_close')
     else:
         r.logger.error('failed to find close-btn of mall panel')
     if s.call('UIModule.IsInMainPanel()').boolval():
-	    return Result.ok(message='successfully closed mall panel')
+        return Result.ok(message='successfully closed mall panel')
     else:
         return Result.err(message='failed to close mall panel')
 
@@ -113,9 +113,9 @@ def is_loading() -> bool:
 
 
 def wait_for_loading(timeout=20, interval=3) -> bool:
-	if not is_loading():
+    if not is_loading():
         return True
-	for _ in range(timeout):
+    for _ in range(timeout):
         time.sleep(interval)
         if not is_loading():
             return True
@@ -161,11 +161,11 @@ class MyGameDungeonBehavior(DungeonBehavior):
         DungeonBehavior.__init__(self, **kwargs)
         self._dungeon_id = dungeon_id
 
-	def update_state(self):
+    def update_state(self):
         """implement update_state step upon MyGame here"""
         pass
 
-	def on_state_changed(self):
+    def on_state_changed(self):
         """implement on_state_changed step upon here"""
         pass
 
@@ -174,15 +174,15 @@ class ChaosSanctuaryDungeonBehavior(MyGameDungeonBehavior):
     """假设有个叫做【混沌避难所】的副本"""
     def __init__(self, **kwargs):
         MyGameDungeonBehavior.__init__(self, 123, **kwargs)
-        self.is_diablo_exist = False
+        self.does_diablo_exist = False
 
-	def update_state(self):
+    def update_state(self):
         MyGameDungeonBehavior.update_state(self)
-        self.is_diablo_exist = entity.has_entity(entity_id=99999)
+        self.does_diablo_exist = entity.has_entity(entity_id=99999)
 
     def get_state(self):
         default_state = MyGameDungeonBehavior.get_state(self)
-    	return f'{default_state}_{self.is_diablo_exist}'
+        return f'{default_state}_{self.does_diablo_exist}'
 
 ```
 
@@ -218,10 +218,10 @@ class ChaosSanctuaryDungeonBehavior(MyGameDungeonBehavior):
 - 代码生成工具：如行为树/脚本可视化编程、UI录制回放等，用于快速生成模板代码或是自动化逻辑
 - 准备数据生成工具：用于快速生成某种玩法自动化测试所需的配置/用例数据
 - 结果可视化工具：用于可视化展现自动化测试的结果
-- IDE：简化研发过程
+- IDE：IDE可以显著简化研发过程，但IDE研发工作量大，需要考虑投入产出比
 
 ## 总结
 
 作为游戏自动化测试框架来讲，既然是底层框架，那么打铁还需自身硬。除了上面说的一些设计理念跟工具选型，一些基础的方面，工程化、产品化的技术原则，比如保证稳定性、易扩展性、易上手性，高内聚低耦合，丰富的文档包装，SLA意识，这些都是通用框架设计落地必须具备的东西。自动化框架之于自动化用例，犹如游戏引擎之于游戏业务逻辑。如果框架开发者不去深入调研业务过程，而是纯粹堆砌自动化底层技术，那这类框架的结果，只能是炒作到大规模**试用**，而永远不可能在单个游戏项目内实现大规模**应用**。遗憾的是，在业界这种半成品依然大行其道。
 
-最后还是得讲点东西，从游戏测试行业的角度来看，国内许多企业都执行中台测开+项目业务测试+中台/项目专项测试的模式，但由于项目测试通常有较高tick的工作模式，中台的工作模式通常又是服务多个项目组，就会造成对于许多技术测试需求，中台的支持效率就会显得很低，同时各项目测试因为不能及时得到支持，工作产出效能也会有所下降。以研发通用的自动化测试框架为例，建议采取的模式是，中台测试主控基础模块开发与业务特性合入，项目测试参与业务特性研发，并能随时申请合入一些自己项目遇到且可以通用给其他项目的内容。这样的开发模式下，不仅可以解决中台测试服务效率的问题，也能充分发挥项目测试的业务理解力和生产力，同时也能在不涉及保密问题的条件下最大限度集成各类技术模块。而更重要的，是可以加强不同测试团队之间的交流，减少信息的不对称性，这点从部门战斗力建设角度来讲，着实大有裨益。
+最后还是得讲点东西。从游戏测试行业的角度来看，国内许多企业都执行中台测开+项目业务测试+中台/项目专项测试的模式，但由于项目测试通常有较高tick的工作模式，中台的工作模式通常又是同时服务多个项目组，就会造成对于许多专项测试需求，中台的支持效率显得很低，同时各项目测试因为不能及时得到支持，工作产出效能也会有所下降。以研发通用的自动化测试框架为例，建议采取的模式是，中台测试主控基础模块开发与业务特性合入，项目测试直接参与业务特性研发，并能随时申请合入一些自己项目遇到且可以通用给其他项目的内容。这样的开发模式下，不仅可以解决中台测试服务效率的问题，也能充分发挥项目测试的业务理解力和技术生产力，同时也能在不涉及保密问题的条件下最大限度集成各类技术模块。而更重要的，是可以加强不同测试团队之间的交流，减少信息的不对称性，这点从部门战斗力建设角度来讲，着实大有裨益。
