@@ -1,5 +1,5 @@
 ---
-title: 【测试人生】GAutomator的安卓UE4版本实现机理与优化实战
+title: 【测试人生】GAutomator安卓UE4版本的实现机理与优化实战
 date: 2022/09/12 17:34:58
 categories:
 - 测试人生
