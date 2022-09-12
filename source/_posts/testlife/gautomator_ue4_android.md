@@ -11,7 +11,7 @@ tags:
 - UE4
 ---
 
-在[2年以前的一篇文章](https://utmhikari.top/2020/05/05/testlife/try_gautomator/)中，讲述了游戏UI自动化方案`GAutomator`的基础机理、使用方式和一些工具扩展的想法。今天，趁着`Game Of AutoTest`系列的连载，结合[游戏自动化技术选型](https://utmhikari.top/2022/08/13/gameofautotest/ii/)一文，笔者将讲述`GAutomator`作为`UE4`安卓游戏UI自动化方案的实现机理，以及自己在实际工作中对`GAutomator`的优化实践。
+在[2年以前的一篇文章](https://utmhikari.top/2020/05/05/testlife/try_gautomator/)中，讲述了游戏UI自动化方案`GAutomator`的基础机理、使用方式和一些工具扩展的想法。今天，趁着`Game Of AutoTest`系列的连载，结合[游戏自动化技术选型](https://utmhikari.top/2022/08/13/gameofautotest/ii/)一文，笔者将深入剖析`GAutomator`作为`UE4`安卓游戏UI自动化方案的实现机理，以及自己在实际工作中对`GAutomator`的优化实践。
 
 ## 工作原理
 
