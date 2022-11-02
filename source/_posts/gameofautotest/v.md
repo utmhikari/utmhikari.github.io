@@ -5,10 +5,10 @@ categories:
 - Game Of AutoTest
 tags:
 - 自动化测试
-- 测试效能
+- 游戏测试
 - 游戏自动化
 - 质量保障
-- 质量监控
+- 质量管理
 ---
 
 《Game Of AutoTest》的最后一篇文章，聊一下游戏自动化测试的价值。
