@@ -414,7 +414,7 @@ tagcloud:
   max: 30 # max font size in px
   start: "#999" # start color (hex, rgba, hsla or color keywords)
   end: "#111" # end color (hex, rgba, hsla or color keywords)
-  amount: 200 # amount of tags, chage it if you have more than 200 tags
+  amount: 1000 # amount of tags, chage it if you have more than 200 tags
 
 
 # ---------------------------------------------------------------
