@@ -10,15 +10,17 @@ HiKari，纯粹的技术派，geek，致力于用技术打破不可能的边界
 
 ## 技术栈
 
-语言主python，其它主流的语言多多少少接触过一些。
+语言主python，其它主流的语言比如go、java多多少少都有些研发经验
 
-python写了几个专栏：
+python写了几个技术专栏，从最简单的语言应用到复杂的语言特性源码分析都有：
 
 - [Easy-Python](https://utmhikari.top/categories/Easy-Python/)：python一些需要掌握的基础内容以及编程思路
 - [Medium-Python](https://utmhikari.top/categories/Medium-Python/)：带C源码的python一些源码分析以及冷知识
 - [Hard-Python](https://utmhikari.top/categories/Hard-Python/)：连载中，主要对python的关键模块进行分析，平坑之作
 
-领域技术上，偏游戏专项测试跟测试业务效能，也搞过一段时间的运维开发
+领域技术上，web开发、游戏测试开发、测试效能以及游戏自动化测试方面的都有比较丰富的经验
+
+其中，游戏自动化测试方面，写了专栏[Game Of AutoTest](https://utmhikari.top/categories/Game-Of-AutoTest/)，记录了自己对游戏自动化测试相关的经验跟思考
 
 ## 个人经历
 
@@ -26,12 +28,13 @@ python写了几个专栏：
 
 - 测试自动化
   - 自动化脚本框架
-    - 底层技术基础是GAutomator+UnLua，客户端自动化，兼顾脚本+UI驱动的支持
+    - 采用python+lua编写 
+    - 自动化底层技术基础是GAutomator+UnLua，兼顾脚本+UI驱动的支持
     - 自动化框架的技术基础是自动化落地的必要条件。为了保持用例稳定性和自动化实用性做了以下几个事情：
       - gameplay逻辑上UnLua、python根据游戏代码各抽了一层，提升代码复用性，简化用例逻辑编写
       - 截图、录屏、日志解析等周边功能模块全部加上，提升问题排查效率
       - 每个用例逻辑单独目录存放，减少协同开发时的代码冲突问题
-      - 框架加了许多技术上的约定，保证其他用例开发者不至于放飞自我= =
+      - 框架加了许多技术上的约定，保证用例开发者易于上手，保证用例本身易于维护
   - 业务和用例
     - 冒烟测试、全量测试等七七八八各种功能测试业务场景都用上了
     - 涉及了任务、pve、枪械、大世界遍历、寻路等多种玩法
@@ -69,7 +72,7 @@ python写了几个专栏：
 
 - 测试工具
   - skynet游戏服框架lua代码覆盖统计
-    - 节点用python+lua统计覆盖数据，传输给egg.js后台，后台根据代码预处理数据，mongodb存储最终数据
+    - 节点动态注入用以收集覆盖数据的lua代码，用flask统计覆盖数据，做好统计后post给egg.js后台，后台根据源代码二次处理数据，mongodb存储最终数据
     - 前台用react进行代码染色展示
     - 文章输出
       - [【Lua杂谈】解锁lua代码覆盖率测试：luacov源码分析](https://utmhikari.top/2019/03/10/luatalk/luacov/)
