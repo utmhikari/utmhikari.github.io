@@ -1,8 +1,8 @@
 ---
-title: 【极客日常】python进程池ProcessPoolExecutor的用法与实现分析
+title: 【Python随笔】python进程池ProcessPoolExecutor的用法与实现分析
 date: 2021/06/08 21:58:51
 categories:
-- 极客日常
+- Python随笔
 tags:
 - python
 - 并发

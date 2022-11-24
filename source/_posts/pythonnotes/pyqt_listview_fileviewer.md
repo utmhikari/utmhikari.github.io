@@ -1,8 +1,8 @@
 ---
-title: 【极客日常】PyQt5的QListView兼容左键双击事件和右键上下文菜单的方法
+title: 【Python随笔】PyQt5的QListView兼容左键双击事件和右键上下文菜单的方法
 date: 2022/10/02 03:28:15
 categories:
-- 极客日常
+- Python随笔
 tags:
 - PyQt5
 - QListView

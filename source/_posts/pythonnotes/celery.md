@@ -1,8 +1,8 @@
 ---
-title: 【极客日常】python轻量级消息队列库celery的应用
+title: 【Python随笔】python轻量级消息队列库celery的应用
 date: 2020/11/29 20:34:25
 categories:
-- 极客日常
+- Python随笔
 tags:
 - python
 - celery

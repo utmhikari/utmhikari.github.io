@@ -1,8 +1,8 @@
 ---
-title: 【极客日常】python的os.walk方法源码分析
+title: 【Python随笔】python的os.walk方法源码分析
 date: 2020/11/15 15:54:30
 categories:
-- 极客日常
+- Python随笔
 tags:
 - python
 - 遍历文件
