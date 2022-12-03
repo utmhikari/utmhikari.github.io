@@ -1,5 +1,5 @@
 ---
-title: 【从零单排Golang】第六话：基于wire的kratos示例项目
+title: 【从零单排Golang】第六话：基于wire的kratos微服务框架示例项目
 date: 2022/12/03 14:50:20
 categories:
 - 从零单排Golang
