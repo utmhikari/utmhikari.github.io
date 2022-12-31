@@ -15,7 +15,7 @@ tags:
 
 [Github传送门](https://github.com/utmhikari/gofromzero)
 
-提起Golang，就不得不提起[kubernetes](https://kubernetes.io/zh/)，在崇尚上云的今天，kubernetes已成为服务端同学必需掌握之学问。在[第三话](https://utmhikari.github.io/2019/09/01/gofromzero/docker_client/)中，我们介绍了docker容器，它相当于虚拟操作系统，可以提供环境供各种不同的应用运行，从而实现轻量部署。但要是业务复杂，需要部署较多应用的话，就会遇到许多运维相关的问题，比如：
+提起Golang，就不得不提起[kubernetes](https://kubernetes.io/zh/)，在崇尚上云的今天，kubernetes已成为服务端同学必需掌握之学问。在[第三话](https://utmhikari.github.io/2019/09/01/gofromzero/03_docker_client/)中，我们介绍了docker容器，它相当于虚拟操作系统，可以提供环境供各种不同的应用运行，从而实现轻量部署。但要是业务复杂，需要部署较多应用的话，就会遇到许多运维相关的问题，比如：
 
 - 应用关联的资源很多都需要持久化存储，它们的存储空间需要怎样分配及调度呢？
 - 不同地域的应用，如何取得相互联系？
