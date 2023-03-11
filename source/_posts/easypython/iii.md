@@ -7,7 +7,7 @@ tags:
 - python
 - 教程
 - 爬虫
-- HTTP
+- BeautifulSoup
 - HTML
 ---
 
