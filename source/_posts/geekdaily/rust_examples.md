@@ -6,7 +6,7 @@ categories:
 tags:
 - rust
 - 教程
-- 笔记
+- 面试
 - 函数式编程
 - 编程
 ---

@@ -7,7 +7,7 @@ tags:
 - python
 - 教程
 - 知识总结
-- 笔记
+- 编程
 - easy python
 ---
 
