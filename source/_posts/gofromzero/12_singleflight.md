@@ -15,7 +15,7 @@ tags:
 
 ## singleflight的应用场景
 
-singleflight主要解决单服务处理高并发任务问题。假设业务有一个【获取Token】的场景，存在如下的实际约束：
+singleflight主要解决单服务处理高并发任务问题，尤其是服务冷启动时候没有足够请求hit到缓存的场景。假设业务有一个【获取Token】的场景，存在如下的实际约束：
 
 - 访问方式：一个业务（Business），获取一个特定区域（Region）的Token
 - Token区域：分为欧亚美非四个区域，每个区域获取Token的时间不一样，但无论怎么输入，都需要【几秒】后才能得到结果
@@ -30,8 +30,9 @@ singleflight主要解决单服务处理高并发任务问题。假设业务有�
 - 当一类任务被触发时，用一个mutex加锁，直到任务完成之后，才解锁
 - 用一个map来存储所有任务Key和任务锁
 - 如果某类任务在运行时，又被其它来源触发一次，那么这些触发只需要自己做轮询，等任务完成拿结果就行
+- 缓存这些任务执行的结果，短期内生效
 
-但这样的方式，实现起来，也是非常麻烦的。而通过singleflight，就可以直截了当解决这个问题。
+但这样的方式，实现起来，也是非常麻烦的。而通过singleflight，就可以解决掉除了缓存之外的其它问题。
 
 ## singleflight的写法
 
@@ -148,6 +149,8 @@ func TestGetToken(t *testing.T) {
 
 任务总共有1000个，但实际运行到`getToken`函数的次数，仅仅只有4次。这样，就达到了预期的效果。
 
+最后需要注意的是，考虑到一般获取Token的逻辑，Token本身一般会有生效时间。因此最好在`getToken`逻辑中，增加一个缓存结果的逻辑，这样后续的获取Token任务就不必再多等几秒钟才能拿到结果了，可以优先走缓存。
+
 ## singleflight的源码分析
 
 singleflight的用法明白了，进阶地，我们可以看一下singleflight源码怎么实现的。
@@ -211,7 +214,7 @@ func (g *Group) Do(key string, fn func() (interface{}, error)) (v interface{}, e
 整个逻辑大致如下：
 
 - 任务已经在运行（即`c, ok := g.m[key]; ok`分支）：增加并发计数，等待wg，直接返回结果
-- 任务没有运行：初始化call实例，注册到Group中，增加wg计数，doCall
+- 任务没有运行：初始化call实例，注册到Group中，增加wg计数，doCall运行任务
 
 在doCall中的逻辑如下：
 
