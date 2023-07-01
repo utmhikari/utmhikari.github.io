@@ -8,7 +8,7 @@ tags:
 - start-fastapi
 - python
 - 装饰器模式
-- 后端
+- 后端开发
 ---
 
 近期项目组准备做一个新的工具，因此自个儿做的[start-fastapi](https://github.com/utmhikari/start-fastapi)框架正好能派上用场试试水。在起草需求搭建最初框架的时候也逐步发现原先的start-fastapi有一些不足的地方，因此做了一些针对性的优化。
