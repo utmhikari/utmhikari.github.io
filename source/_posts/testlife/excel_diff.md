@@ -6,9 +6,9 @@ categories:
 tags:
 - 游戏策划
 - 游戏测试
-- excel
+- excel-diff
 - diff算法
-- 策划表
+- python
 ---
 
 国内的游戏研发团队里许多策划同学都习惯采用excel作为配表工具。因此对策划同学校对与QA同学验收工作来说，需要相应的diff工具去检测excel文件的变更，从而能够尽早发现配表的问题。为此，在笔者启动的游戏效率工具集[gameff-toolset](https://github.com/utmhikari/gameff-toolset)小项目中，首个小脚本便做了excel diff。
