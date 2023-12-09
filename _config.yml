@@ -81,7 +81,7 @@ deploy:
 - type: git
   repo: git@github.com:utmhikari/utmhikari.github.io.git
   branch: master
-- type: baidu_url_submitter
+# - type: baidu_url_submitter
 
 # 改一下baidu_url_submitter的generator的源码，replace域名= =
 baidu_url_submit:
