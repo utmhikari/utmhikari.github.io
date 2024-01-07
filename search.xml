@@ -1,6 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>【极客日常】慢查询的风险治理思路</title>
+    <url>/2024/01/07/testlife/slow_query_risk/</url>
+    <content><![CDATA[<p>在线上环境运维过程中，我们通常需要治理慢查询的风险。慢查询会引起DB性能问题，并且当线上环境流量较大的情况下，就会出现因大量慢查询堆积导致DB被打挂的情况。因此，本篇文章分享一下慢查询的风险治理思路。</p>
+<p>首先，我们需要知道什么情况下会出现慢查询。通常对于大表，未正确引用索引导致全表扫描，就会出现慢查询。慢查询出现也会经历从无到有的过程，而为何从无到有，就涉及到业务变更。以下几种业务变更场景就有可能导致慢查询的产生：</p>
+<a id="more"></a>
+<ul>
+<li>业务代码变更：代码逻辑没有正确引用索引</li>
+<li>DML变更：WHERE条件没有正确引用索引</li>
+<li>DDL索引变更：线上代码还引用原来的索引，导致实际索引未引用正确</li>
+</ul>
+<p>慢查询的特征，从业务视角是DB响应速度变慢，而从DB视角是性能占用变大。从事后排查的角度，以MySQL为例，当变更后疑似发生慢查询时，我们可以结合<span class="exturl" data-url="aHR0cHM6Ly9kZXYubXlzcWwuY29tL2RvYy9yZWZtYW4vOC4wL2VuL3Nsb3ctcXVlcnktbG9nLmh0bWw=" title="https://dev.mysql.com/doc/refman/8.0/en/slow-query-log.html">Slow Query Log<i class="fa fa-external-link"></i></span>与<span class="exturl" data-url="aHR0cHM6Ly9kZXYubXlzcWwuY29tL2RvYy9yZWZtYW4vOC4wL2VuL215c3FsZHVtcHNsb3cuaHRtbA==" title="https://dev.mysql.com/doc/refman/8.0/en/mysqldumpslow.html">mysqldumpslow<i class="fa fa-external-link"></i></span>来查看具体是哪些查询语句出现了慢查询。</p>
+<p>之后，我们才需要针对可能出现慢查询的场景，设定预防的手段，尽可能避免事后止损。针对上述几种变更风险，我们可以各个击破：</p>
+<ul>
+<li>业务代码变更：代码引用DB扫描、线下查询治理</li>
+<li>DML变更：EXPLAIN</li>
+<li>DDL索引变更：代码引用DB扫描、线下查询治理</li>
+</ul>
+<p>DML变更的情况比较好解。我们可以通过<span class="exturl" data-url="aHR0cHM6Ly9kZXYubXlzcWwuY29tL2RvYy9yZWZtYW4vOC4wL2VuL2V4cGxhaW4uaHRtbA==" title="https://dev.mysql.com/doc/refman/8.0/en/explain.html">EXPLAIN<i class="fa fa-external-link"></i></span>的手段解析DML（查询逻辑）预期会使用到的索引、扫描行数和影响行数。如果查询的是大表，并且没有引用索引，或者扫描/影响行数过高，则需要注意真实执行时候，可能会造成慢查影响。</p>
+<p>业务代码或DDL索引变更的情况，则需要把变更内容扫描和线下治理关联上，来确定当次变更是否有风险。在业务代码线下测试的过程中，我们可以通过比如提取ORM-Log的方式解析一些先下代码生成的SQL，然后放到线上库EXPLAIN，从而发现线下变更可能导致线上慢查的一些case。在代码变更发布到线上的时候，一方面可以通过分析代码引用来判断代码是否正确引用索引，另一方面也可以再次确认线下发现的SQL风险是否已经确认修复，从而避免风险夹带到线上。DDL索引变更同理，在执行DDL前，也可以通过血缘关系找到上游的服务，根据服务代码历史的分析结果以及线下提取SQL的记录，来判断变更后会否出现索引未正确引用的情况。</p>
+]]></content>
+      <categories>
+        <category>极客日常</category>
+      </categories>
+      <tags>
+        <tag>后端开发</tag>
+        <tag>SQL</tag>
+        <tag>数据库</tag>
+        <tag>变更风险</tag>
+        <tag>慢查询</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>【测试人生】数据同步和迁移的变更注意事项</title>
     <url>/2023/12/09/testlife/data_sync_warn/</url>
     <content><![CDATA[<p>数据同步或者迁移操作也算是线上数据变更的一种类型。由于涉及的数据量非常大，一旦发生故障，会直接影响线上业务，并且较难止损。从变更风险管控的角度考虑，数据同步或迁移操作也需要走合理的发布窗口，并且在操作前也需要做足够的影响分析。本文就来聊一下数据同步和迁移的变更期间注意事项。</p>
@@ -17,9 +49,9 @@
       <tags>
         <tag>质量管理</tag>
         <tag>质量保障</tag>
-        <tag>变更管控</tag>
         <tag>数据变更</tag>
         <tag>数据迁移</tag>
+        <tag>变更风险</tag>
       </tags>
   </entry>
   <entry>
@@ -237,10 +269,10 @@
       </categories>
       <tags>
         <tag>DevOps</tag>
-        <tag>变更管控</tag>
         <tag>数据变更</tag>
         <tag>持续集成</tag>
         <tag>批量刷数</tag>
+        <tag>变更风险</tag>
       </tags>
   </entry>
   <entry>
@@ -268,8 +300,8 @@
         <tag>MySQL</tag>
         <tag>DevOps</tag>
         <tag>SQL</tag>
-        <tag>变更管控</tag>
         <tag>数据库</tag>
+        <tag>变更风险</tag>
       </tags>
   </entry>
   <entry>
@@ -453,9 +485,9 @@
       <tags>
         <tag>DevOps</tag>
         <tag>SQL</tag>
-        <tag>变更管控</tag>
         <tag>数据变更</tag>
         <tag>持续集成</tag>
+        <tag>变更风险</tag>
       </tags>
   </entry>
   <entry>

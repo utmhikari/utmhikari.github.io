@@ -2,9 +2,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://utmhikari.github.io/2024/01/07/testlife/slow_query_risk/</loc>
+    
+    <lastmod>2024-01-07T08:30:36.200Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://utmhikari.github.io/2023/06/03/testlife/data_change_background/</loc>
+    
+    <lastmod>2024-01-07T07:53:35.118Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://utmhikari.github.io/2023/07/08/testlife/sql_change_block/</loc>
+    
+    <lastmod>2024-01-07T07:53:32.774Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://utmhikari.github.io/2023/07/09/testlife/data_wash_risk/</loc>
+    
+    <lastmod>2024-01-07T07:53:32.774Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://utmhikari.github.io/2023/12/09/testlife/data_sync_warn/</loc>
     
-    <lastmod>2023-12-09T14:31:11.975Z</lastmod>
+    <lastmod>2024-01-07T07:53:32.772Z</lastmod>
     
   </url>
   
@@ -86,20 +114,6 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2023/07/09/testlife/data_wash_risk/</loc>
-    
-    <lastmod>2023-07-09T03:16:21.536Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://utmhikari.github.io/2023/07/08/testlife/sql_change_block/</loc>
-    
-    <lastmod>2023-07-08T06:04:33.882Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://utmhikari.github.io/2023/07/01/gofromzero/12_singleflight/</loc>
     
     <lastmod>2023-07-01T12:51:14.435Z</lastmod>
@@ -159,13 +173,6 @@
     <loc>http://utmhikari.github.io/2020/05/23/geekdaily/ue4_http_server/</loc>
     
     <lastmod>2023-06-09T16:19:56.594Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://utmhikari.github.io/2023/06/03/testlife/data_change_background/</loc>
-    
-    <lastmod>2023-06-03T09:02:52.908Z</lastmod>
     
   </url>
   

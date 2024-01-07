@@ -101,14 +101,14 @@
 
 
   <meta name="description" content="在DB做变更发布的各类场景当中，通过SQL更改DB数据内容，是最为常见的场景。既然是最为常见的场景，那么可能产生线上问题的概率也就越大。本篇文章就来探讨一下，要尽量减少SQL发布产生线上问题的可能性，需要采取什么样的手段。 首先是针对SQL语句本身而言，需要做积累检查。假设用的是MySQL，那么SQL类型大体可能分为以下几种：  新增类：CREATE表/列/索引、INSERT数据 更改类：UPDA">
-<meta name="keywords" content="MySQL,DevOps,SQL,变更管控,数据库">
+<meta name="keywords" content="MySQL,DevOps,SQL,数据库,变更风险">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【测试人生】SQL变更的问题拦截手段">
 <meta property="og:url" content="http://utmhikari.github.io/2023/07/08/testlife/sql_change_block/index.html">
 <meta property="og:site_name" content="HiKariのTechLab">
 <meta property="og:description" content="在DB做变更发布的各类场景当中，通过SQL更改DB数据内容，是最为常见的场景。既然是最为常见的场景，那么可能产生线上问题的概率也就越大。本篇文章就来探讨一下，要尽量减少SQL发布产生线上问题的可能性，需要采取什么样的手段。 首先是针对SQL语句本身而言，需要做积累检查。假设用的是MySQL，那么SQL类型大体可能分为以下几种：  新增类：CREATE表/列/索引、INSERT数据 更改类：UPDA">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2023-07-08T06:04:33.882Z">
+<meta property="og:updated_time" content="2024-01-07T07:53:32.774Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【测试人生】SQL变更的问题拦截手段">
 <meta name="twitter:description" content="在DB做变更发布的各类场景当中，通过SQL更改DB数据内容，是最为常见的场景。既然是最为常见的场景，那么可能产生线上问题的概率也就越大。本篇文章就来探讨一下，要尽量减少SQL发布产生线上问题的可能性，需要采取什么样的手段。 首先是针对SQL语句本身而言，需要做积累检查。假设用的是MySQL，那么SQL类型大体可能分为以下几种：  新增类：CREATE表/列/索引、INSERT数据 更改类：UPDA">
@@ -446,12 +446,24 @@
                 
               
 
-              <time title="创建时间：2023-07-08 14:03:51 / 修改时间：14:04:33" itemprop="dateCreated datePublished" datetime="2023-07-08T14:03:51+08:00">2023-07-08</time>
+              <time title="创建时间：2023-07-08 14:03:51" itemprop="dateCreated datePublished" datetime="2023-07-08T14:03:51+08:00">2023-07-08</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-01-07 15:53:32" itemprop="dateModified" datetime="2024-01-07T15:53:32+08:00">2024-01-07</time>
               
             
           </span>
@@ -566,9 +578,9 @@
           
             <a href="/tags/SQL/" rel="tag"># SQL</a>
           
-            <a href="/tags/变更管控/" rel="tag"># 变更管控</a>
-          
             <a href="/tags/数据库/" rel="tag"># 数据库</a>
+          
+            <a href="/tags/变更风险/" rel="tag"># 变更风险</a>
           
         </div>
       
@@ -655,7 +667,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">150</span>
+                    <span class="site-state-item-count">151</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1569,7 +1581,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">411</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">412</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1681,7 +1697,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2019 – <span itemprop="copyrightYear">2023</span>
+        <div class="copyright">&copy; 2019 – <span itemprop="copyrightYear">2024</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
