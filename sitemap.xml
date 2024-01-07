@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://utmhikari.github.io/about/index.html</loc>
+    
+    <lastmod>2024-01-07T08:58:23.174Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://utmhikari.github.io/2024/01/07/testlife/slow_query_risk/</loc>
     
     <lastmod>2024-01-07T08:30:36.200Z</lastmod>
@@ -327,13 +334,6 @@
     <loc>http://utmhikari.github.io/2022/11/20/testlife/navi_autotest/</loc>
     
     <lastmod>2022-11-20T04:43:02.994Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://utmhikari.github.io/about/index.html</loc>
-    
-    <lastmod>2022-11-06T12:34:14.221Z</lastmod>
     
   </url>
   
