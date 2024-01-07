@@ -5,8 +5,8 @@ categories:
 - 测试人生
 tags:
 - DevOps
-- 变更管控
 - 数据变更
+- 变更风险
 - 持续集成
 - SQL
 ---
