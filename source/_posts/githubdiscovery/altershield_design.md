@@ -1,5 +1,5 @@
 ---
-title: 【极客日常】蚂蚁变更管控平台AlterShield设计分析
+title: 【GitHub探索】蚂蚁变更管控平台AlterShield设计分析
 date: 2024/02/04 15:06:42
 categories:
 - 极客日常
@@ -13,7 +13,7 @@ tags:
 
 技术风险，作为质量保障领域的重要的一环，主要研究如何通过解决方案和技术手段，解决企业内业务在基础运维、日常运营和变更上线过程中的稳定性问题，保证业务风险得到收敛。在国内，蚂蚁金服在这个方向上有沉淀很多方法论和实践经验。变更管控是技术风险地一个子领域，主要的目标是在变更过程中，通过对变更流程的管控介入，提前发现变更过程存在的事故风险，或者阻止变更过程的错误进一步扩大影响面。在这个子领域，蚂蚁开源了[AlterShield变更管控平台](https://altershield.io/zh-CN/docs/introduction/what-is-altershield/)，提供了一套变更风险防御的解决方案。今天，本文就浅析下AlterShield平台整体的设计，适用的场景以及局限性。
 
-AlterShield整体的[技术架构](https://altershield.io/zh-CN/blog/welcome-altershield-v0.1)，主要包含几块部分：
+AlterShield的源码可以参考这个[GitHub-Repo](https://github.com/traas-stack/altershield)。整体的[技术架构](https://altershield.io/zh-CN/blog/welcome-altershield-v0.1)，主要包含几块部分：
 
 <!-- more -->
 
