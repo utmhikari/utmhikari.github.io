@@ -2,7 +2,7 @@
 title: 【GitHub探索】蚂蚁变更管控平台AlterShield设计分析
 date: 2024/02/04 15:06:42
 categories:
-- 极客日常
+- GitHub探索
 tags:
 - 后端开发
 - 变更风险
