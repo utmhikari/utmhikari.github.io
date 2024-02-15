@@ -100,24 +100,25 @@
 
 
 
-  <meta name="description" content="talk is cheap, code is rich">
-<meta name="keywords" content="code, life">
-<meta property="og:type" content="website">
-<meta property="og:title" content="HiKariのTechLab">
-<meta property="og:url" content="http://utmhikari.github.io/categories/极客日常/index.html">
+  <meta name="description" content="技术风险，作为质量保障领域的重要的一环，主要研究如何通过解决方案和技术手段，解决企业内业务在基础运维、日常运营和变更上线过程中的稳定性问题，保证业务风险得到收敛。在国内，蚂蚁金服在这个方向上有沉淀很多方法论和实践经验。变更管控是技术风险地一个子领域，主要的目标是在变更过程中，通过对变更流程的管控介入，提前发现变更过程存在的事故风险，或者阻止变更过程的错误进一步扩大影响面。在这个子领域，蚂蚁开源了A">
+<meta name="keywords" content="后端开发,质量保障,DevOps,变更风险,AlterShield">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【GitHub探索】蚂蚁变更管控平台AlterShield设计分析">
+<meta property="og:url" content="http://utmhikari.github.io/2024/02/04/githubdiscovery/altershield_design/index.html">
 <meta property="og:site_name" content="HiKariのTechLab">
-<meta property="og:description" content="talk is cheap, code is rich">
+<meta property="og:description" content="技术风险，作为质量保障领域的重要的一环，主要研究如何通过解决方案和技术手段，解决企业内业务在基础运维、日常运营和变更上线过程中的稳定性问题，保证业务风险得到收敛。在国内，蚂蚁金服在这个方向上有沉淀很多方法论和实践经验。变更管控是技术风险地一个子领域，主要的目标是在变更过程中，通过对变更流程的管控介入，提前发现变更过程存在的事故风险，或者阻止变更过程的错误进一步扩大影响面。在这个子领域，蚂蚁开源了A">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2024-02-15T01:37:00.523Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HiKariのTechLab">
-<meta name="twitter:description" content="talk is cheap, code is rich">
+<meta name="twitter:title" content="【GitHub探索】蚂蚁变更管控平台AlterShield设计分析">
+<meta name="twitter:description" content="技术风险，作为质量保障领域的重要的一环，主要研究如何通过解决方案和技术手段，解决企业内业务在基础运维、日常运营和变更上线过程中的稳定性问题，保证业务风险得到收敛。在国内，蚂蚁金服在这个方向上有沉淀很多方法论和实践经验。变更管控是技术风险地一个子领域，主要的目标是在变更过程中，通过对变更流程的管控介入，提前发现变更过程存在的事故风险，或者阻止变更过程的错误进一步扩大影响面。在这个子领域，蚂蚁开源了A">
 
 
 
 
 
 
-  <link rel="canonical" href="http://utmhikari.github.io/categories/极客日常/">
+  <link rel="canonical" href="http://utmhikari.github.io/2024/02/04/githubdiscovery/altershield_design/">
 
 
 
@@ -127,7 +128,7 @@
   };
 </script>
 
-  <title>分类: 极客日常 | HiKariのTechLab</title>
+  <title>【GitHub探索】蚂蚁变更管控平台AlterShield设计分析 | HiKariのTechLab</title>
   
 
 
@@ -175,7 +176,7 @@
     
   
 
-  <div class="container sidebar-position-right ">
+  <div class="container sidebar-position-right page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -268,7 +269,7 @@
         
         
           
-          <li class="menu-item menu-item-categories menu-item-active">
+          <li class="menu-item menu-item-categories">
 
     
     
@@ -382,324 +383,263 @@
           
             
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
           
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block category">
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h2>极客日常<small>分类</small>
-        </h2>
-      </div>
-
-      
-        
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2024/02/04/githubdiscovery/altershield_design/">
 
-      <h3 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
         
-          <a class="post-title-link" href="/2024/02/04/githubdiscovery/altershield_design/" itemprop="url">
-            
-              <span itemprop="name">【GitHub探索】蚂蚁变更管控平台AlterShield设计分析</span>
-            
-          </a>
         
-      </h3>
+          <h2 class="post-title" itemprop="name headline">【GitHub探索】蚂蚁变更管控平台AlterShield设计分析
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2024-02-04T15:06:42+08:00" content="2024-02-04">
-          02-04
-        </time>
-      </div>
+              
+            
+          </h2>
+        
 
-    </header>
-  </article>
+        <div class="post-meta">
+          <span class="post-time">
 
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2024-02-04 15:06:42" itemprop="dateCreated datePublished" datetime="2024-02-04T15:06:42+08:00">2024-02-04</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-02-15 09:37:00" itemprop="dateModified" datetime="2024-02-15T09:37:00+08:00">2024-02-15</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/极客日常/" itemprop="url" rel="index"><span itemprop="name">极客日常</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/2024/01/07/testlife/slow_query_risk/" itemprop="url">
-            
-              <span itemprop="name">【极客日常】慢查询的风险治理思路</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2024-01-07T16:30:08+08:00" content="2024-01-07">
-          01-07
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/2023/11/04/geekdaily/code_optimization_ways/" itemprop="url">
-            
-              <span itemprop="name">【极客日常】一些通用的代码优化治理经验</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2023-11-04T18:57:52+08:00" content="2023-11-04">
-          11-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/2023/05/01/geekdaily/rust_examples/" itemprop="url">
-            
-              <span itemprop="name">【极客日常】初体验rust语言</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2023-05-01T15:01:44+08:00" content="2023-05-01">
-          05-01
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/2023/05/01/geekdaily/chatgpt_baguwen_shock/" itemprop="url">
-            
-              <span itemprop="name">【极客日常】聊聊ChatGPT对于八股文程序员的冲击</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2023-05-01T01:38:26+08:00" content="2023-05-01">
-          05-01
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/2022/11/24/geekdaily/python_and_game_autotest_notes/" itemprop="url">
-            
-              <span itemprop="name">【极客日常】游戏测试开发干货——Python进阶与游戏自动化测试攻略</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2022-11-24T20:08:06+08:00" content="2022-11-24">
-          11-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/2022/06/17/geekdaily/vue3_array_update/" itemprop="url">
-            
-              <span itemprop="name">【极客日常】vue3中实现Array数组更新的方法</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2022-06-17T20:59:28+08:00" content="2022-06-17">
-          06-17
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/2022/06/05/geekdaily/electron_motrix_launcher/" itemprop="url">
-            
-              <span itemprop="name">【极客日常】通过motrix启动逻辑初探electron的项目结构</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2022-06-05T12:40:18+08:00" content="2022-06-05">
-          06-05
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/2021/10/19/geekdaily/redis_make_jemalloc_error/" itemprop="url">
-            
-              <span itemprop="name">【极客日常】一种解决redis源码编译时jemalloc报No such file or directory错误的方法</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2021-10-19T23:32:16+08:00" content="2021-10-19">
-          10-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/2021/10/01/geekdaily/reduce_function/" itemprop="url">
-            
-              <span itemprop="name">【极客日常】理解javascript/python中reduce操作的含义</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2021-10-01T12:56:21+08:00" content="2021-10-01">
-          10-01
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+        <p>技术风险，作为质量保障领域的重要的一环，主要研究如何通过解决方案和技术手段，解决企业内业务在基础运维、日常运营和变更上线过程中的稳定性问题，保证业务风险得到收敛。在国内，蚂蚁金服在这个方向上有沉淀很多方法论和实践经验。变更管控是技术风险地一个子领域，主要的目标是在变更过程中，通过对变更流程的管控介入，提前发现变更过程存在的事故风险，或者阻止变更过程的错误进一步扩大影响面。在这个子领域，蚂蚁开源了<span class="exturl" data-url="aHR0cHM6Ly9hbHRlcnNoaWVsZC5pby96aC1DTi9kb2NzL2ludHJvZHVjdGlvbi93aGF0LWlzLWFsdGVyc2hpZWxkLw==" title="https://altershield.io/zh-CN/docs/introduction/what-is-altershield/">AlterShield变更管控平台<i class="fa fa-external-link"></i></span>，提供了一套变更风险防御的解决方案。今天，本文就浅析下AlterShield平台整体的设计，适用的场景以及局限性。</p>
+<p>AlterShield的源码可以参考这个<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3RyYWFzLXN0YWNrL2FsdGVyc2hpZWxk" title="https://github.com/traas-stack/altershield">GitHub-Repo<i class="fa fa-external-link"></i></span>。整体的<span class="exturl" data-url="aHR0cHM6Ly9hbHRlcnNoaWVsZC5pby96aC1DTi9ibG9nL3dlbGNvbWUtYWx0ZXJzaGllbGQtdjAuMQ==" title="https://altershield.io/zh-CN/blog/welcome-altershield-v0.1">技术架构<i class="fa fa-external-link"></i></span>，主要包含几块部分：</p>
+<a id="more"></a>
+<ul>
+<li>OCMS-SDK：面向变更渠道和K8S运维平台的接入层，约定了统一的变更信息协议和变更技术协议的定义</li>
+<li>Defender-Framework：变更防御框架，提供异常检测、发布窗口封禁等变更防御能力，用于检测变更风险</li>
+<li>Analyzer-Framework：变更分析框架，提供影响面分析、变更分级等变更过程分析能力，用于提前分析变更内容，为变更防御能力提供上下文信息输入</li>
+</ul>
+<p>最底层的核心概念，是变更信息协议和变更技术协议。首先是变更信息协议，整个协议描述了一次变更最基础的5W1H信息：</p>
+<ul>
+<li>Who：变更人</li>
+<li>When：变更时间</li>
+<li>Why：变更背景</li>
+<li>Where：变更渠道</li>
+<li>How：变更操作</li>
+<li>What：变更对象</li>
+</ul>
+<p>任何渠道任意变更操作，其中的上下文信息都可以用这个5W1H表示法描述，简洁方便，利于定位和回溯。</p>
+<p>其次是变更技术协议。变更技术协议提出了变更代际的概念，用于描述变更防控能力可介入变更过程的不同方式。变更代际这个概念粗看很有阿里味，比较难以理解，但我们如果分变更渠道和AlterShield视角来看的话，不难发现不同的变更代际实际代表着变更渠道可选接入AlterShield的不同方式。一些变更渠道可选只提供事件信息，另一些变更渠道也可以选择在变更不同阶段引用AlterShield的拦截卡口，从变更渠道方视角，不需要非常关注具体有什么变更防御能力启用，只需要注册自身的接入方式，给定几个可应用防控能力的切点即可；而从AlterShield角度，只需要给业务开放能力，让业务可针对不同平台发布，配置不同切面能力，从而达到变更防控的效果。</p>
+<p>变更代际这样的模式，需要依赖AlterShield的开发方和主流的变更渠道做到深度密切的配合，也需要企业内部为所有变更渠道约定一套变更流程的规范作为代际概念的支撑。因此，如果变更管控平台不是和变更渠道深度共建，以及对于变更渠道的变更流程规范约束不强烈的话，引用变更代际的模式可能不够灵活，但需要保证至少有G0（变更事件）的接入方案。对于高发布频次，与业务核心链路强相关的发布渠道，需要有粒度更高（代际更大）的接入方案，去尽可能在更多的时间点发现更多的变更风险。</p>
+<p>最后简单看一下变更防御能力。当前在文档中，介绍了4种变更防御能力：</p>
+<ul>
+<li>时序指标异常检测：给定一批检测指标，对比变更期间这批指标跟变更前、历史变更的相似度，来推断本次变更是否有指标异常</li>
+<li>日志异常检测：检测错误日志中，是否有错误或者异常堆栈信息</li>
+<li>链路异常检测：检测一条上下链路上，变更期间是否有某个节点突然发生异常</li>
+<li>配置值自适应校验：训练既往的变更内容，推断更新的KV是否可能有人工填写错误问题</li>
+</ul>
+<p>变更防御能力的方案基本是通用的，而且像日志异常、配置校验等能力，在能力基础上，需要支持业务自定义。指标、日志和链路异常检测，如果能够结合企业内部对于性能打点、日志收集、链路打标等基础架构能力进行建设，是更加合适且具备远见的方式。</p>
 
       
     </div>
 
+    
+
+    
+    
+    
+
+    
+      
+<div style="border: 1px solid black; margin-top: 32px; margin-bottom: 32px">
+  <div style="margin-left:10px">
+    <span style="font-weight:bold">版权声明</span>
+    <br>
+    <span>本文为博客<a href="https://utmhikari.github.io" style="color:#258FC6">HiKariのTechLab</a>原创文章，转载请标明出处，谢谢~~~</span>
+  </div>
+</div>
+
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/后端开发/" rel="tag"># 后端开发</a>
+          
+            <a href="/tags/质量保障/" rel="tag"># 质量保障</a>
+          
+            <a href="/tags/DevOps/" rel="tag"># DevOps</a>
+          
+            <a href="/tags/变更风险/" rel="tag"># 变更风险</a>
+          
+            <a href="/tags/AlterShield/" rel="tag"># AlterShield</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2024/01/07/testlife/slow_query_risk/" rel="next" title="【极客日常】慢查询的风险治理思路">
+                <i class="fa fa-chevron-left"></i> 【极客日常】慢查询的风险治理思路
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/categories/极客日常/page/2/">2</a><a class="page-number" href="/categories/极客日常/page/3/">3</a><a class="extend next" rel="next" href="/categories/极客日常/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
-  </nav>
+  </article>
 
 
+  </div>
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -1910,6 +1850,10 @@
 
 
   
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
 
   
 
@@ -1927,6 +1871,8 @@
 
   
 
+
+  
 
 
   
