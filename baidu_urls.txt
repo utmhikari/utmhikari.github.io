@@ -1,3 +1,4 @@
+http://utmhikari.top/2024/03/03/geekdaily/release_check_optimization/
 http://utmhikari.top/2024/02/15/geekdaily/sustainable_architecture/
 http://utmhikari.top/2024/02/04/githubdiscovery/altershield_design/
 http://utmhikari.top/2024/01/07/testlife/slow_query_risk/
@@ -97,4 +98,3 @@ http://utmhikari.top/2020/10/24/testlife/unreal_automator/
 http://utmhikari.top/2020/10/18/geekdaily/fjsonobject_to_ustruct/
 http://utmhikari.top/2020/10/06/geekdaily/idea_change_config_path/
 http://utmhikari.top/2020/09/06/testlife/be_a_tester/
-http://utmhikari.top/2020/09/06/testlife/game_autotest/
