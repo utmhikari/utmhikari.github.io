@@ -1,0 +1,2351 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta name="baidu-site-verification" content="sc1B5Cxcoz">
+  <meta name="google-site-verification" content="OLcRj7lMnauxKrhFT3Q8Nvcexgv22NvlEmVZShKQKR8">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link rel="stylesheet" href="//cdn.staticfile.org/font-awesome/4.6.2/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/uploads/apple-touch.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/uploads/favicon-32x32.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/uploads/favicon-16x16.png?v=7.0.1">
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.1',
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"fadeIn","sidebar":"fadeIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="在2年以前的一篇文章中，讲述了游戏UI自动化方案GAutomator的基础机理、使用方式和一些工具扩展的想法。今天，趁着Game Of AutoTest系列的连载，结合游戏自动化技术选型一文，笔者将深入剖析GAutomator作为UE4安卓游戏UI自动化方案的实现机理，以及自己在实际工作中对GAutomator的优化实践。 工作原理GAutomator是这样的调用链路：">
+<meta name="keywords" content="游戏自动化,UE4,自动化测试,UI自动化,GAutomator">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【测试人生】GAutomator安卓UE4版本的实现机理与优化实战">
+<meta property="og:url" content="http://utmhikari.github.io/2022/09/12/testlife/gautomator_ue4_android/index.html">
+<meta property="og:site_name" content="HiKariのTechLab">
+<meta property="og:description" content="在2年以前的一篇文章中，讲述了游戏UI自动化方案GAutomator的基础机理、使用方式和一些工具扩展的想法。今天，趁着Game Of AutoTest系列的连载，结合游戏自动化技术选型一文，笔者将深入剖析GAutomator作为UE4安卓游戏UI自动化方案的实现机理，以及自己在实际工作中对GAutomator的优化实践。 工作原理GAutomator是这样的调用链路：">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2024-04-07T02:48:06.928Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【测试人生】GAutomator安卓UE4版本的实现机理与优化实战">
+<meta name="twitter:description" content="在2年以前的一篇文章中，讲述了游戏UI自动化方案GAutomator的基础机理、使用方式和一些工具扩展的想法。今天，趁着Game Of AutoTest系列的连载，结合游戏自动化技术选型一文，笔者将深入剖析GAutomator作为UE4安卓游戏UI自动化方案的实现机理，以及自己在实际工作中对GAutomator的优化实践。 工作原理GAutomator是这样的调用链路：">
+
+
+
+
+
+
+  <link rel="canonical" href="http://utmhikari.github.io/2022/09/12/testlife/gautomator_ue4_android/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>【测试人生】GAutomator安卓UE4版本的实现机理与优化实战 | HiKariのTechLab</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HiKariのTechLab</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">光の技术屋</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+  
+
+  
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="关注HiKariのGithub" aria-label="关注HiKariのGithub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></span>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2022/09/12/testlife/gautomator_ue4_android/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">【测试人生】GAutomator安卓UE4版本的实现机理与优化实战
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2022-09-12 17:34:58" itemprop="dateCreated datePublished" datetime="2022-09-12T17:34:58+08:00">2022-09-12</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/测试人生/" itemprop="url" rel="index"><span itemprop="name">测试人生</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjAvMDUvMDUvdGVzdGxpZmUvdHJ5X2dhdXRvbWF0b3Iv" title="https://utmhikari.top/2020/05/05/testlife/try_gautomator/">2年以前的一篇文章<i class="fa fa-external-link"></i></span>中，讲述了游戏UI自动化方案<code>GAutomator</code>的基础机理、使用方式和一些工具扩展的想法。今天，趁着<code>Game Of AutoTest</code>系列的连载，结合<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjIvMDgvMTMvZ2FtZW9mYXV0b3Rlc3QvaWkv" title="https://utmhikari.top/2022/08/13/gameofautotest/ii/">游戏自动化技术选型<i class="fa fa-external-link"></i></span>一文，笔者将深入剖析<code>GAutomator</code>作为<code>UE4</code>安卓游戏UI自动化方案的实现机理，以及自己在实际工作中对<code>GAutomator</code>的优化实践。</p>
+<h2 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h2><p><code>GAutomator</code>是这样的调用链路：</p>
+<a id="more"></a>
+<ul>
+<li>PC和手机的连通 <ul>
+<li><code>GAutomator</code>插件被启用编译，启动时在手机内启动一个<code>tcp-server</code></li>
+<li>PC端<code>GAClient</code>通过<code>adb forward</code>转发端口，然后连到手机内的<code>tcp-server</code></li>
+</ul>
+</li>
+<li>获取控件 <ul>
+<li>通过给<code>GAutomator-Server</code>发送<code>DUMP_TREE</code>命令，获取控件树的<code>XML</code>字符串</li>
+<li>PC端<code>GAClient</code>接收到的控件树数据，可以被我们自己的业务逻辑取到，因此我们可以通过自定义的筛选条件找到对应控件的<code>Element</code></li>
+</ul>
+</li>
+<li>点击控件 <ul>
+<li>PC端<code>GAClient</code>通过筛选控件得到的，或是自定义的<code>Element</code>，给到<code>click</code>接口</li>
+<li><code>click</code>接口发送<code>GET_ELEMENTS_BOUND</code>命令，根据<code>Element</code>信息，查询到对应控件在视口中的坐标</li>
+<li>获取坐标后，用<code>adb input tap</code>点击屏幕</li>
+</ul>
+</li>
+</ul>
+<h2 id="UE-SDK"><a href="#UE-SDK" class="headerlink" title="UE-SDK"></a>UE-SDK</h2><p><code>GAutomator</code>的<code>UE-SDK</code>实质是一个<code>UE4</code>插件，按需启用。</p>
+<h3 id="插件启动"><a href="#插件启动" class="headerlink" title="插件启动"></a>插件启动</h3><p>插件启动时，会启动一个<code>TCP-Server</code>监听设备的某个端口，接取命令请求。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 插件启动</span></span><br><span class="line"><span class="keyword">void</span> FGAutomatorModule::StartupModule()</span><br><span class="line">&#123;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> defined PLATFORM_IOS || defined __ANDROID__</span></span><br><span class="line">	CommandDispatcherPtr = <span class="keyword">new</span> WeTestU3DAutomation::FCommandDispatcher();</span><br><span class="line">	CommandDispatcherPtr-&gt;Initialize();</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// CommandDispatcher初始化</span></span><br><span class="line"><span class="keyword">bool</span> FCommandDispatcher::Initialize()</span><br><span class="line">&#123;</span><br><span class="line">    SocketListenerThreadInstance = FRunnableThread::Create(<span class="keyword">this</span>, TEXT(<span class="string">"GAutomatorListenerThread"</span>));</span><br><span class="line">    <span class="keyword">return</span> SocketListenerThreadInstance != <span class="literal">nullptr</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 服务主循环</span></span><br><span class="line">uint32 FConnectionHandler::Run()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">bool</span> result = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">do</span></span><br><span class="line">    &#123;</span><br><span class="line">        result = HandleOneCommand();</span><br><span class="line">    &#125; <span class="keyword">while</span> (result);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// handle命令</span></span><br><span class="line"><span class="keyword">bool</span> FConnectionHandler::HandleOneCommand() </span><br><span class="line">&#123;</span><br><span class="line">     <span class="comment">// 获取头部长度信息</span></span><br><span class="line">    int32 length = RecvIntLength(); </span><br><span class="line">    <span class="keyword">if</span> (length &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 获取命令请求body</span></span><br><span class="line">    TArray&lt;uint8&gt; BodyBinrary;</span><br><span class="line">    <span class="keyword">bool</span> RecvContentResult = RecvContent(length, BodyBinrary);</span><br><span class="line">    <span class="keyword">if</span> (!RecvContentResult) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    FString ContentStr = StringFromBinaryArray(BodyBinrary);</span><br><span class="line">    UE_LOG(GALog, Log, TEXT(<span class="string">"Recv command:%s"</span>), *ContentStr);</span><br><span class="line">    TSharedPtr&lt;FJsonValue&gt; JsonParsed;</span><br><span class="line">    TSharedRef&lt; TJsonReader&lt;TCHAR&gt; &gt; JsonReader = TJsonReaderFactory&lt;TCHAR&gt;::Create(ContentStr);</span><br><span class="line">    <span class="keyword">bool</span> BFlag = FJsonSerializer::Deserialize(JsonReader, JsonParsed);</span><br><span class="line">    <span class="keyword">if</span> (!BFlag) &#123;</span><br><span class="line">        UE_LOG(GALog, Error, TEXT(<span class="string">"Deserialize request to json failed.\n %s"</span>));</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// handle-command并返回</span></span><br><span class="line">    FString Response;</span><br><span class="line">    <span class="keyword">bool</span> res= HandleCommandInGameThread(JsonParsed, Response);</span><br><span class="line">    length= <span class="keyword">this</span>-&gt;SendData(Response);</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>根据不同的命令码，内部会<code>dispatch</code>到不同<code>handler</code>去运行得到对应命令的结果。</p>
+<h3 id="控件信息获取"><a href="#控件信息获取" class="headerlink" title="控件信息获取"></a>控件信息获取</h3><p><code>GAutomator</code>最重要的一个功能是控件树导出，其实现如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取控件树xml字符串</span></span><br><span class="line"><span class="function">FString <span class="title">GetCurrentWidgetTree</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    TSharedPtr&lt;FXmlFile&gt; xml = CreateFXmlFile();</span><br><span class="line">    FString XmlStr;</span><br><span class="line">    FXmlNode* RootNode = xml-&gt;GetRootNode();</span><br><span class="line">    <span class="comment">// 遍历每层可见的根UUserWidget实例</span></span><br><span class="line">    <span class="keyword">for</span> (TObjectIterator&lt;UUserWidget&gt; Itr; Itr; ++Itr)</span><br><span class="line">    &#123;</span><br><span class="line">        UUserWidget* UserWidget = *Itr;</span><br><span class="line">        <span class="keyword">if</span> (UserWidget == <span class="literal">nullptr</span> || !UserWidget-&gt;GetIsVisible() || UserWidget-&gt;WidgetTree == <span class="literal">nullptr</span>) &#123;</span><br><span class="line">            UE_LOG(GALog, Log, TEXT(<span class="string">"UUserWidget Iterator get a null(unvisible) UUserWidget"</span>));</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 迭代向下遍历</span></span><br><span class="line">        ForWidgetAndChildren(UserWidget-&gt;WidgetTree-&gt;RootWidget, RootNode);</span><br><span class="line">    &#125;</span><br><span class="line">    WriteNodeHierarchy(*RootNode, FString(), XmlStr);</span><br><span class="line">    <span class="keyword">return</span> MoveTemp(XmlStr);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">ForWidgetAndChildren</span><span class="params">(UWidget* Widget, FXmlNode* Parent)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 过滤无效widget</span></span><br><span class="line">    <span class="keyword">if</span> (Widget == <span class="literal">nullptr</span> || Parent == <span class="literal">nullptr</span> || !Widget-&gt;IsVisible()) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 提取UWidget实例信息</span></span><br><span class="line">    FXmlNode* WidgetXmlNode = TransformUmg2XmlElement(Widget, Parent);</span><br><span class="line">    <span class="comment">// 遍历Named-Slot，参考：https://docs.unrealengine.com/5.0/en-US/using-named-slots-in-umg-for-unreal-engine/</span></span><br><span class="line">    <span class="keyword">if</span> (INamedSlotInterface* NamedSlotHost = Cast&lt;INamedSlotInterface&gt;(Widget))</span><br><span class="line">    &#123;</span><br><span class="line">        TArray&lt;FName&gt; SlotNames;</span><br><span class="line">        NamedSlotHost-&gt;GetSlotNames(SlotNames);</span><br><span class="line">        <span class="keyword">for</span> (FName SlotName : SlotNames)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (UWidget* SlotContent = NamedSlotHost-&gt;GetContentForSlot(SlotName))</span><br><span class="line">            &#123;</span><br><span class="line">                ForWidgetAndChildren(SlotContent, WidgetXmlNode);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 遍历Panel-Widget</span></span><br><span class="line">    <span class="keyword">if</span> (UPanelWidget* PanelParent = Cast&lt;UPanelWidget&gt;(Widget))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (int32 ChildIndex = <span class="number">0</span>; ChildIndex &lt; PanelParent-&gt;GetChildrenCount(); ChildIndex++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (UWidget* ChildWidget = PanelParent-&gt;GetChildAt(ChildIndex))</span><br><span class="line">            &#123;</span><br><span class="line">                ForWidgetAndChildren(ChildWidget, WidgetXmlNode);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>机理上，会从所有的<code>Root Widget</code>开始向下遍历，拿到每个<code>Widget</code>的数据<br>而获取控件坐标方面，会涉及寻找控件的逻辑。在<code>UE4</code>插件内部，<code>GAutomator</code>默认支持通过控件名的方式查找：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">const</span> UWidget* <span class="title">FindUWidgetObject</span><span class="params">(<span class="keyword">const</span> FString&amp; name)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (TObjectIterator&lt;UUserWidget&gt; Itr; Itr; ++Itr)</span><br><span class="line">    &#123;</span><br><span class="line">        UUserWidget* UserWidget = *Itr;</span><br><span class="line">        <span class="keyword">if</span> (UserWidget == <span class="literal">nullptr</span> || !UserWidget-&gt;GetIsVisible() || UserWidget-&gt;WidgetTree == <span class="literal">nullptr</span>) &#123;</span><br><span class="line">            UE_LOG(GALog, Log, TEXT(<span class="string">"UUserWidget Iterator get a null(unvisible) UUserWidget"</span>));</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 通过控件名寻找控件</span></span><br><span class="line">        UWidget* Widget = UserWidget-&gt;GetWidgetFromName(FName(*name));</span><br><span class="line">        <span class="keyword">if</span> (Widget != <span class="literal">nullptr</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> Widget;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>机理上，会遍历所有根控件，调用<code>GetWidgetFromName</code>方法，找到的第一个<code>Widget</code>即返回。而之后获取屏幕视口坐标，则会从<code>CachedGeometry</code>获取到：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">bool</span> FUWidgetHelper::GetElementBound(<span class="keyword">const</span> FString&amp; name, FBoundInfo&amp; BoundInfo)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">const</span> UWidget* WidgetPtr = FindUWidgetObject(name);</span><br><span class="line">    <span class="comment">// 由GetCachedGeometry获取渲染几何信息</span></span><br><span class="line">    <span class="keyword">const</span> FGeometry geometry = WidgetPtr-&gt;GetCachedGeometry();</span><br><span class="line">    FVector2D Position = geometry.GetAbsolutePosition();</span><br><span class="line">    FVector2D Size = geometry.GetAbsoluteSize();</span><br><span class="line">    BoundInfo.x = Position.X / WidthScale;</span><br><span class="line">    BoundInfo.y = Position.Y / HeightScale;</span><br><span class="line">    BoundInfo.width = Size.X / WidthScale;</span><br><span class="line">    BoundInfo.height = Size.Y / HeightScale;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="优化手段"><a href="#优化手段" class="headerlink" title="优化手段"></a>优化手段</h3><p><code>GAutomator</code>的<code>UE-SDK</code>在实现上，现在还存在许多不足，在笔者的实际应用中发现，很多地方没有考虑到。比如：</p>
+<ul>
+<li>不支持<code>ListView</code>子空间的信息拉取</li>
+<li>不支持富文本控件</li>
+<li>不支持图片控件</li>
+<li>不支持输入控件输入内容</li>
+<li>不能通过<code>UniqueID</code>查询控件<ul>
+<li>如果出现控件名重复，或者动态生成控件的情况，会难以定位到，甚至每次都只能查到第一个</li>
+</ul>
+</li>
+<li>不能一次性返回控件基础+坐标信息<ul>
+<li>若业务侧一开始查询控件树，不会一次性返回控件坐标，执行控件操作还需要额外再查询一次</li>
+</ul>
+</li>
+<li>PC游戏无法实现点击按下等操作</li>
+</ul>
+<p>因此在实际业务中，笔者做了如下的优化，可供参考：</p>
+<ul>
+<li>支持<code>ListView</code>子控件的信息提取逻辑</li>
+<li>支持富文本控件信息提取（这个看具体项目富文本控件实现而定）</li>
+<li>支持以资源路径为图片控件的文本信息，利于筛选特定图片</li>
+<li>支持对<code>EditableText</code>等控件输入内容</li>
+<li>支持通过<code>UniqueID</code>查询控件</li>
+<li>支持拉取控件树时，一次性返回控件基础信息+视口坐标信息</li>
+<li>支持<code>Broadcast</code>控件委托来实现点击按下等操作，从而支持PC端游戏的控件操作</li>
+</ul>
+<h2 id="GA-Client"><a href="#GA-Client" class="headerlink" title="GA-Client"></a>GA-Client</h2><p><code>GAutomator</code>的PC端<code>Client</code>主要的内容集中在<code>GAutomatorAndroid</code>以及<code>GAutomatorIos</code>下，本文以<code>GAutomatorAndroid</code>的部分为例，讲述<code>GA-Client</code>的核心实现。</p>
+<p><code>GAutomatorAndroid</code>项目本身杂糅了很多<code>wetest</code>相关的内容，以及很多无比粗糙的代码，这部分内容其实和<code>GA-Client</code>核心逻辑没有太大的联系。如果自己写一个<code>GA-Client</code>的话，可能只需要五分之一的代码量就可以了。</p>
+<h3 id="核心逻辑"><a href="#核心逻辑" class="headerlink" title="核心逻辑"></a>核心逻辑</h3><p><code>GA-Client</code>的核心部分在于<code>GameEngine</code>，所有与游戏内<code>SDK</code>交互的逻辑，都集中在这里：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># engine.py</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GameEngine</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, address, port,uiauto_interface)</span>:</span></span><br><span class="line">        self.address = address</span><br><span class="line">        self.port = port</span><br><span class="line">        self.sdk_version = <span class="literal">None</span></span><br><span class="line">        <span class="comment"># 初始化SocketClient实例，用以和游戏SDK通信</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, <span class="number">3</span>):</span><br><span class="line">            <span class="keyword">try</span> :</span><br><span class="line">                self.socket = SocketClient(self.address, self.port)</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                logger.error(e)</span><br><span class="line">                time.sleep(<span class="number">20</span>)</span><br><span class="line">                ret = forward(self.port, unity_sdk_port)  <span class="comment"># with retry...</span></span><br><span class="line">        <span class="comment"># 初始化UIAutomator实例</span></span><br><span class="line">        self.ui_device = uiauto_interface</span><br></pre></td></tr></table></figure>
+<p>在<code>GameEngine</code>实例初始化的时候，会生成一个连接游戏内<code>SDK</code>的<code>socket</code>实例，以及一个<code>uiautomator</code>实例<code>ui_device</code>。当游戏需要和<code>native-ui</code>交互的时候（比如QQ登录），就需要<code>uiautomator</code>的支持（然而在<code>GameEngine</code>的基础方法里，<code>ui_device</code>实例没有发挥作用）。</p>
+<p>当我们向游戏SDK发送命令的时候，会调用到<code>socket</code>的<code>send_command</code>方法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># engine.py</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GameEngine</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_get_dump_tree</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""获取控件树"""</span></span><br><span class="line">        ret = self.socket.send_command(Commands.DUMP_TREE)</span><br><span class="line">    	<span class="keyword">return</span> ret</span><br><span class="line"></span><br><span class="line">        </span><br><span class="line"><span class="comment"># socket_client.py</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SocketClient</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">send_command</span><span class="params">(self, cmd, params=None, timeout=<span class="number">20</span>)</span>:</span></span><br><span class="line">        <span class="string">"""发送命令，带重试机制"""</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> params:</span><br><span class="line">            params = <span class="string">""</span></span><br><span class="line">        command = &#123;&#125;</span><br><span class="line">        command[<span class="string">"cmd"</span>] = cmd</span><br><span class="line">        command[<span class="string">"value"</span>] = params</span><br><span class="line">        <span class="keyword">for</span> retry <span class="keyword">in</span> range(<span class="number">0</span>, <span class="number">2</span>):</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                self.socket.settimeout(timeout)</span><br><span class="line">                self._send_data(command)</span><br><span class="line">                ret = self._recv_data()</span><br><span class="line">                <span class="keyword">return</span> ret</span><br><span class="line">            <span class="keyword">except</span>:</span><br><span class="line">                <span class="comment"># 这里忽略异常处理/重连逻辑</span></span><br><span class="line">                <span class="keyword">pass</span></span><br><span class="line">        <span class="keyword">raise</span> Exception(<span class="string">'Socket Error'</span>)</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">_send_data</span><span class="params">(self, data)</span>:</span></span><br><span class="line">        <span class="string">"""发送数据"""</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            serialized = json.dumps(data)</span><br><span class="line">        <span class="keyword">except</span> (TypeError, ValueError) <span class="keyword">as</span> e:</span><br><span class="line">            <span class="keyword">raise</span> WeTestInvaildArg(<span class="string">'You can only send JSON-serializable data'</span>)</span><br><span class="line">        length = len(serialized)</span><br><span class="line">        buff = struct.pack(<span class="string">"i"</span>, length)</span><br><span class="line">        self.socket.send(buff)</span><br><span class="line">        <span class="keyword">if</span> six.PY3:</span><br><span class="line">            self.socket.sendall(bytes(serialized, encoding=<span class="string">'utf-8'</span>))</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self.socket.sendall(serialized)</span><br></pre></td></tr></table></figure>
+<p>从代码内容易知，发送命令的方式是：</p>
+<ul>
+<li>用<code>json.dumps</code>序列化命令<code>cmd</code>和参数<code>params</code></li>
+<li>在序列化数据前<code>pack</code>一个<code>int</code>长度信息，把它和数据连起来发送给游戏内<code>SDK</code></li>
+<li>游戏内<code>SDK</code>先<code>recv</code>长度信息，再根据长度信息<code>recv</code>对应长度的数据，用<code>json.loads</code>反序列化，就得到原始命令和参数</li>
+</ul>
+<p>当接收到数据时，也是跟游戏内<code>SDK</code>接收数据相同的方式。具体的实现在<code>recv_package</code>里：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># socket_client.py</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SocketClient</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">recv_package</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="comment"># 拉取长度信息</span></span><br><span class="line">        length_buffer = self.socket.recv(<span class="number">4</span>)</span><br><span class="line">        <span class="keyword">if</span> length_buffer:</span><br><span class="line">            total = struct.unpack_from(<span class="string">"i"</span>, length_buffer)[<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">raise</span> WeTestSDKError(<span class="string">'recv length is None?'</span>)</span><br><span class="line">        <span class="comment"># 拉取数据，开total长度的memoryview作为buffer</span></span><br><span class="line">        view = memoryview(bytearray(total))</span><br><span class="line">        next_offset = <span class="number">0</span></span><br><span class="line">        <span class="keyword">while</span> total - next_offset &gt; <span class="number">0</span>:</span><br><span class="line">            recv_size = self.socket.recv_into(view[next_offset:], total - next_offset)</span><br><span class="line">            next_offset += recv_size</span><br><span class="line">        <span class="comment"># 反序列化数据</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">if</span> six.PY3:</span><br><span class="line">                deserialized = json.loads(str(view.tobytes(), encoding=<span class="string">'utf-8'</span>))</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                deserialized = json.loads(view.tobytes())</span><br><span class="line">            <span class="keyword">return</span> deserialized</span><br><span class="line">        <span class="keyword">except</span> (TypeError, ValueError) <span class="keyword">as</span> e:</span><br><span class="line">            <span class="keyword">raise</span> WeTestInvaildArg(<span class="string">'Data received was not in JSON format'</span>)</span><br></pre></td></tr></table></figure>
+<p>类似<code>dump_tree</code>这种命令，返回的是<code>xml-string</code>，相当于是没有二次封装过的控件树。而类似<code>click</code>这种操作命令，实际用到的就是<code>adb shell input</code>这一系列的命令了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># engine.py</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GameEngine</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">click</span><span class="params">(self, locator)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> locator <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        <span class="keyword">if</span> isinstance(locator, Element):  <span class="comment"># 考虑入参Element的情况</span></span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                bound = self.get_element_bound(locator)</span><br><span class="line">                <span class="keyword">if</span> bound:</span><br><span class="line">                    <span class="keyword">return</span> self.click_position(bound.x + bound.width / <span class="number">2</span>, bound.y + bound.height / <span class="number">2</span>)</span><br><span class="line">            <span class="keyword">except</span> WeTestRuntimeError <span class="keyword">as</span> e:</span><br><span class="line">                logger.error(<span class="string">"Get element(&#123;0&#125;) bound faild &#123;1&#125;"</span>.format(locator, e.message))</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        <span class="keyword">else</span>:  <span class="comment"># 忽略只给ElementBound以及其他情况</span></span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">click_position</span><span class="params">(self, x, y)</span>:</span></span><br><span class="line">        x = int(x)</span><br><span class="line">        y = int(y)</span><br><span class="line">        cmd = <span class="string">"shell input tap "</span> + str(x) + <span class="string">" "</span> + str(y)</span><br><span class="line">        excute_adb_process(cmd)  <span class="comment"># adb shell input tap</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># adb_process.py</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">excute_adb_process</span><span class="params">(cmd, serial=None)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> serial:</span><br><span class="line">        command = <span class="string">"adb -s &#123;0&#125; &#123;1&#125;"</span>.format(serial, cmd)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        command = <span class="string">"adb &#123;0&#125;"</span>.format(cmd)</span><br><span class="line">	<span class="comment"># popen一个adb命令进程，执行命令</span></span><br><span class="line">    ret = <span class="string">""</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">3</span>):</span><br><span class="line">        p = subprocess.Popen(command, shell=<span class="literal">True</span>, stderr=subprocess.STDOUT, stdout=subprocess.PIPE)</span><br><span class="line">        lines = p.stdout.readlines()</span><br><span class="line">        ret = <span class="string">""</span></span><br><span class="line">        <span class="keyword">for</span> line <span class="keyword">in</span> lines:</span><br><span class="line">            ret += str(line) + <span class="string">"\n"</span></span><br><span class="line">        <span class="keyword">if</span> <span class="string">"no devices/emulators found"</span> <span class="keyword">in</span> ret <span class="keyword">or</span> <span class="string">"device offline"</span> <span class="keyword">in</span> ret:</span><br><span class="line">            logger.error(<span class="string">"rety in excute_adb_process"</span>)</span><br><span class="line">            time.sleep(<span class="number">20</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> ret</span><br><span class="line">    <span class="keyword">return</span> ret</span><br></pre></td></tr></table></figure>
+<h3 id="优化手段-1"><a href="#优化手段-1" class="headerlink" title="优化手段"></a>优化手段</h3><p>从<code>GA-Client</code>核心逻辑的实现可以看到，有很多地方是值得精简的。以笔者的经验为例，是按照自己自动化框架约定，重写了一版<code>GA-Client</code>。具体是做了以下优化：</p>
+<ul>
+<li>单独分离出设备接口模块，用以统一管理设备信息和操作<ul>
+<li>设备序列号、<code>adb</code>命令、<code>shell</code>命令，都在这个模块执行</li>
+</ul>
+</li>
+<li><code>GA-Client</code>和<code>uiautomator</code>分离，做成插件的形式<ul>
+<li><code>GAutomator</code>和<code>uiautomator</code>的操作，比如点击按下这些，就可以由设备接口模块执行</li>
+</ul>
+</li>
+<li>控件树的<code>XML</code>字符串做二次封装，对每个控件抽象成<code>Widget</code>类<ul>
+<li>单独做一个<code>GA</code>操作接口模块，传入<code>Widget</code>类实例就可以对控件做操作</li>
+<li><code>Widget</code>类做一些更复杂的控件筛选功能，这块就不需要游戏内<code>SDK</code>来深入做了</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+      
+<div style="border: 1px solid black; margin-top: 32px; margin-bottom: 32px">
+  <div style="margin-left:10px">
+    <span style="font-weight:bold">版权声明</span>
+    <br>
+    <span>本文为博客<a href="https://utmhikari.github.io" style="color:#258FC6">HiKariのTechLab</a>原创文章，转载请标明出处，谢谢~~~</span>
+  </div>
+</div>
+
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/游戏自动化/" rel="tag"># 游戏自动化</a>
+          
+            <a href="/tags/UE4/" rel="tag"># UE4</a>
+          
+            <a href="/tags/自动化测试/" rel="tag"># 自动化测试</a>
+          
+            <a href="/tags/UI自动化/" rel="tag"># UI自动化</a>
+          
+            <a href="/tags/GAutomator/" rel="tag"># GAutomator</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/09/04/gameofautotest/iii/" rel="next" title="【Game Of AutoTest】3、游戏自动化测试的框架设计">
+                <i class="fa fa-chevron-left"></i> 【Game Of AutoTest】3、游戏自动化测试的框架设计
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2022/10/02/pythonnotes/pyqt_listview_fileviewer/" rel="prev" title="【Python随笔】PyQt5的QListView兼容左键双击事件和右键上下文菜单的方法">
+                【Python随笔】PyQt5的QListView兼容左键双击事件和右键上下文菜单的方法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="ひかり.HDQ">
+            
+              <p class="site-author-name" itemprop="name">ひかり.HDQ</p>
+              <div class="site-description motion-element" itemprop="description">talk is cheap, code is rich</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">155</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">415</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="GitHub &rarr; https://github.com/utmhikari"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="bWFpbHRvOmhkcTk0MDYyM0AxMjYuY29t" title="Mail &rarr; mailto:hdq940623@126.com"><i class="fa fa-fw fa-envelope"></i>Mail</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly90ZXN0ZXJob21lLmNvbS91dG1oaWthcmk=" title="TesterHome &rarr; https://testerhome.com/utmhikari"><i class="fa fa-fw fa-tumblr"></i>TesterHome</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vaWQvdXRtaGlrYXJp" title="Steam &rarr; https://steamcommunity.com/id/utmhikari"><i class="fa fa-fw fa-steam"></i>Steam</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9zcGFjZS5iaWxpYmlsaS5jb20vMTUwNzUxMTQv" title="Bilibili &rarr; https://space.bilibili.com/15075114/"><i class="fa fa-fw fa-bold"></i>Bilibili</span>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#工作原理"><span class="nav-number">1.</span> <span class="nav-text">工作原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UE-SDK"><span class="nav-number">2.</span> <span class="nav-text">UE-SDK</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#插件启动"><span class="nav-number">2.1.</span> <span class="nav-text">插件启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#控件信息获取"><span class="nav-number">2.2.</span> <span class="nav-text">控件信息获取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优化手段"><span class="nav-number">2.3.</span> <span class="nav-text">优化手段</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GA-Client"><span class="nav-number">3.</span> <span class="nav-text">GA-Client</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#核心逻辑"><span class="nav-number">3.1.</span> <span class="nav-text">核心逻辑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优化手段-1"><span class="nav-number">3.2.</span> <span class="nav-text">优化手段</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2019 – <span itemprop="copyrightYear">2024</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ひかり.HDQ</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="//cdn.staticfile.org/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script src="//cdn.staticfile.org/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+
+  
+  <script src="//cdn.staticfile.org/velocity/1.2.1/velocity.min.js"></script>
+
+  
+  <script src="//cdn.staticfile.org/velocity/1.2.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.1"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.1"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+  <script src="/js/src/exturl.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('5');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'manual') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+if ($('body').find('pre.mermaid').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.staticfile.org/mermaid/8.0.0-rc.8/mermaid.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      mermaid.initialize({
+        theme: 'dark',
+        logLevel: 3,
+        flowchart: { curve: 'linear' },
+        gantt: { axisFormat: '%m/%d/%Y' },
+        sequence: { actorMargin: 50 }
+      });
+    }
+  });
+}
+</script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+  $('.highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,2359 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta name="baidu-site-verification" content="sc1B5Cxcoz">
+  <meta name="google-site-verification" content="OLcRj7lMnauxKrhFT3Q8Nvcexgv22NvlEmVZShKQKR8">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link rel="stylesheet" href="//cdn.staticfile.org/font-awesome/4.6.2/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/uploads/apple-touch.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/uploads/favicon-32x32.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/uploads/favicon-16x16.png?v=7.0.1">
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.1',
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"fadeIn","sidebar":"fadeIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="自动化在技术层面上，除了基础的技术选型之外，最终还是需要落实到具体的工具框架，才能够助力我们自动化脚本开发的过程。因此，本文将讲述一下如何对游戏自动化测试框架进行设计。 在上一篇文章讲到，自动化测试的方式可以有客户端、服务器、编辑器三种方式，除了编辑器需要强依赖引擎层面的特性之外，其他两种自动化方式在工具或者框架的技术实现上有这么几个特点：  框架模块设计具有共通性，只是最终执行自动化用例/脚本的">
+<meta name="keywords" content="python,自动化测试,自动化框架,BDD,依赖注入">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Game Of AutoTest】3、游戏自动化测试的框架设计">
+<meta property="og:url" content="http://utmhikari.github.io/2022/09/04/gameofautotest/iii/index.html">
+<meta property="og:site_name" content="HiKariのTechLab">
+<meta property="og:description" content="自动化在技术层面上，除了基础的技术选型之外，最终还是需要落实到具体的工具框架，才能够助力我们自动化脚本开发的过程。因此，本文将讲述一下如何对游戏自动化测试框架进行设计。 在上一篇文章讲到，自动化测试的方式可以有客户端、服务器、编辑器三种方式，除了编辑器需要强依赖引擎层面的特性之外，其他两种自动化方式在工具或者框架的技术实现上有这么几个特点：  框架模块设计具有共通性，只是最终执行自动化用例/脚本的">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2024-04-07T02:48:06.919Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【Game Of AutoTest】3、游戏自动化测试的框架设计">
+<meta name="twitter:description" content="自动化在技术层面上，除了基础的技术选型之外，最终还是需要落实到具体的工具框架，才能够助力我们自动化脚本开发的过程。因此，本文将讲述一下如何对游戏自动化测试框架进行设计。 在上一篇文章讲到，自动化测试的方式可以有客户端、服务器、编辑器三种方式，除了编辑器需要强依赖引擎层面的特性之外，其他两种自动化方式在工具或者框架的技术实现上有这么几个特点：  框架模块设计具有共通性，只是最终执行自动化用例/脚本的">
+
+
+
+
+
+
+  <link rel="canonical" href="http://utmhikari.github.io/2022/09/04/gameofautotest/iii/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>【Game Of AutoTest】3、游戏自动化测试的框架设计 | HiKariのTechLab</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HiKariのTechLab</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">光の技术屋</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+  
+
+  
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="关注HiKariのGithub" aria-label="关注HiKariのGithub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></span>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2022/09/04/gameofautotest/iii/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">【Game Of AutoTest】3、游戏自动化测试的框架设计
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2022-09-04 15:52:17" itemprop="dateCreated datePublished" datetime="2022-09-04T15:52:17+08:00">2022-09-04</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Game-Of-AutoTest/" itemprop="url" rel="index"><span itemprop="name">Game Of AutoTest</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>自动化在技术层面上，除了基础的技术选型之外，最终还是需要落实到具体的工具框架，才能够助力我们自动化脚本开发的过程。因此，本文将讲述一下如何对游戏自动化测试框架进行设计。</p>
+<p>在<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjIvMDgvMTMvZ2FtZW9mYXV0b3Rlc3QvaWkv" title="https://utmhikari.top/2022/08/13/gameofautotest/ii/">上一篇文章<i class="fa fa-external-link"></i></span>讲到，自动化测试的方式可以有客户端、服务器、编辑器三种方式，除了编辑器需要强依赖引擎层面的特性之外，其他两种自动化方式在工具或者框架的技术实现上有这么几个特点：</p>
+<ul>
+<li>框架模块设计具有共通性，只是最终执行自动化用例/脚本的方式不同</li>
+<li>许多框架模块可以不依赖游戏本身的特性去实现，可以实现很多企业业务功能的集成</li>
+<li>由于和产品没有太多的耦合，可以做成易于在不同项目测试之间迁移通用的形式</li>
+</ul>
+<p>考虑到当前我国有许多游戏企业的工作习惯是，测试由中台dispatch到各个项目，不直接参与研发过程（Code Review？不存在的），项目产品以提测的方式交付测试，测试侧可以运用自己的测试手法和工具去完成任务。从这样的角度看，拥有一个功能性强且通用的自动化测试工具，不仅是对于项目所需要自动化测试的场景，更是对于测试组整体的技术基建提升而言，都显得非常重要。</p>
+<p>以笔者工作经验为参考，要做到游戏自动化框架得以通用，设计上需要遵循如下准则：</p>
+<a id="more"></a>
+<ul>
+<li>技术集成<ul>
+<li>在自动化逻辑实现方面，尽可能集成更多的自动化底层技术方案</li>
+<li>在自动化业务落地方面，尽可能集成更多报告工具以及通用业务SDK<ul>
+<li>报告工具包括：录屏、截图、日志分析、通用报告输出、IM/邮件推送等</li>
+<li>通用业务SDK：这个比较灵活，根据各个企业内具体业务而定</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>用例隔离<ul>
+<li>业务用例和框架底层相互隔离，通过接口约定或是依赖注入的方式衔接起来</li>
+<li>不同用例之间，在逻辑意义上，不应出现相互的模块引用，有共性的需求需要抽象到框架当中</li>
+<li>不同用例之间，在物理意义上，由框架统一管理各个用例的内容（脚本、配置）和运行时状态，测试人员通过启动框架去间接驱动用例的运行</li>
+</ul>
+</li>
+<li>行为驱动<ul>
+<li>在玩家行为层面上，对于每类玩法以及系统功能，抽象出基础接口集</li>
+<li>在自动化测试层面上，对于每类固化的自动测试流程，抽象出固化的行为策略</li>
+</ul>
+</li>
+</ul>
+<h2 id="技术集成"><a href="#技术集成" class="headerlink" title="技术集成"></a>技术集成</h2><p>技术集成，从一个框架的角度而言，能集成更多的功能肯定是更好的。在技术集成方面需要分成两块考虑，一块是自动化的实现，我们需要把先前提到的各种自动化技术方案都整合进来，大多数业界开源的框架也都是这样做的。</p>
+<p>另一块是具体到业务方面，就是在技术实现的基础上，怎样提升自动化的开发效率，怎样让自动化跟实际测试业务衔接的更好。这一part相比于自动化底层技术实现是更加重要的，因为会影响到自动化框架落地到业务的效果。</p>
+<p>针对后者，开源框架和工具很难你这些，而就算企业内部做的许多技术方案，以笔者的经历来看，基本都缺乏这方面的思考沉淀。因此，如果是从0到1实现自动化测试的情况，建议是从具体业务出发，找一个适用于应用自动化技术的玩法测试场景，实事求是去琢磨一下。</p>
+<h2 id="用例隔离"><a href="#用例隔离" class="headerlink" title="用例隔离"></a>用例隔离</h2><p>用例隔离，包含两个方面，一块是用例逻辑和框架逻辑的隔离，一块是不同用例之间的隔离。</p>
+<p>针对前者，用例和框架的隔离，需要强调框架本身存在的意义是为用例提供运行环境还有便捷的功能接口，不应当依赖于用例本身，或者说，就算是非游戏领域的自动化测试甚至其他需求，用这个框架稍微改装一下就可以完成，这是框架作为底层基础需要达到的效果。</p>
+<p>针对不同用例之间的隔离，严格意义上需要达到的效果是，用例本身的版本迭代是独立的，不同的用例开发者可以在相同版本框架的基础上开发不同的内容，最终这些内容都无冲突地合入到同一个开发分支。如果有可以抽象出来的内容，可以由框架开发者统一整理并入，也可以由用例开发者请求合入（这种情况有冲突的可能性），总之都是为了让框架集成的功能更加丰富。</p>
+<p>在这样的设计基础上，用例的执行是需要框架机制驱动的，以笔者的经验为例，在<code>python</code>框架的场景下，可以参考下述方式实现。首先，框架可以呈现这样的目录结构：</p>
+<ul>
+<li><code>cfg</code>：框架配置</li>
+<li><code>engine</code>：框架核心逻辑</li>
+<li><code>testcases</code>：用例集根目录<ul>
+<li><code>testcase_1</code>：用例1的工作目录<ul>
+<li><code>main.py</code>：用例1的入口</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>main.py</code>：框架入口</li>
+</ul>
+<p>之后，在<code>main.py</code>中，用例开发者需要实现一个<code>run</code>函数，作为真实的用例跑测逻辑。<code>run</code>函数的入参可以是框架的一些特性实例，比如脚本/UI自动化的<code>Handle</code>。从用例开发者角度而言，不需要关心这些<code>Handle</code>的来源，可以直接拿来用；从框架开发者角度而言，框架需要根据用例的运行配置创建这些特性实例，然后<code>inject</code>给用例的<code>run</code>接口。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># testcases/testcase_1/main.py</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(r: RunnerHandle, d: DeviceHandle, s: ScriptHandle, u: UIHandle)</span> -&gt; Result:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    main entry of testcase logic</span></span><br><span class="line"><span class="string">    handles will be automatically injected by the autotest framework</span></span><br><span class="line"><span class="string">    :param r: handle of current runner, use this instance to log or get env-vars of testcase runtime</span></span><br><span class="line"><span class="string">     :param d: handle of device</span></span><br><span class="line"><span class="string">    :param s: handle of script-based autotest</span></span><br><span class="line"><span class="string">    :param u: handle of ui-based autotest</span></span><br><span class="line"><span class="string">    :return: testcase result</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="comment"># 用例：关闭商城界面</span></span><br><span class="line">    r.logger.info(<span class="string">'start testcase_1!'</span>)</span><br><span class="line">    s.send(<span class="string">'print("helloworld")'</span>)</span><br><span class="line">    d.screenshot(<span class="string">'before_close'</span>)</span><br><span class="line">    <span class="keyword">if</span> u.find_and_click(name=<span class="string">'BtnClose_Mall'</span>):</span><br><span class="line">        r.logger.info(<span class="string">'found and clicked close-btn of mall panel'</span>)</span><br><span class="line">        time.sleep(<span class="number">3</span>)</span><br><span class="line">        d.screenshot(<span class="string">'after_close'</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        r.logger.error(<span class="string">'failed to find close-btn of mall panel'</span>)</span><br><span class="line">    <span class="keyword">if</span> s.call(<span class="string">'UIModule.IsInMainPanel()'</span>).boolval():</span><br><span class="line">        <span class="keyword">return</span> Result.ok(message=<span class="string">'successfully closed mall panel'</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> Result.err(message=<span class="string">'failed to close mall panel'</span>)</span><br></pre></td></tr></table></figure>
+<p>最后，框架内部需要有一个通过<code>用例名</code>配置，从而动态<code>import</code>到<code>testcases/用例名</code>下的<code>main</code>模块，并调用<code>run</code>接口的运行机制。从用例开发者的角度，框架配置在<code>cfg</code>目录下指定（命令行也可以），之后运行框架入口脚本<code>main.py</code>，达到运行用例逻辑的效果。</p>
+<h2 id="行为驱动"><a href="#行为驱动" class="headerlink" title="行为驱动"></a>行为驱动</h2><p>（游戏）自动化用例本质是一系列用户（玩家）行为的组装，因此在面向游戏自动化测试的框架设计上，需要充分对游戏行为进行抽象，使得不同的游戏行为能够复用到各个用例当中，减少用例代码量以及编写难度。</p>
+<p>自动化的行为分为两种粒度，一种是测试玩家单个操作的粒度，好比说，打开某个玩法的界面、进入某玩法位面、设置某种画质，甚至是说查询任务进度数据、执行恢复状态GM命令这种，都属于测试玩家的单个操作。这些行为可以随时随地被不同的用例复用，拼装成整个自动化流程</p>
+<p>举个例子，我们有<code>登录游戏</code>以及<code>玩PVP</code>的测试场景，这两个场景会遇到<code>等待加载</code>的过程，因此在自动化逻辑实现上，就可以抽象出<code>等待加载</code>的操作，放到单独的地方。代码实现如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># scene.py，场景模块（公共）</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">is_loading</span><span class="params">()</span> -&gt; bool:</span></span><br><span class="line">    script_handle = ScriptHandle.current()</span><br><span class="line">    resp = script_handle.call(<span class="string">'SceneModule.IsLoading()'</span>)</span><br><span class="line">    <span class="keyword">return</span> resp.boolval()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">wait_for_loading</span><span class="params">(timeout=<span class="number">20</span>, interval=<span class="number">3</span>)</span> -&gt; bool:</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> is_loading():</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(timeout):</span><br><span class="line">        time.sleep(interval)</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> is_loading():</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 登录游戏</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">login_game</span><span class="params">()</span> -&gt; bool:</span></span><br><span class="line">    login_server(player_id=<span class="number">123</span>, server_id=<span class="number">456</span>)</span><br><span class="line">    time.sleep(<span class="number">3</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> scene.wait_for_loading():</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> is_in_game():</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 玩PVP</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">play_pvp</span><span class="params">()</span> -&gt; bool:</span></span><br><span class="line">    start_pvp_match(scene_id=<span class="number">999</span>)</span><br><span class="line">    time.sleep(<span class="number">3</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> scene.wait_for_loading():</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> is_in_pvp():</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">True</span></span><br></pre></td></tr></table></figure>
+<p>第二种粒度的行为是固化的自动化流程，这个流程可以指玩法流程，比如某个副本的行为树逻辑，也可以指测试流程，比如<code>buff</code>效果测试，只要给这个流程指定一些<code>buffID</code>，就可以自动执行<code>addBuff</code>、<code>checkPlayerState</code>之类的测试逻辑。这一类的行为是以第一类的行为为基础搭建而成的，从用例开发者角度来看，只需要自定义流程属性（类似行为树的黑板）以及重载一些流程中钩子函数的实现，就可以把自己需要的自动化逻辑搭建起来。</p>
+<p>比如我们需要实现<code>跑副本</code>的操作，那么我们就可以抽象单独的副本流程出来，尽可能复用到游戏里所有独立的副本当中。我们可以根据<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjEvMDUvMjAvdGVzdGxpZmUvZHVuZ2Vvbl9hdXRvdGVzdC8=" title="https://utmhikari.top/2021/05/20/testlife/dungeon_autotest/">副本自动化测试<i class="fa fa-external-link"></i></span>一文所示的方式去构建一个基础的副本流程类，然后再根据我们游戏的具体情况去实现一版副本跑测类，最后就可以通过这个跑测类来适配所有独立的副本。代码示例如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DungeonBehavior</span>:</span></span><br><span class="line">    <span class="string">"""基础副本流程，参考【副本自动化测试】文章的实现"""</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyGameDungeonBehavior</span><span class="params">(DungeonBehavior)</span>:</span></span><br><span class="line">    <span class="string">"""当前游戏的副本流程实现"""</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, dungeon_id: int, **kwargs)</span>:</span></span><br><span class="line">        DungeonBehavior.__init__(self, **kwargs)</span><br><span class="line">        self._dungeon_id = dungeon_id</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">update_state</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""implement update_state step upon MyGame here"""</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">on_state_changed</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""implement on_state_changed step upon here"""</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ChaosSanctuaryDungeonBehavior</span><span class="params">(MyGameDungeonBehavior)</span>:</span></span><br><span class="line">    <span class="string">"""假设有个叫做【混沌避难所】的副本"""</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, **kwargs)</span>:</span></span><br><span class="line">        MyGameDungeonBehavior.__init__(self, <span class="number">123</span>, **kwargs)</span><br><span class="line">        self.does_diablo_exist = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">update_state</span><span class="params">(self)</span>:</span></span><br><span class="line">        MyGameDungeonBehavior.update_state(self)</span><br><span class="line">        self.does_diablo_exist = entity.has_entity(entity_id=<span class="number">99999</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_state</span><span class="params">(self)</span>:</span></span><br><span class="line">        default_state = MyGameDungeonBehavior.get_state(self)</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f'<span class="subst">&#123;default_state&#125;</span>_<span class="subst">&#123;self.does_diablo_exist&#125;</span>'</span></span><br></pre></td></tr></table></figure>
+<p>如果有条件的话，可以编写行为树框架+可视化工具，甚至是能够实现BDD的原语支持，这样都能进一步提效自动化的开发。</p>
+<p>通过对不同粒度的游戏行为进行抽象，不论是用例编写还是逻辑维护上，容易层度都可以上一个台阶。<strong>这一part的组织，是自动化框架设计当中最为重要的一环。</strong></p>
+<h2 id="模块分层"><a href="#模块分层" class="headerlink" title="模块分层"></a>模块分层</h2><p>基于上述的设计思路，自动化框架可以依据这样的模块分层进行设计：</p>
+<ul>
+<li>框架底层<ul>
+<li>基础逻辑：包括运行时配置管理、环境管理、依赖注入等机制</li>
+<li>技术方案组件/插件化：包括设备操作模块、自动化底层技术、报告工具以及业务SDK等内容</li>
+<li>用例运行：包括配置与脚本加载、用例运行监控、测试结果输出等内容</li>
+</ul>
+</li>
+<li>游戏业务层<ul>
+<li>玩家行为、自动化测试行为的封装</li>
+<li>脚本/UI等自动化底层实现的封装<ul>
+<li>根据每个游戏具体情况开发相关内容</li>
+<li>脚本自动化，建议在游戏代码基础上，编写一层单独的自动化模块，使得拼装游戏脚本代码更加方便</li>
+</ul>
+</li>
+<li>仅适用于本游戏的工具/业务SDK内容</li>
+</ul>
+</li>
+<li>用例层<ul>
+<li>用例运行配置</li>
+<li>准备数据：主要是游戏的配置数据，也可以考虑在脚本代码中动态获取的方式</li>
+<li>用例脚本代码</li>
+</ul>
+</li>
+</ul>
+<h2 id="工具扩展"><a href="#工具扩展" class="headerlink" title="工具扩展"></a>工具扩展</h2><p>如果把自动化框架这个概念向外延伸的话，那么除了基础框架本身之外，还需要周边工具的支持，才能最大化提升自动化测试的体验。<br>这些工具不一定需要集成到框架里，可以包括：</p>
+<ul>
+<li>调试工具：能够实现针对单个脚本/UI自动化逻辑给予即时结果反馈，用于日常开发调试用</li>
+<li>代码生成工具：如行为树/脚本可视化编程、UI录制回放等，用于快速生成模板代码或是自动化逻辑</li>
+<li>准备数据生成工具：用于快速生成某种玩法自动化测试所需的配置/用例数据</li>
+<li>结果可视化工具：用于可视化展现自动化测试的结果</li>
+<li>IDE：IDE可以显著简化研发过程，但IDE研发工作量大，需要考虑投入产出比</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>作为游戏自动化测试框架来讲，既然是底层框架，那么打铁还需自身硬。除了上面说的一些设计理念跟工具选型，一些基础的方面，工程化、产品化的技术原则，比如保证稳定性、易扩展性、易上手性，高内聚低耦合，丰富的文档包装，SLA意识，这些都是通用框架设计落地必须具备的东西。自动化框架之于自动化用例，犹如游戏引擎之于游戏业务逻辑。如果框架开发者不去深入调研业务过程，而是纯粹堆砌自动化底层技术，那这类框架的结果，只能是炒作到大规模<strong>试用</strong>，而永远不可能在单个游戏项目内实现大规模<strong>应用</strong>。遗憾的是，在业界这种半成品依然大行其道。</p>
+<p>最后还是得讲点东西。从游戏测试行业的角度来看，国内许多企业都执行中台测开+项目业务测试+中台/项目专项测试的模式，但由于项目测试通常有较高tick的工作模式，中台的工作模式通常又是同时服务多个项目组，就会造成对于许多专项测试需求，中台的支持效率显得很低，同时各项目测试因为不能及时得到支持，工作产出效能也会有所下降。以研发通用的自动化测试框架为例，建议采取的模式是，中台测试主控基础模块开发与业务特性合入，项目测试直接参与业务特性研发，并能随时申请合入一些自己项目遇到且可以通用给其他项目的内容。这样的开发模式下，不仅可以解决中台测试服务效率的问题，也能充分发挥项目测试的业务理解力和技术生产力，同时也能在不涉及保密问题的条件下最大限度集成各类技术模块。而更重要的，是可以加强不同测试团队之间的交流，减少信息的不对称性，这点从部门战斗力建设角度来讲，着实大有裨益。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+      
+<div style="border: 1px solid black; margin-top: 32px; margin-bottom: 32px">
+  <div style="margin-left:10px">
+    <span style="font-weight:bold">版权声明</span>
+    <br>
+    <span>本文为博客<a href="https://utmhikari.github.io" style="color:#258FC6">HiKariのTechLab</a>原创文章，转载请标明出处，谢谢~~~</span>
+  </div>
+</div>
+
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/自动化测试/" rel="tag"># 自动化测试</a>
+          
+            <a href="/tags/自动化框架/" rel="tag"># 自动化框架</a>
+          
+            <a href="/tags/BDD/" rel="tag"># BDD</a>
+          
+            <a href="/tags/依赖注入/" rel="tag"># 依赖注入</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/08/14/pythonnotes/asgi_uvicorn_fastapi/" rel="next" title="【Python随笔】python的web开发——WSGI、ASGI、uvicorn与FastAPI">
+                <i class="fa fa-chevron-left"></i> 【Python随笔】python的web开发——WSGI、ASGI、uvicorn与FastAPI
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2022/09/12/testlife/gautomator_ue4_android/" rel="prev" title="【测试人生】GAutomator安卓UE4版本的实现机理与优化实战">
+                【测试人生】GAutomator安卓UE4版本的实现机理与优化实战 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="ひかり.HDQ">
+            
+              <p class="site-author-name" itemprop="name">ひかり.HDQ</p>
+              <div class="site-description motion-element" itemprop="description">talk is cheap, code is rich</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">155</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">415</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="GitHub &rarr; https://github.com/utmhikari"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="bWFpbHRvOmhkcTk0MDYyM0AxMjYuY29t" title="Mail &rarr; mailto:hdq940623@126.com"><i class="fa fa-fw fa-envelope"></i>Mail</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly90ZXN0ZXJob21lLmNvbS91dG1oaWthcmk=" title="TesterHome &rarr; https://testerhome.com/utmhikari"><i class="fa fa-fw fa-tumblr"></i>TesterHome</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vaWQvdXRtaGlrYXJp" title="Steam &rarr; https://steamcommunity.com/id/utmhikari"><i class="fa fa-fw fa-steam"></i>Steam</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9zcGFjZS5iaWxpYmlsaS5jb20vMTUwNzUxMTQv" title="Bilibili &rarr; https://space.bilibili.com/15075114/"><i class="fa fa-fw fa-bold"></i>Bilibili</span>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#技术集成"><span class="nav-number">1.</span> <span class="nav-text">技术集成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用例隔离"><span class="nav-number">2.</span> <span class="nav-text">用例隔离</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#行为驱动"><span class="nav-number">3.</span> <span class="nav-text">行为驱动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模块分层"><span class="nav-number">4.</span> <span class="nav-text">模块分层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工具扩展"><span class="nav-number">5.</span> <span class="nav-text">工具扩展</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2019 – <span itemprop="copyrightYear">2024</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ひかり.HDQ</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="//cdn.staticfile.org/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script src="//cdn.staticfile.org/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+
+  
+  <script src="//cdn.staticfile.org/velocity/1.2.1/velocity.min.js"></script>
+
+  
+  <script src="//cdn.staticfile.org/velocity/1.2.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.1"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.1"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+  <script src="/js/src/exturl.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('5');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'manual') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+if ($('body').find('pre.mermaid').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.staticfile.org/mermaid/8.0.0-rc.8/mermaid.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      mermaid.initialize({
+        theme: 'dark',
+        logLevel: 3,
+        flowchart: { curve: 'linear' },
+        gantt: { axisFormat: '%m/%d/%Y' },
+        sequence: { actorMargin: 50 }
+      });
+    }
+  });
+}
+</script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+  $('.highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+  
+
+  
+
+</body>
+</html>

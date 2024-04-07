@@ -1,0 +1,2315 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta name="baidu-site-verification" content="sc1B5Cxcoz">
+  <meta name="google-site-verification" content="OLcRj7lMnauxKrhFT3Q8Nvcexgv22NvlEmVZShKQKR8">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link rel="stylesheet" href="//cdn.staticfile.org/font-awesome/4.6.2/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/uploads/apple-touch.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/uploads/favicon-32x32.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/uploads/favicon-16x16.png?v=7.0.1">
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.1',
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"fadeIn","sidebar":"fadeIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="近期准备开始做electron相关的开发工作，因此借着这个机会就再去了解下electron。在很久以前的文章中有稍微玩过electron+react+antd的脚手架，但也只限于快速开发electron应用，并没有去剖析整个项目结构。因此这次，还是得深入一下。 先前一段时间特别喜欢用开源的Motrix下载器，就是基于electron+vue+aria2去实现的，所以索性就把源码给clone了下来。">
+<meta name="keywords" content="vue,nodejs,electron,ipc,桌面工具开发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【极客日常】通过motrix启动逻辑初探electron的项目结构">
+<meta property="og:url" content="http://utmhikari.github.io/2022/06/05/geekdaily/electron_motrix_launcher/index.html">
+<meta property="og:site_name" content="HiKariのTechLab">
+<meta property="og:description" content="近期准备开始做electron相关的开发工作，因此借着这个机会就再去了解下electron。在很久以前的文章中有稍微玩过electron+react+antd的脚手架，但也只限于快速开发electron应用，并没有去剖析整个项目结构。因此这次，还是得深入一下。 先前一段时间特别喜欢用开源的Motrix下载器，就是基于electron+vue+aria2去实现的，所以索性就把源码给clone了下来。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2024-04-07T02:48:06.919Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【极客日常】通过motrix启动逻辑初探electron的项目结构">
+<meta name="twitter:description" content="近期准备开始做electron相关的开发工作，因此借着这个机会就再去了解下electron。在很久以前的文章中有稍微玩过electron+react+antd的脚手架，但也只限于快速开发electron应用，并没有去剖析整个项目结构。因此这次，还是得深入一下。 先前一段时间特别喜欢用开源的Motrix下载器，就是基于electron+vue+aria2去实现的，所以索性就把源码给clone了下来。">
+
+
+
+
+
+
+  <link rel="canonical" href="http://utmhikari.github.io/2022/06/05/geekdaily/electron_motrix_launcher/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>【极客日常】通过motrix启动逻辑初探electron的项目结构 | HiKariのTechLab</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HiKariのTechLab</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">光の技术屋</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+  
+
+  
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="关注HiKariのGithub" aria-label="关注HiKariのGithub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></span>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2022/06/05/geekdaily/electron_motrix_launcher/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">【极客日常】通过motrix启动逻辑初探electron的项目结构
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2022-06-05 12:40:18" itemprop="dateCreated datePublished" datetime="2022-06-05T12:40:18+08:00">2022-06-05</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/极客日常/" itemprop="url" rel="index"><span itemprop="name">极客日常</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>近期准备开始做<code>electron</code>相关的开发工作，因此借着这个机会就再去了解下<code>electron</code>。在<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMTkvMTAvMjAvZ2Vla2RhaWx5L2VsZWN0cm9uX3JlYWN0Lw==" title="https://utmhikari.top/2019/10/20/geekdaily/electron_react/">很久以前的文章<i class="fa fa-external-link"></i></span>中有稍微玩过<code>electron+react+antd</code>的脚手架，但也只限于快速开发<code>electron</code>应用，并没有去剖析整个项目结构。因此这次，还是得深入一下。</p>
+<p>先前一段时间特别喜欢用开源的<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FnYWx3b29kL01vdHJpeA==" title="https://github.com/agalwood/Motrix">Motrix<i class="fa fa-external-link"></i></span>下载器，就是基于<code>electron+vue+aria2</code>去实现的，所以索性就把源码给<code>clone</code>了下来。本文就从最基础的开始，以<code>Motrix</code>的启动逻辑为入口，来研究下一个<code>electron</code>应用是如何打开的。</p>
+<p>首先看一下<code>Motrix</code>的目录结构，源码基本在<code>src</code>下，呈现这样的层级关系：</p>
+<a id="more"></a>
+<ul>
+<li><code>main</code>：主进程，应用内部逻辑<ul>
+<li><code>configs</code>：内部环境配置</li>
+<li><code>core</code>：软件核心管理逻辑</li>
+<li><code>menus</code>：不同<code>os</code>下的菜单配置</li>
+<li><code>pages</code>：基础页面</li>
+<li><code>ui</code>：各<code>ui</code>相关的<code>Manager</code>逻辑</li>
+<li><code>utils</code>：工具方法库</li>
+<li><code>Application.js</code>：应用入口</li>
+<li><code>Launcher.js</code>：启动器入口</li>
+<li><code>index.js/index.dev.js</code>：程序入口<ul>
+<li><code>index.dev.js</code>相对于<code>index.js</code>只是另外安装了<code>devtools</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>renderer</code>：渲染进程，<code>vue</code>页面逻辑，目录结构也是<code>vue</code>默认的，可以参考<span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vZHJhZ29uaXIvcC84NzExNzYxLmh0bWw=" title="https://www.cnblogs.com/dragonir/p/8711761.html">这篇文章<i class="fa fa-external-link"></i></span><ul>
+<li><code>api</code>：外部接口</li>
+<li><code>assets</code>：资源文件</li>
+<li><code>components</code>：组件页面</li>
+<li><code>pages</code>：应用页面入口，<code>App.vue+main.js</code></li>
+<li><code>router</code>：路由</li>
+<li><code>store</code>：应用内部数据</li>
+<li><code>utils</code>：工具方法库</li>
+<li><code>workers</code>：只有一个<code>tray.worker.js</code>用来绘制托盘<code>icon</code></li>
+</ul>
+</li>
+<li><code>shared</code>：公用逻辑/工具<ul>
+<li><code>aria2</code>：下载工具<code>jslib</code></li>
+<li><code>locales</code>：本地化</li>
+<li><code>utils</code>：公用<code>js</code>工具方法库</li>
+</ul>
+</li>
+</ul>
+<p>从<code>MVC</code>的角度，<code>main</code>主进程的逻辑相当于是<code>model</code>，<code>renderer</code>渲染进程的逻辑相当于是<code>view</code>，而至于<code>controller</code>，可以通过<code>electron</code>支持下的两个进程的<code>ipc</code>事件处理机制来呈现。这一点，我们直接看启动逻辑就能明白。</p>
+<p>运行<code>yarn run dev</code>，会启动<code>.election-vue/dev-runner.js</code>，其中会先初始化<code>renderer</code>和<code>main</code>，然后再启动<code>electron</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// .election-vue/dev-runner.js</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">init</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  greeting()</span><br><span class="line"></span><br><span class="line">  <span class="built_in">Promise</span>.all([startRenderer(), startMain()])</span><br><span class="line">    .then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      startElectron()</span><br><span class="line">    &#125;)</span><br><span class="line">    .catch(<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.error(err)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在<code>startRenderer</code>和<code>startMain</code>中会读取<code>js</code>配置的程序入口，编译后运行。两个进程的入口<code>entry</code>分别是：</p>
+<ul>
+<li>渲染进程：<code>src/pages/index/main.js</code></li>
+<li>主进程：<code>src/main/index.dev.js</code></li>
+</ul>
+<p>首先看渲染进程，运行的入口在这里：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">store.dispatch(<span class="string">'preference/fetchPreference'</span>)</span><br><span class="line">  .then(<span class="function">(<span class="params">config</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.info(<span class="string">'[Motrix] load preference:'</span>, config)</span><br><span class="line">    init(config)</span><br><span class="line">  &#125;)</span><br><span class="line">  .catch(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">    alert(err)</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
+<p>首先会通过<code>preference/fetchPreference</code>这个<code>action</code>来获得应用配置，然后调用<code>init</code>函数启动界面。先看获取配置的逻辑：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/renderer/store/modules/preferences.js</span></span><br><span class="line"><span class="keyword">const</span> actions = &#123;</span><br><span class="line">  fetchPreference (&#123; dispatch &#125;) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve</span>) =&gt;</span> &#123;</span><br><span class="line">      api.fetchPreference()</span><br><span class="line">        .then(<span class="function">(<span class="params">config</span>) =&gt;</span> &#123;</span><br><span class="line">          dispatch(<span class="string">'updatePreference'</span>, config)</span><br><span class="line">          resolve(config)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// src/renderer/api/Api.js</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">Api</span> </span>&#123;</span><br><span class="line">  fetchPreference () &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">this</span>.config = <span class="keyword">this</span>.loadConfig()</span><br><span class="line">      resolve(<span class="keyword">this</span>.config)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">async</span> loadConfig () &#123;</span><br><span class="line">    <span class="keyword">let</span> result = is.renderer()  <span class="comment">// electron-is，包含electron相关的IsXXX工具函数</span></span><br><span class="line">      ? <span class="keyword">await</span> <span class="keyword">this</span>.loadConfigFromNativeStore()</span><br><span class="line">      : <span class="keyword">this</span>.loadConfigFromLocalStorage()</span><br><span class="line"></span><br><span class="line">    result = changeKeysToCamelCase(result)</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  loadConfigFromLocalStorage () &#123;</span><br><span class="line">    <span class="keyword">const</span> result = &#123;&#125;</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">async</span> loadConfigFromNativeStore () &#123;</span><br><span class="line">    <span class="keyword">const</span> result = <span class="keyword">await</span> ipcRenderer.invoke(<span class="string">'get-app-config'</span>)</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到最终获取配置的逻辑落到<code>ipcRenderer.invoke(&#39;get-app-config&#39;)</code>。<code>ipcRenderer</code>相当于是渲染进程里进程间（与<code>Main</code>主进程）通信的<code>handle</code>，这里相当于是向主进程<code>invoke</code>了一个<code>get-app-config</code>事件。在主进程端的<code>ipcMain</code>可以注册这个事件的监听，然后返回对应的数据。<br><code>ipcRenderer</code>和<code>ipcMain</code>的通信，可以查看这两个文档：</p>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cudzNjc2Nob29sLmNuL2VsZWN0cm9ubWFudWFsL2VsZWN0cm9ubWFudWFsLWlwYy1yZW5kZXJlci5odG1s" title="https://www.w3cschool.cn/electronmanual/electronmanual-ipc-renderer.html">ipcRenderer模块<i class="fa fa-external-link"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cudzNjc2Nob29sLmNuL2VsZWN0cm9ubWFudWFsL2VsZWN0cm9ubWFudWFsLWlwYy1tYWluLmh0bWw=" title="https://www.w3cschool.cn/electronmanual/electronmanual-ipc-main.html">ipcMain模块<i class="fa fa-external-link"></i></span></li>
+</ul>
+<p>到这里就暂停，看下主进程的启动，主进程<code>index.js</code>会启用一个<code>Launcher</code>来开始主进程逻辑</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/main/index.js</span></span><br><span class="line">global.launcher = <span class="keyword">new</span> Launcher()</span><br><span class="line"></span><br><span class="line"><span class="comment">// src/main/Launcher.js</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">Launcher</span> <span class="keyword">extends</span> <span class="title">EventEmitter</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span> () &#123;</span><br><span class="line">    <span class="keyword">super</span>()</span><br><span class="line">    <span class="keyword">this</span>.url = EMPTY_STRING</span><br><span class="line">    <span class="keyword">this</span>.file = EMPTY_STRING</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 只有一个实例可以运行，通过app.requestSingleInstanceLock()获取</span></span><br><span class="line">    <span class="keyword">this</span>.makeSingleInstance(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">this</span>.init()</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  init () &#123;</span><br><span class="line">    <span class="keyword">this</span>.exceptionHandler = <span class="keyword">new</span> ExceptionHandler()</span><br><span class="line">    <span class="keyword">this</span>.openedAtLogin = is.macOS()</span><br><span class="line">      ? app.getLoginItemSettings().wasOpenedAtLogin</span><br><span class="line">      : <span class="literal">false</span></span><br><span class="line">    <span class="keyword">if</span> (process.argv.length &gt; <span class="number">1</span>) &#123;</span><br><span class="line">      <span class="comment">// 场景：网页直接下载文件或者url</span></span><br><span class="line">      <span class="keyword">this</span>.handleAppLaunchArgv(process.argv)</span><br><span class="line">    &#125;</span><br><span class="line">    logger.info(<span class="string">'[Motrix] openedAtLogin:'</span>, <span class="keyword">this</span>.openedAtLogin)</span><br><span class="line">    <span class="keyword">this</span>.handleAppEvents()</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  handleAppEvents () &#123;</span><br><span class="line">    <span class="keyword">this</span>.handleOpenUrl()</span><br><span class="line">    <span class="keyword">this</span>.handleOpenFile()</span><br><span class="line">    <span class="keyword">this</span>.handelAppReady()</span><br><span class="line">    <span class="keyword">this</span>.handleAppWillQuit()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>主进程启动逻辑最终落到这<code>handleAppEvents</code>里面四个<code>handler</code>，分别是如下作用：</p>
+<ul>
+<li><code>handleAppReady</code>：监听<code>ready</code>事件，初始化<code>Application</code>实例（<code>global.application</code>）并为其注册监听事件；监听<code>activate</code>事件，打开<code>index</code>页面</li>
+<li><code>handleOpenUrl</code>：监听<code>open-url</code>事件，发送<code>url</code>给<code>Application</code></li>
+<li><code>handleOpenFile</code>：监听<code>open-file</code>事件，发送<code>file</code>给<code>Application</code></li>
+<li><code>handleAppWillQuit</code>：监听<code>will-quit</code>事件，停止<code>Application</code></li>
+</ul>
+<p><code>election-app</code>的一系列事件，可以在<span class="exturl" data-url="aHR0cHM6Ly93d3cuZWxlY3Ryb25qcy5vcmcvemgvZG9jcy9sYXRlc3QvYXBpL2FwcA==" title="https://www.electronjs.org/zh/docs/latest/api/app">这个网站<i class="fa fa-external-link"></i></span>查阅具体作用<br>接下来看下<code>Application</code>实例的初始化：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/main/Application.js</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> <span class="keyword">extends</span> <span class="title">EventEmitter</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span> () &#123;</span><br><span class="line">    <span class="keyword">super</span>()</span><br><span class="line">    <span class="keyword">this</span>.isReady = <span class="literal">false</span></span><br><span class="line">    <span class="keyword">this</span>.init()</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  init () &#123;</span><br><span class="line">    <span class="comment">// 配置管理</span></span><br><span class="line">    <span class="keyword">this</span>.configManager = <span class="keyword">this</span>.initConfigManager()</span><br><span class="line">    <span class="comment">// 本地化</span></span><br><span class="line">    <span class="keyword">this</span>.locale = <span class="keyword">this</span>.configManager.getLocale()</span><br><span class="line">    <span class="keyword">this</span>.localeManager = setupLocaleManager(<span class="keyword">this</span>.locale)</span><br><span class="line">    <span class="keyword">this</span>.i18n = <span class="keyword">this</span>.localeManager.getI18n()</span><br><span class="line">    <span class="comment">// 菜单</span></span><br><span class="line">    <span class="keyword">this</span>.setupApplicationMenu()</span><br><span class="line">    <span class="comment">// ? Window</span></span><br><span class="line">    <span class="keyword">this</span>.initWindowManager()</span><br><span class="line">    <span class="comment">// ? UPnP</span></span><br><span class="line">    <span class="keyword">this</span>.initUPnPManager()</span><br><span class="line">    <span class="comment">// 内部engine与client</span></span><br><span class="line">    <span class="keyword">this</span>.startEngine()</span><br><span class="line">    <span class="keyword">this</span>.initEngineClient()</span><br><span class="line">    <span class="comment">// 界面Managers</span></span><br><span class="line">    <span class="keyword">this</span>.initTouchBarManager()</span><br><span class="line">    <span class="keyword">this</span>.initThemeManager()</span><br><span class="line">    <span class="keyword">this</span>.initTrayManager()</span><br><span class="line">    <span class="keyword">this</span>.initDockManager()</span><br><span class="line">    <span class="keyword">this</span>.autoLaunchManager = <span class="keyword">new</span> AutoLaunchManager()</span><br><span class="line">    <span class="keyword">this</span>.energyManager = <span class="keyword">new</span> EnergyManager()</span><br><span class="line">    <span class="comment">// 更新Manager</span></span><br><span class="line">    <span class="keyword">this</span>.initUpdaterManager()</span><br><span class="line">    <span class="comment">// 内部协议Manager</span></span><br><span class="line">    <span class="keyword">this</span>.initProtocolManager()</span><br><span class="line">    <span class="comment">// 注册应用操作事件的handlers</span></span><br><span class="line">    <span class="keyword">this</span>.handleCommands()</span><br><span class="line">    <span class="comment">// 下载进度事件的event</span></span><br><span class="line">    <span class="keyword">this</span>.handleEvents()</span><br><span class="line">    <span class="comment">// on/handle event channels</span></span><br><span class="line">    <span class="keyword">this</span>.handleIpcMessages()</span><br><span class="line">    <span class="keyword">this</span>.handleIpcInvokes()</span><br><span class="line">    <span class="keyword">this</span>.emit(<span class="string">'application:initialized'</span>)</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>其他的先不说，在<code>handleIpcInvokes</code>里面注册了<code>get-app-config</code>的<code>handler</code>，逻辑如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/main/Application.js</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> <span class="keyword">extends</span> <span class="title">EventEmitter</span> </span>&#123;  </span><br><span class="line">  handleIpcInvokes () &#123;</span><br><span class="line">    ipcMain.handle(<span class="string">'get-app-config'</span>, <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">      <span class="keyword">const</span> systemConfig = <span class="keyword">this</span>.configManager.getSystemConfig()</span><br><span class="line">      <span class="keyword">const</span> userConfig = <span class="keyword">this</span>.configManager.getUserConfig()</span><br><span class="line"></span><br><span class="line">      <span class="keyword">const</span> result = &#123;</span><br><span class="line">        ...systemConfig,</span><br><span class="line">        ...userConfig</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> result</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// src/main/core/ConfigManager.js</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">ConfigManager</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span> () &#123;</span><br><span class="line">    <span class="keyword">this</span>.systemConfig = &#123;&#125;</span><br><span class="line">    <span class="keyword">this</span>.userConfig = &#123;&#125;</span><br><span class="line">    <span class="keyword">this</span>.init()</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  init () &#123;</span><br><span class="line">    <span class="keyword">this</span>.initSystemConfig()</span><br><span class="line">    <span class="keyword">this</span>.initUserConfig()</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  initSystemConfig () &#123;</span><br><span class="line">    <span class="keyword">this</span>.systemConfig = <span class="keyword">new</span> Store(&#123;</span><br><span class="line">      name: <span class="string">'system'</span>,</span><br><span class="line">      defaults: &#123;</span><br><span class="line">        <span class="string">'all-proxy'</span>: EMPTY_STRING</span><br><span class="line">        <span class="comment">// 这里省略其他的了</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">this</span>.fixSystemConfig()</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  initUserConfig () &#123;</span><br><span class="line">    <span class="keyword">this</span>.userConfig = <span class="keyword">new</span> Store(&#123;</span><br><span class="line">      name: <span class="string">'user'</span>,</span><br><span class="line">      defaults: &#123;</span><br><span class="line">        <span class="string">'all-proxy-backup'</span>: EMPTY_STRING,</span><br><span class="line">        <span class="comment">// 这里省略其他的了</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">this</span>.fixUserConfig()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里用了<code>electron-store</code>持久化用户配置，详情参考<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3NpbmRyZXNvcmh1cy9lbGVjdHJvbi1zdG9yZQ==" title="https://github.com/sindresorhus/electron-store">这个链接<i class="fa fa-external-link"></i></span><br>最终给到渲染进程的<code>config</code>，就是<code>systemConfig</code>和<code>userConfig</code>合并的结果，因此可以再转到渲染进程查看<code>init(config)</code>的逻辑：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// </span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">init</span> (<span class="params">config</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (is.renderer()) &#123;</span><br><span class="line">    Vue.use(<span class="built_in">require</span>(<span class="string">'vue-electron'</span>))</span><br><span class="line">  &#125;</span><br><span class="line">  Vue.http = Vue.prototype.$http = axios</span><br><span class="line">  Vue.config.productionTip = <span class="literal">false</span></span><br><span class="line">  <span class="keyword">const</span> &#123; locale &#125; = config</span><br><span class="line">  <span class="keyword">const</span> localeManager = getLocaleManager()</span><br><span class="line">  localeManager.changeLanguageByLocale(locale)</span><br><span class="line">  Vue.use(VueI18Next)</span><br><span class="line">  <span class="keyword">const</span> i18n = <span class="keyword">new</span> VueI18Next(localeManager.getI18n())</span><br><span class="line">  Vue.use(Element, &#123;</span><br><span class="line">    size: <span class="string">'mini'</span>,</span><br><span class="line">    i18n: <span class="function">(<span class="params">key, value</span>) =&gt;</span> i18n.t(key, value)</span><br><span class="line">  &#125;)</span><br><span class="line">  Vue.use(Msg, Message, &#123;</span><br><span class="line">    showClose: <span class="literal">true</span></span><br><span class="line">  &#125;)</span><br><span class="line">  Vue.component(<span class="string">'mo-icon'</span>, Icon)</span><br><span class="line">  <span class="keyword">const</span> loading = Loading.service(&#123;</span><br><span class="line">    fullscreen: <span class="literal">true</span>,</span><br><span class="line">    background: <span class="string">'rgba(0, 0, 0, 0.1)'</span></span><br><span class="line">  &#125;)</span><br><span class="line">  sync(store, router)</span><br><span class="line">  <span class="comment">/* eslint-disable no-new */</span></span><br><span class="line">  global.app = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">    components: &#123; App &#125;,</span><br><span class="line">    router,</span><br><span class="line">    store,</span><br><span class="line">    i18n,</span><br><span class="line">    template: <span class="string">'&lt;App/&gt;'</span></span><br><span class="line">  &#125;).$mount(<span class="string">'#app'</span>)</span><br><span class="line">  global.app.commands = commands</span><br><span class="line">  <span class="built_in">require</span>(<span class="string">'./commands'</span>)</span><br><span class="line">  global.app.trayWorker = initTrayWorker()</span><br><span class="line">  setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    loading.close()</span><br><span class="line">  &#125;, <span class="number">400</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这一段代码主要设置<code>Vue</code>的内部属性并起了<code>Vue</code>实例赋予<code>global.app</code>。在其中，加载了<code>App.vue</code>中<code>id=app</code>的页面内容，包括这些：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"app"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mo-title-bar</span></span></span><br><span class="line"><span class="tag">      <span class="attr">v-if</span>=<span class="string">"isRenderer"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">:showActions</span>=<span class="string">"showWindowActions"</span></span></span><br><span class="line"><span class="tag">    /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">router-view</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mo-engine-client</span></span></span><br><span class="line"><span class="tag">      <span class="attr">:secret</span>=<span class="string">"rpcSecret"</span></span></span><br><span class="line"><span class="tag">    /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mo-ipc</span> <span class="attr">v-if</span>=<span class="string">"isRenderer"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mo-dynamic-tray</span> <span class="attr">v-if</span>=<span class="string">"enableTraySpeedometer"</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>其中，<code>&lt;router-view /&gt;</code>是实质展示了路由为<code>/</code>的页面，对应到<code>routers</code>里面就是<code>@/components/Main</code>以及其下级的<code>task</code>的路由组件。其他几个分别是：</p>
+<ul>
+<li><code>mo-title-bar</code>：顶层的最小化、最大化、退出按钮</li>
+<li><code>mo-engine-client</code>：不渲染界面的组件，实质只有<code>js</code>逻辑，用于管理下载进度</li>
+<li><code>mo-ipc</code>：不渲染界面的组件，实质只有<code>js</code>逻辑，用于<code>ipc</code></li>
+<li><code>mo-dynamic-tray</code>：下载速度显示组件</li>
+</ul>
+<p>到了这里，整个<code>app</code>就启动完成了。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+      
+<div style="border: 1px solid black; margin-top: 32px; margin-bottom: 32px">
+  <div style="margin-left:10px">
+    <span style="font-weight:bold">版权声明</span>
+    <br>
+    <span>本文为博客<a href="https://utmhikari.github.io" style="color:#258FC6">HiKariのTechLab</a>原创文章，转载请标明出处，谢谢~~~</span>
+  </div>
+</div>
+
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/vue/" rel="tag"># vue</a>
+          
+            <a href="/tags/nodejs/" rel="tag"># nodejs</a>
+          
+            <a href="/tags/electron/" rel="tag"># electron</a>
+          
+            <a href="/tags/ipc/" rel="tag"># ipc</a>
+          
+            <a href="/tags/桌面工具开发/" rel="tag"># 桌面工具开发</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/05/14/hardpython/5_str_2/" rel="next" title="【Hard Python】【第五章-字符串】2、re，正则表达式源码详解">
+                <i class="fa fa-chevron-left"></i> 【Hard Python】【第五章-字符串】2、re，正则表达式源码详解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2022/06/17/geekdaily/vue3_array_update/" rel="prev" title="【极客日常】vue3中实现Array数组更新的方法">
+                【极客日常】vue3中实现Array数组更新的方法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="ひかり.HDQ">
+            
+              <p class="site-author-name" itemprop="name">ひかり.HDQ</p>
+              <div class="site-description motion-element" itemprop="description">talk is cheap, code is rich</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">155</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">415</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="GitHub &rarr; https://github.com/utmhikari"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="bWFpbHRvOmhkcTk0MDYyM0AxMjYuY29t" title="Mail &rarr; mailto:hdq940623@126.com"><i class="fa fa-fw fa-envelope"></i>Mail</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly90ZXN0ZXJob21lLmNvbS91dG1oaWthcmk=" title="TesterHome &rarr; https://testerhome.com/utmhikari"><i class="fa fa-fw fa-tumblr"></i>TesterHome</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vaWQvdXRtaGlrYXJp" title="Steam &rarr; https://steamcommunity.com/id/utmhikari"><i class="fa fa-fw fa-steam"></i>Steam</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9zcGFjZS5iaWxpYmlsaS5jb20vMTUwNzUxMTQv" title="Bilibili &rarr; https://space.bilibili.com/15075114/"><i class="fa fa-fw fa-bold"></i>Bilibili</span>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2019 – <span itemprop="copyrightYear">2024</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ひかり.HDQ</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="//cdn.staticfile.org/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script src="//cdn.staticfile.org/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+
+  
+  <script src="//cdn.staticfile.org/velocity/1.2.1/velocity.min.js"></script>
+
+  
+  <script src="//cdn.staticfile.org/velocity/1.2.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.1"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.1"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+  <script src="/js/src/exturl.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('5');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'manual') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+if ($('body').find('pre.mermaid').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.staticfile.org/mermaid/8.0.0-rc.8/mermaid.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      mermaid.initialize({
+        theme: 'dark',
+        logLevel: 3,
+        flowchart: { curve: 'linear' },
+        gantt: { axisFormat: '%m/%d/%Y' },
+        sequence: { actorMargin: 50 }
+      });
+    }
+  });
+}
+</script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+  $('.highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+  
+
+  
+
+</body>
+</html>

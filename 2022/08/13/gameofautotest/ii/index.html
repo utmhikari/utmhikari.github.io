@@ -1,0 +1,2451 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta name="baidu-site-verification" content="sc1B5Cxcoz">
+  <meta name="google-site-verification" content="OLcRj7lMnauxKrhFT3Q8Nvcexgv22NvlEmVZShKQKR8">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link rel="stylesheet" href="//cdn.staticfile.org/font-awesome/4.6.2/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/uploads/apple-touch.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/uploads/favicon-32x32.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/uploads/favicon-16x16.png?v=7.0.1">
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.1',
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"fadeIn","sidebar":"fadeIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="要做游戏自动化测试，首先需要了解游戏自动化技术。因此，本文详细讲解下游戏自动化测试领域可能用到的一些技术以及对应的场景，为自动化测试落地的技术选型提供参考。 游戏自动化测试的测试对象是游戏本身。对于游戏这个概念，可以有以下几种：  客户端：我们实际玩到的游戏本体，比如说PC程序，手机App，Web-App。 服务器：在多人网络游戏中，用以模拟游戏世界的本体。 编辑器：包含未烘焙到OS平台的游戏程序">
+<meta name="keywords" content="客户端自动化,服务器自动化,编辑器自动化,录制回放,AI自动化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Game Of AutoTest】2、游戏自动化测试的技术选型">
+<meta property="og:url" content="http://utmhikari.github.io/2022/08/13/gameofautotest/ii/index.html">
+<meta property="og:site_name" content="HiKariのTechLab">
+<meta property="og:description" content="要做游戏自动化测试，首先需要了解游戏自动化技术。因此，本文详细讲解下游戏自动化测试领域可能用到的一些技术以及对应的场景，为自动化测试落地的技术选型提供参考。 游戏自动化测试的测试对象是游戏本身。对于游戏这个概念，可以有以下几种：  客户端：我们实际玩到的游戏本体，比如说PC程序，手机App，Web-App。 服务器：在多人网络游戏中，用以模拟游戏世界的本体。 编辑器：包含未烘焙到OS平台的游戏程序">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2024-04-07T02:48:06.918Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【Game Of AutoTest】2、游戏自动化测试的技术选型">
+<meta name="twitter:description" content="要做游戏自动化测试，首先需要了解游戏自动化技术。因此，本文详细讲解下游戏自动化测试领域可能用到的一些技术以及对应的场景，为自动化测试落地的技术选型提供参考。 游戏自动化测试的测试对象是游戏本身。对于游戏这个概念，可以有以下几种：  客户端：我们实际玩到的游戏本体，比如说PC程序，手机App，Web-App。 服务器：在多人网络游戏中，用以模拟游戏世界的本体。 编辑器：包含未烘焙到OS平台的游戏程序">
+
+
+
+
+
+
+  <link rel="canonical" href="http://utmhikari.github.io/2022/08/13/gameofautotest/ii/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>【Game Of AutoTest】2、游戏自动化测试的技术选型 | HiKariのTechLab</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HiKariのTechLab</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">光の技术屋</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+  
+
+  
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="关注HiKariのGithub" aria-label="关注HiKariのGithub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></span>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2022/08/13/gameofautotest/ii/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">【Game Of AutoTest】2、游戏自动化测试的技术选型
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2022-08-13 13:28:46" itemprop="dateCreated datePublished" datetime="2022-08-13T13:28:46+08:00">2022-08-13</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Game-Of-AutoTest/" itemprop="url" rel="index"><span itemprop="name">Game Of AutoTest</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>要做游戏自动化测试，首先需要了解游戏自动化技术。因此，本文详细讲解下游戏自动化测试领域可能用到的一些技术以及对应的场景，为自动化测试落地的技术选型提供参考。</p>
+<p>游戏自动化测试的测试对象是游戏本身。对于游戏这个概念，可以有以下几种：</p>
+<ul>
+<li>客户端：我们实际玩到的游戏本体，比如说PC程序，手机App，Web-App。</li>
+<li>服务器：在多人网络游戏中，用以模拟游戏世界的本体。</li>
+<li>编辑器：包含未烘焙到OS平台的游戏程序以及资源。</li>
+</ul>
+<p>我们在技术层面上所要做到的，就是通过某些方式访问这些程序运行环境产生的内容，改变游戏呈现以及玩家行为，操作玩家或游戏程序本身，达到我们的测试目的。在笔者的工作经验当中，主要做的是<code>UE</code>安卓客户端的自动化，应用场景主要在业务功能测试方面，因此本文会对客户端自动化做稍微详尽的解析。其他自动化的方案和叙述，如果其中描述有所纰漏，恳请指正。</p>
+<h2 id="客户端自动化"><a href="#客户端自动化" class="headerlink" title="客户端自动化"></a>客户端自动化</h2><p>针对游戏客户端的自动化，在游戏测试里是最为广泛应用的，不仅是因为客户端是一个游戏必须有的成分，而更加因为我们在手工测试游戏的时候，实际是拿着客户端来测的。因此，客户端自动化会最贴合游戏功能测试的需求。</p>
+<p>要实现客户端自动化，有以下的方法：</p>
+<a id="more"></a>
+<ul>
+<li>脚本自动化：通过游戏脚本代码驱动游戏运行。<ul>
+<li>适用于业务逻辑主要采用可热更的脚本语言（如<code>lua</code>、<code>js</code>）编写的游戏。</li>
+<li>游戏对外暴露一个接口，对这个接口发送脚本代码，游戏内部即可自动执行这段脚本代码。</li>
+</ul>
+</li>
+<li>UI自动化：通过UI操作驱动游戏运行，分为UI查询、UI操作两部分。<ul>
+<li>UI查询可以通过图像识别/OCR识别推断控件所在坐标，也可以通过从游戏运行环境中导出UI控件树，获取每个控件的属性和在视口里的坐标数据。<ul>
+<li>由控件树定位控件的方案，相较于图像识别的方案，稳定性会更高，但也需要一定的定位策略。通常来讲，控件之间的层级关系不会有太多的变化，而控件的名称会微调，因此可以通过关键字+层级关系的条件去精准筛选控件。</li>
+<li>图像识别方案不稳定在于几点：图像识别技术本身的不确定性，以及UI风格迭代导致图像识别的基线数据失效。</li>
+</ul>
+</li>
+<li>UI操作可以通过<code>adb</code>之类的方式直接模拟屏幕操作；也可以在游戏中运行一个UI自动化模块，测试人员可以向这个模块请求对某个UI发起点击/按下/释放的操作，而后这个模块内部执行UI实例<code>OnClick/OnPress/OnRelease</code>的委托。</li>
+</ul>
+</li>
+<li>指令自动化：在游戏逻辑中预置一些玩家操作接口以及参数，通过调用指令实现玩家操控。<ul>
+<li>游戏内部暴露给外部指令调用接口，外部发送指令和参数，然后游戏内部做<code>dispatch</code>，去执行对应封装好的指令。</li>
+<li>对于手工测试需求而言是标配，对于自动化测试需求而言，只需要额外支持外部程序调用这些内容。</li>
+</ul>
+</li>
+</ul>
+<p>客户端自动化的开源实现也有不少，其中有两个比较广泛应用：<code>Airtest</code>和<code>GAutomator</code>。</p>
+<ul>
+<li><code>Airtest</code>：一个完整的游戏自动化测试方案，参考<span class="exturl" data-url="aHR0cHM6Ly9haXJ0ZXN0LmRvYy5pby5uZXRlYXNlLmNvbS8=" title="https://airtest.doc.io.netease.com/">这个文档<i class="fa fa-external-link"></i></span><ul>
+<li>主要实现的是面向不同平台应用的UI自动化，并且自带IDE。</li>
+<li>底层是<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0FpcnRlc3RQcm9qZWN0L1BvY28tU0RL" title="https://github.com/AirtestProject/Poco-SDK">PocoSDK<i class="fa fa-external-link"></i></span>，支持<code>Android/iOS</code>的<code>Native</code>控件，也支持<code>Unity/UE/Cocos</code>应用。</li>
+</ul>
+</li>
+<li><code>GAutomator</code>：针对<code>Unity</code>、<code>UE</code>的UI自动化测试框架，源码在<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1RlbmNlbnQvR0F1dG9tYXRvcg==" title="https://github.com/Tencent/GAutomator">这里<i class="fa fa-external-link"></i></span><ul>
+<li>相对<code>Airtest</code>比较轻量级，适合集成+二次开发</li>
+</ul>
+</li>
+</ul>
+<p>一般来讲，开源的自动化方案基本上是UI自动化相关，而脚本自动化和指令自动化，则需要依据不同游戏项目的实现去自定义相关逻辑。</p>
+<p>客户端自动化适用于以下的场景：</p>
+<ul>
+<li>功能测试：代替人工测试工作。<ul>
+<li>玩法冒烟测试：适用于各个玩法的基础功能冒烟。<ul>
+<li>可以应用于强UI的玩法，比如商业化、活动、社交、装备一类。</li>
+<li>可以应用于流程类的玩法，比如副本、任务一类。</li>
+</ul>
+</li>
+<li>功能遍历测试：适用于操作不复杂但重复量较大，繁琐耗时的功能测试任务。<ul>
+<li>依据不同玩法的测试点特性而定，每个玩法可能都有测试点是遍历性质的。</li>
+<li>可以应用于地图/大世界相关的跑测，比如对场景物件、寻路、空气墙、切线的效果检查。</li>
+<li>可以应用于玩家状态机、<code>Buff</code>或是技能效果的遍历测试。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>专项测试：自动执行整个专项测试流程，或是作为流程的一部分，提供对测试有用的信息。<ul>
+<li>客户端性能测试：跑测游戏客户端，并在其中收集游戏以及设备的性能数据，用于做性能分析。</li>
+<li>客户端适配测试：跑测不同机型的客户端，覆盖一些简单的场景跟操作，看性能或者表现上是否一致。</li>
+<li>UI专项测试：这里指UI状态互斥、UI层级关系这一类非强业务相关的专项测试点。</li>
+<li>玩法业务专项：跑测游戏客户端，收集特定游戏玩法数据，用于玩家状态检查、玩法效果评估、数据一致性检查等测试点。需要按各个玩法的特性去自定义自动跑测逻辑。</li>
+<li>玩法环境构造：调用多台客户端机器，自动游玩一个玩法，模拟多人场景。<ul>
+<li>用真实客户端构造场景，通常会消耗许多线上机器资源。因此在资源紧缺或是线上运行环境不稳定的情况下，不建议采取此方案。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>不论是功能还是专项测试场景，在自动化行为的实现上，脚本、UI、指令三种自动化方式都可以相互结合。这是因为，从游戏测试用例过程的角度来看，每一个步骤其实都是一个玩家操作，而玩家操作的实现，可以是发一段脚本，也可以是点某个UI，更可以是执行一个指令。</p>
+<p>相对于其它自动化方式，脚本自动化的实现方案是最优先的，这是因为能够支持热执行客户端脚本的话，理论上可以操纵整个客户端的运行，从而能够满足更多自动化行为的需求。因此如果有条件，比如说测试侧有项目的源代码权限，那么自动化行为的实现，就优先采用脚本编写的方案，而对于一些需要复杂脚本实现的行为，才用UI操作代替。如果没有源码条件，也可以考虑在客户端源码里抽出一个单独的<code>project</code>，包装项目代码<code>API</code>类型信息以及一系列自动化指令，做成一个测试侧也可以单独维护的自动化底层模块。</p>
+<h2 id="服务器自动化"><a href="#服务器自动化" class="headerlink" title="服务器自动化"></a>服务器自动化</h2><p>针对服务器的自动化测试是非常关键的一部分。比如我们经常提到的服务器压测，其实本质上是一种自动化驱动的逻辑。从整个游戏产品的质量保证而言，服务器自动化同样是不可或缺的。</p>
+<p>要实现服务器自动化，一般是两种方法：</p>
+<ul>
+<li>协议交互：通过<code>C/S</code>协议交互的方式驱动游戏逻辑进行<ul>
+<li>一般是通过一个机器人客户端连到服务器，作为一个玩家的身份发送登录协议登入游戏，然后再发送其他<code>C/S</code>协议，从而驱动玩家做某些行为，或者是达到某些状态。</li>
+</ul>
+</li>
+<li>内部指令调用：服务器预编写一些测试接口，通过调用这些接口驱动服务器逻辑。<ul>
+<li>可以是通过机器人客户端连到服务器，发送登录协议登入游戏，但之后不直接通过<code>C/S</code>协议，而是通过某些外部调用，或者是这个机器人发送某个特定的指令，驱动服务器逻辑，从而让机器人参与到某些测试活动当中。</li>
+</ul>
+</li>
+</ul>
+<p>具体的技术实现，实际得依据服务器本身的技术栈以及协议交互的技术栈而定，并没有一套确定的方案。</p>
+<p>服务器自动化适用于以下场景：</p>
+<ul>
+<li>服务器代码单元测试<ul>
+<li>用以在程序层面测试服务器的基础代码逻辑，通常会配合<code>CI</code>流水线使用。</li>
+<li>也可以配合代码覆盖率测试工具一起使用，用以观测测试用例/代码实现的完整性。</li>
+<li>实现上，可以调用某个接口指令，一次性批量或有序地执行服务器业务模块的单元测试代码。</li>
+</ul>
+</li>
+<li>压力测试<ul>
+<li>驱动多个机器人登录服务器，模拟玩家操作。</li>
+<li>需配合服务器性能监控工具，观测服务链路性能表征，分析性能瓶颈。</li>
+</ul>
+</li>
+<li>功能测试环境构造<ul>
+<li>实现原理和压力测试类似，通常会涉及多个机器人玩家在游戏中漫游。</li>
+<li>相比于用多个真实客户端设备构造多人玩法环境的方法，通过机器人构造更加方便，不浪费设备资源。</li>
+<li>可以应用于匹配、登录、世界<code>Boss</code>等涉及海量玩家参与的玩法模块。</li>
+</ul>
+</li>
+<li>服务器协议安全测试<ul>
+<li>同样可以通过机器人的方式驱动，但测试策略需参考协议测试需求。</li>
+<li>通常的测试目标是，绕过客户端做游戏机制限定之外的请求，预期无法通过服务器业务逻辑的校验。</li>
+</ul>
+</li>
+</ul>
+<h2 id="编辑器自动化"><a href="#编辑器自动化" class="headerlink" title="编辑器自动化"></a>编辑器自动化</h2><p>编辑器代表着游戏的开发环境，其中的资源会直接影响到游戏的构建结果，因此针对编辑器及资产的自动化测试也是重要的一部分。以<code>UE</code>为例，其中内置了许多自动化测试的机制：</p>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnVucmVhbGVuZ2luZS5jb20vNS4wL3poLUNOL3NjcmlwdGluZy10aGUtdW5yZWFsLWVkaXRvci11c2luZy1weXRob24v" title="https://docs.unrealengine.com/5.0/zh-CN/scripting-the-unreal-editor-using-python/">Python Scriping<i class="fa fa-external-link"></i></span><ul>
+<li>通过<code>python</code>脚本驱动编辑器和运行的手段，可以作为编辑器开发环境的提效工具，也可以对编辑器资产做测试检查</li>
+</ul>
+</li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnVucmVhbGVuZ2luZS5jb20vNC4yNy96aC1DTi9UZXN0aW5nQW5kT3B0aW1pemF0aW9uL0F1dG9tYXRpb24v" title="https://docs.unrealengine.com/4.27/zh-CN/TestingAndOptimization/Automation/">Automation System<i class="fa fa-external-link"></i></span><ul>
+<li>支持对编辑器资产/引擎功能的测试，或是在关卡里运行游戏功能测试用例</li>
+<li>也可以支持在多个平台同时运行<code>UE</code>游戏会话，执行简单的测试内容，是用<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnVucmVhbGVuZ2luZS5jb20vNC4yNy96aC1DTi9UZXN0aW5nQW5kT3B0aW1pemF0aW9uL0F1dG9tYXRpb24vR2F1bnRsZXQv" title="https://docs.unrealengine.com/4.27/zh-CN/TestingAndOptimization/Automation/Gauntlet/">Gauntlet<i class="fa fa-external-link"></i></span>框架实现的。</li>
+</ul>
+</li>
+</ul>
+<p>编辑器自动化适用于以下的场景：</p>
+<ul>
+<li>编辑器与开发者工具的功能测试</li>
+<li>引擎核心功能测试</li>
+<li>游戏资产静态测试<ul>
+<li>测试对象可以是美术、UI甚至是特定玩法的资产，主要测试的场景是对资产配置的合规性和可用性检查。</li>
+<li>许多游戏客户端本体和策划<code>excel</code>配置可能是分离的，由于在本文范畴中，<code>excel</code>配置不直接影响游戏构建结果，因此关于<code>excel</code>配置的合规性检查暂不纳入本文叙述范围。</li>
+</ul>
+</li>
+<li>关卡配置检查<ul>
+<li>打开特定关卡/子关卡，静态检查关卡内场景物件配置的合规性。</li>
+<li>启动<code>PIE</code>，在游玩期间进行功能测试。<ul>
+<li>如果偏重于系统玩法级的功能测试，并且客户端构建频繁交付，实际用客户端自动化方案会更贴合产品测试的需求。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="自动化周边技术"><a href="#自动化周边技术" class="headerlink" title="自动化周边技术"></a>自动化周边技术</h2><p>客户端/服务器/编辑器自动化技术，是游戏自动化实现的最底层逻辑。在此基础上，还可以加码一些周边技术包装，从而优化自动化测试的效果。</p>
+<h3 id="录制回放"><a href="#录制回放" class="headerlink" title="录制回放"></a>录制回放</h3><p>通常在微服务测试中，会通过录制的方式记录真实访问的流量，作为测试用例，然后在测试环境随时回放，从而起到观测真实流量反映的作用。</p>
+<p>在游戏自动化中，也存在录制回放的操作，服务器跟客户端都能做。以客户端为例，录制回放主要是在UI测试中应用，技术实现上大致有两种方法：</p>
+<ul>
+<li>图像识别<ul>
+<li>录制：根据屏幕操作坐标，记录操作时间，以及坐标附近的特征图。</li>
+<li>回放：根据特征图，识别特征图在屏幕中的位置，再根据操作时间，有序地模拟屏幕操作。</li>
+</ul>
+</li>
+<li>输入事件<ul>
+<li>录制：引擎底层记录玩家操作的输入事件，以及操作时间。</li>
+<li>回放：根据输入事件，推断操作控件与操作方式，再根据操作时间，有序地调用控件对应的操作。</li>
+</ul>
+</li>
+</ul>
+<p>客户端UI测试的录制回放技术，可以用到的场景有：</p>
+<ul>
+<li>UI功能测试：测试游戏UI的可用性，监控不同版本UI呈现的变化。</li>
+<li>UI耗时测试：测试特定玩家UI操作下，界面加载的性能损耗。</li>
+<li>录制的产物，可用于快速生成UI自动化测试用例代码。</li>
+</ul>
+<h3 id="行为树"><a href="#行为树" class="headerlink" title="行为树"></a>行为树</h3><p>行为树是AI的一种实现，主要通过行为抽象+流程控制的方式，实现AI机器人的自动决策。</p>
+<p>在自动化测试领域，通常会提到AI自动化，而行为树就是AI自动化的一种典型案例。但这里需要强调的是，AI驱动并不是最底层的自动化技术，以运行在游戏客户端的行为树为例，每个行为本身的实现，还是得走UI自动化、脚本自动化的套路。AI驱动的，只是业务逻辑，不是游戏本身。</p>
+<p>行为树决策的逻辑是人为制定的，因此引入行为树，会很适合一些操作复杂，耗时长，但比较有规律的测试场景，让这些场景实现自动化的成本大大降低。比如说：</p>
+<ul>
+<li>PVE副本、任务：这类型的玩法通常分为很多环，每一环需要根据副本阶段指引信息、任务类型信息等采取行为决策，因此比较适合用行为树表征。</li>
+<li>PVP、竞技玩法：这类型的玩法通常有特定的游玩规则/目标，因此也适合行为树去做决策。</li>
+</ul>
+<p>针对自动化测试本身而言，行为树也可以帮助我们快速确定基础的自动化逻辑结构，生成基础代码，提高自动化研发效率。但也需要注意，行为树不能作为代码编程的完整代替方案，否则一旦行为复杂度较高，行为树本身就难以维护，详情可以参考<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjIvMDQvMDMvdGVzdGxpZmUvYnRyZWVfYXV0b3Rlc3RfdGFsay8=" title="https://utmhikari.top/2022/04/03/testlife/btree_autotest_talk/">这篇文章<i class="fa fa-external-link"></i></span>。</p>
+<p>行为树方案，建议是配套可视化编程工具提效开发和调试工作，否则研发效率并不一定优于纯粹的代码编写。</p>
+<h3 id="机器学习"><a href="#机器学习" class="headerlink" title="机器学习"></a>机器学习</h3><p>机器学习是一种更为复杂的AI实现案例，有几个特点：</p>
+<ul>
+<li>有一定的目标，实质是通过不断的运算，来达到特定的目标，通过自学习的方式形成更多的经验。</li>
+<li>决策的过程是黑盒的，经验论，无法追溯其中的思维链路。</li>
+<li>学习方式上有监督（人工数据介入）或是无监督均可，但无论如何都需要处理大量的数据作为决策依据。</li>
+</ul>
+<p>因此机器学习的方案，可以考虑在几个自动化测试的场景应用：</p>
+<ul>
+<li>行为复杂度较高，不容易被行为树表征的的PVP、竞技玩法。<ul>
+<li>训练竞技AI，收集数据，用以评价玩法数值配置的合理性，或是做漫游探索测试，尝试发现问题。</li>
+</ul>
+</li>
+<li>需要识别客户端显现异常图像的场景。<ul>
+<li>结合客户端自动化方案执行，可用于监测捏脸/时装等丰富美术场景的显示异常，也可以用于场景穿模、适配闪屏等场景的监控。</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+      
+<div style="border: 1px solid black; margin-top: 32px; margin-bottom: 32px">
+  <div style="margin-left:10px">
+    <span style="font-weight:bold">版权声明</span>
+    <br>
+    <span>本文为博客<a href="https://utmhikari.github.io" style="color:#258FC6">HiKariのTechLab</a>原创文章，转载请标明出处，谢谢~~~</span>
+  </div>
+</div>
+
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/客户端自动化/" rel="tag"># 客户端自动化</a>
+          
+            <a href="/tags/服务器自动化/" rel="tag"># 服务器自动化</a>
+          
+            <a href="/tags/编辑器自动化/" rel="tag"># 编辑器自动化</a>
+          
+            <a href="/tags/录制回放/" rel="tag"># 录制回放</a>
+          
+            <a href="/tags/AI自动化/" rel="tag"># AI自动化</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/08/02/gameofautotest/i/" rel="next" title="【Game Of AutoTest】1、再度启程，重识游戏自动化测试">
+                <i class="fa fa-chevron-left"></i> 【Game Of AutoTest】1、再度启程，重识游戏自动化测试
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2022/08/14/pythonnotes/asgi_uvicorn_fastapi/" rel="prev" title="【Python随笔】python的web开发——WSGI、ASGI、uvicorn与FastAPI">
+                【Python随笔】python的web开发——WSGI、ASGI、uvicorn与FastAPI <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="ひかり.HDQ">
+            
+              <p class="site-author-name" itemprop="name">ひかり.HDQ</p>
+              <div class="site-description motion-element" itemprop="description">talk is cheap, code is rich</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">155</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">415</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="GitHub &rarr; https://github.com/utmhikari"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="bWFpbHRvOmhkcTk0MDYyM0AxMjYuY29t" title="Mail &rarr; mailto:hdq940623@126.com"><i class="fa fa-fw fa-envelope"></i>Mail</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly90ZXN0ZXJob21lLmNvbS91dG1oaWthcmk=" title="TesterHome &rarr; https://testerhome.com/utmhikari"><i class="fa fa-fw fa-tumblr"></i>TesterHome</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vaWQvdXRtaGlrYXJp" title="Steam &rarr; https://steamcommunity.com/id/utmhikari"><i class="fa fa-fw fa-steam"></i>Steam</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9zcGFjZS5iaWxpYmlsaS5jb20vMTUwNzUxMTQv" title="Bilibili &rarr; https://space.bilibili.com/15075114/"><i class="fa fa-fw fa-bold"></i>Bilibili</span>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#客户端自动化"><span class="nav-number">1.</span> <span class="nav-text">客户端自动化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务器自动化"><span class="nav-number">2.</span> <span class="nav-text">服务器自动化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编辑器自动化"><span class="nav-number">3.</span> <span class="nav-text">编辑器自动化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自动化周边技术"><span class="nav-number">4.</span> <span class="nav-text">自动化周边技术</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#录制回放"><span class="nav-number">4.1.</span> <span class="nav-text">录制回放</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#行为树"><span class="nav-number">4.2.</span> <span class="nav-text">行为树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#机器学习"><span class="nav-number">4.3.</span> <span class="nav-text">机器学习</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2019 – <span itemprop="copyrightYear">2024</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ひかり.HDQ</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="//cdn.staticfile.org/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script src="//cdn.staticfile.org/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+
+  
+  <script src="//cdn.staticfile.org/velocity/1.2.1/velocity.min.js"></script>
+
+  
+  <script src="//cdn.staticfile.org/velocity/1.2.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.1"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.1"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+  <script src="/js/src/exturl.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('5');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'manual') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+if ($('body').find('pre.mermaid').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.staticfile.org/mermaid/8.0.0-rc.8/mermaid.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      mermaid.initialize({
+        theme: 'dark',
+        logLevel: 3,
+        flowchart: { curve: 'linear' },
+        gantt: { axisFormat: '%m/%d/%Y' },
+        sequence: { actorMargin: 50 }
+      });
+    }
+  });
+}
+</script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+  $('.highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+  
+
+  
+
+</body>
+</html>

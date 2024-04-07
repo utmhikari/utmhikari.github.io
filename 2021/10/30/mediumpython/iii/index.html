@@ -1,0 +1,2337 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta name="baidu-site-verification" content="sc1B5Cxcoz">
+  <meta name="google-site-verification" content="OLcRj7lMnauxKrhFT3Q8Nvcexgv22NvlEmVZShKQKR8">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link rel="stylesheet" href="//cdn.staticfile.org/font-awesome/4.6.2/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/uploads/apple-touch.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/uploads/favicon-32x32.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/uploads/favicon-16x16.png?v=7.0.1">
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.1',
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"fadeIn","sidebar":"fadeIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="python的多线程，这是个老生常谈的话题了，网上资料也一大把。python默认的threading模块对多线程提供了支持，但实际多个threading.Thread实例无法并行运行（不是无法并发哦！）。​一句话概括答案：python的线程实质是操作系统原生的线程，而每个线程要执行python代码的话，需要获得对应代码解释器的锁GIL。一般我们运行python程序都只有一个解释器，这样不同线程需要">
+<meta name="keywords" content="python,GIL,源码分析,多线程,opcode">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Medium Python】第三话：python多线程为什么不能并行？">
+<meta property="og:url" content="http://utmhikari.github.io/2021/10/30/mediumpython/iii/index.html">
+<meta property="og:site_name" content="HiKariのTechLab">
+<meta property="og:description" content="python的多线程，这是个老生常谈的话题了，网上资料也一大把。python默认的threading模块对多线程提供了支持，但实际多个threading.Thread实例无法并行运行（不是无法并发哦！）。​一句话概括答案：python的线程实质是操作系统原生的线程，而每个线程要执行python代码的话，需要获得对应代码解释器的锁GIL。一般我们运行python程序都只有一个解释器，这样不同线程需要">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://utmhikari.github.io/uploads/mediumpython/iii/threads.png">
+<meta property="og:updated_time" content="2024-04-07T02:48:06.925Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【Medium Python】第三话：python多线程为什么不能并行？">
+<meta name="twitter:description" content="python的多线程，这是个老生常谈的话题了，网上资料也一大把。python默认的threading模块对多线程提供了支持，但实际多个threading.Thread实例无法并行运行（不是无法并发哦！）。​一句话概括答案：python的线程实质是操作系统原生的线程，而每个线程要执行python代码的话，需要获得对应代码解释器的锁GIL。一般我们运行python程序都只有一个解释器，这样不同线程需要">
+<meta name="twitter:image" content="http://utmhikari.github.io/uploads/mediumpython/iii/threads.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://utmhikari.github.io/2021/10/30/mediumpython/iii/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>【Medium Python】第三话：python多线程为什么不能并行？ | HiKariのTechLab</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HiKariのTechLab</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">光の技术屋</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+  
+
+  
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="关注HiKariのGithub" aria-label="关注HiKariのGithub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></span>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2021/10/30/mediumpython/iii/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">【Medium Python】第三话：python多线程为什么不能并行？
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2021-10-30 19:44:40" itemprop="dateCreated datePublished" datetime="2021-10-30T19:44:40+08:00">2021-10-30</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Medium-Python/" itemprop="url" rel="index"><span itemprop="name">Medium Python</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>python的多线程，这是个老生常谈的话题了，网上资料也一大把。python默认的<code>threading</code>模块对多线程提供了支持，但实际多个<code>threading.Thread</code>实例无法并行运行（不是无法并发哦！）。<br>​<br>一句话概括答案：<strong>python的线程实质是操作系统原生的线程，而每个线程要执行python代码的话，需要获得对应代码解释器的锁GIL。一般我们运行python程序都只有一个解释器，这样不同线程需要获得同一个锁才能执行各自的代码，互斥了，于是代码就不能同时运行了。</strong><br>​<br>好的，接下来我们细细讲解这句话背后的故事：</p>
+<h2 id="多线程并行测试"><a href="#多线程并行测试" class="headerlink" title="多线程并行测试"></a>多线程并行测试</h2><p>首先我们通过一些代码来测试多线程是否真的并行：</p>
+<a id="more"></a>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">import</span> datetime</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">COUNT = int(<span class="number">1e8</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_count_task</span><span class="params">(start, end)</span>:</span></span><br><span class="line">    start_time = datetime.datetime.now()</span><br><span class="line">    <span class="keyword">while</span> start &lt; end:</span><br><span class="line">        start += <span class="number">1</span></span><br><span class="line">    duration = datetime.datetime.now() - start_time</span><br><span class="line">    cur_thread_name = threading.current_thread().name</span><br><span class="line">    print(<span class="string">'[THREAD] [%s] %.4f seconds'</span> % (cur_thread_name, duration.total_seconds()))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">increment_singlethread</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'[SINGLE_THREAD] start by count pair: (%d, %d)'</span> % (<span class="number">0</span>, COUNT))</span><br><span class="line">    start_time = datetime.datetime.now()</span><br><span class="line">    _count_task(<span class="number">0</span>, COUNT)</span><br><span class="line">    duration = datetime.datetime.now() - start_time</span><br><span class="line">    print(<span class="string">'[SINGLE_THREAD] %.4f seconds'</span> % duration.total_seconds())</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">NUM_THREADS = <span class="number">5</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_get_counts</span><span class="params">()</span>:</span></span><br><span class="line">    segs = [<span class="number">0</span>]</span><br><span class="line">    div, mod = int(COUNT / NUM_THREADS), int(COUNT % NUM_THREADS)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(NUM_THREADS):</span><br><span class="line">        segs.append(div)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(mod):</span><br><span class="line">        segs[i + <span class="number">1</span>] += <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, len(segs)):</span><br><span class="line">        segs[i] += segs[i - <span class="number">1</span>]</span><br><span class="line">    cnts = []</span><br><span class="line">    segs[<span class="number">0</span>] = <span class="number">-1</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(NUM_THREADS):</span><br><span class="line">        cnts.append((segs[i] + <span class="number">1</span>, segs[i + <span class="number">1</span>]))</span><br><span class="line">    <span class="keyword">return</span> cnts</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">increment_multithread</span><span class="params">()</span>:</span></span><br><span class="line">    cnts = _get_counts()</span><br><span class="line">    print(<span class="string">'[MULTI_THREAD] start by counts: %s'</span> % cnts)</span><br><span class="line">    threads = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(NUM_THREADS):</span><br><span class="line">        threads.append(threading.Thread(</span><br><span class="line">            target=_count_task,</span><br><span class="line">            args=cnts[i],</span><br><span class="line">            name=<span class="string">'Task-%d'</span> % i</span><br><span class="line">        ))</span><br><span class="line">    start_time = datetime.datetime.now()</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(NUM_THREADS):</span><br><span class="line">        threads[i].start()</span><br><span class="line">    time.sleep(<span class="number">0</span>)  <span class="comment"># yield exexcution to task threads</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(NUM_THREADS):</span><br><span class="line">        threads[i].join()</span><br><span class="line">    duration = datetime.datetime.now() - start_time</span><br><span class="line">    print(<span class="string">'[MULTI_THREAD] %.4f seconds'</span> % duration.total_seconds())</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    increment_singlethread()</span><br><span class="line">    increment_multithread()</span><br></pre></td></tr></table></figure>
+<p>这是个测试代码，总共执行COUNT次+=1的操作，一个是单线程，一个是多线程。出来的结果，两种方式没有明显的时间上的差异：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[SINGLE_THREAD] start by count pair: (0, 100000000)</span><br><span class="line">[THREAD] [MainThread] 7.1221 seconds</span><br><span class="line">[SINGLE_THREAD] 7.1221 seconds</span><br><span class="line">[MULTI_THREAD] start by counts: [(0, 20000000), (20000001, 40000000), (40000001, 60000000), (60000001, 80000000), (80000001, 100000000)]</span><br><span class="line">[THREAD] [Task-3] 5.8285 seconds</span><br><span class="line">[THREAD] [Task-0] 6.0101 seconds</span><br><span class="line">[THREAD] [Task-4] 6.6114 seconds</span><br><span class="line">[THREAD] [Task-1] 6.9136 seconds</span><br><span class="line">[THREAD] [Task-2] 6.9735 seconds</span><br><span class="line">[MULTI_THREAD] 7.0034 seconds</span><br></pre></td></tr></table></figure>
+<p>这也侧面证明了基于<code>threading.Thread</code>的多线程并非完全并行运行的。为了深入确认这个问题，我们需要看下python内部的线程运行的机制</p>
+<h2 id="线程是如何启动的"><a href="#线程是如何启动的" class="headerlink" title="线程是如何启动的"></a>线程是如何启动的</h2><p>我们首先看下线程启动的过程，直接从<code>Thread</code>类的<code>start</code>方法开始：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Thread</span>:</span></span><br><span class="line">    <span class="string">"""A class that represents a thread of control.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    This class can be safely subclassed in a limited fashion. There are two ways</span></span><br><span class="line"><span class="string">    to specify the activity: by passing a callable object to the constructor, or</span></span><br><span class="line"><span class="string">    by overriding the run() method in a subclass.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">start</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""Start the thread's activity.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        It must be called at most once per thread object. It arranges for the</span></span><br><span class="line"><span class="string">        object's run() method to be invoked in a separate thread of control.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        This method will raise a RuntimeError if called more than once on the</span></span><br><span class="line"><span class="string">        same thread object.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> self._initialized:</span><br><span class="line">            <span class="keyword">raise</span> RuntimeError(<span class="string">"thread.__init__() not called"</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> self._started.is_set():</span><br><span class="line">            <span class="keyword">raise</span> RuntimeError(<span class="string">"threads can only be started once"</span>)</span><br><span class="line">        <span class="keyword">with</span> _active_limbo_lock:</span><br><span class="line">            _limbo[self] = self</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            _start_new_thread(self._bootstrap, ())</span><br><span class="line">        <span class="keyword">except</span> Exception:</span><br><span class="line">            <span class="keyword">with</span> _active_limbo_lock:</span><br><span class="line">                <span class="keyword">del</span> _limbo[self]</span><br><span class="line">            <span class="keyword">raise</span></span><br><span class="line">        self._started.wait()</span><br></pre></td></tr></table></figure>
+<p><code>start</code>方法中，从行为上来看是这么一个逻辑：</p>
+<ul>
+<li>首先会检查<code>Thread</code>实例是否已经初始化，是否没有启动过</li>
+<li>然后会把自己加入到<code>_limbo</code>中</li>
+<li>调用启动线程的方法<code>_start_new_thread</code>，把自己的<code>_bootstrap</code>方法也带进去<ul>
+<li><code>_bootstrap</code>是python端最终开始线程任务所调用的逻辑，是在新线程里运行的！后面会慢慢看到</li>
+</ul>
+</li>
+<li>等待<code>self._started</code>（一个Event实例）的信号</li>
+</ul>
+<p>首先来看<code>_limbo</code>的作用。玩游戏玩多的同学都知道，<code>limbo</code>叫做“地狱边境”，如果再查下字典的话，我们可以将之简单理解为“准备态”。先记录线程为“准备态”，然后才会开始真正执行线程启动的过程。线程启动的过程是在C层进行的，我们点进<code>_start_new_thread</code>的定义就能看到python层是没有对应的代码的。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// _threadmodule.c</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> PyObject *</span><br><span class="line">thread_PyThread_start_new_thread(PyObject *self, PyObject *fargs)</span><br><span class="line">&#123;</span><br><span class="line">    _PyRuntimeState *runtime = &amp;_PyRuntime;</span><br><span class="line">    PyObject *func, *args, *keyw = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">bootstate</span> *<span class="title">boot</span>;</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> ident;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// 解包function跟args并检查合法性</span></span><br><span class="line">    <span class="keyword">if</span> (!PyArg_UnpackTuple(fargs, <span class="string">"start_new_thread"</span>, <span class="number">2</span>, <span class="number">3</span>,</span><br><span class="line">                           &amp;func, &amp;args, &amp;keyw))</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">if</span> (!PyCallable_Check(func)) &#123;</span><br><span class="line">        PyErr_SetString(PyExc_TypeError,</span><br><span class="line">                        <span class="string">"first arg must be callable"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (!PyTuple_Check(args)) &#123;</span><br><span class="line">        PyErr_SetString(PyExc_TypeError,</span><br><span class="line">                        <span class="string">"2nd arg must be a tuple"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (keyw != <span class="literal">NULL</span> &amp;&amp; !PyDict_Check(keyw)) &#123;</span><br><span class="line">        PyErr_SetString(PyExc_TypeError,</span><br><span class="line">                        <span class="string">"optional 3rd arg must be a dictionary"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    PyInterpreterState *interp = _PyInterpreterState_GET();</span><br><span class="line">    <span class="keyword">if</span> (interp-&gt;config._isolated_interpreter) &#123;</span><br><span class="line">        PyErr_SetString(PyExc_RuntimeError,</span><br><span class="line">                        <span class="string">"thread is not supported for isolated subinterpreters"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// 设置bootstate实例</span></span><br><span class="line">    boot = PyMem_NEW(struct bootstate, <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">if</span> (boot == <span class="literal">NULL</span>)</span><br><span class="line">        <span class="keyword">return</span> PyErr_NoMemory();</span><br><span class="line">    boot-&gt;interp = _PyInterpreterState_GET();</span><br><span class="line">    boot-&gt;func = func;</span><br><span class="line">    boot-&gt;args = args;</span><br><span class="line">    boot-&gt;keyw = keyw;</span><br><span class="line">    boot-&gt;tstate = _PyThreadState_Prealloc(boot-&gt;interp);</span><br><span class="line">    boot-&gt;runtime = runtime;</span><br><span class="line">    <span class="keyword">if</span> (boot-&gt;tstate == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        PyMem_DEL(boot);</span><br><span class="line">        <span class="keyword">return</span> PyErr_NoMemory();</span><br><span class="line">    &#125;</span><br><span class="line">    Py_INCREF(func);</span><br><span class="line">    Py_INCREF(args);</span><br><span class="line">    Py_XINCREF(keyw);</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// 启动线程，传参t_bootstrap跟bootstate实例</span></span><br><span class="line">    ident = PyThread_start_new_thread(t_bootstrap, (<span class="keyword">void</span>*) boot);</span><br><span class="line">    <span class="keyword">if</span> (ident == PYTHREAD_INVALID_THREAD_ID) &#123;</span><br><span class="line">        PyErr_SetString(ThreadError, <span class="string">"can't start new thread"</span>);</span><br><span class="line">        Py_DECREF(func);</span><br><span class="line">        Py_DECREF(args);</span><br><span class="line">        Py_XDECREF(keyw);</span><br><span class="line">        PyThreadState_Clear(boot-&gt;tstate);</span><br><span class="line">        PyMem_DEL(boot);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> PyLong_FromUnsignedLong(ident);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>python中的<code>_start_new_thread</code>，对应了C层的<code>thread_PyThread_start_new_thread</code>，而<code>thread_PyThread_start_new_thread</code>传入的两个参数<code>self</code>跟<code>fargs</code>，则对应python代码里的<code>self._bootstrap</code>跟空的tuple。<code>_start_new_thread</code>的大致步骤如下：</p>
+<ul>
+<li>解包<code>fargs</code>，并检查合法性。这里由于进了空的tuple，所以暂时不需要过多分析。</li>
+<li>设置<code>bootstate</code>实例<code>boot</code><ul>
+<li>一个<code>bootstate</code>是<code>fargs</code>以及对应的<code>thread state</code>、<code>intepreter state</code>以及<code>runtime state</code>的打包，囊括了启动新线程需要有的信息</li>
+</ul>
+</li>
+<li>调用<code>PyThread_start_new_thread</code>函数，把<code>bootstate</code>实例以及一个回调函数<code>t_bootstrap</code>传进去<ul>
+<li>其返回值是线程的实例ID，在python端，我们也可以通过线程实例的<code>ident</code>属性得到。</li>
+<li><code>t_bootstrap</code>回调函数，是需要在新启动的子线程里运行的！</li>
+</ul>
+</li>
+</ul>
+<p><code>PyThread_start_new_thread</code>函数，根据不同操作系统环境有不同的定义。以windows环境为例，其定义如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// thread_nt.h</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* thunker to call adapt between the function type used by the system's</span></span><br><span class="line"><span class="comment">thread start function and the internally used one. */</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">unsigned</span> __stdcall</span><br><span class="line">bootstrap(<span class="keyword">void</span> *call)</span><br><span class="line">&#123;</span><br><span class="line">    callobj *obj = (callobj*)call;</span><br><span class="line">    <span class="keyword">void</span> (*func)(<span class="keyword">void</span>*) = obj-&gt;func;</span><br><span class="line">    <span class="keyword">void</span> *arg = obj-&gt;arg;</span><br><span class="line">    HeapFree(GetProcessHeap(), <span class="number">0</span>, obj);</span><br><span class="line">    func(arg);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">long</span></span><br><span class="line">PyThread_start_new_thread(<span class="keyword">void</span> (*func)(<span class="keyword">void</span> *), <span class="keyword">void</span> *arg)</span><br><span class="line">&#123;</span><br><span class="line">    HANDLE hThread;</span><br><span class="line">    <span class="keyword">unsigned</span> threadID;</span><br><span class="line">    callobj *obj;</span><br><span class="line"></span><br><span class="line">    dprintf((<span class="string">"%lu: PyThread_start_new_thread called\n"</span>,</span><br><span class="line">             PyThread_get_thread_ident()));</span><br><span class="line">    <span class="keyword">if</span> (!initialized)</span><br><span class="line">        PyThread_init_thread();</span><br><span class="line"></span><br><span class="line">    obj = (callobj*)HeapAlloc(GetProcessHeap(), <span class="number">0</span>, <span class="keyword">sizeof</span>(*obj));</span><br><span class="line">    <span class="keyword">if</span> (!obj)</span><br><span class="line">        <span class="keyword">return</span> PYTHREAD_INVALID_THREAD_ID;</span><br><span class="line">    obj-&gt;func = func;</span><br><span class="line">    obj-&gt;arg = arg;</span><br><span class="line">    PyThreadState *tstate = _PyThreadState_GET();</span><br><span class="line">    <span class="keyword">size_t</span> stacksize = tstate ? tstate-&gt;interp-&gt;pythread_stacksize : <span class="number">0</span>;</span><br><span class="line">    hThread = (HANDLE)_beginthreadex(<span class="number">0</span>,</span><br><span class="line">                      Py_SAFE_DOWNCAST(stacksize, Py_ssize_t, <span class="keyword">unsigned</span> <span class="keyword">int</span>),</span><br><span class="line">                      bootstrap, obj,</span><br><span class="line">                      <span class="number">0</span>, &amp;threadID);</span><br><span class="line">    <span class="keyword">if</span> (hThread == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">/* I've seen errno == EAGAIN here, which means "there are</span></span><br><span class="line"><span class="comment">         * too many threads".</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">int</span> e = errno;</span><br><span class="line">        dprintf((<span class="string">"%lu: PyThread_start_new_thread failed, errno %d\n"</span>,</span><br><span class="line">                 PyThread_get_thread_ident(), e));</span><br><span class="line">        threadID = (<span class="keyword">unsigned</span>)<span class="number">-1</span>;</span><br><span class="line">        HeapFree(GetProcessHeap(), <span class="number">0</span>, obj);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        dprintf((<span class="string">"%lu: PyThread_start_new_thread succeeded: %p\n"</span>,</span><br><span class="line">                 PyThread_get_thread_ident(), (<span class="keyword">void</span>*)hThread));</span><br><span class="line">        CloseHandle(hThread);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> threadID;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>参数<code>func</code>和<code>arg</code>，对应的是<code>t_bootstrap</code>回调跟<code>bootstate</code>实例。为了适配<code>windows</code>下的<code>_beginthreadex</code>接口定义，<code>t_bootstrap</code>跟<code>bootstate</code>实例又打包成<code>callobj</code>，作为<code>bootstrap</code>函数（适配用）的参数，随<code>bootstrap</code>一起入参<code>_beginthreadex</code>。</p>
+<p><strong>这时候我们已经可以确定，python启动的新线程是操作系统的原生线程。</strong></p>
+<p>新线程诞生时，调用了<code>bootstrap</code>，在<code>bootstrap</code>里拆包<code>callobj</code>，调用<code>func(arg)</code>，也就是<code>t_bootstrap(boot)</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// _threadmodule.c</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">void</span></span><br><span class="line">t_bootstrap(<span class="keyword">void</span> *boot_raw)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">bootstate</span> *<span class="title">boot</span> = (<span class="title">struct</span> <span class="title">bootstate</span> *) <span class="title">boot_raw</span>;</span></span><br><span class="line">    PyThreadState *tstate;</span><br><span class="line">    PyObject *res;</span><br><span class="line"></span><br><span class="line">    tstate = boot-&gt;tstate;</span><br><span class="line">    tstate-&gt;thread_id = PyThread_get_thread_ident();  <span class="comment">// reset thread ID</span></span><br><span class="line">    _PyThreadState_Init(tstate);</span><br><span class="line">    PyEval_AcquireThread(tstate);  <span class="comment">// take gil for executing thread task</span></span><br><span class="line">    tstate-&gt;interp-&gt;num_threads++;</span><br><span class="line">    res = PyObject_Call(boot-&gt;func, boot-&gt;args, boot-&gt;keyw);</span><br><span class="line">    <span class="keyword">if</span> (res == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (PyErr_ExceptionMatches(PyExc_SystemExit))</span><br><span class="line">            <span class="comment">/* SystemExit is ignored silently */</span></span><br><span class="line">            PyErr_Clear();</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            _PyErr_WriteUnraisableMsg(<span class="string">"in thread started by"</span>, boot-&gt;func);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        Py_DECREF(res);</span><br><span class="line">    &#125;</span><br><span class="line">    Py_DECREF(boot-&gt;func);</span><br><span class="line">    Py_DECREF(boot-&gt;args);</span><br><span class="line">    Py_XDECREF(boot-&gt;keyw);</span><br><span class="line">    PyMem_DEL(boot_raw);</span><br><span class="line">    tstate-&gt;interp-&gt;num_threads--;</span><br><span class="line">    PyThreadState_Clear(tstate);</span><br><span class="line">    _PyThreadState_DeleteCurrent(tstate);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// bpo-44434: Don't call explicitly PyThread_exit_thread(). On Linux with</span></span><br><span class="line">    <span class="comment">// the glibc, pthread_exit() can abort the whole process if dlopen() fails</span></span><br><span class="line">    <span class="comment">// to open the libgcc_s.so library (ex: EMFILE error).</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>回到<code>t_bootstrap</code>中，我们发现，最终<code>t_bootstrap</code>会取出来<code>boot</code>的<code>func</code>&amp;<code>args</code>，然后调用<code>PyObject_Call</code>调用<code>func(args)</code>。回到前面去看，这个<code>func(args)</code>就是python端的<code>self._bootstrap()</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Thread</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_bootstrap</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="comment"># Wrapper around the real bootstrap code that ignores</span></span><br><span class="line">        <span class="comment"># exceptions during interpreter cleanup.  Those typically</span></span><br><span class="line">        <span class="comment"># happen when a daemon thread wakes up at an unfortunate</span></span><br><span class="line">        <span class="comment"># moment, finds the world around it destroyed, and raises some</span></span><br><span class="line">        <span class="comment"># random exception *** while trying to report the exception in</span></span><br><span class="line">        <span class="comment"># _bootstrap_inner() below ***.  Those random exceptions</span></span><br><span class="line">        <span class="comment"># don't help anybody, and they confuse users, so we suppress</span></span><br><span class="line">        <span class="comment"># them.  We suppress them only when it appears that the world</span></span><br><span class="line">        <span class="comment"># indeed has already been destroyed, so that exceptions in</span></span><br><span class="line">        <span class="comment"># _bootstrap_inner() during normal business hours are properly</span></span><br><span class="line">        <span class="comment"># reported.  Also, we only suppress them for daemonic threads;</span></span><br><span class="line">        <span class="comment"># if a non-daemonic encounters this, something else is wrong.</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            self._bootstrap_inner()</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            <span class="keyword">if</span> self._daemonic <span class="keyword">and</span> _sys <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">                <span class="keyword">return</span></span><br><span class="line">            <span class="keyword">raise</span></span><br><span class="line">   </span><br><span class="line"> <span class="function"><span class="keyword">def</span> <span class="title">_bootstrap_inner</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            self._set_ident()</span><br><span class="line">            self._set_tstate_lock()</span><br><span class="line">            <span class="keyword">if</span> _HAVE_THREAD_NATIVE_ID:</span><br><span class="line">                self._set_native_id()</span><br><span class="line">            self._started.set()</span><br><span class="line">            <span class="keyword">with</span> _active_limbo_lock:</span><br><span class="line">                _active[self._ident] = self</span><br><span class="line">                <span class="keyword">del</span> _limbo[self]</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> _trace_hook:</span><br><span class="line">                _sys.settrace(_trace_hook)</span><br><span class="line">            <span class="keyword">if</span> _profile_hook:</span><br><span class="line">                _sys.setprofile(_profile_hook)</span><br><span class="line"></span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                self.run()</span><br><span class="line">            <span class="keyword">except</span>:</span><br><span class="line">                self._invoke_excepthook(self)</span><br><span class="line">        <span class="keyword">finally</span>:</span><br><span class="line">            <span class="keyword">with</span> _active_limbo_lock:</span><br><span class="line">                <span class="keyword">try</span>:</span><br><span class="line">                    <span class="comment"># We don't call self._delete() because it also</span></span><br><span class="line">                    <span class="comment"># grabs _active_limbo_lock.</span></span><br><span class="line">                    <span class="keyword">del</span> _active[get_ident()]</span><br><span class="line">                <span class="keyword">except</span>:</span><br><span class="line">                    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+<p>在<code>self._bootstrap_inner()</code>中，大致有以下步骤：</p>
+<ul>
+<li>notify <code>self._started</code>，这样先前python端的<code>start</code>函数流程就完成了</li>
+<li>把自己从准备态<code>_limbo</code>中移除，并把自己加到<code>active</code>态里</li>
+<li>执行<code>self.run</code>，开始线程逻辑</li>
+</ul>
+<p>这样，python中新线程启动的全貌就展现在我们面前了。除了线程的来源外，很多关于线程相关的基础问题（比如为啥不能直接执行<code>self.run</code>），答案也都一目了然</p>
+<h2 id="线程执行代码的过程"><a href="#线程执行代码的过程" class="headerlink" title="线程执行代码的过程"></a>线程执行代码的过程</h2><p>在先前一小节我们知晓了python新的线程从何而来，然而，只有通过剖析线程执行代码的过程，我们才可以明确为什么python线程不能并行运行。</p>
+<p>一个线程执行其任务，最终还是要落实到<code>run</code>方法上来。首先我们通过python自带的反编译库<code>dis</code>来看下Thread的run函数对应的操作码（opcode），这样就通过python内部对应opcode的执行逻辑来进一步分析：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Thread</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""Method representing the thread's activity.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        You may override this method in a subclass. The standard run() method</span></span><br><span class="line"><span class="string">        invokes the callable object passed to the object's constructor as the</span></span><br><span class="line"><span class="string">        target argument, if any, with sequential and keyword arguments taken</span></span><br><span class="line"><span class="string">        from the args and kwargs arguments, respectively.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">if</span> self._target:</span><br><span class="line">                self._target(*self._args, **self._kwargs)</span><br><span class="line">        <span class="keyword">finally</span>:</span><br><span class="line">            <span class="comment"># Avoid a refcycle if the thread is running a function with</span></span><br><span class="line">            <span class="comment"># an argument that has a member that points to the thread.</span></span><br><span class="line">            <span class="keyword">del</span> self._target, self._args, self._kwargs</span><br></pre></td></tr></table></figure>
+<p>其中真正执行函数的一行<code>self._target(*self._args, **self._kwargs)</code>，对应的opcodes是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">910           8 LOAD_FAST                0 (self)</span><br><span class="line">             10 LOAD_ATTR                0 (_target)</span><br><span class="line">             12 LOAD_FAST                0 (self)</span><br><span class="line">             14 LOAD_ATTR                1 (_args)</span><br><span class="line">             16 BUILD_MAP                0</span><br><span class="line">             18 LOAD_FAST                0 (self)</span><br><span class="line">             20 LOAD_ATTR                2 (_kwargs)</span><br><span class="line">             22 DICT_MERGE               1</span><br><span class="line">             24 CALL_FUNCTION_EX         1</span><br><span class="line">             26 POP_TOP</span><br><span class="line">        &gt;&gt;   28 POP_BLOCK</span><br></pre></td></tr></table></figure>
+<p>很明显，<code>CALL_FUNCTION_EX</code>——调用函数，就是我们需要找到的opcode。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ceval.c</span></span><br><span class="line">PyObject* _Py_HOT_FUNCTION</span><br><span class="line">_PyEval_EvalFrameDefault(PyThreadState *tstate, PyFrameObject *f, <span class="keyword">int</span> throwflag)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 省略超多行</span></span><br><span class="line">    <span class="keyword">switch</span> (opcode) &#123;</span><br><span class="line">        <span class="comment">// 省略超多行</span></span><br><span class="line">        case TARGET(CALL_FUNCTION_EX): &#123;</span><br><span class="line">            <span class="comment">// 检查函数跟参数</span></span><br><span class="line">            PREDICTED(CALL_FUNCTION_EX);</span><br><span class="line">            PyObject *func, *callargs, *kwargs = <span class="literal">NULL</span>, *result;</span><br><span class="line">            <span class="keyword">if</span> (oparg &amp; <span class="number">0x01</span>) &#123;</span><br><span class="line">                kwargs = POP();</span><br><span class="line">                <span class="keyword">if</span> (!PyDict_CheckExact(kwargs)) &#123;</span><br><span class="line">                    PyObject *d = PyDict_New();</span><br><span class="line">                    <span class="keyword">if</span> (d == <span class="literal">NULL</span>)</span><br><span class="line">                        <span class="keyword">goto</span> error;</span><br><span class="line">                    <span class="keyword">if</span> (_PyDict_MergeEx(d, kwargs, <span class="number">2</span>) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">                        Py_DECREF(d);</span><br><span class="line">                        format_kwargs_error(tstate, SECOND(), kwargs);</span><br><span class="line">                        Py_DECREF(kwargs);</span><br><span class="line">                        <span class="keyword">goto</span> error;</span><br><span class="line">                    &#125;</span><br><span class="line">                    Py_DECREF(kwargs);</span><br><span class="line">                    kwargs = d;</span><br><span class="line">                &#125;</span><br><span class="line">                assert(PyDict_CheckExact(kwargs));</span><br><span class="line">            &#125;</span><br><span class="line">            callargs = POP();</span><br><span class="line">            func = TOP();</span><br><span class="line">            <span class="keyword">if</span> (!PyTuple_CheckExact(callargs)) &#123;</span><br><span class="line">                <span class="keyword">if</span> (check_args_iterable(tstate, func, callargs) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">                    Py_DECREF(callargs);</span><br><span class="line">                    <span class="keyword">goto</span> error;</span><br><span class="line">                &#125;</span><br><span class="line">                Py_SETREF(callargs, PySequence_Tuple(callargs));</span><br><span class="line">                <span class="keyword">if</span> (callargs == <span class="literal">NULL</span>) &#123;</span><br><span class="line">                    <span class="keyword">goto</span> error;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            assert(PyTuple_CheckExact(callargs));</span><br><span class="line">            <span class="comment">// 调用函数</span></span><br><span class="line">            result = do_call_core(tstate, func, callargs, kwargs);</span><br><span class="line">            Py_DECREF(func);</span><br><span class="line">            Py_DECREF(callargs);</span><br><span class="line">            Py_XDECREF(kwargs);</span><br><span class="line"></span><br><span class="line">            SET_TOP(result);</span><br><span class="line">            <span class="keyword">if</span> (result == <span class="literal">NULL</span>) &#123;</span><br><span class="line">                <span class="keyword">goto</span> error;</span><br><span class="line">            &#125;</span><br><span class="line">            DISPATCH();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 省略超多行</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 省略超多行</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在<code>ceval.c</code>中，超大函数<code>_PyEval_EvalFrameDefault</code>就是用来解析opcode的方法，在这个函数里可以检索opcode研究对应的逻辑。找到<code>CALL_FUNCTION_EX</code>对应的逻辑，我们可以分析函数调用的过程，顺藤摸瓜，最终会落实到这里：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// call.c</span></span><br><span class="line"></span><br><span class="line">PyObject *</span><br><span class="line">_PyObject_Call(PyThreadState *tstate, PyObject *callable,</span><br><span class="line">               PyObject *args, PyObject *kwargs)</span><br><span class="line">&#123;</span><br><span class="line">    ternaryfunc call;</span><br><span class="line">    PyObject *result;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* PyObject_Call() must not be called with an exception set,</span></span><br><span class="line"><span class="comment">       because it can clear it (directly or indirectly) and so the</span></span><br><span class="line"><span class="comment">       caller loses its exception */</span></span><br><span class="line">    assert(!_PyErr_Occurred(tstate));</span><br><span class="line">    assert(PyTuple_Check(args));</span><br><span class="line">    assert(kwargs == <span class="literal">NULL</span> || PyDict_Check(kwargs));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (PyVectorcall_Function(callable) != <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> PyVectorcall_Call(callable, args, kwargs);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        call = Py_TYPE(callable)-&gt;tp_call;</span><br><span class="line">        <span class="keyword">if</span> (call == <span class="literal">NULL</span>) &#123;</span><br><span class="line">            _PyErr_Format(tstate, PyExc_TypeError,</span><br><span class="line">                          <span class="string">"'%.200s' object is not callable"</span>,</span><br><span class="line">                          Py_TYPE(callable)-&gt;tp_name);</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (_Py_EnterRecursiveCall(tstate, <span class="string">" while calling a Python object"</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        result = (*call)(callable, args, kwargs);</span><br><span class="line"></span><br><span class="line">        _Py_LeaveRecursiveCall(tstate);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> _Py_CheckFunctionResult(tstate, callable, result, <span class="literal">NULL</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在<code>_PyObject_Call</code>中，调用函数的方式最后都以通用的形式（<code>vectorcall</code>以及<code>Py_TYPE(callable)-&gt;tp_call</code>）呈现，这说明入参不同的<code>callable</code>，可能需要不同的caller方法来handle。基于此，我们可以通过直接debug线程类Thread的<code>run</code>方法（在主线程直接跑就行了），来观察线程run函数调用的过程。测试代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> threading <span class="keyword">import</span> Thread</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_stat</span><span class="params">(a, b)</span>:</span> print(a + b)</span><br><span class="line">t = Thread(target=_stat, args=(<span class="number">2</span>, <span class="number">5</span>))</span><br><span class="line">t.run()</span><br></pre></td></tr></table></figure>
+<p><code>t.run</code>中的<code>self._target(*self._args, **self._kwargs)</code>一行触发了<code>_PyObject_Call</code>中<code>PyVectorcall_Call</code>分支。一路step into下去，最终来到了<code>_PyEval_EvalFrame</code>函数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">inline</span> PyObject*</span><br><span class="line">_PyEval_EvalFrame(PyThreadState *tstate, PyFrameObject *f, <span class="keyword">int</span> throwflag)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> tstate-&gt;interp-&gt;eval_frame(tstate, f, throwflag);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>frame</code>就是python函数调用栈上面的单位实例（类似于lua的<code>callinfo</code>），包含了一个函数调用的相关信息。<code>eval_frame</code>就是对<code>frame</code>保存的<code>code</code>（代码）实例解析并执行。解释器用的是<code>tstate-&gt;interp</code>，从先前线程启动的逻辑来看，在<code>thread_PyThread_start_new_thread</code>里，主线程就把自己的<code>interp</code>给到子线程了，所以不管创建多少个线程，所有线程都共用一套解释器。那解释器的<code>eval_frame</code>是什么呢？兜兜转转，又回到了超大函数<code>_PyEval_EvalFrameDefault</code>。</p>
+<p>从<code>_PyEval_EvalFrameDefault</code>的<code>main_loop</code>这个goto记号往下，就是无限循环处理opcode了。但在switch opcode之前，有一个判断逻辑：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ceval.c</span></span><br><span class="line">PyObject* _Py_HOT_FUNCTION</span><br><span class="line">_PyEval_EvalFrameDefault(PyThreadState *tstate, PyFrameObject *f, <span class="keyword">int</span> throwflag)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 省略上面</span></span><br><span class="line">main_loop:</span><br><span class="line">    <span class="keyword">for</span> (;;) &#123;</span><br><span class="line">        <span class="comment">// 省略上面</span></span><br><span class="line">  <span class="keyword">if</span> (_Py_atomic_load_relaxed(eval_breaker)) &#123;</span><br><span class="line">            opcode = _Py_OPCODE(*next_instr);</span><br><span class="line">            <span class="keyword">if</span> (opcode == SETUP_FINALLY ||</span><br><span class="line">                opcode == SETUP_WITH ||</span><br><span class="line">                opcode == BEFORE_ASYNC_WITH ||</span><br><span class="line">                opcode == YIELD_FROM) &#123;</span><br><span class="line">                <span class="comment">/* Few cases where we skip running signal handlers and other</span></span><br><span class="line"><span class="comment">                   pending calls:</span></span><br><span class="line"><span class="comment">                   - If we're about to enter the 'with:'. It will prevent</span></span><br><span class="line"><span class="comment">                     emitting a resource warning in the common idiom</span></span><br><span class="line"><span class="comment">                     'with open(path) as file:'.</span></span><br><span class="line"><span class="comment">                   - If we're about to enter the 'async with:'.</span></span><br><span class="line"><span class="comment">                   - If we're about to enter the 'try:' of a try/finally (not</span></span><br><span class="line"><span class="comment">                     *very* useful, but might help in some cases and it's</span></span><br><span class="line"><span class="comment">                     traditional)</span></span><br><span class="line"><span class="comment">                   - If we're resuming a chain of nested 'yield from' or</span></span><br><span class="line"><span class="comment">                     'await' calls, then each frame is parked with YIELD_FROM</span></span><br><span class="line"><span class="comment">                     as its next opcode. If the user hit control-C we want to</span></span><br><span class="line"><span class="comment">                     wait until we've reached the innermost frame before</span></span><br><span class="line"><span class="comment">                     running the signal handler and raising KeyboardInterrupt</span></span><br><span class="line"><span class="comment">                     (see bpo-30039).</span></span><br><span class="line"><span class="comment">                */</span></span><br><span class="line">                <span class="keyword">goto</span> fast_next_opcode;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (eval_frame_handle_pending(tstate) != <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">goto</span> error;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 省略下面</span></span><br><span class="line">    &#125;</span><br><span class="line"> <span class="comment">// 省略下面</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码首先会判断代码解释是否达到中断条件<code>eval_breaker</code>，如果达到了的话，可能会走到<code>eval_frame_handle_pending</code>处理中断。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ceval.c</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* Handle signals, pending calls, GIL drop request</span></span><br><span class="line"><span class="comment">   and asynchronous exception */</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">int</span></span><br><span class="line">eval_frame_handle_pending(PyThreadState *tstate)</span><br><span class="line">&#123;</span><br><span class="line">    _PyRuntimeState * <span class="keyword">const</span> runtime = &amp;_PyRuntime;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> _<span class="title">ceval_runtime_state</span> *<span class="title">ceval</span> = &amp;<span class="title">runtime</span>-&gt;<span class="title">ceval</span>;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Pending signals */</span></span><br><span class="line">    <span class="keyword">if</span> (_Py_atomic_load_relaxed(&amp;ceval-&gt;signals_pending)) &#123;</span><br><span class="line">        <span class="keyword">if</span> (handle_signals(tstate) != <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Pending calls */</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> _<span class="title">ceval_state</span> *<span class="title">ceval2</span> = &amp;<span class="title">tstate</span>-&gt;<span class="title">interp</span>-&gt;<span class="title">ceval</span>;</span></span><br><span class="line">    <span class="keyword">if</span> (_Py_atomic_load_relaxed(&amp;ceval2-&gt;pending.calls_to_do)) &#123;</span><br><span class="line">        <span class="keyword">if</span> (make_pending_calls(tstate) != <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* GIL drop request */</span></span><br><span class="line">    <span class="keyword">if</span> (_Py_atomic_load_relaxed(&amp;ceval2-&gt;gil_drop_request)) &#123;</span><br><span class="line">        <span class="comment">/* Give another thread a chance */</span></span><br><span class="line">        <span class="keyword">if</span> (_PyThreadState_Swap(&amp;runtime-&gt;gilstate, <span class="literal">NULL</span>) != tstate) &#123;</span><br><span class="line">            Py_FatalError(<span class="string">"tstate mix-up"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        drop_gil(ceval, ceval2, tstate);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* Other threads may run now */</span></span><br><span class="line"></span><br><span class="line">        take_gil(tstate);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (_PyThreadState_Swap(&amp;runtime-&gt;gilstate, tstate) != <span class="literal">NULL</span>) &#123;</span><br><span class="line">            Py_FatalError(<span class="string">"orphan tstate"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Check for asynchronous exception. */</span></span><br><span class="line">    <span class="keyword">if</span> (tstate-&gt;async_exc != <span class="literal">NULL</span>) &#123;</span><br><span class="line">        PyObject *exc = tstate-&gt;async_exc;</span><br><span class="line">        tstate-&gt;async_exc = <span class="literal">NULL</span>;</span><br><span class="line">        UNSIGNAL_ASYNC_EXC(tstate-&gt;interp);</span><br><span class="line">        _PyErr_SetNone(tstate, exc);</span><br><span class="line">        Py_DECREF(exc);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> MS_WINDOWS</span></span><br><span class="line">    <span class="comment">// bpo-42296: On Windows, _PyEval_SignalReceived() can be called in a</span></span><br><span class="line">    <span class="comment">// different thread than the Python thread, in which case</span></span><br><span class="line">    <span class="comment">// _Py_ThreadCanHandleSignals() is wrong. Recompute eval_breaker in the</span></span><br><span class="line">    <span class="comment">// current Python thread with the correct _Py_ThreadCanHandleSignals()</span></span><br><span class="line">    <span class="comment">// value. It prevents to interrupt the eval loop at every instruction if</span></span><br><span class="line">    <span class="comment">// the current Python thread cannot handle signals (if</span></span><br><span class="line">    <span class="comment">// _Py_ThreadCanHandleSignals() is false).</span></span><br><span class="line">    COMPUTE_EVAL_BREAKER(tstate-&gt;interp, ceval, ceval2);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>eval_frame_handle_pending</code>处理了多种opcode解析中断的场景。在这里我们可以看到，不论是哪个线程跑到这里，如果遇到了<code>gil_drop_request</code>，就得<code>drop_gil</code>给到其他线程，之后再尝试<code>take_gil</code>，重新竞争解释器锁。<br>在先前讲解线程启动逻辑的时候，新线程调用的<code>t_bootstrap</code>函数里，有一句<code>PyEval_AcquireThread(tstate)</code>，这里面就包含了<code>take_gil</code>的逻辑。我们可以看一下<code>take_gil</code>到底干了什么事情：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ceval_gil.h</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* Take the GIL.</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">   The function saves errno at entry and restores its value at exit.</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">   tstate must be non-NULL. */</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">void</span></span><br><span class="line">take_gil(PyThreadState *tstate)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 省略上面</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!_Py_atomic_load_relaxed(&amp;gil-&gt;locked)) &#123;</span><br><span class="line">        <span class="keyword">goto</span> _ready;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (_Py_atomic_load_relaxed(&amp;gil-&gt;locked)) &#123;</span><br><span class="line">        <span class="comment">// 没有拿到gil的情况</span></span><br><span class="line">        <span class="keyword">unsigned</span> <span class="keyword">long</span> saved_switchnum = gil-&gt;switch_number;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">unsigned</span> <span class="keyword">long</span> interval = (gil-&gt;interval &gt;= <span class="number">1</span> ? gil-&gt;interval : <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">int</span> timed_out = <span class="number">0</span>;</span><br><span class="line">        COND_TIMED_WAIT(gil-&gt;cond, gil-&gt;mutex, interval, timed_out);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* If we timed out and no switch occurred in the meantime, it is time</span></span><br><span class="line"><span class="comment">           to ask the GIL-holding thread to drop it. */</span></span><br><span class="line">        <span class="keyword">if</span> (timed_out &amp;&amp;</span><br><span class="line">            _Py_atomic_load_relaxed(&amp;gil-&gt;locked) &amp;&amp;</span><br><span class="line">            gil-&gt;switch_number == saved_switchnum)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (tstate_must_exit(tstate)) &#123;</span><br><span class="line">                MUTEX_UNLOCK(gil-&gt;mutex);</span><br><span class="line">                PyThread_exit_thread();</span><br><span class="line">            &#125;</span><br><span class="line">            assert(is_tstate_valid(tstate));</span><br><span class="line"></span><br><span class="line">            SET_GIL_DROP_REQUEST(interp);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">_ready:</span><br><span class="line">    <span class="comment">// 省略FORCE_SWITCHING宏相关代码</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">/* We now hold the GIL */</span></span><br><span class="line">    _Py_atomic_store_relaxed(&amp;gil-&gt;locked, <span class="number">1</span>);</span><br><span class="line">    _Py_ANNOTATE_RWLOCK_ACQUIRED(&amp;gil-&gt;locked, <span class="comment">/*is_write=*/</span><span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (tstate != (PyThreadState*)_Py_atomic_load_relaxed(&amp;gil-&gt;last_holder)) &#123;</span><br><span class="line">        _Py_atomic_store_relaxed(&amp;gil-&gt;last_holder, (<span class="keyword">uintptr_t</span>)tstate);</span><br><span class="line">        ++gil-&gt;switch_number;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 省略FORCE_SWITCHING宏相关代码</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 省略下面</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们看到这段逻辑：当<code>gil</code>一直被占时，就会进入while循环的<code>COND_TIMED_WAIT</code>，等待<code>gil-&gt;cond</code>的信号。这个信号的通知逻辑是在<code>drop_gil</code>的里面的，也就是说如果另一个线程执行了<code>drop_gil</code>就会触发这个信号，而由于python的线程是操作系统原生线程，因此我们如果深挖<code>COND_TIMED_WAIT</code>内部的实现也可以看到实质上是操作系统在调度信号触发后线程的唤醒。<code>COND_TIMED_WAIT</code>的时长是<code>gil-&gt;interval</code>（也就是<code>sys.getswitchinterval()</code>，线程切换时间），过了这段时间还是原来线程hold住<code>gil</code>的话，就强制触发<code>SET_GIL_DROP_REQUEST</code>逻辑</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">void</span></span><br><span class="line">SET_GIL_DROP_REQUEST(PyInterpreterState *interp)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> _<span class="title">ceval_state</span> *<span class="title">ceval2</span> = &amp;<span class="title">interp</span>-&gt;<span class="title">ceval</span>;</span></span><br><span class="line">    _Py_atomic_store_relaxed(&amp;ceval2-&gt;gil_drop_request, <span class="number">1</span>);</span><br><span class="line">    _Py_atomic_store_relaxed(&amp;ceval2-&gt;eval_breaker, <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们看到<code>SET_GIL_DROP_REQUEST</code>强制激活<code>gil_drop_request</code>跟<code>eval_breaker</code>，这样持有GIL的线程在<code>EvalFrame</code>的时候发现满足<code>eval_breaker</code>，就会走<code>eval_frame_handle_pending</code>的逻辑，里面再判断有<code>gil_drop_request</code>之后，就调用<code>drop_gil</code>把解释器锁释放出来。这样，另一个线程在执行<code>SET_GIL_DROP_REQUEST</code>之后的某次<code>COND_TIMED_WAIT</code>时候，就有可能提前被signal到，之后又发现<code>gil</code>没有被locked，于是就能够继续下面的逻辑，持有GIL了。最后，另一个线程拿到了代码的执行权，而原先丢掉GIL的线程，在<code>eval_frame_handle_pending</code>再次调用<code>take_gil</code>，反过来走在了竞争代码执行权的路上。循环往复，如是而已。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过对线程启动机制、代码运行机制以及基于GIL的线程调度机制的剖析，我们可以“一图流”，解释“python多线程为什么不能并行”这个问题：</p>
+<p><img src="/uploads/mediumpython/iii/threads.png" alt="threads" title="&#39;threads&#39;"></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+      
+<div style="border: 1px solid black; margin-top: 32px; margin-bottom: 32px">
+  <div style="margin-left:10px">
+    <span style="font-weight:bold">版权声明</span>
+    <br>
+    <span>本文为博客<a href="https://utmhikari.github.io" style="color:#258FC6">HiKariのTechLab</a>原创文章，转载请标明出处，谢谢~~~</span>
+  </div>
+</div>
+
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/GIL/" rel="tag"># GIL</a>
+          
+            <a href="/tags/源码分析/" rel="tag"># 源码分析</a>
+          
+            <a href="/tags/多线程/" rel="tag"># 多线程</a>
+          
+            <a href="/tags/opcode/" rel="tag"># opcode</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/10/23/mediumpython/ii/" rel="next" title="【Medium Python】第二话：dict的keys()返回了什么数据类型？">
+                <i class="fa fa-chevron-left"></i> 【Medium Python】第二话：dict的keys()返回了什么数据类型？
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/11/06/mediumpython/iv/" rel="prev" title="【Medium Python】第四话：类属性和实例属性是怎样的关系？">
+                【Medium Python】第四话：类属性和实例属性是怎样的关系？ <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="ひかり.HDQ">
+            
+              <p class="site-author-name" itemprop="name">ひかり.HDQ</p>
+              <div class="site-description motion-element" itemprop="description">talk is cheap, code is rich</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">155</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">415</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="GitHub &rarr; https://github.com/utmhikari"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="bWFpbHRvOmhkcTk0MDYyM0AxMjYuY29t" title="Mail &rarr; mailto:hdq940623@126.com"><i class="fa fa-fw fa-envelope"></i>Mail</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly90ZXN0ZXJob21lLmNvbS91dG1oaWthcmk=" title="TesterHome &rarr; https://testerhome.com/utmhikari"><i class="fa fa-fw fa-tumblr"></i>TesterHome</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vaWQvdXRtaGlrYXJp" title="Steam &rarr; https://steamcommunity.com/id/utmhikari"><i class="fa fa-fw fa-steam"></i>Steam</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9zcGFjZS5iaWxpYmlsaS5jb20vMTUwNzUxMTQv" title="Bilibili &rarr; https://space.bilibili.com/15075114/"><i class="fa fa-fw fa-bold"></i>Bilibili</span>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#多线程并行测试"><span class="nav-number">1.</span> <span class="nav-text">多线程并行测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程是如何启动的"><span class="nav-number">2.</span> <span class="nav-text">线程是如何启动的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程执行代码的过程"><span class="nav-number">3.</span> <span class="nav-text">线程执行代码的过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2019 – <span itemprop="copyrightYear">2024</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ひかり.HDQ</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="//cdn.staticfile.org/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script src="//cdn.staticfile.org/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+
+  
+  <script src="//cdn.staticfile.org/velocity/1.2.1/velocity.min.js"></script>
+
+  
+  <script src="//cdn.staticfile.org/velocity/1.2.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.1"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.1"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+  <script src="/js/src/exturl.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('5');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'manual') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+if ($('body').find('pre.mermaid').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.staticfile.org/mermaid/8.0.0-rc.8/mermaid.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      mermaid.initialize({
+        theme: 'dark',
+        logLevel: 3,
+        flowchart: { curve: 'linear' },
+        gantt: { axisFormat: '%m/%d/%Y' },
+        sequence: { actorMargin: 50 }
+      });
+    }
+  });
+}
+</script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+  $('.highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+  
+
+  
+
+</body>
+</html>

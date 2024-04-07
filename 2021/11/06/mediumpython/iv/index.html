@@ -1,0 +1,2370 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta name="baidu-site-verification" content="sc1B5Cxcoz">
+  <meta name="google-site-verification" content="OLcRj7lMnauxKrhFT3Q8Nvcexgv22NvlEmVZShKQKR8">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link rel="stylesheet" href="//cdn.staticfile.org/font-awesome/4.6.2/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/uploads/apple-touch.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/uploads/favicon-32x32.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/uploads/favicon-16x16.png?v=7.0.1">
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.1',
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"fadeIn","sidebar":"fadeIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="前言提到编程不得不提到面向对象，一个说烂了的话题，几十年来一直都有人在争论面向对象的好坏。从宏观角度来说，一个庞大的程序本质是对业务中实体集合以及其中的关系的模拟，虽然解决实体的关系问题，用面向过程、组合等方式去体现比较方便，但要解决实体概念的抽象，就需要面向对象的编程基础。因此，面向对象在编程中是非常重要的一部分思想，不能随随便便被否定或者忽略。 ​面向对象的灵魂在于对类（class）概念的剖析">
+<meta name="keywords" content="python,源码分析,descriptor,类,property">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Medium Python】第四话：类属性和实例属性是怎样的关系？">
+<meta property="og:url" content="http://utmhikari.github.io/2021/11/06/mediumpython/iv/index.html">
+<meta property="og:site_name" content="HiKariのTechLab">
+<meta property="og:description" content="前言提到编程不得不提到面向对象，一个说烂了的话题，几十年来一直都有人在争论面向对象的好坏。从宏观角度来说，一个庞大的程序本质是对业务中实体集合以及其中的关系的模拟，虽然解决实体的关系问题，用面向过程、组合等方式去体现比较方便，但要解决实体概念的抽象，就需要面向对象的编程基础。因此，面向对象在编程中是非常重要的一部分思想，不能随随便便被否定或者忽略。 ​面向对象的灵魂在于对类（class）概念的剖析">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2024-04-07T02:48:06.925Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【Medium Python】第四话：类属性和实例属性是怎样的关系？">
+<meta name="twitter:description" content="前言提到编程不得不提到面向对象，一个说烂了的话题，几十年来一直都有人在争论面向对象的好坏。从宏观角度来说，一个庞大的程序本质是对业务中实体集合以及其中的关系的模拟，虽然解决实体的关系问题，用面向过程、组合等方式去体现比较方便，但要解决实体概念的抽象，就需要面向对象的编程基础。因此，面向对象在编程中是非常重要的一部分思想，不能随随便便被否定或者忽略。 ​面向对象的灵魂在于对类（class）概念的剖析">
+
+
+
+
+
+
+  <link rel="canonical" href="http://utmhikari.github.io/2021/11/06/mediumpython/iv/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>【Medium Python】第四话：类属性和实例属性是怎样的关系？ | HiKariのTechLab</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HiKariのTechLab</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">光の技术屋</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+  
+
+  
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="关注HiKariのGithub" aria-label="关注HiKariのGithub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></span>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2021/11/06/mediumpython/iv/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">【Medium Python】第四话：类属性和实例属性是怎样的关系？
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2021-11-06 18:34:13" itemprop="dateCreated datePublished" datetime="2021-11-06T18:34:13+08:00">2021-11-06</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Medium-Python/" itemprop="url" rel="index"><span itemprop="name">Medium Python</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>提到编程不得不提到面向对象，一个说烂了的话题，几十年来一直都有人在争论面向对象的好坏。从宏观角度来说，一个庞大的程序本质是对业务中实体集合以及其中的关系的模拟，虽然解决实体的关系问题，用面向过程、组合等方式去体现比较方便，但要解决实体概念的抽象，就需要面向对象的编程基础。因此，面向对象在编程中是非常重要的一部分思想，不能随随便便被否定或者忽略。</p>
+<p>​<br>面向对象的灵魂在于对类（class）概念的剖析，而python中也有对类的支持，虽然不像其它静态语言有比较强的约束，但如果想将代码组织成面向对象式的话也是完全满足的。在平常python的交流以及面试的过程中，也会涉及到许多关于类的问题，比如最常见的就是阐述类与实例的关系。要理解类与实例的关系，从类属性和实例属性切入是为最直观的。因此，今天这篇文章就来讲讲python里类属性和实例属性的二三事。<br>​</p>
+<h2 id="在类和实例中访问属性"><a href="#在类和实例中访问属性" class="headerlink" title="在类和实例中访问属性"></a>在类和实例中访问属性</h2><p>首先上一段测试代码：</p>
+<a id="more"></a>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">print_seg</span><span class="params">(msg)</span>:</span></span><br><span class="line">    print(<span class="string">'\n'</span>.join([<span class="string">'='</span> * <span class="number">40</span>, str(msg), <span class="string">'='</span> * <span class="number">40</span> ]))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HeadmasterDescriptor</span>:</span></span><br><span class="line">    headmaster: str = <span class="string">'Dumbledore'</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__get__</span><span class="params">(self, obj, cls)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">'&lt;HeadmasterDescriptor %s&gt;'</span> % self.headmaster</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__set__</span><span class="params">(self, obj, value)</span>:</span></span><br><span class="line">        print(<span class="string">'&lt;HeadmasterDescriptor&gt; set new headmaster: %s'</span> % value)</span><br><span class="line">        self.headmaster = str(value)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span>:</span></span><br><span class="line">    headmaster = HeadmasterDescriptor()</span><br><span class="line">    students = set()</span><br><span class="line">    teacher = <span class="string">'Snape'</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name: str, gender: str, age: int)</span>:</span></span><br><span class="line">        <span class="keyword">assert</span> gender <span class="keyword">in</span> [<span class="string">'male'</span>, <span class="string">'female'</span>]</span><br><span class="line">        self.name = name</span><br><span class="line">        self.age = age</span><br><span class="line">        self.gender = gender</span><br><span class="line"></span><br><span class="line">        <span class="comment"># add to students</span></span><br><span class="line">        self.students.add(name)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__del__</span><span class="params">(self)</span>:</span></span><br><span class="line">        print(<span class="string">'&lt;Student&gt; remove student %s'</span> % self.name)</span><br><span class="line">        self.students.remove(self.name)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="comment"># ============================== test #1 start ==================================</span></span><br><span class="line">    student_1 = Student(name=<span class="string">'conan'</span>, gender=<span class="string">'male'</span>, age=<span class="number">18</span>)</span><br><span class="line">    student_2 = Student(name=<span class="string">'saki'</span>, gender=<span class="string">'female'</span>, age=<span class="number">15</span>)</span><br><span class="line">    print_seg(<span class="string">'test #1 start'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># students</span></span><br><span class="line">    print(<span class="string">'[student-1] students: %s'</span> % student_1.students)</span><br><span class="line">    print(<span class="string">'[student-2] students: %s'</span> % student_2.students)</span><br><span class="line">    print(<span class="string">'[Student] students: %s'</span> % Student.students)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># dir</span></span><br><span class="line">    print(<span class="string">'[student-1] dir: %s'</span> % dir(student_1))</span><br><span class="line">    print(<span class="string">'[Student] dir: %s'</span> % dir(student_1))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># instance attributes</span></span><br><span class="line">    print(<span class="string">'[student-1] name: %s'</span> % student_1.name)</span><br><span class="line">    print(<span class="string">'[student-2] gender: %s'</span> % student_2.gender)</span><br><span class="line">    print(<span class="string">'[student-2] age: %s'</span> % getattr(student_2, <span class="string">'age'</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># headmaster</span></span><br><span class="line">    print(<span class="string">'[student-1] old headmaster: %s'</span> % getattr(student_1, <span class="string">'headmaster'</span>))</span><br><span class="line">    print(<span class="string">'[student-2] old headmaster: %s'</span> % student_2.headmaster)</span><br><span class="line">    print(<span class="string">'[Student] new headmaster: %s'</span> % Student.headmaster)</span><br><span class="line">    print(<span class="string">'%s, %s'</span> % (id(student_2.headmaster), id(Student.headmaster)))</span><br><span class="line">    student_1.headmaster = <span class="string">'Alan Tam'</span></span><br><span class="line">    print(<span class="string">'[student-1] new headmaster: %s'</span> % student_1.headmaster)</span><br><span class="line">    print(<span class="string">'[student-2] new headmaster: %s'</span> % student_2.headmaster)</span><br><span class="line">    print(<span class="string">'[Student] new headmaster: %s'</span> % getattr(Student, <span class="string">'headmaster'</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># remove student</span></span><br><span class="line">    <span class="keyword">del</span> student_1</span><br><span class="line">    print(<span class="string">'[student-2] students: %s'</span> % student_2.students)</span><br><span class="line">    print(<span class="string">'[Student] students: %s'</span> % Student.students)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># set teacher</span></span><br><span class="line">    print(<span class="string">'[student-2] teacher: %s'</span> % student_2.teacher)</span><br><span class="line">    print(<span class="string">'[Student] teacher: %s'</span> % Student.teacher)</span><br><span class="line">    student_2.teacher = <span class="string">'Jodie'</span></span><br><span class="line">    print(<span class="string">'[student-2] teacher: %s'</span> % student_2.teacher)</span><br><span class="line">    print(<span class="string">'[Student] teacher: %s'</span> % Student.teacher)</span><br><span class="line"></span><br><span class="line">    print_seg(<span class="string">'test#1 end'</span>)</span><br><span class="line">    <span class="comment"># ============================== test #1 end ==================================</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+<p>这一段代码构造了这样的场景：</p>
+<ul>
+<li>首先创建两个学生，创建的过程中将学生名加入到集合<code>students</code></li>
+<li>用<code>dir</code>打印学生实例<code>student-1</code>及学生类<code>Student</code>的属性&amp;方法，再通过点或者<code>getattr</code>的方式访问实例属性</li>
+<li>更换<code>headmaster</code></li>
+<li>删除<code>student_1</code></li>
+<li>更换<code>teacher</code></li>
+</ul>
+<p>我们看到打印的结果是这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">========================================</span><br><span class="line">test #1 start</span><br><span class="line">========================================</span><br><span class="line">[student-1] students: &#123;&apos;saki&apos;, &apos;conan&apos;&#125;</span><br><span class="line">[student-2] students: &#123;&apos;saki&apos;, &apos;conan&apos;&#125;</span><br><span class="line">[Student] students: &#123;&apos;saki&apos;, &apos;conan&apos;&#125;</span><br><span class="line">[student-1] dir: [&apos;__class__&apos;, &apos;__del__&apos;, &apos;__delattr__&apos;, &apos;__dict__&apos;, &apos;__dir__&apos;, &apos;__doc__&apos;, &apos;__eq__&apos;, &apos;__format__&apos;, &apos;__ge__&apos;, &apos;__getattribute__&apos;, &apos;__gt__&apos;, &apos;__hash__&apos;, &apos;__init__&apos;, &apos;__init_subclass__&apos;, &apos;__le__&apos;, &apos;__lt__&apos;, &apos;__module__&apos;, &apos;__ne__&apos;, &apos;__new__&apos;, &apos;__reduce__&apos;, &apos;__reduce_ex__&apos;, &apos;__repr__&apos;, &apos;__setattr__&apos;, &apos;__sizeof__&apos;, &apos;__str__&apos;, &apos;__subclasshook__&apos;, &apos;__weakref__&apos;, &apos;age&apos;, &apos;gender&apos;, &apos;headmaster&apos;, &apos;name&apos;, &apos;students&apos;, &apos;teacher&apos;]</span><br><span class="line">[Student] dir: [&apos;__class__&apos;, &apos;__del__&apos;, &apos;__delattr__&apos;, &apos;__dict__&apos;, &apos;__dir__&apos;, &apos;__doc__&apos;, &apos;__eq__&apos;, &apos;__format__&apos;, &apos;__ge__&apos;, &apos;__getattribute__&apos;, &apos;__gt__&apos;, &apos;__hash__&apos;, &apos;__init__&apos;, &apos;__init_subclass__&apos;, &apos;__le__&apos;, &apos;__lt__&apos;, &apos;__module__&apos;, &apos;__ne__&apos;, &apos;__new__&apos;, &apos;__reduce__&apos;, &apos;__reduce_ex__&apos;, &apos;__repr__&apos;, &apos;__setattr__&apos;, &apos;__sizeof__&apos;, &apos;__str__&apos;, &apos;__subclasshook__&apos;, &apos;__weakref__&apos;, &apos;age&apos;, &apos;gender&apos;, &apos;headmaster&apos;, &apos;name&apos;, &apos;students&apos;, &apos;teacher&apos;]</span><br><span class="line">[student-1] name: conan</span><br><span class="line">[student-2] gender: female</span><br><span class="line">[student-2] age: 15</span><br><span class="line">[student-1] old headmaster: &lt;HeadmasterDescriptor Dumbledore&gt;</span><br><span class="line">[student-2] old headmaster: &lt;HeadmasterDescriptor Dumbledore&gt;</span><br><span class="line">[Student] new headmaster: &lt;HeadmasterDescriptor Dumbledore&gt;</span><br><span class="line">1999801558000, 1999801558000</span><br><span class="line">&lt;HeadmasterDescriptor&gt; set new headmaster: Alan Tam</span><br><span class="line">[student-1] new headmaster: &lt;HeadmasterDescriptor Alan Tam&gt;</span><br><span class="line">[student-2] new headmaster: &lt;HeadmasterDescriptor Alan Tam&gt;</span><br><span class="line">[Student] new headmaster: &lt;HeadmasterDescriptor Alan Tam&gt;</span><br><span class="line">&lt;Student&gt; remove student conan</span><br><span class="line">[student-2] students: &#123;&apos;saki&apos;&#125;</span><br><span class="line">[Student] students: &#123;&apos;saki&apos;&#125;</span><br><span class="line">[student-2] teacher: Snape</span><br><span class="line">[Student] teacher: Snape</span><br><span class="line">[student-2] teacher: Jodie</span><br><span class="line">[Student] teacher: Snape</span><br><span class="line">========================================</span><br><span class="line">test#1 end</span><br><span class="line">========================================</span><br><span class="line">&lt;Student&gt; remove student saki</span><br></pre></td></tr></table></figure>
+<p>可以看到：</p>
+<ul>
+<li>创建两个学生的时候，<code>student</code>的名字被加入到了类属性<code>students</code>中。不论在类还是还是在实例去访问<code>students</code>，都能得到相同的结果。</li>
+<li>通过<code>getattr</code>或者带点的方法，能够正常访问到类或者实例的属性。</li>
+<li>更换<code>headmaster</code>。<ul>
+<li><code>headmaster</code>是一个带<code>getter</code>跟<code>setter</code>的<code>descriptor</code></li>
+<li>所谓<code>descriptor</code>，可以简单理解为一个支持根据不同访问方式做出特定行为的特殊属性。我们对<code>headmaster</code>执行<code>get</code>操作，获得的是<code>__get__</code>方法的返回结果，当对<code>headmaster</code>赋新值时，如果发现了带<code>__set__</code>的<code>descriptor</code>，就会触发这个逻辑，改变类属性<code>headmaster</code>这个<code>descriptor</code>里面维护的值。</li>
+<li>否则，属性在类里没有被定义成为<code>descriptor</code>，且在实例里面有定义的话，修改操作只会改实例本身维护的属性值，就像下面的<code>teacher</code>一样。</li>
+</ul>
+</li>
+<li>删除<code>student_1</code>，触发了类定义的<code>__del__</code>函数，将<code>student_1</code>的名字从<code>students</code>里面移除</li>
+<li><code>student_2</code>更换<code>teacher</code>，只更换了自己的，类属性里面还是默认原来的。</li>
+</ul>
+<p>从表现上来看，类相对于实例更多是起到一个模板的作用，每一个实例类似于<code>fork</code>了一个类，然后在<code>__init__</code>中添加属于自己的属性。如果一个实例要访问某个属性，这个属性在<code>__init__</code>里面没有定义到的话，就会下一步从自己的类里寻找属性。如果还找不到，就得从父类里找了，就到了（多重）继承相关的话题。</p>
+<p>所以，为什么会有这样的呈现呢？接下来我们深入源码，一探究竟。<br>获取类的属性，其字节码为<code>LOAD_ATTR</code>。经过一番深入，最终会落实到<code>_PyObject_GenericGetAttrWithDict</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// object.c</span></span><br><span class="line"></span><br><span class="line">PyObject *</span><br><span class="line">_PyObject_GenericGetAttrWithDict(PyObject *obj, PyObject *name,</span><br><span class="line">                                 PyObject *dict, <span class="keyword">int</span> suppress)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">/* Make sure the logic of _PyObject_GetMethod is in sync with</span></span><br><span class="line"><span class="comment">       this method.</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">       When suppress=1, this function suppress AttributeError.</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line"></span><br><span class="line">    PyTypeObject *tp = Py_TYPE(obj);</span><br><span class="line">    PyObject *descr = <span class="literal">NULL</span>;</span><br><span class="line">    PyObject *res = <span class="literal">NULL</span>;</span><br><span class="line">    descrgetfunc f;</span><br><span class="line">    Py_ssize_t dictoffset;</span><br><span class="line">    PyObject **dictptr;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!PyUnicode_Check(name))&#123;</span><br><span class="line">        PyErr_Format(PyExc_TypeError,</span><br><span class="line">                     <span class="string">"attribute name must be string, not '%.200s'"</span>,</span><br><span class="line">                     Py_TYPE(name)-&gt;tp_name);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    Py_INCREF(name);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (tp-&gt;tp_dict == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (PyType_Ready(tp) &lt; <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">goto</span> done;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    descr = _PyType_Lookup(tp, name);</span><br><span class="line"></span><br><span class="line">    f = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">if</span> (descr != <span class="literal">NULL</span>) &#123;</span><br><span class="line">        Py_INCREF(descr);</span><br><span class="line">        f = Py_TYPE(descr)-&gt;tp_descr_get;</span><br><span class="line">        <span class="keyword">if</span> (f != <span class="literal">NULL</span> &amp;&amp; PyDescr_IsData(descr)) &#123;</span><br><span class="line">            res = f(descr, obj, (PyObject *)Py_TYPE(obj));</span><br><span class="line">            <span class="keyword">if</span> (res == <span class="literal">NULL</span> &amp;&amp; suppress &amp;&amp;</span><br><span class="line">                    PyErr_ExceptionMatches(PyExc_AttributeError)) &#123;</span><br><span class="line">                PyErr_Clear();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">goto</span> done;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (dict == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="comment">/* Inline _PyObject_GetDictPtr */</span></span><br><span class="line">        dictoffset = tp-&gt;tp_dictoffset;</span><br><span class="line">        <span class="keyword">if</span> (dictoffset != <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (dictoffset &lt; <span class="number">0</span>) &#123;</span><br><span class="line">                Py_ssize_t tsize = Py_SIZE(obj);</span><br><span class="line">                <span class="keyword">if</span> (tsize &lt; <span class="number">0</span>) &#123;</span><br><span class="line">                    tsize = -tsize;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">size_t</span> size = _PyObject_VAR_SIZE(tp, tsize);</span><br><span class="line">                _PyObject_ASSERT(obj, size &lt;= PY_SSIZE_T_MAX);</span><br><span class="line"></span><br><span class="line">                dictoffset += (Py_ssize_t)size;</span><br><span class="line">                _PyObject_ASSERT(obj, dictoffset &gt; <span class="number">0</span>);</span><br><span class="line">                _PyObject_ASSERT(obj, dictoffset % SIZEOF_VOID_P == <span class="number">0</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            dictptr = (PyObject **) ((<span class="keyword">char</span> *)obj + dictoffset);</span><br><span class="line">            dict = *dictptr;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (dict != <span class="literal">NULL</span>) &#123;</span><br><span class="line">        Py_INCREF(dict);</span><br><span class="line">        res = PyDict_GetItemWithError(dict, name);</span><br><span class="line">        <span class="keyword">if</span> (res != <span class="literal">NULL</span>) &#123;</span><br><span class="line">            Py_INCREF(res);</span><br><span class="line">            Py_DECREF(dict);</span><br><span class="line">            <span class="keyword">goto</span> done;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            Py_DECREF(dict);</span><br><span class="line">            <span class="keyword">if</span> (PyErr_Occurred()) &#123;</span><br><span class="line">                <span class="keyword">if</span> (suppress &amp;&amp; PyErr_ExceptionMatches(PyExc_AttributeError)) &#123;</span><br><span class="line">                    PyErr_Clear();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="keyword">goto</span> done;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (f != <span class="literal">NULL</span>) &#123;</span><br><span class="line">        res = f(descr, obj, (PyObject *)Py_TYPE(obj));</span><br><span class="line">        <span class="keyword">if</span> (res == <span class="literal">NULL</span> &amp;&amp; suppress &amp;&amp;</span><br><span class="line">                PyErr_ExceptionMatches(PyExc_AttributeError)) &#123;</span><br><span class="line">            PyErr_Clear();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">goto</span> done;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (descr != <span class="literal">NULL</span>) &#123;</span><br><span class="line">        res = descr;</span><br><span class="line">        descr = <span class="literal">NULL</span>;</span><br><span class="line">        <span class="keyword">goto</span> done;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!suppress) &#123;</span><br><span class="line">        PyErr_Format(PyExc_AttributeError,</span><br><span class="line">                     <span class="string">"'%.50s' object has no attribute '%U'"</span>,</span><br><span class="line">                     tp-&gt;tp_name, name);</span><br><span class="line">    &#125;</span><br><span class="line">  done:</span><br><span class="line">    Py_XDECREF(descr);</span><br><span class="line">    Py_DECREF(name);</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从这段代码以及其中的部分函数调用定义，可以知悉，获取属性有以下的优先级：</p>
+<ul>
+<li>首先在类继承链搜索是否有对应名字的<code>descriptor</code>。如果有带<code>__get__</code>的<code>descriptor</code>，且包含<code>__set__</code>的话（<code>PyDescr_IsData</code>的判断），优先选择这个<code>descriptor</code></li>
+<li>其次是在实例的<code>__dict__</code>中寻找属性<ul>
+<li>有兴趣的同学可以在上面的测试代码中给实例和类加上<code>__dict__</code>，看一下输出结果</li>
+</ul>
+</li>
+<li>然后如果这个<code>descriptor</code>是有带<code>__get__</code>的，就通过这个<code>descriptor</code>的<code>__get__</code>方法获取这个属性值</li>
+<li>最后如果没有带<code>__get__</code>的，那可能这只是个普通实例，不算严格意义上的<code>descriptor</code>（比如<code>Student.teacher</code>），就返回对应的值即可</li>
+</ul>
+<p>类的继承链，可以通过类的<code>__mro__</code>属性获得到，是用C3线性化算法得到的。有兴趣的同学可以了解背后的原理以及代码实现。python的多重继承，就是基于这一套机制。<br>由先前代码的例子我们可以看到带<code>__get__</code>、<code>__set__</code>的<code>descriptor</code>确实从类、实例里都获得的是同一个<code>descriptor</code>。<br>​<br>同样，当设置属性时，最终会调用<code>_PyObject_GenericSetAttrWithDict</code>（<code>object.c</code>里，这里不放源码了，有兴趣自行查阅）。其中的优先级是：</p>
+<ul>
+<li>在继承链查找属性有带<code>__set__</code>的<code>descriptor</code>，直接调用<code>descriptor.__set__</code></li>
+<li>如果没有，就在实例的<code>__dict__</code>里直接设置属性</li>
+</ul>
+<p>​</p>
+<h2 id="在类方法中访问实例属性"><a href="#在类方法中访问实例属性" class="headerlink" title="在类方法中访问实例属性"></a>在类方法中访问实例属性</h2><p>在类定义里面我们通常会加各式各样的函数（方法），在方法的定义里面也会大量访问<code>self</code>的属性。但我们要知道，python是一个动态语言，函数定义里的<code>self</code>，并不一定只能是这个类的实例。不仅传进子类实例是可以的，而是只要满足函数里面属性的访问的类实例，都行。</p>
+<p>如果有学过golang，或是了解过组合、ecs的概念的同学都会一下明白——如果一个东西，它皮肤是土黄色无花纹，体型大，跑得快，牙齿锋利，肉食，有金黄色的头发，那么它应当是个雄狮。就算世界上可能有其它动物也满足这些条件，但如果我们只关心这些特征属性，那就可以一视同仁。类方法也是这样，如果没有对实例类型的约束，只有对实例属性的约束，那么只要满足这些属性的实例，都可以成为类方法的参数。我们看一个例子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Lion</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name: str, age: int)</span>:</span></span><br><span class="line">        self.name = name</span><br><span class="line">        self.age = age</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name: str, gender: str, age: int)</span>:</span></span><br><span class="line">        <span class="keyword">assert</span> gender <span class="keyword">in</span> [<span class="string">'male'</span>, <span class="string">'female'</span>]</span><br><span class="line">        self.name = name</span><br><span class="line">        self.gender = gender</span><br><span class="line">        self.age = age</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">output</span><span class="params">(self)</span>:</span></span><br><span class="line">        print(<span class="string">'class: %s, name: %s, age: %s'</span> % (</span><br><span class="line">            self.__class__.__name__,</span><br><span class="line">            self.name,</span><br><span class="line">            self.age</span><br><span class="line">        ))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    s = Student(name=<span class="string">'haha'</span>, gender=<span class="string">'male'</span>, age=<span class="number">18</span>)</span><br><span class="line">    s.output()</span><br><span class="line">    Student.output(s)</span><br><span class="line">    Student.output(Lion(name=<span class="string">'simba'</span>, age=<span class="number">5</span>))</span><br></pre></td></tr></table></figure>
+<p>重点在于最后一句：<code>Student.output(Lion(name=&#39;simba&#39;, age=5))</code>——这句话是成立的，从打印的结果来看也没有报错。而同时，<code>s.output()</code>和<code>Student.output(s)</code>则呈现了相同的效果。</p>
+<p>我们打印<code>s.output()</code>以及<code>Student.output(s)</code>的<code>opcode</code>结果（上面代码稍微改了点内容，比如实例<code>s</code>变成了<code>student</code>），可以发现其中的不同：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">29          26 LOAD_FAST                0 (student)</span><br><span class="line">            28 LOAD_METHOD              2 (output)</span><br><span class="line">            30 CALL_METHOD              0</span><br><span class="line">            32 POP_TOP</span><br><span class="line"></span><br><span class="line">30          34 LOAD_GLOBAL              0 (Student)</span><br><span class="line">            36 LOAD_METHOD              2 (output)</span><br><span class="line">            38 LOAD_FAST                0 (student)</span><br><span class="line">            40 CALL_METHOD              1</span><br><span class="line">            42 POP_TOP</span><br></pre></td></tr></table></figure>
+<p>调用<code>student.output</code>时，直接<code>LOAD_METHOD</code>后就<code>call</code>了；而调用<code>Student.output</code>时，还要<code>load</code>一个参数<code>student</code>（当然，也可以是其它实例）再<code>call</code>。<code>opcode</code>的呈现和源代码是一致的。</p>
+<p>我们首先看<code>LOAD_METHOD</code>对应的内容</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">case TARGET(LOAD_METHOD): &#123;</span><br><span class="line">    <span class="comment">/* Designed to work in tandem with CALL_METHOD. */</span></span><br><span class="line">    PyObject *name = GETITEM(names, oparg);</span><br><span class="line">    PyObject *obj = TOP();</span><br><span class="line">    PyObject *meth = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> meth_found = _PyObject_GetMethod(obj, name, &amp;meth);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (meth == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="comment">/* Most likely attribute wasn't found. */</span></span><br><span class="line">        <span class="keyword">goto</span> error;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (meth_found) &#123;</span><br><span class="line">        <span class="comment">/* We can bypass temporary bound method object.</span></span><br><span class="line"><span class="comment">                   meth is unbound method and obj is self.</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">                   meth | self | arg1 | ... | argN</span></span><br><span class="line"><span class="comment">                 */</span></span><br><span class="line">        SET_TOP(meth);</span><br><span class="line">        PUSH(obj);  <span class="comment">// self</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">/* meth is not an unbound method (but a regular attr, or</span></span><br><span class="line"><span class="comment">                   something was returned by a descriptor protocol).  Set</span></span><br><span class="line"><span class="comment">                   the second element of the stack to NULL, to signal</span></span><br><span class="line"><span class="comment">                   CALL_METHOD that it's not a method call.</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">                   NULL | meth | arg1 | ... | argN</span></span><br><span class="line"><span class="comment">                */</span></span><br><span class="line">        SET_TOP(<span class="literal">NULL</span>);</span><br><span class="line">        Py_DECREF(obj);</span><br><span class="line">        PUSH(meth);</span><br><span class="line">    &#125;</span><br><span class="line">    DISPATCH();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>LOAD_METHOD</code>会落实到<code>_PyObject_GetMethod</code>方法：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span></span><br><span class="line">_PyObject_GetMethod(PyObject *obj, PyObject *name, PyObject **method)</span><br><span class="line">&#123;</span><br><span class="line">    PyTypeObject *tp = Py_TYPE(obj);</span><br><span class="line">    PyObject *descr;</span><br><span class="line">    descrgetfunc f = <span class="literal">NULL</span>;</span><br><span class="line">    PyObject **dictptr, *dict;</span><br><span class="line">    PyObject *attr;</span><br><span class="line">    <span class="keyword">int</span> meth_found = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    assert(*method == <span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (Py_TYPE(obj)-&gt;tp_getattro != PyObject_GenericGetAttr</span><br><span class="line">            || !PyUnicode_Check(name)) &#123;</span><br><span class="line">        *method = PyObject_GetAttr(obj, name);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (tp-&gt;tp_dict == <span class="literal">NULL</span> &amp;&amp; PyType_Ready(tp) &lt; <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    descr = _PyType_Lookup(tp, name);</span><br><span class="line">    <span class="keyword">if</span> (descr != <span class="literal">NULL</span>) &#123;</span><br><span class="line">        Py_INCREF(descr);</span><br><span class="line">        <span class="keyword">if</span> (_PyType_HasFeature(Py_TYPE(descr), Py_TPFLAGS_METHOD_DESCRIPTOR)) &#123;</span><br><span class="line">            meth_found = <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            f = Py_TYPE(descr)-&gt;tp_descr_get;</span><br><span class="line">            <span class="keyword">if</span> (f != <span class="literal">NULL</span> &amp;&amp; PyDescr_IsData(descr)) &#123;</span><br><span class="line">                *method = f(descr, obj, (PyObject *)Py_TYPE(obj));</span><br><span class="line">                Py_DECREF(descr);</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    dictptr = _PyObject_GetDictPtr(obj);</span><br><span class="line">    <span class="keyword">if</span> (dictptr != <span class="literal">NULL</span> &amp;&amp; (dict = *dictptr) != <span class="literal">NULL</span>) &#123;</span><br><span class="line">        Py_INCREF(dict);</span><br><span class="line">        attr = PyDict_GetItemWithError(dict, name);</span><br><span class="line">        <span class="keyword">if</span> (attr != <span class="literal">NULL</span>) &#123;</span><br><span class="line">            Py_INCREF(attr);</span><br><span class="line">            *method = attr;</span><br><span class="line">            Py_DECREF(dict);</span><br><span class="line">            Py_XDECREF(descr);</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            Py_DECREF(dict);</span><br><span class="line">            <span class="keyword">if</span> (PyErr_Occurred()) &#123;</span><br><span class="line">                Py_XDECREF(descr);</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (meth_found) &#123;</span><br><span class="line">        *method = descr;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (f != <span class="literal">NULL</span>) &#123;</span><br><span class="line">        *method = f(descr, obj, (PyObject *)Py_TYPE(obj));</span><br><span class="line">        Py_DECREF(descr);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (descr != <span class="literal">NULL</span>) &#123;</span><br><span class="line">        *method = descr;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    PyErr_Format(PyExc_AttributeError,</span><br><span class="line">                 <span class="string">"'%.50s' object has no attribute '%U'"</span>,</span><br><span class="line">                 tp-&gt;tp_name, name);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>_PyObject_GetMethod</code>包含了多处判断。对于<code>student.output</code>和<code>Student.output</code>，走到了不同的分支：</p>
+<ul>
+<li>当调用<code>student.output</code>时，通过<code>_PyType_Lookup(tp, name)</code>找到了<code>output</code>函数（<code>PyFunction_Type</code>）的<code>descriptor</code>，调用<code>tp_descr_get</code>对应的方法<ul>
+<li>最终回到<code>LOAD_METHOD</code>，走到<code>if (meth_found)</code>对应的分支</li>
+<li>栈顶是<code>student</code>实例，然后是<code>output</code>方法</li>
+</ul>
+</li>
+<li>当调用<code>Student.output</code>时，由于<code>Student</code>是一个<code>type</code>，<code>Py_TYPE(obj)-&gt;tp_getattro</code>是<code>PyType_Type</code>里面的<code>type_getattro</code>而不是<code>PyObject_GenericGetAttr</code>，且<code>name</code>合法，所以直接用<code>PyObject_GetAttr(obj, name)</code>找到了对应的<code>output</code>方法<ul>
+<li>最终回到<code>LOAD_METHOD</code>，走到<code>if (meth_found)</code>的<code>else</code>对应的分支</li>
+<li>栈顶是<code>output</code>方法，然后是<code>NULL</code></li>
+</ul>
+</li>
+</ul>
+<p><code>LOAD_METHOD</code>之后就是<code>CALL_METHOD</code>，这个时候我们要记得<code>Student.output</code>是有传参的，因此还会额外<code>push</code>一个<code>student</code>到栈上。之后，我们再来看<code>CALL_METHOD</code>：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">case TARGET(CALL_METHOD): &#123;</span><br><span class="line">    <span class="comment">/* Designed to work in tamdem with LOAD_METHOD. */</span></span><br><span class="line">    PyObject **sp, *res, *meth;</span><br><span class="line"></span><br><span class="line">    sp = stack_pointer;</span><br><span class="line"></span><br><span class="line">    meth = PEEK(oparg + <span class="number">2</span>);</span><br><span class="line">    <span class="keyword">if</span> (meth == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="comment">/* `meth` is NULL when LOAD_METHOD thinks that it's not</span></span><br><span class="line"><span class="comment">                   a method call.</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">                   Stack layout:</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">                       ... | NULL | callable | arg1 | ... | argN</span></span><br><span class="line"><span class="comment">                                                            ^- TOP()</span></span><br><span class="line"><span class="comment">                                               ^- (-oparg)</span></span><br><span class="line"><span class="comment">                                    ^- (-oparg-1)</span></span><br><span class="line"><span class="comment">                             ^- (-oparg-2)</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">                   `callable` will be POPed by call_function.</span></span><br><span class="line"><span class="comment">                   NULL will will be POPed manually later.</span></span><br><span class="line"><span class="comment">                */</span></span><br><span class="line">        res = call_function(tstate, &amp;sp, oparg, <span class="literal">NULL</span>);</span><br><span class="line">        stack_pointer = sp;</span><br><span class="line">        (<span class="keyword">void</span>)POP(); <span class="comment">/* POP the NULL. */</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">/* This is a method call.  Stack layout:</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">                     ... | method | self | arg1 | ... | argN</span></span><br><span class="line"><span class="comment">                                                        ^- TOP()</span></span><br><span class="line"><span class="comment">                                           ^- (-oparg)</span></span><br><span class="line"><span class="comment">                                    ^- (-oparg-1)</span></span><br><span class="line"><span class="comment">                           ^- (-oparg-2)</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">                  `self` and `method` will be POPed by call_function.</span></span><br><span class="line"><span class="comment">                  We'll be passing `oparg + 1` to call_function, to</span></span><br><span class="line"><span class="comment">                  make it accept the `self` as a first argument.</span></span><br><span class="line"><span class="comment">                */</span></span><br><span class="line">        res = call_function(tstate, &amp;sp, oparg + <span class="number">1</span>, <span class="literal">NULL</span>);</span><br><span class="line">        stack_pointer = sp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    PUSH(res);</span><br><span class="line">    <span class="keyword">if</span> (res == <span class="literal">NULL</span>)</span><br><span class="line">        <span class="keyword">goto</span> error;</span><br><span class="line">    DISPATCH();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在<code>CALL_METHOD</code>中会对栈做检查。如果不出意外，栈上自顶向下应该是这样的结构（看下<code>LOAD_METHOD</code>跟<code>CALL_METHOD</code>的注释就能明白）：</p>
+<ul>
+<li><code>student.output</code>：参数N~参数1（假使有的话），<code>student</code>实例，<code>output</code>方法</li>
+<li><code>Student.output</code>：参数N+1~参数2（假使有的话），<code>student</code>实例（参数1），<code>output</code>方法，<code>NULL</code></li>
+</ul>
+<p>最终都会调用<code>call_function</code>，而两者最终的效果都是<code>Student.output(student, *args, **kwargs)</code>了。<br>因此我们可以看到，假使在<code>Student.output</code>传参另外一个类的实例，如果调用到相关属性的话，最终还是会在另外一个类的实例里面调用<code>PyObject_GenericGetAttrWithDict</code>。这个方法是通用的，并约束为单一的类，所以这才能解释<code>Student.output(Lion(name=&#39;simba&#39;, age=5))</code>为什么成立（当然，现实编程不建议这样写哦！有其它更好的workaround提升代码可读性）。</p>
+<h2 id="descriptor属性的应用：property"><a href="#descriptor属性的应用：property" class="headerlink" title="descriptor属性的应用：property"></a>descriptor属性的应用：property</h2><p>在上两个小节当中，我们多次提到了<code>descriptor</code>这个概念。在平时的python编程中，我们基本上很难接触到<code>descriptor</code>，但在python的内部实现中，<code>descriptor</code>是非常核心的一部分，可以说是一种为了适配python的类属性访问接口而生的数据结构。因此，每个修习python的同学，都有必要了解这个概念。</p>
+<p>就说一些常见的内置类属性定义，像是<code>property</code>、<code>classmethod</code>、<code>staticmethod</code>，虽然它们以装饰器的形式呈现在我们的程序里，但它们的实质，都是<code>descriptor</code>。这也是<code>descriptor</code>的魔力所在。</p>
+<p>本文以<code>property</code>为例解析下<code>descriptor</code>的应用。首先来看测试代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pprint</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Human</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, first_name=<span class="string">''</span>, last_name=<span class="string">''</span>)</span>:</span></span><br><span class="line">        self.__first_name = first_name</span><br><span class="line">        self.__last_name = last_name</span><br><span class="line"></span><br><span class="line"><span class="meta">    @property</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">first_name</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.__first_name</span><br><span class="line"></span><br><span class="line"><span class="meta">    @first_name.setter</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">first_name</span><span class="params">(self, value)</span>:</span></span><br><span class="line">        print(<span class="string">'[%s] change first name to %s'</span> % (id(self), value))</span><br><span class="line">        self.__first_name = str(value)</span><br><span class="line"></span><br><span class="line"><span class="meta">    @property</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">last_name</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.__last_name</span><br><span class="line"></span><br><span class="line"><span class="meta">    @last_name.setter</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">last_name</span><span class="params">(self, value)</span>:</span></span><br><span class="line">        print(<span class="string">'[%s] change last name to %s'</span> % (id(self), value))</span><br><span class="line">        self.__last_name = str(value)</span><br><span class="line"></span><br><span class="line"><span class="meta">    @property</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">full_name</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">'%s %s'</span> % (self.first_name, self.last_name)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    h = Human(first_name=<span class="string">'James'</span>, last_name=<span class="string">'Bond'</span>)</span><br><span class="line">    h1 = Human(first_name=<span class="string">'Anatoli'</span>, last_name=<span class="string">'Todorov'</span>)</span><br><span class="line">    print(<span class="string">'first name: %s'</span> % h.first_name)</span><br><span class="line">    print(<span class="string">'last name: %s'</span> % h.last_name)</span><br><span class="line">    print(<span class="string">'full name: %s'</span> % h.full_name)</span><br><span class="line">    h.first_name = <span class="string">'Jiss'</span></span><br><span class="line">    h1.last_name = <span class="string">'Toledo'</span></span><br><span class="line">    print(<span class="string">'[h] first name: %s'</span> % h.first_name)</span><br><span class="line">    print(<span class="string">'[h] full name: %s'</span> % h.full_name)</span><br><span class="line">    print(<span class="string">'[h1] last name: %s'</span> % h1.last_name)</span><br><span class="line">    print(<span class="string">'[h1] full name: %s'</span> % h1.full_name)</span><br><span class="line">    print(<span class="string">'[Human] first name: %s'</span> % Human.first_name)</span><br><span class="line">    print(<span class="string">'[Human] last name: %s'</span> % Human.last_name)</span><br><span class="line">    print(<span class="string">'[Human] full name: %s'</span> % Human.full_name)</span><br><span class="line">    print(<span class="string">'[h] dict: %s'</span> % h.__dict__)</span><br><span class="line">    print(<span class="string">'[h1] dict: %s'</span> % h1.__dict__)</span><br><span class="line">    print(<span class="string">'[Human] dict: %s'</span> % pprint.pformat(Human.__dict__))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+<p>打印出来的结果是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">first name: James</span><br><span class="line">last name: Bond</span><br><span class="line">full name: James Bond</span><br><span class="line">[1661162208128] change first name to Jiss</span><br><span class="line">[1661162208032] change last name to Toledo</span><br><span class="line">[h] first name: Jiss</span><br><span class="line">[h] full name: Jiss Bond</span><br><span class="line">[h1] last name: Toledo</span><br><span class="line">[h1] full name: Anatoli Toledo</span><br><span class="line">[Human] first name: &lt;property object at 0x00000182C4FB7B80&gt;</span><br><span class="line">[Human] last name: &lt;property object at 0x00000182C4FB7BD0&gt;</span><br><span class="line">[Human] full name: &lt;property object at 0x00000182C4F9E220&gt;</span><br><span class="line">[h] dict: &#123;&apos;_Human__first_name&apos;: &apos;Jiss&apos;, &apos;_Human__last_name&apos;: &apos;Bond&apos;&#125;</span><br><span class="line">[h1] dict: &#123;&apos;_Human__first_name&apos;: &apos;Anatoli&apos;, &apos;_Human__last_name&apos;: &apos;Toledo&apos;&#125;</span><br><span class="line">[Human] dict: mappingproxy(&#123;&apos;__dict__&apos;: &lt;attribute &apos;__dict__&apos; of &apos;Human&apos; objects&gt;,</span><br><span class="line">              &apos;__doc__&apos;: None,</span><br><span class="line">              &apos;__init__&apos;: &lt;function Human.__init__ at 0x00000182C4FB3B80&gt;,</span><br><span class="line">              &apos;__module__&apos;: &apos;__main__&apos;,</span><br><span class="line">              &apos;__weakref__&apos;: &lt;attribute &apos;__weakref__&apos; of &apos;Human&apos; objects&gt;,</span><br><span class="line">              &apos;first_name&apos;: &lt;property object at 0x00000182C4FB7B80&gt;,</span><br><span class="line">              &apos;full_name&apos;: &lt;property object at 0x00000182C4F9E220&gt;,</span><br><span class="line">              &apos;last_name&apos;: &lt;property object at 0x00000182C4FB7BD0&gt;&#125;)</span><br></pre></td></tr></table></figure>
+<p><code>property</code>常用于一些私有变量定义的规范化，这里我们从实例的<code>__dict__</code>也可以额外看到带两个下划线前缀的私有变量在代码编译时就已经被偷偷地改名了（有兴趣的同学可以了解下<code>_Py_Mangle</code>）。在类里面，所有<code>property</code>相关的属性都是<code>property object</code>；而在实例里面，所有<code>property</code>相关的属性相互独立，并且是特定的值。</p>
+<p><code>property</code>是如何实现这个效果的？我们需要进入源码一探究竟。</p>
+<p>首先我们看<code>property</code>对应的类型定义<code>PyProperty_Type</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">PyTypeObject PyProperty_Type = &#123;</span><br><span class="line">    PyVarObject_HEAD_INIT(&amp;PyType_Type, <span class="number">0</span>)</span><br><span class="line">    <span class="string">"property"</span>,                                 <span class="comment">/* tp_name */</span></span><br><span class="line">    <span class="keyword">sizeof</span>(propertyobject),                     <span class="comment">/* tp_basicsize */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_itemsize */</span></span><br><span class="line">    <span class="comment">/* methods */</span></span><br><span class="line">    property_dealloc,                           <span class="comment">/* tp_dealloc */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_vectorcall_offset */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_getattr */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_setattr */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_as_async */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_repr */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_as_number */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_as_sequence */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_as_mapping */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_hash */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_call */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_str */</span></span><br><span class="line">    PyObject_GenericGetAttr,                    <span class="comment">/* tp_getattro */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_setattro */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_as_buffer */</span></span><br><span class="line">    Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HAVE_GC |</span><br><span class="line">        Py_TPFLAGS_BASETYPE,                    <span class="comment">/* tp_flags */</span></span><br><span class="line">    property_init__doc__,                       <span class="comment">/* tp_doc */</span></span><br><span class="line">    property_traverse,                          <span class="comment">/* tp_traverse */</span></span><br><span class="line">    (inquiry)property_clear,                    <span class="comment">/* tp_clear */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_richcompare */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_weaklistoffset */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_iter */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_iternext */</span></span><br><span class="line">    property_methods,                           <span class="comment">/* tp_methods */</span></span><br><span class="line">    property_members,                           <span class="comment">/* tp_members */</span></span><br><span class="line">    property_getsetlist,                        <span class="comment">/* tp_getset */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_base */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_dict */</span></span><br><span class="line">    property_descr_get,                         <span class="comment">/* tp_descr_get */</span></span><br><span class="line">    property_descr_set,                         <span class="comment">/* tp_descr_set */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_dictoffset */</span></span><br><span class="line">    property_init,                              <span class="comment">/* tp_init */</span></span><br><span class="line">    PyType_GenericAlloc,                        <span class="comment">/* tp_alloc */</span></span><br><span class="line">    PyType_GenericNew,                          <span class="comment">/* tp_new */</span></span><br><span class="line">    PyObject_GC_Del,                            <span class="comment">/* tp_free */</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>从定义中我们可以看到，<code>PyProperty_Type</code>的<code>tp_descr_get</code>和<code>tp_descr_set</code>都有对应的回调函数，因此任何一个<code>property</code>的实例都可以当作是一个<code>descriptor</code></p>
+<p>我们创建一个<code>property</code>实例的时候，是采用装饰器的写法，解析出来就是类似于<code>property(function)</code>的形式。因此，我们需要再看一下<code>property</code>实例创建的过程。</p>
+<p><code>property</code>本身是一个<code>type object</code>，创建实例的时候，是按照<code>property(function)</code>的写法来解析，这就相当于把<code>property</code>当成一个函数来看待。我们可以首先看下<code>type object</code>的类<code>PyType_Type</code>的定义：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">PyTypeObject PyType_Type = &#123;</span><br><span class="line">    PyVarObject_HEAD_INIT(&amp;PyType_Type, <span class="number">0</span>)</span><br><span class="line">    <span class="string">"type"</span>,                                     <span class="comment">/* tp_name */</span></span><br><span class="line">    <span class="keyword">sizeof</span>(PyHeapTypeObject),                   <span class="comment">/* tp_basicsize */</span></span><br><span class="line">    <span class="keyword">sizeof</span>(PyMemberDef),                        <span class="comment">/* tp_itemsize */</span></span><br><span class="line">    (destructor)type_dealloc,                   <span class="comment">/* tp_dealloc */</span></span><br><span class="line">    offsetof(PyTypeObject, tp_vectorcall),      <span class="comment">/* tp_vectorcall_offset */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_getattr */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_setattr */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_as_async */</span></span><br><span class="line">    (reprfunc)type_repr,                        <span class="comment">/* tp_repr */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_as_number */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_as_sequence */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_as_mapping */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_hash */</span></span><br><span class="line">    (ternaryfunc)type_call,                     <span class="comment">/* tp_call */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_str */</span></span><br><span class="line">    (getattrofunc)type_getattro,                <span class="comment">/* tp_getattro */</span></span><br><span class="line">    (setattrofunc)type_setattro,                <span class="comment">/* tp_setattro */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_as_buffer */</span></span><br><span class="line">    Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HAVE_GC |</span><br><span class="line">    Py_TPFLAGS_BASETYPE | Py_TPFLAGS_TYPE_SUBCLASS |</span><br><span class="line">    Py_TPFLAGS_HAVE_VECTORCALL,                 <span class="comment">/* tp_flags */</span></span><br><span class="line">    type_doc,                                   <span class="comment">/* tp_doc */</span></span><br><span class="line">    (traverseproc)type_traverse,                <span class="comment">/* tp_traverse */</span></span><br><span class="line">    (inquiry)type_clear,                        <span class="comment">/* tp_clear */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_richcompare */</span></span><br><span class="line">    offsetof(PyTypeObject, tp_weaklist),        <span class="comment">/* tp_weaklistoffset */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_iter */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_iternext */</span></span><br><span class="line">    type_methods,                               <span class="comment">/* tp_methods */</span></span><br><span class="line">    type_members,                               <span class="comment">/* tp_members */</span></span><br><span class="line">    type_getsets,                               <span class="comment">/* tp_getset */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_base */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_dict */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_descr_get */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_descr_set */</span></span><br><span class="line">    offsetof(PyTypeObject, tp_dict),            <span class="comment">/* tp_dictoffset */</span></span><br><span class="line">    type_init,                                  <span class="comment">/* tp_init */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_alloc */</span></span><br><span class="line">    type_new,                                   <span class="comment">/* tp_new */</span></span><br><span class="line">    PyObject_GC_Del,                            <span class="comment">/* tp_free */</span></span><br><span class="line">    (inquiry)type_is_gc,                        <span class="comment">/* tp_is_gc */</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>易知，如果把<code>type object</code>当作函数（严格意义上讲，叫做可调用的，<code>callable</code>）看待，会触发<code>tp_call</code>对应的<code>type_call</code>函数。<code>type_call</code>函数这里就不列出来了，因为只有两步是最为关键的：</p>
+<ul>
+<li><code>obj = type-&gt;tp_new(type, args, kwds)</code></li>
+<li><code>res = type-&gt;tp_init(obj, args, kwds)</code></li>
+</ul>
+<p>也就是说，要创建<code>property</code>实例，需要找到<code>property</code>的<code>tp_new</code>对应的函数先弄一个空的实例，然后再找<code>tp_init</code>对应的函数初始化实例。由<code>PyProperty_Type</code>的定义可知，<code>property</code>的<code>tp_new</code>对应的是<code>PyType_GenericNew</code>，简单分配了内存空间；而<code>tp_init</code>则对应<code>property_init</code>，<code>property_init</code>实质的实现是<code>property_init_impl</code>，因此我们直接看<code>property_init_impl</code>的定义。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">int</span></span><br><span class="line">property_init_impl(propertyobject *self, PyObject *fget, PyObject *fset,</span><br><span class="line">                   PyObject *fdel, PyObject *doc)</span><br><span class="line"><span class="comment">/*[clinic end generated code: output=01a960742b692b57 input=dfb5dbbffc6932d5]*/</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (fget == Py_None)</span><br><span class="line">        fget = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">if</span> (fset == Py_None)</span><br><span class="line">        fset = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">if</span> (fdel == Py_None)</span><br><span class="line">        fdel = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">    Py_XINCREF(fget);</span><br><span class="line">    Py_XINCREF(fset);</span><br><span class="line">    Py_XINCREF(fdel);</span><br><span class="line">    Py_XINCREF(doc);</span><br><span class="line"></span><br><span class="line">    Py_XSETREF(self-&gt;prop_get, fget);</span><br><span class="line">    Py_XSETREF(self-&gt;prop_set, fset);</span><br><span class="line">    Py_XSETREF(self-&gt;prop_del, fdel);</span><br><span class="line">    Py_XSETREF(self-&gt;prop_doc, doc);</span><br><span class="line">    self-&gt;getter_doc = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* if no docstring given and the getter has one, use that one */</span></span><br><span class="line">    <span class="keyword">if</span> ((doc == <span class="literal">NULL</span> || doc == Py_None) &amp;&amp; fget != <span class="literal">NULL</span>) &#123;</span><br><span class="line">        _Py_IDENTIFIER(__doc__);</span><br><span class="line">        PyObject *get_doc;</span><br><span class="line">        <span class="keyword">int</span> rc = _PyObject_LookupAttrId(fget, &amp;PyId___doc__, &amp;get_doc);</span><br><span class="line">        <span class="keyword">if</span> (rc &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> rc;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (Py_IS_TYPE(self, &amp;PyProperty_Type)) &#123;</span><br><span class="line">            Py_XSETREF(self-&gt;prop_doc, get_doc);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">/* If this is a property subclass, put __doc__</span></span><br><span class="line"><span class="comment">               in dict of the subclass instance instead,</span></span><br><span class="line"><span class="comment">               otherwise it gets shadowed by __doc__ in the</span></span><br><span class="line"><span class="comment">               class's dict. */</span></span><br><span class="line">            <span class="keyword">int</span> err = _PyObject_SetAttrId((PyObject *)self, &amp;PyId___doc__, get_doc);</span><br><span class="line">            Py_DECREF(get_doc);</span><br><span class="line">            <span class="keyword">if</span> (err &lt; <span class="number">0</span>)</span><br><span class="line">                <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        self-&gt;getter_doc = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>property</code>实例初始化，传入的参数是<code>fget</code>、<code>fset</code>、<code>fdel</code>、<code>doc</code>，从<code>property_init_impl</code>中我们易知，四个参数最终会放到<code>prop_get</code>、<code>prop_set</code>、<code>prop_del</code>、<code>prop_doc</code>中。一般我们用<code>property</code>装饰器包裹的函数，就对应了<code>fget</code>。<br>​<br>在先前的“访问属性”中，我们了解到如果一个类实例访问属性，第一优先级是判断继承链上是不是有名字对应了一个<code>data-descriptor</code>（同时包含<code>__get__</code>与<code>__set__</code>）。从上面的例子我们最终会发现在类里面定义了<code>first_name</code>之类的<code>property object</code>，而<code>property object</code>的类型<code>PyProperty_Type</code>就是同时拥有<code>tp_descr_get</code>跟<code>tp_descr_set</code>，可以当作一个<code>data-descriptor</code>，因此在<code>_PyObject_GenericGetAttrWithDict</code>中，会直接走到<code>f(descr, obj, (PyObject *)Py_TYPE(obj))</code>这一个逻辑来返回结果。转换一下函数里面涉及的变量名，就变成了<code>tp_descr_get(property实例, 类实例, 类)</code></p>
+<p><code>property</code>的<code>tp_descr_get</code>对应的是<code>property_descr_get</code>，我们看下其中的定义：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> PyObject *</span><br><span class="line">property_descr_get(PyObject *self, PyObject *obj, PyObject *type)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (obj == <span class="literal">NULL</span> || obj == Py_None) &#123;</span><br><span class="line">        Py_INCREF(self);</span><br><span class="line">        <span class="keyword">return</span> self;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    propertyobject *gs = (propertyobject *)self;</span><br><span class="line">    <span class="keyword">if</span> (gs-&gt;prop_get == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        PyErr_SetString(PyExc_AttributeError, <span class="string">"unreadable attribute"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> PyObject_CallOneArg(gs-&gt;prop_get, obj);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们看到，<code>getter</code>的逻辑最终会调用<code>property object</code>的<code>prop_get</code>，传参<code>obj</code>。显然，这个<code>prop_get</code>就是我们用<code>property</code>包裹的<code>fget</code>函数，而<code>obj</code>就是类实例，我们的<code>fget</code>函数第一个参数就是<code>self</code>。那么显然，我们就直接通过<code>fget</code>获取了类实例对应的属性。<br>​<br>至此我们也可以发现，在上面的python测试代码中，<code>h.first_name</code>和<code>Human.first_name.fget(h)</code>，两者就是相同的表达。再引申一下，假使有个类的实例叫做<code>fakehuman</code>，它包含一个属性叫做<code>_Human__first_name</code>（记得上面说的，双下划线的变量会被改名），那么<code>Human.first_name.fget(fakehuman)</code>这个表达式也是通过的！</p>
+<p><code>property</code>的<code>setter</code>也是一样的套路，最终会落实到<code>property_descr_set</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">int</span></span><br><span class="line">property_descr_set(PyObject *self, PyObject *obj, PyObject *value)</span><br><span class="line">&#123;</span><br><span class="line">    propertyobject *gs = (propertyobject *)self;</span><br><span class="line">    PyObject *func, *res;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (value == <span class="literal">NULL</span>)</span><br><span class="line">        func = gs-&gt;prop_del;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        func = gs-&gt;prop_set;</span><br><span class="line">    <span class="keyword">if</span> (func == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        PyErr_SetString(PyExc_AttributeError,</span><br><span class="line">                        value == <span class="literal">NULL</span> ?</span><br><span class="line">                        <span class="string">"can't delete attribute"</span> :</span><br><span class="line">                <span class="string">"can't set attribute"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (value == <span class="literal">NULL</span>)</span><br><span class="line">        res = PyObject_CallOneArg(func, obj);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        res = PyObject_CallFunctionObjArgs(func, obj, value, <span class="literal">NULL</span>);</span><br><span class="line">    <span class="keyword">if</span> (res == <span class="literal">NULL</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    Py_DECREF(res);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从<code>property_descr_set</code>里可以看出，当<code>value</code>为<code>NULL</code>（不是传进python的<code>None</code>哈），就会调用<code>prop_del</code>对应的<code>deleter</code>（删除属性用<code>del</code>，对应<code>opcode</code>为<code>DELETE_ATTR</code>，实质就是设置<code>attr</code>为<code>NULL</code>）；当<code>value</code>为非<code>null</code>的时候，就会调用<code>prop_set</code>对应的<code>setter</code>。这样，一个属性<code>setter</code>跟<code>deleter</code>的的需求也就轻而易举地被满足了。<br>​</p>
+<p>从<code>property</code>的实现可以看到，<code>descriptor</code>相当于在属性本身和用户访问之间起到了一层桥梁的作用，是非常灵活巧妙的构思。而<code>classmethod</code>、<code>staticmethod</code>，本质上也是<code>non-data-descriptor</code>（不带<code>setter</code>），有兴趣的同学也可以深入研究。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本文通过类/实例属性之间的联系，对python的类和实例之间的关系做了剖析，并引申了python内部实现中重要的一个概念——<code>descriptor</code>。在三个月前，笔者甚至根本不知道<code>descriptor</code>是什么东西，而经过了这一段时间的学习，也对python类/实例属性实现机制有了全新的理解。希望大家阅读此文，也能有所收获。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+      
+<div style="border: 1px solid black; margin-top: 32px; margin-bottom: 32px">
+  <div style="margin-left:10px">
+    <span style="font-weight:bold">版权声明</span>
+    <br>
+    <span>本文为博客<a href="https://utmhikari.github.io" style="color:#258FC6">HiKariのTechLab</a>原创文章，转载请标明出处，谢谢~~~</span>
+  </div>
+</div>
+
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/源码分析/" rel="tag"># 源码分析</a>
+          
+            <a href="/tags/descriptor/" rel="tag"># descriptor</a>
+          
+            <a href="/tags/类/" rel="tag"># 类</a>
+          
+            <a href="/tags/property/" rel="tag"># property</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/10/30/mediumpython/iii/" rel="next" title="【Medium Python】第三话：python多线程为什么不能并行？">
+                <i class="fa fa-chevron-left"></i> 【Medium Python】第三话：python多线程为什么不能并行？
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/11/13/mediumpython/v/" rel="prev" title="【Medium Python】最终话：如何彻底理解with关键字的用法？">
+                【Medium Python】最终话：如何彻底理解with关键字的用法？ <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="ひかり.HDQ">
+            
+              <p class="site-author-name" itemprop="name">ひかり.HDQ</p>
+              <div class="site-description motion-element" itemprop="description">talk is cheap, code is rich</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">155</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">415</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="GitHub &rarr; https://github.com/utmhikari"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="bWFpbHRvOmhkcTk0MDYyM0AxMjYuY29t" title="Mail &rarr; mailto:hdq940623@126.com"><i class="fa fa-fw fa-envelope"></i>Mail</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly90ZXN0ZXJob21lLmNvbS91dG1oaWthcmk=" title="TesterHome &rarr; https://testerhome.com/utmhikari"><i class="fa fa-fw fa-tumblr"></i>TesterHome</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vaWQvdXRtaGlrYXJp" title="Steam &rarr; https://steamcommunity.com/id/utmhikari"><i class="fa fa-fw fa-steam"></i>Steam</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9zcGFjZS5iaWxpYmlsaS5jb20vMTUwNzUxMTQv" title="Bilibili &rarr; https://space.bilibili.com/15075114/"><i class="fa fa-fw fa-bold"></i>Bilibili</span>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在类和实例中访问属性"><span class="nav-number">2.</span> <span class="nav-text">在类和实例中访问属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在类方法中访问实例属性"><span class="nav-number">3.</span> <span class="nav-text">在类方法中访问实例属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#descriptor属性的应用：property"><span class="nav-number">4.</span> <span class="nav-text">descriptor属性的应用：property</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2019 – <span itemprop="copyrightYear">2024</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ひかり.HDQ</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="//cdn.staticfile.org/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script src="//cdn.staticfile.org/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+
+  
+  <script src="//cdn.staticfile.org/velocity/1.2.1/velocity.min.js"></script>
+
+  
+  <script src="//cdn.staticfile.org/velocity/1.2.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.1"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.1"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+  <script src="/js/src/exturl.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('5');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'manual') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+if ($('body').find('pre.mermaid').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.staticfile.org/mermaid/8.0.0-rc.8/mermaid.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      mermaid.initialize({
+        theme: 'dark',
+        logLevel: 3,
+        flowchart: { curve: 'linear' },
+        gantt: { axisFormat: '%m/%d/%Y' },
+        sequence: { actorMargin: 50 }
+      });
+    }
+  });
+}
+</script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+  $('.highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+  
+
+  
+
+</body>
+</html>

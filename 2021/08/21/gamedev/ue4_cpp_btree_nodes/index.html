@@ -1,0 +1,2335 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta name="baidu-site-verification" content="sc1B5Cxcoz">
+  <meta name="google-site-verification" content="OLcRj7lMnauxKrhFT3Q8Nvcexgv22NvlEmVZShKQKR8">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link rel="stylesheet" href="//cdn.staticfile.org/font-awesome/4.6.2/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/uploads/apple-touch.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/uploads/favicon-32x32.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/uploads/favicon-16x16.png?v=7.0.1">
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.1',
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"fadeIn","sidebar":"fadeIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="在游戏领域，行为树是常用的AI解决方案，用行为树可以快速明了地描述AI的行为模型，而UE4提也供了非常完善的行为树解决方案，不仅有用户友好的界面，而且也有多样化的底层支持。在官网的行为树快速入门指南中，我们可以了解到UE4行为树编辑器的使用以及用蓝图创造行为树节点的方式，而在一些特定的需求当中，蓝图相对于C++并不会非常灵活。因此，笔者稍微研究了下行为树C++层次中的内容，简单分享下行为树里各种节">
+<meta name="keywords" content="UE4,C++,行为树,AI,行为树节点">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【游戏开发】UE4用C++编写行为树的Task、Service、Decorator节点">
+<meta property="og:url" content="http://utmhikari.github.io/2021/08/21/gamedev/ue4_cpp_btree_nodes/index.html">
+<meta property="og:site_name" content="HiKariのTechLab">
+<meta property="og:description" content="在游戏领域，行为树是常用的AI解决方案，用行为树可以快速明了地描述AI的行为模型，而UE4提也供了非常完善的行为树解决方案，不仅有用户友好的界面，而且也有多样化的底层支持。在官网的行为树快速入门指南中，我们可以了解到UE4行为树编辑器的使用以及用蓝图创造行为树节点的方式，而在一些特定的需求当中，蓝图相对于C++并不会非常灵活。因此，笔者稍微研究了下行为树C++层次中的内容，简单分享下行为树里各种节">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://utmhikari.github.io/uploads/gamedev/ue4_cpp_btree_nodes/btree.png">
+<meta property="og:updated_time" content="2024-04-07T02:48:06.918Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【游戏开发】UE4用C++编写行为树的Task、Service、Decorator节点">
+<meta name="twitter:description" content="在游戏领域，行为树是常用的AI解决方案，用行为树可以快速明了地描述AI的行为模型，而UE4提也供了非常完善的行为树解决方案，不仅有用户友好的界面，而且也有多样化的底层支持。在官网的行为树快速入门指南中，我们可以了解到UE4行为树编辑器的使用以及用蓝图创造行为树节点的方式，而在一些特定的需求当中，蓝图相对于C++并不会非常灵活。因此，笔者稍微研究了下行为树C++层次中的内容，简单分享下行为树里各种节">
+<meta name="twitter:image" content="http://utmhikari.github.io/uploads/gamedev/ue4_cpp_btree_nodes/btree.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://utmhikari.github.io/2021/08/21/gamedev/ue4_cpp_btree_nodes/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>【游戏开发】UE4用C++编写行为树的Task、Service、Decorator节点 | HiKariのTechLab</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HiKariのTechLab</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">光の技术屋</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+  
+
+  
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="关注HiKariのGithub" aria-label="关注HiKariのGithub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></span>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2021/08/21/gamedev/ue4_cpp_btree_nodes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">【游戏开发】UE4用C++编写行为树的Task、Service、Decorator节点
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2021-08-21 14:43:15" itemprop="dateCreated datePublished" datetime="2021-08-21T14:43:15+08:00">2021-08-21</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/游戏开发/" itemprop="url" rel="index"><span itemprop="name">游戏开发</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在游戏领域，行为树是常用的AI解决方案，用行为树可以快速明了地描述AI的行为模型，而UE4提也供了非常完善的行为树解决方案，不仅有用户友好的界面，而且也有多样化的底层支持。在官网的<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnVucmVhbGVuZ2luZS5jb20vNC4yNy96aC1DTi9JbnRlcmFjdGl2ZUV4cGVyaWVuY2VzL0FydGlmaWNpYWxJbnRlbGxpZ2VuY2UvQmVoYXZpb3JUcmVlcy9CZWhhdmlvclRyZWVRdWlja1N0YXJ0Lw==" title="https://docs.unrealengine.com/4.27/zh-CN/InteractiveExperiences/ArtificialIntelligence/BehaviorTrees/BehaviorTreeQuickStart/">行为树快速入门指南<i class="fa fa-external-link"></i></span>中，我们可以了解到UE4行为树编辑器的使用以及用蓝图创造行为树节点的方式，而在一些特定的需求当中，蓝图相对于C++并不会非常灵活。因此，笔者稍微研究了下行为树C++层次中的内容，简单分享下行为树里各种节点的C++写法</p>
+<p>首先上一张行为树完整图，是基于<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnVucmVhbGVuZ2luZS5jb20vNC4yNy96aC1DTi9JbnRlcmFjdGl2ZUV4cGVyaWVuY2VzL0FydGlmaWNpYWxJbnRlbGxpZ2VuY2UvRVFTL0VRU1F1aWNrU3RhcnQv" title="https://docs.unrealengine.com/4.27/zh-CN/InteractiveExperiences/ArtificialIntelligence/EQS/EQSQuickStart/">场景查询系统（EQS）快速入门<i class="fa fa-external-link"></i></span>制作的：</p>
+<a id="more"></a>
+<p><img src="/uploads/gamedev/ue4_cpp_btree_nodes/btree.png" alt="btree" title="&#39;btree&#39;"></p>
+<p>在<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnVucmVhbGVuZ2luZS5jb20vNC4yNy96aC1DTi9JbnRlcmFjdGl2ZUV4cGVyaWVuY2VzL0FydGlmaWNpYWxJbnRlbGxpZ2VuY2UvRVFTL0VRU1F1aWNrU3RhcnQv" title="https://docs.unrealengine.com/4.27/zh-CN/InteractiveExperiences/ArtificialIntelligence/EQS/EQSQuickStart/">官网EQS入门<i class="fa fa-external-link"></i></span>的例子中，AI大致遵循这样的逻辑：</p>
+<ul>
+<li>没看到玩家，特定范围随机某个点巡逻</li>
+<li>视觉感知到玩家，会转向看着玩家</li>
+<li>玩家离开视线，调用EQS找到当前时刻最好的能看到玩家的位置，走过去</li>
+<li>看不到玩家，再回到随机巡逻</li>
+</ul>
+<p>而在笔者的行为树完整图中，添加了以下的节点：</p>
+<ul>
+<li>任务节点（Task）：JumpForNTimes -&gt; 跳N次</li>
+<li>服务节点（Service）：TraceDistance -&gt; 监控AI到某个点的距离</li>
+<li>装饰器节点（Decorator）：CheckActorDistance -&gt; 检查AI到某个Actor的距离</li>
+</ul>
+<p>最终想要达到的AI目的：</p>
+<ul>
+<li>没看到玩家，特定范围随机某个点巡逻</li>
+<li>视觉感知到玩家，会转向看着玩家，然后跳N次（JumpForNTimes），并且会在屏幕实时打印AI跟玩家的距离（TraceDistance）</li>
+<li>玩家离开视线，调用EQS找到当前时刻最好的能看到玩家的位置，走过去</li>
+<li>看不到玩家，再回到随机巡逻。但如果玩家再次接近到一定距离，AI会“警觉”（CheckActorDistance），执行跳N次的操作</li>
+</ul>
+<p>下面就一起来看下这三个节点具体的写法。在写这些行为树节点具体逻辑之前，首先需要在<code>Build.cs</code>的<code>PublicDependencyModuleNames</code>加上<code>AIModule</code>跟<code>GameplayTasks</code>，保证三种节点所需要的方法都能支持</p>
+<h2 id="Task节点：JumpForNTimes"><a href="#Task节点：JumpForNTimes" class="headerlink" title="Task节点：JumpForNTimes"></a>Task节点：JumpForNTimes</h2><p><span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnVucmVhbGVuZ2luZS5jb20vNC4yNy96aC1DTi9JbnRlcmFjdGl2ZUV4cGVyaWVuY2VzL0FydGlmaWNpYWxJbnRlbGxpZ2VuY2UvQmVoYXZpb3JUcmVlcy9CZWhhdmlvclRyZWVOb2RlUmVmZXJlbmNlL0JlaGF2aW9yVHJlZU5vZGVSZWZlcmVuY2VUYXNrcy8=" title="https://docs.unrealengine.com/4.27/zh-CN/InteractiveExperiences/ArtificialIntelligence/BehaviorTrees/BehaviorTreeNodeReference/BehaviorTreeNodeReferenceTasks/">task节点<i class="fa fa-external-link"></i></span>表示AI实际的一种操作，我们在UE4源码的<code>Runtime/AIModule/Classes/BehaviorTree/Tasks</code>中能够看到预设的许多task节点的定义。<code>JumpForNTimes</code>这类操作并不是瞬时的，需要跳完N次后才会执行后面的动作，因此在写法上，可以参考<code>BTTask_Wait</code>的实现。</p>
+<p>首先创建<code>BTTask_JumpForNTimes</code>类，继承<code>UBTTaskNode</code></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// BTTask_JumpForNTimes.h</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">FBTJumpForNTimesTaskMemory</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    int32 JumpTimesInternal;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * jump for n times btree task</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">UCLASS()</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TESTEQS_API</span> <span class="title">UBTTask_JumpForNTimes</span> :</span> <span class="keyword">public</span> UBTTaskNode</span><br><span class="line">&#123;</span><br><span class="line">    GENERATED_UCLASS_BODY()</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** jump times */</span></span><br><span class="line">    UPROPERTY(Category = Jump, EditAnywhere)</span><br><span class="line">    int32 JumpTimes;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">virtual</span> EBTNodeResult::<span class="function">Type <span class="title">ExecuteTask</span><span class="params">(UBehaviorTreeComponent&amp; OwnerComp, uint8* NodeMemory)</span> override</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> uint16 <span class="title">GetInstanceMemorySize</span><span class="params">()</span> <span class="keyword">const</span> override</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> WITH_EDITOR</span></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> FName <span class="title">GetNodeIconName</span><span class="params">()</span> <span class="keyword">const</span> override</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">// WITH_EDITOR</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">TickTask</span><span class="params">(UBehaviorTreeComponent&amp; OwnerComp, uint8* NodeMemory, <span class="keyword">float</span> DeltaSeconds)</span> override</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>UBTTask_JumpForNTimes：JumpForNTimes任务节点定义<ul>
+<li>JumpTimes：跳跃次数，是需要我们在编辑器里设置的内容，因此需要标注<code>UPROPERTY</code>+<code>EditAnywhere</code></li>
+<li>ExecuteTask：任务执行时的逻辑。<ul>
+<li><code>EBTNodeResult</code>是task节点执行的结果表示</li>
+<li>对于非瞬时完成的任务（比如Wait），可以在<code>ExecuteTask</code>接口中返回<code>EBTNodeResult::InProgress</code>（任务进行中），并在后面的<code>TickTask</code>中判断完成条件，执行<code>FinishLatentTask(OwnerComp, EBTNodeResult)</code>来通知任务的完成结果</li>
+</ul>
+</li>
+<li>TickTask：每个tick中该任务执行的逻辑</li>
+<li>GetInstanceMemorySize：获取节点实例自己的内存空间大小，用于预分配内存</li>
+<li>GetNodeIconName：编辑器里节点icon</li>
+</ul>
+</li>
+<li>FBTJumpForNTimesTaskMemory：我们任务节点自带的内存空间，放着节点私有的变量<ul>
+<li>JumpTimesInternal：实际用来记录跳跃次数的计数器</li>
+<li>在GetInstanceMemorySize返回sizeof结构体，这样引擎会预分配相应大小的内存块</li>
+<li>在ExecuteTask、TickTask可以通过转换uint8* NodeMemory获得内存块对应结构体的实例</li>
+</ul>
+</li>
+</ul>
+<p>在cpp逻辑里，<code>JumpForNTimes</code>可以这样实现：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// BTTask_JumpForNTimes.cpp</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 构造函数，启用tick -&gt; bNotifyTick = true</span></span><br><span class="line">UBTTask_JumpForNTimes::UBTTask_JumpForNTimes(<span class="keyword">const</span> FObjectInitializer&amp; ObjectInitializer) : Super(ObjectInitializer)</span><br><span class="line">&#123;</span><br><span class="line">    NodeName = <span class="string">"JumpForNTimes"</span>;</span><br><span class="line">    JumpTimes = <span class="number">3</span>;</span><br><span class="line">    bNotifyTick = <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 开始执行任务，先重置JumpTimesInternal，返回InProgress</span></span><br><span class="line">EBTNodeResult::Type UBTTask_JumpForNTimes::ExecuteTask(UBehaviorTreeComponent&amp; OwnerComp, uint8* NodeMemory)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (JumpTimes &lt;= <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> EBTNodeResult::Failed;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    FBTJumpForNTimesTaskMemory* MyMemory = (FBTJumpForNTimesTaskMemory*)NodeMemory;</span><br><span class="line">    MyMemory-&gt;JumpTimesInternal = JumpTimes;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> AController* Controller = Cast&lt;AController&gt;(OwnerComp.GetOwner());</span><br><span class="line">    ACharacter* Character = Controller ? Controller-&gt;GetCharacter() : <span class="literal">nullptr</span>;</span><br><span class="line">    <span class="keyword">if</span> (!Character)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> EBTNodeResult::Failed;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> EBTNodeResult::InProgress;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在tick中，检查玩家是否在跳跃过程</span></span><br><span class="line"><span class="comment">// 如果没有的话，看下计数是否到0，到0了就不跳，还没有就继续跳</span></span><br><span class="line"><span class="keyword">void</span> UBTTask_JumpForNTimes::TickTask(UBehaviorTreeComponent&amp; OwnerComp, uint8* NodeMemory, <span class="keyword">float</span> DeltaSeconds)</span><br><span class="line">&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">const</span> AController* Controller = Cast&lt;AController&gt;(OwnerComp.GetOwner());</span><br><span class="line">    ACharacter* Character = Controller ? Controller-&gt;GetCharacter() : <span class="literal">nullptr</span>;</span><br><span class="line">    <span class="keyword">if</span> (!Character) &#123;</span><br><span class="line">        FinishLatentTask(OwnerComp, EBTNodeResult::Failed);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (!Character-&gt;GetMovementComponent()-&gt;IsFalling())</span><br><span class="line">    &#123;</span><br><span class="line">        FBTJumpForNTimesTaskMemory* MyMemory = (FBTJumpForNTimesTaskMemory*)NodeMemory;</span><br><span class="line">        <span class="keyword">if</span> (MyMemory-&gt;JumpTimesInternal &lt;= <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (!Character-&gt;bPressedJump)</span><br><span class="line">        &#123;</span><br><span class="line">            Character-&gt;Jump();</span><br><span class="line">            MyMemory-&gt;JumpTimesInternal--;</span><br><span class="line">            UE_LOG(LogTemp, Log, TEXT(<span class="string">"[BTTask_JumpForNTimes] JumpTimes--"</span>))</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 返回结构体大小</span></span><br><span class="line">uint16 UBTTask_JumpForNTimes::GetInstanceMemorySize() <span class="keyword">const</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">sizeof</span>(FBTJumpForNTimesTaskMemory);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> WITH_EDITOR</span></span><br><span class="line"><span class="comment">// 随便返回个icon名字就好了</span></span><br><span class="line">FName UBTTask_JumpForNTimes::GetNodeIconName() <span class="keyword">const</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// use MakeNoise icon for jump~</span></span><br><span class="line">    <span class="keyword">return</span> FName(<span class="string">"BTEditor.Graph.BTNode.Task.MakeNoise.Icon"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="Service节点：TraceDistance"><a href="#Service节点：TraceDistance" class="headerlink" title="Service节点：TraceDistance"></a>Service节点：TraceDistance</h2><p><span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnVucmVhbGVuZ2luZS5jb20vNC4yNy96aC1DTi9JbnRlcmFjdGl2ZUV4cGVyaWVuY2VzL0FydGlmaWNpYWxJbnRlbGxpZ2VuY2UvQmVoYXZpb3JUcmVlcy9CZWhhdmlvclRyZWVOb2RlUmVmZXJlbmNlL0JlaGF2aW9yVHJlZU5vZGVSZWZlcmVuY2VTZXJ2aWNlcy8=" title="https://docs.unrealengine.com/4.27/zh-CN/InteractiveExperiences/ArtificialIntelligence/BehaviorTrees/BehaviorTreeNodeReference/BehaviorTreeNodeReferenceServices/">Service节点<i class="fa fa-external-link"></i></span>通常用于在某个行为节点/分支执行过程中，执行响应的检查逻辑更新黑板，亦或是作为sidecar式的逻辑监控节点/分支的运行情况。</p>
+<p>TraceDistance只用于实时监控AI到某个点的距离，并且在屏幕上打印数据。在实现上可以参考已有的<code>BTService_DefaultFocus</code>跟<code>BTService_RunEQS</code>来写</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// BTService_TraceDistance.h</span></span><br><span class="line"></span><br><span class="line">UCLASS()</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TESTEQS_API</span> <span class="title">UBTService_TraceDistance</span> :</span> <span class="keyword">public</span> UBTService_BlackboardBase</span><br><span class="line">&#123;</span><br><span class="line">    GENERATED_BODY()</span><br><span class="line"></span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">    UBTService_TraceDistance(<span class="keyword">const</span> FObjectInitializer&amp; ObjectInitializer = FObjectInitializer::Get());</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">TickNode</span><span class="params">(UBehaviorTreeComponent&amp; OwnerComp, uint8* NodeMemory, <span class="keyword">float</span> DeltaSeconds)</span> override</span>;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">OnCeaseRelevant</span><span class="params">(UBehaviorTreeComponent&amp; OwnerComp, uint8* NodeMemory)</span> override</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> WITH_EDITOR</span></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> FName <span class="title">GetNodeIconName</span><span class="params">()</span> <span class="keyword">const</span> override</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">// WITH_EDITOR</span></span></span><br><span class="line">    </span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">const</span> int32 LogKey = <span class="number">9527</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>在头文件里定义<code>UBTService_TraceDistance</code>，继承<code>UBTService_BlackboardBase</code>。<code>UBTService_BlackboardBase</code>默认提供了一个可选黑板Key的属性，在编辑器里可以看到这个选项的。其他属性如下：</p>
+<ul>
+<li><code>TickNode</code>是这个Service生命周期里的一个hook函数，表示每Tick的行为</li>
+<li><code>OnCeaseRelevant</code>也是这个Service生命周期里的hook函数，表示当行为树运行到和这个Service不相关（Service结束服务）时候的逻辑操作</li>
+<li>当然除了这两者还有一个<code>OnBecomeRelevant</code>钩子表示当运行到和Service相关的节点/分支时候的逻辑操作。</li>
+</ul>
+<p>我们打算在每个tick时候在特定的<code>LogKey</code>打印AI与玩家的距离，而在玩家没法再看到（TargetActor被清空）时候打印“追踪距离结束”的字样。因此cpp里可以这样写：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// BTService_TraceDistance.cpp</span></span><br><span class="line"></span><br><span class="line">UBTService_TraceDistance::UBTService_TraceDistance(<span class="keyword">const</span> FObjectInitializer&amp; ObjectInitializer)</span><br><span class="line">    : Super(ObjectInitializer)</span><br><span class="line">&#123;</span><br><span class="line">    NodeName = <span class="string">"Trace Distance"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 启用tick跟CeaseRelevant，不启用BecomeRelevant</span></span><br><span class="line">    bNotifyTick = <span class="literal">true</span>;</span><br><span class="line">    bTickIntervals = <span class="literal">true</span>;</span><br><span class="line">    bNotifyBecomeRelevant = <span class="literal">false</span>;</span><br><span class="line">    bNotifyCeaseRelevant = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// accept only actors and vectors，限制只能选某个特定位置，或者actor</span></span><br><span class="line">    BlackboardKey.AddObjectFilter(<span class="keyword">this</span>, GET_MEMBER_NAME_CHECKED(UBTService_TraceDistance, BlackboardKey), AActor::StaticClass());</span><br><span class="line">    BlackboardKey.AddVectorFilter(<span class="keyword">this</span>, GET_MEMBER_NAME_CHECKED(UBTService_TraceDistance, BlackboardKey));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> UBTService_TraceDistance::TickNode(UBehaviorTreeComponent&amp; OwnerComp, uint8* NodeMemory, <span class="keyword">float</span> DeltaSeconds)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (!GEngine)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// get controlled pawn location</span></span><br><span class="line">    <span class="keyword">const</span> AController* Controller = Cast&lt;AController&gt;(OwnerComp.GetOwner());</span><br><span class="line">    APawn* Pawn = Controller ? Controller-&gt;GetPawn() : <span class="literal">nullptr</span>;</span><br><span class="line">    <span class="keyword">if</span> (!Pawn)</span><br><span class="line">    &#123;</span><br><span class="line">        GEngine-&gt;AddOnScreenDebugMessage(LogKey, <span class="number">5.0f</span>, FColor::Red, TEXT(<span class="string">"cannot get controlled pawn"</span>));</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    FVector PawnLoc = Pawn-&gt;GetActorLocation();</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// get target location</span></span><br><span class="line">    UBlackboardComponent* Blackboard = OwnerComp.GetBlackboardComponent();</span><br><span class="line">    <span class="keyword">if</span> (!Blackboard)</span><br><span class="line">    &#123;</span><br><span class="line">        GEngine-&gt;AddOnScreenDebugMessage(LogKey, <span class="number">5.0f</span>, FColor::Red, TEXT(<span class="string">"cannot get blackboard"</span>));</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">float</span> Distance = <span class="number">0.0f</span>;</span><br><span class="line">    <span class="keyword">if</span> (BlackboardKey.SelectedKeyType == UBlackboardKeyType_Object::StaticClass())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// object</span></span><br><span class="line">        UObject* KeyValue = Blackboard-&gt;GetValue&lt;UBlackboardKeyType_Object&gt;(BlackboardKey.GetSelectedKeyID());</span><br><span class="line">        AActor* TargetActor = Cast&lt;AActor&gt;(KeyValue);</span><br><span class="line">        <span class="keyword">if</span> (TargetActor)</span><br><span class="line">        &#123;</span><br><span class="line">            Distance = FVector::Distance(PawnLoc, TargetActor-&gt;GetActorLocation());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// vector</span></span><br><span class="line">        FVector DestLoc = Blackboard-&gt;GetValue&lt;UBlackboardKeyType_Vector&gt;(BlackboardKey.GetSelectedKeyID());</span><br><span class="line">        Distance = FVector::Distance(PawnLoc, DestLoc);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// print log</span></span><br><span class="line">    FString Msg = FString::Printf(TEXT(<span class="string">"distance to destination: %.2f"</span>), Distance);</span><br><span class="line">    GEngine-&gt;AddOnScreenDebugMessage(LogKey, <span class="number">5.0f</span>, FColor::Yellow, Msg);</span><br><span class="line"></span><br><span class="line">    Super::TickNode(OwnerComp, NodeMemory, DeltaSeconds);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> UBTService_TraceDistance::OnCeaseRelevant(UBehaviorTreeComponent&amp; OwnerComp, uint8* NodeMemory)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (GEngine)</span><br><span class="line">    &#123;</span><br><span class="line">        GEngine-&gt;AddOnScreenDebugMessage(LogKey, <span class="number">5.0f</span>, FColor::Yellow, TEXT(<span class="string">"trace distance finished"</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Decorator节点：CheckActorDistance"><a href="#Decorator节点：CheckActorDistance" class="headerlink" title="Decorator节点：CheckActorDistance"></a>Decorator节点：CheckActorDistance</h2><p><span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnVucmVhbGVuZ2luZS5jb20vNC4yNy96aC1DTi9JbnRlcmFjdGl2ZUV4cGVyaWVuY2VzL0FydGlmaWNpYWxJbnRlbGxpZ2VuY2UvQmVoYXZpb3JUcmVlcy9CZWhhdmlvclRyZWVOb2RlUmVmZXJlbmNlL0JlaGF2aW9yVHJlZU5vZGVSZWZlcmVuY2VEZWNvcmF0b3JzLw==" title="https://docs.unrealengine.com/4.27/zh-CN/InteractiveExperiences/ArtificialIntelligence/BehaviorTrees/BehaviorTreeNodeReference/BehaviorTreeNodeReferenceDecorators/">Decorator装饰器节点<i class="fa fa-external-link"></i></span>通常用来表示某种条件判断。条件判断成立后，AI的某些行为是否执行，或者执行优先级，都会有所变化。</p>
+<p>在CheckActorDistance装饰器里，我们希望实现判断AI跟某个Actor距离在某个范围内，就优先执行装饰器装饰到的节点/分支的行为。我们可以参照其它预设装饰器的实现，来编写CheckActorDistance的逻辑</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// BTDecorator_CheckActorDistance.h</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Check Actor Distance</span></span><br><span class="line"><span class="comment"> * activated if distance to specific actor is in specific radius</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">UCLASS()</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TESTEQS_API</span> <span class="title">UBTDecorator_CheckActorDistance</span> :</span> <span class="keyword">public</span> UBTDecorator_BlackboardBase</span><br><span class="line">&#123;</span><br><span class="line">    GENERATED_BODY()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">    UPROPERTY(EditAnywhere, Category = CheckActorDistance)</span><br><span class="line">        <span class="keyword">float</span> DistanceRadius;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">bool</span> <span class="title">CalculateRawConditionValue</span><span class="params">(UBehaviorTreeComponent&amp; OwnerComp, uint8* NodeMemory)</span> <span class="keyword">const</span> override</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">    UBTDecorator_CheckActorDistance(<span class="keyword">const</span> FObjectInitializer&amp; ObjectInitializer = FObjectInitializer::Get());</span><br><span class="line">    </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>DistanceRadius：编辑器里需要设置的半径范围</li>
+<li>CalculateRawConditionValue：用来计算装饰器条件是否成立的接口</li>
+</ul>
+<p>我们只需要在<code>CalculateRawConditionValue</code>里判断距离是否在给定范围内就好。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// BTDecorator_CheckActorDistance.cpp</span></span><br><span class="line"></span><br><span class="line">BTDecorator_CheckActorDistance::UBTDecorator_CheckActorDistance(<span class="keyword">const</span> FObjectInitializer&amp; ObjectInitializer) : Super(ObjectInitializer)</span><br><span class="line">&#123;</span><br><span class="line">    NodeName = <span class="string">"Check Actor Distance"</span>;</span><br><span class="line"></span><br><span class="line">    BlackboardKey.AddObjectFilter(<span class="keyword">this</span>, GET_MEMBER_NAME_CHECKED(UBTDecorator_CheckActorDistance, BlackboardKey), AActor::StaticClass());</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Default to using Self Actor</span></span><br><span class="line">    BlackboardKey.SelectedKeyName = FBlackboard::KeySelf;</span><br><span class="line">    DistanceRadius = <span class="number">0.0f</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 判断黑板的某个actor跟ai控制的pawn是不是在给定DistanceRadius内</span></span><br><span class="line"><span class="keyword">bool</span> UBTDecorator_CheckActorDistance::CalculateRawConditionValue(UBehaviorTreeComponent&amp; OwnerComp, uint8* NodeMemory) <span class="keyword">const</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (UKismetMathLibrary::LessEqual_FloatFloat(DistanceRadius, <span class="number">0.0f</span>))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> UBlackboardComponent* BlackboardComp = OwnerComp.GetBlackboardComponent();</span><br><span class="line">    <span class="keyword">if</span> (!BlackboardComp)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    AActor* TargetActor = Cast&lt;AActor&gt;(BlackboardComp-&gt;GetValue&lt;UBlackboardKeyType_Object&gt;(BlackboardKey.GetSelectedKeyID()));</span><br><span class="line">    <span class="keyword">if</span> (!TargetActor)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> AController* Controller = Cast&lt;AController&gt;(OwnerComp.GetOwner());</span><br><span class="line">    APawn* Pawn = Controller ? Controller-&gt;GetPawn() : <span class="literal">nullptr</span>;</span><br><span class="line">    <span class="keyword">if</span> (!Pawn)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">float</span> Distance = FVector::Dist(TargetActor-&gt;GetActorLocation(), Pawn-&gt;GetActorLocation());</span><br><span class="line">    <span class="keyword">return</span> UKismetMathLibrary::LessEqual_FloatFloat(Distance, DistanceRadius);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>值得一提的是，在黑板里最好加个<code>LastTargetActor</code>表示上一个看到的<code>TargetActor</code>，然后在AIController里丢失视线的逻辑中，在清空<code>TargetActor</code>之前，把<code>LastTargetActor</code>设置为当前的<code>TargetActor</code>，这样上一个<code>TargetActor</code>在丢失视线后回来到一定范围，AI就会有“预警”效果了</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>UE的AIModule非常的大，行为树只是冰山一角，还有很多需要细细研究。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+      
+<div style="border: 1px solid black; margin-top: 32px; margin-bottom: 32px">
+  <div style="margin-left:10px">
+    <span style="font-weight:bold">版权声明</span>
+    <br>
+    <span>本文为博客<a href="https://utmhikari.github.io" style="color:#258FC6">HiKariのTechLab</a>原创文章，转载请标明出处，谢谢~~~</span>
+  </div>
+</div>
+
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/UE4/" rel="tag"># UE4</a>
+          
+            <a href="/tags/C/" rel="tag"># C++</a>
+          
+            <a href="/tags/行为树/" rel="tag"># 行为树</a>
+          
+            <a href="/tags/AI/" rel="tag"># AI</a>
+          
+            <a href="/tags/行为树节点/" rel="tag"># 行为树节点</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/08/07/gamedev/recastdemo/" rel="next" title="【游戏开发】初识寻路&navmesh，探索RecastDemo">
+                <i class="fa fa-chevron-left"></i> 【游戏开发】初识寻路&navmesh，探索RecastDemo
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/09/01/gamedev/ue4_point_in_cuboid/" rel="prev" title="【游戏开发】UE4下判断一个点是否在特定长方体内的计算方法">
+                【游戏开发】UE4下判断一个点是否在特定长方体内的计算方法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="ひかり.HDQ">
+            
+              <p class="site-author-name" itemprop="name">ひかり.HDQ</p>
+              <div class="site-description motion-element" itemprop="description">talk is cheap, code is rich</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">155</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">415</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="GitHub &rarr; https://github.com/utmhikari"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="bWFpbHRvOmhkcTk0MDYyM0AxMjYuY29t" title="Mail &rarr; mailto:hdq940623@126.com"><i class="fa fa-fw fa-envelope"></i>Mail</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly90ZXN0ZXJob21lLmNvbS91dG1oaWthcmk=" title="TesterHome &rarr; https://testerhome.com/utmhikari"><i class="fa fa-fw fa-tumblr"></i>TesterHome</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vaWQvdXRtaGlrYXJp" title="Steam &rarr; https://steamcommunity.com/id/utmhikari"><i class="fa fa-fw fa-steam"></i>Steam</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9zcGFjZS5iaWxpYmlsaS5jb20vMTUwNzUxMTQv" title="Bilibili &rarr; https://space.bilibili.com/15075114/"><i class="fa fa-fw fa-bold"></i>Bilibili</span>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Task节点：JumpForNTimes"><span class="nav-number">1.</span> <span class="nav-text">Task节点：JumpForNTimes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Service节点：TraceDistance"><span class="nav-number">2.</span> <span class="nav-text">Service节点：TraceDistance</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Decorator节点：CheckActorDistance"><span class="nav-number">3.</span> <span class="nav-text">Decorator节点：CheckActorDistance</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2019 – <span itemprop="copyrightYear">2024</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ひかり.HDQ</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="//cdn.staticfile.org/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script src="//cdn.staticfile.org/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+
+  
+  <script src="//cdn.staticfile.org/velocity/1.2.1/velocity.min.js"></script>
+
+  
+  <script src="//cdn.staticfile.org/velocity/1.2.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.1"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.1"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+  <script src="/js/src/exturl.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('5');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'manual') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+if ($('body').find('pre.mermaid').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.staticfile.org/mermaid/8.0.0-rc.8/mermaid.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      mermaid.initialize({
+        theme: 'dark',
+        logLevel: 3,
+        flowchart: { curve: 'linear' },
+        gantt: { axisFormat: '%m/%d/%Y' },
+        sequence: { actorMargin: 50 }
+      });
+    }
+  });
+}
+</script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+  $('.highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+  
+
+  
+
+</body>
+</html>

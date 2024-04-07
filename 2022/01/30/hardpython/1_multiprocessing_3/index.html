@@ -1,0 +1,2291 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta name="baidu-site-verification" content="sc1B5Cxcoz">
+  <meta name="google-site-verification" content="OLcRj7lMnauxKrhFT3Q8Nvcexgv22NvlEmVZShKQKR8">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link rel="stylesheet" href="//cdn.staticfile.org/font-awesome/4.6.2/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/uploads/apple-touch.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/uploads/favicon-32x32.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/uploads/favicon-16x16.png?v=7.0.1">
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.1',
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"fadeIn","sidebar":"fadeIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="前面讲了进程创建与进程通信的内容，接下来讲一下多进程编程最能发挥的地方。对于同时运行多个同质任务来讲，采用multiprocessing.Pool进程池去管理是最方便的。Pool的用法如下： 123456789101112131415161718192021from multiprocessing import Pool, processimport osimport pprintdef _tes">
+<meta name="keywords" content="python,并行,multiprocessing,pool,进程池">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Hard Python】【第一章-多进程】3、Pool，多任务并行进程池">
+<meta property="og:url" content="http://utmhikari.github.io/2022/01/30/hardpython/1_multiprocessing_3/index.html">
+<meta property="og:site_name" content="HiKariのTechLab">
+<meta property="og:description" content="前面讲了进程创建与进程通信的内容，接下来讲一下多进程编程最能发挥的地方。对于同时运行多个同质任务来讲，采用multiprocessing.Pool进程池去管理是最方便的。Pool的用法如下： 123456789101112131415161718192021from multiprocessing import Pool, processimport osimport pprintdef _tes">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2024-04-07T02:48:06.923Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【Hard Python】【第一章-多进程】3、Pool，多任务并行进程池">
+<meta name="twitter:description" content="前面讲了进程创建与进程通信的内容，接下来讲一下多进程编程最能发挥的地方。对于同时运行多个同质任务来讲，采用multiprocessing.Pool进程池去管理是最方便的。Pool的用法如下： 123456789101112131415161718192021from multiprocessing import Pool, processimport osimport pprintdef _tes">
+
+
+
+
+
+
+  <link rel="canonical" href="http://utmhikari.github.io/2022/01/30/hardpython/1_multiprocessing_3/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>【Hard Python】【第一章-多进程】3、Pool，多任务并行进程池 | HiKariのTechLab</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HiKariのTechLab</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">光の技术屋</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+  
+
+  
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="关注HiKariのGithub" aria-label="关注HiKariのGithub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></span>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2022/01/30/hardpython/1_multiprocessing_3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">【Hard Python】【第一章-多进程】3、Pool，多任务并行进程池
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2022-01-30 16:36:44" itemprop="dateCreated datePublished" datetime="2022-01-30T16:36:44+08:00">2022-01-30</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Hard-Python/" itemprop="url" rel="index"><span itemprop="name">Hard Python</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>前面讲了进程创建与进程通信的内容，接下来讲一下多进程编程最能发挥的地方。对于同时运行多个同质任务来讲，采用<code>multiprocessing.Pool</code>进程池去管理是最方便的。<code>Pool</code>的用法如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Pool, process</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> pprint</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_test_func</span><span class="params">(a, b)</span>:</span></span><br><span class="line">    result = a + b</span><br><span class="line">    print(<span class="string">f'<span class="subst">&#123;os.getpid()&#125;</span>: <span class="subst">&#123;result&#125;</span>'</span>)</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_pool</span><span class="params">()</span>:</span></span><br><span class="line">    test_data = [(<span class="number">2</span> * i, <span class="number">2</span> * i + <span class="number">1</span>) <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">16</span>)]</span><br><span class="line">    <span class="keyword">with</span> Pool(<span class="number">4</span>) <span class="keyword">as</span> p:</span><br><span class="line">        pprint.pprint(process.active_children())</span><br><span class="line">        results = p.starmap(_test_func, test_data)  <span class="comment"># starmap指iterable的unpack，*args这样，详情看源码注释</span></span><br><span class="line">        print(<span class="string">f'<span class="subst">&#123;os.getpid()&#125;</span>: <span class="subst">&#123;results&#125;</span>'</span>)  <span class="comment"># 得到_test_func的所有结果</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    test_pool()</span><br></pre></td></tr></table></figure>
+<p>打印出来的结果，可能是这样子的：</p>
+<a id="more"></a>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">[&lt;SpawnProcess name=&apos;SpawnPoolWorker-4&apos; pid=7648 parent=2468 started daemon&gt;,</span><br><span class="line"> &lt;SpawnProcess name=&apos;SpawnPoolWorker-3&apos; pid=15812 parent=2468 started daemon&gt;,</span><br><span class="line"> &lt;SpawnProcess name=&apos;SpawnPoolWorker-1&apos; pid=3496 parent=2468 started daemon&gt;,</span><br><span class="line"> &lt;SpawnProcess name=&apos;SpawnPoolWorker-2&apos; pid=3120 parent=2468 started daemon&gt;]</span><br><span class="line">3496: 1</span><br><span class="line">3496: 5</span><br><span class="line">3496: 9</span><br><span class="line">3496: 13</span><br><span class="line">3496: 17</span><br><span class="line">3496: 21</span><br><span class="line">3496: 25</span><br><span class="line">3496: 29</span><br><span class="line">3496: 33</span><br><span class="line">3496: 37</span><br><span class="line">3496: 41</span><br><span class="line">3496: 45</span><br><span class="line">3496: 49</span><br><span class="line">3496: 53</span><br><span class="line">3496: 57</span><br><span class="line">3496: 61</span><br><span class="line">2468: [1, 5, 9, 13, 17, 21, 25, 29, 33, 37, 41, 45, 49, 53, 57, 61]</span><br></pre></td></tr></table></figure>
+<p>我们可以在结果中看到这样的景象：</p>
+<ul>
+<li>当进入<code>with Pool</code>代码段时，进程池中的进程已经被预先创建了</li>
+<li>总共16个任务，最后却只在进程池里单独1个进程中运行（小概率在2个进程中运行）</li>
+</ul>
+<p>具体缘由，我们一起来看<code>Pool</code>的代码实现。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Pool</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, processes=None, initializer=None, initargs=<span class="params">()</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">                 maxtasksperchild=None, context=None)</span>:</span></span><br><span class="line">        <span class="comment"># 忽略一些初始变量设置</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment"># processes</span></span><br><span class="line">        self._processes = processes</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            self._repopulate_pool()</span><br><span class="line">        <span class="keyword">except</span> Exception:</span><br><span class="line">            <span class="keyword">for</span> p <span class="keyword">in</span> self._pool:</span><br><span class="line">                <span class="keyword">if</span> p.exitcode <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">                    p.terminate()</span><br><span class="line">            <span class="keyword">for</span> p <span class="keyword">in</span> self._pool:</span><br><span class="line">                p.join()</span><br><span class="line">            <span class="keyword">raise</span></span><br><span class="line"></span><br><span class="line">        sentinels = self._get_sentinels()</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># worker handler</span></span><br><span class="line">        self._worker_handler = threading.Thread(</span><br><span class="line">            target=Pool._handle_workers,</span><br><span class="line">            args=(self._cache, self._taskqueue, self._ctx, self.Process,</span><br><span class="line">                  self._processes, self._pool, self._inqueue, self._outqueue,</span><br><span class="line">                  self._initializer, self._initargs, self._maxtasksperchild,</span><br><span class="line">                  self._wrap_exception, sentinels, self._change_notifier)</span><br><span class="line">            )</span><br><span class="line">        self._worker_handler.daemon = <span class="literal">True</span></span><br><span class="line">        self._worker_handler._state = RUN</span><br><span class="line">        self._worker_handler.start()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># task handler</span></span><br><span class="line">        self._task_handler = threading.Thread(</span><br><span class="line">            target=Pool._handle_tasks,</span><br><span class="line">            args=(self._taskqueue, self._quick_put, self._outqueue,</span><br><span class="line">                  self._pool, self._cache)</span><br><span class="line">            )</span><br><span class="line">        self._task_handler.daemon = <span class="literal">True</span></span><br><span class="line">        self._task_handler._state = RUN</span><br><span class="line">        self._task_handler.start()</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># result handler</span></span><br><span class="line">        self._result_handler = threading.Thread(</span><br><span class="line">            target=Pool._handle_results,</span><br><span class="line">            args=(self._outqueue, self._quick_get, self._cache)</span><br><span class="line">            )</span><br><span class="line">        self._result_handler.daemon = <span class="literal">True</span></span><br><span class="line">        self._result_handler._state = RUN</span><br><span class="line">        self._result_handler.start()</span><br></pre></td></tr></table></figure>
+<p>一个<code>Pool</code>实例总共包含以下的内容：</p>
+<ul>
+<li><code>self._processes</code>：所有worker子进程实例</li>
+<li><code>self._worker_handler</code>：管理worker子进程的线程</li>
+<li><code>self._task_handler</code>：任务调度线程</li>
+<li><code>self._result_handler</code>：结果收集线程</li>
+</ul>
+<p>上述所有的<code>worker</code>子进程跟管理线程在初始化的时候，都会被启动。首先我们来看<code>worker</code>进程的情况：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_repopulate_pool</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> self._repopulate_pool_static(self._ctx, self.Process,</span><br><span class="line">                                        self._processes,</span><br><span class="line">                                        self._pool, self._inqueue,</span><br><span class="line">                                        self._outqueue, self._initializer,</span><br><span class="line">                                        self._initargs,</span><br><span class="line">                                        self._maxtasksperchild,</span><br><span class="line">                                        self._wrap_exception)</span><br><span class="line"></span><br><span class="line"><span class="meta">@staticmethod</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_repopulate_pool_static</span><span class="params">(ctx, Process, processes, pool, inqueue,</span></span></span><br><span class="line"><span class="function"><span class="params">                            outqueue, initializer, initargs,</span></span></span><br><span class="line"><span class="function"><span class="params">                            maxtasksperchild, wrap_exception)</span>:</span></span><br><span class="line">    <span class="string">"""Bring the number of pool processes up to the specified number,</span></span><br><span class="line"><span class="string">    for use after reaping workers which have exited.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(processes - len(pool)):</span><br><span class="line">        w = Process(ctx, target=worker,</span><br><span class="line">                    args=(inqueue, outqueue,</span><br><span class="line">                          initializer,</span><br><span class="line">                          initargs, maxtasksperchild,</span><br><span class="line">                          wrap_exception))</span><br><span class="line">        w.name = w.name.replace(<span class="string">'Process'</span>, <span class="string">'PoolWorker'</span>)</span><br><span class="line">        w.daemon = <span class="literal">True</span></span><br><span class="line">        w.start()</span><br><span class="line">        pool.append(w)</span><br><span class="line">        util.debug(<span class="string">'added worker'</span>)</span><br><span class="line">        </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">worker</span><span class="params">(inqueue, outqueue, initializer=None, initargs=<span class="params">()</span>, maxtasks=None,</span></span></span><br><span class="line"><span class="function"><span class="params">           wrap_exception=False)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> (maxtasks <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>) <span class="keyword">and</span> <span class="keyword">not</span> (isinstance(maxtasks, int)</span><br><span class="line">                                       <span class="keyword">and</span> maxtasks &gt;= <span class="number">1</span>):</span><br><span class="line">        <span class="keyword">raise</span> AssertionError(<span class="string">"Maxtasks &#123;!r&#125; is not valid"</span>.format(maxtasks))</span><br><span class="line">    put = outqueue.put</span><br><span class="line">    get = inqueue.get</span><br><span class="line">    <span class="keyword">if</span> hasattr(inqueue, <span class="string">'_writer'</span>):</span><br><span class="line">        inqueue._writer.close()</span><br><span class="line">        outqueue._reader.close()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> initializer <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">        initializer(*initargs)</span><br><span class="line"></span><br><span class="line">    completed = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> maxtasks <span class="keyword">is</span> <span class="literal">None</span> <span class="keyword">or</span> (maxtasks <span class="keyword">and</span> completed &lt; maxtasks):</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            task = get()</span><br><span class="line">        <span class="keyword">except</span> (EOFError, OSError):</span><br><span class="line">            util.debug(<span class="string">'worker got EOFError or OSError -- exiting'</span>)</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> task <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            util.debug(<span class="string">'worker got sentinel -- exiting'</span>)</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">        job, i, func, args, kwds = task</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            result = (<span class="literal">True</span>, func(*args, **kwds))</span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">            <span class="keyword">if</span> wrap_exception <span class="keyword">and</span> func <span class="keyword">is</span> <span class="keyword">not</span> _helper_reraises_exception:</span><br><span class="line">                e = ExceptionWithTraceback(e, e.__traceback__)</span><br><span class="line">            result = (<span class="literal">False</span>, e)</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            put((job, i, result))</span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">            wrapped = MaybeEncodingError(e, result[<span class="number">1</span>])</span><br><span class="line">            util.debug(<span class="string">"Possible encoding error while sending result: %s"</span> % (</span><br><span class="line">                wrapped))</span><br><span class="line">            put((job, i, (<span class="literal">False</span>, wrapped)))</span><br><span class="line"></span><br><span class="line">        task = job = result = func = args = kwds = <span class="literal">None</span></span><br><span class="line">        completed += <span class="number">1</span></span><br><span class="line">    util.debug(<span class="string">'worker exiting after %d tasks'</span> % completed)</span><br></pre></td></tr></table></figure>
+<p><code>_repopulate_pool</code>是启动所有<code>worker</code>进程的出发点，顺流而下，所有<code>worker</code>进程最终会执行<code>worker</code>函数。<code>worker</code>函数有如下的步骤：</p>
+<ul>
+<li>执行<code>initializer(*initargs)</code>。在多进程的场景下，有很多模块到了子进程可能是未初始化的状态，而<code>initializer</code>就提供了一个在子进程中初始化某些模块或者变量的途径。</li>
+<li>从<code>inqueue</code>中<code>get</code>一个<code>task</code>的实例，将其<code>unpack</code></li>
+<li>执行<code>task</code>中的<code>func</code>，得到结果</li>
+<li>将结果<code>put</code>到<code>outqueue</code></li>
+</ul>
+<p>然后我们再看下<code>_task_handler</code>，对应的函数是<code>Pool._handle_tasks</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@staticmethod</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_handle_tasks</span><span class="params">(taskqueue, put, outqueue, pool, cache)</span>:</span></span><br><span class="line">    thread = threading.current_thread()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> taskseq, set_length <span class="keyword">in</span> iter(taskqueue.get, <span class="literal">None</span>):</span><br><span class="line">        task = <span class="literal">None</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="comment"># iterating taskseq cannot fail</span></span><br><span class="line">            <span class="keyword">for</span> task <span class="keyword">in</span> taskseq:</span><br><span class="line">                <span class="keyword">if</span> thread._state != RUN:</span><br><span class="line">                    util.debug(<span class="string">'task handler found thread._state != RUN'</span>)</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">                <span class="keyword">try</span>:</span><br><span class="line">                    put(task)</span><br><span class="line">                <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                    job, idx = task[:<span class="number">2</span>]</span><br><span class="line">                    <span class="keyword">try</span>:</span><br><span class="line">                        cache[job]._set(idx, (<span class="literal">False</span>, e))</span><br><span class="line">                    <span class="keyword">except</span> KeyError:</span><br><span class="line">                        <span class="keyword">pass</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">if</span> set_length:</span><br><span class="line">                    util.debug(<span class="string">'doing set_length()'</span>)</span><br><span class="line">                    idx = task[<span class="number">1</span>] <span class="keyword">if</span> task <span class="keyword">else</span> <span class="number">-1</span></span><br><span class="line">                    set_length(idx + <span class="number">1</span>)</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">finally</span>:</span><br><span class="line">            task = taskseq = job = <span class="literal">None</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        util.debug(<span class="string">'task handler got sentinel'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="comment"># tell result handler to finish when cache is empty</span></span><br><span class="line">        util.debug(<span class="string">'task handler sending sentinel to result handler'</span>)</span><br><span class="line">        outqueue.put(<span class="literal">None</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># tell workers there is no more work</span></span><br><span class="line">        util.debug(<span class="string">'task handler sending sentinel to workers'</span>)</span><br><span class="line">        <span class="keyword">for</span> p <span class="keyword">in</span> pool:</span><br><span class="line">            put(<span class="literal">None</span>)</span><br><span class="line">    <span class="keyword">except</span> OSError:</span><br><span class="line">        util.debug(<span class="string">'task handler got OSError when sending sentinels'</span>)</span><br><span class="line"></span><br><span class="line">    util.debug(<span class="string">'task handler exiting'</span>)</span><br></pre></td></tr></table></figure>
+<p><code>task_handler</code>负责从<code>taskqueue</code>中得到<code>task</code>实例，并<code>put</code>到<code>inqueue</code>中。当所有<code>task</code>实例推送完毕后，像<code>result_handler</code>和所有<code>worker process</code>推送了<code>None</code>实例。从先前<code>worker</code>的代码中可以知晓，当<code>inqueue</code>收到了<code>None</code>，就代表任务已经推送完毕，可以<code>break</code>退出了。而至于为何也给到<code>result_handler</code>一个<code>None</code>实例，我们就看下<code>result_handler</code>的代码，来分析其中具体的机制。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@staticmethod</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_handle_results</span><span class="params">(outqueue, get, cache)</span>:</span></span><br><span class="line">    thread = threading.current_thread()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            task = get()</span><br><span class="line">        <span class="keyword">except</span> (OSError, EOFError):</span><br><span class="line">            util.debug(<span class="string">'result handler got EOFError/OSError -- exiting'</span>)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> thread._state != RUN:</span><br><span class="line">            <span class="keyword">assert</span> thread._state == TERMINATE, <span class="string">"Thread not in TERMINATE"</span></span><br><span class="line">            util.debug(<span class="string">'result handler found thread._state=TERMINATE'</span>)</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> task <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            util.debug(<span class="string">'result handler got sentinel'</span>)</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">        job, i, obj = task</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            cache[job]._set(i, obj)</span><br><span class="line">        <span class="keyword">except</span> KeyError:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line">        task = job = obj = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> cache <span class="keyword">and</span> thread._state != TERMINATE:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            task = get()</span><br><span class="line">        <span class="keyword">except</span> (OSError, EOFError):</span><br><span class="line">            util.debug(<span class="string">'result handler got EOFError/OSError -- exiting'</span>)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> task <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            util.debug(<span class="string">'result handler ignoring extra sentinel'</span>)</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        job, i, obj = task</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            cache[job]._set(i, obj)</span><br><span class="line">        <span class="keyword">except</span> KeyError:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line">        task = job = obj = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> hasattr(outqueue, <span class="string">'_reader'</span>):</span><br><span class="line">        util.debug(<span class="string">'ensuring that outqueue is not full'</span>)</span><br><span class="line">        <span class="comment"># If we don't make room available in outqueue then</span></span><br><span class="line">        <span class="comment"># attempts to add the sentinel (None) to outqueue may</span></span><br><span class="line">        <span class="comment"># block.  There is guaranteed to be no more than 2 sentinels.</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">                <span class="keyword">if</span> <span class="keyword">not</span> outqueue._reader.poll():</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">                get()</span><br><span class="line">        <span class="keyword">except</span> (OSError, EOFError):</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">    util.debug(<span class="string">'result handler exiting: len(cache)=%s, thread._state=%s'</span>,</span><br><span class="line">          len(cache), thread._state)</span><br></pre></td></tr></table></figure>
+<p>在<code>handle_results</code>的主循环中，会不断地从<code>outqueue</code>里<code>get</code>结果，然后放到<code>cache</code>中。参考<code>worker</code>进程的实现中我们可以知晓，从<code>outqueue</code>里获取的结果即是<code>worker</code>任务执行后的返回值。</p>
+<p>当所有<code>task</code>在<code>handle_tasks</code>线程被消费完之后，<code>handle_tasks</code>线程会在<code>outqueue</code>里<code>put</code>一个<code>None</code>值。<code>handle_results</code>线程接收到<code>None</code>值后，直到<code>cache</code>为空或者<code>Pool</code>被终止（TERMINATE）为止，都会继续接收子进程任务执行结果并存到<code>cache</code>里。<code>cache</code>为空或者<code>Pool</code>被终止之后，<code>handle_results</code>线程会清空<code>outqueue</code>，然后退出。</p>
+<p>从<code>worker</code>、<code>task</code>、<code>result</code>线程的作用可以看到，<code>inqueue</code>、<code>outqueue</code>、<code>cache</code>是连接用户业务线程和子进程之间的桥梁。<code>inqueue</code>和<code>outqueue</code>的作用在前面的叙述中已经非常清楚，一个用来上传任务，一个用来下发执行结果。因此最终，我们还是要深入研究一下<code>cache</code>的运行机制。</p>
+<p>首先我们还是回顾一开始给的例子，<code>test_pool</code>函数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_pool</span><span class="params">()</span>:</span></span><br><span class="line">    test_data = [(<span class="number">2</span> * i, <span class="number">2</span> * i + <span class="number">1</span>) <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">16</span>)]</span><br><span class="line">    <span class="keyword">with</span> Pool(<span class="number">4</span>) <span class="keyword">as</span> p:</span><br><span class="line">        pprint.pprint(process.active_children())</span><br><span class="line">        results = p.starmap(_test_func, test_data)  <span class="comment"># starmap指iterable的unpack，*args这样，详情看源码注释</span></span><br><span class="line">        print(<span class="string">f'<span class="subst">&#123;os.getpid()&#125;</span>: <span class="subst">&#123;results&#125;</span>'</span>)  <span class="comment"># 得到_test_func的所有结果</span></span><br></pre></td></tr></table></figure>
+<p><code>test_pool</code>函数调用了<code>starmap</code>，<code>starmap</code>方法需要给定一个任务函数以及一组参数，和<code>map</code>不同的是，<code>starmap</code>指代的参数是带星的（<code>*args</code>），因此在调用任务函数时会<code>unpack</code>对应的参数。</p>
+<p><code>starmap</code>之后，涉及到的方法定义如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">starmapstar</span><span class="params">(args)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> list(itertools.starmap(args[<span class="number">0</span>], args[<span class="number">1</span>]))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">starmap</span><span class="params">(self, func, iterable, chunksize=None)</span>:</span></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    Like `map()` method but the elements of the `iterable` are expected to</span></span><br><span class="line"><span class="string">    be iterables as well and will be unpacked as arguments. Hence</span></span><br><span class="line"><span class="string">    `func` and (a, b) becomes func(a, b).</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    <span class="keyword">return</span> self._map_async(func, iterable, starmapstar, chunksize).get()</span><br><span class="line"></span><br><span class="line"><span class="meta">@staticmethod</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_get_tasks</span><span class="params">(func, it, size)</span>:</span></span><br><span class="line">    it = iter(it)</span><br><span class="line">    <span class="keyword">while</span> <span class="number">1</span>:</span><br><span class="line">        x = tuple(itertools.islice(it, size))</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> x:</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        <span class="keyword">yield</span> (func, x)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_guarded_task_generation</span><span class="params">(self, result_job, func, iterable)</span>:</span></span><br><span class="line">    <span class="string">'''Provides a generator of tasks for imap and imap_unordered with</span></span><br><span class="line"><span class="string">    appropriate handling for iterables which throw exceptions during</span></span><br><span class="line"><span class="string">    iteration.'''</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        i = <span class="number">-1</span></span><br><span class="line">        <span class="keyword">for</span> i, x <span class="keyword">in</span> enumerate(iterable):</span><br><span class="line">            <span class="keyword">yield</span> (result_job, i, func, (x,), &#123;&#125;)</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        <span class="keyword">yield</span> (result_job, i+<span class="number">1</span>, _helper_reraises_exception, (e,), &#123;&#125;)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_map_async</span><span class="params">(self, func, iterable, mapper, chunksize=None, callback=None,</span></span></span><br><span class="line"><span class="function"><span class="params">        error_callback=None)</span>:</span></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    Helper function to implement map, starmap and their async counterparts.</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    self._check_running()</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> hasattr(iterable, <span class="string">'__len__'</span>):</span><br><span class="line">        iterable = list(iterable)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> chunksize <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        chunksize, extra = divmod(len(iterable), len(self._pool) * <span class="number">4</span>)</span><br><span class="line">        <span class="keyword">if</span> extra:</span><br><span class="line">            chunksize += <span class="number">1</span></span><br><span class="line">    <span class="keyword">if</span> len(iterable) == <span class="number">0</span>:</span><br><span class="line">        chunksize = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    task_batches = Pool._get_tasks(func, iterable, chunksize)</span><br><span class="line">    result = MapResult(self, chunksize, len(iterable), callback,</span><br><span class="line">                       error_callback=error_callback)</span><br><span class="line">    self._taskqueue.put(</span><br><span class="line">        (</span><br><span class="line">            self._guarded_task_generation(result._job,</span><br><span class="line">                                          mapper,</span><br><span class="line">                                          task_batches),</span><br><span class="line">            <span class="literal">None</span></span><br><span class="line">        )</span><br><span class="line">    )</span><br><span class="line">    <span class="keyword">return</span> result</span><br></pre></td></tr></table></figure>
+<p>各类<code>map/map_async</code>方法，最终都会落实到<code>_map_async</code>方法。在<code>_map_async</code>方法中会做以下几件事情：</p>
+<ul>
+<li>计算<code>chunksize</code>，即每<code>batch</code>子任务的数量</li>
+<li>通过<code>_get_tasks</code>函数，获取传递子任务<code>batch</code>的<code>generator</code></li>
+<li>生成<code>MapResult</code>实例<code>result</code></li>
+<li>在<code>taskqueue</code>中放入<code>_guarded_task_generation</code>的任务<code>generator</code>实例</li>
+</ul>
+<p>每个子进程最终会调用<code>mapper(task_batch)</code>，相当于是<code>list(itertools.starmap(func, task_batch))</code>，也就是单个子进程会执行一个<code>batch</code>的任务，然后返回一组这个<code>batch</code>的执行结果。</p>
+<p>从这个角度推论，假设每个任务函数执行要1s，总共16个子任务，<code>chunksize</code>是14，<code>pool</code>的<code>size</code>是2，那么一执行起来，前2秒的话2个子进程都会打印执行结果，然后接下来12秒就只有第1个子进程打印结果了。这是因为，第1个子进程一批被分了14个，第2个子进程一批就被分了剩下2个。如果其它变量不变，<code>pool</code>的<code>size</code>是3，那么打印的效果也和<code>size</code>为2的时候一样，这是因为<code>chunksize</code>太大，前2个子进程已经瓜分了所有子任务（14、2），第3个子进程啥任务都分不到了。</p>
+<p>所以<code>chunksize</code>的设定，也是一门学问。实际使用<code>pool</code>的时候要注意这个坑。</p>
+<p>接下来注意力转到<code>MapResult</code>实例<code>result</code>上，也是在这个地方会对任务缓存<code>cache</code>做一些操作。首先我们看<code>MapResult</code>的定义：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line">job_counter = itertools.count()</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ApplyResult</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, pool, callback, error_callback)</span>:</span></span><br><span class="line">        self._pool = pool</span><br><span class="line">        self._event = threading.Event()</span><br><span class="line">        self._job = next(job_counter)</span><br><span class="line">        self._cache = pool._cache</span><br><span class="line">        self._callback = callback</span><br><span class="line">        self._error_callback = error_callback</span><br><span class="line">        self._cache[self._job] = self</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">ready</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self._event.is_set()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">successful</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> self.ready():</span><br><span class="line">            <span class="keyword">raise</span> ValueError(<span class="string">"&#123;0!r&#125; not ready"</span>.format(self))</span><br><span class="line">        <span class="keyword">return</span> self._success</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wait</span><span class="params">(self, timeout=None)</span>:</span></span><br><span class="line">        self._event.wait(timeout)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self, timeout=None)</span>:</span></span><br><span class="line">        self.wait(timeout)</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> self.ready():</span><br><span class="line">            <span class="keyword">raise</span> TimeoutError</span><br><span class="line">        <span class="keyword">if</span> self._success:</span><br><span class="line">            <span class="keyword">return</span> self._value</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">raise</span> self._value</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MapResult</span><span class="params">(ApplyResult)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, pool, chunksize, length, callback, error_callback)</span>:</span></span><br><span class="line">        ApplyResult.__init__(self, pool, callback,</span><br><span class="line">                             error_callback=error_callback)</span><br><span class="line">        self._success = <span class="literal">True</span></span><br><span class="line">        self._value = [<span class="literal">None</span>] * length</span><br><span class="line">        self._chunksize = chunksize</span><br><span class="line">        <span class="keyword">if</span> chunksize &lt;= <span class="number">0</span>:</span><br><span class="line">            self._number_left = <span class="number">0</span></span><br><span class="line">            self._event.set()</span><br><span class="line">            <span class="keyword">del</span> self._cache[self._job]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self._number_left = length//chunksize + bool(length % chunksize)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_set</span><span class="params">(self, i, success_result)</span>:</span></span><br><span class="line">        self._number_left -= <span class="number">1</span></span><br><span class="line">        success, result = success_result</span><br><span class="line">        <span class="keyword">if</span> success <span class="keyword">and</span> self._success:</span><br><span class="line">            self._value[i*self._chunksize:(i+<span class="number">1</span>)*self._chunksize] = result</span><br><span class="line">            <span class="keyword">if</span> self._number_left == <span class="number">0</span>:</span><br><span class="line">                <span class="keyword">if</span> self._callback:</span><br><span class="line">                    self._callback(self._value)</span><br><span class="line">                <span class="keyword">del</span> self._cache[self._job]</span><br><span class="line">                self._event.set()</span><br><span class="line">                self._pool = <span class="literal">None</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> success <span class="keyword">and</span> self._success:</span><br><span class="line">                <span class="comment"># only store first exception</span></span><br><span class="line">                self._success = <span class="literal">False</span></span><br><span class="line">                self._value = result</span><br><span class="line">            <span class="keyword">if</span> self._number_left == <span class="number">0</span>:</span><br><span class="line">                <span class="comment"># only consider the result ready once all jobs are done</span></span><br><span class="line">                <span class="keyword">if</span> self._error_callback:</span><br><span class="line">                    self._error_callback(self._value)</span><br><span class="line">                <span class="keyword">del</span> self._cache[self._job]</span><br><span class="line">                self._event.set()</span><br><span class="line">                self._pool = <span class="literal">None</span></span><br></pre></td></tr></table></figure>
+<p>针对<code>starmap</code>而言，在<code>worker</code>中，执行了一批子任务之后，会调用<code>put((job, i, result))</code>返回独立的<code>job_id</code>、任务组编号、子任务批次的结果集。我们需要注意到，在<code>result</code>初始化时侯，会通过<code>[None] * length</code>占位所有的结果（<code>self._values</code>），并且在缓存中设置本次<code>job</code>（<code>ApplyResult</code>中<code>self._cache[self._job] = self</code>），然后在<code>handle_results</code>线程中<code>_set</code>结果时，调用了<code>MapResult._set</code>，会根据任务组编号<code>i</code>把对应位置的结果替代。直到所有批次的结果集执行结果返回后，最终会清楚缓存中的这次<code>starmap</code>的<code>job_id</code>，然后调用<code>self._event.set()</code></p>
+<p><code>starmap</code>函数会阻塞，直到所有结果返回。实现阻塞操作的方式，即是用了<code>threading.Event()</code>。<code>starmap</code>返回的是<code>result.get()</code>，在<code>get</code>的实现里，会调用<code>self._event.wait</code>，也就是阻塞，直到<code>self._event.set</code>。这样，只有所有结果返回，<code>starmap</code>才会返回。如果大家日常开发中，有这种等待直到执行成功的业务需求，不妨尝试用<code>threading.Event()</code>，比<code>sleep</code>轮询的方式优雅的多。</p>
+<p>说到底，<code>Pool</code>为多进程编程提供了灵活的任务调度模型。日常如果需要用到进程池做并行操作，用原生的<code>multiprocessing.Pool</code>就是不二选择。</p>
+<p>当然，并行任务还有一种选择方案实用<code>ProcessPoolExecutor</code>，比原生的<code>Pool</code>稍微轻量级一点。<code>ProcessPoolExecutor</code>的机理实现，也可以参考<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDEvYXJ0aWNsZS9kZXRhaWxzLzExNzcxNzIwMA==" title="https://blog.csdn.net/u013842501/article/details/117717200">这篇文档<i class="fa fa-external-link"></i></span>。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+      
+<div style="border: 1px solid black; margin-top: 32px; margin-bottom: 32px">
+  <div style="margin-left:10px">
+    <span style="font-weight:bold">版权声明</span>
+    <br>
+    <span>本文为博客<a href="https://utmhikari.github.io" style="color:#258FC6">HiKariのTechLab</a>原创文章，转载请标明出处，谢谢~~~</span>
+  </div>
+</div>
+
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/并行/" rel="tag"># 并行</a>
+          
+            <a href="/tags/multiprocessing/" rel="tag"># multiprocessing</a>
+          
+            <a href="/tags/pool/" rel="tag"># pool</a>
+          
+            <a href="/tags/进程池/" rel="tag"># 进程池</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/01/22/hardpython/1_multiprocessing_2/" rel="next" title="【Hard Python】【第一章-多进程】2、Pipe和Queue，进程间通信">
+                <i class="fa fa-chevron-left"></i> 【Hard Python】【第一章-多进程】2、Pipe和Queue，进程间通信
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2022/02/12/hardpython/2_asyncio_1/" rel="prev" title="【Hard Python】【第二章-异步IO】1、asyncio事件循环的创建">
+                【Hard Python】【第二章-异步IO】1、asyncio事件循环的创建 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="ひかり.HDQ">
+            
+              <p class="site-author-name" itemprop="name">ひかり.HDQ</p>
+              <div class="site-description motion-element" itemprop="description">talk is cheap, code is rich</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">155</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">415</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="GitHub &rarr; https://github.com/utmhikari"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="bWFpbHRvOmhkcTk0MDYyM0AxMjYuY29t" title="Mail &rarr; mailto:hdq940623@126.com"><i class="fa fa-fw fa-envelope"></i>Mail</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly90ZXN0ZXJob21lLmNvbS91dG1oaWthcmk=" title="TesterHome &rarr; https://testerhome.com/utmhikari"><i class="fa fa-fw fa-tumblr"></i>TesterHome</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vaWQvdXRtaGlrYXJp" title="Steam &rarr; https://steamcommunity.com/id/utmhikari"><i class="fa fa-fw fa-steam"></i>Steam</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9zcGFjZS5iaWxpYmlsaS5jb20vMTUwNzUxMTQv" title="Bilibili &rarr; https://space.bilibili.com/15075114/"><i class="fa fa-fw fa-bold"></i>Bilibili</span>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2019 – <span itemprop="copyrightYear">2024</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ひかり.HDQ</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="//cdn.staticfile.org/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script src="//cdn.staticfile.org/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+
+  
+  <script src="//cdn.staticfile.org/velocity/1.2.1/velocity.min.js"></script>
+
+  
+  <script src="//cdn.staticfile.org/velocity/1.2.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.1"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.1"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+  <script src="/js/src/exturl.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('5');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'manual') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+if ($('body').find('pre.mermaid').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.staticfile.org/mermaid/8.0.0-rc.8/mermaid.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      mermaid.initialize({
+        theme: 'dark',
+        logLevel: 3,
+        flowchart: { curve: 'linear' },
+        gantt: { axisFormat: '%m/%d/%Y' },
+        sequence: { actorMargin: 50 }
+      });
+    }
+  });
+}
+</script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+  $('.highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+  
+
+  
+
+</body>
+</html>

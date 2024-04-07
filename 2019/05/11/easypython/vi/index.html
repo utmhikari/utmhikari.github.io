@@ -1,0 +1,2325 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta name="baidu-site-verification" content="sc1B5Cxcoz">
+  <meta name="google-site-verification" content="OLcRj7lMnauxKrhFT3Q8Nvcexgv22NvlEmVZShKQKR8">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link rel="stylesheet" href="//cdn.staticfile.org/font-awesome/4.6.2/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/uploads/apple-touch.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/uploads/favicon-32x32.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/uploads/favicon-16x16.png?v=7.0.1">
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.1',
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"fadeIn","sidebar":"fadeIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="前言前段时间，我和我的领导回到了母校，和我的师父师母聚餐。聚餐点了很多东西，大碗宽面，牛肉炒饭，韩国烤肉，吃都吃不完。虽然我的领导最近长得比以前p了些，但是吃饭速度还是慢悠悠。唉，要是我的领导能有个三头六臂，每个手都夹菜，每个头都去啃，那吃饭速度可就蹭蹭地涨上去了啊！ 人无法三头六臂，但在Python里，我们可以做到。 并发&amp;amp;并行实验要想实现三头六臂的效率，不走单一顺序流，我们不仅需要让多">
+<meta name="keywords" content="python,GIL,并行,并发,multiprocessing">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Easy Python】第六话：multiprocessing——Python多进程并行">
+<meta property="og:url" content="http://utmhikari.github.io/2019/05/11/easypython/vi/index.html">
+<meta property="og:site_name" content="HiKariのTechLab">
+<meta property="og:description" content="前言前段时间，我和我的领导回到了母校，和我的师父师母聚餐。聚餐点了很多东西，大碗宽面，牛肉炒饭，韩国烤肉，吃都吃不完。虽然我的领导最近长得比以前p了些，但是吃饭速度还是慢悠悠。唉，要是我的领导能有个三头六臂，每个手都夹菜，每个头都去啃，那吃饭速度可就蹭蹭地涨上去了啊！ 人无法三头六臂，但在Python里，我们可以做到。 并发&amp;amp;并行实验要想实现三头六臂的效率，不走单一顺序流，我们不仅需要让多">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2024-04-07T02:48:06.917Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【Easy Python】第六话：multiprocessing——Python多进程并行">
+<meta name="twitter:description" content="前言前段时间，我和我的领导回到了母校，和我的师父师母聚餐。聚餐点了很多东西，大碗宽面，牛肉炒饭，韩国烤肉，吃都吃不完。虽然我的领导最近长得比以前p了些，但是吃饭速度还是慢悠悠。唉，要是我的领导能有个三头六臂，每个手都夹菜，每个头都去啃，那吃饭速度可就蹭蹭地涨上去了啊！ 人无法三头六臂，但在Python里，我们可以做到。 并发&amp;amp;并行实验要想实现三头六臂的效率，不走单一顺序流，我们不仅需要让多">
+
+
+
+
+
+
+  <link rel="canonical" href="http://utmhikari.github.io/2019/05/11/easypython/vi/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>【Easy Python】第六话：multiprocessing——Python多进程并行 | HiKariのTechLab</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HiKariのTechLab</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">光の技术屋</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+  
+
+  
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="关注HiKariのGithub" aria-label="关注HiKariのGithub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></span>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2019/05/11/easypython/vi/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">【Easy Python】第六话：multiprocessing——Python多进程并行
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-11 19:47:50" itemprop="dateCreated datePublished" datetime="2019-05-11T19:47:50+08:00">2019-05-11</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Easy-Python/" itemprop="url" rel="index"><span itemprop="name">Easy Python</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前段时间，我和我的领导回到了母校，和我的师父师母聚餐。聚餐点了很多东西，大碗宽面，牛肉炒饭，韩国烤肉，吃都吃不完。虽然我的领导最近长得比以前p了些，但是吃饭速度还是慢悠悠。唉，要是我的领导能有个三头六臂，每个手都夹菜，每个头都去啃，那吃饭速度可就蹭蹭地涨上去了啊！</p>
+<p>人无法三头六臂，但在Python里，我们可以做到。</p>
+<h2 id="并发-amp-并行实验"><a href="#并发-amp-并行实验" class="headerlink" title="并发&amp;并行实验"></a>并发&amp;并行实验</h2><p>要想实现三头六臂的效率，不走单一顺序流，我们不仅需要让多个任务能够并发（Concurrent），还能够并行（Parallel）运作。</p>
+<p>假使吃饭吃到一半，人有三急，摘花回来继续用膳，那么如果把“吃饭”与“解手”当作两个任务，那么它们便是便是并发运作，但不并行。如果太追求效率，蹲坑恰饭，那便即是并发，也是并行了。</p>
+<p>在Python中，我们可以用三种方式实现并发。但是并不是所有的方法，都支持并行。</p>
+<p>这三种方法是：</p>
+<a id="more"></a>
+<ul>
+<li>多线程 Multi Threading</li>
+<li>多进程 Multi Processing</li>
+<li>异步IO Async IO</li>
+</ul>
+<p>其中，异步IO的实现方法，我们在第四章<a href="https://utmhikari.github.io/2019/03/31/easypython/iv">《玩转豆瓣二百五：下》</a>中已经介绍过。多线程和多进程的实现方法，可以参考<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnB5dGhvbi5vcmcvemgtY24vMy8=" title="https://docs.python.org/zh-cn/3/">Python官方文档<i class="fa fa-external-link"></i></span>，或者干脆直接看下面的实例。</p>
+<p>通过一个简单的运行时间测试我们就可以发现，这三种方法中，哪些方法是能够真正利用并行的效率：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Pool</span><br><span class="line"><span class="keyword">from</span> threading <span class="keyword">import</span> Thread</span><br><span class="line"><span class="keyword">import</span> datetime</span><br><span class="line"><span class="keyword">import</span> functools</span><br><span class="line"><span class="keyword">import</span> asyncio</span><br><span class="line"></span><br><span class="line">TOTAL = <span class="number">20000</span>  <span class="comment"># 子任务执行次数</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">task</span><span class="params">(n)</span>:</span>  <span class="comment"># 每个子任务，从n减到-n</span></span><br><span class="line">    end = -n</span><br><span class="line">    <span class="keyword">while</span> n &gt; end:</span><br><span class="line">        n -= <span class="number">1</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sequential</span><span class="params">()</span>:</span>  <span class="comment"># 一般的顺序执行</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(TOTAL):</span><br><span class="line">        task(i)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">multi_process</span><span class="params">()</span>:</span>  <span class="comment"># 多进程，设定最大进程数为10，放到一个池里调度</span></span><br><span class="line">    pool = Pool(<span class="number">10</span>)</span><br><span class="line">    pool.map(task, range(TOTAL))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">async_io</span><span class="params">()</span>:</span>  <span class="comment"># 异步IO，详见Easy Python第四章</span></span><br><span class="line">    <span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">async_task</span><span class="params">(n)</span>:</span></span><br><span class="line">        task(n)</span><br><span class="line">    <span class="keyword">await</span> asyncio.gather(*[async_task(i) <span class="keyword">for</span> i <span class="keyword">in</span> range(TOTAL)])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">multi_thread</span><span class="params">()</span>:</span>  <span class="comment"># 多线程，设定10个线程，每个线程执行2000个task</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">tasks</span><span class="params">(ns)</span>:</span></span><br><span class="line">        <span class="keyword">for</span> n <span class="keyword">in</span> ns:</span><br><span class="line">            task(n)</span><br><span class="line">    threads = []</span><br><span class="line">    inputs = [[] <span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">10</span>)]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(TOTAL):</span><br><span class="line">        inputs[(i % <span class="number">10</span>)].append(i)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">        threads.append(Thread(target=functools.partial(tasks, inputs[i])))</span><br><span class="line">        threads[<span class="number">-1</span>].start()</span><br><span class="line">    <span class="keyword">for</span> thread <span class="keyword">in</span> threads:</span><br><span class="line">        thread.join()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    <span class="comment"># sequential</span></span><br><span class="line">    start = datetime.datetime.now()</span><br><span class="line">    sequential()</span><br><span class="line">    print(<span class="string">"Sequential: %s"</span> % (datetime.datetime.now() - start).total_seconds())</span><br><span class="line">    <span class="comment"># multi-process</span></span><br><span class="line">    start = datetime.datetime.now()</span><br><span class="line">    multi_process()</span><br><span class="line">    print(<span class="string">"Multi-Process: %s"</span> % (datetime.datetime.now() - start).total_seconds())</span><br><span class="line">    <span class="comment"># asyncio</span></span><br><span class="line">    start = datetime.datetime.now()</span><br><span class="line">    asyncio.run(async_io())</span><br><span class="line">    print(<span class="string">"Async-IO: %s"</span> % (datetime.datetime.now() - start).total_seconds())</span><br><span class="line">    <span class="comment"># multi-thread</span></span><br><span class="line">    start = datetime.datetime.now()</span><br><span class="line">    multi_thread()</span><br><span class="line">    print(<span class="string">"Multi-Thread: %s"</span> % (datetime.datetime.now() - start).total_seconds())</span><br></pre></td></tr></table></figure>
+<p>结果出炉！</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Sequential: 18.116519</span><br><span class="line">Multi-Process: 3.879628</span><br><span class="line">Async-IO: 18.225281</span><br><span class="line">Multi-Thread: 18.119936</span><br></pre></td></tr></table></figure>
+<p>我们发现，只有采用多进程的方式，能够符合我们的并行猜测。其它方式，甚至比顺序执行还要慢一些，应当不是并行运行。</p>
+<h2 id="为什么是多进程？"><a href="#为什么是多进程？" class="headerlink" title="为什么是多进程？"></a>为什么是多进程？</h2><h3 id="线程与进程"><a href="#线程与进程" class="headerlink" title="线程与进程"></a>线程与进程</h3><p>首先，我们简要介绍一下<span class="exturl" data-url="aHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvVGhyZWFkXyUyOGNvbXB1dGluZyUyOQ==" title="https://en.wikipedia.org/wiki/Thread_%28computing%29">线程<i class="fa fa-external-link"></i></span>与<span class="exturl" data-url="aHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvUHJvY2Vzc18lMjhjb21wdXRpbmclMjk=" title="https://en.wikipedia.org/wiki/Process_%28computing%29">进程<i class="fa fa-external-link"></i></span>。</p>
+<ul>
+<li>线程（Thread）：操作系统调度最小单位，顺序执行的程序流</li>
+<li>进程（Process）：计算机程序的实例，线程的容器</li>
+</ul>
+<p>进程，好比是一个特定工作的流程，是相对宏观的；线程，则是一个个子任务的流程，是相对微观的。一个进程中，可以容纳多个不同的线程以执行不同类型的工作。同一个进程的不同线程之间，共享了许多当前进程信息，相互独立性较弱；而同一个操作系统的进程之间，共享信息较少，相互独立性强。</p>
+<p>在实际执行程序的时候，对于单个（核）CPU而言，同一时刻只能跑一个特定的线程。CPU通过不停地切换不同线程实现各个线程任务的并发，并且由于CPU手速太快，造成了我们一按<code>ctrl + alt + del</code>所看到的，同一时刻几十个进程都在同时跑的假象。但是，对于多核CPU而言，我们就可以做到在多个CPU上，并发并且并行多个线程，增加执行效率。但即便如此，Python的多线程，却无法做到这一点。</p>
+<h3 id="全局解释器锁GIL"><a href="#全局解释器锁GIL" class="headerlink" title="全局解释器锁GIL"></a>全局解释器锁GIL</h3><p>Python多线程无法利用多核CPU的优势，其罪魁祸首，在于全局解释器锁（GIL，Global Interpreter Lock）</p>
+<p>了解GIL，可以看这个资料：<span class="exturl" data-url="aHR0cDovL3d3dy5kYWJlYXouY29tL3B5dGhvbi9VbmRlcnN0YW5kaW5nR0lMLnBkZg==" title="http://www.dabeaz.com/python/UnderstandingGIL.pdf">UnderstandingGIL<i class="fa fa-external-link"></i></span></p>
+<p>运行Python代码，需要通过解释器（Intepreter）进行。Python解释器在读取了一行Python代码后，就会将其执行，执行完后，再读取下一行代码，以此类推。</p>
+<p>GIL能够使得同一时刻，只有一个线程能在执行。Python的官方实现Cython就采用了这种机制，保证Python进程中资源的状态能够同步（synchronize）到各个线程中。可以看到，GIL简单粗暴，让我们省去了资源同步的担忧，但相对地，造成了一种同一时刻一个线程包场的景象，不能满足细粒度的资源同步操作。</p>
+<p>因此，解决这个问题的办法就是开启多个进程，让每一个进程都有自己的解释器跟GIL。这样，就能实现多任务的并行了。</p>
+<h2 id="多进程资源共享——TornadoCenter"><a href="#多进程资源共享——TornadoCenter" class="headerlink" title="多进程资源共享——TornadoCenter"></a>多进程资源共享——TornadoCenter</h2><p>进程之间的资源信息通常是不共享的，因此要借由系统自身的机制。比如说内存信息共享，在Python的多进程模块<code>multiprocessing</code>中，就提供了<code>Pipe（管道）</code>、<code>Queue（队列）</code>等方式，使得不同进程之间的数据可以共享。</p>
+<p>在我的<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaS9Ub3JuYWRvQ2VudGVy" title="https://github.com/utmhikari/TornadoCenter">TornadoCenter<i class="fa fa-external-link"></i></span>小项目中，就有这样的一个实例——主进程是cmd小黑框命令行程序，通过规定的指令可以开启服务器进程与客户端进程。客户端进程通过网络读写往服务器进程发送数据，而服务器进程则通过<code>Queue</code>队列发送数据给主进程。Tornado是一个著名的Python网络框架，因此能满足这方面的需求。</p>
+<p>主进程大概设计如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    忽略其它初始化</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    self._cmd_state = &#123;</span><br><span class="line">        <span class="string">'exit'</span>: self._exit,</span><br><span class="line">        <span class="string">'help'</span>: self._help,</span><br><span class="line">        <span class="string">'server'</span>: &#123;</span><br><span class="line">            <span class="string">'start'</span>: self._start_server,</span><br><span class="line">            <span class="string">'stop'</span>: self._stop_server,</span><br><span class="line">            <span class="string">'params'</span>: self._show_server_params,</span><br><span class="line">            <span class="string">'status'</span>: self._show_server_status</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">'client'</span>: &#123;</span><br><span class="line">            <span class="string">'start'</span>: self._start_client,</span><br><span class="line">            <span class="string">'stop'</span>: self._stop_client,</span><br><span class="line">            <span class="string">'status'</span>: self._show_client_status</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    self._server_holder = TornadoTCPServerHolder()</span><br><span class="line">    self._client_holder = TornadoTCPClientHolder()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_dispatch</span><span class="params">(self, cmds, cmd_state)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    dispatch cmds on cmd state machine</span></span><br><span class="line"><span class="string">    :param cmds: cmd.split(' ')</span></span><br><span class="line"><span class="string">    :param cmd_state: the current state of cmd</span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    len_cmd = len(cmds)</span><br><span class="line">    <span class="keyword">if</span> len_cmd == <span class="number">0</span> <span class="keyword">or</span> cmds[<span class="number">0</span>] <span class="keyword">not</span> <span class="keyword">in</span> cmd_state.keys():</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    state = cmd_state[cmds[<span class="number">0</span>]]</span><br><span class="line">    <span class="keyword">if</span> callable(state):</span><br><span class="line">        sig = signature(state)</span><br><span class="line">        len_pars = len(sig.parameters)</span><br><span class="line">        <span class="keyword">if</span> len_pars == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> state() <span class="keyword">if</span> len_cmd == <span class="number">1</span> <span class="keyword">else</span> <span class="literal">False</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> functools.partial(state, cmds[<span class="number">1</span>:])() <span class="keyword">if</span> len_cmd &gt; <span class="number">1</span> <span class="keyword">else</span> state()</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> self._dispatch(cmds[<span class="number">1</span>:], state) <span class="keyword">if</span> len_cmd &gt; <span class="number">1</span> <span class="keyword">else</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">loop</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Main loop of TornadoCenter</span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    self._log(<span class="string">'Start main loop!!!'</span>)</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        cmd = input(<span class="string">'\n$ '</span>).strip()</span><br><span class="line">        <span class="keyword">if</span> len(cmd) == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        cmds = cmd.split(<span class="string">' '</span>)</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> self._dispatch(cmds, self._cmd_state):</span><br><span class="line">            self._exception(<span class="string">'Invalid command: %s!'</span> % cmd)</span><br><span class="line">            self._help()</span><br></pre></td></tr></table></figure>
+<p>我们来拆解一下业务：</p>
+<ul>
+<li>初始化变量<ul>
+<li>cmd_state: 根据指令查找对应执行函数的reference</li>
+<li>server_holder: 管理服务器进程</li>
+<li>client_holder: 管理客户端进程</li>
+</ul>
+</li>
+<li>函数<ul>
+<li>loop：主循环，使得我们在cmd界面上能一直输入指令，输错了则显示帮助</li>
+<li>dispatch: 根据指令与cmd_state，查找&amp;执行对应函数</li>
+</ul>
+</li>
+</ul>
+<p>对于管理服务器进程的<code>server_holder</code>，我们需要让其持有服务器进程的实例<code>process</code>，互通服务器进程数据的通道<code>queue</code>，以及查询服务器进程状态的一些接口。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TornadoTCPServerHolder</span><span class="params">(BaseCSHolder)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Tornado TCPServer Holder</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Initialization</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        BaseCSHolder.__init__(self, <span class="string">'TCPServerHolder'</span>)</span><br><span class="line">        <span class="string">'''</span></span><br><span class="line"><span class="string">        Server Info</span></span><br><span class="line"><span class="string">        '''</span></span><br><span class="line">        self._process = <span class="literal">None</span></span><br><span class="line">        self._queue = Queue()</span><br><span class="line">        self._params = &#123;</span><br><span class="line">            <span class="string">'host'</span>: <span class="string">'127.0.0.1'</span>,</span><br><span class="line">            <span class="string">'port'</span>: <span class="number">5000</span>,</span><br><span class="line">            <span class="string">'num_processes'</span>: <span class="number">1</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="string">'''</span></span><br><span class="line"><span class="string">        Monitor Thread</span></span><br><span class="line"><span class="string">        '''</span></span><br><span class="line">        self._monitor = <span class="literal">None</span></span><br><span class="line">        self._is_monitor_stop = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_monitor_loop</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Monitor thread, print the data received by the server</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        self._log(<span class="string">'Starting Monitor...'</span>)</span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            <span class="keyword">if</span> self._is_monitor_stop:</span><br><span class="line">                self._is_monitor_stop = <span class="literal">False</span></span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">while</span> <span class="keyword">not</span> self._queue.empty():</span><br><span class="line">                data = self._queue.get()</span><br><span class="line">                <span class="keyword">try</span>:</span><br><span class="line">                    <span class="keyword">if</span> data.startswith(<span class="string">'JSON|'</span>):</span><br><span class="line">                        json_data = json.loads(data[<span class="number">5</span>:])</span><br><span class="line">                        self._log(<span class="string">'Received JSON data: %s\n%s'</span> % (</span><br><span class="line">                            type(json_data), json.dumps(json_data, indent=<span class="number">2</span>)</span><br><span class="line">                        ))</span><br><span class="line">                    <span class="keyword">else</span>:</span><br><span class="line">                        self._log(<span class="string">'Received String: %s'</span> % data)</span><br><span class="line">                <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                    self._exception(e)</span><br><span class="line">            time.sleep(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">start</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Start Tornado TCPServer Process</span></span><br><span class="line"><span class="string">        :return:</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        self._log(<span class="string">'Starting Tornado TCPServer...'</span>)</span><br><span class="line">        <span class="keyword">if</span> self.is_server_active():</span><br><span class="line">            self._exception(<span class="string">'Cannot start server! The TCPServer is still active!'</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self._process = TornadoTCPServerProcess(queue=self._queue, params=self._params)</span><br><span class="line">            self._process.start()</span><br><span class="line">            self._monitor = Thread(target=self._monitor_loop)</span><br><span class="line">            self._monitor.start()</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">True</span></span><br></pre></td></tr></table></figure>
+<p>物以类聚，我们可以将服务器进程的管理抽象到一个类中。这个类继承了另外一个叫<code>BaseCSHolder</code>的类，具备打印日志以及编辑参数的功能。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BaseCSHolder</span><span class="params">(Logger)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Client and Server Holder Class</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, tag=<span class="string">'BaseCSHolder'</span>)</span>:</span></span><br><span class="line">        Logger.__init__(self, tag)</span><br><span class="line">        self._params = dict()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_param_keys</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        get the keys of params</span></span><br><span class="line"><span class="string">        :return: sorted param keys</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">return</span> sorted(self._params.keys())</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_params</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        get the params</span></span><br><span class="line"><span class="string">        :return: params dict</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">return</span> self._params</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">set_params</span><span class="params">(self, params)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        set the params of the server</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">pass</span>  <span class="comment"># 此处省略</span></span><br></pre></td></tr></table></figure>
+<p>总的来看，在启动服务器进程之后，同时也起一个线程执行<code>monitor_loop</code>的逻辑，监控<code>Queue</code>里的数据。每当<code>Queue</code>里有数据的时候，就取出来数据，打印出来。</p>
+<p>对于服务器进程的实例（Server Process Instance），我们可以让其持有服务器实例（Server Instance）、主线程传递的信息（比如服务器参数与<code>Queue</code>）以及其它自身信息。服务器进程实例相当于是服务器实例的容器。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TornadoTCPServerProcess</span><span class="params">(Process, Logger)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    TCPServer Process</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, queue=None, params=None)</span>:</span></span><br><span class="line">        Process.__init__(self, daemon=<span class="literal">True</span>)</span><br><span class="line">        Logger.__init__(self, <span class="string">'TCPServerProcess'</span>)</span><br><span class="line">        self._queue = queue</span><br><span class="line">        self._params = params</span><br><span class="line">        self._server = <span class="literal">None</span>  <span class="comment"># 运行该进程（run）后，会开启服务器实例</span></span><br></pre></td></tr></table></figure>
+<p>而最后，对于服务器实例，就是实实在在地继承服务器框架了。</p>
+<p>Tornado框架的用法，可以参考<span class="exturl" data-url="aHR0cDovL3d3dy50b3JuYWRvd2ViLm9yZy9lbi9zdGFibGUvZ3VpZGUuaHRtbA==" title="http://www.tornadoweb.org/en/stable/guide.html">官方文档<i class="fa fa-external-link"></i></span></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TornadoTCPServer</span><span class="params">(TCPServer, Logger)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    TCPServer instance of tornado</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, queue=None)</span>:</span></span><br><span class="line">        TCPServer.__init__(self)</span><br><span class="line">        Logger.__init__(self, <span class="string">'TCPServer'</span>)</span><br><span class="line">        self._queue = queue</span><br><span class="line"></span><br><span class="line">    <span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">handle_stream</span><span class="params">(self, stream, address)</span>:</span></span><br><span class="line">        host, port = address</span><br><span class="line">        addr = <span class="string">'%s:%s'</span> % (host, port)</span><br><span class="line">        self._log(<span class="string">'Handling stream at %s'</span> % addr)</span><br><span class="line">        proto_cnt = <span class="number">0</span></span><br><span class="line">        <span class="keyword">await</span> stream.write(<span class="string">'Welcome to tornado server!'</span>.encode(<span class="string">'utf-8'</span>))</span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                data = <span class="keyword">await</span> stream.read_bytes(<span class="number">4096</span>, partial=<span class="literal">True</span>)</span><br><span class="line">                decode_data = data.decode().strip()</span><br><span class="line">                self._queue.put(decode_data)</span><br><span class="line">                proto_cnt += <span class="number">1</span></span><br><span class="line">                <span class="keyword">if</span> proto_cnt % <span class="number">10</span> == <span class="number">0</span>:</span><br><span class="line">                    self._log(<span class="string">'Received %d protos from %s!'</span> % (proto_cnt, addr))</span><br><span class="line">            <span class="keyword">except</span> StreamClosedError:</span><br><span class="line">                self._log(<span class="string">'Stream at %s:%s is closed!'</span> % (host, port))</span><br><span class="line">                <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+<p>可以看到，每次服务器实例在收到数据后，就会把数据解码放到<code>Queue</code>队列头里。这样在主线程那一端，就可以实时在队列尾取出数据打印了。</p>
+<p>这样，我们就实现了多进程之间的资源共享。怎么样，要不要试试“千手观音”~</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>有了多进程与异步的支持，Python在基础任务调度上，更是增强了一个层次</p>
+<p>Easy Python第六章——多进程并行，也标志着Easy Python系列进入尾声</p>
+<p>第七章，会对Easy Python系列做最终的整理</p>
+<p>See ya~</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+      
+<div style="border: 1px solid black; margin-top: 32px; margin-bottom: 32px">
+  <div style="margin-left:10px">
+    <span style="font-weight:bold">版权声明</span>
+    <br>
+    <span>本文为博客<a href="https://utmhikari.github.io" style="color:#258FC6">HiKariのTechLab</a>原创文章，转载请标明出处，谢谢~~~</span>
+  </div>
+</div>
+
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/GIL/" rel="tag"># GIL</a>
+          
+            <a href="/tags/并行/" rel="tag"># 并行</a>
+          
+            <a href="/tags/并发/" rel="tag"># 并发</a>
+          
+            <a href="/tags/multiprocessing/" rel="tag"># multiprocessing</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/01/diymemo/msr/" rel="next" title="【DIY小记】踏平Win10升级之坑——我们无法更新系统保留的分区">
+                <i class="fa fa-chevron-left"></i> 【DIY小记】踏平Win10升级之坑——我们无法更新系统保留的分区
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/19/easypython/vii/" rel="prev" title="【Easy Python】最终话：重回首知识点，让python真正easy！">
+                【Easy Python】最终话：重回首知识点，让python真正easy！ <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="ひかり.HDQ">
+            
+              <p class="site-author-name" itemprop="name">ひかり.HDQ</p>
+              <div class="site-description motion-element" itemprop="description">talk is cheap, code is rich</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">155</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">415</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="GitHub &rarr; https://github.com/utmhikari"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="bWFpbHRvOmhkcTk0MDYyM0AxMjYuY29t" title="Mail &rarr; mailto:hdq940623@126.com"><i class="fa fa-fw fa-envelope"></i>Mail</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly90ZXN0ZXJob21lLmNvbS91dG1oaWthcmk=" title="TesterHome &rarr; https://testerhome.com/utmhikari"><i class="fa fa-fw fa-tumblr"></i>TesterHome</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vaWQvdXRtaGlrYXJp" title="Steam &rarr; https://steamcommunity.com/id/utmhikari"><i class="fa fa-fw fa-steam"></i>Steam</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9zcGFjZS5iaWxpYmlsaS5jb20vMTUwNzUxMTQv" title="Bilibili &rarr; https://space.bilibili.com/15075114/"><i class="fa fa-fw fa-bold"></i>Bilibili</span>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#并发-amp-并行实验"><span class="nav-number">2.</span> <span class="nav-text">并发&amp;并行实验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么是多进程？"><span class="nav-number">3.</span> <span class="nav-text">为什么是多进程？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#线程与进程"><span class="nav-number">3.1.</span> <span class="nav-text">线程与进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#全局解释器锁GIL"><span class="nav-number">3.2.</span> <span class="nav-text">全局解释器锁GIL</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多进程资源共享——TornadoCenter"><span class="nav-number">4.</span> <span class="nav-text">多进程资源共享——TornadoCenter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2019 – <span itemprop="copyrightYear">2024</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ひかり.HDQ</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="//cdn.staticfile.org/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script src="//cdn.staticfile.org/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+
+  
+  <script src="//cdn.staticfile.org/velocity/1.2.1/velocity.min.js"></script>
+
+  
+  <script src="//cdn.staticfile.org/velocity/1.2.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.1"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.1"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+  <script src="/js/src/exturl.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('5');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'manual') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+if ($('body').find('pre.mermaid').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.staticfile.org/mermaid/8.0.0-rc.8/mermaid.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      mermaid.initialize({
+        theme: 'dark',
+        logLevel: 3,
+        flowchart: { curve: 'linear' },
+        gantt: { axisFormat: '%m/%d/%Y' },
+        sequence: { actorMargin: 50 }
+      });
+    }
+  });
+}
+</script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+  $('.highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+  
+
+  
+
+</body>
+</html>

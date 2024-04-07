@@ -1,0 +1,2312 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta name="baidu-site-verification" content="sc1B5Cxcoz">
+  <meta name="google-site-verification" content="OLcRj7lMnauxKrhFT3Q8Nvcexgv22NvlEmVZShKQKR8">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link rel="stylesheet" href="//cdn.staticfile.org/font-awesome/4.6.2/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/uploads/apple-touch.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/uploads/favicon-32x32.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/uploads/favicon-16x16.png?v=7.0.1">
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.1',
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"fadeIn","sidebar":"fadeIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="接续第一话的内容，事件循环在创建之后，又是如何运行协程任务以及异步IO任务的？​由asyncio.run的代码可知，loop.run_until_complete是运行协程的方法。其定义如下：">
+<meta name="keywords" content="事件循环,python,异步,asyncio,proactor">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Hard Python】【第二章-异步IO】2、异步任务在事件循环中的执行">
+<meta property="og:url" content="http://utmhikari.github.io/2022/02/20/hardpython/2_asyncio_2/index.html">
+<meta property="og:site_name" content="HiKariのTechLab">
+<meta property="og:description" content="接续第一话的内容，事件循环在创建之后，又是如何运行协程任务以及异步IO任务的？​由asyncio.run的代码可知，loop.run_until_complete是运行协程的方法。其定义如下：">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2024-04-07T02:48:06.923Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【Hard Python】【第二章-异步IO】2、异步任务在事件循环中的执行">
+<meta name="twitter:description" content="接续第一话的内容，事件循环在创建之后，又是如何运行协程任务以及异步IO任务的？​由asyncio.run的代码可知，loop.run_until_complete是运行协程的方法。其定义如下：">
+
+
+
+
+
+
+  <link rel="canonical" href="http://utmhikari.github.io/2022/02/20/hardpython/2_asyncio_2/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>【Hard Python】【第二章-异步IO】2、异步任务在事件循环中的执行 | HiKariのTechLab</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HiKariのTechLab</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">光の技术屋</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+  
+
+  
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="关注HiKariのGithub" aria-label="关注HiKariのGithub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></span>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2022/02/20/hardpython/2_asyncio_2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">【Hard Python】【第二章-异步IO】2、异步任务在事件循环中的执行
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2022-02-20 19:22:53" itemprop="dateCreated datePublished" datetime="2022-02-20T19:22:53+08:00">2022-02-20</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Hard-Python/" itemprop="url" rel="index"><span itemprop="name">Hard Python</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>接续<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjIvMDIvMTIvaGFyZHB5dGhvbi8yX2FzeW5jaW9fMS8=" title="https://utmhikari.top/2022/02/12/hardpython/2_asyncio_1/">第一话<i class="fa fa-external-link"></i></span>的内容，事件循环在创建之后，又是如何运行协程任务以及异步IO任务的？<br>​<br>由<code>asyncio.run</code>的代码可知，<code>loop.run_until_complete</code>是运行协程的方法。其定义如下：</p>
+<a id="more"></a>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># base_events.py</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BaseEventLoop</span><span class="params">(events.AbstractEventLoop)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run_until_complete</span><span class="params">(self, future)</span>:</span></span><br><span class="line">        self._check_closed()</span><br><span class="line">        self._check_running()</span><br><span class="line">        new_task = <span class="keyword">not</span> futures.isfuture(future)</span><br><span class="line">        future = tasks.ensure_future(future, loop=self)</span><br><span class="line">        <span class="keyword">if</span> new_task:</span><br><span class="line">            future._log_destroy_pending = <span class="literal">False</span></span><br><span class="line">        future.add_done_callback(_run_until_complete_cb)</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            self.run_forever()</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            <span class="keyword">if</span> new_task <span class="keyword">and</span> future.done() <span class="keyword">and</span> <span class="keyword">not</span> future.cancelled():</span><br><span class="line">                future.exception()</span><br><span class="line">            <span class="keyword">raise</span></span><br><span class="line">        <span class="keyword">finally</span>:</span><br><span class="line">            future.remove_done_callback(_run_until_complete_cb)</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> future.done():</span><br><span class="line">            <span class="keyword">raise</span> RuntimeError(<span class="string">'Event loop stopped before Future completed.'</span>)</span><br><span class="line">        <span class="keyword">return</span> future.result()</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line"><span class="comment"># tasks.py</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">ensure_future</span><span class="params">(coro_or_future, *, loop=None)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> _ensure_future(coro_or_future, loop=loop)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_ensure_future</span><span class="params">(coro_or_future, *, loop=None)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> futures.isfuture(coro_or_future):</span><br><span class="line">        <span class="keyword">if</span> loop <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span> <span class="keyword">and</span> loop <span class="keyword">is</span> <span class="keyword">not</span> futures._get_loop(coro_or_future):</span><br><span class="line">            <span class="keyword">raise</span> ValueError(<span class="string">'The future belongs to a different loop than '</span></span><br><span class="line">                            <span class="string">'the one specified as the loop argument'</span>)</span><br><span class="line">        <span class="keyword">return</span> coro_or_future</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> coroutines.iscoroutine(coro_or_future):</span><br><span class="line">        <span class="keyword">if</span> inspect.isawaitable(coro_or_future):</span><br><span class="line">            coro_or_future = _wrap_awaitable(coro_or_future)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">raise</span> TypeError(<span class="string">'An asyncio.Future, a coroutine or an awaitable '</span></span><br><span class="line">                            <span class="string">'is required'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> loop <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        loop = events._get_event_loop(stacklevel=<span class="number">4</span>)</span><br><span class="line">    <span class="keyword">return</span> loop.create_task(coro_or_future)</span><br></pre></td></tr></table></figure>
+<p><code>run_until_complete</code>方法传入的协程会通过<code>tasks.ensure_future</code>方法被封装成一个<code>task</code>实例，从上述的代码可以看到，最终落实到了<code>loop.create_task</code>方法。<br>​</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># base_events.py</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BaseEventLoop</span><span class="params">(events.AbstractEventLoop)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">create_task</span><span class="params">(self, coro, *, name=None)</span>:</span></span><br><span class="line">        self._check_closed()</span><br><span class="line">        <span class="keyword">if</span> self._task_factory <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            task = tasks.Task(coro, loop=self, name=name)</span><br><span class="line">            <span class="keyword">if</span> task._source_traceback:</span><br><span class="line">                <span class="keyword">del</span> task._source_traceback[<span class="number">-1</span>]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            task = self._task_factory(self, coro)</span><br><span class="line">            tasks._set_task_name(task, name)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> task</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line"><span class="comment"># task.py</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Task</span><span class="params">(futures._PyFuture)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, coro, *, loop=None, name=None)</span>:</span></span><br><span class="line">        super().__init__(loop=loop)</span><br><span class="line">        <span class="keyword">if</span> self._source_traceback:</span><br><span class="line">            <span class="keyword">del</span> self._source_traceback[<span class="number">-1</span>]</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> coroutines.iscoroutine(coro):</span><br><span class="line">            self._log_destroy_pending = <span class="literal">False</span></span><br><span class="line">            <span class="keyword">raise</span> TypeError(<span class="string">f"a coroutine was expected, got <span class="subst">&#123;coro!r&#125;</span>"</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> name <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            self._name = <span class="string">f'Task-<span class="subst">&#123;_task_name_counter()&#125;</span>'</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self._name = str(name)</span><br><span class="line"></span><br><span class="line">        self._must_cancel = <span class="literal">False</span></span><br><span class="line">        self._fut_waiter = <span class="literal">None</span></span><br><span class="line">        self._coro = coro</span><br><span class="line">        self._context = contextvars.copy_context()</span><br><span class="line"></span><br><span class="line">        self._loop.call_soon(self.__step, context=self._context)</span><br><span class="line">        _register_task(self)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># base_events.py</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BaseEventLoop</span><span class="params">(events.AbstractEventLoop)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">call_soon</span><span class="params">(self, callback, *args, context=None)</span>:</span></span><br><span class="line">        self._check_closed()</span><br><span class="line">        <span class="keyword">if</span> self._debug:</span><br><span class="line">            self._check_thread()</span><br><span class="line">            self._check_callback(callback, <span class="string">'call_soon'</span>)</span><br><span class="line">        handle = self._call_soon(callback, args, context)</span><br><span class="line">        <span class="keyword">if</span> handle._source_traceback:</span><br><span class="line">            <span class="keyword">del</span> handle._source_traceback[<span class="number">-1</span>]</span><br><span class="line">        <span class="keyword">return</span> handle</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_call_soon</span><span class="params">(self, callback, args, context)</span>:</span></span><br><span class="line">        handle = events.Handle(callback, args, self, context)</span><br><span class="line">        <span class="keyword">if</span> handle._source_traceback:</span><br><span class="line">            <span class="keyword">del</span> handle._source_traceback[<span class="number">-1</span>]</span><br><span class="line">        self._ready.append(handle)</span><br><span class="line">        <span class="keyword">return</span> handle</span><br></pre></td></tr></table></figure>
+<p><code>loop.create_task</code>方法最终会生成一个<code>Task</code>实例。<code>Task</code>实例封装了协程以及其它一系列变量，最终调用<code>loop</code>的<code>call_soon</code>方法，传入了实例的<code>__step</code>函数。<code>call_soon</code>方法传入的函数，会通过<code>events.Handle</code>封装生成一个<code>handle</code>实例，并加入到事件循环的<code>_ready</code>队列中。<br>​</p>
+<p><code>__step</code>方法会通过<code>coro.send(None)</code>或是<code>coro.throw(exc)</code>方法启动<code>Task</code>实例内部的协程并获取协程的返回结果，对于一般协程而言<code>coro.send(None)</code>会直接<code>throw</code>一个<code>StopIteration</code>异常，并在异常结果里附上协程返回值。当然，也有其它情况（比如<code>await</code>了一个<code>yield</code>多次的<code>Awaitable</code>实例）可能要多次<code>call_soon</code>协程<code>Task</code>的<code>__step</code>函数，相关的例子可以查看stackoverflow的<span class="exturl" data-url="aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9xdWVzdGlvbnMvMzQ0NjkwNjAvcHl0aG9uLW5hdGl2ZS1jb3JvdXRpbmVzLWFuZC1zZW5k" title="https://stackoverflow.com/questions/34469060/python-native-coroutines-and-send">这篇文章<i class="fa fa-external-link"></i></span>。<br>​</p>
+<p>在这之后，我们再回到<code>run_until_complete</code>方法，在<code>ensure_future</code>后，便调用<code>loop.run_forever</code>方法，启动事件循环。<br>​</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># windows_events.py</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProactorEventLoop</span><span class="params">(proactor_events.BaseProactorEventLoop)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run_forever</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">assert</span> self._self_reading_future <span class="keyword">is</span> <span class="literal">None</span></span><br><span class="line">            self.call_soon(self._loop_self_reading)</span><br><span class="line">            super().run_forever()</span><br><span class="line">        <span class="keyword">finally</span>:</span><br><span class="line">            <span class="keyword">if</span> self._self_reading_future <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">                ov = self._self_reading_future._ov</span><br><span class="line">                self._self_reading_future.cancel()</span><br><span class="line">                <span class="keyword">if</span> ov <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">                    self._proactor._unregister(ov)</span><br><span class="line">                self._self_reading_future = <span class="literal">None</span></span><br><span class="line">                </span><br><span class="line">                </span><br><span class="line"><span class="comment"># proactor_events.py</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BaseProactorEventLoop</span><span class="params">(base_events.BaseEventLoop)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_loop_self_reading</span><span class="params">(self, f=None)</span>:</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">if</span> f <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">                f.result()  <span class="comment"># may raise</span></span><br><span class="line">            <span class="keyword">if</span> self._self_reading_future <span class="keyword">is</span> <span class="keyword">not</span> f:</span><br><span class="line">                <span class="keyword">return</span></span><br><span class="line">            f = self._proactor.recv(self._ssock, <span class="number">4096</span>)</span><br><span class="line">        <span class="keyword">except</span> exceptions.CancelledError:</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        <span class="keyword">except</span> (SystemExit, KeyboardInterrupt):</span><br><span class="line">            <span class="keyword">raise</span></span><br><span class="line">        <span class="keyword">except</span> BaseException <span class="keyword">as</span> exc:</span><br><span class="line">            self.call_exception_handler(&#123;</span><br><span class="line">                <span class="string">'message'</span>: <span class="string">'Error on reading from the event loop self pipe'</span>,</span><br><span class="line">                <span class="string">'exception'</span>: exc,</span><br><span class="line">                <span class="string">'loop'</span>: self,</span><br><span class="line">            &#125;)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self._self_reading_future = f</span><br><span class="line">            f.add_done_callback(self._loop_self_reading)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># base_events.py</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BaseEventLoop</span><span class="params">(events.AbstractEventLoop)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run_forever</span><span class="params">(self)</span>:</span></span><br><span class="line">        self._check_closed()</span><br><span class="line">        self._check_running()</span><br><span class="line">        self._set_coroutine_origin_tracking(self._debug)</span><br><span class="line">        self._thread_id = threading.get_ident()</span><br><span class="line"></span><br><span class="line">        old_agen_hooks = sys.get_asyncgen_hooks()</span><br><span class="line">        sys.set_asyncgen_hooks(firstiter=self._asyncgen_firstiter_hook,</span><br><span class="line">                               finalizer=self._asyncgen_finalizer_hook)</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            events._set_running_loop(self)</span><br><span class="line">            <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">                self._run_once()</span><br><span class="line">                <span class="keyword">if</span> self._stopping:</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">finally</span>:</span><br><span class="line">            self._stopping = <span class="literal">False</span></span><br><span class="line">            self._thread_id = <span class="literal">None</span></span><br><span class="line">            events._set_running_loop(<span class="literal">None</span>)</span><br><span class="line">            self._set_coroutine_origin_tracking(<span class="literal">False</span>)</span><br><span class="line">            sys.set_asyncgen_hooks(*old_agen_hooks)</span><br><span class="line">            </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_run_once</span><span class="params">(self)</span>:</span></span><br><span class="line">        sched_count = len(self._scheduled)</span><br><span class="line">        <span class="keyword">if</span> (sched_count &gt; _MIN_SCHEDULED_TIMER_HANDLES <span class="keyword">and</span></span><br><span class="line">            self._timer_cancelled_count / sched_count &gt;</span><br><span class="line">                _MIN_CANCELLED_TIMER_HANDLES_FRACTION):</span><br><span class="line">            new_scheduled = []</span><br><span class="line">            <span class="keyword">for</span> handle <span class="keyword">in</span> self._scheduled:</span><br><span class="line">                <span class="keyword">if</span> handle._cancelled:</span><br><span class="line">                    handle._scheduled = <span class="literal">False</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    new_scheduled.append(handle)</span><br><span class="line"></span><br><span class="line">            heapq.heapify(new_scheduled)</span><br><span class="line">            self._scheduled = new_scheduled</span><br><span class="line">            self._timer_cancelled_count = <span class="number">0</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">while</span> self._scheduled <span class="keyword">and</span> self._scheduled[<span class="number">0</span>]._cancelled:</span><br><span class="line">                self._timer_cancelled_count -= <span class="number">1</span></span><br><span class="line">                handle = heapq.heappop(self._scheduled)</span><br><span class="line">                handle._scheduled = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">        timeout = <span class="literal">None</span></span><br><span class="line">        <span class="keyword">if</span> self._ready <span class="keyword">or</span> self._stopping:</span><br><span class="line">            timeout = <span class="number">0</span></span><br><span class="line">        <span class="keyword">elif</span> self._scheduled:</span><br><span class="line">            <span class="comment"># Compute the desired timeout.</span></span><br><span class="line">            when = self._scheduled[<span class="number">0</span>]._when</span><br><span class="line">            timeout = min(max(<span class="number">0</span>, when - self.time()), MAXIMUM_SELECT_TIMEOUT)</span><br><span class="line"></span><br><span class="line">        event_list = self._selector.select(timeout)</span><br><span class="line">        self._process_events(event_list)</span><br><span class="line"></span><br><span class="line">        end_time = self.time() + self._clock_resolution</span><br><span class="line">        <span class="keyword">while</span> self._scheduled:</span><br><span class="line">            handle = self._scheduled[<span class="number">0</span>]</span><br><span class="line">            <span class="keyword">if</span> handle._when &gt;= end_time:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            handle = heapq.heappop(self._scheduled)</span><br><span class="line">            handle._scheduled = <span class="literal">False</span></span><br><span class="line">            self._ready.append(handle)</span><br><span class="line"></span><br><span class="line">        ntodo = len(self._ready)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(ntodo):</span><br><span class="line">            handle = self._ready.popleft()</span><br><span class="line">            <span class="keyword">if</span> handle._cancelled:</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            <span class="keyword">if</span> self._debug:</span><br><span class="line">                <span class="comment"># debug模式下代码，加了时间统计</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                handle._run()</span><br><span class="line">        handle = <span class="literal">None</span>  <span class="comment"># Needed to break cycles when an exception occurs.</span></span><br></pre></td></tr></table></figure>
+<p><code>ProactorEventLoop</code>在调用<code>run_forever</code>时，首先会用<code>call_soon</code>方法将<code>_loop_self_reading</code>方法加入排期。<code>_loop_self_reading</code>方法会读取<code>proactor</code>中的<code>future</code>，并且将自己加入<code>future</code>的完成时回调，实现不间断地读取<code>future</code>实例。<br>​</p>
+<p>之后，<code>ProactorEventLoop</code>调用了<code>BaseEventLoop</code>的<code>run_forever</code>方法，在其中会不断执行<code>_run_once</code>方法去一遍遍地迭代事件循环。一轮<code>_run_once</code>会做以下几件事情：</p>
+<ul>
+<li>清理<code>_scheduled</code>中被取消的定时任务</li>
+<li><code>select</code>出事件列表并进行处理</li>
+<li>从<code>_scheduled</code>取出到时的任务，加入到<code>_ready</code>列表中<ul>
+<li>由上面的逻辑也可知，<code>call_soon</code>的任务也会被加入到<code>_ready</code>列表中</li>
+</ul>
+</li>
+<li>从<code>_ready</code>列表中依次取出所有<code>handle</code>，调用<code>_run</code>方法运行</li>
+</ul>
+<p>通过这种机制，事件循环就能持续不断地运行任务。<br>​<br>由上述<code>_run_once</code>的定义也可知，在<code>select</code>事件列表一步会出现<code>IOCP</code>的身影，这是因为<code>BaseProactorEventLoop</code>的<code>selector</code>就是<code>proactor</code>，实际传入的就是<code>IOCP</code>实例，因此最终就是调用了<code>IOCP</code>实例的<code>select</code>方法。也是只有在这一步，才会去处理一些IO操作。<br>​<br>所以问题来了，针对IO操作，<code>asyncio</code>是如何进行调度的呢？我们首先看<code>IocpProactor.select</code>的实现：<br>​</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># windows_events.py</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">IocpProactor</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">select</span><span class="params">(self, timeout=None)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> self._results:</span><br><span class="line">            self._poll(timeout)</span><br><span class="line">        tmp = self._results</span><br><span class="line">        self._results = []</span><br><span class="line">        <span class="keyword">return</span> tmp</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_poll</span><span class="params">(self, timeout=None)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> timeout <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            ms = INFINITE</span><br><span class="line">        <span class="keyword">elif</span> timeout &lt; <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">raise</span> ValueError(<span class="string">"negative timeout"</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            ms = math.ceil(timeout * <span class="number">1e3</span>)</span><br><span class="line">            <span class="keyword">if</span> ms &gt;= INFINITE:</span><br><span class="line">                <span class="keyword">raise</span> ValueError(<span class="string">"timeout too big"</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            status = _overlapped.GetQueuedCompletionStatus(self._iocp, ms)</span><br><span class="line">            <span class="keyword">if</span> status <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            ms = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">            err, transferred, key, address = status</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                f, ov, obj, callback = self._cache.pop(address)</span><br><span class="line">            <span class="keyword">except</span> KeyError:</span><br><span class="line">                <span class="keyword">if</span> self._loop.get_debug():</span><br><span class="line">                    self._loop.call_exception_handler(&#123;</span><br><span class="line">                        <span class="string">'message'</span>: (<span class="string">'GetQueuedCompletionStatus() returned an '</span></span><br><span class="line">                                    <span class="string">'unexpected event'</span>),</span><br><span class="line">                        <span class="string">'status'</span>: (<span class="string">'err=%s transferred=%s key=%#x address=%#x'</span></span><br><span class="line">                                   % (err, transferred, key, address)),</span><br><span class="line">                    &#125;)</span><br><span class="line">                <span class="keyword">if</span> key <span class="keyword">not</span> <span class="keyword">in</span> (<span class="number">0</span>, _overlapped.INVALID_HANDLE_VALUE):</span><br><span class="line">                    _winapi.CloseHandle(key)</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> obj <span class="keyword">in</span> self._stopped_serving:</span><br><span class="line">                f.cancel()</span><br><span class="line">            <span class="keyword">elif</span> <span class="keyword">not</span> f.done():</span><br><span class="line">                <span class="keyword">try</span>:</span><br><span class="line">                    value = callback(transferred, key, ov)</span><br><span class="line">                <span class="keyword">except</span> OSError <span class="keyword">as</span> e:</span><br><span class="line">                    f.set_exception(e)</span><br><span class="line">                    self._results.append(f)</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    f.set_result(value)</span><br><span class="line">                    self._results.append(f)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Remove unregistered futures</span></span><br><span class="line">        <span class="keyword">for</span> ov <span class="keyword">in</span> self._unregistered:</span><br><span class="line">            self._cache.pop(ov.address, <span class="literal">None</span>)</span><br><span class="line">        self._unregistered.clear()</span><br></pre></td></tr></table></figure>
+<p>在<code>IocpProactor._poll</code>中，会调用<code>GetQueuedCompletionStatus</code>去查询完成端口的结果。直到有结果出现，才会根据结果中缓存的<code>address</code>数据<code>pop</code>出缓存的回调并且执行。</p>
+<p>我们通过剖析一个IO操作的例子，来观察其中具体的奥秘：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Process</span><br><span class="line"><span class="keyword">import</span> asyncio</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">HOST, PORT = <span class="string">'127.0.0.1'</span>, <span class="number">31077</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">_svr_handler</span><span class="params">(reader: asyncio.StreamReader, writer: asyncio.StreamWriter)</span>:</span></span><br><span class="line">    data = <span class="keyword">await</span> reader.read(<span class="number">1024</span>)</span><br><span class="line">    msg = data.decode()</span><br><span class="line">    print(<span class="string">f'[Server] recv: <span class="subst">&#123;msg&#125;</span>'</span>)</span><br><span class="line"></span><br><span class="line">    msg_back = <span class="string">''</span>.join([msg[i] <span class="keyword">for</span> i <span class="keyword">in</span> range(len(msg) - <span class="number">1</span>, <span class="number">0</span>, <span class="number">-1</span>)])</span><br><span class="line">    print(<span class="string">f'[Server] send: <span class="subst">&#123;msg_back&#125;</span>'</span>)</span><br><span class="line">    writer.write(msg_back.encode())</span><br><span class="line">    <span class="keyword">await</span> writer.drain()</span><br><span class="line"></span><br><span class="line">    writer.close()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">_svr_task</span><span class="params">()</span>:</span></span><br><span class="line">    svr = <span class="keyword">await</span> asyncio.start_server(_svr_handler, host=HOST, port=PORT)</span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">with</span> svr:</span><br><span class="line">        <span class="keyword">await</span> svr.serve_forever()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_svr</span><span class="params">()</span>:</span></span><br><span class="line">    asyncio.run(_svr_task())</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">_test_cli</span><span class="params">(msg: str)</span>:</span></span><br><span class="line">    reader, writer = <span class="keyword">await</span> asyncio.open_connection(HOST, PORT)</span><br><span class="line"></span><br><span class="line">    print(<span class="string">f'[Client] send: <span class="subst">&#123;msg&#125;</span>'</span>)</span><br><span class="line">    writer.write(msg.encode())</span><br><span class="line">    <span class="keyword">await</span> writer.drain()</span><br><span class="line"></span><br><span class="line">    data = <span class="keyword">await</span> reader.read(<span class="number">1024</span>)</span><br><span class="line">    print(<span class="string">f'[Client] recv: <span class="subst">&#123;data.decode()&#125;</span>'</span>)</span><br><span class="line"></span><br><span class="line">    writer.close()</span><br><span class="line">    <span class="keyword">await</span> writer.wait_closed()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_cli</span><span class="params">()</span>:</span></span><br><span class="line">    p = Process(target=_svr, daemon=<span class="literal">True</span>)</span><br><span class="line">    p.start()</span><br><span class="line">    time.sleep(<span class="number">0.5</span>)</span><br><span class="line">    _msg = <span class="string">'helloworld'</span></span><br><span class="line">    asyncio.run(_test_cli(_msg))</span><br><span class="line">    p.kill()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    test_cli()</span><br></pre></td></tr></table></figure>
+<p>这是一个很简单的<code>echo server</code>的实现，<code>client</code>发送给<code>server</code>信息，<code>server</code>返回信息的<code>reverse</code>。我们以<code>client</code>的写操作<code>writer.write</code>为例，看下IO事件是如何在事件循环里被处理的。<br>​</p>
+<p>首先，<code>open_connection</code>函数创建了对特定<code>host</code>、<code>port</code>的连接，并返回连接流的<code>reader</code>跟<code>writer</code>。<br>​</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">open_connection</span><span class="params">(host=None, port=None, *,</span></span></span><br><span class="line"><span class="function"><span class="params">                          limit=_DEFAULT_LIMIT, **kwds)</span>:</span></span><br><span class="line">    loop = events.get_running_loop()</span><br><span class="line">    reader = StreamReader(limit=limit, loop=loop)</span><br><span class="line">    protocol = StreamReaderProtocol(reader, loop=loop)</span><br><span class="line">    transport, _ = <span class="keyword">await</span> loop.create_connection(</span><br><span class="line">        <span class="keyword">lambda</span>: protocol, host, port, **kwds)</span><br><span class="line">    writer = StreamWriter(transport, protocol, reader, loop)</span><br><span class="line">    <span class="keyword">return</span> reader, writer</span><br></pre></td></tr></table></figure>
+<p>针对<code>reader</code>，首先会初始化一个<code>StreamReader</code>实例，再用<code>StreamReaderProtocol</code>对<code>reader</code>做进一步的封装。<br>​</p>
+<p>针对<code>writer</code>，首先会通过<code>loop</code>的<code>create_connection</code>方法，针对本次连接创建<code>transport</code>实例，相当于一个通信管道的封装。<code>transport</code>实例会与先前创建的<code>StreamReaderProtocol</code>实例进行绑定。然后，再将创建的<code>transport</code>实例和<code>writer</code>绑定。<br>​</p>
+<p>在<code>ProactorEventLoop</code>中，会这样创建<code>transport</code>实例：<br>​</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># proactor_events.py</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BaseProactorEventLoop</span><span class="params">(base_events.BaseEventLoop)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> _ProactorSocketTransport(self, sock, protocol, waiter,</span><br><span class="line">                                        extra, server)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">_ProactorSocketTransport</span><span class="params">(_ProactorReadPipeTransport,</span></span></span><br><span class="line"><span class="class"><span class="params">                               _ProactorBaseWritePipeTransport,</span></span></span><br><span class="line"><span class="class"><span class="params">                               transports.Transport)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, loop, sock, protocol, waiter=None,</span></span></span><br><span class="line"><span class="function"><span class="params">                 extra=None, server=None)</span>:</span></span><br><span class="line">        super().__init__(loop, sock, protocol, waiter, extra, server)</span><br><span class="line">        base_events._set_nodelay(sock)</span><br></pre></td></tr></table></figure>
+<p><code>_ProactorSocketTransport</code>实例会同时对<code>_ProactorReadPipeTransport</code>以及<code>_ProactorBaseWritePipeTransport</code>的初始化，因此会提供对管道读写的功能。其继承链如下：<br>​</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">(&lt;class &apos;asyncio.proactor_events._ProactorSocketTransport&apos;&gt;,</span><br><span class="line"> &lt;class &apos;asyncio.proactor_events._ProactorReadPipeTransport&apos;&gt;,</span><br><span class="line"> &lt;class &apos;asyncio.proactor_events._ProactorBaseWritePipeTransport&apos;&gt;,</span><br><span class="line"> &lt;class &apos;asyncio.proactor_events._ProactorBasePipeTransport&apos;&gt;,</span><br><span class="line"> &lt;class &apos;asyncio.transports._FlowControlMixin&apos;&gt;,</span><br><span class="line"> &lt;class &apos;asyncio.transports.Transport&apos;&gt;,</span><br><span class="line"> &lt;class &apos;asyncio.transports.ReadTransport&apos;&gt;,</span><br><span class="line"> &lt;class &apos;asyncio.transports.WriteTransport&apos;&gt;,</span><br><span class="line"> &lt;class &apos;asyncio.transports.BaseTransport&apos;&gt;,</span><br><span class="line"> &lt;class &apos;object&apos;&gt;)</span><br></pre></td></tr></table></figure>
+<p>之后，当客户端开始写操作，调用<code>writer.write</code>时，实质是进行了以下操作：<br>​</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># proactor_events.py</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">_ProactorBaseWritePipeTransport</span><span class="params">(_ProactorBasePipeTransport,</span></span></span><br><span class="line"><span class="class"><span class="params">                                      transports.WriteTransport)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">write</span><span class="params">(self, data)</span>:</span></span><br><span class="line">        <span class="comment"># 省略一些判断逻辑</span></span><br><span class="line">        <span class="comment"># Observable states:</span></span><br><span class="line">        <span class="comment"># 1. IDLE: _write_fut and _buffer both None</span></span><br><span class="line">        <span class="comment"># 2. WRITING: _write_fut set; _buffer None</span></span><br><span class="line">        <span class="comment"># 3. BACKED UP: _write_fut set; _buffer a bytearray</span></span><br><span class="line">        <span class="comment"># We always copy the data, so the caller can't modify it</span></span><br><span class="line">        <span class="comment"># while we're still waiting for the I/O to happen.</span></span><br><span class="line">        <span class="keyword">if</span> self._write_fut <span class="keyword">is</span> <span class="literal">None</span>:  <span class="comment"># IDLE -&gt; WRITING</span></span><br><span class="line">            <span class="keyword">assert</span> self._buffer <span class="keyword">is</span> <span class="literal">None</span></span><br><span class="line">            <span class="comment"># Pass a copy, except if it's already immutable.</span></span><br><span class="line">            self._loop_writing(data=bytes(data))</span><br><span class="line">        <span class="keyword">elif</span> <span class="keyword">not</span> self._buffer:  <span class="comment"># WRITING -&gt; BACKED UP</span></span><br><span class="line">            <span class="comment"># Make a mutable copy which we can extend.</span></span><br><span class="line">            self._buffer = bytearray(data)</span><br><span class="line">            self._maybe_pause_protocol()</span><br><span class="line">        <span class="keyword">else</span>:  <span class="comment"># BACKED UP</span></span><br><span class="line">            <span class="comment"># Append to buffer (also copies).</span></span><br><span class="line">            self._buffer.extend(data)</span><br><span class="line">            self._maybe_pause_protocol()</span><br><span class="line">            </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_loop_writing</span><span class="params">(self, f=None, data=None)</span>:</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">if</span> f <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span> <span class="keyword">and</span> self._write_fut <span class="keyword">is</span> <span class="literal">None</span> <span class="keyword">and</span> self._closing:</span><br><span class="line">                <span class="keyword">return</span></span><br><span class="line">            <span class="keyword">assert</span> f <span class="keyword">is</span> self._write_fut</span><br><span class="line">            self._write_fut = <span class="literal">None</span></span><br><span class="line">            self._pending_write = <span class="number">0</span></span><br><span class="line">            <span class="keyword">if</span> f:</span><br><span class="line">                f.result()</span><br><span class="line">            <span class="keyword">if</span> data <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">                data = self._buffer</span><br><span class="line">                self._buffer = <span class="literal">None</span></span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> data:</span><br><span class="line">                <span class="keyword">if</span> self._closing:</span><br><span class="line">                    self._loop.call_soon(self._call_connection_lost, <span class="literal">None</span>)</span><br><span class="line">                <span class="keyword">if</span> self._eof_written:</span><br><span class="line">                    self._sock.shutdown(socket.SHUT_WR)</span><br><span class="line">                self._maybe_resume_protocol()</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                self._write_fut = self._loop._proactor.send(self._sock, data)</span><br><span class="line">                <span class="keyword">if</span> <span class="keyword">not</span> self._write_fut.done():</span><br><span class="line">                    <span class="keyword">assert</span> self._pending_write == <span class="number">0</span></span><br><span class="line">                    self._pending_write = len(data)</span><br><span class="line">                    self._write_fut.add_done_callback(self._loop_writing)</span><br><span class="line">                    self._maybe_pause_protocol()</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    self._write_fut.add_done_callback(self._loop_writing)</span><br><span class="line">            <span class="keyword">if</span> self._empty_waiter <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span> <span class="keyword">and</span> self._write_fut <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">                self._empty_waiter.set_result(<span class="literal">None</span>)</span><br><span class="line">        <span class="keyword">except</span> ConnectionResetError <span class="keyword">as</span> exc:</span><br><span class="line">            self._force_close(exc)</span><br><span class="line">        <span class="keyword">except</span> OSError <span class="keyword">as</span> exc:</span><br><span class="line">            self._fatal_error(exc, <span class="string">'Fatal write error on pipe transport'</span>)</span><br></pre></td></tr></table></figure>
+<p>第一次<code>write</code>时，<code>write_future</code>以及<code>buffer</code>为空，因此触发了<code>_loop_writing</code>逻辑。在<code>_loop_writing</code>中，调用了<code>self._loop._proactor.send(self._sock, data)</code>生成了一个写操作的<code>future</code>。而<code>_proactor</code>，也就是在<code>ProactorEventLoop</code>里的<code>IocpProactor</code>实例了。<br>​</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># windows_events.py</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">IocpProactor</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">send</span><span class="params">(self, conn, buf, flags=<span class="number">0</span>)</span>:</span></span><br><span class="line">        self._register_with_iocp(conn)</span><br><span class="line">        ov = _overlapped.Overlapped(NULL)</span><br><span class="line">        <span class="keyword">if</span> isinstance(conn, socket.socket):</span><br><span class="line">            ov.WSASend(conn.fileno(), buf, flags)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            ov.WriteFile(conn.fileno(), buf)</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">finish_send</span><span class="params">(trans, key, ov)</span>:</span></span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                <span class="keyword">return</span> ov.getresult()</span><br><span class="line">            <span class="keyword">except</span> OSError <span class="keyword">as</span> exc:</span><br><span class="line">                <span class="keyword">if</span> exc.winerror <span class="keyword">in</span> (_overlapped.ERROR_NETNAME_DELETED,</span><br><span class="line">                                    _overlapped.ERROR_OPERATION_ABORTED):</span><br><span class="line">                    <span class="keyword">raise</span> ConnectionResetError(*exc.args)</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    <span class="keyword">raise</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> self._register(ov, conn, finish_send)</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_register_with_iocp</span><span class="params">(self, obj)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> obj <span class="keyword">not</span> <span class="keyword">in</span> self._registered:</span><br><span class="line">            self._registered.add(obj)</span><br><span class="line">            _overlapped.CreateIoCompletionPort(obj.fileno(), self._iocp, <span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line">            </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_register</span><span class="params">(self, ov, obj, callback)</span>:</span></span><br><span class="line">        self._check_closed()</span><br><span class="line"></span><br><span class="line">        f = _OverlappedFuture(ov, loop=self._loop)</span><br><span class="line">        <span class="keyword">if</span> f._source_traceback:</span><br><span class="line">            <span class="keyword">del</span> f._source_traceback[<span class="number">-1</span>]</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> ov.pending:</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                value = callback(<span class="literal">None</span>, <span class="literal">None</span>, ov)</span><br><span class="line">            <span class="keyword">except</span> OSError <span class="keyword">as</span> e:</span><br><span class="line">                f.set_exception(e)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                f.set_result(value)</span><br><span class="line"></span><br><span class="line">        self._cache[ov.address] = (f, ov, obj, callback)</span><br><span class="line">        <span class="keyword">return</span> f</span><br></pre></td></tr></table></figure>
+<p>在<code>send</code>方法中，做了如下操作：<br>​</p>
+<ul>
+<li>通过<code>CreateIoCompletionPort</code>注册<code>socket</code>到完成端口</li>
+<li>创建一个<code>Overlapped</code>实例，通过<code>WSASend</code>发送数据到<code>socket</code></li>
+<li>创建一个关联<code>Overlapped</code>实例的<code>future</code>，并且判断<code>Overlapped</code>实例如果不在<code>pending</code>状态就直接执行回调。之后，缓存这个<code>future</code>实例到<code>_cache</code>中。</li>
+</ul>
+<p>​<br>在先前已经提到，事件循环执行时，<code>IocpProactor</code>实例会调用<code>_poll</code>方法，其中会采用<code>GetQueuedCompletionStatus</code>查询IO操作完成结果。如果发现有IO操作完成，就会从操作中提取<code>ov.address</code>并在<code>_cache</code>中<code>pop</code>出回调然后执行。这样通过<code>IOCP</code>模型加上事件循环（事件循环实质就是<code>IOCP</code>里头的<code>worker</code>），就把<code>writer.write</code>的操作从开始到完成的步骤给串起来了。<br>​<br>之后就是<code>await writer.drain</code>，实质是做了如下操作：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># streams.py</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">StreamWriter</span>:</span></span><br><span class="line">    <span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">drain</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">await</span> self._protocol._drain_helper()</span><br><span class="line">        </span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FlowControlMixin</span><span class="params">(protocols.Protocol)</span>:</span>  <span class="comment"># 这个会被StreamReaderProtocol继承</span></span><br><span class="line">    <span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">_drain_helper</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> self._connection_lost:</span><br><span class="line">            <span class="keyword">raise</span> ConnectionResetError(<span class="string">'Connection lost'</span>)</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> self._paused:</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        waiter = self._drain_waiter</span><br><span class="line">        <span class="keyword">assert</span> waiter <span class="keyword">is</span> <span class="literal">None</span> <span class="keyword">or</span> waiter.cancelled()</span><br><span class="line">        waiter = self._loop.create_future()</span><br><span class="line">        self._drain_waiter = waiter</span><br><span class="line">        <span class="keyword">await</span> waiter</span><br></pre></td></tr></table></figure>
+<p><code>writer.drain</code>实质上是<code>await</code>了<code>StreamReaderProtocol</code>实例的<code>_drain_helper</code>协程，其中做了一些前置检查，然后依据当前事件循环设置了一个<code>_drain_waiter</code>的<code>future</code>实例，并<code>await</code>。为什么要这么做呢？<br>​<br>首先，我们可以观察得知，在<code>_run_once</code>的逻辑中，如果<code>_ready</code>队列有任务，或者是有<code>_scheduled</code>里头的定时任务，那么之后<code>IocpProactor._poll</code>里头的<code>GetQueuedCompletionStatus</code>就会有<code>timeout</code>，否则<code>GetQueuedCompletionStatus</code>对应的<code>timeout</code>就是<code>INFINITE</code>，会一直阻塞直到有IO事件完成。有兴趣的同学可以创建一个协程任务，里头<code>create_future</code>之后<code>await</code>下，一试便知。</p>
+<p>然后，回到<code>_ProactorBaseWritePipeTransport</code>的<code>_loop_writing</code>方法。<code>_write_fut</code>被创建后，会直接添加<code>_loop_writing</code>为自己的完成回调。当<code>IocpProactor</code>实例由<code>GetQueuedCompletionStatus</code>获得一个完成事件之后，会取出来执行<code>ov.getresult()</code>（在<code>send</code>方法的<code>finish_send</code>里头）来获取结果，这个结果就会被放到<code>_write_fut</code>作为其最终的返回结果。此时<code>_write_fut</code>由于完成了，因此会调用自己的回调<code>_loop_writing</code>，但这个时候因为<code>buffer</code>里没有数据了，所以就会走到<code>_maybe_resume_protocol</code><br>​</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># transports.py</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">_FlowControlMixin</span><span class="params">(Transport)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_maybe_resume_protocol</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> (self._protocol_paused <span class="keyword">and</span></span><br><span class="line">                self.get_write_buffer_size() &lt;= self._low_water):</span><br><span class="line">            self._protocol_paused = <span class="literal">False</span></span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                self._protocol.resume_writing()</span><br><span class="line">            <span class="keyword">except</span> (SystemExit, KeyboardInterrupt):</span><br><span class="line">                <span class="keyword">raise</span></span><br><span class="line">            <span class="keyword">except</span> BaseException <span class="keyword">as</span> exc:</span><br><span class="line">                self._loop.call_exception_handler(&#123;</span><br><span class="line">                    <span class="string">'message'</span>: <span class="string">'protocol.resume_writing() failed'</span>,</span><br><span class="line">                    <span class="string">'exception'</span>: exc,</span><br><span class="line">                    <span class="string">'transport'</span>: self,</span><br><span class="line">                    <span class="string">'protocol'</span>: self._protocol,</span><br><span class="line">                &#125;)</span><br><span class="line">                </span><br><span class="line"></span><br><span class="line"><span class="comment"># streams.py</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FlowControlMixin</span><span class="params">(protocols.Protocol)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">resume_writing</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">assert</span> self._paused</span><br><span class="line">        self._paused = <span class="literal">False</span></span><br><span class="line">        <span class="keyword">if</span> self._loop.get_debug():</span><br><span class="line">            logger.debug(<span class="string">"%r resumes writing"</span>, self)</span><br><span class="line"></span><br><span class="line">        waiter = self._drain_waiter</span><br><span class="line">        <span class="keyword">if</span> waiter <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">            self._drain_waiter = <span class="literal">None</span></span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> waiter.done():</span><br><span class="line">                waiter.set_result(<span class="literal">None</span>)</span><br></pre></td></tr></table></figure>
+<p>在<code>writer.drain</code>中，我们实际上是一直在<code>await</code>这个<code>_drain_waiter</code>。在调用<code>_maybe_resume_protocol</code>之后，实际是走到了<code>StreamReaderProtocol</code>实例的<code>resume_writing</code>方法，在<code>FlowControlMixin</code>类被定义。这个方法执行了两个操作：<br>​</p>
+<ul>
+<li>将<code>_paused</code>状态置为<code>False</code><ul>
+<li><code>_loop_writing</code>中，如果数据没发完，就会另外走到<code>_maybe_pause_protocol</code>，会把这个状态置为<code>true</code>。此时调用<code>await writer.drain</code>，就正好会走到了<code>await _drain_waiter</code></li>
+</ul>
+</li>
+<li>将<code>_drain_waiter</code>设置完成。这样，<code>await writer.drain</code>就能完成了</li>
+</ul>
+<p>客户端的写操作，在事件循环里就是通过如上复杂的方式调度的。总的来说，是如下的步骤：<br>​</p>
+<ul>
+<li>用户调用<code>writer.write</code>将数据传进<code>transport</code>的写<code>buffer</code></li>
+<li><code>transport</code>的<code>_loop_writing</code>发现<code>buffer</code>有数据，创建一个写<code>future</code><ul>
+<li>通过<code>CreateIoCompletionPort</code>绑定<code>socket</code>跟完成端口</li>
+<li>通过<code>WSASend</code>发送数据</li>
+<li>设置一个回调用来取发送数据的结果</li>
+<li>取出来的结果给到写<code>future</code></li>
+<li>写<code>future</code>预先设置<code>_loop_writing</code>为完成回调，得到结果后执行下一轮<code>_loop_writing</code></li>
+</ul>
+</li>
+<li>用户调用<code>await writer.drain</code><ul>
+<li>写<code>future</code>在创建后，发现写<code>future</code>没有到完成状态，先调用<code>_maybe_pause_protocol</code>设置<code>protocol</code>的<code>_paused</code>为<code>True</code></li>
+<li>在<code>writer.drain</code>里判断<code>protocol</code>为<code>_paused</code>，重置<code>_drain_waiter</code>为新的实例并<code>await</code></li>
+<li>写操作完成，触发写<code>future</code>的回调<code>_loop_writing</code>。下一轮<code>_loop_writing</code>发现没有数据发送，调用<code>_maybe_resume_protocol</code>，设置<code>protocol</code>的<code>_paused</code>为<code>False</code>，并设置<code>_drain_waiter</code>为完成</li>
+<li><code>_drain_waiter</code>完成，退出<code>await writer.drain</code></li>
+</ul>
+</li>
+</ul>
+<p>针对读操作，以及其它的IO操作，有兴趣的小伙伴可以深入研究^_^</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+      
+<div style="border: 1px solid black; margin-top: 32px; margin-bottom: 32px">
+  <div style="margin-left:10px">
+    <span style="font-weight:bold">版权声明</span>
+    <br>
+    <span>本文为博客<a href="https://utmhikari.github.io" style="color:#258FC6">HiKariのTechLab</a>原创文章，转载请标明出处，谢谢~~~</span>
+  </div>
+</div>
+
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/事件循环/" rel="tag"># 事件循环</a>
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/异步/" rel="tag"># 异步</a>
+          
+            <a href="/tags/asyncio/" rel="tag"># asyncio</a>
+          
+            <a href="/tags/proactor/" rel="tag"># proactor</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/02/12/hardpython/2_asyncio_1/" rel="next" title="【Hard Python】【第二章-异步IO】1、asyncio事件循环的创建">
+                <i class="fa fa-chevron-left"></i> 【Hard Python】【第二章-异步IO】1、asyncio事件循环的创建
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2022/02/26/hardpython/2_asyncio_3/" rel="prev" title="【Hard Python】【第二章-异步IO】3、async/await的源码实现">
+                【Hard Python】【第二章-异步IO】3、async/await的源码实现 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="ひかり.HDQ">
+            
+              <p class="site-author-name" itemprop="name">ひかり.HDQ</p>
+              <div class="site-description motion-element" itemprop="description">talk is cheap, code is rich</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">155</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">415</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="GitHub &rarr; https://github.com/utmhikari"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="bWFpbHRvOmhkcTk0MDYyM0AxMjYuY29t" title="Mail &rarr; mailto:hdq940623@126.com"><i class="fa fa-fw fa-envelope"></i>Mail</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly90ZXN0ZXJob21lLmNvbS91dG1oaWthcmk=" title="TesterHome &rarr; https://testerhome.com/utmhikari"><i class="fa fa-fw fa-tumblr"></i>TesterHome</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vaWQvdXRtaGlrYXJp" title="Steam &rarr; https://steamcommunity.com/id/utmhikari"><i class="fa fa-fw fa-steam"></i>Steam</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9zcGFjZS5iaWxpYmlsaS5jb20vMTUwNzUxMTQv" title="Bilibili &rarr; https://space.bilibili.com/15075114/"><i class="fa fa-fw fa-bold"></i>Bilibili</span>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2019 – <span itemprop="copyrightYear">2024</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ひかり.HDQ</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="//cdn.staticfile.org/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script src="//cdn.staticfile.org/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+
+  
+  <script src="//cdn.staticfile.org/velocity/1.2.1/velocity.min.js"></script>
+
+  
+  <script src="//cdn.staticfile.org/velocity/1.2.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.1"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.1"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+  <script src="/js/src/exturl.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('5');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'manual') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+if ($('body').find('pre.mermaid').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.staticfile.org/mermaid/8.0.0-rc.8/mermaid.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      mermaid.initialize({
+        theme: 'dark',
+        logLevel: 3,
+        flowchart: { curve: 'linear' },
+        gantt: { axisFormat: '%m/%d/%Y' },
+        sequence: { actorMargin: 50 }
+      });
+    }
+  });
+}
+</script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+  $('.highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+  
+
+  
+
+</body>
+</html>

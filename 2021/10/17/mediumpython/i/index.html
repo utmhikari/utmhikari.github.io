@@ -1,0 +1,2291 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta name="baidu-site-verification" content="sc1B5Cxcoz">
+  <meta name="google-site-verification" content="OLcRj7lMnauxKrhFT3Q8Nvcexgv22NvlEmVZShKQKR8">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link rel="stylesheet" href="//cdn.staticfile.org/font-awesome/4.6.2/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/uploads/apple-touch.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/uploads/favicon-32x32.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/uploads/favicon-16x16.png?v=7.0.1">
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.1',
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"fadeIn","sidebar":"fadeIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="前言python面试有一道很基础的问题：list（列表）和tuple（元组）有什么不同？基本上只要背过题库的同学都知道，list（里面的元素）是可变的，tuple（里面的元素）是不可变的。 我们尝试在python解释器中改变tuple的元素（赋另一个值），会有以下的表现： 123456789101112def tuple_check():    tp = (&apos;123&apos;, 123)    tp[1]">
+<meta name="keywords" content="python,源码分析,list,tuple,元组">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Medium Python】第一话：为什么list“可变”，而tuple“不可变”？">
+<meta property="og:url" content="http://utmhikari.github.io/2021/10/17/mediumpython/i/index.html">
+<meta property="og:site_name" content="HiKariのTechLab">
+<meta property="og:description" content="前言python面试有一道很基础的问题：list（列表）和tuple（元组）有什么不同？基本上只要背过题库的同学都知道，list（里面的元素）是可变的，tuple（里面的元素）是不可变的。 我们尝试在python解释器中改变tuple的元素（赋另一个值），会有以下的表现： 123456789101112def tuple_check():    tp = (&apos;123&apos;, 123)    tp[1]">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2024-04-07T02:48:06.925Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【Medium Python】第一话：为什么list“可变”，而tuple“不可变”？">
+<meta name="twitter:description" content="前言python面试有一道很基础的问题：list（列表）和tuple（元组）有什么不同？基本上只要背过题库的同学都知道，list（里面的元素）是可变的，tuple（里面的元素）是不可变的。 我们尝试在python解释器中改变tuple的元素（赋另一个值），会有以下的表现： 123456789101112def tuple_check():    tp = (&apos;123&apos;, 123)    tp[1]">
+
+
+
+
+
+
+  <link rel="canonical" href="http://utmhikari.github.io/2021/10/17/mediumpython/i/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>【Medium Python】第一话：为什么list“可变”，而tuple“不可变”？ | HiKariのTechLab</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HiKariのTechLab</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">光の技术屋</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+  
+
+  
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="关注HiKariのGithub" aria-label="关注HiKariのGithub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></span>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2021/10/17/mediumpython/i/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">【Medium Python】第一话：为什么list“可变”，而tuple“不可变”？
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2021-10-17 17:55:52" itemprop="dateCreated datePublished" datetime="2021-10-17T17:55:52+08:00">2021-10-17</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Medium-Python/" itemprop="url" rel="index"><span itemprop="name">Medium Python</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>python面试有一道很基础的问题：list（列表）和tuple（元组）有什么不同？基本上只要背过题库的同学都知道，list（里面的元素）是可变的，tuple（里面的元素）是不可变的。</p>
+<p>我们尝试在python解释器中改变tuple的元素（赋另一个值），会有以下的表现：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">tuple_check</span><span class="params">()</span>:</span></span><br><span class="line">    tp = (<span class="string">'123'</span>, <span class="number">123</span>)</span><br><span class="line">    tp[<span class="number">1</span>] = <span class="number">13</span></span><br><span class="line">    </span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">Traceback (most recent call last):</span></span><br><span class="line"><span class="string">  File "H:/Projects/Python/playground/main.py", line 20, in &lt;module&gt;</span></span><br><span class="line"><span class="string">    tuple_check()</span></span><br><span class="line"><span class="string">  File "H:/Projects/Python/playground/main.py", line 10, in tuple_check</span></span><br><span class="line"><span class="string">    tp[2] = 13</span></span><br><span class="line"><span class="string">TypeError: 'tuple' object does not support item assignment</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+<p>可以看到赋值操作报错，tuple不支持再次赋值，体现了其“不可变”的特性。</p>
+<p>但是，不支持赋值/不可变的原因，到底是什么呢？不是说不支持就不支持吧！难道也没有支持的可能？</p>
+<p>这个问题要给出清晰的答案可并不容易，如果你直接检索网上资料的话，会发现很多文章都在说重复的话，没有什么深入的挖掘，导致这个问题无从解释。于是，今天这篇文章，就给大家把这个问题讲的干脆一点。</p>
+<p>以及，看完这篇文章之后，网上那些车轱辘话大家也就没有必要再看了。</p>
+<a id="more"></a>
+<h2 id="赋值操作的源码分析"><a href="#赋值操作的源码分析" class="headerlink" title="赋值操作的源码分析"></a>赋值操作的源码分析</h2><p>从官网的<span class="exturl" data-url="aHR0cHM6Ly93d3cucHl0aG9uLm9yZy9kb3dubG9hZHMvc291cmNlLw==" title="https://www.python.org/downloads/source/">Python-Source-Release<i class="fa fa-external-link"></i></span>页面中，我们能够下载到Python各个版本的源代码（笔者下载了3.9.7）。在源码的<code>PCBuild</code>文件夹下，有Visual Studio专属的<code>pcbuild.sln</code>项目文件，打开它就能看到python各个库的源代码的集合，以及各种文档和编译构建脚本。准备好了环境，就可以开始研究了。</p>
+<p>以上述的赋值操作为例，通过检索<code>object does not support item assignment</code>字样，我们可以定位到对应的函数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Objects/abstract.c</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span></span><br><span class="line">PyObject_SetItem(PyObject *o, PyObject *key, PyObject *value)</span><br><span class="line">&#123;</span><br><span class="line">    PyMappingMethods *m;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (o == <span class="literal">NULL</span> || key == <span class="literal">NULL</span> || value == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        null_error();</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    m = Py_TYPE(o)-&gt;tp_as_mapping;</span><br><span class="line">    <span class="keyword">if</span> (m &amp;&amp; m-&gt;mp_ass_subscript)</span><br><span class="line">        <span class="keyword">return</span> m-&gt;mp_ass_subscript(o, key, value);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (Py_TYPE(o)-&gt;tp_as_sequence) &#123;</span><br><span class="line">        <span class="keyword">if</span> (_PyIndex_Check(key)) &#123;</span><br><span class="line">            Py_ssize_t key_value;</span><br><span class="line">            key_value = PyNumber_AsSsize_t(key, PyExc_IndexError);</span><br><span class="line">            <span class="keyword">if</span> (key_value == <span class="number">-1</span> &amp;&amp; PyErr_Occurred())</span><br><span class="line">                <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">            <span class="keyword">return</span> PySequence_SetItem(o, key_value, value);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (Py_TYPE(o)-&gt;tp_as_sequence-&gt;sq_ass_item) &#123;</span><br><span class="line">            type_error(<span class="string">"sequence index must be "</span></span><br><span class="line">                       <span class="string">"integer, not '%.200s'"</span>, key);</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    type_error(<span class="string">"'%.200s' object does not support item assignment"</span>, o);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>PyObject_SetItem</code>函数涉及到<code>PyObject *o</code>、<code>PyObject* key</code>、<code>PyObject *value</code>三个入参，分别对应我们的tuple实例、索引以及待赋的值。这个函数是一个通用的接口，我们可以看到函数内首先尝试将实例o看作为<code>mapping</code>或者是<code>sequence</code>（<code>tp_as_mapping</code>、<code>tp_as_sequence</code>）。如果能作为<code>mapping</code>，就看是否能执行<code>mp_ass_subscript</code>回调实现赋值；如果作为<code>sequence</code>，会检查<code>key</code>并尝试执行<code>PySequence_SetItem</code>函数，在这个函数里也会尝试执行<code>Py_TYPE(o)-&gt;tp_as_sequence-&gt;sq_ass_item</code>回调实现赋值。<br>​</p>
+<p>在研究tuple之前，我们可以通过对list实例进行断点调试，追踪list赋值操作的执行链路。断点直接断在<code>PyObject_SetItem</code>里面即可，测试代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lst = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">lst[<span class="number">2</span>] = <span class="number">5</span></span><br></pre></td></tr></table></figure>
+<p>不出意外的话执行到第二行就会切到debug，一行一行下去，可以看到list实例赋值能够走到这里：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">m = Py_TYPE(o)-&gt;tp_as_mapping;</span><br><span class="line">if (m &amp;&amp; m-&gt;mp_ass_subscript)</span><br><span class="line">    return m-&gt;mp_ass_subscript(o, key, value);</span><br></pre></td></tr></table></figure>
+<p>step into进去，可以看到list实例作为<code>mapping</code>的<code>mp_ass_subscript</code>回调，对应的是<code>list_ass_subscript</code>函数:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Objects/listobject.c</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">int</span></span><br><span class="line">list_ass_subscript(PyListObject* self, PyObject* item, PyObject* value)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (_PyIndex_Check(item)) &#123;</span><br><span class="line">        Py_ssize_t i = PyNumber_AsSsize_t(item, PyExc_IndexError);</span><br><span class="line">        <span class="keyword">if</span> (i == <span class="number">-1</span> &amp;&amp; PyErr_Occurred())</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">if</span> (i &lt; <span class="number">0</span>)</span><br><span class="line">            i += PyList_GET_SIZE(self);</span><br><span class="line">        <span class="keyword">return</span> list_ass_item(self, i, value);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (PySlice_Check(item)) &#123;</span><br><span class="line">        <span class="comment">// 这里是对切片赋值，[a:b]这种。太长了先忽略掉= =</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        PyErr_Format(PyExc_TypeError,</span><br><span class="line">                     <span class="string">"list indices must be integers or slices, not %.200s"</span>,</span><br><span class="line">                     Py_TYPE(item)-&gt;tp_name);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">int</span></span><br><span class="line">list_ass_item(PyListObject *a, Py_ssize_t i, PyObject *v)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (!valid_index(i, Py_SIZE(a))) &#123;</span><br><span class="line">        PyErr_SetString(PyExc_IndexError,</span><br><span class="line">                        <span class="string">"list assignment index out of range"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (v == <span class="literal">NULL</span>)</span><br><span class="line">        <span class="keyword">return</span> list_ass_slice(a, i, i+<span class="number">1</span>, v);</span><br><span class="line">    Py_INCREF(v);</span><br><span class="line">    Py_SETREF(a-&gt;ob_item[i], v);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>list_ass_subscript</code>函数会判断索引<code>key</code>的合法性并转换负值索引，然后调用<code>list_ass_item</code>处理赋值操作。<code>list_ass_item</code>也会再次检查索引边界，然后在list实例对应索引的位置赋新值，并调整引用计数。这样，list赋值操作就完成了。</p>
+<h2 id="tuple为什么不可变"><a href="#tuple为什么不可变" class="headerlink" title="tuple为什么不可变"></a>tuple为什么不可变</h2><p>list可以对其中的元素赋值，tuple不行。从源码的角度，list能够作为<code>mapping</code>，有<code>list_ass_subscript</code>函数用于对元素赋值，那tuple呢？我们同样可以断tuple的赋值操作，可以看到最终还是落到<code>PyObject_SetItem</code>的“<code>object does not support item assignment</code>”一行<br>​</p>
+<p>打开list这个类在C层的源代码，我们能够看到list这个数据类型的定义：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Objects/listobject.c</span></span><br><span class="line"></span><br><span class="line">PyTypeObject PyList_Type = &#123;</span><br><span class="line">    PyVarObject_HEAD_INIT(&amp;PyType_Type, <span class="number">0</span>)</span><br><span class="line">    <span class="string">"list"</span>,</span><br><span class="line">    <span class="keyword">sizeof</span>(PyListObject),</span><br><span class="line">    <span class="number">0</span>,</span><br><span class="line">    (destructor)list_dealloc,                   <span class="comment">/* tp_dealloc */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_vectorcall_offset */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_getattr */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_setattr */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_as_async */</span></span><br><span class="line">    (reprfunc)list_repr,                        <span class="comment">/* tp_repr */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_as_number */</span></span><br><span class="line">    &amp;list_as_sequence,                          <span class="comment">/* tp_as_sequence */</span></span><br><span class="line">    &amp;list_as_mapping,                           <span class="comment">/* tp_as_mapping */</span></span><br><span class="line">    PyObject_HashNotImplemented,                <span class="comment">/* tp_hash */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_call */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_str */</span></span><br><span class="line">    PyObject_GenericGetAttr,                    <span class="comment">/* tp_getattro */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_setattro */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_as_buffer */</span></span><br><span class="line">    Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HAVE_GC |</span><br><span class="line">        Py_TPFLAGS_BASETYPE | Py_TPFLAGS_LIST_SUBCLASS, <span class="comment">/* tp_flags */</span></span><br><span class="line">    list___init____doc__,                       <span class="comment">/* tp_doc */</span></span><br><span class="line">    (traverseproc)list_traverse,                <span class="comment">/* tp_traverse */</span></span><br><span class="line">    (inquiry)_list_clear,                       <span class="comment">/* tp_clear */</span></span><br><span class="line">    list_richcompare,                           <span class="comment">/* tp_richcompare */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_weaklistoffset */</span></span><br><span class="line">    list_iter,                                  <span class="comment">/* tp_iter */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_iternext */</span></span><br><span class="line">    list_methods,                               <span class="comment">/* tp_methods */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_members */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_getset */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_base */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_dict */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_descr_get */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_descr_set */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_dictoffset */</span></span><br><span class="line">    (initproc)list___init__,                    <span class="comment">/* tp_init */</span></span><br><span class="line">    PyType_GenericAlloc,                        <span class="comment">/* tp_alloc */</span></span><br><span class="line">    PyType_GenericNew,                          <span class="comment">/* tp_new */</span></span><br><span class="line">    PyObject_GC_Del,                            <span class="comment">/* tp_free */</span></span><br><span class="line">    .tp_vectorcall = list_vectorcall,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> PyMappingMethods list_as_mapping = &#123;</span><br><span class="line">    (lenfunc)list_length,</span><br><span class="line">    (binaryfunc)list_subscript,</span><br><span class="line">    (objobjargproc)list_ass_subscript</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    lenfunc mp_length;</span><br><span class="line">    binaryfunc mp_subscript;</span><br><span class="line">    objobjargproc mp_ass_subscript;</span><br><span class="line">&#125; PyMappingMethods;</span><br></pre></td></tr></table></figure>
+<p>可以看到，在list类型定义中，<code>tp_as_mapping-&gt;list_as_mapping</code>已经包含了<code>PyMappingMethods</code>所定义的<code>mp_length</code>、<code>mp_subscript</code>以及<code>mp_ass_subscript</code>三个回调，而最后一个就是赋值操作所对应的回调。反观tuple的类型定义，这一块是缺失的：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Objects/tupleobject.c</span></span><br><span class="line"></span><br><span class="line">PyTypeObject PyTuple_Type = &#123;</span><br><span class="line">    PyVarObject_HEAD_INIT(&amp;PyType_Type, <span class="number">0</span>)</span><br><span class="line">    <span class="string">"tuple"</span>,</span><br><span class="line">    <span class="keyword">sizeof</span>(PyTupleObject) - <span class="keyword">sizeof</span>(PyObject *),</span><br><span class="line">    <span class="keyword">sizeof</span>(PyObject *),</span><br><span class="line">    (destructor)tupledealloc,                   <span class="comment">/* tp_dealloc */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_vectorcall_offset */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_getattr */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_setattr */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_as_async */</span></span><br><span class="line">    (reprfunc)tuplerepr,                        <span class="comment">/* tp_repr */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_as_number */</span></span><br><span class="line">    &amp;tuple_as_sequence,                         <span class="comment">/* tp_as_sequence */</span></span><br><span class="line">    &amp;tuple_as_mapping,                          <span class="comment">/* tp_as_mapping */</span></span><br><span class="line">    (hashfunc)tuplehash,                        <span class="comment">/* tp_hash */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_call */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_str */</span></span><br><span class="line">    PyObject_GenericGetAttr,                    <span class="comment">/* tp_getattro */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_setattro */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_as_buffer */</span></span><br><span class="line">    Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HAVE_GC |</span><br><span class="line">        Py_TPFLAGS_BASETYPE | Py_TPFLAGS_TUPLE_SUBCLASS, <span class="comment">/* tp_flags */</span></span><br><span class="line">    tuple_new__doc__,                           <span class="comment">/* tp_doc */</span></span><br><span class="line">    (traverseproc)tupletraverse,                <span class="comment">/* tp_traverse */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_clear */</span></span><br><span class="line">    tuplerichcompare,                           <span class="comment">/* tp_richcompare */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_weaklistoffset */</span></span><br><span class="line">    tuple_iter,                                 <span class="comment">/* tp_iter */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_iternext */</span></span><br><span class="line">    tuple_methods,                              <span class="comment">/* tp_methods */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_members */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_getset */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_base */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_dict */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_descr_get */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_descr_set */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_dictoffset */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_init */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* tp_alloc */</span></span><br><span class="line">    tuple_new,                                  <span class="comment">/* tp_new */</span></span><br><span class="line">    PyObject_GC_Del,                            <span class="comment">/* tp_free */</span></span><br><span class="line">    .tp_vectorcall = tuple_vectorcall,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> PySequenceMethods tuple_as_sequence = &#123;</span><br><span class="line">    (lenfunc)tuplelength,                       <span class="comment">/* sq_length */</span></span><br><span class="line">    (binaryfunc)tupleconcat,                    <span class="comment">/* sq_concat */</span></span><br><span class="line">    (ssizeargfunc)tuplerepeat,                  <span class="comment">/* sq_repeat */</span></span><br><span class="line">    (ssizeargfunc)tupleitem,                    <span class="comment">/* sq_item */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* sq_slice */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* sq_ass_item */</span></span><br><span class="line">    <span class="number">0</span>,                                          <span class="comment">/* sq_ass_slice */</span></span><br><span class="line">    (objobjproc)tuplecontains,                  <span class="comment">/* sq_contains */</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> PyMappingMethods tuple_as_mapping = &#123;</span><br><span class="line">    (lenfunc)tuplelength,</span><br><span class="line">    (binaryfunc)tuplesubscript,</span><br><span class="line">    <span class="number">0</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>在<code>PyMappingMethods</code>中，tuple作为<code>mapping</code>没有指定<code>mp_ass_subscript</code>，作为<code>sequence</code>也没有指定<code>sq_ass_item</code>、<code>sq_ass_slice</code>。所以自然而然，原生不支持赋值操作<br>​</p>
+<p>所以，list元素可变而tuple元素不可变，要解释这个问题可以这样阐述：<strong>tuple作为<code>mapping</code>或者<code>sequence</code>，没有指定赋值操作的回调函数，所以其元素不可变。而list有对应的操作回调支持，所以可变。</strong><br>​</p>
+<h2 id="tuple的元素能够“可变”吗？"><a href="#tuple的元素能够“可变”吗？" class="headerlink" title="tuple的元素能够“可变”吗？"></a>tuple的元素能够“可变”吗？</h2><p>当然可以，但是需要魔改Python源代码。我们可以仿写<code>list_ass_subscript</code>去实现tuple的赋值操作。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Objects/tupleobject.c</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// =========================== 以下是魔改代码 =============================</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">int</span></span><br><span class="line">tuple_ass_item(PyTupleObject* a, Py_ssize_t i, PyObject* v)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (!((<span class="keyword">size_t</span>)i &lt; (<span class="keyword">size_t</span>)Py_SIZE(a)))</span><br><span class="line">    &#123;</span><br><span class="line">        PyErr_SetString(PyExc_IndexError,</span><br><span class="line">            <span class="string">"tuple assignment index out of range"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (v == <span class="literal">NULL</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        PyErr_SetString(PyExc_IndexError,</span><br><span class="line">            <span class="string">"tuple assignment does not support null value"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    Py_INCREF(v);</span><br><span class="line">    Py_SETREF(a-&gt;ob_item[i], v);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">int</span></span><br><span class="line">tuple_ass_subscript(PyTupleObject* self, PyObject* item, PyObject* value)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (_PyIndex_Check(item))</span><br><span class="line">    &#123;</span><br><span class="line">        Py_ssize_t i = PyNumber_AsSsize_t(item, PyExc_IndexError);</span><br><span class="line">        <span class="keyword">if</span> (i == <span class="number">-1</span> &amp;&amp; PyErr_Occurred())</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (i &lt; <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            i += PyTuple_GET_SIZE(self);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> tuple_ass_item(self, i, value);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        PyErr_Format(PyExc_TypeError,</span><br><span class="line">            <span class="string">"tuple index must be integer! not %.200s"</span>,</span><br><span class="line">            Py_TYPE(item)-&gt;tp_name);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// =========================== 以上是魔改代码 =============================</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> PyMappingMethods tuple_as_mapping = &#123;</span><br><span class="line">    (lenfunc)tuplelength,</span><br><span class="line">    (binaryfunc)tuplesubscript,</span><br><span class="line">    <span class="comment">// 0</span></span><br><span class="line">    (objobjargproc)tuple_ass_subscript  <span class="comment">// 这里原来是0，现在得是tuple_ass_subscript</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>我们就加上tuple作为<code>mapping</code>时候的赋值操作即可，代码逻辑也和list的基本一样。编译新的python试试看吧</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tp = (<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">tp[<span class="number">2</span>] = <span class="number">5</span></span><br><span class="line">print(tp)  <span class="comment"># (1, 2, 5)</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+      
+<div style="border: 1px solid black; margin-top: 32px; margin-bottom: 32px">
+  <div style="margin-left:10px">
+    <span style="font-weight:bold">版权声明</span>
+    <br>
+    <span>本文为博客<a href="https://utmhikari.github.io" style="color:#258FC6">HiKariのTechLab</a>原创文章，转载请标明出处，谢谢~~~</span>
+  </div>
+</div>
+
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/源码分析/" rel="tag"># 源码分析</a>
+          
+            <a href="/tags/list/" rel="tag"># list</a>
+          
+            <a href="/tags/tuple/" rel="tag"># tuple</a>
+          
+            <a href="/tags/元组/" rel="tag"># 元组</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/10/10/mediumpython/preface/" rel="next" title="【Medium Python】前言">
+                <i class="fa fa-chevron-left"></i> 【Medium Python】前言
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/10/19/geekdaily/redis_make_jemalloc_error/" rel="prev" title="【极客日常】一种解决redis源码编译时jemalloc报No such file or directory错误的方法">
+                【极客日常】一种解决redis源码编译时jemalloc报No such file or directory错误的方法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="ひかり.HDQ">
+            
+              <p class="site-author-name" itemprop="name">ひかり.HDQ</p>
+              <div class="site-description motion-element" itemprop="description">talk is cheap, code is rich</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">155</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">415</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="GitHub &rarr; https://github.com/utmhikari"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="bWFpbHRvOmhkcTk0MDYyM0AxMjYuY29t" title="Mail &rarr; mailto:hdq940623@126.com"><i class="fa fa-fw fa-envelope"></i>Mail</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly90ZXN0ZXJob21lLmNvbS91dG1oaWthcmk=" title="TesterHome &rarr; https://testerhome.com/utmhikari"><i class="fa fa-fw fa-tumblr"></i>TesterHome</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vaWQvdXRtaGlrYXJp" title="Steam &rarr; https://steamcommunity.com/id/utmhikari"><i class="fa fa-fw fa-steam"></i>Steam</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9zcGFjZS5iaWxpYmlsaS5jb20vMTUwNzUxMTQv" title="Bilibili &rarr; https://space.bilibili.com/15075114/"><i class="fa fa-fw fa-bold"></i>Bilibili</span>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#赋值操作的源码分析"><span class="nav-number">2.</span> <span class="nav-text">赋值操作的源码分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tuple为什么不可变"><span class="nav-number">3.</span> <span class="nav-text">tuple为什么不可变</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tuple的元素能够“可变”吗？"><span class="nav-number">4.</span> <span class="nav-text">tuple的元素能够“可变”吗？</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2019 – <span itemprop="copyrightYear">2024</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ひかり.HDQ</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="//cdn.staticfile.org/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script src="//cdn.staticfile.org/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+
+  
+  <script src="//cdn.staticfile.org/velocity/1.2.1/velocity.min.js"></script>
+
+  
+  <script src="//cdn.staticfile.org/velocity/1.2.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.1"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.1"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+  <script src="/js/src/exturl.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('5');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'manual') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+if ($('body').find('pre.mermaid').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.staticfile.org/mermaid/8.0.0-rc.8/mermaid.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      mermaid.initialize({
+        theme: 'dark',
+        logLevel: 3,
+        flowchart: { curve: 'linear' },
+        gantt: { axisFormat: '%m/%d/%Y' },
+        sequence: { actorMargin: 50 }
+      });
+    }
+  });
+}
+</script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+  $('.highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+  
+
+  
+
+</body>
+</html>

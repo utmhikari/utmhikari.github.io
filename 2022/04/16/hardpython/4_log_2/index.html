@@ -1,0 +1,2310 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta name="baidu-site-verification" content="sc1B5Cxcoz">
+  <meta name="google-site-verification" content="OLcRj7lMnauxKrhFT3Q8Nvcexgv22NvlEmVZShKQKR8">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link rel="stylesheet" href="//cdn.staticfile.org/font-awesome/4.6.2/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/uploads/apple-touch.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/uploads/favicon-32x32.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/uploads/favicon-16x16.png?v=7.0.1">
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.1',
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"fadeIn","sidebar":"fadeIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="在上篇文章里说完了日志实例Logger和日志管理Manager，现在该提到Handler了。Handler是日志信息的消费者，单个Logger实例注册多个Handler，每生成一个LogRecord，就会被合法的Handler消费，在不同地方打印出日志信息。 要研究Handler，首先需要看下基类的实现： 12345678910class Handler(Filterer):    def han">
+<meta name="keywords" content="python,日志,Handler,stderr,TimedRotatingFileHandler">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Hard Python】【第四章-日志】2、日志消费者Handler的实现">
+<meta property="og:url" content="http://utmhikari.github.io/2022/04/16/hardpython/4_log_2/index.html">
+<meta property="og:site_name" content="HiKariのTechLab">
+<meta property="og:description" content="在上篇文章里说完了日志实例Logger和日志管理Manager，现在该提到Handler了。Handler是日志信息的消费者，单个Logger实例注册多个Handler，每生成一个LogRecord，就会被合法的Handler消费，在不同地方打印出日志信息。 要研究Handler，首先需要看下基类的实现： 12345678910class Handler(Filterer):    def han">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2024-04-07T02:48:06.924Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【Hard Python】【第四章-日志】2、日志消费者Handler的实现">
+<meta name="twitter:description" content="在上篇文章里说完了日志实例Logger和日志管理Manager，现在该提到Handler了。Handler是日志信息的消费者，单个Logger实例注册多个Handler，每生成一个LogRecord，就会被合法的Handler消费，在不同地方打印出日志信息。 要研究Handler，首先需要看下基类的实现： 12345678910class Handler(Filterer):    def han">
+
+
+
+
+
+
+  <link rel="canonical" href="http://utmhikari.github.io/2022/04/16/hardpython/4_log_2/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>【Hard Python】【第四章-日志】2、日志消费者Handler的实现 | HiKariのTechLab</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HiKariのTechLab</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">光の技术屋</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+  
+
+  
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="关注HiKariのGithub" aria-label="关注HiKariのGithub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></span>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2022/04/16/hardpython/4_log_2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">【Hard Python】【第四章-日志】2、日志消费者Handler的实现
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2022-04-16 10:22:53" itemprop="dateCreated datePublished" datetime="2022-04-16T10:22:53+08:00">2022-04-16</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Hard-Python/" itemprop="url" rel="index"><span itemprop="name">Hard Python</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjIvMDQvMDkvaGFyZHB5dGhvbi80X2xvZ18xLw==" title="https://utmhikari.top/2022/04/09/hardpython/4_log_1/">上篇文章<i class="fa fa-external-link"></i></span>里说完了日志实例<code>Logger</code>和日志管理<code>Manager</code>，现在该提到<code>Handler</code>了。<code>Handler</code>是日志信息的消费者，单个<code>Logger</code>实例注册多个<code>Handler</code>，每生成一个<code>LogRecord</code>，就会被合法的<code>Handler</code>消费，在不同地方打印出日志信息。</p>
+<p>要研究<code>Handler</code>，首先需要看下基类的实现：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Handler</span><span class="params">(Filterer)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">handle</span><span class="params">(self, record)</span>:</span></span><br><span class="line">        rv = self.filter(record)</span><br><span class="line">        <span class="keyword">if</span> rv:</span><br><span class="line">            self.acquire()</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                self.emit(record)</span><br><span class="line">            <span class="keyword">finally</span>:</span><br><span class="line">                self.release()</span><br><span class="line">        <span class="keyword">return</span> rv</span><br></pre></td></tr></table></figure>
+<p><code>Handler</code>会通过自带的重入锁限制日志记录被串行处理。<code>Handler</code>也是继承<code>Filterer</code>，首先会通过<code>filter</code>过滤日志是否满足<code>Handler</code>的要求，如果合法，然后调用<code>emit</code>方法处理日志。</p>
+<p><code>emit</code>方法在基类是<code>NotImplemented</code>，需要子类加以实现。因此接下来我们具体抽几个例子来看。</p>
+<a id="more"></a>
+<h2 id="StreamHandler"><a href="#StreamHandler" class="headerlink" title="StreamHandler"></a>StreamHandler</h2><p><code>StreamHandler</code>打印日志的实现比较简单：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">StreamHandler</span><span class="params">(Handler)</span>:</span></span><br><span class="line">    terminator = <span class="string">'\n'</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">emit</span><span class="params">(self, record)</span>:</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            msg = self.format(record)</span><br><span class="line">            stream = self.stream</span><br><span class="line">            <span class="comment"># issue 35046: merged two stream.writes into one.</span></span><br><span class="line">            stream.write(msg + self.terminator)</span><br><span class="line">            self.flush()</span><br><span class="line">        <span class="keyword">except</span> RecursionError:  <span class="comment"># See issue 36272</span></span><br><span class="line">            <span class="keyword">raise</span></span><br><span class="line">        <span class="keyword">except</span> Exception:</span><br><span class="line">            self.handleError(record)</span><br><span class="line">            </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">flush</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.acquire()</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">if</span> self.stream <span class="keyword">and</span> hasattr(self.stream, <span class="string">"flush"</span>):</span><br><span class="line">                self.stream.flush()</span><br><span class="line">        <span class="keyword">finally</span>:</span><br><span class="line">            self.release()</span><br></pre></td></tr></table></figure>
+<p><code>StreamHandler</code>默认的<code>stream</code>是<code>sys.stderr</code>。只要我们在<code>basicConfig</code>中给到的<code>stream</code>实例实现了<code>write</code>跟<code>flush</code>方法，就可以被放到<code>StreamHandler</code>里头处理日志。日志首先通过<code>format</code>方法被<code>Handler</code>实例的<code>formatter</code>格式化，然后再被输出。</p>
+<p>以<code>sys.stderr</code>为例，我们来看标准错误流在<code>python</code>中的源码实现。首先需要追溯<code>sys.stderr</code>的来源，我们节选一部分代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// pylifecycle.c</span></span><br><span class="line"><span class="keyword">static</span> PyStatus</span><br><span class="line">init_sys_streams(PyThreadState *tstate)</span><br><span class="line">&#123;</span><br><span class="line">    fd = fileno(<span class="built_in">stderr</span>);</span><br><span class="line">    <span class="built_in">std</span> = create_stdio(config, iomod, fd, <span class="number">1</span>, <span class="string">"&lt;stderr&gt;"</span>,</span><br><span class="line">                       config-&gt;stdio_encoding,</span><br><span class="line">                       <span class="string">L"backslashreplace"</span>);</span><br><span class="line">    <span class="keyword">if</span> (PySys_SetObject(<span class="string">"__stderr__"</span>, <span class="built_in">std</span>) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        Py_DECREF(<span class="built_in">std</span>);</span><br><span class="line">        <span class="keyword">goto</span> error;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (_PySys_SetObjectId(&amp;PyId_stderr, <span class="built_in">std</span>) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        Py_DECREF(<span class="built_in">std</span>);</span><br><span class="line">        <span class="keyword">goto</span> error;</span><br><span class="line">    &#125;</span><br><span class="line">    Py_DECREF(<span class="built_in">std</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> PyObject*</span><br><span class="line">create_stdio(<span class="keyword">const</span> PyConfig *config, PyObject* io,</span><br><span class="line">    <span class="keyword">int</span> fd, <span class="keyword">int</span> write_mode, <span class="keyword">const</span> <span class="keyword">char</span>* name,</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">wchar_t</span>* encoding, <span class="keyword">const</span> <span class="keyword">wchar_t</span>* errors)</span><br><span class="line">&#123;</span><br><span class="line">    buf = _PyObject_CallMethodId(io, &amp;PyId_open, <span class="string">"isiOOOO"</span>,</span><br><span class="line">                                 fd, mode, buffering,</span><br><span class="line">                                 Py_None, Py_None, <span class="comment">/* encoding, errors */</span></span><br><span class="line">                                 Py_None, Py_False); <span class="comment">/* newline, closefd */</span></span><br><span class="line">    stream = _PyObject_CallMethodId(io, &amp;PyId_TextIOWrapper, <span class="string">"OOOsOO"</span>,</span><br><span class="line">                                    buf, encoding_str, errors_str,</span><br><span class="line">                                    newline, line_buffering, write_through);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在<code>pylifecycle.c</code>中，<code>sys.stderr</code>被设置，最终调用了<code>create_stdio</code>设置了<code>stream</code>实例。其中，会调用<code>io</code>模块的<code>open</code>以及<code>TextIOWrapper</code>方法：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// _iomodule.c</span></span><br><span class="line"><span class="keyword">static</span> PyObject *</span><br><span class="line">_io_open_impl(PyObject *<span class="keyword">module</span>, PyObject *file, <span class="keyword">const</span> <span class="keyword">char</span> *mode,</span><br><span class="line">              <span class="keyword">int</span> buffering, <span class="keyword">const</span> <span class="keyword">char</span> *encoding, <span class="keyword">const</span> <span class="keyword">char</span> *errors,</span><br><span class="line">              <span class="keyword">const</span> <span class="keyword">char</span> *newline, <span class="keyword">int</span> closefd, PyObject *opener)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">/* Create the Raw file stream */</span></span><br><span class="line">    &#123;</span><br><span class="line">        PyObject *RawIO_class = (PyObject *)&amp;PyFileIO_Type;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> MS_WINDOWS</span></span><br><span class="line">        <span class="keyword">const</span> PyConfig *config = _Py_GetConfig();</span><br><span class="line">        <span class="keyword">if</span> (!config-&gt;legacy_windows_stdio &amp;&amp; _PyIO_get_console_type(path_or_fd) != <span class="string">'\0'</span>) &#123;</span><br><span class="line">            RawIO_class = (PyObject *)&amp;PyWindowsConsoleIO_Type;</span><br><span class="line">            encoding = <span class="string">"utf-8"</span>;</span><br><span class="line">        &#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">        raw = PyObject_CallFunction(RawIO_class, <span class="string">"OsOO"</span>,</span><br><span class="line">                                    path_or_fd, rawmode,</span><br><span class="line">                                    closefd ? Py_True : Py_False,</span><br><span class="line">                                    opener);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/* wraps into a buffered file */</span></span><br><span class="line">    &#123;</span><br><span class="line">        PyObject *Buffered_class;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (updating)</span><br><span class="line">            Buffered_class = (PyObject *)&amp;PyBufferedRandom_Type;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (creating || writing || appending)</span><br><span class="line">            Buffered_class = (PyObject *)&amp;PyBufferedWriter_Type;  <span class="comment">// hits here</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (reading)</span><br><span class="line">            Buffered_class = (PyObject *)&amp;PyBufferedReader_Type;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            PyErr_Format(PyExc_ValueError,</span><br><span class="line">                         <span class="string">"unknown mode: '%s'"</span>, mode);</span><br><span class="line">            <span class="keyword">goto</span> error;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        buffer = PyObject_CallFunction(Buffered_class, <span class="string">"Oi"</span>, raw, buffering);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (buffer == <span class="literal">NULL</span>)</span><br><span class="line">        <span class="keyword">goto</span> error;</span><br><span class="line">    result = buffer;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/* if binary, returns the buffered file */</span></span><br><span class="line">    <span class="keyword">if</span> (binary) &#123;</span><br><span class="line">        Py_DECREF(modeobj);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>所以总的来看，在<code>windows</code>中，<code>stderr</code>实例的创建流程大致是这样：</p>
+<ul>
+<li>创建了一个<code>PyWindowsConsoleIO_Type</code>的实例<ul>
+<li><code>PyWindowsConsoleIO_Type</code>实质是封装了和<code>windows</code>命令行终端交互的方法</li>
+</ul>
+</li>
+<li>创建了一个<code>PyBufferedWriter_Type</code>实例去实现缓冲输出流<ul>
+<li>该实例的<code>raw</code>属性即为<code>PyWindowsConsoleIO_Type</code>的实例</li>
+</ul>
+</li>
+<li>创建了一个<code>TextIOWrapper</code>实例封装<code>PyBufferedWriter_Type</code>实例，得到<code>stderr</code>的<code>stream</code>实例</li>
+</ul>
+<p>当调用<code>stderr.write</code>和<code>stderr.flush</code>时，最终会调用<code>BufferedWriter</code>的<code>write</code>和<code>flush</code>。在<code>write</code>过程中会将数据写入缓冲区，而在<code>write</code>跟<code>flush</code>过程中都会调用<code>raw.write</code>方法尝试将缓冲区数据刷掉，并写入<code>windows</code>命令行。有兴趣的同学，可以深入研究<code>bufferedio.c</code>里面的内容。</p>
+<h2 id="FileHandler"><a href="#FileHandler" class="headerlink" title="FileHandler"></a>FileHandler</h2><p><code>FileHandler</code>继承了<code>StreamHandler</code>，可以将日志记录打印到文件里面，其代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FileHandler</span><span class="params">(StreamHandler)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, filename, mode=<span class="string">'a'</span>, encoding=None, delay=False, errors=None)</span>:</span></span><br><span class="line">        filename = os.fspath(filename)</span><br><span class="line">        self.baseFilename = os.path.abspath(filename)</span><br><span class="line">        self.mode = mode</span><br><span class="line">        self.encoding = encoding</span><br><span class="line">        <span class="keyword">if</span> <span class="string">"b"</span> <span class="keyword">not</span> <span class="keyword">in</span> mode:</span><br><span class="line">            self.encoding = io.text_encoding(encoding)</span><br><span class="line">        self.errors = errors</span><br><span class="line">        self.delay = delay</span><br><span class="line">        self._builtin_open = open</span><br><span class="line">        <span class="keyword">if</span> delay:</span><br><span class="line">            Handler.__init__(self)</span><br><span class="line">            self.stream = <span class="literal">None</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            StreamHandler.__init__(self, self._open())</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_open</span><span class="params">(self)</span>:</span></span><br><span class="line">        open_func = self._builtin_open</span><br><span class="line">        <span class="keyword">return</span> open_func(self.baseFilename, self.mode,</span><br><span class="line">                         encoding=self.encoding, errors=self.errors)</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">emit</span><span class="params">(self, record)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> self.stream <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            self.stream = self._open()</span><br><span class="line">        StreamHandler.emit(self, record)</span><br></pre></td></tr></table></figure>
+<p><code>FileHandler</code>为<code>StreamHandler</code>底层提供了一个内置<code>open</code>方法文件流。我们知道这样的文件流也会有<code>write</code>以及<code>flush</code>方法，所以显而易见日志会输出到对应的文件当中。</p>
+<h2 id="TimedRotatingFileHandler"><a href="#TimedRotatingFileHandler" class="headerlink" title="TimedRotatingFileHandler"></a>TimedRotatingFileHandler</h2><p><code>TimedRotatingFileHandler</code>也是常用的日志<code>Handler</code>之一，它可以实现按规定的时间间隔打印各个时段的日志到不同文件中。其继承链如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># pprint.pprint(TimedRotatingFileHandler.__mro__)</span><br><span class="line">(&lt;class &apos;logging.handlers.TimedRotatingFileHandler&apos;&gt;,</span><br><span class="line"> &lt;class &apos;logging.handlers.BaseRotatingHandler&apos;&gt;,</span><br><span class="line"> &lt;class &apos;logging.FileHandler&apos;&gt;,</span><br><span class="line"> &lt;class &apos;logging.StreamHandler&apos;&gt;,</span><br><span class="line"> &lt;class &apos;logging.Handler&apos;&gt;,</span><br><span class="line"> &lt;class &apos;logging.Filterer&apos;&gt;,</span><br><span class="line"> &lt;class &apos;object&apos;&gt;)</span><br></pre></td></tr></table></figure>
+<p>首先我们来看<code>BaseRotatingHandler</code>，它继承了<code>FileHandler</code>，其实现如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BaseRotatingHandler</span><span class="params">(logging.FileHandler)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">emit</span><span class="params">(self, record)</span>:</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">if</span> self.shouldRollover(record):</span><br><span class="line">                self.doRollover()</span><br><span class="line">            logging.FileHandler.emit(self, record)</span><br><span class="line">        <span class="keyword">except</span> Exception:</span><br><span class="line">            self.handleError(record)</span><br><span class="line">            </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">rotate</span><span class="params">(self, source, dest)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> callable(self.rotator):</span><br><span class="line">            <span class="keyword">if</span> os.path.exists(source):</span><br><span class="line">                os.rename(source, dest)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self.rotator(source, dest)</span><br></pre></td></tr></table></figure>
+<p><code>BaseRotatingHandler</code>在打印日志记录前，首先会通过<code>shouldRollover</code>方法根据日志记录信息判断是否要翻篇，如果需要的话就调用<code>doRollOver</code>方法翻篇，最后再调用<code>FileHandler</code>的<code>emit</code>方法。<code>shouldRollover</code>跟<code>doRollover</code>方法都需要子类自己实现。</p>
+<p>同时，<code>BaseRotatingHandler</code>也提供了<code>rotate</code>方法调用<code>rotator</code>或者采用默认重命名的方式执行翻篇操作。</p>
+<p>接下来我们再看<code>TimedRotatingFileHandler</code>的具体实现：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TimedRotatingFileHandler</span><span class="params">(BaseRotatingHandler)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, filename, when=<span class="string">'h'</span>, interval=<span class="number">1</span>, backupCount=<span class="number">0</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">                 encoding=None, delay=False, utc=False, atTime=None,</span></span></span><br><span class="line"><span class="function"><span class="params">                 errors=None)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> os.path.exists(filename):</span><br><span class="line">            t = os.stat(filename)[ST_MTIME]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            t = int(time.time())</span><br><span class="line">        self.rolloverAt = self.computeRollover(t)</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">computeRollover</span><span class="params">(self, currentTime)</span>:</span></span><br><span class="line">        result = currentTime + self.interval</span><br><span class="line">        <span class="keyword">if</span> self.when == <span class="string">'MIDNIGHT'</span> <span class="keyword">or</span> self.when.startswith(<span class="string">'W'</span>):</span><br><span class="line">            <span class="comment"># 这里忽略掉计算凌晨跟一周内特定日的情况</span></span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">shouldRollover</span><span class="params">(self, record)</span>:</span></span><br><span class="line">        t = int(time.time())</span><br><span class="line">        <span class="keyword">if</span> t &gt;= self.rolloverAt:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">doRollover</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> self.stream:</span><br><span class="line">            self.stream.close()</span><br><span class="line">            self.stream = <span class="literal">None</span></span><br><span class="line">        <span class="comment"># get the time that this sequence started at and make it a TimeTuple</span></span><br><span class="line">        currentTime = int(time.time())</span><br><span class="line">        dstNow = time.localtime(currentTime)[<span class="number">-1</span>]</span><br><span class="line">        t = self.rolloverAt - self.interval</span><br><span class="line">        <span class="keyword">if</span> self.utc:</span><br><span class="line">            timeTuple = time.gmtime(t)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            timeTuple = time.localtime(t)</span><br><span class="line">            dstThen = timeTuple[<span class="number">-1</span>]</span><br><span class="line">            <span class="keyword">if</span> dstNow != dstThen:</span><br><span class="line">                <span class="keyword">if</span> dstNow:</span><br><span class="line">                    addend = <span class="number">3600</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    addend = <span class="number">-3600</span></span><br><span class="line">                timeTuple = time.localtime(t + addend)</span><br><span class="line">        dfn = self.rotation_filename(self.baseFilename + <span class="string">"."</span> +</span><br><span class="line">                                     time.strftime(self.suffix, timeTuple))</span><br><span class="line">        <span class="keyword">if</span> os.path.exists(dfn):</span><br><span class="line">            os.remove(dfn)</span><br><span class="line">        self.rotate(self.baseFilename, dfn)</span><br><span class="line">        <span class="keyword">if</span> self.backupCount &gt; <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">for</span> s <span class="keyword">in</span> self.getFilesToDelete():</span><br><span class="line">                os.remove(s)</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> self.delay:</span><br><span class="line">            self.stream = self._open()</span><br><span class="line">        newRolloverAt = self.computeRollover(currentTime)</span><br><span class="line">        <span class="keyword">while</span> newRolloverAt &lt;= currentTime:</span><br><span class="line">            newRolloverAt = newRolloverAt + self.interval</span><br><span class="line">        <span class="comment">#If DST changes and midnight or weekly rollover, adjust for this.</span></span><br><span class="line">        <span class="keyword">if</span> (self.when == <span class="string">'MIDNIGHT'</span> <span class="keyword">or</span> self.when.startswith(<span class="string">'W'</span>)) <span class="keyword">and</span> <span class="keyword">not</span> self.utc:</span><br><span class="line">            dstAtRollover = time.localtime(newRolloverAt)[<span class="number">-1</span>]</span><br><span class="line">            <span class="keyword">if</span> dstNow != dstAtRollover:</span><br><span class="line">                <span class="keyword">if</span> <span class="keyword">not</span> dstNow:  <span class="comment"># DST kicks in before next rollover, so we need to deduct an hour</span></span><br><span class="line">                    addend = <span class="number">-3600</span></span><br><span class="line">                <span class="keyword">else</span>:           <span class="comment"># DST bows out before next rollover, so we need to add an hour</span></span><br><span class="line">                    addend = <span class="number">3600</span></span><br><span class="line">                newRolloverAt += addend</span><br><span class="line">        self.rolloverAt = newRolloverAt</span><br></pre></td></tr></table></figure>
+<p>在初始化的过程中，首先会解析时间设定计算时间间隔<code>interval</code>，然后通过<code>computeRollover</code>初始化<code>rolloverAt</code>，也就是翻篇的时间点。在<code>emit</code>的时候，也会直接通过当前时间判断是否超过翻篇时间，超过的话，就会执行<code>doRollover</code>。</p>
+<p><code>doRollover</code>总共做了这几件事情：</p>
+<ul>
+<li>关闭当前文件流</li>
+<li>根据当前时间生成需要归档的日志文件名</li>
+<li>执行翻篇，将当前日志文件重命名，归档标注为特定时间</li>
+<li>删除冗余的旧文件</li>
+<li>如果不是lazy-load，直接调用<code>_open</code>生成新的文件</li>
+<li>计算新的翻篇时间点</li>
+</ul>
+<p>可以看到，<code>baseFilename</code>其实是个中间态的文件名，实质翻篇操作会是重命名文件，修改为带特定时间信息的文件名。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在<code>logging.handlers</code>里，除了上述三种<code>handler</code>外，还有许许多多的<code>handler</code>定义。有兴趣的同学可以自行挖掘！</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+      
+<div style="border: 1px solid black; margin-top: 32px; margin-bottom: 32px">
+  <div style="margin-left:10px">
+    <span style="font-weight:bold">版权声明</span>
+    <br>
+    <span>本文为博客<a href="https://utmhikari.github.io" style="color:#258FC6">HiKariのTechLab</a>原创文章，转载请标明出处，谢谢~~~</span>
+  </div>
+</div>
+
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/日志/" rel="tag"># 日志</a>
+          
+            <a href="/tags/Handler/" rel="tag"># Handler</a>
+          
+            <a href="/tags/stderr/" rel="tag"># stderr</a>
+          
+            <a href="/tags/TimedRotatingFileHandler/" rel="tag"># TimedRotatingFileHandler</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/04/09/hardpython/4_log_1/" rel="next" title="【Hard Python】【第四章-日志】1、Logger与Manager的源码实现">
+                <i class="fa fa-chevron-left"></i> 【Hard Python】【第四章-日志】1、Logger与Manager的源码实现
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2022/05/08/hardpython/5_str_1/" rel="prev" title="【Hard Python】【第五章-字符串】1、unicode，py3的字符串实现">
+                【Hard Python】【第五章-字符串】1、unicode，py3的字符串实现 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="ひかり.HDQ">
+            
+              <p class="site-author-name" itemprop="name">ひかり.HDQ</p>
+              <div class="site-description motion-element" itemprop="description">talk is cheap, code is rich</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">155</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">415</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="GitHub &rarr; https://github.com/utmhikari"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="bWFpbHRvOmhkcTk0MDYyM0AxMjYuY29t" title="Mail &rarr; mailto:hdq940623@126.com"><i class="fa fa-fw fa-envelope"></i>Mail</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly90ZXN0ZXJob21lLmNvbS91dG1oaWthcmk=" title="TesterHome &rarr; https://testerhome.com/utmhikari"><i class="fa fa-fw fa-tumblr"></i>TesterHome</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vaWQvdXRtaGlrYXJp" title="Steam &rarr; https://steamcommunity.com/id/utmhikari"><i class="fa fa-fw fa-steam"></i>Steam</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9zcGFjZS5iaWxpYmlsaS5jb20vMTUwNzUxMTQv" title="Bilibili &rarr; https://space.bilibili.com/15075114/"><i class="fa fa-fw fa-bold"></i>Bilibili</span>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#StreamHandler"><span class="nav-number">1.</span> <span class="nav-text">StreamHandler</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FileHandler"><span class="nav-number">2.</span> <span class="nav-text">FileHandler</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TimedRotatingFileHandler"><span class="nav-number">3.</span> <span class="nav-text">TimedRotatingFileHandler</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2019 – <span itemprop="copyrightYear">2024</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ひかり.HDQ</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="//cdn.staticfile.org/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script src="//cdn.staticfile.org/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+
+  
+  <script src="//cdn.staticfile.org/velocity/1.2.1/velocity.min.js"></script>
+
+  
+  <script src="//cdn.staticfile.org/velocity/1.2.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.1"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.1"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+  <script src="/js/src/exturl.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('5');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'manual') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+if ($('body').find('pre.mermaid').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.staticfile.org/mermaid/8.0.0-rc.8/mermaid.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      mermaid.initialize({
+        theme: 'dark',
+        logLevel: 3,
+        flowchart: { curve: 'linear' },
+        gantt: { axisFormat: '%m/%d/%Y' },
+        sequence: { actorMargin: 50 }
+      });
+    }
+  });
+}
+</script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+  $('.highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+  
+
+  
+
+</body>
+</html>

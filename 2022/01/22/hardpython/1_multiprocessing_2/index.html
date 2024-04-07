@@ -1,0 +1,2278 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta name="baidu-site-verification" content="sc1B5Cxcoz">
+  <meta name="google-site-verification" content="OLcRj7lMnauxKrhFT3Q8Nvcexgv22NvlEmVZShKQKR8">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link rel="stylesheet" href="//cdn.staticfile.org/font-awesome/4.6.2/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/uploads/apple-touch.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/uploads/favicon-32x32.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/uploads/favicon-16x16.png?v=7.0.1">
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.1',
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"fadeIn","sidebar":"fadeIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="第一话详细讲解了Process新进程是如何被创建的，接下来就来讲一下进程之间有什么通信的方法。 要在multiprocessing中实现进程间通信，最直接的方法是采用Pipe或者Queue。其用法如下：">
+<meta name="keywords" content="python,multiprocessing,pipe,queue,进程通信">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Hard Python】【第一章-多进程】2、Pipe和Queue，进程间通信">
+<meta property="og:url" content="http://utmhikari.github.io/2022/01/22/hardpython/1_multiprocessing_2/index.html">
+<meta property="og:site_name" content="HiKariのTechLab">
+<meta property="og:description" content="第一话详细讲解了Process新进程是如何被创建的，接下来就来讲一下进程之间有什么通信的方法。 要在multiprocessing中实现进程间通信，最直接的方法是采用Pipe或者Queue。其用法如下：">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2024-04-07T02:48:06.923Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【Hard Python】【第一章-多进程】2、Pipe和Queue，进程间通信">
+<meta name="twitter:description" content="第一话详细讲解了Process新进程是如何被创建的，接下来就来讲一下进程之间有什么通信的方法。 要在multiprocessing中实现进程间通信，最直接的方法是采用Pipe或者Queue。其用法如下：">
+
+
+
+
+
+
+  <link rel="canonical" href="http://utmhikari.github.io/2022/01/22/hardpython/1_multiprocessing_2/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>【Hard Python】【第一章-多进程】2、Pipe和Queue，进程间通信 | HiKariのTechLab</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HiKariのTechLab</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">光の技术屋</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+  
+
+  
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="关注HiKariのGithub" aria-label="关注HiKariのGithub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></span>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2022/01/22/hardpython/1_multiprocessing_2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">【Hard Python】【第一章-多进程】2、Pipe和Queue，进程间通信
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2022-01-22 19:05:02" itemprop="dateCreated datePublished" datetime="2022-01-22T19:05:02+08:00">2022-01-22</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Hard-Python/" itemprop="url" rel="index"><span itemprop="name">Hard Python</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjIvMDEvMTYvaGFyZHB5dGhvbi8xX211bHRpcHJvY2Vzc2luZ18xLw==" title="https://utmhikari.top/2022/01/16/hardpython/1_multiprocessing_1/">第一话<i class="fa fa-external-link"></i></span>详细讲解了Process新进程是如何被创建的，接下来就来讲一下进程之间有什么通信的方法。</p>
+<p>要在<code>multiprocessing</code>中实现进程间通信，最直接的方法是采用<code>Pipe</code>或者<code>Queue</code>。其用法如下：</p>
+<a id="more"></a>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Process, Pipe, Queue</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> mp_module <span class="keyword">import</span> log, seg</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_test_queue</span><span class="params">(q)</span>:</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        msg = q.get()</span><br><span class="line">        <span class="keyword">if</span> msg == <span class="string">'quit'</span>:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            log(<span class="string">f'recv: <span class="subst">&#123;msg&#125;</span>'</span>)</span><br><span class="line">    log(<span class="string">'child process end~'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_queue</span><span class="params">()</span>:</span></span><br><span class="line">    seg(<span class="string">'test queue start'</span>)</span><br><span class="line">    q = Queue()</span><br><span class="line">    p = Process(target=_test_queue, args=(q,))</span><br><span class="line">    p.start()</span><br><span class="line">    cmds = [<span class="string">'helloworld'</span>, <span class="string">'testmsg'</span>, <span class="string">'quit'</span>]</span><br><span class="line">    <span class="keyword">for</span> cmd <span class="keyword">in</span> cmds:</span><br><span class="line">        log(<span class="string">f'send: <span class="subst">&#123;cmd&#125;</span>'</span>)</span><br><span class="line">        q.put(cmd)</span><br><span class="line">        time.sleep(<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">assert</span> <span class="keyword">not</span> p.is_alive()</span><br><span class="line">    seg(<span class="string">'test queue end'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_test_pipe</span><span class="params">(r)</span>:</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        msg = r.recv()</span><br><span class="line">        <span class="keyword">if</span> msg == <span class="string">'quit'</span>:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            log(<span class="string">f'recv: <span class="subst">&#123;msg&#125;</span>'</span>)</span><br><span class="line">    log(<span class="string">'child process end~'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_pipe</span><span class="params">()</span>:</span></span><br><span class="line">    seg(<span class="string">'test pipe start'</span>)</span><br><span class="line">    r, w = Pipe()</span><br><span class="line">    p = Process(target=_test_pipe, args=(r,))</span><br><span class="line">    p.start()</span><br><span class="line">    cmds = [<span class="string">'helloworld'</span>, <span class="string">'testmsg'</span>, <span class="string">'quit'</span>]</span><br><span class="line">    <span class="keyword">for</span> cmd <span class="keyword">in</span> cmds:</span><br><span class="line">        log(<span class="string">f'send: <span class="subst">&#123;cmd&#125;</span>'</span>)</span><br><span class="line">        w.send(cmd)</span><br><span class="line">        time.sleep(<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">assert</span> <span class="keyword">not</span> p.is_alive()</span><br><span class="line">    seg(<span class="string">'test pipe end'</span>)</span><br></pre></td></tr></table></figure>
+<p>形式上非常简单。<code>Pipe</code>创建了一对<code>reader</code>跟<code>writer</code>，将<code>reader</code>传入子进程，主进程在<code>writer</code>写入数据，子进程即能通过<code>reader</code>读取到；<code>Queue</code>则更为方便，其实例能够直接传入子进程。主进程调用<code>put</code>即可写入数据，子进程调用<code>get</code>即可获取数据。</p>
+<p>首先我们先看<code>Pipe</code>在windows下的实现：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Pipe</span><span class="params">(duplex=True)</span>:</span></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    Returns pair of connection objects at either end of a pipe</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    address = arbitrary_address(<span class="string">'AF_PIPE'</span>)</span><br><span class="line">    <span class="keyword">if</span> duplex:</span><br><span class="line">        openmode = _winapi.PIPE_ACCESS_DUPLEX</span><br><span class="line">        access = _winapi.GENERIC_READ | _winapi.GENERIC_WRITE</span><br><span class="line">        obsize, ibsize = BUFSIZE, BUFSIZE</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        openmode = _winapi.PIPE_ACCESS_INBOUND</span><br><span class="line">        access = _winapi.GENERIC_WRITE</span><br><span class="line">        obsize, ibsize = <span class="number">0</span>, BUFSIZE</span><br><span class="line"></span><br><span class="line">    h1 = _winapi.CreateNamedPipe(</span><br><span class="line">        address, openmode | _winapi.FILE_FLAG_OVERLAPPED |</span><br><span class="line">        _winapi.FILE_FLAG_FIRST_PIPE_INSTANCE,</span><br><span class="line">        _winapi.PIPE_TYPE_MESSAGE | _winapi.PIPE_READMODE_MESSAGE |</span><br><span class="line">        _winapi.PIPE_WAIT,</span><br><span class="line">        <span class="number">1</span>, obsize, ibsize, _winapi.NMPWAIT_WAIT_FOREVER,</span><br><span class="line">        <span class="comment"># default security descriptor: the handle cannot be inherited</span></span><br><span class="line">        _winapi.NULL</span><br><span class="line">        )</span><br><span class="line">    h2 = _winapi.CreateFile(</span><br><span class="line">        address, access, <span class="number">0</span>, _winapi.NULL, _winapi.OPEN_EXISTING,</span><br><span class="line">        _winapi.FILE_FLAG_OVERLAPPED, _winapi.NULL</span><br><span class="line">        )</span><br><span class="line">    _winapi.SetNamedPipeHandleState(</span><br><span class="line">        h2, _winapi.PIPE_READMODE_MESSAGE, <span class="literal">None</span>, <span class="literal">None</span></span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    overlapped = _winapi.ConnectNamedPipe(h1, overlapped=<span class="literal">True</span>)</span><br><span class="line">    _, err = overlapped.GetOverlappedResult(<span class="literal">True</span>)</span><br><span class="line">    <span class="keyword">assert</span> err == <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    c1 = PipeConnection(h1, writable=duplex)</span><br><span class="line">    c2 = PipeConnection(h2, readable=duplex)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> c1, c2</span><br></pre></td></tr></table></figure>
+<p><code>h1</code>与<code>h2</code>互为服务端/客户端的关系。<code>h1</code>通过<code>CreateNamedPipe</code>创建，之后<code>h2</code>通过<code>CreateFile</code>连接到<code>h1</code>的<code>NamedPipe</code>上。之后用<code>PipeConnection</code>封装<code>h1</code>和<code>h2</code>两端，返回<code>reader</code>跟<code>writer</code>。当然，两个管道入口是否双工也是可选项。</p>
+<p>经过<code>PipeConnection</code>的封装，管道即拥有了发送或接收<code>python</code>对象的方法。<code>python</code>对象的序列化/反序列化会用内置库<code>pickle</code>来支持。被<code>pickle</code>的对象会保留特定的信息，比如某个模块<code>def</code>的函数，在<code>pickle</code>时除了对函数本身进行序列化外，也会封存函数所属模块的信息。在<code>unpickle</code>时，如果找不到对应模块的信息，就会报错。因此多进程之间通信python对象时，需要留意序列化/反序列化后对应对象的取值/模块环境等情况。<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnB5dGhvbi5vcmcvemgtY24vMy9saWJyYXJ5L3BpY2tsZS5odG1s" title="https://docs.python.org/zh-cn/3/library/pickle.html">pickle的官方文档<i class="fa fa-external-link"></i></span>给到了我们足够的信息去了解这些机制。</p>
+<p>接下来我们转向<code>Queue</code>的实现。相对于<code>Pipe</code>，<code>Queue</code>是对其的封装，并提供了更多的功能。这里我们完整列举一下<code>Queue</code>的关键代码：：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Queue</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, maxsize=<span class="number">0</span>, *, ctx)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> maxsize &lt;= <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">from</span> .synchronize <span class="keyword">import</span> SEM_VALUE_MAX <span class="keyword">as</span> maxsize</span><br><span class="line">        self._maxsize = maxsize</span><br><span class="line">        self._reader, self._writer = connection.Pipe(duplex=<span class="literal">False</span>)</span><br><span class="line">        self._rlock = ctx.Lock()</span><br><span class="line">        self._opid = os.getpid()</span><br><span class="line">        <span class="keyword">if</span> sys.platform == <span class="string">'win32'</span>:</span><br><span class="line">            self._wlock = <span class="literal">None</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self._wlock = ctx.Lock()</span><br><span class="line">        self._sem = ctx.BoundedSemaphore(maxsize)</span><br><span class="line">        self._ignore_epipe = <span class="literal">False</span></span><br><span class="line">        self._reset()</span><br><span class="line">        <span class="keyword">if</span> sys.platform != <span class="string">'win32'</span>:</span><br><span class="line">            register_after_fork(self, Queue._after_fork)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getstate__</span><span class="params">(self)</span>:</span></span><br><span class="line">        context.assert_spawning(self)</span><br><span class="line">        <span class="keyword">return</span> (self._ignore_epipe, self._maxsize, self._reader, self._writer,</span><br><span class="line">                self._rlock, self._wlock, self._sem, self._opid)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__setstate__</span><span class="params">(self, state)</span>:</span></span><br><span class="line">        (self._ignore_epipe, self._maxsize, self._reader, self._writer,</span><br><span class="line">         self._rlock, self._wlock, self._sem, self._opid) = state</span><br><span class="line">        self._reset()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_reset</span><span class="params">(self, after_fork=False)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> after_fork:</span><br><span class="line">            self._notempty._at_fork_reinit()</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self._notempty = threading.Condition(threading.Lock())</span><br><span class="line">        self._buffer = collections.deque()</span><br><span class="line">        self._thread = <span class="literal">None</span></span><br><span class="line">        self._jointhread = <span class="literal">None</span></span><br><span class="line">        self._joincancelled = <span class="literal">False</span></span><br><span class="line">        self._closed = <span class="literal">False</span></span><br><span class="line">        self._close = <span class="literal">None</span></span><br><span class="line">        self._send_bytes = self._writer.send_bytes</span><br><span class="line">        self._recv_bytes = self._reader.recv_bytes</span><br><span class="line">        self._poll = self._reader.poll</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">put</span><span class="params">(self, obj, block=True, timeout=None)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> self._closed:</span><br><span class="line">            <span class="keyword">raise</span> ValueError(<span class="string">f"Queue <span class="subst">&#123;self!r&#125;</span> is closed"</span>)</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> self._sem.acquire(block, timeout):</span><br><span class="line">            <span class="keyword">raise</span> Full</span><br><span class="line"></span><br><span class="line">        <span class="keyword">with</span> self._notempty:</span><br><span class="line">            <span class="keyword">if</span> self._thread <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">                self._start_thread()</span><br><span class="line">            self._buffer.append(obj)</span><br><span class="line">            self._notempty.notify()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self, block=True, timeout=None)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> self._closed:</span><br><span class="line">            <span class="keyword">raise</span> ValueError(<span class="string">f"Queue <span class="subst">&#123;self!r&#125;</span> is closed"</span>)</span><br><span class="line">        <span class="keyword">if</span> block <span class="keyword">and</span> timeout <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">with</span> self._rlock:</span><br><span class="line">                res = self._recv_bytes()</span><br><span class="line">            self._sem.release()</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">if</span> block:</span><br><span class="line">                deadline = time.monotonic() + timeout</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> self._rlock.acquire(block, timeout):</span><br><span class="line">                <span class="keyword">raise</span> Empty</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                <span class="keyword">if</span> block:</span><br><span class="line">                    timeout = deadline - time.monotonic()</span><br><span class="line">                    <span class="keyword">if</span> <span class="keyword">not</span> self._poll(timeout):</span><br><span class="line">                        <span class="keyword">raise</span> Empty</span><br><span class="line">                <span class="keyword">elif</span> <span class="keyword">not</span> self._poll():</span><br><span class="line">                    <span class="keyword">raise</span> Empty</span><br><span class="line">                res = self._recv_bytes()</span><br><span class="line">                self._sem.release()</span><br><span class="line">            <span class="keyword">finally</span>:</span><br><span class="line">                self._rlock.release()</span><br><span class="line">        <span class="keyword">return</span> _ForkingPickler.loads(res)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">close</span><span class="params">(self)</span>:</span></span><br><span class="line">        self._closed = <span class="literal">True</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            self._reader.close()</span><br><span class="line">        <span class="keyword">finally</span>:</span><br><span class="line">            close = self._close</span><br><span class="line">            <span class="keyword">if</span> close:</span><br><span class="line">                self._close = <span class="literal">None</span></span><br><span class="line">                close()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_start_thread</span><span class="params">(self)</span>:</span></span><br><span class="line">        self._buffer.clear()</span><br><span class="line">        self._thread = threading.Thread(</span><br><span class="line">            target=Queue._feed,</span><br><span class="line">            args=(self._buffer, self._notempty, self._send_bytes,</span><br><span class="line">                  self._wlock, self._writer.close, self._ignore_epipe,</span><br><span class="line">                  self._on_queue_feeder_error, self._sem),</span><br><span class="line">            name=<span class="string">'QueueFeederThread'</span></span><br><span class="line">        )</span><br><span class="line">        self._thread.daemon = <span class="literal">True</span></span><br><span class="line">        self._thread.start()</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> self._joincancelled:</span><br><span class="line">            self._jointhread = Finalize(</span><br><span class="line">                self._thread, Queue._finalize_join,</span><br><span class="line">                [weakref.ref(self._thread)],</span><br><span class="line">                exitpriority=<span class="number">-5</span></span><br><span class="line">                )</span><br><span class="line">        self._close = Finalize(</span><br><span class="line">            self, Queue._finalize_close,</span><br><span class="line">            [self._buffer, self._notempty],</span><br><span class="line">            exitpriority=<span class="number">10</span></span><br><span class="line">            )</span><br><span class="line"></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_feed</span><span class="params">(buffer, notempty, send_bytes, writelock, close, ignore_epipe,</span></span></span><br><span class="line"><span class="function"><span class="params">              onerror, queue_sem)</span>:</span></span><br><span class="line">        debug(<span class="string">'starting thread to feed data to pipe'</span>)</span><br><span class="line">        nacquire = notempty.acquire</span><br><span class="line">        nrelease = notempty.release</span><br><span class="line">        nwait = notempty.wait</span><br><span class="line">        bpopleft = buffer.popleft</span><br><span class="line">        sentinel = _sentinel</span><br><span class="line">        <span class="keyword">if</span> sys.platform != <span class="string">'win32'</span>:</span><br><span class="line">            wacquire = writelock.acquire</span><br><span class="line">            wrelease = writelock.release</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            wacquire = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                nacquire()</span><br><span class="line">                <span class="keyword">try</span>:</span><br><span class="line">                    <span class="keyword">if</span> <span class="keyword">not</span> buffer:</span><br><span class="line">                        nwait()</span><br><span class="line">                <span class="keyword">finally</span>:</span><br><span class="line">                    nrelease()</span><br><span class="line">                <span class="keyword">try</span>:</span><br><span class="line">                    <span class="keyword">while</span> <span class="number">1</span>:</span><br><span class="line">                        obj = bpopleft()</span><br><span class="line">                        <span class="keyword">if</span> obj <span class="keyword">is</span> sentinel:</span><br><span class="line">                            debug(<span class="string">'feeder thread got sentinel -- exiting'</span>)</span><br><span class="line">                            close()</span><br><span class="line">                            <span class="keyword">return</span></span><br><span class="line">                        obj = _ForkingPickler.dumps(obj)</span><br><span class="line">                        <span class="keyword">if</span> wacquire <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">                            send_bytes(obj)</span><br><span class="line">                        <span class="keyword">else</span>:</span><br><span class="line">                            wacquire()</span><br><span class="line">                            <span class="keyword">try</span>:</span><br><span class="line">                                send_bytes(obj)</span><br><span class="line">                            <span class="keyword">finally</span>:</span><br><span class="line">                                wrelease()</span><br><span class="line">                <span class="keyword">except</span> IndexError:</span><br><span class="line">                    <span class="keyword">pass</span></span><br><span class="line">            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                <span class="keyword">if</span> ignore_epipe <span class="keyword">and</span> getattr(e, <span class="string">'errno'</span>, <span class="number">0</span>) == errno.EPIPE:</span><br><span class="line">                    <span class="keyword">return</span></span><br><span class="line">                <span class="keyword">if</span> is_exiting():</span><br><span class="line">                    info(<span class="string">'error in queue thread: %s'</span>, e)</span><br><span class="line">                    <span class="keyword">return</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    queue_sem.release()</span><br><span class="line">                    onerror(e, obj)</span><br></pre></td></tr></table></figure>
+<p>在<code>Queue</code>的<code>__init__</code>函数中，构造了这么些对象：</p>
+<ul>
+<li><code>self._maxsize</code>：<code>Queue</code>队列的最大长度</li>
+<li><code>self._reader</code>, <code>self._writer</code>：<code>pipe</code>的两端</li>
+<li><code>self._rlock</code>：<code>self._reader</code>的读锁</li>
+<li><code>self._wlock</code>：<code>self._writer</code>的写锁</li>
+<li><code>self._sem</code>：以<code>self._maxsize</code>为基准的信号量，用来记录队列填满情况</li>
+<li><code>self._notempty</code>：队列非空的条件变量。如果队列为空，需要<code>wait</code></li>
+<li><code>self._buffer</code>：存储<code>python</code>对象的队列<code>deque</code></li>
+<li><code>self._thread</code>：消费线程，用于消费<code>self._buffer</code>中的内容并发送到<code>pipe</code>中</li>
+<li><code>self._jointhread</code>：关闭消费线程的<code>finalizer</code></li>
+<li><code>self._close</code>：关闭<code>pipe</code>的<code>finalizer</code></li>
+</ul>
+<p>其中还要留意一点是，<code>Queue</code>实例本身是要传给<code>Process</code>实例，并在另一个进程被反序列化一次。因此为了保证序列化/反序列化之后部分状态得到保留（比如<code>pipe</code>），<code>Queue</code>的类定义中采用了<code>__getstate__</code>和<code>__setstate__</code>两个钩子去实现实例内部状态的存储与读取。这个特性在<code>pickle</code>的官方文档内有详细的说明。</p>
+<p>大致了解了这些对象的含义后，接下来，就详细把<code>Queue</code>的工作流程列一下：</p>
+<ul>
+<li>用户调用<code>put</code>，信号量<code>self._sem</code>增加一个占位，之后发现消费线程未启动，通过<code>self._start_thread</code>启动消费线程<code>Queue._feed</code></li>
+<li>消费线程进入循环，发现队列<code>self._buffer</code>为空，条件变量<code>self._notempty</code>进入<code>wait</code></li>
+<li><code>self._start_thread</code>之后，将<code>python</code>对象推入<code>self._buffer</code>，并<code>notify</code>条件变量<code>self._notempty</code><ul>
+<li>这一步很有概率发生在上一步之前，不过无所谓了</li>
+</ul>
+</li>
+<li><code>_feed</code>退出<code>wait</code>状态，<code>pop</code>出<code>python</code>对象，然后将其<code>pickle</code>，最后调用<code>self._writer._send_bytes</code>发送序列化之后的数据到<code>pipe</code>内<ul>
+<li>这里注意，如果<code>python</code>对象是<code>object()</code>，会触发<code>self._writer.close</code>。因此实际业务代码中最好不要出现发送<code>object()</code>的情况</li>
+</ul>
+</li>
+<li>用户调用<code>get</code>，通过<code>self._reader</code>读取<code>pipe</code>中的数据，并且让信号量<code>self._sem</code>释放一个占位。之后对数据进行反序列化，得到发送过来的对象</li>
+<li>用户调用<code>close</code>，首先关闭<code>self._reader</code>，然后在<code>self._writer</code>中发送一个<code>object()</code>。<code>_feed</code>会一直消费队列，直到检测到最后的<code>object()</code>，终于触发<code>self._writer</code>的关闭。这样<code>pipe</code>的两端就都关闭，并且<code>buffer</code>里也没有任何其它数据了。</li>
+<li>用户调用<code>join_thread</code>，触发<code>self._thread.join()</code>，关闭消费线程</li>
+</ul>
+<p>在<code>multiprocessing</code>当中，<code>Queue</code>还有两种变体，分别为<code>SimpleQueue</code>和<code>JoinableQueue</code>。<code>SimpleQueue</code>没有提供<code>blocking</code>或<code>timeout</code>的功能，只是简单创建一对<code>pipe</code>交换序列化的数据。<code>JoinableQueue</code>则是在<code>Queue</code>的基础上增加了<code>join</code>的功能，其实现上是增加了一个初始值0的信号量<code>_unfinished_tasks</code>以及一个条件变量<code>_cond</code>。<code>JoinableQueue</code>在调用<code>join</code>时，如果<code>_unfinished_tasks</code>信号量不为0会进入<code>_cond.wait</code>，这是因为每次<code>put</code>的时候<code>_unfinished_tasks</code>信号量会<code>release</code>一次，只有用户每次<code>get</code>之后显式调用<code>JoinableQueue.task_done</code>才能<code>acquire</code>一次信号量，最终使得<code>_unfinished_tasks</code>信号量归零并<code>notify_all</code>所有<code>join</code>的调用。</p>
+<p>最后，进程间通信的方法说到底，除了<code>Pipe</code>跟<code>Queue</code>外，采用<code>Manager</code>共享内存或者直接用<code>socket</code>网络通信都是ok的方式。当然，如果是在单节点上面，并且是一个内聚的<code>python</code>项目的话，<code>Queue</code>是不二选择。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+      
+<div style="border: 1px solid black; margin-top: 32px; margin-bottom: 32px">
+  <div style="margin-left:10px">
+    <span style="font-weight:bold">版权声明</span>
+    <br>
+    <span>本文为博客<a href="https://utmhikari.github.io" style="color:#258FC6">HiKariのTechLab</a>原创文章，转载请标明出处，谢谢~~~</span>
+  </div>
+</div>
+
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/multiprocessing/" rel="tag"># multiprocessing</a>
+          
+            <a href="/tags/pipe/" rel="tag"># pipe</a>
+          
+            <a href="/tags/queue/" rel="tag"># queue</a>
+          
+            <a href="/tags/进程通信/" rel="tag"># 进程通信</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/01/16/hardpython/1_multiprocessing_1/" rel="next" title="【Hard Python】【第一章-多进程】1、Process，新进程的诞生">
+                <i class="fa fa-chevron-left"></i> 【Hard Python】【第一章-多进程】1、Process，新进程的诞生
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2022/01/30/hardpython/1_multiprocessing_3/" rel="prev" title="【Hard Python】【第一章-多进程】3、Pool，多任务并行进程池">
+                【Hard Python】【第一章-多进程】3、Pool，多任务并行进程池 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="ひかり.HDQ">
+            
+              <p class="site-author-name" itemprop="name">ひかり.HDQ</p>
+              <div class="site-description motion-element" itemprop="description">talk is cheap, code is rich</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">155</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">415</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="GitHub &rarr; https://github.com/utmhikari"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="bWFpbHRvOmhkcTk0MDYyM0AxMjYuY29t" title="Mail &rarr; mailto:hdq940623@126.com"><i class="fa fa-fw fa-envelope"></i>Mail</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly90ZXN0ZXJob21lLmNvbS91dG1oaWthcmk=" title="TesterHome &rarr; https://testerhome.com/utmhikari"><i class="fa fa-fw fa-tumblr"></i>TesterHome</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vaWQvdXRtaGlrYXJp" title="Steam &rarr; https://steamcommunity.com/id/utmhikari"><i class="fa fa-fw fa-steam"></i>Steam</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9zcGFjZS5iaWxpYmlsaS5jb20vMTUwNzUxMTQv" title="Bilibili &rarr; https://space.bilibili.com/15075114/"><i class="fa fa-fw fa-bold"></i>Bilibili</span>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2019 – <span itemprop="copyrightYear">2024</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ひかり.HDQ</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="//cdn.staticfile.org/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script src="//cdn.staticfile.org/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+
+  
+  <script src="//cdn.staticfile.org/velocity/1.2.1/velocity.min.js"></script>
+
+  
+  <script src="//cdn.staticfile.org/velocity/1.2.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.1"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.1"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+  <script src="/js/src/exturl.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('5');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'manual') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+if ($('body').find('pre.mermaid').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.staticfile.org/mermaid/8.0.0-rc.8/mermaid.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      mermaid.initialize({
+        theme: 'dark',
+        logLevel: 3,
+        flowchart: { curve: 'linear' },
+        gantt: { axisFormat: '%m/%d/%Y' },
+        sequence: { actorMargin: 50 }
+      });
+    }
+  });
+}
+</script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+  $('.highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+  
+
+  
+
+</body>
+</html>
