@@ -94,7 +94,9 @@ func launchConsumer(c <-chan int) {
 }
 ```
 
-channel使用的基本原则是，从producer端去close掉channel。produce端触发close后，不管有多少个consumer，consumer端就能够知道channel被close掉，进而结束掉自己的chunk。因此，不论是怎样的生产消费模型，都需要保证channel仅被close一次。也就是说，close掉channel的操作，放到最外层函数的defer里面，就能解决问题。
+channel使用的基本原则是，从producer端去close掉channel。produce端触发close后，consumer端就能够知道channel被close掉，进而结束掉自己的chunk。而如果是consumer端主动close，producer端在不知情的情况下，往channel发送消息，就会panic。
+
+因此，为了规避这个风险，一是要从producer去关channel，而是不论是怎样的生产消费模型，都需要保证channel仅被close一次。简单来讲，close掉channel的操作，放到producer最外层函数的defer里面，就能解决问题。
 
 对于单个producer的模拟，我们可以简单做一个for循环，去不断发送消息。中途打断的方式采用可cancel的context，当循环过程中检测到context被cancel掉，就停止发送消息。整个代码如下：
 
