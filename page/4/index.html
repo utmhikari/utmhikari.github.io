@@ -403,6 +403,189 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2023/01/01/gofromzero/07_reflect_module/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2023/01/01/gofromzero/07_reflect_module/" class="post-title-link" itemprop="url">【从零单排Golang】第七话：反射模块reflect使用方式探索</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2023-01-01 02:16:48" itemprop="dateCreated datePublished" datetime="2023-01-01T02:16:48+08:00">2023-01-01</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/从零单排Golang/" itemprop="url" rel="index"><span itemprop="name">从零单排Golang</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p><code>Golang</code>的反射功能，在很多场景都会用到，最基础的莫过于<code>rpc</code>、<code>orm</code>跟<code>json</code>的编解码，更复杂的可能会到做另外一门语言的虚拟机。通过反射模块，我们可以在编程语言的<code>runtime</code>运行时期间去访问内部产生对象的信息。了解反射模块的实现，对我们了解<code>Golang</code>对象机制本身，也是莫大的帮助。</p>
+<p>今天，恰逢阳康+新年，就决定来探究一下<code>Golang</code>的反射模块——<code>reflect</code>。</p>
+<p>从最基础的开始，<code>reflect</code>模块，以获取整数对象的类型信息为例，我们可以这么用：</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2023/01/01/gofromzero/07_reflect_module/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2022/12/10/codegallery/daggre/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2060,188 +2243,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2022/09/12/testlife/gautomator_ue4_android/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ひかり.HDQ">
-      <meta itemprop="description" content="talk is cheap, code is rich">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HiKariのTechLab">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2022/09/12/testlife/gautomator_ue4_android/" class="post-title-link" itemprop="url">【测试人生】GAutomator安卓UE4版本的实现机理与优化实战</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2022-09-12 17:34:58" itemprop="dateCreated datePublished" datetime="2022-09-12T17:34:58+08:00">2022-09-12</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/测试人生/" itemprop="url" rel="index"><span itemprop="name">测试人生</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>在<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjAvMDUvMDUvdGVzdGxpZmUvdHJ5X2dhdXRvbWF0b3Iv" title="https://utmhikari.top/2020/05/05/testlife/try_gautomator/">2年以前的一篇文章<i class="fa fa-external-link"></i></span>中，讲述了游戏UI自动化方案<code>GAutomator</code>的基础机理、使用方式和一些工具扩展的想法。今天，趁着<code>Game Of AutoTest</code>系列的连载，结合<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjIvMDgvMTMvZ2FtZW9mYXV0b3Rlc3QvaWkv" title="https://utmhikari.top/2022/08/13/gameofautotest/ii/">游戏自动化技术选型<i class="fa fa-external-link"></i></span>一文，笔者将深入剖析<code>GAutomator</code>作为<code>UE4</code>安卓游戏UI自动化方案的实现机理，以及自己在实际工作中对<code>GAutomator</code>的优化实践。</p>
-<h2 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h2><p><code>GAutomator</code>是这样的调用链路：</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2022/09/12/testlife/gautomator_ue4_android/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2290,7 +2291,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">155</span>
+                    <span class="site-state-item-count">156</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -3182,7 +3183,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">415</span>
+                      
+                    
+                    <span class="site-state-item-count">416</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
