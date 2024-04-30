@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>【极客日常】读2023美团技术年货的一些笔记</title>
+    <url>/2024/05/01/geekdaily/meituan_tech_notes/</url>
+    <content><![CDATA[<p>正直劳动节，翻了下2023年美团的<span class="exturl" data-url="aHR0cHM6Ly90ZWNoLm1laXR1YW4uY29tLzIwMjQvMDIvMDEvMjAyMy1zcHJpbmctZmVzdGl2YWwtcHJlc2VudC5odG1s" title="https://tech.meituan.com/2024/02/01/2023-spring-festival-present.html">技术年货<i class="fa fa-external-link"></i></span>，挑选了一些和变更风险防控和稳定性建设相关主题的文章做了下浅读。本文仅简单记一下阅读笔记。</p>
+<p>总共选读了3篇文章，分别是《基于AI+数据驱动的慢查询索引推荐》、《代码变更风险可视化系统建设与实践》，以及《AIOps在美团的探索与实践——事件管理篇》。</p>
+<a id="more"></a>
+<p>第一篇是AI推荐慢查询索引。实现推荐主要的方式是，收集大量线上SQL的索引引用数据，作为训练集，再根据线上慢查询的实际情况，去推断补充哪一组索引比较合适。这个方案可以作为慢查询治理的一个环节，并且通过相似库表的索引分析，甚至在慢查询没有出现的情况下“治未病”，而不是等到慢查询实际出现后再做紧急修复。从这个角度来看是挺有价值的。</p>
+<p>第二篇是代码风险可视化建设。实际阅读的时候，比起代码分析的技术，会更加关注这套可视化能力所赋能的场景。从变更风险防控角度，变更影响面分析一直是一类难点，这套方案则从代码工程类型、风险特征识别、可定制化风险、单服务/跨服务影响等层面做了多维度的分析，并且这些分析内容可以额外辅助到配置变更影响判断和接口自动化用例推荐上，整体来看可应用的场景比较广泛。</p>
+<p>同时，在代码风险可读性方面，提供了上下游跳转和实时链路拓扑的试图，从CR的角度来说也是非常及时的，而不是等到变更上线的时候再给一个血缘分析的影响面视图。</p>
+<p>第三篇是AIOps在美团的探索与实践，主要侧重于事件管理部分。变更事件是理解变更过程的核心信息来源，但存在数据复杂多样化、领域知识强等复杂的问题。从事件管理角度，美团给出了风险预防、故障发现、事件处理和事件运营等几个维度的能力。</p>
+<p>在风险识别方面，主要依赖配置文本/结构合法性检查以及灰度&amp;未变更&amp;历史变更的ABDiff去探测指标异常。在故障发现和事件处理方面，主要通过异常链路拓展视图、相似事件推荐，帮助变更人及时看清线上问题，找到可借鉴的解决方案。在事件运营方面，则提供了一套复盘系统。整体来看，能够满足变更风险管理的基本诉求。</p>
+]]></content>
+      <categories>
+        <category>极客日常</category>
+      </categories>
+      <tags>
+        <tag>变更风险</tag>
+        <tag>AI</tag>
+        <tag>质量管理</tag>
+        <tag>慢查询</tag>
+        <tag>AIOps</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>【DIY小记】用OCR和大模型GPT生成的《软件研发效能权威指南》读书笔记</title>
     <url>/2024/04/21/diymemo/devops_ai_memo/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><span class="exturl" data-url="aHR0cHM6Ly9ib29rLmRvdWJhbi5jb20vc3ViamVjdC8zNjExNjM3NS8=" title="https://book.douban.com/subject/36116375/">《软件研发效能权威指南》<i class="fa fa-external-link"></i></span>一书，对于软件研发效能DevOps领域做什么事情，解决什么问题，给出了非常全面详尽的说明。这本书的精华，基本全部都浓缩在一张附属的海报上，海报讲述了每个章节的精简摘要，可以说是现成的读书笔记。</p>

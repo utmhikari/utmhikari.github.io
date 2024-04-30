@@ -1,3 +1,4 @@
+http://utmhikari.github.io/2024/05/01/geekdaily/meituan_tech_notes/
 http://utmhikari.github.io/2024/04/21/diymemo/devops_ai_memo/
 http://utmhikari.github.io/2024/04/13/gofromzero/16_channel/
 http://utmhikari.github.io/2024/04/04/archiart/change_analysis_framework/
@@ -97,4 +98,3 @@ http://utmhikari.github.io/2020/12/20/testlife/ue4_automation/
 http://utmhikari.github.io/2020/11/29/pythonnotes/celery/
 http://utmhikari.github.io/2020/11/15/pythonnotes/python_os_walk/
 http://utmhikari.github.io/2020/11/08/geekdaily/ue4_llm_dump_cpp/
-http://utmhikari.github.io/2020/10/24/testlife/unreal_automator/
