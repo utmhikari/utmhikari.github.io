@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>【DIY小记】用爬虫+clean-mark+zhihu-on-vscode搬运技术博客到知乎</title>
+    <url>/2024/05/01/diymemo/zhihu_blog_migrate/</url>
+    <content><![CDATA[<p>今天灵光一闪，决定调研一下自己的技术博客，可以怎样方便迁移到其它社媒平台。想要达到的效果是，把自己在掘金的专栏：<span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vY29sdW1uLzcyNDAzMzM3NzkyMjMzMzA4NzI=" title="https://juejin.cn/column/7240333779223330872">从1到∞精通Python<i class="fa fa-external-link"></i></span>，迁移到知乎上面去。</p>
+<p>简单花了两三小时时间，找到一个比较快捷的方法，就是结合python爬虫、clean-mark工具和zhihu-on-vscode插件，实现从掘金到知乎的文章搬运。</p>
+<a id="more"></a>
+<p>首先是爬虫，给定一个掘金专栏的url，直接get就能拿到整个网页信息，包括这个专栏的标题、描述还有所有文章的标题跟URL。用BeautifulSoup写个50行左右解析一下，就能够把所有信息给拿出来。</p>
+<p>然后是用<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nyb3Fhei9jbGVhbi1tYXJr" title="https://github.com/croqaz/clean-mark">clean-mark<i class="fa fa-external-link"></i></span>，遍历所有的文章url，就能够把所有文章的markdown给拿出来。</p>
+<p>最后是用zhihu-on-vscode插件，把markdown文件直接上传到知乎。知乎平台本身不支持复制markdown文本，但支持导入markdown文件。这个插件把知乎的平台交互收敛到了vscode里，并且能直接上传markdown到专栏，非常方便。</p>
+<p>通过这三个工具的结合，笔者花了一个上午，就实现了所有Python专栏文章的搬运。新专栏的链接在<span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL2NvbHVtbi9jXzE3NjkwMzY5NTI2ODUzNzk1ODU=" title="https://www.zhihu.com/column/c_1769036952685379585">这里<i class="fa fa-external-link"></i></span>，如果你想彻底拿捏Python，那这个就是你的菜。</p>
+]]></content>
+      <categories>
+        <category>DIY小记</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>爬虫</tag>
+        <tag>BeautifulSoup</tag>
+        <tag>clean-mark</tag>
+        <tag>zhihu-on-vscode</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>【极客日常】读2023美团技术年货的一些笔记</title>
     <url>/2024/05/01/geekdaily/meituan_tech_notes/</url>
     <content><![CDATA[<p>正直劳动节，翻了下2023年美团的<span class="exturl" data-url="aHR0cHM6Ly90ZWNoLm1laXR1YW4uY29tLzIwMjQvMDIvMDEvMjAyMy1zcHJpbmctZmVzdGl2YWwtcHJlc2VudC5odG1s" title="https://tech.meituan.com/2024/02/01/2023-spring-festival-present.html">技术年货<i class="fa fa-external-link"></i></span>，挑选了一些和变更风险防控和稳定性建设相关主题的文章做了下浅读。本文仅简单记一下阅读笔记。</p>
