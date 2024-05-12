@@ -403,6 +403,190 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2019/10/07/geekdaily/next_code_theme/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/10/07/geekdaily/next_code_theme/" class="post-title-link" itemprop="url">【极客日常】hexo+NexT博客自定义代码高亮主题配色CSS</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-10-07 11:14:13" itemprop="dateCreated datePublished" datetime="2019-10-07T11:14:13+08:00">2019-10-07</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/极客日常/" itemprop="url" rel="index"><span itemprop="name">极客日常</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>用hexo+NexT搭建博客的同学或许会遇到一个问题：默认的代码配色只有<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nocmlza2VtcHNvbi90b21vcnJvdy10aGVtZQ==" title="https://github.com/chriskempson/tomorrow-theme">Tomorrow Theme<i class="fa fa-external-link"></i></span>五种，如果想要自己的代码配色，应当如何自定义呢？</p>
+<p>其实也是可以的。在NexT的<code>source/css/highlight/theme.styl</code>中，我们就可以看到几种主题的具体配色：</p>
+<figure class="highlight styl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$highlight_theme</span> = hexo-config(<span class="string">"highlight_theme"</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="variable">$highlight_theme</span> == <span class="string">"normal"</span></span><br><span class="line">  <span class="variable">$highlight</span>-<span class="attribute">background</span>   = <span class="number">#f7f7f7</span></span><br><span class="line">  <span class="variable">$highlight</span>-current-line = <span class="number">#efefef</span></span><br><span class="line">  <span class="variable">$highlight</span>-selection    = <span class="number">#d6d6d6</span></span><br><span class="line">  <span class="variable">$highlight</span>-foreground   = <span class="number">#4d4d4c</span></span><br><span class="line">  <span class="variable">$highlight</span>-comment      = <span class="number">#8e908c</span></span><br><span class="line">  <span class="variable">$highlight</span>-red          = <span class="number">#c82829</span></span><br><span class="line">  <span class="variable">$highlight</span>-orange       = <span class="number">#f5871f</span></span><br><span class="line">  <span class="variable">$highlight</span>-yellow       = <span class="number">#eab700</span></span><br><span class="line">  <span class="variable">$highlight</span>-green        = <span class="number">#718c00</span></span><br><span class="line">  <span class="variable">$highlight</span>-aqua         = <span class="number">#3e999f</span></span><br><span class="line">  <span class="variable">$highlight</span>-blue         = <span class="number">#4271ae</span></span><br><span class="line">  <span class="variable">$highlight</span>-purple       = <span class="number">#8959a8</span></span><br><span class="line">  <span class="variable">$highlight</span>-gutter       = &#123;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#869194</span>,</span><br><span class="line">    bg-<span class="attribute">color</span>: <span class="number">#eff2f3</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="variable">$highlight_theme</span> == <span class="string">"night"</span></span><br><span class="line">  <span class="variable">$highlight</span>-<span class="attribute">background</span>   = <span class="number">#1d1f21</span></span><br><span class="line">  <span class="variable">$highlight</span>-current-line = <span class="number">#282a2e</span></span><br><span class="line">  <span class="variable">$highlight</span>-selection    = <span class="number">#373b41</span></span><br><span class="line">  <span class="variable">$highlight</span>-foreground   = <span class="number">#c5c8c6</span></span><br><span class="line">  <span class="variable">$highlight</span>-comment      = <span class="number">#969896</span></span><br><span class="line">  <span class="variable">$highlight</span>-red          = <span class="number">#cc6666</span></span><br><span class="line">  <span class="variable">$highlight</span>-orange       = <span class="number">#de935f</span></span><br><span class="line">  <span class="variable">$highlight</span>-yellow       = <span class="number">#f0c674</span></span><br><span class="line">  <span class="variable">$highlight</span>-green        = <span class="number">#b5bd68</span></span><br><span class="line">  <span class="variable">$highlight</span>-aqua         = <span class="number">#8abeb7</span></span><br><span class="line">  <span class="variable">$highlight</span>-blue         = <span class="number">#81a2be</span></span><br><span class="line">  <span class="variable">$highlight</span>-purple       = <span class="number">#b294bb</span></span><br><span class="line">  <span class="variable">$highlight</span>-gutter       = &#123;</span><br><span class="line">    <span class="attribute">color</span>: lighten(<span class="variable">$highlight</span>-background, <span class="number">50%</span>),</span><br><span class="line">    bg-<span class="attribute">color</span>: darken(<span class="variable">$highlight</span>-background, <span class="number">100%</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>我们可以看到其实如果要增加一个自定义主题的话，其实加一段if跟其配色，然后在配置里配置theme的关键词就好了。那么自己配色的话应该怎样参考呢？我们可以在<code>source/css/highlight/highlight.styl</code>中找到答案：</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/10/07/geekdaily/next_code_theme/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2019/10/07/geekdaily/go113_proxy/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2060,189 +2244,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2019/07/28/testlife/think_as_a_user/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ひかり.HDQ">
-      <meta itemprop="description" content="talk is cheap, code is rich">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HiKariのTechLab">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/07/28/testlife/think_as_a_user/" class="post-title-link" itemprop="url">【测试人生】一个测试开发的用户思维</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-07-28 01:07:58" itemprop="dateCreated datePublished" datetime="2019-07-28T01:07:58+08:00">2019-07-28</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/测试人生/" itemprop="url" rel="index"><span itemprop="name">测试人生</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>近几天一直在思考什么是用户思维，决定结合这一年的工作，把自己的想法记录下来。</p>
-<p>在这之前，自己一直秉持一种观念——测试开发从工作内容上，更加符合“开（码）发（农）”的定义，因此应当更加着重于技术深耕，并且在业务对接时，也尽可能地从从技术实现的角度去阐述观点与想法。但是在经过同事伙伴们的提点，以及和家中领导激烈讨（吵）论（架）了一番之后，这个观念就慢慢地改变了。</p>
-<p>测试，不仅仅是根据需求，利用各种工具，对开发交付的产品进行功能、性能、安全等测试，发现bug而后提交复现/解决方案，从而确保产品稳定（QC）。而另一些方面在于——如何确保研发计划完备进行，预防产品设计缺陷，从而保证产品体验；如何优化产品生命周期流程，从而使产品顺利上线运营（QA）。作为偏中台的测试开发，扮演的角色更像是“优化产品生命周期”的实现者，而前线上的QA与QC，则成为了我们的用户。因此在业务对接时，首先都需要尽可能满足前线同学的需求，让他们引领效率工具/平台的设计。</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/07/28/testlife/think_as_a_user/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2291,7 +2292,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">159</span>
+                    <span class="site-state-item-count">160</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -3197,7 +3198,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">422</span>
+                      
+                    
+                    <span class="site-state-item-count">423</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

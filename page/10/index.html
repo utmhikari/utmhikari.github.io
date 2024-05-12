@@ -403,6 +403,188 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2021/05/20/testlife/dungeon_autotest/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2021/05/20/testlife/dungeon_autotest/" class="post-title-link" itemprop="url">【测试人生】副本自动化测试</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2021-05-20 23:46:05" itemprop="dateCreated datePublished" datetime="2021-05-20T23:46:05+08:00">2021-05-20</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/测试人生/" itemprop="url" rel="index"><span itemprop="name">测试人生</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>许多游戏，尤其是MMO，会包含“副本”这个概念，玩家通过打副本从而获得物品奖励及属性收益。通常来讲，单个游戏所涉及的副本数量/品种较多，因此在游戏测试过程当中，很难一次性全部遍历完所有副本的流程与玩法。为了解决这个问题，可以通过自动化测试的方式去冒烟副本玩法流程、检查奖励。为了让自动化测试用例执行更加稳定且易于维护，需要一套通用的逻辑模版去实现副本玩法自动化。自动化测试流程涉及多个部分，包括玩家账号的准备、副本的进入、副本流程、奖励检查，而本文主要考虑“副本流程”的实现。</p>
+<p>副本玩法的机制可以如下描述：玩家在进入副本后，服务器会为玩家创建一个分线并让玩家执行切线操作切入副本内，而后下发副本信息，客户端则缓存信息，为玩家创建场景及指引，而后玩家根据指引游玩副本内的内容。每当玩家执行了特定的行为，比如走到指引的位置/干掉指引的怪物，就会触发这些指引绑定的触发器，触发器生效后，服务器就会同步触发出来的下一阶段的信息给到客户端，客户端便展示出下一阶段的指引，直到副本结束或者发生错误、意外退出为止。从副本机制可以看到，副本玩法的每一个步骤，在客户端中都有缓存相关的信息，在自动化的实现上，只需要每一个轮次读取副本信息，执行相关的行为即可（任务也是如此）。因此，我们可以设计如下的行为来自动跑副本：</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2021/05/20/testlife/dungeon_autotest/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2021/05/01/geekdaily/excel_diff_vxe-table/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2043,188 +2225,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2020/11/15/pythonnotes/python_os_walk/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ひかり.HDQ">
-      <meta itemprop="description" content="talk is cheap, code is rich">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HiKariのTechLab">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2020/11/15/pythonnotes/python_os_walk/" class="post-title-link" itemprop="url">【Python随笔】python的os.walk方法源码分析</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2020-11-15 15:54:30" itemprop="dateCreated datePublished" datetime="2020-11-15T15:54:30+08:00">2020-11-15</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Python随笔/" itemprop="url" rel="index"><span itemprop="name">Python随笔</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>在日常python编程中，有很多遍历文件夹内文件的需求，而os.walk方法就是一个满足该需求的例子。不熟悉这个方法的同学，刚开始用os.walk的时候难免踩坑。因此本文采用源码分析的方式，讲述os.walk的机理，让大家对于这个方法有更加深入的理解。</p>
-<p>以python3为例，os.walk方法的源码如下：</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2020/11/15/pythonnotes/python_os_walk/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2273,7 +2273,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">159</span>
+                    <span class="site-state-item-count">160</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -3179,7 +3179,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">422</span>
+                      
+                    
+                    <span class="site-state-item-count">423</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

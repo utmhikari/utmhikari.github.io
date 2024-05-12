@@ -1,3 +1,4 @@
+http://utmhikari.github.io/2024/05/12/diymemo/sz_wxtd/
 http://utmhikari.github.io/2024/05/01/diymemo/zhihu_blog_migrate/
 http://utmhikari.github.io/2024/05/01/geekdaily/meituan_tech_notes/
 http://utmhikari.github.io/2024/04/21/diymemo/devops_ai_memo/
@@ -97,4 +98,3 @@ http://utmhikari.github.io/2021/01/24/codegallery/start_fastapi/
 http://utmhikari.github.io/2021/01/01/codegallery/repomaster/
 http://utmhikari.github.io/2020/12/20/testlife/ue4_automation/
 http://utmhikari.github.io/2020/11/29/pythonnotes/celery/
-http://utmhikari.github.io/2020/11/15/pythonnotes/python_os_walk/
