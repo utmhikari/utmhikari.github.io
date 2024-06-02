@@ -1,3 +1,4 @@
+http://utmhikari.github.io/2024/06/02/archiart/code_architecture_thinkings/
 http://utmhikari.github.io/2024/05/12/diymemo/sz_wxtd/
 http://utmhikari.github.io/2024/05/01/diymemo/zhihu_blog_migrate/
 http://utmhikari.github.io/2024/05/01/geekdaily/meituan_tech_notes/
@@ -97,4 +98,3 @@ http://utmhikari.github.io/2021/02/16/gamedev/ue4_datatable_subsystem/
 http://utmhikari.github.io/2021/01/24/codegallery/start_fastapi/
 http://utmhikari.github.io/2021/01/01/codegallery/repomaster/
 http://utmhikari.github.io/2020/12/20/testlife/ue4_automation/
-http://utmhikari.github.io/2020/11/29/pythonnotes/celery/
