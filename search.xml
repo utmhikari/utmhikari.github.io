@@ -3,7 +3,7 @@
   <entry>
     <title>【极客日常】Golang一个的slice数据替换的bug排查</title>
     <url>/2024/07/20/geekdaily/golang_slice_bug/</url>
-    <content><![CDATA[<p>上周一天下班前，接到同事转来一个bug要排查，症状代码重构之后某些业务效果不符合预期。由于代码重构人是笔者，于是blame到笔者这边。经过10min左右的排查和尝试后，解决了这个问题：既往逻辑没有改动，重构时候出笔误了。</p>
+    <content><![CDATA[<p>上周某天下班前，接到同事转来一个bug要排查，症状是代码重构之后某些业务效果不符合预期，由于代码重构人是笔者，于是blame到笔者这边。经过10min左右的排查和尝试后，解决了这个问题：既往逻辑没有改动，重构时候出笔误了。</p>
 <p>简单来讲，重构之前的代码大概是这个样子：</p>
 <a id="more"></a>
 <figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">beforeRefactor</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> configListExpr = fetchConfigListExpr()</span><br><span class="line">    </span><br><span class="line">    newConfigListExpr := replaceConfigVariables(configListExpr)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> configList []Config</span><br><span class="line">    <span class="keyword">if</span> err := json.Unmarshal([]<span class="keyword">byte</span>(newConfigListExpr), &amp;configList); err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="built_in">panic</span>(<span class="string">"unmarshal configList err: "</span> + err.Error())</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> configList</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
