@@ -6,7 +6,7 @@ categories:
 tags:
 - lua
 - skynet
-- 服务端
+- 后端开发
 - 教程
 - create-skynet
 ---

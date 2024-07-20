@@ -5,7 +5,7 @@ categories:
 - 从零单排Golang
 tags:
 - Golang
-- 服务端
+- 后端开发
 - gin
 - gorm
 - CRUD
