@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>【极客日常】Golang一个的slice数据替换的bug排查</title>
+    <url>/2024/07/20/geekdaily/golang_slice_bug/</url>
+    <content><![CDATA[<p>上周一天下班前，接到同事转来一个bug要排查，症状代码重构之后某些业务效果不符合预期。由于代码重构人是笔者，于是blame到笔者这边。经过10min左右的排查和尝试后，解决了这个问题：既往逻辑没有改动，重构时候出笔误了。</p>
+<p>简单来讲，重构之前的代码大概是这个样子：</p>
+<a id="more"></a>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">beforeRefactor</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> configListExpr = fetchConfigListExpr()</span><br><span class="line">    </span><br><span class="line">    newConfigListExpr := replaceConfigVariables(configListExpr)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> configList []Config</span><br><span class="line">    <span class="keyword">if</span> err := json.Unmarshal([]<span class="keyword">byte</span>(newConfigListExpr), &amp;configList); err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="built_in">panic</span>(<span class="string">"unmarshal configList err: "</span> + err.Error())</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> configList</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>而改造业务逻辑时，因为类似于replaceVariables这类对configList批量处理的流程更多，所以定义了很多函数节点去对configList做批量的替换以及内部属性的修改。因此重构时候，就把replaceConfigVariables做了更细粒度的转换，然后同时把整个configList替换逻辑也顺带修改了下。大概改成了这样：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">afterRefactor</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> configList []Config = fetchConfigList()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> _, config := <span class="keyword">range</span> configList &#123;</span><br><span class="line">        urlList := config.URLList</span><br><span class="line">        newURLList = replaceURLListVariables(urlList)</span><br><span class="line">        config.URLList = newURLList</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> configList</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码是存在问题的。由于这次重构提的代码很多，cr时候没有发现；然后一开始排查以为是重构引起的业务逻辑变更，所以忽略了Golang本身机制导致的问题。这里的问题是，遍历slice的时候，要想改动原来slice里成员的属性，不应该用config这个复制品，而得用configList取下标这种方式来取到原始的成员实例，或者干脆把configList整个全新替换，这样才可以达到效果。</p>
+]]></content>
+      <categories>
+        <category>极客日常</category>
+      </categories>
+      <tags>
+        <tag>重构</tag>
+        <tag>Golang</tag>
+        <tag>slice</tag>
+        <tag>bug</tag>
+        <tag>指针</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>【架构艺术】大规模业务逻辑迁移实践</title>
     <url>/2024/07/20/archiart/large_scale_migration/</url>
     <content><![CDATA[<p>对于一个成熟的工程项目而言，因为项目未来发展或是和企业内部更深度融合的需要，我们可能需要对既有业务逻辑做很大规模的改动，涉及到多方面的逻辑迁移和代码重构，才能够达到下一代产品所需要的效果。</p>
@@ -2588,9 +2610,9 @@
       <tags>
         <tag>nodejs</tag>
         <tag>vue3</tag>
-        <tag>Array</tag>
         <tag>state</tag>
         <tag>reactive</tag>
+        <tag>array</tag>
       </tags>
   </entry>
   <entry>

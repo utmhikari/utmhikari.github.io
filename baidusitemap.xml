@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://utmhikari.github.io/2024/07/20/geekdaily/golang_slice_bug/</loc>
+    <lastmod>2024-07-20</lastmod>
+  </url>  <url>
+    <loc>http://utmhikari.github.io/2022/06/17/geekdaily/vue3_array_update/</loc>
+    <lastmod>2024-07-20</lastmod>
+  </url>  <url>
     <loc>http://utmhikari.github.io/2024/07/20/archiart/large_scale_migration/</loc>
     <lastmod>2024-07-20</lastmod>
   </url>  <url>
@@ -353,9 +359,6 @@
     <lastmod>2024-04-07</lastmod>
   </url>  <url>
     <loc>http://utmhikari.github.io/2021/09/11/geekdaily/vscode_git-bash/</loc>
-    <lastmod>2024-04-07</lastmod>
-  </url>  <url>
-    <loc>http://utmhikari.github.io/2022/06/17/geekdaily/vue3_array_update/</loc>
     <lastmod>2024-04-07</lastmod>
   </url>  <url>
     <loc>http://utmhikari.github.io/2022/09/04/gameofautotest/iii/</loc>

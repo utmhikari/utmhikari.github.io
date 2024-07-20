@@ -1,3 +1,4 @@
+http://utmhikari.github.io/2024/07/20/geekdaily/golang_slice_bug/
 http://utmhikari.github.io/2024/07/20/archiart/large_scale_migration/
 http://utmhikari.github.io/2024/06/02/archiart/code_architecture_thinkings/
 http://utmhikari.github.io/2024/05/12/diymemo/sz_wxtd/
@@ -97,4 +98,3 @@ http://utmhikari.github.io/2021/04/02/codegallery/protobuf_grpc_starter/
 http://utmhikari.github.io/2021/03/06/testlife/table_check/
 http://utmhikari.github.io/2021/02/16/gamedev/ue4_datatable_subsystem/
 http://utmhikari.github.io/2021/01/24/codegallery/start_fastapi/
-http://utmhikari.github.io/2021/01/01/codegallery/repomaster/
