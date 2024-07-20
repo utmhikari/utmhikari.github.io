@@ -403,6 +403,189 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2019/03/10/luatalk/luacov/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/03/10/luatalk/luacov/" class="post-title-link" itemprop="url">【Lua杂谈】解锁lua代码覆盖率测试：luacov源码分析</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-10 23:23:06" itemprop="dateCreated datePublished" datetime="2019-03-10T23:23:06+08:00">2019-03-10</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Lua杂谈/" itemprop="url" rel="index"><span itemprop="name">Lua杂谈</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>Lua 杂谈系列，就以代码覆盖率测试的 luacov 开头吧</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>说到 lua 的覆盖率测试，我们一般都会想到用<span class="exturl" data-url="aHR0cHM6LS1rZXBsZXJwcm9qZWN0LmdpdGh1Yi5pby9sdWFjb3YvaW5kZXguaHRtbA==" title="https:--keplerproject.github.io/luacov/index.html">luacov<i class="fa fa-external-link"></i></span>做代码覆盖率测试<br>在<span class="exturl" data-url="aHR0cHM6LS1ibG9nLmNzZG4ubmV0L080ZEM4T2pPN1pMNi9hcnRpY2xlL2RldGFpbHMvNzgzNzMxMTc=" title="https:--blog.csdn.net/O4dC8OjO7ZL6/article/details/78373117">干货｜使用 luacov 统计 lua 代码覆盖率<i class="fa fa-external-link"></i></span>一文中，介绍了基本的 luacov 用法，但是缺少对 luacov 深入挖掘的相关内容。并且同时，原生的 luacov 提供了一套简洁的覆盖率测试实现以及报告输出形式，但是在实际许多场景中，采用原生 luacov 还是远远满足不了需求的<br>因此，本文旨在通过分析 luacov 的实现，帮助希望了解 lua 代码覆盖率测试或是使用、二次开发 luacov 的同学尽快上手</p>
+<h2 id="获取代码覆盖率数据"><a href="#获取代码覆盖率数据" class="headerlink" title="获取代码覆盖率数据"></a>获取代码覆盖率数据</h2><p>luacov 获取代码覆盖率数据，得益于 lua 自带的 debug 库。我们从 luacov 的主类 runner 中，可以一探究竟</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/03/10/luatalk/luacov/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2019/03/09/easypython/i/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -625,7 +808,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">161</span>
+                    <span class="site-state-item-count">162</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1535,7 +1718,7 @@
                     
                       
                     
-                    <span class="site-state-item-count">424</span>
+                    <span class="site-state-item-count">423</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

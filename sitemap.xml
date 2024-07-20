@@ -2,6 +2,41 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://utmhikari.github.io/2024/07/20/archiart/large_scale_migration/</loc>
+    
+    <lastmod>2024-07-20T14:35:05.725Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://utmhikari.github.io/2019/10/20/luatalk/skynet/</loc>
+    
+    <lastmod>2024-07-20T13:11:34.279Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://utmhikari.github.io/2019/11/16/githubdiscovery/vlang/</loc>
+    
+    <lastmod>2024-07-20T13:11:25.764Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://utmhikari.github.io/2019/08/04/gofromzero/02_gin_gorm/</loc>
+    
+    <lastmod>2024-07-20T13:11:24.850Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://utmhikari.github.io/2019/10/26/luatalk/create_skynet/</loc>
+    
+    <lastmod>2024-07-20T13:11:23.695Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://utmhikari.github.io/2024/06/02/archiart/code_architecture_thinkings/</loc>
     
     <lastmod>2024-06-02T06:20:27.233Z</lastmod>
@@ -436,13 +471,6 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2019/10/20/luatalk/skynet/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.925Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://utmhikari.github.io/2019/09/12/luatalk/sproto/</loc>
     
     <lastmod>2024-04-07T02:48:06.925Z</lastmod>
@@ -534,13 +562,6 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2019/10/26/luatalk/create_skynet/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.924Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://utmhikari.github.io/2019/03/25/luatalk/lfunctimer/</loc>
     
     <lastmod>2024-04-07T02:48:06.924Z</lastmod>
@@ -614,13 +635,6 @@
     <loc>http://utmhikari.github.io/2022/02/26/hardpython/2_asyncio_3/</loc>
     
     <lastmod>2024-04-07T02:48:06.923Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://utmhikari.github.io/2019/08/04/gofromzero/02_gin_gorm/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.922Z</lastmod>
     
   </url>
   
@@ -738,13 +752,6 @@
   
   <url>
     <loc>http://utmhikari.github.io/2020/04/13/githubdiscovery/theia_and_gitpod/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.921Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://utmhikari.github.io/2019/11/16/githubdiscovery/vlang/</loc>
     
     <lastmod>2024-04-07T02:48:06.921Z</lastmod>
     

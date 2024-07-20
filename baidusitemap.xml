@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://utmhikari.github.io/2024/07/20/archiart/large_scale_migration/</loc>
+    <lastmod>2024-07-20</lastmod>
+  </url>  <url>
+    <loc>http://utmhikari.github.io/2019/10/20/luatalk/skynet/</loc>
+    <lastmod>2024-07-20</lastmod>
+  </url>  <url>
+    <loc>http://utmhikari.github.io/2019/11/16/githubdiscovery/vlang/</loc>
+    <lastmod>2024-07-20</lastmod>
+  </url>  <url>
+    <loc>http://utmhikari.github.io/2019/08/04/gofromzero/02_gin_gorm/</loc>
+    <lastmod>2024-07-20</lastmod>
+  </url>  <url>
+    <loc>http://utmhikari.github.io/2019/10/26/luatalk/create_skynet/</loc>
+    <lastmod>2024-07-20</lastmod>
+  </url>  <url>
     <loc>http://utmhikari.github.io/2024/06/02/archiart/code_architecture_thinkings/</loc>
     <lastmod>2024-06-02</lastmod>
   </url>  <url>
@@ -178,9 +193,6 @@
     <loc>http://utmhikari.github.io/2019/06/12/luatalk/metatable/</loc>
     <lastmod>2024-04-07</lastmod>
   </url>  <url>
-    <loc>http://utmhikari.github.io/2019/10/20/luatalk/skynet/</loc>
-    <lastmod>2024-04-07</lastmod>
-  </url>  <url>
     <loc>http://utmhikari.github.io/2019/09/12/luatalk/sproto/</loc>
     <lastmod>2024-04-07</lastmod>
   </url>  <url>
@@ -220,9 +232,6 @@
     <loc>http://utmhikari.github.io/2019/08/25/luatalk/coroutine/</loc>
     <lastmod>2024-04-07</lastmod>
   </url>  <url>
-    <loc>http://utmhikari.github.io/2019/10/26/luatalk/create_skynet/</loc>
-    <lastmod>2024-04-07</lastmod>
-  </url>  <url>
     <loc>http://utmhikari.github.io/2019/03/25/luatalk/lfunctimer/</loc>
     <lastmod>2024-04-07</lastmod>
   </url>  <url>
@@ -254,9 +263,6 @@
     <lastmod>2024-04-07</lastmod>
   </url>  <url>
     <loc>http://utmhikari.github.io/2022/02/26/hardpython/2_asyncio_3/</loc>
-    <lastmod>2024-04-07</lastmod>
-  </url>  <url>
-    <loc>http://utmhikari.github.io/2019/08/04/gofromzero/02_gin_gorm/</loc>
     <lastmod>2024-04-07</lastmod>
   </url>  <url>
     <loc>http://utmhikari.github.io/2019/09/01/gofromzero/03_docker_client/</loc>
@@ -308,9 +314,6 @@
     <lastmod>2024-04-07</lastmod>
   </url>  <url>
     <loc>http://utmhikari.github.io/2020/04/13/githubdiscovery/theia_and_gitpod/</loc>
-    <lastmod>2024-04-07</lastmod>
-  </url>  <url>
-    <loc>http://utmhikari.github.io/2019/11/16/githubdiscovery/vlang/</loc>
     <lastmod>2024-04-07</lastmod>
   </url>  <url>
     <loc>http://utmhikari.github.io/2019/07/20/gofromzero/01_first_code/</loc>
