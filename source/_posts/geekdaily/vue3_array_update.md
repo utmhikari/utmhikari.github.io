@@ -6,7 +6,7 @@ categories:
 tags:
 - vue3
 - nodejs
-- Array
+- array
 - state
 - reactive
 ---
