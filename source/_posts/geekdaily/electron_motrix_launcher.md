@@ -8,7 +8,7 @@ tags:
 - electron
 - vue
 - ipc
-- 桌面工具开发
+- 工具开发
 ---
 
 近期准备开始做`electron`相关的开发工作，因此借着这个机会就再去了解下`electron`。在[很久以前的文章](https://utmhikari.top/2019/10/20/geekdaily/electron_react/)中有稍微玩过`electron+react+antd`的脚手架，但也只限于快速开发`electron`应用，并没有去剖析整个项目结构。因此这次，还是得深入一下。
