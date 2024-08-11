@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://utmhikari.github.io/2024/08/11/pythonnotes/pyside6_intro/</loc>
+    <lastmod>2024-08-11</lastmod>
+  </url>  <url>
+    <loc>http://utmhikari.github.io/2022/06/05/geekdaily/electron_motrix_launcher/</loc>
+    <lastmod>2024-08-11</lastmod>
+  </url>  <url>
     <loc>http://utmhikari.github.io/2024/08/11/geekdaily/gofromzero_collection/</loc>
     <lastmod>2024-08-11</lastmod>
   </url>  <url>
@@ -389,9 +395,6 @@
     <lastmod>2024-04-07</lastmod>
   </url>  <url>
     <loc>http://utmhikari.github.io/2019/10/07/geekdaily/go113_proxy/</loc>
-    <lastmod>2024-04-07</lastmod>
-  </url>  <url>
-    <loc>http://utmhikari.github.io/2022/06/05/geekdaily/electron_motrix_launcher/</loc>
     <lastmod>2024-04-07</lastmod>
   </url>  <url>
     <loc>http://utmhikari.github.io/2020/10/06/geekdaily/idea_change_config_path/</loc>

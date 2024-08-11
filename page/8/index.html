@@ -403,6 +403,189 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2022/01/16/hardpython/1_multiprocessing_1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2022/01/16/hardpython/1_multiprocessing_1/" class="post-title-link" itemprop="url">【Hard Python】【第一章-多进程】1、Process，新进程的诞生</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2022-01-16 18:36:17" itemprop="dateCreated datePublished" datetime="2022-01-16T18:36:17+08:00">2022-01-16</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Hard-Python/" itemprop="url" rel="index"><span itemprop="name">Hard Python</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>在python中，如果要做多任务并行的编程，必须要掌握<code>multiprocessing</code>库的相关运用。在python的<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnB5dGhvbi5vcmcvemgtY24vMy9saWJyYXJ5L211bHRpcHJvY2Vzc2luZy5odG1s" title="https://docs.python.org/zh-cn/3/library/multiprocessing.html">multiprocessing官方文档<i class="fa fa-external-link"></i></span>中，已然详细给出了<code>multiprocessing</code>库的相关用法。多进程编程其实还是有很多坑存在的，为了进一步探索python多进程的机制，提升对python多进程编程的理解，本篇文章会对多进程模块的实现进行一次详细的剖析。</p>
+<p>多进程编程的第一话，首先来聊聊一个新的python子进程是如何诞生的。</p>
+<p>首先我们需要了解这么一个事情，python创建的进程之间模块状态是相互隔离的。在多进程的场景下，代码中定义的各种变量，其值并不一定会共享。我们举个例子：</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2022/01/16/hardpython/1_multiprocessing_1/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2022/01/08/hardpython/preface/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2064,190 +2247,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2021/10/10/mediumpython/preface/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ひかり.HDQ">
-      <meta itemprop="description" content="talk is cheap, code is rich">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HiKariのTechLab">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2021/10/10/mediumpython/preface/" class="post-title-link" itemprop="url">【Medium Python】前言</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2021-10-10 20:50:09" itemprop="dateCreated datePublished" datetime="2021-10-10T20:50:09+08:00">2021-10-10</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Medium-Python/" itemprop="url" rel="index"><span itemprop="name">Medium Python</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>python作为最流行的语言之一，我们对python的认知到底有多少呢？大胆猜测，95%的同学对python的了解都不超过5%吧！不用说python的c源码了，就算是python每个标准库的.py源码，都有很少人去关心。结论就是，我们对python本身的理解是远远不够的，比想象中还不够！当然，这也可能是python的语言特性导致的吧，在设计方面就不需要我们去多想。</p>
-<p>python的岗位众多，网上的教材跟面试题也很多，然而很多都是八股文，浅尝辄止，鲜有深度的挖掘，让人知其然而不知其所以然，处处透露着对技术的不敬！想想看，游戏程序员学lua，一些C Library的实现、Lua底层机理都需要熟悉，python比lua应用会更加广泛，为什么就不可以去熟悉类似的东西呢？python的应用场景那么多，不去深入了解这门语言的实现，怎么能够更好掌控这门语言？怎么可能做出更加优秀的产品？</p>
-<p>因此笔者决定，从一些所谓的python面试题出发，通过源码分析的方法，挖掘其思路与实现，让更多人对python有更加深入的了解。这个系列，会把一些本该属于python教程里的东西给展现出来，取名就叫做Medium Python——因为笔者刚出道（谈恋爱）时，已经写过<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wL2NhdGVnb3JpZXMvRWFzeS1QeXRob24v" title="https://utmhikari.top/categories/Easy-Python/">Easy Python<i class="fa fa-external-link"></i></span>，里面罗列了些python的简单知识。至于未来有没有Hard Python，到时候再说吧！</p>
-<h2 id="Contents"><a href="#Contents" class="headerlink" title="Contents"></a>Contents</h2><ul>
-<li><span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjEvMTAvMTcvbWVkaXVtcHl0aG9uL2kv" title="https://utmhikari.top/2021/10/17/mediumpython/i/">【Medium Python】第一话：为什么list“可变”，而tuple“不可变”？<i class="fa fa-external-link"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjEvMTAvMjMvbWVkaXVtcHl0aG9uL2lpLw==" title="https://utmhikari.top/2021/10/23/mediumpython/ii/">【Medium Python】第二话：dict的keys()返回了什么数据类型？<i class="fa fa-external-link"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjEvMTAvMzAvbWVkaXVtcHl0aG9uL2lpaS8=" title="https://utmhikari.top/2021/10/30/mediumpython/iii/">【Medium Python】第三话：python多线程为什么不能并行？<i class="fa fa-external-link"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjEvMTEvMDYvbWVkaXVtcHl0aG9uL2l2Lw==" title="https://utmhikari.top/2021/11/06/mediumpython/iv/">【Medium Python】第四话：类属性和实例属性是怎样的关系？<i class="fa fa-external-link"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjEvMTEvMTMvbWVkaXVtcHl0aG9uL3Yv" title="https://utmhikari.top/2021/11/13/mediumpython/v/">【Medium Python】最终话：如何彻底理解with关键字的用法？<i class="fa fa-external-link"></i></span></li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2296,7 +2295,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">164</span>
+                    <span class="site-state-item-count">165</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2357,6 +2356,8 @@
                     
                   
                     
+                    
+                      
                     
                       
                     

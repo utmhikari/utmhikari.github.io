@@ -403,6 +403,192 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2019/03/31/easypython/iii/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/03/31/easypython/iii/" class="post-title-link" itemprop="url">【Easy Python】第三话：爬虫初探——玩转豆瓣二百五（上）</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-31 17:00:02" itemprop="dateCreated datePublished" datetime="2019-03-31T17:00:02+08:00">2019-03-31</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Easy-Python/" itemprop="url" rel="index"><span itemprop="name">Easy Python</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>一直以来，爬虫都是许多同学学Python的目的之一，就连我敬爱的领导，也经常不耻下问一些爬虫方面的问题。因此，我们开始实战——以<span class="exturl" data-url="aHR0cHM6Ly9tb3ZpZS5kb3ViYW4uY29tL3RvcDI1MA==" title="https://movie.douban.com/top250">豆瓣Top 250<i class="fa fa-external-link"></i></span>为例，试水一下基础的爬虫。</p>
+<p>“玩转豆瓣二百五”系列分为上下两部，所有代码，可以在我的Github里<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaS9Eb3ViYW5fMjUw" title="https://github.com/utmhikari/Douban_250">Douban_250<i class="fa fa-external-link"></i></span>找到~</p>
+<p>工欲善其事，必先利其器。以下浏览器操作，都基于最新版Chrome~</p>
+<h2 id="获取电影列表网页数据"><a href="#获取电影列表网页数据" class="headerlink" title="获取电影列表网页数据"></a>获取电影列表网页数据</h2><p>爬虫爬虫，实质还是抓取网络数据= =爬虫不得急，可要一步步来——首先，我们希望获得每一个电影的链接，把它们存起来，留着后续爬取具体内容备用。</p>
+<p>打开<span class="exturl" data-url="aHR0cHM6Ly9tb3ZpZS5kb3ViYW4uY29tL3RvcDI1MA==" title="https://movie.douban.com/top250">豆瓣Top 250首页<i class="fa fa-external-link"></i></span>，会看到电影列表的页面，往下翻，会看到总共有10页，每页25个电影。打开第二页，可以看到浏览器的地址变成了<code>https://movie.douban.com/top250?start=25&amp;filter=</code>，咱们观察一下链接——链接有一部分，<code>start=25</code>，是不是很突兀？按这样推算，第三页应该是<code>start=50</code>，第一页就是<code>start=0</code>嘛= =试了一下，果真是的= =</p>
+<p>因此，爬取250个电影链接，不难规划。具体如下：</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/03/31/easypython/iii/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2019/03/25/luatalk/lfunctimer/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1183,7 +1369,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">164</span>
+                    <span class="site-state-item-count">165</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1244,6 +1430,8 @@
                     
                   
                     
+                    
+                      
                     
                       
                     
