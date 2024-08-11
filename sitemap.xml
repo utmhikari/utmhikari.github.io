@@ -2,9 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://utmhikari.github.io/2024/08/11/geekdaily/gofromzero_collection/</loc>
+    
+    <lastmod>2024-08-11T06:57:55.517Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://utmhikari.github.io/2021/06/06/geekdaily/go_basic_data_types/</loc>
+    
+    <lastmod>2024-08-11T06:23:58.282Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://utmhikari.github.io/2024/07/20/geekdaily/golang_slice_bug/</loc>
     
-    <lastmod>2024-07-20T15:17:46.930Z</lastmod>
+    <lastmod>2024-08-07T16:28:23.650Z</lastmod>
     
   </url>
   
@@ -81,14 +95,14 @@
   <url>
     <loc>http://utmhikari.github.io/2024/04/21/diymemo/devops_ai_memo/</loc>
     
-    <lastmod>2024-04-21T08:44:42.946Z</lastmod>
+    <lastmod>2024-04-22T16:00:04.938Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://utmhikari.github.io/2024/04/13/gofromzero/16_channel/</loc>
     
-    <lastmod>2024-04-13T11:24:41.762Z</lastmod>
+    <lastmod>2024-04-21T08:14:05.397Z</lastmod>
     
   </url>
   
@@ -163,13 +177,6 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2021/10/04/testlife/test_architect_notes/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.929Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://utmhikari.github.io/2019/07/28/testlife/think_as_a_user/</loc>
     
     <lastmod>2024-04-07T02:48:06.929Z</lastmod>
@@ -199,6 +206,13 @@
   
   <url>
     <loc>http://utmhikari.github.io/2020/10/24/testlife/unreal_automator/</loc>
+    
+    <lastmod>2024-04-07T02:48:06.929Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://utmhikari.github.io/2021/10/04/testlife/test_architect_notes/</loc>
     
     <lastmod>2024-04-07T02:48:06.929Z</lastmod>
     
@@ -247,13 +261,6 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2022/09/12/testlife/gautomator_ue4_android/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.928Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://utmhikari.github.io/2019/08/19/testlife/ios_review/</loc>
     
     <lastmod>2024-04-07T02:48:06.928Z</lastmod>
@@ -261,7 +268,14 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2019/07/01/testlife/mtsc2019/</loc>
+    <loc>http://utmhikari.github.io/2021/07/11/testlife/openpyxl/</loc>
+    
+    <lastmod>2024-04-07T02:48:06.928Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://utmhikari.github.io/2022/09/12/testlife/gautomator_ue4_android/</loc>
     
     <lastmod>2024-04-07T02:48:06.928Z</lastmod>
     
@@ -282,7 +296,7 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2021/07/11/testlife/openpyxl/</loc>
+    <loc>http://utmhikari.github.io/2019/07/01/testlife/mtsc2019/</loc>
     
     <lastmod>2024-04-07T02:48:06.928Z</lastmod>
     
@@ -311,13 +325,6 @@
   
   <url>
     <loc>http://utmhikari.github.io/2023/03/11/pythonnotes/w3schools_sqls_crawler/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.927Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://utmhikari.github.io/2023/04/08/testlife/alibaba_stress_test/</loc>
     
     <lastmod>2024-04-07T02:48:06.927Z</lastmod>
     
@@ -387,21 +394,14 @@
   </url>
   
   <url>
+    <loc>http://utmhikari.github.io/2023/04/08/testlife/alibaba_stress_test/</loc>
+    
+    <lastmod>2024-04-07T02:48:06.927Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://utmhikari.github.io/2021/10/10/mediumpython/preface/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.926Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://utmhikari.github.io/2021/11/13/mediumpython/v/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.926Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://utmhikari.github.io/2022/08/14/pythonnotes/asgi_uvicorn_fastapi/</loc>
     
     <lastmod>2024-04-07T02:48:06.926Z</lastmod>
     
@@ -451,6 +451,20 @@
   
   <url>
     <loc>http://utmhikari.github.io/2020/11/15/pythonnotes/python_os_walk/</loc>
+    
+    <lastmod>2024-04-07T02:48:06.926Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://utmhikari.github.io/2021/11/13/mediumpython/v/</loc>
+    
+    <lastmod>2024-04-07T02:48:06.926Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://utmhikari.github.io/2022/08/14/pythonnotes/asgi_uvicorn_fastapi/</loc>
     
     <lastmod>2024-04-07T02:48:06.926Z</lastmod>
     
@@ -562,13 +576,6 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2022/05/14/hardpython/5_str_2/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.924Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://utmhikari.github.io/2019/08/25/luatalk/coroutine/</loc>
     
     <lastmod>2024-04-07T02:48:06.924Z</lastmod>
@@ -577,6 +584,13 @@
   
   <url>
     <loc>http://utmhikari.github.io/2019/03/25/luatalk/lfunctimer/</loc>
+    
+    <lastmod>2024-04-07T02:48:06.924Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://utmhikari.github.io/2022/05/14/hardpython/5_str_2/</loc>
     
     <lastmod>2024-04-07T02:48:06.924Z</lastmod>
     
@@ -625,13 +639,6 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2022/01/30/hardpython/1_multiprocessing_3/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.923Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://utmhikari.github.io/2022/02/12/hardpython/2_asyncio_1/</loc>
     
     <lastmod>2024-04-07T02:48:06.923Z</lastmod>
@@ -639,14 +646,21 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2022/02/20/hardpython/2_asyncio_2/</loc>
+    <loc>http://utmhikari.github.io/2022/02/26/hardpython/2_asyncio_3/</loc>
     
     <lastmod>2024-04-07T02:48:06.923Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2022/02/26/hardpython/2_asyncio_3/</loc>
+    <loc>http://utmhikari.github.io/2022/01/30/hardpython/1_multiprocessing_3/</loc>
+    
+    <lastmod>2024-04-07T02:48:06.923Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://utmhikari.github.io/2022/02/20/hardpython/2_asyncio_2/</loc>
     
     <lastmod>2024-04-07T02:48:06.923Z</lastmod>
     
@@ -702,13 +716,6 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2023/04/01/gofromzero/10_context/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.922Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://utmhikari.github.io/2023/05/10/gofromzero/11_make_new/</loc>
     
     <lastmod>2024-04-07T02:48:06.922Z</lastmod>
@@ -716,7 +723,21 @@
   </url>
   
   <url>
+    <loc>http://utmhikari.github.io/2023/04/01/gofromzero/10_context/</loc>
+    
+    <lastmod>2024-04-07T02:48:06.922Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://utmhikari.github.io/2024/02/04/githubdiscovery/altershield_design/</loc>
+    
+    <lastmod>2024-04-07T02:48:06.921Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://utmhikari.github.io/2019/05/25/githubdiscovery/pysnooper/</loc>
     
     <lastmod>2024-04-07T02:48:06.921Z</lastmod>
     
@@ -737,13 +758,6 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2019/05/25/githubdiscovery/pysnooper/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.921Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://utmhikari.github.io/2023/06/10/githubdiscovery/reactpy/</loc>
     
     <lastmod>2024-04-07T02:48:06.921Z</lastmod>
@@ -758,14 +772,14 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2019/06/22/githubdiscovery/terminus/</loc>
+    <loc>http://utmhikari.github.io/2020/04/13/githubdiscovery/theia_and_gitpod/</loc>
     
     <lastmod>2024-04-07T02:48:06.921Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2020/04/13/githubdiscovery/theia_and_gitpod/</loc>
+    <loc>http://utmhikari.github.io/2019/06/22/githubdiscovery/terminus/</loc>
     
     <lastmod>2024-04-07T02:48:06.921Z</lastmod>
     
@@ -842,14 +856,14 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2020/11/08/geekdaily/ue4_llm_dump_cpp/</loc>
+    <loc>http://utmhikari.github.io/2020/02/16/geekdaily/v_autocomplete/</loc>
     
     <lastmod>2024-04-07T02:48:06.920Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2020/02/16/geekdaily/v_autocomplete/</loc>
+    <loc>http://utmhikari.github.io/2020/11/08/geekdaily/ue4_llm_dump_cpp/</loc>
     
     <lastmod>2024-04-07T02:48:06.920Z</lastmod>
     
@@ -877,13 +891,6 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2020/04/21/geekdaily/bilibili_in_hugo/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.919Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://utmhikari.github.io/2022/11/02/gameofautotest/v/</loc>
     
     <lastmod>2024-04-07T02:48:06.919Z</lastmod>
@@ -891,7 +898,7 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2022/06/05/geekdaily/electron_motrix_launcher/</loc>
+    <loc>http://utmhikari.github.io/2020/04/21/geekdaily/bilibili_in_hugo/</loc>
     
     <lastmod>2024-04-07T02:48:06.919Z</lastmod>
     
@@ -919,13 +926,6 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2020/10/18/geekdaily/fjsonobject_to_ustruct/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.919Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://utmhikari.github.io/2019/10/07/geekdaily/go113_proxy/</loc>
     
     <lastmod>2024-04-07T02:48:06.919Z</lastmod>
@@ -933,7 +933,7 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2021/06/06/geekdaily/go_basic_data_types/</loc>
+    <loc>http://utmhikari.github.io/2022/06/05/geekdaily/electron_motrix_launcher/</loc>
     
     <lastmod>2024-04-07T02:48:06.919Z</lastmod>
     
@@ -941,6 +941,13 @@
   
   <url>
     <loc>http://utmhikari.github.io/2020/10/06/geekdaily/idea_change_config_path/</loc>
+    
+    <lastmod>2024-04-07T02:48:06.919Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://utmhikari.github.io/2020/10/18/geekdaily/fjsonobject_to_ustruct/</loc>
     
     <lastmod>2024-04-07T02:48:06.919Z</lastmod>
     
@@ -961,13 +968,6 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2021/02/16/gamedev/ue4_datatable_subsystem/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.918Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://utmhikari.github.io/2021/09/01/gamedev/ue4_point_in_cuboid/</loc>
     
     <lastmod>2024-04-07T02:48:06.918Z</lastmod>
@@ -976,6 +976,13 @@
   
   <url>
     <loc>http://utmhikari.github.io/2021/11/21/gamedev/ue4_python_script_plugin/</loc>
+    
+    <lastmod>2024-04-07T02:48:06.918Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://utmhikari.github.io/2021/02/16/gamedev/ue4_datatable_subsystem/</loc>
     
     <lastmod>2024-04-07T02:48:06.918Z</lastmod>
     
@@ -1031,7 +1038,7 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2019/03/31/easypython/iv/</loc>
+    <loc>http://utmhikari.github.io/2019/03/31/easypython/iii/</loc>
     
     <lastmod>2024-04-07T02:48:06.917Z</lastmod>
     
@@ -1045,7 +1052,7 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2019/03/31/easypython/iii/</loc>
+    <loc>http://utmhikari.github.io/2019/05/19/easypython/vii/</loc>
     
     <lastmod>2024-04-07T02:48:06.917Z</lastmod>
     
@@ -1059,14 +1066,14 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2019/05/11/easypython/vi/</loc>
+    <loc>http://utmhikari.github.io/2019/03/31/easypython/iv/</loc>
     
     <lastmod>2024-04-07T02:48:06.917Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2019/05/19/easypython/vii/</loc>
+    <loc>http://utmhikari.github.io/2019/05/11/easypython/vi/</loc>
     
     <lastmod>2024-04-07T02:48:06.917Z</lastmod>
     
@@ -1080,21 +1087,14 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2022/12/10/codegallery/daggre/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.916Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://utmhikari.github.io/2021/04/02/codegallery/protobuf_grpc_starter/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.916Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://utmhikari.github.io/2021/01/01/codegallery/repomaster/</loc>
+    
+    <lastmod>2024-04-07T02:48:06.916Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://utmhikari.github.io/2022/12/10/codegallery/daggre/</loc>
     
     <lastmod>2024-04-07T02:48:06.916Z</lastmod>
     
@@ -1108,6 +1108,13 @@
   </url>
   
   <url>
+    <loc>http://utmhikari.github.io/2021/04/02/codegallery/protobuf_grpc_starter/</loc>
+    
+    <lastmod>2024-04-07T02:48:06.916Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://utmhikari.github.io/2019/09/21/diymemo/csgo/</loc>
     
     <lastmod>2024-04-07T02:48:06.916Z</lastmod>
@@ -1115,14 +1122,14 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2019/06/01/diymemo/font_theme/</loc>
+    <loc>http://utmhikari.github.io/2019/10/29/diymemo/gigabyte_z390/</loc>
     
     <lastmod>2024-04-07T02:48:06.916Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2019/10/29/diymemo/gigabyte_z390/</loc>
+    <loc>http://utmhikari.github.io/2019/06/01/diymemo/font_theme/</loc>
     
     <lastmod>2024-04-07T02:48:06.916Z</lastmod>
     

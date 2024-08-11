@@ -101,7 +101,7 @@
 
 
   <meta name="description" content="python的多线程，这是个老生常谈的话题了，网上资料也一大把。python默认的threading模块对多线程提供了支持，但实际多个threading.Thread实例无法并行运行（不是无法并发哦！）。​一句话概括答案：python的线程实质是操作系统原生的线程，而每个线程要执行python代码的话，需要获得对应代码解释器的锁GIL。一般我们运行python程序都只有一个解释器，这样不同线程需要">
-<meta name="keywords" content="python,GIL,源码分析,多线程,opcode">
+<meta name="keywords" content="源码分析,python,GIL,多线程,opcode">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【Medium Python】第三话：python多线程为什么不能并行？">
 <meta property="og:url" content="http://utmhikari.github.io/2021/10/30/mediumpython/iii/index.html">
@@ -634,11 +634,11 @@
       
         <div class="post-tags">
           
+            <a href="/tags/源码分析/" rel="tag"># 源码分析</a>
+          
             <a href="/tags/python/" rel="tag"># python</a>
           
             <a href="/tags/GIL/" rel="tag"># GIL</a>
-          
-            <a href="/tags/源码分析/" rel="tag"># 源码分析</a>
           
             <a href="/tags/多线程/" rel="tag"># 多线程</a>
           
@@ -738,7 +738,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">163</span>
+                    <span class="site-state-item-count">164</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -799,10 +799,6 @@
                     
                   
                     
-                    
-                      
-                    
-                      
                     
                       
                     

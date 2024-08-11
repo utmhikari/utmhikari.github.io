@@ -101,14 +101,14 @@
 
 
   <meta name="description" content="在基于Golang的后端开发中，channel是一个必须要掌握的并发编程概念。和python的queue一样，channel在不同的goroutine里承担着传递信息的作用，使得业务逻辑的状态上下文可以在不同的goroutine中共享。今天，我们就来看一下channel的用法还有一些使用上的基本原则。 首先，我们需要知道什么场景下会用到channel。一个简单的例子是，在主流程里，我们希望启动一个">
-<meta name="keywords" content="后端开发,Golang,并发,多线程,channel">
+<meta name="keywords" content="Golang,后端开发,并发,channel,多线程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【从零单排Golang】第十六话：channel的用法和基本原则">
 <meta property="og:url" content="http://utmhikari.github.io/2024/04/13/gofromzero/16_channel/index.html">
 <meta property="og:site_name" content="HiKariのTechLab">
 <meta property="og:description" content="在基于Golang的后端开发中，channel是一个必须要掌握的并发编程概念。和python的queue一样，channel在不同的goroutine里承担着传递信息的作用，使得业务逻辑的状态上下文可以在不同的goroutine中共享。今天，我们就来看一下channel的用法还有一些使用上的基本原则。 首先，我们需要知道什么场景下会用到channel。一个简单的例子是，在主流程里，我们希望启动一个">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2024-04-13T11:24:41.762Z">
+<meta property="og:updated_time" content="2024-04-21T08:14:05.397Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【从零单排Golang】第十六话：channel的用法和基本原则">
 <meta name="twitter:description" content="在基于Golang的后端开发中，channel是一个必须要掌握的并发编程概念。和python的queue一样，channel在不同的goroutine里承担着传递信息的作用，使得业务逻辑的状态上下文可以在不同的goroutine中共享。今天，我们就来看一下channel的用法还有一些使用上的基本原则。 首先，我们需要知道什么场景下会用到channel。一个简单的例子是，在主流程里，我们希望启动一个">
@@ -446,12 +446,24 @@
                 
               
 
-              <time title="创建时间：2024-04-13 19:15:40 / 修改时间：19:24:41" itemprop="dateCreated datePublished" datetime="2024-04-13T19:15:40+08:00">2024-04-13</time>
+              <time title="创建时间：2024-04-13 19:15:40" itemprop="dateCreated datePublished" datetime="2024-04-13T19:15:40+08:00">2024-04-13</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-21 16:14:05" itemprop="dateModified" datetime="2024-04-21T16:14:05+08:00">2024-04-21</time>
               
             
           </span>
@@ -563,15 +575,15 @@
       
         <div class="post-tags">
           
-            <a href="/tags/后端开发/" rel="tag"># 后端开发</a>
-          
             <a href="/tags/Golang/" rel="tag"># Golang</a>
+          
+            <a href="/tags/后端开发/" rel="tag"># 后端开发</a>
           
             <a href="/tags/并发/" rel="tag"># 并发</a>
           
-            <a href="/tags/多线程/" rel="tag"># 多线程</a>
-          
             <a href="/tags/channel/" rel="tag"># channel</a>
+          
+            <a href="/tags/多线程/" rel="tag"># 多线程</a>
           
         </div>
       
@@ -658,7 +670,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">163</span>
+                    <span class="site-state-item-count">164</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -719,10 +731,6 @@
                     
                   
                     
-                    
-                      
-                    
-                      
                     
                       
                     
