@@ -1,3 +1,5 @@
+http://utmhikari.github.io/2024/08/17/testlife/work_and_study/
+http://utmhikari.github.io/2024/08/17/geekdaily/low_code_talk/
 http://utmhikari.github.io/2024/08/11/pythonnotes/pyside6_intro/
 http://utmhikari.github.io/2024/08/11/geekdaily/gofromzero_collection/
 http://utmhikari.github.io/2024/07/20/geekdaily/golang_slice_bug/
@@ -96,5 +98,3 @@ http://utmhikari.github.io/2021/05/23/gamedev/ue4_swarm_build/
 http://utmhikari.github.io/2021/05/20/testlife/dungeon_autotest/
 http://utmhikari.github.io/2021/05/01/geekdaily/excel_diff_vxe-table/
 http://utmhikari.github.io/2021/04/17/testlife/ue4_weapon_autotest/
-http://utmhikari.github.io/2021/04/02/codegallery/protobuf_grpc_starter/
-http://utmhikari.github.io/2021/03/06/testlife/table_check/
