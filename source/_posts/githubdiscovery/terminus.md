@@ -5,7 +5,7 @@ categories:
 - GitHub探索
 tags:
 - terminus
-- 命令行工具
+- 效率工具
 - terminal
 - shell
 - 测试
