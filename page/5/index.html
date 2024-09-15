@@ -403,6 +403,387 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2023/02/18/gofromzero/08_cache_interface/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2023/02/18/gofromzero/08_cache_interface/" class="post-title-link" itemprop="url">【从零单排Golang】第八话：通过cache缓存模块示范interface该怎么用</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2023-02-18 02:16:48" itemprop="dateCreated datePublished" datetime="2023-02-18T02:16:48+08:00">2023-02-18</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/从零单排Golang/" itemprop="url" rel="index"><span itemprop="name">从零单排Golang</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>和许多面向对象的编程语言一样，<code>Golang</code>也存在<code>interface</code>接口这样的概念。<code>interface</code>相当于是一个中间层，下游只需要关心<code>interface</code>实现了什么行为，利用这些行为做些业务级别事情，而上游则负责实现<code>interface</code>，把这些行为具象化。本文就来通过一个简单的缓存<code>cache</code>模块的实现，来示范一下<code>Golang</code>的<code>interface</code>该怎么用。</p>
+<p>首先，从业务<code>service</code>角度而言，一个cache模块可能需要以下几种方法：</p>
+<ul>
+<li>获取缓存中的某个值</li>
+<li>缓存数据，加缓存时效</li>
+<li>删除缓存内容</li>
+</ul>
+<p>那么这些个方法，就可以用一类叫<code>Cache</code>的<code>interface</code>来表示：</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2023/02/18/gofromzero/08_cache_interface/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2023/02/05/diymemo/vmware_ubuntu_network/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2023/02/05/diymemo/vmware_ubuntu_network/" class="post-title-link" itemprop="url">【DIY小记】VMWare设置主机连接到的Ubuntu虚拟机的网络端口</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2023-02-05 13:08:17" itemprop="dateCreated datePublished" datetime="2023-02-05T13:08:17+08:00">2023-02-05</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/DIY小记/" itemprop="url" rel="index"><span itemprop="name">DIY小记</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>很多同学在自己机器上玩开发的时候，都会用到<code>VMWare</code>、<code>VirtualBox</code>之类的虚拟OS容器装一个带<code>GUI</code>的<code>Linux OS</code>，然后在里面另外安装开发工具做开发。这里面遇到的最经典问题，就是比如我在虚拟机里面起了个<code>MySQL</code>、<code>Redis</code>之类的服务，如果DB的客户端/GUI工具是放在主机里面，不在虚拟机里，那怎么连进去？这个问题，本文提供一种解决方案。</p>
+<p>本文采取的虚拟机环境如下：</p>
+<ul>
+<li>主机：Win11</li>
+<li>虚拟机容器：VMWare Workstation 16</li>
+<li>虚拟机：Ubuntu 22.04</li>
+</ul>
+<p>首先需要了解到，<code>VMWare</code>场景下，我们通常用<code>NAT</code>模式新开一个网段来管理虚拟机的网络配置，而虚拟机内部，假设使用<code>IPV4</code>，会默认采取<code>DHCP</code>机制，自动设置一个<code>IP</code>跟相应的网络配置。相关资料可以看这几篇文档：</p>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC80NzcxNDc4MDE=" title="https://zhuanlan.zhihu.com/p/477147801">网络中的NAT模式<i class="fa fa-external-link"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9iYWlrZS5iYWlkdS5jb20vaXRlbS8lRTUlOEElQTglRTYlODAlODElRTQlQjglQkIlRTYlOUMlQkElRTklODUlOEQlRTclQkQlQUUlRTUlOEQlOEYlRTglQUUlQUUvMTA3Nzg2NjM=" title="https://baike.baidu.com/item/%E5%8A%A8%E6%80%81%E4%B8%BB%E6%9C%BA%E9%85%8D%E7%BD%AE%E5%8D%8F%E8%AE%AE/10778663">DHCP百度百科<i class="fa fa-external-link"></i></span></li>
+</ul>
+<p>而为了让我们主机能连到虚拟机内部，实际上是满足下面两个条件之一即可：</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2023/02/05/diymemo/vmware_ubuntu_network/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2023/01/26/testlife/quality_redline_design/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1880,377 +2261,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2022/10/05/githubdiscovery/ebook_boilerplate/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ひかり.HDQ">
-      <meta itemprop="description" content="talk is cheap, code is rich">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HiKariのTechLab">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2022/10/05/githubdiscovery/ebook_boilerplate/" class="post-title-link" itemprop="url">【GitHub探索】ebook-boilerplate——批量转markdown为PDF和电子书</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2022-10-05 16:16:16" itemprop="dateCreated datePublished" datetime="2022-10-05T16:16:16+08:00">2022-10-05</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/GitHub探索/" itemprop="url" rel="index"><span itemprop="name">GitHub探索</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>正值十一假期，近期准备把自己的<code>python</code>笔记精编整理，做一个<code>pdf</code>电子书。在调研如何把多个<code>markdown</code>文档转化为单个<code>pdf</code>的时候，试了很多种方法。最后找到了最佳方案，也就是本文的主角，由<code>phodal</code>前辈整理的电子书生成项目<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3Bob2RhbC9lYm9vay1ib2lsZXJwbGF0ZQ==" title="https://github.com/phodal/ebook-boilerplate">ebook-boilerplate<i class="fa fa-external-link"></i></span>。这个项目不仅支持批量转<code>markdown</code>为<code>pdf</code>，而且还支持转成<code>ebook</code>等多种格式。</p>
-<p>使用这个项目的时候，也踩了一些坑，需要做一些额外的配置。以笔者的场景为例，电子书生成环境是<code>Ubuntu22</code>，需要转化一堆中文的<code>markdown</code>。<code>clone</code>了这个项目之后，除了<code>ebook-boilerplate</code>本身<code>README.md</code>里描述的内容之外，实际还需要留意以下环节：</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2022/10/05/githubdiscovery/ebook_boilerplate/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2022/10/03/gameofautotest/iv/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ひかり.HDQ">
-      <meta itemprop="description" content="talk is cheap, code is rich">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HiKariのTechLab">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2022/10/03/gameofautotest/iv/" class="post-title-link" itemprop="url">【Game Of AutoTest】4、游戏自动化测试的稳定性保障</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2022-10-03 17:43:40" itemprop="dateCreated datePublished" datetime="2022-10-03T17:43:40+08:00">2022-10-03</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Game-Of-AutoTest/" itemprop="url" rel="index"><span itemprop="name">Game Of AutoTest</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>在游戏自动化测试技术落地过程当中，如何保证自动化测试的稳定性，是一个需要重点优先解决的困难问题。</p>
-<p>以手机游戏客户端自动化测试为例，和一般服务架构的自动化单元测试或集成测试不同，自动化驱动的过程，其本质更加类似于网络爬虫，每次测试执行都是一个时间较长的过程，而流程一长，不稳定因素则随之而来。游戏自动化的整个过程，大致是这样的：</p>
-<ul>
-<li>前置环境准备（setup）：设置用例运行环境、设备状态与玩家状态，保证用例运行的条件</li>
-<li>用例脚本执行（run）：执行自动化用例脚本</li>
-<li>后置恢复操作（teardown）：恢复测试环境、设备状态与玩家状态</li>
-<li>测试报告输出（report）：整合跑测期间游戏的运行数据与用例脚本收集/导出的数据，生成测试报告</li>
-</ul>
-<p>要分析如何保障整个自动化过程的稳定性，我们可以根据这几个步骤进行细节切分，对每一个环节影响稳定性的因素逐个理顺，从而最终，我们就可以得到一整套自动化稳定性保障的解决方案。在这四个步骤当中，前置环境准备和用例脚本执行这两步，对自动化流程稳定性的影响面最大，而最后面两步的影响程度，则相对较低。</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2022/10/03/gameofautotest/iv/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2299,7 +2309,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">167</span>
+                    <span class="site-state-item-count">169</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -3215,7 +3225,7 @@
                     
                       
                     
-                    <span class="site-state-item-count">426</span>
+                    <span class="site-state-item-count">424</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

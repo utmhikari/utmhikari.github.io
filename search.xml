@@ -1,6 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>【测试人生】谈研发测试人员在AI时代中的自我成长</title>
+    <url>/2024/09/16/testlife/ai_era_challenge/</url>
+    <content><![CDATA[<p>研发测试不分家，在AI时代，LLM/GPT技术的冲击之下，不论是研发还是测试人员都可能会担忧，AI是否会取代自己的工作。从笔者的角度看来，这根本不是一个需要担心的问题，就和围棋一样，在AlphaGo之后，大家都会利用AI来学习围棋，超越以前时代的人。而作为研发或者测试人员的你，也可以利用AI技术的产物，实现进一步的自我提升。</p>
+<p>今天，笔者决定简单聊一下，AI时代下，研发测试人员实现自我成长的一些方法。</p>
+<a id="more"></a>
+<p>首先需要认识当前流行的AI技术，本质的极限在哪里。以ChatGPT类工具为例，LLM再大也是人类知识的结晶，上线不会超越人类整体的智慧，但结合GPT对话技术，一是能够具备知识生成能力，二是具备比单个人类更大的算力，因此这类效率工具可以解决许多自己工作中的问题，比如查询某类八股文知识，生产一些文案图片大纲，甚至日常聊聊人生，补充情绪价值，都是可以的做法。</p>
+<p>这里重点是，需要专注于自己的需求，纳AI为己用，而不是被八股文玩，被prompt玩，被复杂不知道哪里下手的AI理论玩。比如说今天这个命题，如果遇到了，不妨问问GPT，看一下GPT自己能够提炼出什么结论。GPT给出的答案可能会有那么一些：领域深耕、发展软技能、关注AI无法替代的领域，以及持续广泛学习等等方式，这些答案虽然比较浅尝辄止，只提供大方向，不提供具体执行的方法，但至少有参考的价值，毕竟选择题比开放题更加好做。</p>
+<p>要自我成长，还是得先拆解自己的需求目标，多问自己几个问题，把东西都抛出来。比如你是一个测试开发，在职业发展上可以多想想这些，以后做管理还是做技术，做技术做什么方向的技术，要做精准测试的话广度覆盖哪些场景，深度精准到什么层次，什么指标来衡量好坏，怎样论证精准测试提升了产品研发的质量，后续团队如果人多了，需要如何分工，在确保团队的产出的同时，保证大家的工作积极性和自我成长。然后才是，解决这些问题，怎么去切入AI。比方说技术类问题的解决，有这几种可能性：</p>
+<ul>
+<li>精准测试：直接通过LLM分析变更代码含义，定位到具体的用例或者自主生成测试用例</li>
+<li>自动化测试：通过代码分析自动生成单测用例，减少用例编写的研发成本</li>
+<li>SRE/基础架构：通过结合AI定位分析线上问题，提供问题分析和应急解决方案</li>
+<li>DevOps质量：通过分析变更内容和线上服务指标/告警变化，推断问题成因和变更异常严重度</li>
+</ul>
+<p>拆分了具体方向之后，接下来就是看哪些是自己做，哪些是自己带的人做，或者是第三方已有能力可以提供，可以通过沟通合作达到目的。这样，解决了一个又一个的问题，自己的视角爬到更高，自然可以体会到自己的成长。</p>
+<p>最后，AI是人造的，社会规则也是人造的，所以不需要过份担忧AI，不要担忧MOSS会不会被造出来，比起担忧社会，更应该担忧自己，适当逼一下自己。搞定人，搞定事，自然可以成长。</p>
+]]></content>
+      <categories>
+        <category>测试人生</category>
+      </categories>
+      <tags>
+        <tag>八股文</tag>
+        <tag>AI</tag>
+        <tag>测试开发</tag>
+        <tag>效率工具</tag>
+        <tag>LLM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【DIY小记】分享一些让编程工作效率翻倍的实用工具</title>
+    <url>/2024/09/15/diymemo/code_tools/</url>
+    <content><![CDATA[<p>对于一个程序员而言，拥有一套合理的编程工具集，便可以让编程工作事半功倍。本篇文章就分享下笔者当前使用的一些实用提效的编程周边工具。</p>
+<p>首先需要声明的是，DIY一套编程工具，一定需要贴合自己的工作或者生活需求。好比说，你是前端，你是后端，或者你是搞安卓iOS客户端的，搞图形学渲染的，那肯定用到的工具都不一样。笔者主要工作是互联网后端方向，也兼顾一些前端开发、桌面工具之类的全栈开发内容，一般用Macbook做开发，而不是像游戏程序员一样用Windows比较多。所以本文分享的一些工具，虽然看起来比较普罗大众，但也有一定的倾向性。</p>
+<a id="more"></a>
+<p>然后看IDE，这部分笔者选用的组合是GoLand+PyCharm+VSCode。对于python编程无需多讲，如果不是一些科研算法用途的话，PyCharm是最为无脑的选择。对于Go编程而言，GoLand比VSCode的一点好处是GoLand配置Go开发环境（GOROOT、Proxy之类）更加方便，当然PyCharm也是这个优势，VSCode则有一些学习成本。万能的VSCode是用来兜底的，VSCode可以用来做前端开发，也可以用来临时review代码，比起重研发过程的JetBrains全套来说，VSCode更加专属于程序员日常的需要。</p>
+<p>插件方面，首先要提升代码编写效率，需要一个实用的AI代码补全工具，比如通义灵码、文心一言等，可以随意在<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC82NzIxNjA5NDM=" title="https://zhuanlan.zhihu.com/p/672160943">这篇文章<i class="fa fa-external-link"></i></span>中挑一个免费的。这样的话，像后台硬编码一些配置，涉及到重复性工作，在Golang、Python没有宏去减少编码量的情况下，AI自动补全就可以显著发挥作用。然后就比较见仁见智，比如彩虹括号之类的代码高亮的插件可以按需安装，用于生成gitignore之类的ignore插件也是必备，然后一些eslint之类的前端规范类插件、工作用到的服务部署、环境配置类插件也看着来。如果是脑力所及，比如很熟悉某些shell、git命令，就不需要装太多的插件；如果脑力不够，比如重复性劳动这种，就可以看看有没有通过插件去改变现状的可能。</p>
+<p>之后看文本编辑器。首先想到的还是VSCode，但VSCode在笔者这里已经是一个IDE了，所以更加需要一个轻量级的工具。对于Windows开发而言Notepad++一度是最无脑的选择，但因为众所周知的原因，选用一个更加有前途的文本编辑器会更好，平替的比如SublimeText破解版、Notepad–以及Notepad3之类。MacOS的话，笔者用的是CotEditor，AppStore里就可以安装，基本上满足平常看文本、打草稿、做json转换（需要自定义脚本）之类的需要，非常实用。CotEditor一个美中不足的是打开非常大的文本比较吃力，这个时候就得用MacOS默认的文本编辑或者vim来满足查大文件的需要了。</p>
+<p>提到vim，这里想说，笔者并非vim的资深玩家，也只是有需要采用。vim的可扩展性很强，如果大家自己想把vim打造成独一无二的文本编辑器，甚至是IDE，也是可取的。对于新手玩家来说，笔者还是推荐根据具体工作场景，走最畅销最无脑的选择，这样子注意力才能集中在生产上，vim的话<span class="exturl" data-url="aHR0cHM6Ly9ydWFueWlmZW5nLmNvbS9ibG9nLzIwMTgvMDkvdmltcmMuaHRtbA==" title="https://ruanyifeng.com/blog/2018/09/vimrc.html">入门<i class="fa fa-external-link"></i></span>一下就可以。</p>
+<p>终端工具的话，笔者用的是iTerm2带上<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL29obXl6c2gvb2hteXpzaA==" title="https://github.com/ohmyzsh/ohmyzsh">OhMyZsh<i class="fa fa-external-link"></i></span>和<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3JvbWthdHYvcG93ZXJsZXZlbDEwaw==" title="https://github.com/romkatv/powerlevel10k">powerlevel10k<i class="fa fa-external-link"></i></span>，就可以打造一个简单舒适的终端界面，配置方式网上也有一大堆，不再赘述。</p>
+<p>重要的一个事情是，桌面可以备一款AI检索对话类工具，用来代替stackoverflow做日常技术查询工作，这样也能够提升很多工作效率。有科学上网的话可以用poe，家用的话比较推荐智普清言，免费而且基本可以满足日常编码需求。</p>
+<p>最后还是要提一嘴，实用的编程工具远远不止笔者提到的这些，但如果精力不所及，没有时间去学习熟悉的话，装再多的插件反倒会减少自己的专注。所以重要的，还是找到自己最真实的需求，让自己专注于最重要的工作中，才能够显著提升编程效率。</p>
+]]></content>
+      <categories>
+        <category>DIY小记</category>
+      </categories>
+      <tags>
+        <tag>效率工具</tag>
+        <tag>shell</tag>
+        <tag>Jetbrains</tag>
+        <tag>IDE</tag>
+        <tag>代码高亮</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>【测试人生】分享下自己对于平衡日常工作和学习提升的观点</title>
     <url>/2024/08/17/testlife/work_and_study/</url>
     <content><![CDATA[<p>日常工作总是琐碎的，尤其是技术岗，沉浸在日常的需求开发、需求测试和bugfix里，很容易对工作环境形成依赖，导致没有成长空间。那么这种情况下，怎么样去平衡日常工作和自我的学习提升呢？今天，笔者就通过这篇文章，分享下自己的观点。</p>
@@ -6488,10 +6542,10 @@
       </categories>
       <tags>
         <tag>游戏测试</tag>
+        <tag>测试开发</tag>
         <tag>质量管理</tag>
         <tag>测试</tag>
         <tag>功能测试</tag>
-        <tag>技术测试</tag>
       </tags>
   </entry>
   <entry>
@@ -7981,8 +8035,8 @@
         <category>GitHub探索</category>
       </categories>
       <tags>
+        <tag>效率工具</tag>
         <tag>terminus</tag>
-        <tag>命令行工具</tag>
         <tag>terminal</tag>
         <tag>shell</tag>
         <tag>测试</tag>

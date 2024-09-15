@@ -403,6 +403,375 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2019/10/07/geekdaily/go113_proxy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/10/07/geekdaily/go113_proxy/" class="post-title-link" itemprop="url">【极客日常】解决国内go1.13的go mod无法安装依赖的问题</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-10-07 01:40:29" itemprop="dateCreated datePublished" datetime="2019-10-07T01:40:29+08:00">2019-10-07</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/极客日常/" itemprop="url" rel="index"><span itemprop="name">极客日常</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在<a href="https://utmhikari.github.io/2019/07/20/gofromzero/01_first_code/">从零单排Golang第一话</a>中讲到了Golang的基础开发环境配置，其中讲到了Go的依赖管理方面，提及了以后的趋势会采用官方的go mod进行管理。关于这一块，现在有了更加简单的方法。</p>
+<p>最新的Go1.13中已经将go mod列为默认的包管理方法，但国内用户go mod vendor时还是有可能会出错，这是因为在go get时会检查哈希值，需要访问官方的sumdb。由于众所周知的不可抗因素，sumdb没法直接访问，这样就会造成下载依赖失败。解决的方法也很简单，只需要一行终端命令即可：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go env -w GOPROXY=https://goproxy.cn,direct</span><br></pre></td></tr></table></figure>
+<p>如果采用idea+Go插件开发的话需要注意，idea可能会托管环境变量，这个时候需要进入<code>settings, languages &amp; frameworks, go, go modules</code>里，设置proxy为<code>https://goproxy.cn,direct</code>，就ok了。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2019/10/03/gofromzero/04_kubernetes_mongo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/10/03/gofromzero/04_kubernetes_mongo/" class="post-title-link" itemprop="url">【从零单排Golang】第四话：Win10安装minikube，用client-go部署mongodb</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-10-03 01:25:52" itemprop="dateCreated datePublished" datetime="2019-10-03T01:25:52+08:00">2019-10-03</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/从零单排Golang/" itemprop="url" rel="index"><span itemprop="name">从零单排Golang</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaS9nb2Zyb216ZXJv" title="https://github.com/utmhikari/gofromzero">Github传送门<i class="fa fa-external-link"></i></span></p>
+<p>提起Golang，就不得不提起<span class="exturl" data-url="aHR0cHM6Ly9rdWJlcm5ldGVzLmlvL3poLw==" title="https://kubernetes.io/zh/">kubernetes<i class="fa fa-external-link"></i></span>，在崇尚上云的今天，kubernetes已成为服务端同学必需掌握之学问。在<a href="https://utmhikari.github.io/2019/09/01/gofromzero/03_docker_client/">第三话</a>中，我们介绍了docker容器，它相当于虚拟操作系统，可以提供环境供各种不同的应用运行，从而实现轻量部署。但要是业务复杂，需要部署较多应用的话，就会遇到许多运维相关的问题，比如：</p>
+<ul>
+<li>应用关联的资源很多都需要持久化存储，它们的存储空间需要怎样分配及调度呢？</li>
+<li>不同地域的应用，如何取得相互联系？</li>
+<li>在应用集群中，如果有一个子应用挂了，该怎么办？</li>
+<li>。。。</li>
+</ul>
+<p>这些问题，单靠docker是解决不了的（也不是docker所要关心的），需要在docker的基础上做更高层次的运维平台才能解决，而kubernetes，就是方案之一。复杂的调度逻辑，都会由kubernetes负责，而运维开发人员则基本只需向kubernetes提供资源及其描述，就能满足运维需求，从而提升工作效率。</p>
+<p>既然准备入坑，就需要强行踩下去，因此今天就试试“家中上云”，单机搭建kubernetes，部署一个mongodb数据库。废话不多说，咱们开始吧~</p>
+<h2 id="minikube——在Win10本地搭建kubernetes"><a href="#minikube——在Win10本地搭建kubernetes" class="headerlink" title="minikube——在Win10本地搭建kubernetes"></a>minikube——在Win10本地搭建kubernetes</h2>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/10/03/gofromzero/04_kubernetes_mongo/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2019/09/21/diymemo/csgo/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1874,376 +2243,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2019/07/20/gofromzero/01_first_code/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ひかり.HDQ">
-      <meta itemprop="description" content="talk is cheap, code is rich">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HiKariのTechLab">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/07/20/gofromzero/01_first_code/" class="post-title-link" itemprop="url">【从零单排Golang】第一话：Go开发环境搭建——环境变量、依赖与目录结构踩坑</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-07-20 19:35:05" itemprop="dateCreated datePublished" datetime="2019-07-20T19:35:05+08:00">2019-07-20</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/从零单排Golang/" itemprop="url" rel="index"><span itemprop="name">从零单排Golang</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaS9nb2Zyb216ZXJv" title="https://github.com/utmhikari/gofromzero">Github传送门<i class="fa fa-external-link"></i></span></p>
-<p>当测试开发真不容易，入行第一年，就要在python、NodeJS、lua、C、Java等语言间无缝切换。为了快速响应需求，挺难抽出时间去深耕一门语言的特性（诶羡慕那些只搞Java的人= =）。在<a href="https://utmhikari.github.io/2019/07/01/testlife_mtsc2019/">MTSC2019分享</a>中也谈到，测试开发归属质量保障QA，作为一个中台角色，其终极任务保障研发效能，因此一大需求是打通产品研发运维的生产线。说到生产线就想到上云，说到上云就想到docker跟kube，说到跟容器的交互就想到了Golang。马蛋，又要学一门新语言了。</p>
-<p>开这个坑，旨在展现以程序员的视角学习一门新语言的过程。希望大家看得欢乐。如果有启发，那就更棒啦！</p>
-<h2 id="安装与环境变量配置"><a href="#安装与环境变量配置" class="headerlink" title="安装与环境变量配置"></a>安装与环境变量配置</h2><p>家里的电脑是Windows，从<span class="exturl" data-url="aHR0cHM6Ly9nb2xhbmcub3JnLw==" title="https://golang.org/">官网<i class="fa fa-external-link"></i></span>即可下载Win的安装包。Go的版本为1.12。</p>
-<p>下好后安装，安装完毕之后还需要设置环境变量（我的电脑——属性——高级系统设置）。<code>GOROOT</code>设置成Go的安装路径，还有一个关键的<code>GOPATH</code>，它表示你的工作目录，<strong>一般所有的Go项目，甭管第三方的还是你的，都统一放到这个目录下</strong>（从这点可以看出，Go的控制欲还是很强的）。<code>GOPATH</code>的一般结构如下：</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/07/20/gofromzero/01_first_code/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2019/07/13/testlife/android_fps/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ひかり.HDQ">
-      <meta itemprop="description" content="talk is cheap, code is rich">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HiKariのTechLab">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/07/13/testlife/android_fps/" class="post-title-link" itemprop="url">【测试人生】安卓FPS测试详解</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-07-13 16:51:27" itemprop="dateCreated datePublished" datetime="2019-07-13T16:51:27+08:00">2019-07-13</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/测试人生/" itemprop="url" rel="index"><span itemprop="name">测试人生</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>安卓的fps测试，是我打开测试开发大门的一把钥匙。两年前的现在，安卓性能测试的相关资料甚少，以fps为例在网上也只有寥寥几篇文章讲述，但到了今年，已经有许多资料在各大技术论坛上供大家看到了。对于自己，一直想找一个机会把这一段技术探索写出来。所以，心动不如行动。</p>
-<p>fps（frames per second），通常表示我们屏幕每秒展现的图片（帧）数，反映了一款应用在当前硬件下的性能消耗。比如我们抽CS的时候，就经常关注fps是否高，在高的情况下，就会有较好的流畅度。因此fps是应用性能测试中一个重要指标。</p>
-<p>对于一个安卓app而言，为了测定fps数值，我们需要从安卓图形显示相关的模块入手。一个通用的方式是切入安卓的SurfaceFlinger服务，它是图形显示流程中软件层和硬件层的交互点，是极其关键的一环。SurfaceFlinger则是负责分析&amp;合成各个app中的图层，而后将合成的图像数据交由硬件渲染。硬件渲染的机制复杂，因此安卓系统中，将硬件操作进行了抽象方便调用，我们将这一与SurfaceFlinger对接的层次，称之为硬件抽象层（HAL）。SurfaceFlinger与HAL在功能上有部分的耦合，一些Surface合成的工作，也会委托HAL进行。</p>
-<p>那么我们该如何通过SurfaceFlinger获得fps数据呢？大体上，我们可以参考<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2l0Zm9vdGJhbGwvYXJ0aWNsZS9kZXRhaWxzLzQzMDg0NTI3Lw==" title="https://blog.csdn.net/itfootball/article/details/43084527/">《Android性能测试之fps获取》<i class="fa fa-external-link"></i></span>一文。这种方式成功率高（虽然我家手机行不通），且不用root，较为方便</p>
-<p>首先，通过adb，我们可以导出SurfaceFlinger服务的运行时信息。</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/07/13/testlife/android_fps/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2292,7 +2291,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">167</span>
+                    <span class="site-state-item-count">169</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -3208,7 +3207,7 @@
                     
                       
                     
-                    <span class="site-state-item-count">426</span>
+                    <span class="site-state-item-count">424</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
