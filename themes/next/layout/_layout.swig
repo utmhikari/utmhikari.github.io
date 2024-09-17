@@ -18,6 +18,7 @@
 <head>
   <meta name="baidu-site-verification" content="sc1B5Cxcoz" />
   <meta name="google-site-verification" content="OLcRj7lMnauxKrhFT3Q8Nvcexgv22NvlEmVZShKQKR8" />
+  <meta name="msvalidate.01" content="9850C66949CEE9FC01308CA6993E7147" />
   {{ partial('_partials/head/head.swig', {}, {cache: theme.cache.enable}) }}
   {% include '_partials/head/head-unique.swig' %}
   <title>{% block title %}{% endblock %}</title>
