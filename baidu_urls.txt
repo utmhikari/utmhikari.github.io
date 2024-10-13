@@ -1,3 +1,5 @@
+http://utmhikari.github.io/2024/10/13/diymemo/overclock_try/
+http://utmhikari.github.io/2024/10/13/pythonnotes/pyside6_clocks/
 http://utmhikari.github.io/2024/09/16/testlife/ai_era_challenge/
 http://utmhikari.github.io/2024/09/15/diymemo/code_tools/
 http://utmhikari.github.io/2024/08/17/testlife/work_and_study/
@@ -96,5 +98,3 @@ http://utmhikari.github.io/2021/07/11/testlife/openpyxl/
 http://utmhikari.github.io/2021/06/08/pythonnotes/python_processpoolexecutor/
 http://utmhikari.github.io/2021/06/06/geekdaily/go_basic_data_types/
 http://utmhikari.github.io/2021/06/01/testlife/table_test_tool/
-http://utmhikari.github.io/2021/05/23/gamedev/ue4_swarm_build/
-http://utmhikari.github.io/2021/05/20/testlife/dungeon_autotest/
