@@ -404,6 +404,188 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2024/02/04/githubdiscovery/altershield_design/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2024/02/04/githubdiscovery/altershield_design/" class="post-title-link" itemprop="url">【GitHub探索】蚂蚁变更管控平台AlterShield设计分析</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2024-02-04 15:06:42" itemprop="dateCreated datePublished" datetime="2024-02-04T15:06:42+08:00">2024-02-04</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/GitHub探索/" itemprop="url" rel="index"><span itemprop="name">GitHub探索</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>技术风险，作为质量保障领域的重要的一环，主要研究如何通过解决方案和技术手段，解决企业内业务在基础运维、日常运营和变更上线过程中的稳定性问题，保证业务风险得到收敛。在国内，蚂蚁金服在这个方向上有沉淀很多方法论和实践经验。变更管控是技术风险地一个子领域，主要的目标是在变更过程中，通过对变更流程的管控介入，提前发现变更过程存在的事故风险，或者阻止变更过程的错误进一步扩大影响面。在这个子领域，蚂蚁开源了<span class="exturl" data-url="aHR0cHM6Ly9hbHRlcnNoaWVsZC5pby96aC1DTi9kb2NzL2ludHJvZHVjdGlvbi93aGF0LWlzLWFsdGVyc2hpZWxkLw==" title="https://altershield.io/zh-CN/docs/introduction/what-is-altershield/">AlterShield变更管控平台<i class="fa fa-external-link"></i></span>，提供了一套变更风险防御的解决方案。今天，本文就浅析下AlterShield平台整体的设计，适用的场景以及局限性。</p>
+<p>AlterShield的源码可以参考这个<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3RyYWFzLXN0YWNrL2FsdGVyc2hpZWxk" title="https://github.com/traas-stack/altershield">GitHub-Repo<i class="fa fa-external-link"></i></span>。整体的<span class="exturl" data-url="aHR0cHM6Ly9hbHRlcnNoaWVsZC5pby96aC1DTi9ibG9nL3dlbGNvbWUtYWx0ZXJzaGllbGQtdjAuMQ==" title="https://altershield.io/zh-CN/blog/welcome-altershield-v0.1">技术架构<i class="fa fa-external-link"></i></span>，主要包含几块部分：</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2024/02/04/githubdiscovery/altershield_design/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2024/01/07/testlife/slow_query_risk/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2037,189 +2219,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2023/07/09/testlife/data_wash_risk/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ひかり.HDQ">
-      <meta itemprop="description" content="talk is cheap, code is rich">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HiKariのTechLab">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2023/07/09/testlife/data_wash_risk/" class="post-title-link" itemprop="url">【测试人生】批量刷数的发布流程与风险点</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2023-07-09 11:16:30" itemprop="dateCreated datePublished" datetime="2023-07-09T11:16:30+08:00">2023-07-09</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/测试人生/" itemprop="url" rel="index"><span itemprop="name">测试人生</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>在项目日常开发过程中，批量刷数也是有一定频率的变更场景之一，同时也是容易产生风险的一种变更操作。本文就来聊下，批量刷数的发布需要经历哪些流程，以及流程中每个环节中有什么风险点需要考虑。</p>
-<p>首先需要了解批量刷数这个操作是个什么意义。无论是新增/删除一些数据也好，还是UPDATE某些已有线上数据也好，其背后要么对应着一个新业务开发，要么对应着一个bugfix。因此，批量刷数的本质其实就是一个业务需求，需要有完整的一套需求评审 -&gt; 技术评审 -&gt; 线下测试 -&gt; 线上发布 -&gt; 发布验证的过程。</p>
-<p>第一个环节是需求评审。需求评审的主要的目的，一是为了做刷数的可行性评估，二是做刷数记录归档。</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2023/07/09/testlife/data_wash_risk/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2268,7 +2267,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">171</span>
+                    <span class="site-state-item-count">172</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -3194,7 +3193,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">428</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">429</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

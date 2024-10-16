@@ -1,6 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>【DIY小记】通过调整电压和使用Process Lasso优化CPU表现</title>
+    <url>/2024/10/16/diymemo/overclock_core/</url>
+    <content><![CDATA[<p>在<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjQvMTAvMTMvZGl5bWVtby9vdmVyY2xvY2tfdHJ5Lw==" title="https://utmhikari.top/2024/10/13/diymemo/overclock_try/">上一篇文章<i class="fa fa-external-link"></i></span>当中，笔者介绍了一些作为新手小白超频CPU和NVIDIA显卡的经验。今天又有了更新，笔者通过降低CPU工作电压，并且结合Process Lasso对程序做CPU调度优化，成功再一次升级了CPU的表现，CS2的benchmark又提高了50左右的fps。</p>
+<p>本篇文章，就介绍一下笔者在这方面的一些实践。配置方面再复述一次：主板是微星z690刀锋ti，cpu是i9-12900kf，散热用的追风者冰灵m25-360，gpu是3070ti，内存是一个比较简陋的ddr4。</p>
+<a id="more"></a>
+<p>首先是电压的调整，如果电压过低，那么功率就会低，CPU实际工作的时候就不稳定；如果电压过高，那么可能会过热，导致CPU散热出现问题。因为笔者的散热比较捉急，所以一个宗旨是在尽量高的CPU频率下，用尽量低的电压同时确保运行稳定。手法也是参考<span class="exturl" data-url="aHR0cHM6Ly9iYnMubmdhLmNuL3JlYWQucGhwP3RpZD0zMDc0MTkzNiZhbXA7cmFuZD0xNzgmYW1wO3JhbmQ9MzUz" title="https://bbs.nga.cn/read.php?tid=30741936&amp;rand=178&amp;rand=353">这一篇文章<i class="fa fa-external-link"></i></span>，先用override恒定电压看某频率下主板默认给的电压是多少，然后再调成adaptive+offset模式降低电压，看降低后能不能散热OK+运行稳定。通过不断的调试，最终也是摸到了一套比较合适的参数，原先大核只能睿到4.6Ghz，现在能升到5.0Ghz，配套-0.1v的offset，电压降到1.2v，aida64烤10min可保持稳定，日常使用暂时没啥问题。大核5.1Ghz下电压即便降了散热也抵抗不住，而5.2Ghz下恒定电压就1.37v，也就不好兼顾散热和电压了，没有再继续调试。</p>
+<p>然后是Process Lasso，这个工具可以调整程序的工作优先级和CPU亲和度，对于具备大小核的i9-12900kf来说，这个工具的意义非常重大。比如cs2，就可以调整CPU优先级为实时，亲和度给到所有大核，启动项-threads设置为大核数量+1，并且如果需要展示RTSS得设置-allow_third_party_software。而其他比如360之类的日常程序，亲和度给小核，优先级适当放低就可以。这样游戏运行就能充分解放大核的潜力，达到更好的效果。</p>
+]]></content>
+      <categories>
+        <category>DIY小记</category>
+      </categories>
+      <tags>
+        <tag>性能测试</tag>
+        <tag>超频</tag>
+        <tag>CPU</tag>
+        <tag>Process Lasso</tag>
+        <tag>硬件</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>【DIY小记】新手小白超频i9-12900kf和3070ti经验分享</title>
     <url>/2024/10/13/diymemo/overclock_try/</url>
     <content><![CDATA[<p>最近cs2更新了之后，因为总是解决fps过高的问题，导致游戏性能降的非常明显。笔者组的老土机子先前一直没有搞超频，现在也不得不睿一下保证游戏能够稍微流畅的运作，最终比以前稍微提升了50fps左右，cs2的dust2-benchmark地图能勉强达到平均400fps。本文就分享一下笔者在这块的粗浅经验，有什么技术概念性问题也麻烦大家指正。</p>
@@ -14,11 +34,11 @@
         <category>DIY小记</category>
       </categories>
       <tags>
-        <tag>NVIDIA</tag>
+        <tag>性能测试</tag>
         <tag>超频</tag>
-        <tag>微星</tag>
         <tag>CPU</tag>
-        <tag>Win11</tag>
+        <tag>硬件</tag>
+        <tag>显卡</tag>
       </tags>
   </entry>
   <entry>

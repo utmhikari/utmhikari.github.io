@@ -404,6 +404,190 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2022/08/02/gameofautotest/i/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2022/08/02/gameofautotest/i/" class="post-title-link" itemprop="url">【Game Of AutoTest】1、再度启程，重识游戏自动化测试</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2022-08-02 21:46:25" itemprop="dateCreated datePublished" datetime="2022-08-02T21:46:25+08:00">2022-08-02</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Game-Of-AutoTest/" itemprop="url" rel="index"><span itemprop="name">Game Of AutoTest</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>2022年的8月，结束了很长一段时间的犹豫，笔者决定开启新的文章系列：《Game Of AutoTest》，向外界公开自己近两年来在游戏自动化测试方面所沉淀的工作经验，以及许多关于自动化测试本身的思考跟想法。在先前的<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wL2NhdGVnb3JpZXMvJUU2JUI1JThCJUU4JUFGJTk1JUU0JUJBJUJBJUU3JTk0JTlGLw==" title="https://utmhikari.top/categories/%E6%B5%8B%E8%AF%95%E4%BA%BA%E7%94%9F/">测试人生<i class="fa fa-external-link"></i></span>栏目中，曾经分享过许多关于游戏自动化测试的技术，但并没有一个比较系统化的输出。因此借这个机会，笔者也决定好好分享一下，从一个更加纯粹的技术人的角度，对于游戏自动化测试这一细分领域的理解。</p>
+<p>自动化测试本身已经不是一个新鲜的名词，不论是游戏还是传统互联网行业，我们都能够见到自动化测试落地的身影。但是，自动化测试基础技术到底需要往怎样的方向搭建，业务应用需要覆盖哪些场景，这些话题其实很少被讨论，并且实际沉淀下来的知识分享和业务产出，也不尽然特别引人注目。尤其在游戏测试领域，自动化测试如何被应用到实际测试工作当中，相关的沉淀是少之又少，可以算是一片待开垦的荒地。</p>
+<p>游戏自动化测试——这个名词本身都没有一个确切的定义。有些人认为，只有像自动驱动客户端玩游戏，测试场景物件是否正常交互，这种能够实际测到和测试用例相关的内容，才算是自动化测试；也有些人认为，像一些纯粹收集性能数据的场景，比如驱动玩家在地图里跑图，收集前后台数据，也算是自动化测试。这说明了，只要是用了程序化的手段，去完成游戏测试的整个或一部分的流程，那么就有可能被定义为一种游戏自动化测试的方案。但遗憾的是，正因为如此，很多测试工作者为了让自己的工作有技术含量，都会尝试沾自动化测试技术的光，为了技术而技术，用一些现成的自动化工具去做了个demo规模的东西，然后很阿里味地包装成富有技术含量的测试工作，但实际上相对于原来反倒增加了学习、维护、执行成本，是毫无价值的负优化。其中原因，归根到底，还是自动化测试这个工作被很多人小看了。如果你是个测试工作者，但业务经验、技术能力以及良师指导三者都很缺乏，并且业务环境上没啥落地场景，组织氛围也没啥支持的话，要做好自动化测试，那是非常困难的。</p>
+<p>因此，我们有必要去重新认识游戏自动化测试这个概念。有几个准则：</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2022/08/02/gameofautotest/i/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2022/07/03/pythonnotes/multithread_parallel/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2055,193 +2239,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2022/03/19/hardpython/3_gc_2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ひかり.HDQ">
-      <meta itemprop="description" content="talk is cheap, code is rich">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HiKariのTechLab">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2022/03/19/hardpython/3_gc_2/" class="post-title-link" itemprop="url">【Hard Python】【第三章-GC】2、python的GC流程</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2022-03-19 14:09:44" itemprop="dateCreated datePublished" datetime="2022-03-19T14:09:44+08:00">2022-03-19</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Hard-Python/" itemprop="url" rel="index"><span itemprop="name">Hard Python</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>除了通过引用计数直接销毁对象之外，<code>python</code>还是拥有内在<code>GC</code>机制的，并且也有完整的一套流程。</p>
-<p>如果只有通过引用计数销毁对象这种机制，那么随便构造一个循环引用就会造成内存泄漏，比如下面的代码：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_dump_gc</span><span class="params">()</span>:</span></span><br><span class="line">    gcobjs = gc.get_objects()</span><br><span class="line">    pprint.pprint(len(gcobjs))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_circle</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_test_internal</span><span class="params">()</span>:</span></span><br><span class="line">        _dump_gc()</span><br><span class="line">        a = []</span><br><span class="line">        b = []</span><br><span class="line">        a.append(b)</span><br><span class="line">        b.append(a)</span><br><span class="line">        _dump_gc()</span><br><span class="line"></span><br><span class="line">    _test_internal()</span><br><span class="line">    _dump_gc()</span><br><span class="line">    gc.collect()</span><br><span class="line">    _dump_gc()</span><br></pre></td></tr></table></figure>
-<p>打印出来的结果是：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">13707</span><br><span class="line">13709</span><br><span class="line">13709</span><br><span class="line">13370</span><br></pre></td></tr></table></figure>
-<p>很显然，当退出<code>_test_internal</code>作用域时，<code>gc</code>对象的数量没有变化，这就说明在<code>_test_internal</code>里创建的<code>a、b</code>两个对象没有被立即释放掉。如果注释掉两个<code>append</code>行，就能看到打印结果第三行变成了<code>13707</code>，说明<code>a、b</code>在退出函数时就被销毁了。</p>
-<p>所以首先，我们从循环引用入手，来研究一下<code>python</code>的<code>gc</code>机制（好巧不巧的是，<code>python</code>的<code>gc</code>也是专门为循环引用而设置的）。调用<code>gc.collect</code>触发<code>gc</code>之后，会跑到<code>gc_collect_main</code>触发完整的<code>gc</code>流程。<code>gc_collect_main</code>是<code>python</code>整个<code>gc</code>流程的主入口，我们来看其中的代码：</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2022/03/19/hardpython/3_gc_2/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2290,7 +2287,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">171</span>
+                    <span class="site-state-item-count">172</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -3216,7 +3213,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">428</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">429</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
