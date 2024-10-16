@@ -1,3 +1,4 @@
+http://utmhikari.github.io/2024/10/16/geekdaily/rookie_interview/
 http://utmhikari.github.io/2024/10/16/diymemo/overclock_core/
 http://utmhikari.github.io/2024/10/13/diymemo/overclock_try/
 http://utmhikari.github.io/2024/10/13/pythonnotes/pyside6_clocks/
@@ -97,4 +98,3 @@ http://utmhikari.github.io/2021/08/21/gamedev/ue4_cpp_btree_nodes/
 http://utmhikari.github.io/2021/08/07/gamedev/recastdemo/
 http://utmhikari.github.io/2021/07/11/testlife/openpyxl/
 http://utmhikari.github.io/2021/06/08/pythonnotes/python_processpoolexecutor/
-http://utmhikari.github.io/2021/06/06/geekdaily/go_basic_data_types/
