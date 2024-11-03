@@ -5,10 +5,10 @@ categories:
 - Python随笔
 tags:
 - python
+- 类
+- 面向对象
+- 编译
 - 下划线
-- name mangling
-- 属性
-- instance
 ---
 
 学过python的我们都知道在python的类实例instance的`__init__`函数里，可以初始化这个instance的属性。属性的命名有许多种，比如有一个例子：
