@@ -2,16 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://utmhikari.github.io/2024/11/03/pythonnotes/requests_to_curl/</loc>
+    <loc>http://utmhikari.github.io/2024/11/03/archiart/stability_basics/</loc>
     
-    <lastmod>2024-11-03T04:12:23.582Z</lastmod>
+    <lastmod>2024-11-03T04:19:05.651Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2024/11/03/archiart/stability_basics/</loc>
+    <loc>http://utmhikari.github.io/2024/07/20/geekdaily/golang_slice_bug/</loc>
     
-    <lastmod>2024-11-03T04:11:33.477Z</lastmod>
+    <lastmod>2024-11-03T04:19:04.286Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://utmhikari.github.io/2024/11/03/pythonnotes/requests_to_curl/</loc>
+    
+    <lastmod>2024-11-03T04:12:23.582Z</lastmod>
     
   </url>
   
@@ -152,13 +159,6 @@
     <loc>http://utmhikari.github.io/2021/06/06/geekdaily/go_basic_data_types/</loc>
     
     <lastmod>2024-08-11T06:23:58.282Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://utmhikari.github.io/2024/07/20/geekdaily/golang_slice_bug/</loc>
-    
-    <lastmod>2024-08-07T16:28:23.650Z</lastmod>
     
   </url>
   

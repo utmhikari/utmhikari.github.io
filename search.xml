@@ -21,7 +21,7 @@
         <tag>架构</tag>
         <tag>微服务</tag>
         <tag>稳定性</tag>
-        <tag>bug</tag>
+        <tag>问题排查</tag>
       </tags>
   </entry>
   <entry>
@@ -305,8 +305,8 @@
         <tag>Golang</tag>
         <tag>重构</tag>
         <tag>slice</tag>
-        <tag>bug</tag>
         <tag>指针</tag>
+        <tag>问题排查</tag>
       </tags>
   </entry>
   <entry>
