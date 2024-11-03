@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://utmhikari.github.io/2024/11/03/pythonnotes/requests_to_curl/</loc>
+    <lastmod>2024-11-03</lastmod>
+  </url>  <url>
+    <loc>http://utmhikari.github.io/2024/11/03/archiart/stability_basics/</loc>
+    <lastmod>2024-11-03</lastmod>
+  </url>  <url>
+    <loc>http://utmhikari.github.io/2021/10/06/pythonnotes/attr_with_underscore/</loc>
+    <lastmod>2024-11-03</lastmod>
+  </url>  <url>
+    <loc>http://utmhikari.github.io/2019/07/28/testlife/think_as_a_user/</loc>
+    <lastmod>2024-11-03</lastmod>
+  </url>  <url>
+    <loc>http://utmhikari.github.io/2022/01/22/hardpython/1_multiprocessing_2/</loc>
+    <lastmod>2024-11-03</lastmod>
+  </url>  <url>
+    <loc>http://utmhikari.github.io/2022/10/03/gameofautotest/iv/</loc>
+    <lastmod>2024-11-03</lastmod>
+  </url>  <url>
     <loc>http://utmhikari.github.io/2024/10/16/geekdaily/rookie_interview/</loc>
     <lastmod>2024-10-16</lastmod>
   </url>  <url>
@@ -109,9 +127,6 @@
     <loc>http://utmhikari.github.io/2021/06/01/testlife/table_test_tool/</loc>
     <lastmod>2024-04-07</lastmod>
   </url>  <url>
-    <loc>http://utmhikari.github.io/2019/07/28/testlife/think_as_a_user/</loc>
-    <lastmod>2024-04-07</lastmod>
-  </url>  <url>
     <loc>http://utmhikari.github.io/2020/05/05/testlife/try_gautomator/</loc>
     <lastmod>2024-04-07</lastmod>
   </url>  <url>
@@ -200,9 +215,6 @@
     <lastmod>2024-04-07</lastmod>
   </url>  <url>
     <loc>http://utmhikari.github.io/2021/10/10/mediumpython/preface/</loc>
-    <lastmod>2024-04-07</lastmod>
-  </url>  <url>
-    <loc>http://utmhikari.github.io/2021/10/06/pythonnotes/attr_with_underscore/</loc>
     <lastmod>2024-04-07</lastmod>
   </url>  <url>
     <loc>http://utmhikari.github.io/2020/11/29/pythonnotes/celery/</loc>
@@ -296,9 +308,6 @@
     <lastmod>2024-04-07</lastmod>
   </url>  <url>
     <loc>http://utmhikari.github.io/2022/01/16/hardpython/1_multiprocessing_1/</loc>
-    <lastmod>2024-04-07</lastmod>
-  </url>  <url>
-    <loc>http://utmhikari.github.io/2022/01/22/hardpython/1_multiprocessing_2/</loc>
     <lastmod>2024-04-07</lastmod>
   </url>  <url>
     <loc>http://utmhikari.github.io/2022/02/12/hardpython/2_asyncio_1/</loc>
@@ -401,9 +410,6 @@
     <lastmod>2024-04-07</lastmod>
   </url>  <url>
     <loc>http://utmhikari.github.io/2022/09/04/gameofautotest/iii/</loc>
-    <lastmod>2024-04-07</lastmod>
-  </url>  <url>
-    <loc>http://utmhikari.github.io/2022/10/03/gameofautotest/iv/</loc>
     <lastmod>2024-04-07</lastmod>
   </url>  <url>
     <loc>http://utmhikari.github.io/2022/11/02/gameofautotest/v/</loc>

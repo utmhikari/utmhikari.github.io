@@ -101,24 +101,25 @@
 
 
 
-  <meta name="description" content="talk is cheap, code is rich">
-<meta name="keywords" content="code, life">
-<meta property="og:type" content="website">
-<meta property="og:title" content="HiKariのTechLab">
-<meta property="og:url" content="http://utmhikari.github.io/tags/用户思维/index.html">
+  <meta name="description" content="在某些python的工具模块开发场景下，我们可能需要根据用户给定的web请求输入，来转化成一个curl的输出，用于一些网络请求测试，或者方便开发之间交流信息。由于python的web请求基本上一万个人里面九成九都用requests，因此今天这篇文章就简单介绍一下，如何在python里面将requests实例转化成curl语句。 这个场景下，我们需要用到一个叫做curlify的工具库来达到效果。cu">
+<meta name="keywords" content="源码分析,python,web开发,curl,requests">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Python随笔】将requests实例转换成curl语句">
+<meta property="og:url" content="http://utmhikari.github.io/2024/11/03/pythonnotes/requests_to_curl/index.html">
 <meta property="og:site_name" content="HiKariのTechLab">
-<meta property="og:description" content="talk is cheap, code is rich">
+<meta property="og:description" content="在某些python的工具模块开发场景下，我们可能需要根据用户给定的web请求输入，来转化成一个curl的输出，用于一些网络请求测试，或者方便开发之间交流信息。由于python的web请求基本上一万个人里面九成九都用requests，因此今天这篇文章就简单介绍一下，如何在python里面将requests实例转化成curl语句。 这个场景下，我们需要用到一个叫做curlify的工具库来达到效果。cu">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2024-11-03T04:12:23.582Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HiKariのTechLab">
-<meta name="twitter:description" content="talk is cheap, code is rich">
+<meta name="twitter:title" content="【Python随笔】将requests实例转换成curl语句">
+<meta name="twitter:description" content="在某些python的工具模块开发场景下，我们可能需要根据用户给定的web请求输入，来转化成一个curl的输出，用于一些网络请求测试，或者方便开发之间交流信息。由于python的web请求基本上一万个人里面九成九都用requests，因此今天这篇文章就简单介绍一下，如何在python里面将requests实例转化成curl语句。 这个场景下，我们需要用到一个叫做curlify的工具库来达到效果。cu">
 
 
 
 
 
 
-  <link rel="canonical" href="http://utmhikari.github.io/tags/用户思维/">
+  <link rel="canonical" href="http://utmhikari.github.io/2024/11/03/pythonnotes/requests_to_curl/">
 
 
 
@@ -128,7 +129,7 @@
   };
 </script>
 
-  <title>标签: 用户思维 | HiKariのTechLab</title>
+  <title>【Python随笔】将requests实例转换成curl语句 | HiKariのTechLab</title>
   
 
 
@@ -176,7 +177,7 @@
     
   
 
-  <div class="container sidebar-position-right ">
+  <div class="container sidebar-position-right page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -252,7 +253,7 @@
         
         
           
-          <li class="menu-item menu-item-tags menu-item-active">
+          <li class="menu-item menu-item-tags">
 
     
     
@@ -383,86 +384,235 @@
           
             
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
           
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h2>用户思维<small>标签</small>
-        </h2>
-      </div>
+  
 
-      
-        
+  
+  
+  
+
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2024/11/03/pythonnotes/requests_to_curl/">
 
-      <h3 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
         
-          <a class="post-title-link" href="/2019/07/28/testlife/think_as_a_user/" itemprop="url">
-            
-              <span itemprop="name">【测试人生】一个测试开发的用户思维</span>
-            
-          </a>
         
-      </h3>
+          <h2 class="post-title" itemprop="name headline">【Python随笔】将requests实例转换成curl语句
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-28T01:07:58+08:00" content="2019-07-28">
-          07-28
-        </time>
-      </div>
+              
+            
+          </h2>
+        
 
-    </header>
-  </article>
+        <div class="post-meta">
+          <span class="post-time">
 
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2024-11-03 12:11:10 / 修改时间：12:12:23" itemprop="dateCreated datePublished" datetime="2024-11-03T12:11:10+08:00">2024-11-03</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Python随笔/" itemprop="url" rel="index"><span itemprop="name">Python随笔</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在某些python的工具模块开发场景下，我们可能需要根据用户给定的web请求输入，来转化成一个curl的输出，用于一些网络请求测试，或者方便开发之间交流信息。由于python的web请求基本上一万个人里面九成九都用requests，因此今天这篇文章就简单介绍一下，如何在python里面将requests实例转化成curl语句。</p>
+<p>这个场景下，我们需要用到一个叫做<span class="exturl" data-url="aHR0cHM6Ly9weXBpLm9yZy9wcm9qZWN0L2N1cmxpZnkv" title="https://pypi.org/project/curlify/">curlify<i class="fa fa-external-link"></i></span>的工具库来达到效果。curlify提供了一个to_curl函数，可以将一个请求实例转化成curl语句：</p>
+<a id="more"></a>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">to_curl</span><span class="params">(request, compressed=False, verify=True)</span>:</span></span><br><span class="line">    parts = [</span><br><span class="line">        (<span class="string">'curl'</span>, <span class="literal">None</span>),</span><br><span class="line">        (<span class="string">'-X'</span>, request.method),</span><br><span class="line">    ]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> k, v <span class="keyword">in</span> sorted(request.headers.items()):</span><br><span class="line">        parts += [(<span class="string">'-H'</span>, <span class="string">'&#123;0&#125;: &#123;1&#125;'</span>.format(k, v))]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> request.body:</span><br><span class="line">        body = request.body</span><br><span class="line">        <span class="keyword">if</span> isinstance(body, bytes):</span><br><span class="line">            body = body.decode(<span class="string">'utf-8'</span>)</span><br><span class="line">        parts += [(<span class="string">'-d'</span>, body)]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> compressed:</span><br><span class="line">        parts += [(<span class="string">'--compressed'</span>, <span class="literal">None</span>)]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> verify:</span><br><span class="line">        parts += [(<span class="string">'--insecure'</span>, <span class="literal">None</span>)]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 下略，主要是组装命令</span></span><br></pre></td></tr></table></figure>
+<p>这里有一个坑点在于，我们有时候把requests转化为curl，得在请求之前去做，而我们一般用requests.get、requests.request时候，其实已经把请求发送出去了。因此，这个情况下我们需要简单探秘一下requests的源码实现，来看需要怎么做才能给到一个请求发送之前的requests实例。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">request</span><span class="params">(self)</span>:</span>  <span class="comment"># requests.session.request，参数略</span></span><br><span class="line">    req = Request(</span><br><span class="line">        method=method.upper(),</span><br><span class="line">        url=url,</span><br><span class="line">        <span class="comment"># 其他参数略</span></span><br><span class="line">    )</span><br><span class="line">    prep = self.prepare_request(req)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">prepare_request</span><span class="params">(self, req)</span>:</span></span><br><span class="line">    p = PreparedRequest()</span><br><span class="line">    p.prepare(</span><br><span class="line">        method=request.method.upper(),</span><br><span class="line">        url=request.url,</span><br><span class="line">        files=request.files,</span><br><span class="line">        data=request.data,</span><br><span class="line">        json=request.json,</span><br><span class="line">        headers=merge_setting(</span><br><span class="line">            request.headers, self.headers, dict_class=CaseInsensitiveDict</span><br><span class="line">        ),</span><br><span class="line">        params=merge_setting(request.params, self.params),</span><br><span class="line">        auth=merge_setting(auth, self.auth),</span><br><span class="line">        cookies=merged_cookies,</span><br><span class="line">        hooks=merge_hooks(request.hooks, self.hooks),</span><br><span class="line">    )</span><br><span class="line">    <span class="keyword">return</span> p</span><br></pre></td></tr></table></figure>
+<p>从requests源码中可以看到，在请求之前，会构造一个PreparedRequest实例，来存储所有的请求参数。因此，如果给定请求参数的话，我们也可以显式构造一个PreparedRequest实例，然后调用to_curl函数，将PreparedRequest转化为curl语句，满足在请求发起之间转化的需要。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">to_curl</span><span class="params">(self)</span>:</span></span><br><span class="line">    prepared_request = requests.PreparedRequest()</span><br><span class="line">    prepared_request.prepare_method(self.method)</span><br><span class="line">    prepared_request.prepare_url(self.url, <span class="literal">None</span>)</span><br><span class="line">    prepared_request.prepare_headers(self.headers)</span><br><span class="line">    prepared_request.prepare_body(self.body.strip(), <span class="literal">None</span>)</span><br><span class="line">    <span class="keyword">return</span> curlify.to_curl(prepared_request)</span><br></pre></td></tr></table></figure>
 
       
     </div>
 
+    
+
+    
+    
+    
+
+    
+      
+<div style="border: 1px solid black; margin-top: 32px; margin-bottom: 32px">
+  <div style="margin-left:10px">
+    <span style="font-weight:bold">版权声明</span>
+    <br>
+    <span>本文为博客<a href="https://utmhikari.github.io" style="color:#258FC6">HiKariのTechLab</a>原创文章，转载请标明出处，谢谢~~~</span>
+  </div>
+</div>
+
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/源码分析/" rel="tag"># 源码分析</a>
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/web开发/" rel="tag"># web开发</a>
+          
+            <a href="/tags/curl/" rel="tag"># curl</a>
+          
+            <a href="/tags/requests/" rel="tag"># requests</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2024/10/16/geekdaily/rookie_interview/" rel="next" title="【极客日常】由面试官角度给校招生的大厂面试要点">
+                <i class="fa fa-chevron-left"></i> 【极客日常】由面试官角度给校招生的大厂面试要点
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2024/11/03/archiart/stability_basics/" rel="prev" title="【架构艺术】服务架构稳定性的基础保障">
+                【架构艺术】服务架构稳定性的基础保障 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+  </div>
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -500,7 +650,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">173</span>
+                    <span class="site-state-item-count">175</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1432,7 +1582,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">429</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">425</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1685,6 +1841,10 @@
 
 
   
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
 
   
 
@@ -1702,6 +1862,8 @@
 
   
 
+
+  
 
 
   

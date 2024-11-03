@@ -404,6 +404,373 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2020/02/26/geekdaily/start_fastapi_reborn/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2020/02/26/geekdaily/start_fastapi_reborn/" class="post-title-link" itemprop="url">【极客日常】再度上手start-fastapi</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-02-26 22:04:32" itemprop="dateCreated datePublished" datetime="2020-02-26T22:04:32+08:00">2020-02-26</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/极客日常/" itemprop="url" rel="index"><span itemprop="name">极客日常</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>近期项目组准备做一个新的工具，因此自个儿做的<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaS9zdGFydC1mYXN0YXBp" title="https://github.com/utmhikari/start-fastapi">start-fastapi<i class="fa fa-external-link"></i></span>框架正好能派上用场试试水。在起草需求搭建最初框架的时候也逐步发现原先的start-fastapi有一些不足的地方，因此做了一些针对性的优化。</p>
+<p>首先必须重新介绍一下start-fastapi，其本身是轻量级web框架<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3RpYW5nb2xvL2Zhc3RhcGk=" title="https://github.com/tiangolo/fastapi">fastapi<i class="fa fa-external-link"></i></span>的延伸，但是由于fastapi给的例子过于简单，因此就基于此做了一个简单的web后端脚手架，借鉴了<span class="exturl" data-url="aHR0cHM6Ly9lZ2dqcy5vcmcvemgtY24vaW50cm8vcXVpY2tzdGFydC5odG1s" title="https://eggjs.org/zh-cn/intro/quickstart.html">eggjs<i class="fa fa-external-link"></i></span>的目录组织模型，使得整个框架更加易于投产。如果稍微看过start-fastapi其中的代码的话就能够发现它并不是一个OOP的框架，这是因为一方面python本身不是向java一般与OO设计理念强耦合，且其module隔离与动态加载机制已经足够区分每一个功能模块了；另一方面轻量的HTTP Web Server本身作为无状态的服务，各个功能模块应该是静态式、单例式的存在。在start-fastapi上也可以继续扩展底层。从起草工具的效果来看，多人协同开发时，每个人负责的模块应当也不会有太大冲突的概率。</p>
+<p>接下来是近期优化的一些点，首先是application目录下的优化。原先application分为了service、middleware、config等多个模块，但现在直接缩减为controller、logger跟router，这是因为service跟middleware里全局性的功能模块一般都是用户自定义的，而controller的response可以约定，logger factory也可以统一提供。而router作为后端app的固有功能，这块就必不可少了。</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2020/02/26/geekdaily/start_fastapi_reborn/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2020/02/16/geekdaily/v_autocomplete/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2020/02/16/geekdaily/v_autocomplete/" class="post-title-link" itemprop="url">【极客日常】写一个基于vuetify的v-autocomplete的自定义组件</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-02-16 14:59:57" itemprop="dateCreated datePublished" datetime="2020-02-16T14:59:57+08:00">2020-02-16</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/极客日常/" itemprop="url" rel="index"><span itemprop="name">极客日常</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p><span class="exturl" data-url="aHR0cHM6Ly92dWV0aWZ5anMuY29tL3poLUhhbnMv" title="https://vuetifyjs.com/zh-Hans/">Vuetify<i class="fa fa-external-link"></i></span>是Vue的一套前端组件框架，基于Material Design设计，界面较为整洁。最近由于项目需要开始入手，但在写自定义<code>v-autocomplete</code>组件的时候却踩了许多坑。因此本文果断记录一下踩坑的过程。</p>
+<p>首先新上手vue的话肯定耳边都会萦绕着“双向绑定”一词，用的最多的属性就是<code>v-model</code>了。但是我们参考<span class="exturl" data-url="aHR0cHM6Ly9jbi52dWVqcy5vcmcvdjIvZ3VpZGUvZm9ybXMuaHRtbA==" title="https://cn.vuejs.org/v2/guide/forms.html">官方文档<i class="fa fa-external-link"></i></span>可以发现<code>v-model</code>只是语法糖，除了绑定默认组件的值（比如<code>select</code>元素是<code>value</code>，而<code>checkbox</code>元素是<code>checked</code>）之外，还会绑定监听用户输入事件（比如<code>text</code>元素是<code>input</code>，而<code>radio</code>元素是<code>change</code>）。因此要用<code>v-model</code>的话需要关注相应的元素是否本身就支持语法糖。我们在<span class="exturl" data-url="aHR0cHM6Ly92dWV0aWZ5anMuY29tL3poLUhhbnMvY29tcG9uZW50cy9hdXRvY29tcGxldGVz" title="https://vuetifyjs.com/zh-Hans/components/autocompletes">v-autocomplete官方文档<i class="fa fa-external-link"></i></span>中可以发现，其扩展了<code>v-select</code>组件，因此如果用自定义组件包一层的话，一般主要关心的是怎样传递最终选择的value，就可以了。</p>
+<p>比如要做一个异步检索items的<code>v-autocomplete</code>组件，我们可以用如下的方式自定义：</p>
+<p>其中template如下：</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2020/02/16/geekdaily/v_autocomplete/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2020/02/01/githubdiscovery/fastapi/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1905,380 +2272,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2019/10/29/diymemo/gigabyte_z390/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ひかり.HDQ">
-      <meta itemprop="description" content="talk is cheap, code is rich">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HiKariのTechLab">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/10/29/diymemo/gigabyte_z390/" class="post-title-link" itemprop="url">【DIY小记】解决技嘉Z390 AORUS PRO不识别SSD/机械硬盘的问题</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-10-29 23:24:37" itemprop="dateCreated datePublished" datetime="2019-10-29T23:24:37+08:00">2019-10-29</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/DIY小记/" itemprop="url" rel="index"><span itemprop="name">DIY小记</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>笔者近期用技嘉（GIGABYTE）Z390装机时遇到了装上一个SSD跟一个机械硬盘后，机械硬盘无法被主板/操作系统识别的问题，经过一番研究后发现了解决方案，特地分享：</p>
-<p>首先本经验理论上应当适用于不同厂家的Z390主板上（比如华硕之类）</p>
-<p>SSD或机械硬盘无法识别可能是主板芯片共享频宽的问题。以技嘉为例，我们首先需要知道SSD或机械硬盘插在了哪里，以及硬盘有哪些接口。在技嘉Z390上，有以下的硬盘接口：</p>
-<ul>
-<li>M.2（M2A/M2M）</li>
-<li>SATA</li>
-</ul>
-<p>在说明书中应当会有这些插口所插到的位置图示。</p>
-<p>如果不了解硬盘原来插到了哪个接口，可以开机进入BIOS，BIOS中也会显示这些接口插了哪些硬盘。如果插过的硬盘没显示，那就是没识别到了。</p>
-<p>接下来也得翻说明书找硬盘接口相关的内容，以技嘉Z390为例，在说明书的<code>插座及跳线介绍——M.2及SATA插座安装注意事项</code>中，会有<strong>表格及文字</strong>显示M.2的哪个接口安装了哪种SSD，会与哪个SATA接口共享频宽，从而不兼容。借助这个表格找到兼容的接口，把原先插在SATA的硬盘换一个兼容号码的插座，就好了。技嘉的话，SATA插到3、4号（中间两个），是没问题的。</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2019/10/26/luatalk/create_skynet/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ひかり.HDQ">
-      <meta itemprop="description" content="talk is cheap, code is rich">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HiKariのTechLab">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/10/26/luatalk/create_skynet/" class="post-title-link" itemprop="url">【Lua杂谈】服务端架构skynet简易入门项目——create-skynet</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-10-26 01:22:09" itemprop="dateCreated datePublished" datetime="2019-10-26T01:22:09+08:00">2019-10-26</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2024-07-20 21:11:23" itemprop="dateModified" datetime="2024-07-20T21:11:23+08:00">2024-07-20</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Lua杂谈/" itemprop="url" rel="index"><span itemprop="name">Lua杂谈</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在<a href="https://utmhikari.github.io/2019/10/20/luatalk/skynet/">skynet通信原理与源码分析</a>一文中，我们已经详尽地弄清楚了<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nsb3Vkd3Uvc2t5bmV0" title="https://github.com/cloudwu/skynet">skynet<i class="fa fa-external-link"></i></span>地通信架构，为我们上手skynet提供了极大的帮助。因此本篇文章接续上文，正式上手使用skynet。</p>
-<h2 id="skynet入门项目：create-skynet"><a href="#skynet入门项目：create-skynet" class="headerlink" title="skynet入门项目：create-skynet"></a>skynet入门项目：create-skynet</h2><p>要做一个基于skynet的项目，首先需要一个好的模板。skynet的最佳实践并非将服务卸载skynet模块中，而是将skynet当作一个单独的库/SDK看待，自己独立在另外的目录写业务逻辑。因此，笔者在数月前简单地整合了一下skynet的boilerplate项目——<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaS9jcmVhdGUtc2t5bmV0" title="https://github.com/utmhikari/create-skynet">create-skynet<i class="fa fa-external-link"></i></span>，采用这个项目搭建skynet服务端结构会较为清晰。</p>
-<h3 id="服务-amp-库的约定"><a href="#服务-amp-库的约定" class="headerlink" title="服务&amp;库的约定"></a>服务&amp;库的约定</h3><p>在create-skynet的配置中，每个服务的lua文件入口以config中<code>luaservice</code>项为准：</p>
-<ul>
-<li>service/服务名.lua</li>
-<li>service/服务名/main.lua</li>
-<li>skynet/service/服务名.lua（默认的服务）</li>
-</ul>
-<p>skynet启动时会根据服务名注册相应服务，因此自己在service下定义的服务名最好不要与skynet原有服务重名。</p>
-<p>skynet在为每一个服务读取lua库的时候，会根据运行skynet脚本的工作目录以及config里的设置去读取，这是由config的<code>lua_path</code>与<code>lua_cpath</code>为准的。在create-skynet里，lualib的位置有：</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/10/26/luatalk/create_skynet/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2327,7 +2320,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">173</span>
+                    <span class="site-state-item-count">175</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -3259,7 +3252,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">429</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">425</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

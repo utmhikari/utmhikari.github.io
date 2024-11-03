@@ -1,6 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>【架构艺术】服务架构稳定性的基础保障</title>
+    <url>/2024/11/03/archiart/stability_basics/</url>
+    <content><![CDATA[<p>一个产品随着不断研发，其服务架构的复杂度会越来越高。随着产品的用户体量变大，为了保证产品能够长线运营，就需要保证整个服务架构的稳定性。因此，今天这篇文章，就从实操的角度，粗浅讨论一下，服务架构的稳定性需要如何做到基础保障。</p>
+<p>既然是基于实操的角度，那么理论上的东西不会涉及的太深刻。好比说，谈到稳定性，我们就会考虑SLI、SLO、SLA这些基础概念，但这些比较宏观。拿OKR举例子的话，O是SLA，KR是SLO，而SLI则是KR具体的指标定义。所以这篇文章主要讲如何保证SLI以及其他指标，间接满足SLO、SLA的需要。</p>
+<a id="more"></a>
+<p>对于外部客户来讲，核心服务的SLI指标是需要优先保证的，而周边服务的SLI指标则可以做为核心服务的下钻指标来看待。SLI指标一般是上游视角的服务可用性，如果一个请求返回一些4字头、5字头的错误码，那么就可以认为上游视角服务不可用。由于5字头主要是服务器错误，因此5字头的问题需要case-by-case排查服务端实现问题进行处理，而4字头则不一定。比如一个只能POST的路由，强行GET，就有可能构造出一个404；一个设计上预计延时较长的接口，客户端如果提前断开，nginx也可能给一个499的错误。究其性质，4字头的错误可以适当做过滤，但也不排服务端自己可以把接口实现给优化掉，主动解决问题。</p>
+<p>为了保证SLI的高指标，刚刚提到，除了周边服务的SLI指标外，其他当前服务的黄金指标也必不可少。上下游的请求错误，可以反映当前服务具体出现哪些错误或者不合理的请求，以及服务处理业务过程中哪些环节出了异常；容器的CPU/MEM等资源占用，可以反映服务在哪些具体的时刻出现性能问题；错误和崩溃日志，则直接反映具体出现的业务逻辑或者性能问题是什么。</p>
+<p>对于SLI的毛刺，可以将同一时间段三类下钻指标结合起来看，找到一些毛刺上的共性，对于请求错误，可以找到一些trace的例子做分析；对于性能占用问题，可以通过抓取火焰图来看当前某个时间段哪些函数占用的时间比较多，然后再做定点优化；对于错误崩溃日志问题，可以做日志聚合分析，看哪些类型的日志出现的比较多，哪些日志在某个时刻有上涨波动，找到一些关键字共性特征。这样，就可以系统性查证可能导致可用性降低的原因，从而逐个排除击破。</p>
+<p>除了核心服务和周边服务之外，中间件的问题也是需要关注的，比如DB的表可用性、消息队列的吞吐量延时，以及缓存的访问错误率等等。对于DB而言，可以重点关注慢查询、连接数上限和主从延时等性能指标，如果有慢查或者连接数打满那要考虑代码hit索引以及连接（池）未及时释放问题，是需要服务器关心的，如果有主从延时，则需要看是不是同时刻有DDL之类的操作锁表，导致大量数据不能及时同步，或者纯粹是DB运维原因。对于缓存而言，如果缓存访问错误，可以优先看下是否因为高延时引起，如果是的话，看下是否有大key占用了缓存较多的内存，或者频繁对于大key做操作导致缓存处理不过来。之后，DB和缓存都需要注意集群分片的场景下，单个实例的性能问题，需要考虑是否存在某些热点数据。</p>
+<p>对于消息队列，除了运维原因外，尤其是作为消费者的服务，需要监控上消费逻辑的处理延时。尤其，如果消费逻辑涉及到和第三方平台的交互，需要考虑第三方平台是否稳定，如若不稳定，则需要走另外的消息处理异步逻辑兜底，做一个相对优雅的fix。如果代码层面没法优化的话，通过扩容服务则是最粗暴直接的解决方式。</p>
+<p>最后，除了服务本身的指标之外，从业务角度而言也需要梳理业务的核心重要链路，补充打点metrics上报，从而在监控服务性质指标的同时，也可以及时发现一些业务性质的问题。业务错误最终会导致服务可用性下降，这样通过结合同时间段的指标聚合分析，服务SLI的下降问题就可能会更加容易被定位到。</p>
+]]></content>
+      <categories>
+        <category>架构艺术</category>
+      </categories>
+      <tags>
+        <tag>后端开发</tag>
+        <tag>架构</tag>
+        <tag>微服务</tag>
+        <tag>稳定性</tag>
+        <tag>bug</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【Python随笔】将requests实例转换成curl语句</title>
+    <url>/2024/11/03/pythonnotes/requests_to_curl/</url>
+    <content><![CDATA[<p>在某些python的工具模块开发场景下，我们可能需要根据用户给定的web请求输入，来转化成一个curl的输出，用于一些网络请求测试，或者方便开发之间交流信息。由于python的web请求基本上一万个人里面九成九都用requests，因此今天这篇文章就简单介绍一下，如何在python里面将requests实例转化成curl语句。</p>
+<p>这个场景下，我们需要用到一个叫做<span class="exturl" data-url="aHR0cHM6Ly9weXBpLm9yZy9wcm9qZWN0L2N1cmxpZnkv" title="https://pypi.org/project/curlify/">curlify<i class="fa fa-external-link"></i></span>的工具库来达到效果。curlify提供了一个to_curl函数，可以将一个请求实例转化成curl语句：</p>
+<a id="more"></a>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">to_curl</span><span class="params">(request, compressed=False, verify=True)</span>:</span></span><br><span class="line">    parts = [</span><br><span class="line">        (<span class="string">'curl'</span>, <span class="literal">None</span>),</span><br><span class="line">        (<span class="string">'-X'</span>, request.method),</span><br><span class="line">    ]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> k, v <span class="keyword">in</span> sorted(request.headers.items()):</span><br><span class="line">        parts += [(<span class="string">'-H'</span>, <span class="string">'&#123;0&#125;: &#123;1&#125;'</span>.format(k, v))]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> request.body:</span><br><span class="line">        body = request.body</span><br><span class="line">        <span class="keyword">if</span> isinstance(body, bytes):</span><br><span class="line">            body = body.decode(<span class="string">'utf-8'</span>)</span><br><span class="line">        parts += [(<span class="string">'-d'</span>, body)]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> compressed:</span><br><span class="line">        parts += [(<span class="string">'--compressed'</span>, <span class="literal">None</span>)]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> verify:</span><br><span class="line">        parts += [(<span class="string">'--insecure'</span>, <span class="literal">None</span>)]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 下略，主要是组装命令</span></span><br></pre></td></tr></table></figure>
+<p>这里有一个坑点在于，我们有时候把requests转化为curl，得在请求之前去做，而我们一般用requests.get、requests.request时候，其实已经把请求发送出去了。因此，这个情况下我们需要简单探秘一下requests的源码实现，来看需要怎么做才能给到一个请求发送之前的requests实例。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">request</span><span class="params">(self)</span>:</span>  <span class="comment"># requests.session.request，参数略</span></span><br><span class="line">    req = Request(</span><br><span class="line">        method=method.upper(),</span><br><span class="line">        url=url,</span><br><span class="line">        <span class="comment"># 其他参数略</span></span><br><span class="line">    )</span><br><span class="line">    prep = self.prepare_request(req)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">prepare_request</span><span class="params">(self, req)</span>:</span></span><br><span class="line">    p = PreparedRequest()</span><br><span class="line">    p.prepare(</span><br><span class="line">        method=request.method.upper(),</span><br><span class="line">        url=request.url,</span><br><span class="line">        files=request.files,</span><br><span class="line">        data=request.data,</span><br><span class="line">        json=request.json,</span><br><span class="line">        headers=merge_setting(</span><br><span class="line">            request.headers, self.headers, dict_class=CaseInsensitiveDict</span><br><span class="line">        ),</span><br><span class="line">        params=merge_setting(request.params, self.params),</span><br><span class="line">        auth=merge_setting(auth, self.auth),</span><br><span class="line">        cookies=merged_cookies,</span><br><span class="line">        hooks=merge_hooks(request.hooks, self.hooks),</span><br><span class="line">    )</span><br><span class="line">    <span class="keyword">return</span> p</span><br></pre></td></tr></table></figure>
+<p>从requests源码中可以看到，在请求之前，会构造一个PreparedRequest实例，来存储所有的请求参数。因此，如果给定请求参数的话，我们也可以显式构造一个PreparedRequest实例，然后调用to_curl函数，将PreparedRequest转化为curl语句，满足在请求发起之间转化的需要。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">to_curl</span><span class="params">(self)</span>:</span></span><br><span class="line">    prepared_request = requests.PreparedRequest()</span><br><span class="line">    prepared_request.prepare_method(self.method)</span><br><span class="line">    prepared_request.prepare_url(self.url, <span class="literal">None</span>)</span><br><span class="line">    prepared_request.prepare_headers(self.headers)</span><br><span class="line">    prepared_request.prepare_body(self.body.strip(), <span class="literal">None</span>)</span><br><span class="line">    <span class="keyword">return</span> curlify.to_curl(prepared_request)</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Python随笔</category>
+      </categories>
+      <tags>
+        <tag>源码分析</tag>
+        <tag>python</tag>
+        <tag>web开发</tag>
+        <tag>curl</tag>
+        <tag>requests</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>【极客日常】由面试官角度给校招生的大厂面试要点</title>
     <url>/2024/10/16/geekdaily/rookie_interview/</url>
     <content><![CDATA[<p>又到了一年一度的校招季，今年由于团队同时招聘后端和智能化方向的同学，吸引了很多不同算法领域、后端领域以及甚至已经在大厂实习过的同学的简历，可谓是每年都非常优秀。至少比起笔者本人校招那个时候，是要优秀的很多，不是一点半点。</p>
@@ -2206,9 +2253,9 @@
       <tags>
         <tag>系统设计</tag>
         <tag>游戏自动化</tag>
+        <tag>稳定性</tag>
         <tag>自动化测试</tag>
-        <tag>自动化稳定性</tag>
-        <tag>自动化测试平台</tag>
+        <tag>测试开发</tag>
       </tags>
   </entry>
   <entry>
@@ -3859,9 +3906,9 @@
       <tags>
         <tag>python</tag>
         <tag>multiprocessing</tag>
+        <tag>多进程</tag>
         <tag>pipe</tag>
         <tag>queue</tag>
-        <tag>进程通信</tag>
       </tags>
   </entry>
   <entry>
@@ -4559,10 +4606,10 @@
       </categories>
       <tags>
         <tag>python</tag>
+        <tag>编译</tag>
+        <tag>面向对象</tag>
         <tag>下划线</tag>
-        <tag>name mangling</tag>
-        <tag>属性</tag>
-        <tag>instance</tag>
+        <tag>类</tag>
       </tags>
   </entry>
   <entry>
@@ -7927,11 +7974,11 @@
         <category>测试人生</category>
       </categories>
       <tags>
-        <tag>用户</tag>
         <tag>测试开发</tag>
+        <tag>专项测试</tag>
         <tag>测试</tag>
         <tag>QA</tag>
-        <tag>用户思维</tag>
+        <tag>产品</tag>
       </tags>
   </entry>
   <entry>

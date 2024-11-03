@@ -1,3 +1,5 @@
+http://utmhikari.github.io/2024/11/03/archiart/stability_basics/
+http://utmhikari.github.io/2024/11/03/pythonnotes/requests_to_curl/
 http://utmhikari.github.io/2024/10/16/geekdaily/rookie_interview/
 http://utmhikari.github.io/2024/10/16/diymemo/overclock_core/
 http://utmhikari.github.io/2024/10/13/diymemo/overclock_try/
@@ -96,5 +98,3 @@ http://utmhikari.github.io/2021/09/11/geekdaily/vscode_git-bash/
 http://utmhikari.github.io/2021/09/01/gamedev/ue4_point_in_cuboid/
 http://utmhikari.github.io/2021/08/21/gamedev/ue4_cpp_btree_nodes/
 http://utmhikari.github.io/2021/08/07/gamedev/recastdemo/
-http://utmhikari.github.io/2021/07/11/testlife/openpyxl/
-http://utmhikari.github.io/2021/06/08/pythonnotes/python_processpoolexecutor/

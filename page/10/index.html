@@ -404,6 +404,374 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2021/10/10/mediumpython/preface/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2021/10/10/mediumpython/preface/" class="post-title-link" itemprop="url">【Medium Python】前言</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2021-10-10 20:50:09" itemprop="dateCreated datePublished" datetime="2021-10-10T20:50:09+08:00">2021-10-10</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Medium-Python/" itemprop="url" rel="index"><span itemprop="name">Medium Python</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>python作为最流行的语言之一，我们对python的认知到底有多少呢？大胆猜测，95%的同学对python的了解都不超过5%吧！不用说python的c源码了，就算是python每个标准库的.py源码，都有很少人去关心。结论就是，我们对python本身的理解是远远不够的，比想象中还不够！当然，这也可能是python的语言特性导致的吧，在设计方面就不需要我们去多想。</p>
+<p>python的岗位众多，网上的教材跟面试题也很多，然而很多都是八股文，浅尝辄止，鲜有深度的挖掘，让人知其然而不知其所以然，处处透露着对技术的不敬！想想看，游戏程序员学lua，一些C Library的实现、Lua底层机理都需要熟悉，python比lua应用会更加广泛，为什么就不可以去熟悉类似的东西呢？python的应用场景那么多，不去深入了解这门语言的实现，怎么能够更好掌控这门语言？怎么可能做出更加优秀的产品？</p>
+<p>因此笔者决定，从一些所谓的python面试题出发，通过源码分析的方法，挖掘其思路与实现，让更多人对python有更加深入的了解。这个系列，会把一些本该属于python教程里的东西给展现出来，取名就叫做Medium Python——因为笔者刚出道（谈恋爱）时，已经写过<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wL2NhdGVnb3JpZXMvRWFzeS1QeXRob24v" title="https://utmhikari.top/categories/Easy-Python/">Easy Python<i class="fa fa-external-link"></i></span>，里面罗列了些python的简单知识。至于未来有没有Hard Python，到时候再说吧！</p>
+<h2 id="Contents"><a href="#Contents" class="headerlink" title="Contents"></a>Contents</h2><ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjEvMTAvMTcvbWVkaXVtcHl0aG9uL2kv" title="https://utmhikari.top/2021/10/17/mediumpython/i/">【Medium Python】第一话：为什么list“可变”，而tuple“不可变”？<i class="fa fa-external-link"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjEvMTAvMjMvbWVkaXVtcHl0aG9uL2lpLw==" title="https://utmhikari.top/2021/10/23/mediumpython/ii/">【Medium Python】第二话：dict的keys()返回了什么数据类型？<i class="fa fa-external-link"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjEvMTAvMzAvbWVkaXVtcHl0aG9uL2lpaS8=" title="https://utmhikari.top/2021/10/30/mediumpython/iii/">【Medium Python】第三话：python多线程为什么不能并行？<i class="fa fa-external-link"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjEvMTEvMDYvbWVkaXVtcHl0aG9uL2l2Lw==" title="https://utmhikari.top/2021/11/06/mediumpython/iv/">【Medium Python】第四话：类属性和实例属性是怎样的关系？<i class="fa fa-external-link"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjEvMTEvMTMvbWVkaXVtcHl0aG9uL3Yv" title="https://utmhikari.top/2021/11/13/mediumpython/v/">【Medium Python】最终话：如何彻底理解with关键字的用法？<i class="fa fa-external-link"></i></span></li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2021/10/06/pythonnotes/attr_with_underscore/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2021/10/06/pythonnotes/attr_with_underscore/" class="post-title-link" itemprop="url">【Python随笔】如何访问类实例里带双下划线的属性</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2021-10-06 20:41:24" itemprop="dateCreated datePublished" datetime="2021-10-06T20:41:24+08:00">2021-10-06</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-11-03 11:49:07" itemprop="dateModified" datetime="2024-11-03T11:49:07+08:00">2024-11-03</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Python随笔/" itemprop="url" rel="index"><span itemprop="name">Python随笔</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>学过python的我们都知道在python的类实例instance的<code>__init__</code>函数里，可以初始化这个instance的属性。属性的命名有许多种，比如有一个例子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name, gender, age)</span>:</span></span><br><span class="line">        self.name = name</span><br><span class="line">        self._gender = gender</span><br><span class="line">        self.__age = age</span><br></pre></td></tr></table></figure>
+<p>这三种属性名分别是：不带下划线、带一个下划线、带两个下划线</p>
+<p>假设有一个类<code>Student</code>的实例<code>student</code>，我们通过访问<code>student.name</code>、<code>student._gender</code>，是能够获得对应属性值的，但访问<code>student.__age</code>却报了如下错误：</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2021/10/06/pythonnotes/attr_with_underscore/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2021/10/05/pythonnotes/python_c_extension/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1854,383 +2222,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2021/07/11/testlife/openpyxl/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ひかり.HDQ">
-      <meta itemprop="description" content="talk is cheap, code is rich">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HiKariのTechLab">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2021/07/11/testlife/openpyxl/" class="post-title-link" itemprop="url">【测试人生】python的excel库——openpyxl的用法</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2021-07-11 00:03:07" itemprop="dateCreated datePublished" datetime="2021-07-11T00:03:07+08:00">2021-07-11</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/测试人生/" itemprop="url" rel="index"><span itemprop="name">测试人生</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在测试工具的开发过程中，可能会遇到需要生成excel文件的需求。笔者在自研excel-diff工具的过程中，也同样接到了需要生成excel文件来展示每个sheet的diff数据。每个包含diff的sheet需要生成1个excel文件，每个文件分成3个sheet，2个sheet用于展示sheet原先的数据与修改后的数据，1个sheet用于描述性统计和超链接每个diff的情况。要生成这样的excel文件，不用专门的excel库是不行的。基于python的技术栈，经过一番调研，笔者采用openpyxl作为生成excel的库，并且顺利完成了需求。</p>
-<p>学习openpyxl可以直接从<span class="exturl" data-url="aHR0cHM6Ly9vcGVucHl4bC5yZWFkdGhlZG9jcy5pby9lbi9zdGFibGUv" title="https://openpyxl.readthedocs.io/en/stable/">官方文档<i class="fa fa-external-link"></i></span>入手。一些基本操作如下：</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2021/07/11/testlife/openpyxl/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2021/06/08/pythonnotes/python_processpoolexecutor/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ひかり.HDQ">
-      <meta itemprop="description" content="talk is cheap, code is rich">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HiKariのTechLab">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2021/06/08/pythonnotes/python_processpoolexecutor/" class="post-title-link" itemprop="url">【Python随笔】python进程池ProcessPoolExecutor的用法与实现分析</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2021-06-08 21:58:51" itemprop="dateCreated datePublished" datetime="2021-06-08T21:58:51+08:00">2021-06-08</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Python随笔/" itemprop="url" rel="index"><span itemprop="name">Python随笔</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>在python开发期间，由于GIL的原因，不能直接采用并行的方式处理代码逻辑。在multiprocessing库的支持下，python程序能够启动子进程执行特定的任务，但子进程的管理也成为了问题。为了简化用户开发成本，python在concurrent.futures下内置了ProcessPoolExecutor这一数据结构，实现了简单的进程管理及任务调度。如果没有特别的需求，开发者只需要用ProcessPoolExecutor即可实现并行执行任务。因此，本文简单对ProcessPoolExecutor的实现进行分析，帮助大家更加了解python开发中进程/任务调度的一种方式。</p>
-<p>首先来看ProcessPoolExecutor的用法，可以参考<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnB5dGhvbi5vcmcvMy9saWJyYXJ5L2NvbmN1cnJlbnQuZnV0dXJlcy5odG1s" title="https://docs.python.org/3/library/concurrent.futures.html">官方文档<i class="fa fa-external-link"></i></span></p>
-<ul>
-<li>constructor：构造器<ul>
-<li>max_workers：最大worker数量</li>
-<li>context：进程启动方式，比如spawn、fork等。可以参考<span class="exturl" data-url="aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9xdWVzdGlvbnMvNDM4MTg1MTkvd2hhdC1pcy10aGUtbWVhbmluZy1vZi1jb250ZXh0LWFyZ3VtZW50LWluLW11bHRpcHJvY2Vzc2luZy1wb29sLXBvb2wvNDM4MTg4Mjk=" title="https://stackoverflow.com/questions/43818519/what-is-the-meaning-of-context-argument-in-multiprocessing-pool-pool/43818829">这篇文章<i class="fa fa-external-link"></i></span></li>
-<li>initializer：初始化环境用的回调/钩子，会在传进去的任务执行之前调用（比如要import什么库，读取什么配置之类）</li>
-<li>initargs：初始化回调的参数</li>
-</ul>
-</li>
-<li>submit：提交特定任务，返回一个future实例（类似于js的promise）</li>
-<li>map：批量submit</li>
-<li>shutdown：关闭进程池并销毁资源</li>
-</ul>
-<p>可以看到用法非常简单，用户一侧只需要这样操作即可得到任务执行结果：</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2021/06/08/pythonnotes/python_processpoolexecutor/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2279,7 +2270,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">173</span>
+                    <span class="site-state-item-count">175</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -3211,7 +3202,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">429</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">425</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
