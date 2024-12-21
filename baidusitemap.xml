@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://utmhikari.github.io/2024/12/21/pythonnotes/pyside6_simple_app/</loc>
+    <lastmod>2024-12-21</lastmod>
+  </url>  <url>
+    <loc>http://utmhikari.github.io/2024/12/21/pythonnotes/enigma_implementation/</loc>
+    <lastmod>2024-12-21</lastmod>
+  </url>  <url>
     <loc>http://utmhikari.github.io/2024/11/03/archiart/stability_basics/</loc>
     <lastmod>2024-11-03</lastmod>
   </url>  <url>
