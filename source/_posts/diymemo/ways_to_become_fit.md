@@ -5,7 +5,7 @@ categories:
 - DIY小记
 tags:
 - 减肥
-- 生活
+- 健康检查
 - 问题排查
 - gc
 - 稳定性

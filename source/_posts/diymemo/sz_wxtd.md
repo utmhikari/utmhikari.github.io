@@ -5,7 +5,6 @@ categories:
 - DIY小记
 tags:
 - 个人博客
-- 生活
 - 用户
 ---
 
