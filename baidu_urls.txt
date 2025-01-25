@@ -1,3 +1,5 @@
+http://utmhikari.github.io/2025/01/25/diymemo/ways_to_become_fit/
+http://utmhikari.github.io/2025/01/25/testlife/change_observe_logic/
 http://utmhikari.github.io/2024/12/21/pythonnotes/pyside6_simple_app/
 http://utmhikari.github.io/2024/12/21/pythonnotes/enigma_implementation/
 http://utmhikari.github.io/2024/11/03/archiart/stability_basics/
@@ -24,7 +26,6 @@ http://utmhikari.github.io/2024/04/04/archiart/change_analysis_framework/
 http://utmhikari.github.io/2024/03/03/geekdaily/release_check_optimization/
 http://utmhikari.github.io/2024/02/15/archiart/sustainable_architecture/
 http://utmhikari.github.io/2024/02/04/githubdiscovery/altershield_design/
-http://utmhikari.github.io/2024/01/25/testlife/change_observe_logic/
 http://utmhikari.github.io/2024/01/07/testlife/slow_query_risk/
 http://utmhikari.github.io/2023/12/09/testlife/data_sync_warn/
 http://utmhikari.github.io/2023/11/04/archiart/code_optimization_ways/
@@ -97,4 +98,3 @@ http://utmhikari.github.io/2021/10/05/pythonnotes/python_c_extension/
 http://utmhikari.github.io/2021/10/04/testlife/test_architect_notes/
 http://utmhikari.github.io/2021/10/01/geekdaily/reduce_function/
 http://utmhikari.github.io/2021/09/16/geekdaily/echarts_scatter_color/
-http://utmhikari.github.io/2021/09/11/geekdaily/vscode_git-bash/
