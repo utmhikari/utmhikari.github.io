@@ -404,6 +404,189 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2020/04/21/geekdaily/bilibili_in_hugo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2020/04/21/geekdaily/bilibili_in_hugo/" class="post-title-link" itemprop="url">【极客日常】在hugo博客中利用shortcode嵌入bilibili视频</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-04-21 16:07:57" itemprop="dateCreated datePublished" datetime="2020-04-21T16:07:57+08:00">2020-04-21</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/极客日常/" itemprop="url" rel="index"><span itemprop="name">极客日常</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p><span class="exturl" data-url="aHR0cHM6Ly9nb2h1Z28uaW8v" title="https://gohugo.io/">hugo<i class="fa fa-external-link"></i></span>是当前热门的个人博客框架之一，和hexo同样是markdown文件跟博客帖子一一对应。有些同学想利用hugo制作个人视频博客，但发现在hugo博客中不支持直接在markdown里输入iframe标签，从而没有办法将其它网站的视频（比如b站）嵌进来。这种情况下，我们可以采用hugo内置的<span class="exturl" data-url="aHR0cHM6Ly9nb2h1Z28uaW8vY29udGVudC1tYW5hZ2VtZW50L3Nob3J0Y29kZXMv" title="https://gohugo.io/content-management/shortcodes/">shortcode<i class="fa fa-external-link"></i></span>机制完成这个需求。</p>
+<p>我们参考的文章是<span class="exturl" data-url="aHR0cHM6Ly9nb2h1Z28uaW8vdGVtcGxhdGVzL3Nob3J0Y29kZS10ZW1wbGF0ZXMv" title="https://gohugo.io/templates/shortcode-templates/">create your own shortcodes<i class="fa fa-external-link"></i></span>，在这个文档中介绍了自定义shortcode从而快速渲染网页的方法，并且举了youtube以及vimeo的例子。照葫芦画瓢，我们也可以定义b站的shortcode。</p>
+<p>我们首先在<code>layouts/shortcodes</code>目录下创建<code>bilibili.html</code>，然后填充内容如下：</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2020/04/21/geekdaily/bilibili_in_hugo/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2020/04/13/githubdiscovery/theia_and_gitpod/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2047,212 +2230,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2019/11/24/gofromzero/05_load_balancer/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ひかり.HDQ">
-      <meta itemprop="description" content="talk is cheap, code is rich">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HiKariのTechLab">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/11/24/gofromzero/05_load_balancer/" class="post-title-link" itemprop="url">【从零单排Golang】第五话：用自带net包写一个简单的负载均衡</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-11-24 12:28:04" itemprop="dateCreated datePublished" datetime="2019-11-24T12:28:04+08:00">2019-11-24</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/从零单排Golang/" itemprop="url" rel="index"><span itemprop="name">从零单排Golang</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaS9nb2Zyb216ZXJv" title="https://github.com/utmhikari/gofromzero">Github传送门<i class="fa fa-external-link"></i></span></p>
-<p>golang在工业中用途最多的方面就是编写中间件以及上游设施，因此切入golang的话，了解其网络库是很有必要的。因此，笔者上手了自带的net包，花了一天左右的时间写了个简单的<span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU4JUI0JTlGJUU4JUJEJUJEJUU1JTlEJTg3JUU4JUExJUEx" title="https://zh.wikipedia.org/wiki/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1">负载均衡（Load Balancer）<i class="fa fa-external-link"></i></span>，也算是能用啦= =</p>
-<h2 id="用net包写负载均衡"><a href="#用net包写负载均衡" class="headerlink" title="用net包写负载均衡"></a>用net包写负载均衡</h2><p>我们在浏览网页时，通常会遇到服务方故障的情况，提示我们nginx、apache之类的字眼。这些，便都是负载均衡的工作了。</p>
-<p>一个负载均衡可能会包含以下的功能：</p>
-<ul>
-<li>负载调节<ul>
-<li>上游连接分配（策略：轮流（roundrobin）、最少连接等）</li>
-<li>权重管理</li>
-</ul>
-</li>
-<li>健康检查（业务是否OK）</li>
-<li>协议支持<ul>
-<li>tcp、udp</li>
-<li>http、https</li>
-<li>路由代理</li>
-<li>数据缓存与压缩</li>
-</ul>
-</li>
-<li>安全<ul>
-<li>限流，DDOS防护</li>
-<li>备用负载均衡</li>
-</ul>
-</li>
-</ul>
-<p>为了实践一下（培养手感），笔者用net包弄了一个基于tcp的简易负载均衡，实现了上述最基础的负载调节与健康检查功能。</p>
-<p>首先设计一个struct：</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/11/24/gofromzero/05_load_balancer/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2301,7 +2278,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">177</span>
+                    <span class="site-state-item-count">178</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -3359,7 +3336,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2019 – <span itemprop="copyrightYear">2024</span>
+        <div class="copyright">&copy; 2019 – <span itemprop="copyrightYear">2025</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
