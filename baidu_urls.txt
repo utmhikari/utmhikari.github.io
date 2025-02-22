@@ -1,3 +1,4 @@
+http://utmhikari.github.io/2025/02/22/testlife/change_control_data_marketing/
 http://utmhikari.github.io/2025/02/21/geekdaily/geek_sense_of_product/
 http://utmhikari.github.io/2025/01/26/testlife/change_observe_logic/
 http://utmhikari.github.io/2025/01/25/diymemo/ways_to_become_fit/
@@ -97,4 +98,3 @@ http://utmhikari.github.io/2021/10/10/mediumpython/preface/
 http://utmhikari.github.io/2021/10/06/pythonnotes/attr_with_underscore/
 http://utmhikari.github.io/2021/10/05/pythonnotes/python_c_extension/
 http://utmhikari.github.io/2021/10/04/testlife/test_architect_notes/
-http://utmhikari.github.io/2021/10/01/geekdaily/reduce_function/
