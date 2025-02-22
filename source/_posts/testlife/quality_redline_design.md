@@ -5,7 +5,7 @@ categories:
 - 测试人生
 tags:
 - 准入准出
-- 质量红线
+- 质量管理
 - DevOps
 - CI
 - 原子能力

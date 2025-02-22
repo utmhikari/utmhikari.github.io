@@ -7,7 +7,7 @@ tags:
 - OCR
 - AI
 - 大模型
-- GPT
+- ChatGPT
 - DevOps
 ---
 
