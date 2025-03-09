@@ -1,6 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>【架构艺术】变更风险观测的任务调度设计</title>
+    <url>/2025/03/09/archiart/change_observation_worker/</url>
+    <content><![CDATA[<p>在<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjUvMDEvMjYvdGVzdGxpZmUvY2hhbmdlX29ic2VydmVfbG9naWMv" title="https://utmhikari.top/2025/01/26/testlife/change_observe_logic/">先前的文章<i class="fa fa-external-link"></i></span>中，对于变更风险观测的流程逻辑设计，有浅谈一小部分。但从宏观来讲，一个变更观测平台，需要对大量的观测任务做统一调度，这样才能把整个观测平台给支撑起来。因此，本文就简单分享一下，变更风险观测的任务调度可能怎样设计。</p>
+<p>这个问题可以拆分为几个子问题：多任务并发需要如何处理，任务调度的消息协议需要如何设计，以及怎么去保证整个调度系统的稳定性。</p>
+<a id="more"></a>
+<p>首先第一个问题是，多任务并发的整个系统设计。主要是两个路子，一种方式是有一个任务驱动服务去不断地向一个MQ去生产和消费任务调度信息，好比说创建任务的过程，HTTP接口逻辑先让任务记录落库，然后produce一条任务执行的消息，之后consumer消费了任务执行消息后，就initialize整个观测任务，开始执行，执行过程中不断生产消费poll的消息，如果用RMQ的话也可以借助延迟队列机制去定时推进任务进程，直到任务结束。另外一种方式是通过一个外部的cronjob去查询近期的非终止态任务，然后一个个去推进执行，不走消息队列。</p>
+<p>两种方式各有利弊，后者因为有定时的查询过程，对DB的压力会稍微大一些，因此如果任务量非常多的话，查询时延会比较高，导致任务推进缓慢，而前者主要依赖MQ的稳定性，如果消费逻辑不稳定，容易造成消息积压或者任务推进过程中断。整体来看前者的架构会更加灵活一些，用mq分担一些任务推进工作，在这个基础上，再去附加一个外部的cronjob做兜底。对于MQ的生产消费，如果任务量有预估，可以用定容的服务去处理produce/consume逻辑，当然如果有计费要求，用faas会更加合理。</p>
+<p>第二块是消息协议设计。这块会主要关注创建任务需要包括哪些信息，可以大致做这样的分门别类：</p>
+<ul>
+<li>任务创建的元信息：哪个job、创建人、创建来源以及任务的调度参数</li>
+<li>工单（阶段）的上下文信息：工单所属渠道、工单ID、变更类型、阶段唯一key以及放量比例等信息</li>
+<li>DevOps的上下文信息：需求/发布信息、流水线ID等信息</li>
+<li>风险观测参数：上下游服务、观测时长、通知webhook等信息</li>
+</ul>
+<p>这样，一个观测任务就能够精准对应到一次发布、一次特定节点以及一组特定的执行策略，就能够确定整个任务的运行方式和观测内容。</p>
+<p>第三个问题是稳定性保障。除了一些必要的中间件/服务监控告警之外，影响整个系统稳定性的，还是producer/consumer和mq这个搭配。这里有几个点需要考虑的：</p>
+<ul>
+<li>代码：producer/consumer的panic需要recover+ack，防止任务进程中断；channel/singleflight/waitgroup阻塞之类问题需要有重试机制、死信队列兜底，先保证进度信息不丢失再做修复。</li>
+<li>容量：观测任务的处理延时主要在任务推进，一次任务推进的时间可能很长，兜底需要1～2min的timeout，所以除了对服务有一个合理的定容之外，整个任务推进的逻辑当中，需要把能够开goroutine异步执行的步骤尽可能单独拿出来，优先保证消费延时不要太高。如果遇到一个观测项又有多个子任务需要调度的场景，一个好的方法是把多个子任务调度放到单独的服务中进行，这样不影响主流程；如果是在消费不过来了，也可以通过一些兜底机制，根据任务执行时间或任务重要性，自主适配延长下次consume的间隔，从而减轻自己压力。</li>
+</ul>
+<p>总体来看变更风险观测的任务调度，大体设计思路方面不需要做的非常复杂，重要还是去有一套稳定性兜底机制，保证整个生产消费链路能够持续稳定运转。后续有什么额外的经验，再在这里补充～</p>
+]]></content>
+      <categories>
+        <category>架构艺术</category>
+      </categories>
+      <tags>
+        <tag>后端开发</tag>
+        <tag>架构</tag>
+        <tag>变更风险</tag>
+        <tag>事件循环</tag>
+        <tag>异步</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【架构艺术】Go语言微服务monorepo的代码架构设计</title>
+    <url>/2025/03/09/archiart/go_monorepo_structure/</url>
+    <content><![CDATA[<p>近期因为项目架构升级原因，笔者着手调研一些go项目monorepo的代码架构设计，目标是长期把既有微服务项目重要的部分都转移到monorepo上面，让代码更容易维护，协作开发更加方便。虽然经验不多，但既然有了初步的调研，今天就分享一下笔者所面临场景的monorepo设计思路。</p>
+<p>从语言特性上讲，Golang是非常适合做monorepo的，但根据不同项目研发需要，monorepo的目录结构可以定制成不同的形式，并且投入量也不少。所以要做monorepo，首先要回答的问题是，做这个事情主要解决什么研发问题，优化了什么东西，否则ROI就会很低。</p>
+<a id="more"></a>
+<p>笔者所处的团队偏向于中台角色，每个同学都负责一个专项，不同专项质检可能共享很多三方能力的实现，并且团队距离业务比较近，研发更注重短平快，所以既往的代码实现质量方面，并不是非常完美。从这个角度来看，如果用monorepo做代码架构升级，主要能解决的问题，一是更精简的代码和模块化抽象，二是减少三方能力的冗余实现，三是通过一套研发实践规范代码管理，这样就能够在保证代码易扩展和模块易兼容的基础上，各个成员能够尽可能自由发挥，代码质量也不会轻易下降，这样长期就能让整个团队的技术迭代更加效率，服务实现的稳定性会更高。</p>
+<p>然后就是整个代码架构长什么样子。笔者的项目，大概是这样设计：</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="bullet">- </span>app：所有服务各自的代码</span><br><span class="line">  - $&#123;service_group&#125;：按架构划分的服务组（模块）</span><br><span class="line"><span class="code">    - $&#123;service_name&#125;：单个服务的代码（http/rpc等）</span></span><br><span class="line"><span class="code">      - biz：业务逻辑</span></span><br><span class="line"><span class="code">        - handler</span></span><br><span class="line"><span class="code">        - middleware</span></span><br><span class="line"><span class="code">        - service</span></span><br><span class="line"><span class="code">      - conf：静态配置</span></span><br><span class="line"><span class="code">      - main.go</span></span><br><span class="line"><span class="code">      - build.sh：每个服务的编译</span></span><br><span class="line"><span class="bullet">- </span>lib：所有服务公有的代码</span><br><span class="line">  - client：三方能力的client实现</span><br><span class="line">  - common：枚举定义</span><br><span class="line">  - model：数据结构（from idl）</span><br><span class="line">  - dal：数据访问（gorm自动生成）</span><br><span class="line">  - util：工具函数</span><br><span class="line"><span class="bullet">- </span>idl：协议</span><br><span class="line"><span class="bullet">- </span>script：脚本（编译/本地开发）</span><br><span class="line"><span class="bullet">- </span>Makefile</span><br><span class="line"><span class="bullet">- </span>go.mod</span><br><span class="line"><span class="bullet">- </span>go.sum</span><br><span class="line"><span class="bullet">- </span>README.md</span><br></pre></td></tr></table></figure>
+<p>由于很多服务需要共享数据结构，所以在设计上，idl、model做了单独提出，被所有服务可以引用。开发约定上，通过在script、Makefile做一些脚本，就可以自动指定某服务创建/更新项目代码，也可以随时自动生成/更新协议结构和gorm定义。</p>
+<p>通过这样一个架构，首先代码精简和三方能力抽象都可以解决。然后，由于各类脚本的存在，每个业务专项的研发同学就不需要把过多精力关注在代码底层架构上，可以快速适应整个项目开发。就算长期有需要单独提出的能力，代码也可以很容易迁移到lib模块。这样整体上看，整个团队的代码质量在未来都能够有质的提升。</p>
+<p>当然，从现状来看，这个项目结构未来可能会遇到的问题是，如果存量大服务的研发过程要迁移到这个monorepo，可能会踩什么坑，比如go-mod要处理兼容性问题，服务编译部署配置需要重新调整，研发脚本需要做额外的兼容，很多模块需要未来打散挪到lib等等。</p>
+<p>上述这些基本上是小问题，大的问题是怎么在迁移项目的过程中，不影响既有的业务迭代。排除需要周末加班的的情况，笔者认为一个合理的解决方法是，在迁移前抽一些时间间隙，先找一些小的存量项目去做试点迁移，踩坑，整理最佳实践，然后再尝试迁移大项目，这样就不至于一下迁移遇到问题就阻塞很多。迁移的话，也是先把所有代码挪到app，保证编译部署是通的，然后在这个基础上再做代码重构和打散，把重要的公有能力给提取出来，去让代码逐渐演变成理想的形态。</p>
+]]></content>
+      <categories>
+        <category>架构艺术</category>
+      </categories>
+      <tags>
+        <tag>Golang</tag>
+        <tag>后端开发</tag>
+        <tag>架构</tag>
+        <tag>微服务</tag>
+        <tag>monorepo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>【测试人生】浅谈变更风险防控的数据运营</title>
     <url>/2025/02/22/testlife/change_control_data_marketing/</url>
     <content><![CDATA[<p>从质量管理角度来讲，变更风险防控算是一类重要的方向，从业务的角度来讲，通过运营变更风险数据，可以更好了解变更发布的质量，从而预防线上问题。今天就浅聊一下，变更风险防控的数据运营，需要做好哪些数据基础。</p>
