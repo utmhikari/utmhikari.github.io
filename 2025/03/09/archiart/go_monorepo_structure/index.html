@@ -109,7 +109,7 @@
 <meta property="og:site_name" content="HiKariのTechLab">
 <meta property="og:description" content="近期因为项目架构升级原因，笔者着手调研一些go项目monorepo的代码架构设计，目标是长期把既有微服务项目重要的部分都转移到monorepo上面，让代码更容易维护，协作开发更加方便。虽然经验不多，但既然有了初步的调研，今天就分享一下笔者所面临场景的monorepo设计思路。 从语言特性上讲，Golang是非常适合做monorepo的，但根据不同项目研发需要，monorepo的目录结构可以定制成不">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2025-03-09T07:04:20.700Z">
+<meta property="og:updated_time" content="2025-03-09T08:18:05.659Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【架构艺术】Go语言微服务monorepo的代码架构设计">
 <meta name="twitter:description" content="近期因为项目架构升级原因，笔者着手调研一些go项目monorepo的代码架构设计，目标是长期把既有微服务项目重要的部分都转移到monorepo上面，让代码更容易维护，协作开发更加方便。虽然经验不多，但既然有了初步的调研，今天就分享一下笔者所面临场景的monorepo设计思路。 从语言特性上讲，Golang是非常适合做monorepo的，但根据不同项目研发需要，monorepo的目录结构可以定制成不">
@@ -447,7 +447,7 @@
                 
               
 
-              <time title="创建时间：2025-03-09 15:02:43 / 修改时间：15:04:20" itemprop="dateCreated datePublished" datetime="2025-03-09T15:02:43+08:00">2025-03-09</time>
+              <time title="创建时间：2025-03-09 15:02:43 / 修改时间：16:18:05" itemprop="dateCreated datePublished" datetime="2025-03-09T15:02:43+08:00">2025-03-09</time>
             
 
             
@@ -512,9 +512,9 @@
 
       
         <p>近期因为项目架构升级原因，笔者着手调研一些go项目monorepo的代码架构设计，目标是长期把既有微服务项目重要的部分都转移到monorepo上面，让代码更容易维护，协作开发更加方便。虽然经验不多，但既然有了初步的调研，今天就分享一下笔者所面临场景的monorepo设计思路。</p>
-<p>从语言特性上讲，Golang是非常适合做monorepo的，但根据不同项目研发需要，monorepo的目录结构可以定制成不同的形式，并且投入量也不少。所以要做monorepo，首先要回答的问题是，做这个事情主要解决什么研发问题，优化了什么东西，否则ROI就会很低。</p>
+<p>从语言特性上讲，Golang是非常适合做monorepo的，但根据不同项目研发需要，monorepo的目录结构可以定制成不同的形式。所以要做monorepo，首先要回答的问题是，做这个事情主要解决什么研发问题，优化了什么东西，否则投入量过多，ROI就会很低。</p>
 <a id="more"></a>
-<p>笔者所处的团队偏向于中台角色，每个同学都负责一个专项，不同专项质检可能共享很多三方能力的实现，并且团队距离业务比较近，研发更注重短平快，所以既往的代码实现质量方面，并不是非常完美。从这个角度来看，如果用monorepo做代码架构升级，主要能解决的问题，一是更精简的代码和模块化抽象，二是减少三方能力的冗余实现，三是通过一套研发实践规范代码管理，这样就能够在保证代码易扩展和模块易兼容的基础上，各个成员能够尽可能自由发挥，代码质量也不会轻易下降，这样长期就能让整个团队的技术迭代更加效率，服务实现的稳定性会更高。</p>
+<p>笔者所处的团队偏向于中台角色，每个同学都负责一个专项，不同专项之间可能共享很多三方能力的实现，并且团队距离业务比较近，研发更注重短平快，所以既往的代码实现质量方面，并不是非常完美。从这个角度来看，如果用monorepo做代码架构升级，主要能解决的问题，一是更精简的代码和模块化抽象，二是减少三方能力的冗余实现，三是通过一套研发实践规范代码管理，这样就能够在保证代码易扩展和模块易兼容的基础上，各个成员能够尽可能自由发挥，代码质量也不会轻易下降，这样长期就能让整个团队的技术迭代更加效率，服务实现的稳定性会更高。</p>
 <p>然后就是整个代码架构长什么样子。笔者的项目，大概是这样设计：</p>
 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">- </span>app：所有服务各自的代码</span><br><span class="line">  - $&#123;service_group&#125;：按架构划分的服务组（模块）</span><br><span class="line"><span class="code">    - $&#123;service_name&#125;：单个服务的代码（http/rpc等）</span></span><br><span class="line"><span class="code">      - biz：业务逻辑</span></span><br><span class="line"><span class="code">        - handler</span></span><br><span class="line"><span class="code">        - middleware</span></span><br><span class="line"><span class="code">        - service</span></span><br><span class="line"><span class="code">      - conf：静态配置</span></span><br><span class="line"><span class="code">      - main.go</span></span><br><span class="line"><span class="code">      - build.sh：每个服务的编译</span></span><br><span class="line"><span class="bullet">- </span>lib：所有服务公有的代码</span><br><span class="line">  - client：三方能力的client实现</span><br><span class="line">  - common：枚举定义</span><br><span class="line">  - model：数据结构（from idl）</span><br><span class="line">  - dal：数据访问（gorm自动生成）</span><br><span class="line">  - util：工具函数</span><br><span class="line"><span class="bullet">- </span>idl：协议</span><br><span class="line"><span class="bullet">- </span>script：脚本（编译/本地开发）</span><br><span class="line"><span class="bullet">- </span>Makefile</span><br><span class="line"><span class="bullet">- </span>go.mod</span><br><span class="line"><span class="bullet">- </span>go.sum</span><br><span class="line"><span class="bullet">- </span>README.md</span><br></pre></td></tr></table></figure>
 <p>由于很多服务需要共享数据结构，所以在设计上，idl、model做了单独提出，被所有服务可以引用。开发约定上，通过在script、Makefile做一些脚本，就可以自动指定某服务创建/更新项目代码，也可以随时自动生成/更新协议结构和gorm定义。</p>
