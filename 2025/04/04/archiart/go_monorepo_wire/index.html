@@ -101,24 +101,25 @@
 
 
 
-  <meta name="description" content="talk is cheap, code is rich">
-<meta name="keywords" content="code, life">
-<meta property="og:type" content="website">
-<meta property="og:title" content="HiKariのTechLab">
-<meta property="og:url" content="http://utmhikari.github.io/tags/数据转发/index.html">
+  <meta name="description" content="在先前的文章当中，笔者分享了一套简洁的go微服务monorepo代码架构的实现，主要解决中小团队协同开发微服务集群的代码架构组织问题。但是在实际代码开发过程中，怎么组织不同的业务服务service实例，就成了比较棘手的问题。 为什么会出现这样的场景？首先，不同的业务服务可能会用到相同的底层服务，比如DB、缓存、MQ以及三方Client等等。其次，一个底层服务实例可能会在多个业务服务复用，一个业务服">
+<meta name="keywords" content="Golang,后端开发,架构,wire,monorepo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【架构艺术】Go大仓monorepo中使用wire做依赖注入的经验">
+<meta property="og:url" content="http://utmhikari.github.io/2025/04/04/archiart/go_monorepo_wire/index.html">
 <meta property="og:site_name" content="HiKariのTechLab">
-<meta property="og:description" content="talk is cheap, code is rich">
+<meta property="og:description" content="在先前的文章当中，笔者分享了一套简洁的go微服务monorepo代码架构的实现，主要解决中小团队协同开发微服务集群的代码架构组织问题。但是在实际代码开发过程中，怎么组织不同的业务服务service实例，就成了比较棘手的问题。 为什么会出现这样的场景？首先，不同的业务服务可能会用到相同的底层服务，比如DB、缓存、MQ以及三方Client等等。其次，一个底层服务实例可能会在多个业务服务复用，一个业务服">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2025-04-04T09:22:28.361Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HiKariのTechLab">
-<meta name="twitter:description" content="talk is cheap, code is rich">
+<meta name="twitter:title" content="【架构艺术】Go大仓monorepo中使用wire做依赖注入的经验">
+<meta name="twitter:description" content="在先前的文章当中，笔者分享了一套简洁的go微服务monorepo代码架构的实现，主要解决中小团队协同开发微服务集群的代码架构组织问题。但是在实际代码开发过程中，怎么组织不同的业务服务service实例，就成了比较棘手的问题。 为什么会出现这样的场景？首先，不同的业务服务可能会用到相同的底层服务，比如DB、缓存、MQ以及三方Client等等。其次，一个底层服务实例可能会在多个业务服务复用，一个业务服">
 
 
 
 
 
 
-  <link rel="canonical" href="http://utmhikari.github.io/tags/数据转发/">
+  <link rel="canonical" href="http://utmhikari.github.io/2025/04/04/archiart/go_monorepo_wire/">
 
 
 
@@ -128,7 +129,7 @@
   };
 </script>
 
-  <title>标签: 数据转发 | HiKariのTechLab</title>
+  <title>【架构艺术】Go大仓monorepo中使用wire做依赖注入的经验 | HiKariのTechLab</title>
   
 
 
@@ -176,7 +177,7 @@
     
   
 
-  <div class="container sidebar-position-right ">
+  <div class="container sidebar-position-right page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -252,7 +253,7 @@
         
         
           
-          <li class="menu-item menu-item-tags menu-item-active">
+          <li class="menu-item menu-item-tags">
 
     
     
@@ -383,86 +384,250 @@
           
             
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
           
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h2>数据转发<small>标签</small>
-        </h2>
-      </div>
+  
 
-      
-        
+  
+  
+  
+
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2025/04/04/archiart/go_monorepo_wire/">
 
-      <h3 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
         
-          <a class="post-title-link" href="/2019/11/24/gofromzero/05_load_balancer/" itemprop="url">
-            
-              <span itemprop="name">【从零单排Golang】第五话：用自带net包写一个简单的负载均衡</span>
-            
-          </a>
         
-      </h3>
+          <h2 class="post-title" itemprop="name headline">【架构艺术】Go大仓monorepo中使用wire做依赖注入的经验
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-11-24T12:28:04+08:00" content="2019-11-24">
-          11-24
-        </time>
-      </div>
+              
+            
+          </h2>
+        
 
-    </header>
-  </article>
+        <div class="post-meta">
+          <span class="post-time">
 
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2025-04-04 17:22:40 / 修改时间：17:22:28" itemprop="dateCreated datePublished" datetime="2025-04-04T17:22:40+08:00">2025-04-04</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/架构艺术/" itemprop="url" rel="index"><span itemprop="name">架构艺术</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkuYmxvZy5jc2RuLm5ldC9hcnRpY2xlL2RldGFpbHMvMTQ2MTM0MDI0" title="https://utmhikari.blog.csdn.net/article/details/146134024">先前的文章<i class="fa fa-external-link"></i></span>当中，笔者分享了一套简洁的go微服务monorepo代码架构的实现，主要解决中小团队协同开发微服务集群的代码架构组织问题。但是在实际代码开发过程中，怎么组织不同的业务服务service实例，就成了比较棘手的问题。</p>
+<p>为什么会出现这样的场景？首先，不同的业务服务可能会用到相同的底层服务，比如DB、缓存、MQ以及三方Client等等。其次，一个底层服务实例可能会在多个业务服务复用，一个业务服务又可能成为另外一个业务服务的依赖。因此这样下来，不同服务实例之间就存在错综复杂的联系，用代码组织起来就比较困难了。</p>
+<p>幸运的是，我们拥有wire工具去做go对象的依赖注入，这样就可以用简单的代码实现解决上述问题。在<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkuYmxvZy5jc2RuLm5ldC9hcnRpY2xlL2RldGFpbHMvMTI4MTYxNzM4" title="https://utmhikari.blog.csdn.net/article/details/128161738">以前的wire文章<i class="fa fa-external-link"></i></span>当中，也简单提到了wire对于微服务框架的作用，但讲解的不算特别精要。所以今天这篇文章，笔者就分享下在go大仓的场景下，怎么用wire去解决service实例依赖问题的，以及怎样才是更加恰当的打开方式。</p>
+<p>首先我们要知道wire工具对外暴露了什么能力，有以下一些：</p>
+<a id="more"></a>
+<ul>
+<li>NewSet：声明一组Provider，Provider可以是对象的Constructor/Factory，也可以是其他Provider</li>
+<li>Value：把一个特定的对象给Provide出去</li>
+<li>InterfaceValue：把一个特定的interface对象给Provide出去（比如context.Context）</li>
+<li>Struct：把一个struct给Provide出去，同时可指定具体要被更底层注入对象的字段</li>
+<li>Bind：一般用于去声明某一个特定的interface对象需要某一个特定的struct实例来实现</li>
+<li>FieldsOf：把单个struct的某些特定的字段给Provide出去</li>
+</ul>
+<p>对于大仓的每一个微服务来讲，我们可以用到这些能力来描述不同服务service实例的依赖，这样就可以用wire一次性把我们所有service实例的初始化代码给生成出来，并且可以提前检查依赖的正确性，从而runtime的时候就不会出现哪个底层服务实例有nil异常的情况。</p>
+<p>具体怎么做，首先我们在biz下面一般有handler、service、config等子目录，我们可以加一个子目录ioc，用来存放wire依赖注入的内容。</p>
+<ul>
+<li>ioc.go：执行初始化逻辑的入口，存放暴露给handler层的所有上层service实例。</li>
+<li>wire.go：声明所有service实例的依赖关系，可后续生成包含初始化代码的wire_gen.go。</li>
+</ul>
+<p>ioc.go里面这样写：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> IOC <span class="keyword">struct</span> &#123;</span><br><span class="line">    User service.IUserService <span class="comment">// 建议对外暴露Interface类型的service</span></span><br><span class="line">    Task service.ITaskService</span><br><span class="line">    <span class="comment">// ...其他service</span></span><br><span class="line">    DB dal.DB <span class="comment">// interface or pointer</span></span><br><span class="line">    Cache cache.Cache <span class="comment">// interface or pointer</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> Instances *IOC</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Init</span><span class="params">()</span></span> &#123;</span><br><span class="line">    instances, err := initIOC()</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="built_in">panic</span>(err)</span><br><span class="line">    &#125;</span><br><span class="line">    Instances = instances</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样handler层就可以通过ioc.Instances.XXX直接获取service实例调用对应业务，然后业务的实现代码就放到service层具体的user或者task目录，层次结构就比较清晰了。</p>
+<p>我们假设user的实现依赖db服务，task的实现依赖user、db和cache服务，那么UserService和TaskService的代码实现可以是这样：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> IUserService <span class="keyword">interface</span> &#123;</span><br><span class="line">    GetUser(ctx context.Context, userID <span class="keyword">int64</span>) (*User, error)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> UserServiceImpl <span class="keyword">struct</span> &#123;</span><br><span class="line">    DB dal.DB</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// GetUser 从DB拿</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(u *UserServiceImpl)</span> <span class="title">GetUser</span><span class="params">(ctx context.Context, userID <span class="keyword">int64</span>)</span> <span class="params">(*User, error)</span></span> &#123;</span><br><span class="line">    <span class="keyword">return</span> DB.GetUser(ctx, userID)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// user实现上需要db服务</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">NewUserService</span><span class="params">(db dal.DB)</span> <span class="title">IUserService</span></span> &#123;</span><br><span class="line">    <span class="keyword">return</span> &amp;UserServiceImpl&#123;</span><br><span class="line">        DB: db,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> ITaskService <span class="keyword">interface</span> &#123;</span><br><span class="line">    CreateTask(ctx context.Context, userID <span class="keyword">int64</span>) (<span class="keyword">int64</span>, error)</span><br><span class="line">    GetTask(ctx context.Context, taskID <span class="keyword">int64</span>) (*Task, error)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> TaskServiceImpl <span class="keyword">struct</span> &#123;</span><br><span class="line">    DB dal.DB</span><br><span class="line">    Cache cache.Cache</span><br><span class="line">    User IUserService</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// CreateTask 拿user信息存DB</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *TaskServiceImpl)</span> <span class="title">CreateTask</span><span class="params">(ctx context.Context, userID <span class="keyword">int64</span>)</span> <span class="params">(<span class="keyword">int64</span>, error)</span></span> &#123;</span><br><span class="line">    userInfo, err := t.User.GetUser(ctx, userID)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>, err</span><br><span class="line">    &#125;</span><br><span class="line">    task := &amp;Task&#123;</span><br><span class="line">        Creator: userInfo.Name,</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> DB.CreateTask(ctx, task)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// GetTask 先拿缓存再拿DB</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *TaskServiceImpl)</span> <span class="title">GetTask</span><span class="params">(ctx context.Context, taskID <span class="keyword">int64</span>)</span> <span class="params">(*Task, error)</span></span> &#123;</span><br><span class="line">    taskInfo := <span class="built_in">new</span>(Task)</span><br><span class="line">    <span class="keyword">var</span> err error</span><br><span class="line">    cacheKey := fmt.Sprintf(<span class="string">"task:%d"</span>, taskID)</span><br><span class="line">    <span class="keyword">if</span> err = t.Cache.Load(ctx, cacheKey, taskInfo); err == <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> taskInfo, <span class="literal">nil</span></span><br><span class="line">    &#125;</span><br><span class="line">    taskInfo, err = DB.GetTask(ctx, taskID)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span>, err</span><br><span class="line">    &#125;</span><br><span class="line">    t.Cache.Save(ctx, cacheKey, taskInfo)</span><br><span class="line">    <span class="keyword">return</span> taskInfo, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// task实现上需要db、cache和user服务</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">NewTaskService</span><span class="params">(db dal.DB, cache cache.Cache, user IUserService)</span> <span class="title">ITaskService</span></span> &#123;</span><br><span class="line">    <span class="keyword">return</span> &amp;TaskServiceImpl&#123;</span><br><span class="line">        DB: db,</span><br><span class="line">        Cache: cache,</span><br><span class="line">        User: IUserService,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以上面wire为前提，接下来wire.go就可以这样写，从而简单声明所有可能出现的服务实例，打平依赖顺序：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ctx = context.Background() <span class="comment">// 初始化的ctx一般就是background</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 底层依赖</span></span><br><span class="line"><span class="keyword">var</span> (</span><br><span class="line">    ctxSet = wire.InterfaceValue(<span class="built_in">new</span>(context.Context), ctx)</span><br><span class="line">    <span class="comment">// 如果有静态DB配置的话，先initConfig然后再ioc.Init</span></span><br><span class="line">    <span class="comment">// cfg模块主动暴露方法拿对应DB配置，这样比如相同类型DB有多套配置也可以自由provide出来</span></span><br><span class="line">    dbSet = wire.NewSet(dal.NewDB, cfg.GetDB)</span><br><span class="line">    cacheSet = wire.NewSet(cache.NewCache, cfg.GetCache)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 总集</span></span><br><span class="line"><span class="keyword">var</span> providerSet = wire.NewSet(</span><br><span class="line">    ctxSet,</span><br><span class="line">    dbSet,</span><br><span class="line">    cacheSet,</span><br><span class="line">    userService.NewUserService,</span><br><span class="line">    taskService.NewTaskService, <span class="comment">// task依赖user，写下面</span></span><br><span class="line">    wire.Struct(<span class="built_in">new</span>(IOC), <span class="string">"*"</span>) <span class="comment">// instances放在最下面</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化方法</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">initIOC</span><span class="params">()</span> <span class="params">(*IOC, error)</span></span> &#123;</span><br><span class="line">    <span class="built_in">panic</span>(wire.Build(providerSet))</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">new</span>(IOC), <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样wire.Build过后，所有服务实例的初始化代码就生成了，我们在每个微服务的main里面调用ioc.go里面的Init，就可以把所有服务实例生成出来，ezpz！</p>
 
       
     </div>
 
+    
+
+    
+    
+    
+
+    
+      
+<div style="border: 1px solid black; margin-top: 32px; margin-bottom: 32px">
+  <div style="margin-left:10px">
+    <span style="font-weight:bold">版权声明</span>
+    <br>
+    <span>本文为博客<a href="https://utmhikari.github.io" style="color:#258FC6">HiKariのTechLab</a>原创文章，转载请标明出处，谢谢~~~</span>
+  </div>
+</div>
+
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Golang/" rel="tag"># Golang</a>
+          
+            <a href="/tags/后端开发/" rel="tag"># 后端开发</a>
+          
+            <a href="/tags/架构/" rel="tag"># 架构</a>
+          
+            <a href="/tags/wire/" rel="tag"># wire</a>
+          
+            <a href="/tags/monorepo/" rel="tag"># monorepo</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2025/04/04/codegallery/homemade_toolset/" rel="next" title="【代码艺廊】pyside6桌面应用范例：homemade-toolset">
+                <i class="fa fa-chevron-left"></i> 【代码艺廊】pyside6桌面应用范例：homemade-toolset
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+  </div>
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -500,7 +665,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">183</span>
+                    <span class="site-state-item-count">185</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1452,7 +1617,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">428</span>
+                      
+                    
+                    <span class="site-state-item-count">427</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1705,6 +1872,10 @@
 
 
   
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
 
   
 
@@ -1722,6 +1893,8 @@
 
   
 
+
+  
 
 
   

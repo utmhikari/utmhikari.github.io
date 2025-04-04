@@ -404,6 +404,380 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2019/10/29/diymemo/gigabyte_z390/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/10/29/diymemo/gigabyte_z390/" class="post-title-link" itemprop="url">【DIY小记】解决技嘉Z390 AORUS PRO不识别SSD/机械硬盘的问题</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-10-29 23:24:37" itemprop="dateCreated datePublished" datetime="2019-10-29T23:24:37+08:00">2019-10-29</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/DIY小记/" itemprop="url" rel="index"><span itemprop="name">DIY小记</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>笔者近期用技嘉（GIGABYTE）Z390装机时遇到了装上一个SSD跟一个机械硬盘后，机械硬盘无法被主板/操作系统识别的问题，经过一番研究后发现了解决方案，特地分享：</p>
+<p>首先本经验理论上应当适用于不同厂家的Z390主板上（比如华硕之类）</p>
+<p>SSD或机械硬盘无法识别可能是主板芯片共享频宽的问题。以技嘉为例，我们首先需要知道SSD或机械硬盘插在了哪里，以及硬盘有哪些接口。在技嘉Z390上，有以下的硬盘接口：</p>
+<ul>
+<li>M.2（M2A/M2M）</li>
+<li>SATA</li>
+</ul>
+<p>在说明书中应当会有这些插口所插到的位置图示。</p>
+<p>如果不了解硬盘原来插到了哪个接口，可以开机进入BIOS，BIOS中也会显示这些接口插了哪些硬盘。如果插过的硬盘没显示，那就是没识别到了。</p>
+<p>接下来也得翻说明书找硬盘接口相关的内容，以技嘉Z390为例，在说明书的<code>插座及跳线介绍——M.2及SATA插座安装注意事项</code>中，会有<strong>表格及文字</strong>显示M.2的哪个接口安装了哪种SSD，会与哪个SATA接口共享频宽，从而不兼容。借助这个表格找到兼容的接口，把原先插在SATA的硬盘换一个兼容号码的插座，就好了。技嘉的话，SATA插到3、4号（中间两个），是没问题的。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2019/10/26/luatalk/create_skynet/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/10/26/luatalk/create_skynet/" class="post-title-link" itemprop="url">【Lua杂谈】服务端架构skynet简易入门项目——create-skynet</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-10-26 01:22:09" itemprop="dateCreated datePublished" datetime="2019-10-26T01:22:09+08:00">2019-10-26</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-07-20 21:11:23" itemprop="dateModified" datetime="2024-07-20T21:11:23+08:00">2024-07-20</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Lua杂谈/" itemprop="url" rel="index"><span itemprop="name">Lua杂谈</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在<a href="https://utmhikari.github.io/2019/10/20/luatalk/skynet/">skynet通信原理与源码分析</a>一文中，我们已经详尽地弄清楚了<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nsb3Vkd3Uvc2t5bmV0" title="https://github.com/cloudwu/skynet">skynet<i class="fa fa-external-link"></i></span>地通信架构，为我们上手skynet提供了极大的帮助。因此本篇文章接续上文，正式上手使用skynet。</p>
+<h2 id="skynet入门项目：create-skynet"><a href="#skynet入门项目：create-skynet" class="headerlink" title="skynet入门项目：create-skynet"></a>skynet入门项目：create-skynet</h2><p>要做一个基于skynet的项目，首先需要一个好的模板。skynet的最佳实践并非将服务卸载skynet模块中，而是将skynet当作一个单独的库/SDK看待，自己独立在另外的目录写业务逻辑。因此，笔者在数月前简单地整合了一下skynet的boilerplate项目——<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaS9jcmVhdGUtc2t5bmV0" title="https://github.com/utmhikari/create-skynet">create-skynet<i class="fa fa-external-link"></i></span>，采用这个项目搭建skynet服务端结构会较为清晰。</p>
+<h3 id="服务-amp-库的约定"><a href="#服务-amp-库的约定" class="headerlink" title="服务&amp;库的约定"></a>服务&amp;库的约定</h3><p>在create-skynet的配置中，每个服务的lua文件入口以config中<code>luaservice</code>项为准：</p>
+<ul>
+<li>service/服务名.lua</li>
+<li>service/服务名/main.lua</li>
+<li>skynet/service/服务名.lua（默认的服务）</li>
+</ul>
+<p>skynet启动时会根据服务名注册相应服务，因此自己在service下定义的服务名最好不要与skynet原有服务重名。</p>
+<p>skynet在为每一个服务读取lua库的时候，会根据运行skynet脚本的工作目录以及config里的设置去读取，这是由config的<code>lua_path</code>与<code>lua_cpath</code>为准的。在create-skynet里，lualib的位置有：</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/10/26/luatalk/create_skynet/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2019/10/20/geekdaily/electron_react/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1863,382 +2237,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2019/09/01/gofromzero/03_docker_client/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ひかり.HDQ">
-      <meta itemprop="description" content="talk is cheap, code is rich">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HiKariのTechLab">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/09/01/gofromzero/03_docker_client/" class="post-title-link" itemprop="url">【从零单排Golang】第三话：利用docker client本地部署MySQL</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-09-01 18:50:17" itemprop="dateCreated datePublished" datetime="2019-09-01T18:50:17+08:00">2019-09-01</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/从零单排Golang/" itemprop="url" rel="index"><span itemprop="name">从零单排Golang</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaS9nb2Zyb216ZXJv" title="https://github.com/utmhikari/gofromzero">Github传送门<i class="fa fa-external-link"></i></span></p>
-<p>最近回忆起了在学校那会儿趣事：刚开始上数据库原理课程，一开始装Microsoft SQL Server，全班同学都在吐槽，怨声载道——这个说数据库咋启动不了，那个说数据库咋卸载不干净，个个焦头烂额，实在是好一番风景。唉，那时候就在想，要是有一个类似于软件管家的东西托管Microsoft SQL Server，让我们一键安装/卸载，可不就好了。</p>
-<p>进入工业界，接触了运维方面的知识，才了解到<span class="exturl" data-url="aHR0cHM6Ly93d3cuZG9ja2VyLmNvbS8=" title="https://www.docker.com/">docker<i class="fa fa-external-link"></i></span>的存在。不同于当年常用的虚拟机软件（VMWare WorkStation），docker并未对操作系统的硬件支撑做虚拟化，只是操作系统的进程，但却模拟了一个操作系统的环境，因此相对于虚拟机而言，docker更加轻量。轻量的运行环境意味着基于docker的部署，在管理与调度上会更加容易。看，kubernetes！</p>
-<p>再回到我们的学习生活，拿MySQL为例吧——有了docker，安装卸载MySQL，就会变得无比容易。首先<code>docker pull mysql</code>；而后整理一下配置——通过<code>-v</code>映射数据在本地的存储路径，通过<code>-p</code>暴露出来mysql容器的端口，通过<code>-e</code>设置MySQL密码等环境变量；之后<code>docker run</code>带上上面的设置，我们的MySQL就启动了！要彻底卸载的话，只需要三行命令：<code>docker stop ${MySQL容器ID}</code>、<code>docker rm ${MySQL容器ID}</code>与<code>docker image rm ${MySQL镜像ID}</code>，就ok了，是不是EZPZ？</p>
-<p>正好，docker是基于Golang编写。因此本期从零单排，我们就用Golang来挑战一下如何与docker交互吧~</p>
-<h2 id="编写Golang程序部署MySQL"><a href="#编写Golang程序部署MySQL" class="headerlink" title="编写Golang程序部署MySQL"></a>编写Golang程序部署MySQL</h2><p>首先，我们研究一下相关的技术栈：官方提供的Golang客户端库<span class="exturl" data-url="aHR0cHM6Ly9nb2RvYy5vcmcvZ2l0aHViLmNvbS9kb2NrZXIvZG9ja2VyL2NsaWVudA==" title="https://godoc.org/github.com/docker/docker/client">docker client<i class="fa fa-external-link"></i></span>为Golang与docker间搭建了桥梁，其实质是对<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLmRvY2tlci5jb20vZW5naW5lL2FwaS92MS4yNC8=" title="https://docs.docker.com/engine/api/v1.24/">docker engine api<i class="fa fa-external-link"></i></span>的抽象；而docker engine api实质则是一个HTTP后端，是对docker内部镜像与容器管理功能的抽象。</p>
-<p>通过docker client库，我们只需关心相关的参数输入。库中的方法会自动拼装参数，发送至docker engine api，从而实现交互。docker client的一些小例子，可以参考<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLmRvY2tlci5jb20vZGV2ZWxvcC9zZGsvZXhhbXBsZXMv" title="https://docs.docker.com/develop/sdk/examples/">这里<i class="fa fa-external-link"></i></span>。</p>
-<p>接下来，我们必须研究一下，要部署MySQL容器，需要有哪些步骤：</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/09/01/gofromzero/03_docker_client/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2019/08/25/luatalk/coroutine/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ひかり.HDQ">
-      <meta itemprop="description" content="talk is cheap, code is rich">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HiKariのTechLab">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/08/25/luatalk/coroutine/" class="post-title-link" itemprop="url">【Lua杂谈】一文上手coroutine协程</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-08-25 16:31:28" itemprop="dateCreated datePublished" datetime="2019-08-25T16:31:28+08:00">2019-08-25</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Lua杂谈/" itemprop="url" rel="index"><span itemprop="name">Lua杂谈</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>提到lua，就不得不提协程coroutine。coroutine是lua的一种内在机制，为lua提供了原生的异步支持。从用户层面来看，用户不需关心coroutine的内在实现，而只需要用coroutine调度function即可，因此非常方便。</p>
-<p>对于一个function而言，coroutine可以将function的代码分片，使得一个function可以分阶段运行。在实现上，function的状态管理会与CPU的机制相似。如果把一个function当做一个任务来看待的话，在coroutine的封装下，这个任务会被分解成多个阶段的子任务。这样，我们就可以把多个任务的子任务相互协调调度，实现更加灵活的功能交互。</p>
-<p>因此，本期Lua杂谈，就来小试一抔coroutine的使用吧。</p>
-<h2 id="coroutine的基本用法"><a href="#coroutine的基本用法" class="headerlink" title="coroutine的基本用法"></a>coroutine的基本用法</h2><p>官方5.3.5版本的coroutine库，提供了如下的接口：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// lcorolib.c</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> luaL_Reg co_funcs[] = &#123;</span><br><span class="line">  &#123;<span class="string">"create"</span>, luaB_cocreate&#125;,</span><br><span class="line">  &#123;<span class="string">"resume"</span>, luaB_coresume&#125;,</span><br><span class="line">  &#123;<span class="string">"running"</span>, luaB_corunning&#125;,</span><br><span class="line">  &#123;<span class="string">"status"</span>, luaB_costatus&#125;,</span><br><span class="line">  &#123;<span class="string">"wrap"</span>, luaB_cowrap&#125;,</span><br><span class="line">  &#123;<span class="string">"yield"</span>, luaB_yield&#125;,</span><br><span class="line">  &#123;<span class="string">"isyieldable"</span>, luaB_yieldable&#125;,</span><br><span class="line">  &#123;<span class="literal">NULL</span>, <span class="literal">NULL</span>&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>用户可以通过<code>coroutine.wrap</code>与<code>coroutine.create</code>两种方式封装一个function（任务）。通过<code>wrap</code>封装任务会返回一个纯粹的lua函数（type为function），而用<code>create</code>封装则返回的是一个封装好的线程。</p>
-<p>在Lua中，线程thread与协程coroutine的概念内涵有较多相似之处，但我们可以认为，线程是更加宏观广泛的概念，协程则是一种特殊的线程。线程强调的不同的<code>routine</code>之间运行是否独立；而协程强调的则是不同<code>routine</code>之间具有相互<code>co</code>的协作功能。</p>
-<p>基于这两种方式调度任务的代码写法大同小异。以下以<code>create</code>封装任务为例，我们一起看看会是怎样的进行——</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/08/25/luatalk/coroutine/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2287,7 +2285,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">183</span>
+                    <span class="site-state-item-count">185</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -3239,7 +3237,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">428</span>
+                      
+                    
+                    <span class="site-state-item-count">427</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

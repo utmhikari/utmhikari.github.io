@@ -1,3 +1,5 @@
+http://utmhikari.github.io/2025/04/04/archiart/go_monorepo_wire/
+http://utmhikari.github.io/2025/04/04/codegallery/homemade_toolset/
 http://utmhikari.github.io/2025/03/09/archiart/change_observation_worker/
 http://utmhikari.github.io/2025/03/09/archiart/go_monorepo_structure/
 http://utmhikari.github.io/2025/02/22/testlife/change_control_data_marketing/
@@ -96,5 +98,3 @@ http://utmhikari.github.io/2021/10/30/mediumpython/iii/
 http://utmhikari.github.io/2021/10/23/mediumpython/ii/
 http://utmhikari.github.io/2021/10/19/geekdaily/redis_make_jemalloc_error/
 http://utmhikari.github.io/2021/10/17/mediumpython/i/
-http://utmhikari.github.io/2021/10/10/mediumpython/preface/
-http://utmhikari.github.io/2021/10/06/pythonnotes/attr_with_underscore/

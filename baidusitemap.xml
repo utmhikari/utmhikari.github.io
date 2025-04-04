@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://utmhikari.github.io/2025/04/04/codegallery/homemade_toolset/</loc>
+    <lastmod>2025-04-04</lastmod>
+  </url>  <url>
+    <loc>http://utmhikari.github.io/2025/04/04/archiart/go_monorepo_wire/</loc>
+    <lastmod>2025-04-04</lastmod>
+  </url>  <url>
+    <loc>http://utmhikari.github.io/2019/11/24/gofromzero/05_load_balancer/</loc>
+    <lastmod>2025-04-04</lastmod>
+  </url>  <url>
     <loc>http://utmhikari.github.io/2025/03/09/archiart/go_monorepo_structure/</loc>
     <lastmod>2025-03-09</lastmod>
   </url>  <url>
@@ -350,9 +359,6 @@
     <lastmod>2024-04-07</lastmod>
   </url>  <url>
     <loc>http://utmhikari.github.io/2019/10/03/gofromzero/04_kubernetes_mongo/</loc>
-    <lastmod>2024-04-07</lastmod>
-  </url>  <url>
-    <loc>http://utmhikari.github.io/2019/11/24/gofromzero/05_load_balancer/</loc>
     <lastmod>2024-04-07</lastmod>
   </url>  <url>
     <loc>http://utmhikari.github.io/2022/12/03/gofromzero/06_wire_kratos/</loc>

@@ -404,6 +404,383 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2022/12/10/codegallery/daggre/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2022/12/10/codegallery/daggre/" class="post-title-link" itemprop="url">【代码艺廊】daggre：数据聚合与联表检查工具</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2022-12-10 19:45:43" itemprop="dateCreated datePublished" datetime="2022-12-10T19:45:43+08:00">2022-12-10</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/代码艺廊/" itemprop="url" rel="index"><span itemprop="name">代码艺廊</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>在以前写过的一篇关于游戏策划配置检查工具设计的<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjEvMDMvMDYvdGVzdGxpZmUvdGFibGVfY2hlY2sv" title="https://utmhikari.top/2021/03/06/testlife/table_check/">文章<i class="fa fa-external-link"></i></span>里，笔者讲述了一种表格检查工具的分层设计方法，简而言之也就是两部分：</p>
+<ul>
+<li>配置数据源服务：管理本地策划配置<code>repo</code>，通过自定义脚本解析<code>repo</code>中文件，提供实际的配置数据</li>
+<li>配置数据处理服务：处理实际的配置测试业务，比如表格检查、<code>excel-diff</code>等等</li>
+</ul>
+<p>其中，配置数据源服务，在许久以前写过一个样例的版本<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaS9yZXBvbWFzdGVy" title="https://github.com/utmhikari/repomaster">repomaster<i class="fa fa-external-link"></i></span>，<br>实际也就是一个管理<code>git-repo</code>的小服务，在<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjEvMDEvMDEvY29kZWdhbGxlcnkvcmVwb21hc3Rlci8=" title="https://utmhikari.top/2021/01/01/codegallery/repomaster/">这篇博客<i class="fa fa-external-link"></i></span>里有详细阐述实现内容。</p>
+<p>而今天的主题则是配置数据处理服务方面的内容，笔者采纳通过配置化方式声明数据处理过程的设计，编写了一个数据聚合工具：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaS9kYWdncmU=" title="https://github.com/utmhikari/daggre">daggre<i class="fa fa-external-link"></i></span>，全称为<code>DAta-AGGREgator</code>，专门用于处理数据的联表视图、过滤检查相关的需求。</p>
+<p>以游戏业务测试为例，<code>daggre</code>的使用场景，我们可以看两个例子：</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2022/12/10/codegallery/daggre/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2022/12/03/gofromzero/06_wire_kratos/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2022/12/03/gofromzero/06_wire_kratos/" class="post-title-link" itemprop="url">【从零单排Golang】第六话：基于wire的kratos微服务框架示例项目</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2022-12-03 14:50:20" itemprop="dateCreated datePublished" datetime="2022-12-03T14:50:20+08:00">2022-12-03</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/从零单排Golang/" itemprop="url" rel="index"><span itemprop="name">从零单排Golang</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>《从零单排Golang》系列，又重新开张了。后续会不定期更新自己学习<code>Golang</code>的笔记跟心得。</p>
+<p>这次的话，就介绍一款名为奎爷<code>kratos</code>的微服务框架，以及讲述一下基础的使用机理。</p>
+<p><code>kratos</code>是B站开源的微服务框架，不仅提供了<code>grpc</code>、<code>http</code>协议支持，而且有较为完善的层级架构、微服务中间件以及第三方组件的编写约定，可以说是非常方便上手跟扩展。</p>
+<p>要上手<code>kratos</code>，我们可以从两个地方入手：</p>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2dvLWtyYXRvcy9rcmF0b3M=" title="https://github.com/go-kratos/kratos">kratos-github<i class="fa fa-external-link"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9nby1rcmF0b3MuZGV2Lw==" title="https://go-kratos.dev/">kratos官方文档<i class="fa fa-external-link"></i></span></li>
+</ul>
+<p>通过<code>kratos</code>的<span class="exturl" data-url="aHR0cHM6Ly9nby1rcmF0b3MuZGV2L2VuL2RvY3MvZ2V0dGluZy1zdGFydGVkL3N0YXJ0" title="https://go-kratos.dev/en/docs/getting-started/start">quickstart文档<i class="fa fa-external-link"></i></span>，我们可以创建一个名为<code>kratostest</code>的项目。项目的目录结构遵循<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2dvLWtyYXRvcy9rcmF0b3MtbGF5b3V0" title="https://github.com/go-kratos/kratos-layout">kratos-layout<i class="fa fa-external-link"></i></span>，具体如下：</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2022/12/03/gofromzero/06_wire_kratos/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2022/11/24/geekdaily/python_and_game_autotest_notes/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1866,386 +2243,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2022/09/04/gameofautotest/iii/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ひかり.HDQ">
-      <meta itemprop="description" content="talk is cheap, code is rich">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HiKariのTechLab">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2022/09/04/gameofautotest/iii/" class="post-title-link" itemprop="url">【Game Of AutoTest】3、游戏自动化测试的框架设计</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2022-09-04 15:52:17" itemprop="dateCreated datePublished" datetime="2022-09-04T15:52:17+08:00">2022-09-04</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Game-Of-AutoTest/" itemprop="url" rel="index"><span itemprop="name">Game Of AutoTest</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>自动化在技术层面上，除了基础的技术选型之外，最终还是需要落实到具体的工具框架，才能够助力我们自动化脚本开发的过程。因此，本文将讲述一下如何对游戏自动化测试框架进行设计。</p>
-<p>在<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjIvMDgvMTMvZ2FtZW9mYXV0b3Rlc3QvaWkv" title="https://utmhikari.top/2022/08/13/gameofautotest/ii/">上一篇文章<i class="fa fa-external-link"></i></span>讲到，自动化测试的方式可以有客户端、服务器、编辑器三种方式，除了编辑器需要强依赖引擎层面的特性之外，其他两种自动化方式在工具或者框架的技术实现上有这么几个特点：</p>
-<ul>
-<li>框架模块设计具有共通性，只是最终执行自动化用例/脚本的方式不同</li>
-<li>许多框架模块可以不依赖游戏本身的特性去实现，可以实现很多企业业务功能的集成</li>
-<li>由于和产品没有太多的耦合，可以做成易于在不同项目测试之间迁移通用的形式</li>
-</ul>
-<p>考虑到当前我国有许多游戏企业的工作习惯是，测试由中台dispatch到各个项目，不直接参与研发过程（Code Review？不存在的），项目产品以提测的方式交付测试，测试侧可以运用自己的测试手法和工具去完成任务。从这样的角度看，拥有一个功能性强且通用的自动化测试工具，不仅是对于项目所需要自动化测试的场景，更是对于测试组整体的技术基建提升而言，都显得非常重要。</p>
-<p>以笔者工作经验为参考，要做到游戏自动化框架得以通用，设计上需要遵循如下准则：</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2022/09/04/gameofautotest/iii/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2022/08/14/pythonnotes/asgi_uvicorn_fastapi/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ひかり.HDQ">
-      <meta itemprop="description" content="talk is cheap, code is rich">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HiKariのTechLab">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2022/08/14/pythonnotes/asgi_uvicorn_fastapi/" class="post-title-link" itemprop="url">【Python随笔】python的web开发——WSGI、ASGI、uvicorn与FastAPI</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2022-08-14 15:40:31" itemprop="dateCreated datePublished" datetime="2022-08-14T15:40:31+08:00">2022-08-14</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Python随笔/" itemprop="url" rel="index"><span itemprop="name">Python随笔</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>今天这篇文章，聊一下<code>python</code>在<code>web</code>开发上的一些基础实现，阐述下自己理解中的<code>WSGI</code>、<code>ASGI</code>，以及拿<code>uvicorn</code>+<code>FastAPI</code>的组合举个<code>ASGI</code>应用的例子。</p>
-<h2 id="WSGI"><a href="#WSGI" class="headerlink" title="WSGI"></a>WSGI</h2><p><code>python</code>的<code>web</code>服务的诞生，其实追溯到一种机制，叫做<code>WSGI</code>，全称<code>Web Server Gateway Interface</code>。<code>WSGI</code>的提案来源于<span class="exturl" data-url="aHR0cHM6Ly9wZXBzLnB5dGhvbi5vcmcvcGVwLTAzMzMv" title="https://peps.python.org/pep-0333/">PEP-333<i class="fa fa-external-link"></i></span>，可以理解为一种<code>python-web-server</code>和<code>python-web-app</code>的接口通信标准。在这种场景下，<code>python</code>的<code>web</code>服务呈现以下的工作模式：</p>
-<ul>
-<li><code>python-web-app</code>，也就是<code>web</code>应用层，实现<code>WSGI</code>接口，用作<code>web</code>请求的<code>handler</code></li>
-<li>用户向<code>python-web-server</code>发送<code>web</code>请求</li>
-<li><code>python-web-server</code>，又称作<code>WSGI Server</code>，解析请求数据，整理当前<code>session</code>的环境信息</li>
-<li><code>python-web-server</code>加载<code>python-web-app</code>，调用<code>python-web-app</code>实例的<code>WSGI</code>接口，处理请求</li>
-<li><code>python-web-app</code>处理完请求，返回结果给到<code>python-web-server</code></li>
-<li><code>python-web-server</code>写回返回结果，给回用户</li>
-</ul>
-<p>代码上是这样的表现，以官方提案的例子为例：</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2022/08/14/pythonnotes/asgi_uvicorn_fastapi/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2294,7 +2291,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">183</span>
+                    <span class="site-state-item-count">185</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -3246,7 +3243,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">428</span>
+                      
+                    
+                    <span class="site-state-item-count">427</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
