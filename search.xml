@@ -857,9 +857,9 @@
       <tags>
         <tag>AI</tag>
         <tag>变更风险</tag>
+        <tag>DevOps</tag>
         <tag>质量管理</tag>
         <tag>慢查询</tag>
-        <tag>AIOps</tag>
       </tags>
   </entry>
   <entry>
@@ -1283,7 +1283,7 @@
         <tag>后端开发</tag>
         <tag>并发</tag>
         <tag>Once</tag>
-        <tag>懒加载</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -1552,7 +1552,7 @@
         <tag>fastapi</tag>
         <tag>web开发</tag>
         <tag>react</tag>
-        <tag>前端</tag>
+        <tag>前端开发</tag>
       </tags>
   </entry>
   <entry>
@@ -1868,11 +1868,11 @@
         <category>测试人生</category>
       </categories>
       <tags>
+        <tag>稳定性</tag>
         <tag>质量保障</tag>
         <tag>测试</tag>
-        <tag>压测</tag>
-        <tag>全链路压测</tag>
-        <tag>电商</tag>
+        <tag>压力测试</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -3209,11 +3209,11 @@
         <category>Game Of AutoTest</category>
       </categories>
       <tags>
-        <tag>客户端自动化</tag>
-        <tag>服务器自动化</tag>
-        <tag>编辑器自动化</tag>
-        <tag>录制回放</tag>
-        <tag>AI自动化</tag>
+        <tag>AI</tag>
+        <tag>UE4</tag>
+        <tag>行为树</tag>
+        <tag>GAutomator</tag>
+        <tag>压力测试</tag>
       </tags>
   </entry>
   <entry>
@@ -7267,11 +7267,11 @@
         <category>极客日常</category>
       </categories>
       <tags>
+        <tag>后端开发</tag>
         <tag>UE4</tag>
         <tag>C++</tag>
         <tag>web开发</tag>
         <tag>UE4插件</tag>
-        <tag>HTTP Server</tag>
       </tags>
   </entry>
   <entry>
@@ -7321,7 +7321,7 @@
         <tag>hugo</tag>
         <tag>bilibili</tag>
         <tag>shortcode</tag>
-        <tag>iframe</tag>
+        <tag>前端开发</tag>
       </tags>
   </entry>
   <entry>
@@ -7373,9 +7373,9 @@
       <tags>
         <tag>gc</tag>
         <tag>导表检查</tag>
-        <tag>java</tag>
         <tag>JVM</tag>
         <tag>OOM</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -7422,8 +7422,8 @@
         <category>极客日常</category>
       </categories>
       <tags>
-        <tag>前端</tag>
         <tag>vue</tag>
+        <tag>前端开发</tag>
         <tag>vuetify</tag>
         <tag>v-autocomplete</tag>
         <tag>v-model</tag>
@@ -7838,9 +7838,9 @@
       <tags>
         <tag>桌面应用</tag>
         <tag>react</tag>
-        <tag>前端</tag>
         <tag>electron</tag>
         <tag>antd</tag>
+        <tag>前端开发</tag>
       </tags>
   </entry>
   <entry>
@@ -8380,8 +8380,8 @@
         <tag>Golang</tag>
         <tag>后端开发</tag>
         <tag>gin</tag>
+        <tag>web开发</tag>
         <tag>gorm</tag>
-        <tag>CRUD</tag>
       </tags>
   </entry>
   <entry>

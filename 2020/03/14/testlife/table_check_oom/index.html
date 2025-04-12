@@ -102,14 +102,14 @@
 
 
   <meta name="description" content="最近在项目组测试有开发一个导表检查的需求，大致是在策划提交表更新到svn之后，svn发送post-commit到策划表数据服务，而后策划表数据服务下载excel文件，更新数据之后，将导表检查下游服务所需的检查数据进行整合，然后post到导表检查服务。在这个过程中，由于做的仓促没有考虑设计，最后策划表数据服务的JVM发生了OOM问题。经过一番排查改进了设计，解决了这个问题。 JVM的内存结构跟GC流">
-<meta name="keywords" content="gc,导表检查,java,JVM,OOM">
+<meta name="keywords" content="gc,导表检查,JVM,OOM,Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【测试人生】记一次导表检查流程中导致JVM的OOM问题">
 <meta property="og:url" content="http://utmhikari.github.io/2020/03/14/testlife/table_check_oom/index.html">
 <meta property="og:site_name" content="HiKariのTechLab">
 <meta property="og:description" content="最近在项目组测试有开发一个导表检查的需求，大致是在策划提交表更新到svn之后，svn发送post-commit到策划表数据服务，而后策划表数据服务下载excel文件，更新数据之后，将导表检查下游服务所需的检查数据进行整合，然后post到导表检查服务。在这个过程中，由于做的仓促没有考虑设计，最后策划表数据服务的JVM发生了OOM问题。经过一番排查改进了设计，解决了这个问题。 JVM的内存结构跟GC流">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2024-04-07T02:48:06.929Z">
+<meta property="og:updated_time" content="2025-04-12T15:45:30.271Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【测试人生】记一次导表检查流程中导致JVM的OOM问题">
 <meta name="twitter:description" content="最近在项目组测试有开发一个导表检查的需求，大致是在策划提交表更新到svn之后，svn发送post-commit到策划表数据服务，而后策划表数据服务下载excel文件，更新数据之后，将导表检查下游服务所需的检查数据进行整合，然后post到导表检查服务。在这个过程中，由于做的仓促没有考虑设计，最后策划表数据服务的JVM发生了OOM问题。经过一番排查改进了设计，解决了这个问题。 JVM的内存结构跟GC流">
@@ -464,7 +464,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+                <time title="修改时间：2025-04-12 23:45:30" itemprop="dateModified" datetime="2025-04-12T23:45:30+08:00">2025-04-12</time>
               
             
           </span>
@@ -576,11 +576,11 @@
           
             <a href="/tags/导表检查/" rel="tag"># 导表检查</a>
           
-            <a href="/tags/java/" rel="tag"># java</a>
-          
             <a href="/tags/JVM/" rel="tag"># JVM</a>
           
             <a href="/tags/OOM/" rel="tag"># OOM</a>
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
           
         </div>
       
@@ -1587,7 +1587,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">429</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">417</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

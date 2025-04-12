@@ -102,14 +102,14 @@
 
 
   <meta name="description" content="在使用Golang做后端开发的工程中，我们通常需要声明一些一些配置类或服务单例等在业务逻辑层面较为底层的实例。为了节省内存或是冷启动开销，我们通常采用lazy-load懒加载的方式去初始化这些实例。初始化单例这个行为是一个非常经典的并发处理的案例，比如在java当中，我们可能用到建立双重锁+volatile的方式保证初始化逻辑只被访问一次，并且所有线程最终都可以读取到初始化完成的实例产物。这段经典">
-<meta name="keywords" content="Golang,后端开发,并发,Once,懒加载">
+<meta name="keywords" content="Golang,后端开发,并发,Once,Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【从零单排Golang】第十五话：用sync.Once实现懒加载的用法和坑点">
 <meta property="og:url" content="http://utmhikari.github.io/2023/09/03/gofromzero/15_sync_once/index.html">
 <meta property="og:site_name" content="HiKariのTechLab">
 <meta property="og:description" content="在使用Golang做后端开发的工程中，我们通常需要声明一些一些配置类或服务单例等在业务逻辑层面较为底层的实例。为了节省内存或是冷启动开销，我们通常采用lazy-load懒加载的方式去初始化这些实例。初始化单例这个行为是一个非常经典的并发处理的案例，比如在java当中，我们可能用到建立双重锁+volatile的方式保证初始化逻辑只被访问一次，并且所有线程最终都可以读取到初始化完成的实例产物。这段经典">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2024-04-07T02:48:06.923Z">
+<meta property="og:updated_time" content="2025-04-12T15:45:38.686Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【从零单排Golang】第十五话：用sync.Once实现懒加载的用法和坑点">
 <meta name="twitter:description" content="在使用Golang做后端开发的工程中，我们通常需要声明一些一些配置类或服务单例等在业务逻辑层面较为底层的实例。为了节省内存或是冷启动开销，我们通常采用lazy-load懒加载的方式去初始化这些实例。初始化单例这个行为是一个非常经典的并发处理的案例，比如在java当中，我们可能用到建立双重锁+volatile的方式保证初始化逻辑只被访问一次，并且所有线程最终都可以读取到初始化完成的实例产物。这段经典">
@@ -464,7 +464,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+                <time title="修改时间：2025-04-12 23:45:38" itemprop="dateModified" datetime="2025-04-12T23:45:38+08:00">2025-04-12</time>
               
             
           </span>
@@ -583,7 +583,7 @@
           
             <a href="/tags/Once/" rel="tag"># Once</a>
           
-            <a href="/tags/懒加载/" rel="tag"># 懒加载</a>
+            <a href="/tags/Java/" rel="tag"># Java</a>
           
         </div>
       
@@ -1590,7 +1590,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">429</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">417</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

@@ -1,6 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://utmhikari.github.io/2022/08/13/gameofautotest/ii/</loc>
+    <lastmod>2025-04-12</lastmod>
+  </url>  <url>
+    <loc>http://utmhikari.github.io/2023/04/08/testlife/alibaba_stress_test/</loc>
+    <lastmod>2025-04-12</lastmod>
+  </url>  <url>
+    <loc>http://utmhikari.github.io/2023/06/10/githubdiscovery/reactpy/</loc>
+    <lastmod>2025-04-12</lastmod>
+  </url>  <url>
+    <loc>http://utmhikari.github.io/2020/02/16/geekdaily/v_autocomplete/</loc>
+    <lastmod>2025-04-12</lastmod>
+  </url>  <url>
+    <loc>http://utmhikari.github.io/2020/04/21/geekdaily/bilibili_in_hugo/</loc>
+    <lastmod>2025-04-12</lastmod>
+  </url>  <url>
+    <loc>http://utmhikari.github.io/2019/10/20/geekdaily/electron_react/</loc>
+    <lastmod>2025-04-12</lastmod>
+  </url>  <url>
+    <loc>http://utmhikari.github.io/2019/08/04/gofromzero/02_gin_gorm/</loc>
+    <lastmod>2025-04-12</lastmod>
+  </url>  <url>
+    <loc>http://utmhikari.github.io/2024/05/01/geekdaily/meituan_tech_notes/</loc>
+    <lastmod>2025-04-12</lastmod>
+  </url>  <url>
+    <loc>http://utmhikari.github.io/2020/05/23/geekdaily/ue4_http_server/</loc>
+    <lastmod>2025-04-12</lastmod>
+  </url>  <url>
+    <loc>http://utmhikari.github.io/2023/09/03/gofromzero/15_sync_once/</loc>
+    <lastmod>2025-04-12</lastmod>
+  </url>  <url>
+    <loc>http://utmhikari.github.io/2020/03/14/testlife/table_check_oom/</loc>
+    <lastmod>2025-04-12</lastmod>
+  </url>  <url>
     <loc>http://utmhikari.github.io/2025/04/12/githubdiscovery/mcp_go/</loc>
     <lastmod>2025-04-12</lastmod>
   </url>  <url>
@@ -133,9 +166,6 @@
     <loc>http://utmhikari.github.io/2019/11/16/githubdiscovery/vlang/</loc>
     <lastmod>2024-07-20</lastmod>
   </url>  <url>
-    <loc>http://utmhikari.github.io/2019/08/04/gofromzero/02_gin_gorm/</loc>
-    <lastmod>2024-07-20</lastmod>
-  </url>  <url>
     <loc>http://utmhikari.github.io/2019/10/26/luatalk/create_skynet/</loc>
     <lastmod>2024-07-20</lastmod>
   </url>  <url>
@@ -144,9 +174,6 @@
   </url>  <url>
     <loc>http://utmhikari.github.io/2024/05/01/diymemo/zhihu_blog_migrate/</loc>
     <lastmod>2024-05-01</lastmod>
-  </url>  <url>
-    <loc>http://utmhikari.github.io/2024/05/01/geekdaily/meituan_tech_notes/</loc>
-    <lastmod>2024-04-30</lastmod>
   </url>  <url>
     <loc>http://utmhikari.github.io/2024/04/13/gofromzero/16_channel/</loc>
     <lastmod>2024-04-21</lastmod>
@@ -167,9 +194,6 @@
     <lastmod>2024-04-07</lastmod>
   </url>  <url>
     <loc>http://utmhikari.github.io/2021/03/06/testlife/table_check/</loc>
-    <lastmod>2024-04-07</lastmod>
-  </url>  <url>
-    <loc>http://utmhikari.github.io/2020/03/14/testlife/table_check_oom/</loc>
     <lastmod>2024-04-07</lastmod>
   </url>  <url>
     <loc>http://utmhikari.github.io/2021/06/01/testlife/table_test_tool/</loc>
@@ -233,9 +257,6 @@
     <lastmod>2024-04-07</lastmod>
   </url>  <url>
     <loc>http://utmhikari.github.io/2019/07/13/testlife/android_fps/</loc>
-    <lastmod>2024-04-07</lastmod>
-  </url>  <url>
-    <loc>http://utmhikari.github.io/2023/04/08/testlife/alibaba_stress_test/</loc>
     <lastmod>2024-04-07</lastmod>
   </url>  <url>
     <loc>http://utmhikari.github.io/2019/12/22/testlife/are_testers_controlling_quality/</loc>
@@ -343,9 +364,6 @@
     <loc>http://utmhikari.github.io/2023/07/01/gofromzero/12_singleflight/</loc>
     <lastmod>2024-04-07</lastmod>
   </url>  <url>
-    <loc>http://utmhikari.github.io/2023/09/03/gofromzero/15_sync_once/</loc>
-    <lastmod>2024-04-07</lastmod>
-  </url>  <url>
     <loc>http://utmhikari.github.io/2022/01/16/hardpython/1_multiprocessing_1/</loc>
     <lastmod>2024-04-07</lastmod>
   </url>  <url>
@@ -397,9 +415,6 @@
     <loc>http://utmhikari.github.io/2020/02/01/githubdiscovery/fastapi/</loc>
     <lastmod>2024-04-07</lastmod>
   </url>  <url>
-    <loc>http://utmhikari.github.io/2023/06/10/githubdiscovery/reactpy/</loc>
-    <lastmod>2024-04-07</lastmod>
-  </url>  <url>
     <loc>http://utmhikari.github.io/2019/08/11/githubdiscovery/solopi/</loc>
     <lastmod>2024-04-07</lastmod>
   </url>  <url>
@@ -436,13 +451,7 @@
     <loc>http://utmhikari.github.io/2020/11/08/geekdaily/ue4_llm_dump_cpp/</loc>
     <lastmod>2024-04-07</lastmod>
   </url>  <url>
-    <loc>http://utmhikari.github.io/2020/02/16/geekdaily/v_autocomplete/</loc>
-    <lastmod>2024-04-07</lastmod>
-  </url>  <url>
     <loc>http://utmhikari.github.io/2021/09/11/geekdaily/vscode_git-bash/</loc>
-    <lastmod>2024-04-07</lastmod>
-  </url>  <url>
-    <loc>http://utmhikari.github.io/2020/05/23/geekdaily/ue4_http_server/</loc>
     <lastmod>2024-04-07</lastmod>
   </url>  <url>
     <loc>http://utmhikari.github.io/2022/09/04/gameofautotest/iii/</loc>
@@ -451,13 +460,7 @@
     <loc>http://utmhikari.github.io/2022/11/02/gameofautotest/v/</loc>
     <lastmod>2024-04-07</lastmod>
   </url>  <url>
-    <loc>http://utmhikari.github.io/2020/04/21/geekdaily/bilibili_in_hugo/</loc>
-    <lastmod>2024-04-07</lastmod>
-  </url>  <url>
     <loc>http://utmhikari.github.io/2023/05/01/geekdaily/chatgpt_baguwen_shock/</loc>
-    <lastmod>2024-04-07</lastmod>
-  </url>  <url>
-    <loc>http://utmhikari.github.io/2019/10/20/geekdaily/electron_react/</loc>
     <lastmod>2024-04-07</lastmod>
   </url>  <url>
     <loc>http://utmhikari.github.io/2021/05/01/geekdaily/excel_diff_vxe-table/</loc>
@@ -491,9 +494,6 @@
     <lastmod>2024-04-07</lastmod>
   </url>  <url>
     <loc>http://utmhikari.github.io/2022/08/02/gameofautotest/i/</loc>
-    <lastmod>2024-04-07</lastmod>
-  </url>  <url>
-    <loc>http://utmhikari.github.io/2022/08/13/gameofautotest/ii/</loc>
     <lastmod>2024-04-07</lastmod>
   </url>  <url>
     <loc>http://utmhikari.github.io/2019/03/09/easypython/i/</loc>
