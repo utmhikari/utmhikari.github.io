@@ -8,7 +8,7 @@ tags:
 - react
 - antd
 - 桌面应用
-- 前端
+- 前端开发
 ---
 
 桌面应用的实现方式有很多，但谈到多操作系统平台兼容的话，就不得不提到[electron](https://electronjs.org/)。electron是前端开发的利好，做过web前端的同学只要稍微迁移下自己的项目，就能够将原本的web前端变成桌面应用。

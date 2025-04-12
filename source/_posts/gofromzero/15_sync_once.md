@@ -6,7 +6,7 @@ categories:
 tags:
 - Golang
 - Once
-- 懒加载
+- Java
 - 并发
 - 后端开发
 ---

@@ -8,7 +8,7 @@ tags:
 - 个人博客
 - bilibili
 - shortcode
-- iframe
+- 前端开发
 ---
 
 [hugo](https://gohugo.io/)是当前热门的个人博客框架之一，和hexo同样是markdown文件跟博客帖子一一对应。有些同学想利用hugo制作个人视频博客，但发现在hugo博客中不支持直接在markdown里输入iframe标签，从而没有办法将其它网站的视频（比如b站）嵌进来。这种情况下，我们可以采用hugo内置的[shortcode](https://gohugo.io/content-management/shortcodes/)机制完成这个需求。

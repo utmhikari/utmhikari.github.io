@@ -6,7 +6,7 @@ categories:
 tags:
 - 慢查询
 - AI
-- AIOps
+- DevOps
 - 变更风险
 - 质量管理
 ---

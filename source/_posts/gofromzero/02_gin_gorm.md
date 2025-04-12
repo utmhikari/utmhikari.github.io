@@ -8,7 +8,7 @@ tags:
 - 后端开发
 - gin
 - gorm
-- CRUD
+- web开发
 ---
 
 ## 前言

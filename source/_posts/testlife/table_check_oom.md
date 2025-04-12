@@ -5,7 +5,7 @@ categories:
 - 测试人生
 tags:
 - 导表检查
-- java
+- Java
 - JVM
 - OOM
 - gc
