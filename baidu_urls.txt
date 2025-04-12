@@ -1,3 +1,5 @@
+http://utmhikari.github.io/2025/04/12/githubdiscovery/mcp_go/
+http://utmhikari.github.io/2025/04/12/geekdaily/mcp_llm_agent/
 http://utmhikari.github.io/2025/04/04/archiart/go_monorepo_wire/
 http://utmhikari.github.io/2025/04/04/codegallery/homemade_toolset/
 http://utmhikari.github.io/2025/03/09/archiart/change_observation_worker/
@@ -96,5 +98,3 @@ http://utmhikari.github.io/2021/11/13/mediumpython/v/
 http://utmhikari.github.io/2021/11/06/mediumpython/iv/
 http://utmhikari.github.io/2021/10/30/mediumpython/iii/
 http://utmhikari.github.io/2021/10/23/mediumpython/ii/
-http://utmhikari.github.io/2021/10/19/geekdaily/redis_make_jemalloc_error/
-http://utmhikari.github.io/2021/10/17/mediumpython/i/

@@ -1,6 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>【GitHub探索】mcp-go，MCP协议的Golang-SDK</title>
+    <url>/2025/04/12/githubdiscovery/mcp_go/</url>
+    <content><![CDATA[<p>近期大模型Agent应用开发方面，MCP的概念比较流行，基于MCP的ToolServer能力开发也逐渐成为主流趋势。由于笔者工作原因，主力是Go语言，为了调研大模型应用开发，也接触到了<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21hcmszbGFicy9tY3AtZ28=" title="https://github.com/mark3labs/mcp-go">mcp-go<i class="fa fa-external-link"></i></span>这套MCP的SDK实现。</p>
+<p>对于企业内部而言，在这个SDK基础上做封装，基本上就能够完善MCP-Server的开发生态。因此今天就简单看一下这个SDK里面，实现了什么东西。</p>
+<p>首先是Client连接的实现，这里可以看到每次连接都需要InitializeRequest、InitializeResult以及InitializeNotification这<span class="exturl" data-url="aHR0cHM6Ly9tb2RlbGNvbnRleHRwcm90b2NvbC5pby9kb2NzL2NvbmNlcHRzL2FyY2hpdGVjdHVyZQ==" title="https://modelcontextprotocol.io/docs/concepts/architecture">三次握手<i class="fa fa-external-link"></i></span>。从Client角度看逻辑是这样：</p>
+<a id="more"></a>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *StdioMCPClient)</span> <span class="title">Initialize</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">	ctx context.Context,</span></span></span><br><span class="line"><span class="function"><span class="params">	request mcp.InitializeRequest,</span></span></span><br><span class="line"><span class="function"><span class="params">)</span> <span class="params">(*mcp.InitializeResult, error)</span></span> &#123;</span><br><span class="line">	<span class="comment">// This structure ensures Capabilities is always included in JSON</span></span><br><span class="line">	params := <span class="keyword">struct</span> &#123;</span><br><span class="line">		ProtocolVersion <span class="keyword">string</span>                 <span class="string">`json:"protocolVersion"`</span></span><br><span class="line">		ClientInfo      mcp.Implementation     <span class="string">`json:"clientInfo"`</span></span><br><span class="line">		Capabilities    mcp.ClientCapabilities <span class="string">`json:"capabilities"`</span></span><br><span class="line">	&#125;&#123;</span><br><span class="line">		ProtocolVersion: request.Params.ProtocolVersion,</span><br><span class="line">		ClientInfo:      request.Params.ClientInfo,</span><br><span class="line">		Capabilities:    request.Params.Capabilities, <span class="comment">// Will be empty struct if not set</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	response, err := c.sendRequest(ctx, <span class="string">"initialize"</span>, params)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span>, err</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">var</span> result mcp.InitializeResult</span><br><span class="line">	<span class="keyword">if</span> err := json.Unmarshal(*response, &amp;result); err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span>, fmt.Errorf(<span class="string">"failed to unmarshal response: %w"</span>, err)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Store capabilities</span></span><br><span class="line">	c.capabilities = result.Capabilities</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Send initialized notification</span></span><br><span class="line">	notification := mcp.JSONRPCNotification&#123;</span><br><span class="line">		JSONRPC: mcp.JSONRPC_VERSION,</span><br><span class="line">		Notification: mcp.Notification&#123;</span><br><span class="line">			Method: <span class="string">"notifications/initialized"</span>,</span><br><span class="line">		&#125;,</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	notificationBytes, err := json.Marshal(notification)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span>, fmt.Errorf(</span><br><span class="line">			<span class="string">"failed to marshal initialized notification: %w"</span>,</span><br><span class="line">			err,</span><br><span class="line">		)</span><br><span class="line">	&#125;</span><br><span class="line">	notificationBytes = <span class="built_in">append</span>(notificationBytes, <span class="string">'\n'</span>)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> _, err := c.stdin.Write(notificationBytes); err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span>, fmt.Errorf(</span><br><span class="line">			<span class="string">"failed to send initialized notification: %w"</span>,</span><br><span class="line">			err,</span><br><span class="line">		)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	c.initialized = <span class="literal">true</span></span><br><span class="line">	<span class="keyword">return</span> &amp;result, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>握手的校验当前还比较粗糙，没有对版本号之类的兼容性做校验。两次握手后Client确认Notification（单向消息）可以发出去，就代表可以建立连接了。</p>
+<p>从利于应用开发的角度，开发框架有SDK的话，最好是再封装一层Client把Initialize握手步骤也代理掉，然后把其他List/Call协议也封装成接口，这样对开发者比较方便一些。</p>
+<p>然后看Server端的实现，主要包括：资源/Prompt/Tool的管理、C2S的Notification的处理，以及S2C单点Notification跟广播能力。说白了就是无状态、长连接都同时能支持上。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="comment">// NewMCPServer creates a new MCP server instance with the given name, version and options</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">NewMCPServer</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">	name, version <span class="keyword">string</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">	opts ...ServerOption,</span></span></span><br><span class="line"><span class="function"><span class="params">)</span> *<span class="title">MCPServer</span></span> &#123;</span><br><span class="line">	s := &amp;MCPServer&#123;</span><br><span class="line">		resources:            <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]resourceEntry),</span><br><span class="line">		resourceTemplates:    <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]resourceTemplateEntry),</span><br><span class="line">		prompts:              <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]mcp.Prompt),</span><br><span class="line">		promptHandlers:       <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]PromptHandlerFunc),</span><br><span class="line">		tools:                <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]ServerTool),</span><br><span class="line">		name:                 name,</span><br><span class="line">		version:              version,</span><br><span class="line">		notificationHandlers: <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]NotificationHandlerFunc),</span><br><span class="line">		capabilities: serverCapabilities&#123;</span><br><span class="line">			tools:     <span class="literal">nil</span>,</span><br><span class="line">			resources: <span class="literal">nil</span>,</span><br><span class="line">			prompts:   <span class="literal">nil</span>,</span><br><span class="line">			logging:   <span class="literal">false</span>,</span><br><span class="line">		&#125;,</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> _, opt := <span class="keyword">range</span> opts &#123;</span><br><span class="line">		opt(s)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> s</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>应用角度就比较简单了，Server端可以基于examples/everything/main.go的实现做扩展，Client端长期来看用SSE的连接方式比较多，参考client/sse_test.go的实现做扩充即可。</p>
+]]></content>
+      <categories>
+        <category>GitHub探索</category>
+      </categories>
+      <tags>
+        <tag>Golang</tag>
+        <tag>MCP</tag>
+        <tag>AI</tag>
+        <tag>大模型</tag>
+        <tag>LLM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【极客日常】浅聊基于MCP生态的LLM-Agent开发</title>
+    <url>/2025/04/12/geekdaily/mcp_llm_agent/</url>
+    <content><![CDATA[<p>最近在AI大模型领域，MCP这个概念非常火，大大小小的公众号都开始对外炒作这个概念，宣教一种新的大模型Agent开发生态。因为工作原因，近期笔者也对MCP和LLM-Agent开发做了一些接触。因此今天这篇文章就浅聊下笔者对基于MCP的LLM-Agent开发方面，自己粗浅的一些理解。</p>
+<p>首先还是聊一下什么是MCP，以及MCP在LLM-Agent开发方面，解决了什么问题。</p>
+<a id="more"></a>
+<p>MCP（Model Context Protocol，模型上下文协议）是由<span class="exturl" data-url="aHR0cHM6Ly9tb2RlbGNvbnRleHRwcm90b2NvbC5pby9pbnRyb2R1Y3Rpb24=" title="https://modelcontextprotocol.io/introduction">做Claude的公司<i class="fa fa-external-link"></i></span>制定的，其主要的作用是对大模型访问三方能力（OpenAPI、多模态数据源）定下规范。想象下，不管是本地部署的大模型还是remote的agent，或多或少都有访问本地DB、调用外部OpenAPI，或者获取外部的Prompt文本、图片等多模态资源的需求，而对于模型本身来讲，模型自己只能理解自然语言，反倒结构化的数据不好去理解，所以对于Agent开发者，还需要花很多精力去封装这些三方能力，才能够让模型做比较精确的意图识别。而MCP就通过一套协议约定，去解决这个问题，不同的三方能力用同一套描述方式做打标，并且在数据传输层也封装了stdio和sse两套方案，从而分别满足访问本地资源和访问外部资源的需求。</p>
+<p>结合<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLmFudGhyb3BpYy5jb20vZW4vZG9jcy9idWlsZC13aXRoLWNsYXVkZS90b29sLXVzZS9vdmVydmlldw==" title="https://docs.anthropic.com/en/docs/build-with-claude/tool-use/overview">Tool use with Claude<i class="fa fa-external-link"></i></span>这篇文章，可以更好理解MCP要解决的问题。比如对于Claude大模型客户端，CallTool的过程，先是根据UserPrompt去识别决定要用哪个Tool，然后才是调用，拿到结果后处理成文本再返回。在<span class="exturl" data-url="aHR0cHM6Ly9nbGFtYS5haS9ibG9nLzIwMjQtMTEtMjUtbW9kZWwtY29udGV4dC1wcm90b2NvbC1xdWlja3N0YXJ0" title="https://glama.ai/blog/2024-11-25-model-context-protocol-quickstart">这篇文档<i class="fa fa-external-link"></i></span>里面也可以看到每个Tool定义的样子，一般用name、description（用途）和inputSchema（入参标注），就可以满足模型做用途识别和参数识别的需要。</p>
+<p>MCP协议相当于对大模型的前端（Agent应用）和后端（三方工具）做了分离，提供了标准化且具备安全性的协议，所以在这个基础上，MCP-Server的市场生态也衍生了出来。比如<span class="exturl" data-url="aHR0cHM6Ly9tY3Auc28v" title="https://mcp.so/">mcp.so<i class="fa fa-external-link"></i></span>，作为一个类似“网关”的角色，实现了大规模MCP-Server的在线托管，同样近期阿里云也提供了<span class="exturl" data-url="aHR0cHM6Ly9iYWlsaWFuLmNvbnNvbGUuYWxpeXVuLmNvbS8mYW1wO3RhYj1tY3AjL21jcC1tYXJrZXQ=" title="https://bailian.console.aliyun.com/&amp;tab=mcp#/mcp-market">MCP广场<i class="fa fa-external-link"></i></span>的服务。看起来这种模式和传统的Web-OpenAPI市场比较类似，但不同点在于MCP主要面向大模型服务，能够提供多模态的数据，Web-OpenAPI并不重视这个，所以这个概念也不算非常重复。</p>
+<p>对于Agent开发者而言，要封装三方工具，除了以往自主封装或者依靠框架约定做封装之外，现在也可以直接利用<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21hcmszbGFicy9tY3AtZ28=" title="https://github.com/mark3labs/mcp-go">mcp-go<i class="fa fa-external-link"></i></span>之类的SDK，直接通过ListTools、CallTool等操作实现工具调用，并且各类框架现在也在逐渐跟进基于MCP协议的三方调用模式。从长远上来看，这种模式由很大的发展空间，但短期来看，这套连接的稳定可用性SLA保障基建其实还比较欠缺。所以个人建议对于Agent开发者来说，重点还是去打磨自己的Tool能力或Agent效果，但也要为长期把Tool迁移到MCP生态做准备。</p>
+]]></content>
+      <categories>
+        <category>极客日常</category>
+      </categories>
+      <tags>
+        <tag>MCP</tag>
+        <tag>AI</tag>
+        <tag>大模型</tag>
+        <tag>LLM</tag>
+        <tag>Agent</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>【架构艺术】Go大仓monorepo中使用wire做依赖注入的经验</title>
     <url>/2025/04/04/archiart/go_monorepo_wire/</url>
     <content><![CDATA[<p>在<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkuYmxvZy5jc2RuLm5ldC9hcnRpY2xlL2RldGFpbHMvMTQ2MTM0MDI0" title="https://utmhikari.blog.csdn.net/article/details/146134024">先前的文章<i class="fa fa-external-link"></i></span>当中，笔者分享了一套简洁的go微服务monorepo代码架构的实现，主要解决中小团队协同开发微服务集群的代码架构组织问题。但是在实际代码开发过程中，怎么组织不同的业务服务service实例，就成了比较棘手的问题。</p>
@@ -36,10 +83,10 @@
       </categories>
       <tags>
         <tag>Golang</tag>
-        <tag>后端开发</tag>
         <tag>架构</tag>
-        <tag>wire</tag>
+        <tag>后端开发</tag>
         <tag>monorepo</tag>
+        <tag>wire</tag>
       </tags>
   </entry>
   <entry>
@@ -92,9 +139,9 @@
       <tags>
         <tag>python</tag>
         <tag>工具开发</tag>
-        <tag>桌面应用</tag>
         <tag>pyside6</tag>
         <tag>homemade-toolset</tag>
+        <tag>桌面应用</tag>
       </tags>
   </entry>
   <entry>
@@ -124,8 +171,8 @@
         <category>架构艺术</category>
       </categories>
       <tags>
-        <tag>后端开发</tag>
         <tag>架构</tag>
+        <tag>后端开发</tag>
         <tag>变更风险</tag>
         <tag>事件循环</tag>
         <tag>异步</tag>
@@ -150,10 +197,10 @@
       </categories>
       <tags>
         <tag>Golang</tag>
-        <tag>后端开发</tag>
         <tag>架构</tag>
-        <tag>微服务</tag>
+        <tag>后端开发</tag>
         <tag>monorepo</tag>
+        <tag>微服务</tag>
       </tags>
   </entry>
   <entry>
@@ -174,8 +221,8 @@
       </categories>
       <tags>
         <tag>变更风险</tag>
-        <tag>DevOps</tag>
         <tag>数据挖掘</tag>
+        <tag>DevOps</tag>
         <tag>质量管理</tag>
         <tag>准入准出</tag>
       </tags>
@@ -198,9 +245,9 @@
       </categories>
       <tags>
         <tag>面试</tag>
+        <tag>ChatGPT</tag>
         <tag>个人博客</tag>
         <tag>用户</tag>
-        <tag>ChatGPT</tag>
         <tag>产品</tag>
       </tags>
   </entry>
@@ -241,9 +288,9 @@
       </categories>
       <tags>
         <tag>变更风险</tag>
-        <tag>DevOps</tag>
         <tag>异步</tag>
         <tag>行为树</tag>
+        <tag>DevOps</tag>
         <tag>质量管理</tag>
       </tags>
   </entry>
@@ -266,10 +313,10 @@
       </categories>
       <tags>
         <tag>稳定性</tag>
-        <tag>gc</tag>
         <tag>问题排查</tag>
         <tag>减肥</tag>
         <tag>健康检查</tag>
+        <tag>gc</tag>
       </tags>
   </entry>
   <entry>
@@ -329,10 +376,10 @@
         <category>Python随笔</category>
       </categories>
       <tags>
-        <tag>教程</tag>
         <tag>python</tag>
         <tag>工具开发</tag>
         <tag>pyside6</tag>
+        <tag>教程</tag>
         <tag>requests</tag>
       </tags>
   </entry>
@@ -398,8 +445,8 @@
         <category>架构艺术</category>
       </categories>
       <tags>
-        <tag>后端开发</tag>
         <tag>架构</tag>
+        <tag>后端开发</tag>
         <tag>微服务</tag>
         <tag>稳定性</tag>
         <tag>问题排查</tag>
@@ -421,11 +468,11 @@
         <category>Python随笔</category>
       </categories>
       <tags>
-        <tag>源码分析</tag>
         <tag>python</tag>
+        <tag>源码分析</tag>
         <tag>web开发</tag>
-        <tag>curl</tag>
         <tag>requests</tag>
+        <tag>curl</tag>
       </tags>
   </entry>
   <entry>
@@ -448,8 +495,8 @@
       </categories>
       <tags>
         <tag>后端开发</tag>
-        <tag>教程</tag>
         <tag>面试</tag>
+        <tag>教程</tag>
         <tag>八股文</tag>
         <tag>个人博客</tag>
       </tags>
@@ -467,11 +514,11 @@
         <category>DIY小记</category>
       </categories>
       <tags>
-        <tag>性能测试</tag>
         <tag>超频</tag>
         <tag>CPU</tag>
         <tag>Process Lasso</tag>
         <tag>硬件</tag>
+        <tag>性能测试</tag>
       </tags>
   </entry>
   <entry>
@@ -488,10 +535,10 @@
         <category>DIY小记</category>
       </categories>
       <tags>
-        <tag>性能测试</tag>
         <tag>超频</tag>
         <tag>CPU</tag>
         <tag>硬件</tag>
+        <tag>性能测试</tag>
         <tag>显卡</tag>
       </tags>
   </entry>
@@ -511,8 +558,8 @@
       <tags>
         <tag>python</tag>
         <tag>工具开发</tag>
-        <tag>桌面应用</tag>
         <tag>pyside6</tag>
+        <tag>桌面应用</tag>
         <tag>渲染</tag>
       </tags>
   </entry>
@@ -538,11 +585,11 @@
         <category>测试人生</category>
       </categories>
       <tags>
-        <tag>八股文</tag>
         <tag>AI</tag>
-        <tag>测试开发</tag>
-        <tag>效率工具</tag>
         <tag>LLM</tag>
+        <tag>八股文</tag>
+        <tag>效率工具</tag>
+        <tag>测试开发</tag>
       </tags>
   </entry>
   <entry>
@@ -563,11 +610,11 @@
         <category>DIY小记</category>
       </categories>
       <tags>
-        <tag>效率工具</tag>
-        <tag>shell</tag>
         <tag>Jetbrains</tag>
         <tag>IDE</tag>
+        <tag>效率工具</tag>
         <tag>代码高亮</tag>
+        <tag>shell</tag>
       </tags>
   </entry>
   <entry>
@@ -608,10 +655,10 @@
         <category>极客日常</category>
       </categories>
       <tags>
-        <tag>编程</tag>
         <tag>工具开发</tag>
-        <tag>研发效能</tag>
+        <tag>编程</tag>
         <tag>游戏开发</tag>
+        <tag>研发效能</tag>
         <tag>低代码</tag>
       </tags>
   </entry>
@@ -637,9 +684,9 @@
       <tags>
         <tag>python</tag>
         <tag>工具开发</tag>
+        <tag>pyside6</tag>
         <tag>PyQt5</tag>
         <tag>Qt</tag>
-        <tag>pyside6</tag>
       </tags>
   </entry>
   <entry>
@@ -663,8 +710,8 @@
       <tags>
         <tag>Golang</tag>
         <tag>后端开发</tag>
-        <tag>编程</tag>
         <tag>教程</tag>
+        <tag>编程</tag>
         <tag>源码分析</tag>
       </tags>
   </entry>
@@ -685,9 +732,9 @@
       <tags>
         <tag>Golang</tag>
         <tag>重构</tag>
+        <tag>问题排查</tag>
         <tag>slice</tag>
         <tag>指针</tag>
-        <tag>问题排查</tag>
       </tags>
   </entry>
   <entry>
@@ -711,8 +758,8 @@
         <category>架构艺术</category>
       </categories>
       <tags>
-        <tag>后端开发</tag>
         <tag>架构</tag>
+        <tag>后端开发</tag>
         <tag>重构</tag>
         <tag>数据迁移</tag>
         <tag>稳定性</tag>
@@ -747,8 +794,8 @@
         <category>架构艺术</category>
       </categories>
       <tags>
-        <tag>后端开发</tag>
         <tag>架构</tag>
+        <tag>后端开发</tag>
         <tag>重构</tag>
         <tag>设计模式</tag>
         <tag>面试</tag>
@@ -808,8 +855,8 @@
         <category>极客日常</category>
       </categories>
       <tags>
-        <tag>变更风险</tag>
         <tag>AI</tag>
+        <tag>变更风险</tag>
         <tag>质量管理</tag>
         <tag>慢查询</tag>
         <tag>AIOps</tag>
@@ -892,10 +939,10 @@
         <category>DIY小记</category>
       </categories>
       <tags>
-        <tag>DevOps</tag>
-        <tag>OCR</tag>
         <tag>AI</tag>
         <tag>大模型</tag>
+        <tag>DevOps</tag>
+        <tag>OCR</tag>
         <tag>ChatGPT</tag>
       </tags>
   </entry>
@@ -948,8 +995,8 @@
         <category>架构艺术</category>
       </categories>
       <tags>
-        <tag>后端开发</tag>
         <tag>架构</tag>
+        <tag>后端开发</tag>
         <tag>变更风险</tag>
         <tag>系统设计</tag>
         <tag>事件循环</tag>
@@ -1001,11 +1048,11 @@
         <category>架构艺术</category>
       </categories>
       <tags>
-        <tag>后端开发</tag>
         <tag>架构</tag>
+        <tag>后端开发</tag>
         <tag>系统设计</tag>
-        <tag>游戏自动化</tag>
         <tag>微服务</tag>
+        <tag>游戏自动化</tag>
       </tags>
   </entry>
   <entry>
@@ -1132,8 +1179,8 @@
       </categories>
       <tags>
         <tag>Golang</tag>
-        <tag>后端开发</tag>
         <tag>架构</tag>
+        <tag>后端开发</tag>
         <tag>重构</tag>
         <tag>python</tag>
       </tags>
@@ -1201,8 +1248,8 @@
         <category>测试人生</category>
       </categories>
       <tags>
-        <tag>工具开发</tag>
         <tag>表格检查</tag>
+        <tag>工具开发</tag>
         <tag>持续集成</tag>
         <tag>游戏测试</tag>
         <tag>测试开发</tag>
@@ -1421,8 +1468,8 @@
       <tags>
         <tag>Golang</tag>
         <tag>后端开发</tag>
-        <tag>源码分析</tag>
         <tag>并发</tag>
+        <tag>源码分析</tag>
         <tag>singleflight</tag>
       </tags>
   </entry>
@@ -1588,10 +1635,10 @@
         <category>极客日常</category>
       </categories>
       <tags>
-        <tag>编程</tag>
-        <tag>教程</tag>
         <tag>面试</tag>
+        <tag>教程</tag>
         <tag>函数式编程</tag>
+        <tag>编程</tag>
         <tag>rust</tag>
       </tags>
   </entry>
@@ -1609,9 +1656,9 @@
         <category>极客日常</category>
       </categories>
       <tags>
+        <tag>AI</tag>
         <tag>面试</tag>
         <tag>八股文</tag>
-        <tag>AI</tag>
         <tag>ChatGPT</tag>
         <tag>leetcode</tag>
       </tags>
@@ -2183,9 +2230,9 @@
       </categories>
       <tags>
         <tag>Golang</tag>
+        <tag>interface</tag>
         <tag>反射</tag>
         <tag>reflect</tag>
-        <tag>interface</tag>
         <tag>json</tag>
       </tags>
   </entry>
@@ -2224,9 +2271,9 @@
       </categories>
       <tags>
         <tag>Golang</tag>
-        <tag>工具开发</tag>
         <tag>表格检查</tag>
         <tag>数据聚合</tag>
+        <tag>工具开发</tag>
         <tag>daggre</tag>
       </tags>
   </entry>
@@ -2632,8 +2679,8 @@
       </categories>
       <tags>
         <tag>系统设计</tag>
-        <tag>游戏自动化</tag>
         <tag>稳定性</tag>
+        <tag>游戏自动化</tag>
         <tag>自动化测试</tag>
         <tag>测试开发</tag>
       </tags>
@@ -3372,8 +3419,8 @@
       <tags>
         <tag>工具开发</tag>
         <tag>electron</tag>
-        <tag>vue</tag>
         <tag>nodejs</tag>
+        <tag>vue</tag>
         <tag>ipc</tag>
       </tags>
   </entry>
@@ -4392,9 +4439,9 @@
         <category>Hard Python</category>
       </categories>
       <tags>
+        <tag>python</tag>
         <tag>教程</tag>
         <tag>源码分析</tag>
-        <tag>python</tag>
         <tag>Medium Python</tag>
         <tag>Easy Python</tag>
       </tags>
@@ -4618,8 +4665,8 @@
         <category>Medium Python</category>
       </categories>
       <tags>
-        <tag>源码分析</tag>
         <tag>python</tag>
+        <tag>源码分析</tag>
         <tag>with</tag>
         <tag>字节码</tag>
         <tag>异常处理</tag>
@@ -4742,8 +4789,8 @@
         <category>Medium Python</category>
       </categories>
       <tags>
-        <tag>源码分析</tag>
         <tag>python</tag>
+        <tag>源码分析</tag>
         <tag>descriptor</tag>
         <tag>类</tag>
         <tag>property</tag>
@@ -4831,9 +4878,9 @@
         <category>Medium Python</category>
       </categories>
       <tags>
-        <tag>源码分析</tag>
         <tag>python</tag>
         <tag>GIL</tag>
+        <tag>源码分析</tag>
         <tag>多线程</tag>
         <tag>opcode</tag>
       </tags>
@@ -4933,8 +4980,8 @@
         <category>Medium Python</category>
       </categories>
       <tags>
-        <tag>源码分析</tag>
         <tag>python</tag>
+        <tag>源码分析</tag>
         <tag>list</tag>
         <tag>tuple</tag>
         <tag>元组</tag>
@@ -4958,10 +5005,10 @@
         <category>Medium Python</category>
       </categories>
       <tags>
-        <tag>教程</tag>
-        <tag>源码分析</tag>
         <tag>python</tag>
         <tag>面试</tag>
+        <tag>教程</tag>
+        <tag>源码分析</tag>
         <tag>Easy Python</tag>
       </tags>
   </entry>
@@ -4987,9 +5034,9 @@
       <tags>
         <tag>python</tag>
         <tag>编译</tag>
+        <tag>类</tag>
         <tag>面向对象</tag>
         <tag>下划线</tag>
-        <tag>类</tag>
       </tags>
   </entry>
   <entry>
@@ -6025,8 +6072,8 @@
         <category>测试人生</category>
       </categories>
       <tags>
-        <tag>质量管理</tag>
         <tag>性能测试</tag>
+        <tag>质量管理</tag>
         <tag>业务测试</tag>
         <tag>软件测试</tag>
         <tag>测试管理</tag>
@@ -6142,9 +6189,9 @@
         <category>游戏开发</category>
       </categories>
       <tags>
-        <tag>源码分析</tag>
         <tag>UE4</tag>
         <tag>数学</tag>
+        <tag>源码分析</tag>
         <tag>NavModifierVolume</tag>
         <tag>旋转矩阵</tag>
       </tags>
@@ -6511,8 +6558,8 @@
       </categories>
       <tags>
         <tag>系统设计</tag>
-        <tag>工具开发</tag>
         <tag>表格检查</tag>
+        <tag>工具开发</tag>
         <tag>游戏测试</tag>
         <tag>测试开发</tag>
       </tags>
@@ -6551,8 +6598,8 @@
         <tag>UE4</tag>
         <tag>游戏开发</tag>
         <tag>swarm agent</tag>
-        <tag>分布式构建</tag>
         <tag>渲染</tag>
+        <tag>分布式构建</tag>
       </tags>
   </entry>
   <entry>
@@ -6624,8 +6671,8 @@
       <tags>
         <tag>游戏测试</tag>
         <tag>测试开发</tag>
-        <tag>前端开发</tag>
         <tag>vue</tag>
+        <tag>前端开发</tag>
         <tag>vxe-table</tag>
       </tags>
   </entry>
@@ -6725,9 +6772,9 @@
       <tags>
         <tag>Golang</tag>
         <tag>后端开发</tag>
-        <tag>gin</tag>
         <tag>protobuf</tag>
         <tag>grpc</tag>
+        <tag>gin</tag>
       </tags>
   </entry>
   <entry>
@@ -6753,8 +6800,8 @@
         <category>测试人生</category>
       </categories>
       <tags>
-        <tag>工具开发</tag>
         <tag>表格检查</tag>
+        <tag>工具开发</tag>
         <tag>游戏测试</tag>
         <tag>测试开发</tag>
         <tag>mongodb</tag>
@@ -6839,8 +6886,8 @@
       <tags>
         <tag>Golang</tag>
         <tag>工具开发</tag>
-        <tag>git</tag>
         <tag>gin</tag>
+        <tag>git</tag>
         <tag>go-git</tag>
       </tags>
   </entry>
@@ -6926,8 +6973,8 @@
         <category>Python随笔</category>
       </categories>
       <tags>
-        <tag>源码分析</tag>
         <tag>python</tag>
+        <tag>源码分析</tag>
         <tag>遍历文件</tag>
         <tag>os.walk</tag>
         <tag>generator</tag>
@@ -6948,11 +6995,11 @@
         <category>极客日常</category>
       </categories>
       <tags>
+        <tag>LLM</tag>
         <tag>UE4</tag>
         <tag>C++</tag>
-        <tag>UE4插件</tag>
-        <tag>LLM</tag>
         <tag>UnrealAutomator</tag>
+        <tag>UE4插件</tag>
       </tags>
   </entry>
   <entry>
@@ -6991,8 +7038,8 @@
         <tag>游戏自动化</tag>
         <tag>UE4</tag>
         <tag>游戏测试</tag>
-        <tag>UE4插件</tag>
         <tag>UnrealAutomator</tag>
+        <tag>UE4插件</tag>
       </tags>
   </entry>
   <entry>
@@ -7012,9 +7059,9 @@
         <category>极客日常</category>
       </categories>
       <tags>
-        <tag>源码分析</tag>
         <tag>UE4</tag>
         <tag>C++</tag>
+        <tag>源码分析</tag>
         <tag>FJsonObject</tag>
         <tag>USTRUCT</tag>
       </tags>
@@ -7035,9 +7082,9 @@
       </categories>
       <tags>
         <tag>Win10</tag>
-        <tag>Intellij IDEA</tag>
         <tag>Jetbrains</tag>
         <tag>IDE</tag>
+        <tag>Intellij IDEA</tag>
         <tag>idea.properties</tag>
       </tags>
   </entry>
@@ -7223,8 +7270,8 @@
         <tag>UE4</tag>
         <tag>C++</tag>
         <tag>web开发</tag>
-        <tag>HTTP Server</tag>
         <tag>UE4插件</tag>
+        <tag>HTTP Server</tag>
       </tags>
   </entry>
   <entry>
@@ -7789,11 +7836,11 @@
         <category>极客日常</category>
       </categories>
       <tags>
+        <tag>桌面应用</tag>
         <tag>react</tag>
         <tag>前端</tag>
         <tag>electron</tag>
         <tag>antd</tag>
-        <tag>桌面应用</tag>
       </tags>
   </entry>
   <entry>
@@ -7858,8 +7905,8 @@
         <category>Easy Python</category>
       </categories>
       <tags>
-        <tag>教程</tag>
         <tag>python</tag>
+        <tag>教程</tag>
         <tag>爬虫</tag>
         <tag>数据挖掘</tag>
         <tag>pdf</tag>
@@ -7885,9 +7932,9 @@
         <category>极客日常</category>
       </categories>
       <tags>
+        <tag>代码高亮</tag>
         <tag>hexo</tag>
         <tag>NexT</tag>
-        <tag>代码高亮</tag>
         <tag>styl</tag>
         <tag>CSS</tag>
       </tags>
@@ -8256,11 +8303,11 @@
         <category>GitHub探索</category>
       </categories>
       <tags>
+        <tag>性能测试</tag>
         <tag>自动化测试</tag>
         <tag>录制回放</tag>
         <tag>SoloPi</tag>
         <tag>Android</tag>
-        <tag>性能测试</tag>
       </tags>
   </entry>
   <entry>
@@ -8357,8 +8404,8 @@
         <tag>测试开发</tag>
         <tag>专项测试</tag>
         <tag>测试</tag>
-        <tag>QA</tag>
         <tag>产品</tag>
+        <tag>QA</tag>
       </tags>
   </entry>
   <entry>
@@ -8460,8 +8507,8 @@
         <category>测试人生</category>
       </categories>
       <tags>
-        <tag>Android</tag>
         <tag>性能测试</tag>
+        <tag>Android</tag>
         <tag>测试</tag>
         <tag>fps</tag>
         <tag>SurfaceFlinger</tag>
@@ -8551,9 +8598,9 @@
       </categories>
       <tags>
         <tag>效率工具</tag>
+        <tag>shell</tag>
         <tag>terminus</tag>
         <tag>terminal</tag>
-        <tag>shell</tag>
         <tag>测试</tag>
       </tags>
   </entry>
@@ -8729,8 +8776,8 @@
         <category>GitHub探索</category>
       </categories>
       <tags>
-        <tag>源码分析</tag>
         <tag>python</tag>
+        <tag>源码分析</tag>
         <tag>pysnooper</tag>
         <tag>逆向</tag>
         <tag>debug</tag>
@@ -8799,10 +8846,10 @@
         <category>Easy Python</category>
       </categories>
       <tags>
-        <tag>编程</tag>
-        <tag>教程</tag>
         <tag>python</tag>
+        <tag>教程</tag>
         <tag>知识总结</tag>
+        <tag>编程</tag>
         <tag>easy python</tag>
       </tags>
   </entry>
@@ -9144,10 +9191,10 @@
         <category>Easy Python</category>
       </categories>
       <tags>
-        <tag>教程</tag>
         <tag>python</tag>
-        <tag>爬虫</tag>
         <tag>异步</tag>
+        <tag>教程</tag>
+        <tag>爬虫</tag>
         <tag>代理</tag>
       </tags>
   </entry>
@@ -9187,8 +9234,8 @@
         <category>Easy Python</category>
       </categories>
       <tags>
-        <tag>教程</tag>
         <tag>python</tag>
+        <tag>教程</tag>
         <tag>爬虫</tag>
         <tag>BeautifulSoup</tag>
         <tag>HTML</tag>
@@ -9216,8 +9263,8 @@
       </categories>
       <tags>
         <tag>lua</tag>
-        <tag>debug</tag>
         <tag>性能测试</tag>
+        <tag>debug</tag>
         <tag>测试</tag>
         <tag>lfunctimer</tag>
       </tags>
@@ -9287,8 +9334,8 @@
         <category>Easy Python</category>
       </categories>
       <tags>
-        <tag>教程</tag>
         <tag>python</tag>
+        <tag>教程</tag>
         <tag>函数式编程</tag>
         <tag>高阶函数</tag>
         <tag>映射</tag>
@@ -9386,8 +9433,8 @@
         <category>Easy Python</category>
       </categories>
       <tags>
-        <tag>教程</tag>
         <tag>python</tag>
+        <tag>教程</tag>
         <tag>函数</tag>
         <tag>输入</tag>
         <tag>输出</tag>
