@@ -1,3 +1,5 @@
+http://utmhikari.github.io/2025/05/02/archiart/go_monorepo_modules/
+http://utmhikari.github.io/2025/05/02/diymemo/overclock_voltage/
 http://utmhikari.github.io/2025/04/12/githubdiscovery/mcp_go/
 http://utmhikari.github.io/2025/04/12/geekdaily/mcp_llm_agent/
 http://utmhikari.github.io/2025/04/04/archiart/go_monorepo_wire/
@@ -96,5 +98,3 @@ http://utmhikari.github.io/2021/12/12/pythonnotes/function_info/
 http://utmhikari.github.io/2021/11/21/gamedev/ue4_python_script_plugin/
 http://utmhikari.github.io/2021/11/13/mediumpython/v/
 http://utmhikari.github.io/2021/11/06/mediumpython/iv/
-http://utmhikari.github.io/2021/10/30/mediumpython/iii/
-http://utmhikari.github.io/2021/10/23/mediumpython/ii/
