@@ -8,7 +8,7 @@ tags:
 - C++
 - 行为树
 - AI
-- 行为树节点
+- 低代码
 ---
 
 在游戏领域，行为树是常用的AI解决方案，用行为树可以快速明了地描述AI的行为模型，而UE4提也供了非常完善的行为树解决方案，不仅有用户友好的界面，而且也有多样化的底层支持。在官网的[行为树快速入门指南](https://docs.unrealengine.com/4.27/zh-CN/InteractiveExperiences/ArtificialIntelligence/BehaviorTrees/BehaviorTreeQuickStart/)中，我们可以了解到UE4行为树编辑器的使用以及用蓝图创造行为树节点的方式，而在一些特定的需求当中，蓝图相对于C++并不会非常灵活。因此，笔者稍微研究了下行为树C++层次中的内容，简单分享下行为树里各种节点的C++写法
