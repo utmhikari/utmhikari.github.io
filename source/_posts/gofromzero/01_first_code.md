@@ -6,8 +6,8 @@ categories:
 tags:
 - Golang
 - 环境变量
-- go目录结构
-- go依赖
+- 架构
+- 编程
 - go mod
 ---
 
