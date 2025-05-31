@@ -1,6 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>【架构艺术】平衡技术架构设计和预期的产品形态</title>
+    <url>/2025/06/01/archiart/balance_architecture_and_product/</url>
+    <content><![CDATA[<p>近期笔者因为工作原因，开始启动team内部部分技术项目的重构。在事情启动的过程中，内部对于这件事情的定性和投入有一些争论，但最终还是敲定了下来。其中部分争论点主要在于产品形态，因为事情涉及到跨部门合作，所以产品形态怎么符合双方的利益是比较重要的。在这个前提下，然后才是技术设计上面，怎么能够迎合长久合作的需要。</p>
+<p>因此，今天笔者就简单聊一下，怎么去做到让技术架构设计和预期产品形态能够做到有效平衡。</p>
+<a id="more"></a>
+<p>首先，因为产品形态决定技术结果，所以需要经过讨论去确定核心的产品效果。笔者所在的team距离具体业务比较近，而面临的跨部门合作场景主要是和infra部门合作，那么这里面的分歧点就是，infra部门对于业务需求提倡开放性，而距离具体业务比较近的部门则更加倾向于打造相对封闭而有竞争力的产品。为了解决这个分歧，最终讨论产品效果是让infra提供架子，笔者team的能力作为核心组件接入，这样就能够达到双方对于最终产品效果上的共识。当然，不同企业不同部门情况不统一，但这个事情还是要确定的。</p>
+<p>其次，由产品形态反推技术设计，必然涉及到架构演进的部分，从现有的技术架构出发，怎么演进到最终态，花费多少时间多少人力，如果要拿技术/业务结果的话有哪些阶段性产出，不同阶段之间架构演进会有什么样的变化，每个阶段投入产出比怎么样，这些都是作为架构师需要去考虑的。在笔者的case里面，笔者所要重构的是一套变更风险观测基建，所以架构演进主要采用分模块演进的方式，第一阶段面向观测能力，提供统一的技术接入和调度协议；第二阶段面向观测调度，提供类流水线+低代码的编排方案；第三阶段将整套调度编排做持续迭代，适配各类业务变更观测场景，并完善数据度量分析等周边功能。这样，这套变更风险观测基建，就可以兼顾短期和长期的落地需要，逐步成为公司内部标准化的方案。</p>
+<p>最后，在实际执行技术架构实现的过程中，也需要保持足够的主动性，推动研发和非研发的事情都得到解决。虽然下面的话有点阿里味，但道理是没有错，那就是因为相信，所以看见。以这样的基础，跨部门合作也会更加有凝聚力，大家也更愿意互相信任，让整个事情做到成功。当然，悲观的来讲，唯一不变的是变化，也许一些宏大的技术构思，最终也会因为种种原因无法落地，但这并不重要。重要的是，你能够用技术掌控人，解决人的问题，这才是作为一名技术架构师存在的价值。</p>
+]]></content>
+      <categories>
+        <category>架构艺术</category>
+      </categories>
+      <tags>
+        <tag>架构</tag>
+        <tag>后端开发</tag>
+        <tag>系统设计</tag>
+        <tag>重构</tag>
+        <tag>产品</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【极客日常】分享go开发中wire和interface配合的一些经验</title>
+    <url>/2025/06/01/geekdaily/wire_and_interface/</url>
+    <content><![CDATA[<p>在先前<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjUvMDQvMDQvYXJjaGlhcnQvZ29fbW9ub3JlcG9fd2lyZS8=" title="https://utmhikari.top/2025/04/04/archiart/go_monorepo_wire/">一篇文章<i class="fa fa-external-link"></i></span>中，笔者给大家提到了go语言后端编程可以用wire依赖注入模块去简化单例服务的初始化，同时也可以解决服务单例之间复杂依赖的问题。但实事求是来讲，用wire也是有一些学习成本的，wire在帮助解决复杂依赖的问题同时，也会限定你去用一些特定的编程方式来满足wire的需要，尤其需要你interface给用的更加灵活。</p>
+<p>因此今天这篇文章，笔者结合自己的经验，就和大家浅分享下，wire和interface配合的一些经验，让大家以后用wire的时候避免一些坑。</p>
+<a id="more"></a>
+<p>对于wire的build指令而言，build会检查你依赖对象是属于哪种类型，不能出现重复provide某种类型的情况。也就是说，比如你的某个Service需要一个string的member，那这个string就不好单独provide出来，因为其他Service也大概率存在。所以这种情况下，我们需要通过一个string-provider的interface或者struct去对这个string做一个封装，阐明这个参数的独有业务涵义，这样就不会出现依赖重复的情况。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> ThirdPartyClient <span class="keyword">struct</span> &#123;</span><br><span class="line">    Client *HttpClient</span><br><span class="line">    Secret <span class="keyword">string</span> <span class="comment">// 初始情况下，需要提供一个secret参数</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 一种方式是通过静态config拿，然后wire.Struct给到ThirdPartyClient</span></span><br><span class="line"><span class="keyword">type</span> ThirdPartyConfig <span class="keyword">struct</span> &#123;</span><br><span class="line">    Secret <span class="keyword">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> ThirdPartyClient <span class="keyword">struct</span> &#123;</span><br><span class="line">    Client *HttpClient</span><br><span class="line">    Config *ThirdPartyConfig</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">NewThirdPartyClient</span><span class="params">(httpClient *HttpClient, config *ThirdPartyConfig)</span> *<span class="title">ThirdPartyClient</span></span> &#123;</span><br><span class="line">    <span class="keyword">return</span> &amp;ThirdPartyClient&#123;</span><br><span class="line">        Client: httpClient,</span><br><span class="line">        Config: config,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 另一种方式是抽象一个SecretProvider的interface，可以处理动态获取Secret的情况</span></span><br><span class="line"><span class="keyword">type</span> ISecretProvider <span class="keyword">interface</span> &#123;</span><br><span class="line">    GetSecret() <span class="keyword">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> ThirdPartyClient <span class="keyword">struct</span> &#123;</span><br><span class="line">    Client *HttpClient</span><br><span class="line">    SecretProvider ISecretProvider</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">NewThirdPartyClient</span><span class="params">(httpClient *HttpClient, secretProvider ISecretProvider)</span> *<span class="title">ThirdPartyClient</span></span> &#123;</span><br><span class="line">    <span class="keyword">return</span> &amp;ThirdPartyClient&#123;</span><br><span class="line">        Client: httpClient,</span><br><span class="line">        SecretProvider: secretProvider,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>那这里就衍生出新的问题，如果我有很多Secret，一个SecretProvider不够，那怎么办？这个也好办，因为本质上来讲，对于每一个参与wire的实例，我们都需要阐明其的独有业务涵义。也就是说，你得在ISecretProvider基础上，定义IAAASecretProvider、IBBBSecretProvider以及ICCCSecretProvider这种。或者换个例子，我们wire一些缓存模块给业务service，缓存模块就需要这么设计。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> ICache <span class="keyword">interface</span> &#123;</span><br><span class="line">    Get(key <span class="keyword">string</span>) (<span class="keyword">string</span>, error)</span><br><span class="line">    Set(key <span class="keyword">string</span>, value <span class="keyword">string</span>, expiration time.Duration) error</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> ILocalCache <span class="keyword">interface</span> &#123;</span><br><span class="line">    ICache</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> IRemoteCache <span class="keyword">interface</span> &#123;</span><br><span class="line">    ICache</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">NewGoCache</span><span class="params">()</span> <span class="title">ILocalCache</span></span> &#123;</span><br><span class="line">    <span class="comment">// TODO</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">NewRedisCache</span><span class="params">()</span> <span class="title">IRemoteCache</span></span> &#123;</span><br><span class="line">    <span class="comment">// TODO</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过这样写，不仅可以区分LocalCache和RemoteCache，满足wire的要求，同时对于其它开发者，也能够清楚知道当前是使用Local和Remote的Cache来做业务逻辑，这样就不会出现误用。</p>
+]]></content>
+      <categories>
+        <category>极客日常</category>
+      </categories>
+      <tags>
+        <tag>Golang</tag>
+        <tag>wire</tag>
+        <tag>依赖注入</tag>
+        <tag>interface</tag>
+        <tag>cache</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>【架构艺术】Go大仓monorepo各模块的代码组织设计</title>
     <url>/2025/05/02/archiart/go_monorepo_modules/</url>
     <content><![CDATA[<p>在<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjUvMDMvMDkvYXJjaGlhcnQvZ29fbW9ub3JlcG9fc3RydWN0dXJlLw==" title="https://utmhikari.top/2025/03/09/archiart/go_monorepo_structure/">先前的文章<i class="fa fa-external-link"></i></span>中，笔者分享了go语言monorepo基本的一套代码架构设计。以这个设计为基础，今天这篇文章就聊一下具体里面的代码怎么编写起来比较舒适。</p>
@@ -8517,10 +8561,10 @@
       </categories>
       <tags>
         <tag>Golang</tag>
+        <tag>架构</tag>
+        <tag>编程</tag>
         <tag>go mod</tag>
         <tag>环境变量</tag>
-        <tag>go目录结构</tag>
-        <tag>go依赖</tag>
       </tags>
   </entry>
   <entry>

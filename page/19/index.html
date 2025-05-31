@@ -404,6 +404,376 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2019/05/11/easypython/vi/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/05/11/easypython/vi/" class="post-title-link" itemprop="url">【Easy Python】第六话：multiprocessing——Python多进程并行</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-11 19:47:50" itemprop="dateCreated datePublished" datetime="2019-05-11T19:47:50+08:00">2019-05-11</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Easy-Python/" itemprop="url" rel="index"><span itemprop="name">Easy Python</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前段时间，我和我的领导回到了母校，和我的师父师母聚餐。聚餐点了很多东西，大碗宽面，牛肉炒饭，韩国烤肉，吃都吃不完。虽然我的领导最近长得比以前p了些，但是吃饭速度还是慢悠悠。唉，要是我的领导能有个三头六臂，每个手都夹菜，每个头都去啃，那吃饭速度可就蹭蹭地涨上去了啊！</p>
+<p>人无法三头六臂，但在Python里，我们可以做到。</p>
+<h2 id="并发-amp-并行实验"><a href="#并发-amp-并行实验" class="headerlink" title="并发&amp;并行实验"></a>并发&amp;并行实验</h2><p>要想实现三头六臂的效率，不走单一顺序流，我们不仅需要让多个任务能够并发（Concurrent），还能够并行（Parallel）运作。</p>
+<p>假使吃饭吃到一半，人有三急，摘花回来继续用膳，那么如果把“吃饭”与“解手”当作两个任务，那么它们便是便是并发运作，但不并行。如果太追求效率，蹲坑恰饭，那便即是并发，也是并行了。</p>
+<p>在Python中，我们可以用三种方式实现并发。但是并不是所有的方法，都支持并行。</p>
+<p>这三种方法是：</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/05/11/easypython/vi/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2019/05/01/diymemo/msr/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/05/01/diymemo/msr/" class="post-title-link" itemprop="url">【DIY小记】踏平Win10升级之坑——我们无法更新系统保留的分区</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-01 20:22:08" itemprop="dateCreated datePublished" datetime="2019-05-01T20:22:08+08:00">2019-05-01</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/DIY小记/" itemprop="url" rel="index"><span itemprop="name">DIY小记</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前几天心血来潮，想把自己船上的Win10更新到18年10月的版本（1809），结果易升下载了更新之后，安装时提示“我们无法更新系统保留的分区”，于是一脸懵逼。</p>
+<p><img src="/uploads/diymemo/msr/nomsr.png" alt="我们无法更新系统保留的分区" title="&#39;我们无法更新系统保留的分区&#39;"></p>
+<p>坑也是要慢慢踩的。熬了两夜，终于成功解决了这个问题，将Win10升级到了最新版本。</p>
+<h2 id="踩坑记录"><a href="#踩坑记录" class="headerlink" title="踩坑记录"></a>踩坑记录</h2><h3 id="原因分析"><a href="#原因分析" class="headerlink" title="原因分析"></a>原因分析</h3><p>遇到这个问题后，笔者第一时间google百度了下解决方案，看到了以下几条：</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/05/01/diymemo/msr/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2019/04/20/luatalk/lnodelist/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1871,200 +2241,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2019/03/09/easypython/i/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ひかり.HDQ">
-      <meta itemprop="description" content="talk is cheap, code is rich">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HiKariのTechLab">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/03/09/easypython/i/" class="post-title-link" itemprop="url">【Easy Python】第一话：print('HelloWorld')——输入、输出与函数</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-03-09 18:06:45" itemprop="dateCreated datePublished" datetime="2019-03-09T18:06:45+08:00">2019-03-09</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Easy-Python/" itemprop="url" rel="index"><span itemprop="name">Easy Python</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这个年代，连小学生都会Python了，我家领导还是一行代码都打不出。<br>网上的Python教程一抓一大把，但出于让人更加深刻理解以及实用的目的（尤其是我家领导），Easy Python，开始挖坑！</p>
-<h2 id="安装Python"><a href="#安装Python" class="headerlink" title="安装Python"></a>安装Python</h2><p>这个没有教程= =，请安装3.*最新版Python<br>编辑器建议为vscode 、sublime之类（记得装插件），如若觉得装插件烦可直接上pycharm<br>Easy Python系列不展现实时交互式命令~</p>
-<h2 id="HelloWorld"><a href="#HelloWorld" class="headerlink" title="HelloWorld"></a>HelloWorld</h2><p>学程序的第一行代码，大概都是Hello World吧！</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'Hello World!'</span>)</span><br></pre></td></tr></table></figure>
-<p>然后命令行里，就会输出：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello World!</span><br></pre></td></tr></table></figure>
-<p>那如果要打出1行100个Hello World的话，该怎么办呢？<br>如果这样的话：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100</span>):</span><br><span class="line">    print(<span class="string">'Hello World'</span>)</span><br></pre></td></tr></table></figure>
-<p>试试看，会打出100行HelloWorld，不符合我们的需求<br>这个时候，该怎么办？</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/03/09/easypython/i/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/18/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><span class="page-number current">19</span>
+    <a class="extend prev" rel="prev" href="/page/18/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><span class="page-number current">19</span><a class="page-number" href="/page/20/">20</a><a class="extend next" rel="next" href="/page/20/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -2108,7 +2289,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">189</span>
+                    <span class="site-state-item-count">191</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -3034,7 +3215,7 @@
                     
                       
                     
-                    <span class="site-state-item-count">417</span>
+                    <span class="site-state-item-count">415</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

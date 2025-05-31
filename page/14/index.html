@@ -404,6 +404,371 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2020/11/29/pythonnotes/celery/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2020/11/29/pythonnotes/celery/" class="post-title-link" itemprop="url">【Python随笔】python轻量级消息队列库celery的应用</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-11-29 20:34:25" itemprop="dateCreated datePublished" datetime="2020-11-29T20:34:25+08:00">2020-11-29</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Python随笔/" itemprop="url" rel="index"><span itemprop="name">Python随笔</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>python语言，一般适用于快速实现业务需求的用途，在大型架构方面其应用范围并没有Java、Golang以及C++那么丰富，因此相对来讲还没有形成非常统一的技术体系。在某些需求中可能需要开发多个服务，服务之间需要实现异步通信，甚至是调用对方的函数。<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLmNlbGVyeXByb2plY3Qub3JnL2VuL3N0YWJsZS8=" title="https://docs.celeryproject.org/en/stable/">celery<i class="fa fa-external-link"></i></span>就是一个典型的例子，它提供了以将python函数注册到消息队列的方式暴露服务的方法，并且支持RabbitMQ、Redis等多种Broker中间代理形式。</p>
+<p>celery同时也支持多个python的web框架，在其<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLmNlbGVyeXByb2plY3Qub3JnL2VuL3N0YWJsZS9nZXR0aW5nLXN0YXJ0ZWQvaW50cm9kdWN0aW9uLmh0bWw=" title="https://docs.celeryproject.org/en/stable/getting-started/introduction.html">介绍页<i class="fa fa-external-link"></i></span>中，也明确说明了Tornado、Django、web2py等框架都有自己的celery实现方法，当然要知道其他框架的实践，可以上github上探查一番。</p>
+<p>celery简便易用，本文笔者以自己整理的<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaS9zdGFydC1mYXN0YXBp" title="https://github.com/utmhikari/start-fastapi">start-fastapi<i class="fa fa-external-link"></i></span>为例，讲述接入celery的方法。</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2020/11/29/pythonnotes/celery/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2020/11/15/pythonnotes/python_os_walk/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2020/11/15/pythonnotes/python_os_walk/" class="post-title-link" itemprop="url">【Python随笔】python的os.walk方法源码分析</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-11-15 15:54:30" itemprop="dateCreated datePublished" datetime="2020-11-15T15:54:30+08:00">2020-11-15</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Python随笔/" itemprop="url" rel="index"><span itemprop="name">Python随笔</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>在日常python编程中，有很多遍历文件夹内文件的需求，而os.walk方法就是一个满足该需求的例子。不熟悉这个方法的同学，刚开始用os.walk的时候难免踩坑。因此本文采用源码分析的方式，讲述os.walk的机理，让大家对于这个方法有更加深入的理解。</p>
+<p>以python3为例，os.walk方法的源码如下：</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2020/11/15/pythonnotes/python_os_walk/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2020/11/08/geekdaily/ue4_llm_dump_cpp/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1847,378 +2212,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2020/06/13/testlife/coverage_beautify/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ひかり.HDQ">
-      <meta itemprop="description" content="talk is cheap, code is rich">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HiKariのTechLab">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2020/06/13/testlife/coverage_beautify/" class="post-title-link" itemprop="url">【测试人生】代码覆盖率测试之代码染色优化——以lua代码覆盖为例</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2020-06-13 14:47:09" itemprop="dateCreated datePublished" datetime="2020-06-13T14:47:09+08:00">2020-06-13</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/测试人生/" itemprop="url" rel="index"><span itemprop="name">测试人生</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>在研发代码覆盖率测试工具的时候，通常除了代码覆盖数据收集模块之外，一般还要研发前端展示的部分以展现代码覆盖分析报告，通常会为每一个文件增加行染色，类似于<span class="exturl" data-url="aHR0cHM6Ly93d3cuamFjb2NvLm9yZy9qYWNvY28vdHJ1bmsvY292ZXJhZ2Uvb3JnLmphY29jby5jb3JlL29yZy5qYWNvY28uY29yZS5pbnRlcm5hbC5hbmFseXNpcy5maWx0ZXIvVHJ5V2l0aFJlc291cmNlc0phdmFjRmlsdGVyLmphdmEuaHRtbCNMMTg0" title="https://www.jacoco.org/jacoco/trunk/coverage/org.jacoco.core/org.jacoco.core.internal.analysis.filter/TryWithResourcesJavacFilter.java.html#L184">jacoco<i class="fa fa-external-link"></i></span>这种形式。</p>
-<p>然而代码覆盖报告实际出来的行染色，会出现许多正常代码行没有着色的情况。这是因为编程语言认为的“行”和本身我们在文本编辑器打出的”行“是不一样的。编译出来的“行”实际上是一段操作，比如我们定义一个函数的时候，编译器认为我们执行的操作有包括function xxx那一行，于是就有一种情况——我们实际没有运行过这个函数，但由于定义被覆盖，因此出现function xxx染绿，而函数体染红的现象。从用户的角度而言，用户如果对代码编译这块并不熟悉的话，就会造成理解上的偏差。</p>
-<p>因此考虑工作成本，如果有必要的话，需要对代码覆盖数据进行修改，从而展现更好的代码行染色效果。以lua为例，可以采用这样的方法：</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2020/06/13/testlife/coverage_beautify/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2020/05/23/geekdaily/ue4_http_server/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ひかり.HDQ">
-      <meta itemprop="description" content="talk is cheap, code is rich">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HiKariのTechLab">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2020/05/23/geekdaily/ue4_http_server/" class="post-title-link" itemprop="url">【极客日常】在UE4插件中编写一个HTTP Web Server</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2020-05-23 13:33:33" itemprop="dateCreated datePublished" datetime="2020-05-23T13:33:33+08:00">2020-05-23</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2025-04-12 23:45:42" itemprop="dateModified" datetime="2025-04-12T23:45:42+08:00">2025-04-12</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/极客日常/" itemprop="url" rel="index"><span itemprop="name">极客日常</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>在某些游戏研发or测试的需求中，需要在Unreal增加一个插件或者模块，里面启动一个服务器作为SDK，然后外部通过直连或者adb forward可以连接到客户端中，获取客户端实时的场景、actor信息等等。UE4本身除了socket server支持之外，也支持简单的HTTP Web Server。由于网上没有比较好的范例，因此这里给出一个例子。</p>
-<p>本文以Unreal 4.24为例。搭建HTTP Server，需要在<code>.Build.cs</code>中引入如下模块：</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">PrivateDependencyModuleNames.AddRange(</span><br><span class="line">    <span class="keyword">new</span> <span class="keyword">string</span>[]</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">"CoreUObject"</span>,</span><br><span class="line">        <span class="string">"Engine"</span>,</span><br><span class="line">        <span class="string">"Slate"</span>,</span><br><span class="line">        <span class="string">"SlateCore"</span>,</span><br><span class="line">        <span class="comment">// ... add private dependencies that you statically link with here ...</span></span><br><span class="line">        <span class="string">"HTTP"</span>,</span><br><span class="line">        <span class="string">"HttpServer"</span>,</span><br><span class="line">        <span class="string">"JsonUtilities"</span>,</span><br><span class="line">        <span class="string">"Json"</span>,</span><br><span class="line">    &#125;</span><br><span class="line">    );</span><br></pre></td></tr></table></figure>
-<p>通过<code>FHttpServerModule::Get()</code>方法，可以获得内置的HTTP Server模块的一个单例，该instance负责管理内置private的socket listeners。我们可以通过该单例获取<code>HTTPRouter</code>，然后绑定路由跟handler，然后调用<code>StartAllListeners</code>，就能够启动Web服务器。具体代码如下：</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2020/05/23/geekdaily/ue4_http_server/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/13/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" href="/page/15/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/13/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><a class="extend next" rel="next" href="/page/15/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -2262,7 +2260,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">189</span>
+                    <span class="site-state-item-count">191</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -3188,7 +3186,7 @@
                     
                       
                     
-                    <span class="site-state-item-count">417</span>
+                    <span class="site-state-item-count">415</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

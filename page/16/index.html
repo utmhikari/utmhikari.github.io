@@ -404,6 +404,374 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2020/01/12/geekdaily/mongo_multi_updatemany/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2020/01/12/geekdaily/mongo_multi_updatemany/" class="post-title-link" itemprop="url">【极客日常】解决使用mongodb时同时update多条数据的问题</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-01-12 15:37:44" itemprop="dateCreated datePublished" datetime="2020-01-12T15:37:44+08:00">2020-01-12</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/极客日常/" itemprop="url" rel="index"><span itemprop="name">极客日常</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>在实际使用mongodb的场景中，我们经常遇到多个请求同时在某个collection里update多条document的需求。这个需求看似有许多种解法，但是具体哪种好也说不准。现在便让我们一探究竟吧~</p>
+<p>首先我们利用pymongo添加1000000条数据，name字段为hello：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pymongo <span class="keyword">import</span> MongoClient</span><br><span class="line"></span><br><span class="line">client = MongoClient()</span><br><span class="line">db = client[<span class="string">'test'</span>]</span><br><span class="line">coll = db[<span class="string">'concurrency'</span>]</span><br><span class="line"></span><br><span class="line">coll.insert_many([</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">"name"</span>: <span class="string">"hello"</span>,</span><br><span class="line">        <span class="string">"num"</span>: i</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1000000</span>)</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+<p>然后，我们另外加一个进程，启动任务为将num字段为偶数的documents的name字段给update成aa，而主线程则update所有documents的name字段为bb。代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pymongo <span class="keyword">import</span> MongoClient</span><br><span class="line"><span class="keyword">import</span> pprint</span><br><span class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Pool, Process</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">client = MongoClient()</span><br><span class="line">db = client[<span class="string">'test'</span>]</span><br><span class="line">coll = db[<span class="string">'concurrency'</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">(name, m)</span>:</span></span><br><span class="line">    coll.update_many(</span><br><span class="line">        &#123;<span class="string">"num"</span>: &#123;<span class="string">"$mod"</span>: [m, <span class="number">0</span>]&#125;&#125;,</span><br><span class="line">        &#123;<span class="string">"$set"</span>: &#123;<span class="string">"name"</span>: str(name)&#125;&#125;,</span><br><span class="line">    )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    p = Process(target=f, args=(<span class="string">'aa'</span>, <span class="number">2</span>))</span><br><span class="line">    p.start()</span><br><span class="line">    coll.update_many(&#123;&#125;, &#123;<span class="string">"$set"</span>: &#123;<span class="string">"name"</span>: <span class="string">'bb'</span>&#125;&#125;)</span><br><span class="line">    p.join()</span><br><span class="line">    docs = coll.find()</span><br><span class="line">    d = dict()</span><br><span class="line">    <span class="keyword">for</span> doc <span class="keyword">in</span> docs:</span><br><span class="line">        n = doc[<span class="string">'name'</span>]</span><br><span class="line">        <span class="keyword">if</span> n <span class="keyword">not</span> <span class="keyword">in</span> d.keys():s</span><br><span class="line">            d[n] = <span class="number">0</span></span><br><span class="line">        d[n] += <span class="number">1</span></span><br><span class="line">    pprint.pprint(d)</span><br></pre></td></tr></table></figure>
+<p>最后结果是：</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2020/01/12/geekdaily/mongo_multi_updatemany/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2019/12/22/testlife/are_testers_controlling_quality/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/12/22/testlife/are_testers_controlling_quality/" class="post-title-link" itemprop="url">【测试人生】测试、策划与开发，谁来把控游戏的质量？</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-12-22 18:25:36" itemprop="dateCreated datePublished" datetime="2019-12-22T18:25:36+08:00">2019-12-22</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/测试人生/" itemprop="url" rel="index"><span itemprop="name">测试人生</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>近期进入了另外一个项目组，工作沟通的时候遇到了一些碰撞。在和项目组其它伙伴交换意见的同时，自己也开始思考这个问题：测试、策划与开发，这三个主导游戏研发的部门，谁才是真正把控着游戏的质量？</p>
+<p>从自己的职业立场与岗位的配置上来看，测试理所应当真正管控游戏的质量，但是实际上又不尽然。从策划和开发的立场上来看，一个关心游戏呈现的效果，一个关心游戏的稳定性，都是广义上的“质量管理”。但实际情况下，许多研发与策划同学会希望测试能专注于提bug，这方面没有什么问题，而希望测试同学只提出经过自己确认后的所谓的bug，这种观点倒是有点不靠谱。</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/12/22/testlife/are_testers_controlling_quality/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2019/12/06/testlife/game_testcase_with_code/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1908,375 +2276,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2019/10/08/easypython/pdf/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ひかり.HDQ">
-      <meta itemprop="description" content="talk is cheap, code is rich">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HiKariのTechLab">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/10/08/easypython/pdf/" class="post-title-link" itemprop="url">【Easy Python】另类实用Python教程——Easy Python精编版上线</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-10-08 15:18:35" itemprop="dateCreated datePublished" datetime="2019-10-08T15:18:35+08:00">2019-10-08</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Easy-Python/" itemprop="url" rel="index"><span itemprop="name">Easy Python</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>最近小包装了一下<a href="https://utmhikari.github.io/categories/Easy-Python/">Easy Python系列</a>，放到<span class="exturl" data-url="aHR0cHM6Ly93d3cueXVxdWUuY29tL2hpa2FyaS16eTVjMC9lYXN5LXB5dGhvbg==" title="https://www.yuque.com/hikari-zy5c0/easy-python">语雀<i class="fa fa-external-link"></i></span>上整合精编了个pdf投放，完成Easy Python系列的最后一项任务。</p>
-<p>第一次编撰一个短篇技术系列，小有成就，值得鼓励。但路还有很远，慢慢来吧~</p>
-<p>传送门如下：</p>
-<ul>
-<li><span class="exturl" data-url="aHR0cHM6Ly9wYW4uYmFpZHUuY29tL3MvMVJ6OTlpWXFzRGxIYkZNbWJhNlVKZkE=" title="https://pan.baidu.com/s/1Rz99iYqsDlHbFMmba6UJfA">百度网盘<i class="fa fa-external-link"></i></span></li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2019/10/07/geekdaily/next_code_theme/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ひかり.HDQ">
-      <meta itemprop="description" content="talk is cheap, code is rich">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HiKariのTechLab">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/10/07/geekdaily/next_code_theme/" class="post-title-link" itemprop="url">【极客日常】hexo+NexT博客自定义代码高亮主题配色CSS</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-10-07 11:14:13" itemprop="dateCreated datePublished" datetime="2019-10-07T11:14:13+08:00">2019-10-07</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/极客日常/" itemprop="url" rel="index"><span itemprop="name">极客日常</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>用hexo+NexT搭建博客的同学或许会遇到一个问题：默认的代码配色只有<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nocmlza2VtcHNvbi90b21vcnJvdy10aGVtZQ==" title="https://github.com/chriskempson/tomorrow-theme">Tomorrow Theme<i class="fa fa-external-link"></i></span>五种，如果想要自己的代码配色，应当如何自定义呢？</p>
-<p>其实也是可以的。在NexT的<code>source/css/highlight/theme.styl</code>中，我们就可以看到几种主题的具体配色：</p>
-<figure class="highlight styl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$highlight_theme</span> = hexo-config(<span class="string">"highlight_theme"</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="variable">$highlight_theme</span> == <span class="string">"normal"</span></span><br><span class="line">  <span class="variable">$highlight</span>-<span class="attribute">background</span>   = <span class="number">#f7f7f7</span></span><br><span class="line">  <span class="variable">$highlight</span>-current-line = <span class="number">#efefef</span></span><br><span class="line">  <span class="variable">$highlight</span>-selection    = <span class="number">#d6d6d6</span></span><br><span class="line">  <span class="variable">$highlight</span>-foreground   = <span class="number">#4d4d4c</span></span><br><span class="line">  <span class="variable">$highlight</span>-comment      = <span class="number">#8e908c</span></span><br><span class="line">  <span class="variable">$highlight</span>-red          = <span class="number">#c82829</span></span><br><span class="line">  <span class="variable">$highlight</span>-orange       = <span class="number">#f5871f</span></span><br><span class="line">  <span class="variable">$highlight</span>-yellow       = <span class="number">#eab700</span></span><br><span class="line">  <span class="variable">$highlight</span>-green        = <span class="number">#718c00</span></span><br><span class="line">  <span class="variable">$highlight</span>-aqua         = <span class="number">#3e999f</span></span><br><span class="line">  <span class="variable">$highlight</span>-blue         = <span class="number">#4271ae</span></span><br><span class="line">  <span class="variable">$highlight</span>-purple       = <span class="number">#8959a8</span></span><br><span class="line">  <span class="variable">$highlight</span>-gutter       = &#123;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#869194</span>,</span><br><span class="line">    bg-<span class="attribute">color</span>: <span class="number">#eff2f3</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="variable">$highlight_theme</span> == <span class="string">"night"</span></span><br><span class="line">  <span class="variable">$highlight</span>-<span class="attribute">background</span>   = <span class="number">#1d1f21</span></span><br><span class="line">  <span class="variable">$highlight</span>-current-line = <span class="number">#282a2e</span></span><br><span class="line">  <span class="variable">$highlight</span>-selection    = <span class="number">#373b41</span></span><br><span class="line">  <span class="variable">$highlight</span>-foreground   = <span class="number">#c5c8c6</span></span><br><span class="line">  <span class="variable">$highlight</span>-comment      = <span class="number">#969896</span></span><br><span class="line">  <span class="variable">$highlight</span>-red          = <span class="number">#cc6666</span></span><br><span class="line">  <span class="variable">$highlight</span>-orange       = <span class="number">#de935f</span></span><br><span class="line">  <span class="variable">$highlight</span>-yellow       = <span class="number">#f0c674</span></span><br><span class="line">  <span class="variable">$highlight</span>-green        = <span class="number">#b5bd68</span></span><br><span class="line">  <span class="variable">$highlight</span>-aqua         = <span class="number">#8abeb7</span></span><br><span class="line">  <span class="variable">$highlight</span>-blue         = <span class="number">#81a2be</span></span><br><span class="line">  <span class="variable">$highlight</span>-purple       = <span class="number">#b294bb</span></span><br><span class="line">  <span class="variable">$highlight</span>-gutter       = &#123;</span><br><span class="line">    <span class="attribute">color</span>: lighten(<span class="variable">$highlight</span>-background, <span class="number">50%</span>),</span><br><span class="line">    bg-<span class="attribute">color</span>: darken(<span class="variable">$highlight</span>-background, <span class="number">100%</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-<p>我们可以看到其实如果要增加一个自定义主题的话，其实加一段if跟其配色，然后在配置里配置theme的关键词就好了。那么自己配色的话应该怎样参考呢？我们可以在<code>source/css/highlight/highlight.styl</code>中找到答案：</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/10/07/geekdaily/next_code_theme/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/15/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/">17</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" href="/page/17/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/15/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/">17</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><a class="extend next" rel="next" href="/page/17/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -2320,7 +2324,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">189</span>
+                    <span class="site-state-item-count">191</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -3246,7 +3250,7 @@
                     
                       
                     
-                    <span class="site-state-item-count">417</span>
+                    <span class="site-state-item-count">415</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
