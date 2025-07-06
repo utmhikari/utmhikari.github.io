@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://utmhikari.github.io/2025/07/06/geekdaily/oom_issue_solution/</loc>
+    
+    <lastmod>2025-07-06T04:41:18.892Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://utmhikari.github.io/2020/03/14/testlife/table_check_oom/</loc>
+    
+    <lastmod>2025-07-06T03:58:11.734Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://utmhikari.github.io/2022/03/12/hardpython/3_gc_1/</loc>
+    
+    <lastmod>2025-07-06T03:54:48.385Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://utmhikari.github.io/2025/06/01/archiart/balance_architecture_and_product/</loc>
     
     <lastmod>2025-05-31T20:04:36.657Z</lastmod>
@@ -110,13 +131,6 @@
     <loc>http://utmhikari.github.io/2023/09/03/gofromzero/15_sync_once/</loc>
     
     <lastmod>2025-04-12T15:45:38.686Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://utmhikari.github.io/2020/03/14/testlife/table_check_oom/</loc>
-    
-    <lastmod>2025-04-12T15:45:30.271Z</lastmod>
     
   </url>
   
@@ -824,13 +838,6 @@
     <loc>http://utmhikari.github.io/2019/09/12/luatalk/sproto/</loc>
     
     <lastmod>2024-04-07T02:48:06.925Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://utmhikari.github.io/2022/03/12/hardpython/3_gc_1/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.924Z</lastmod>
     
   </url>
   

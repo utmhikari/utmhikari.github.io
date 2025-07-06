@@ -404,6 +404,191 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2023/04/01/gofromzero/10_context/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2023/04/01/gofromzero/10_context/" class="post-title-link" itemprop="url">【从零单排Golang】第十话：快速理解并上手context的基础用法</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2023-04-01 17:11:46" itemprop="dateCreated datePublished" datetime="2023-04-01T17:11:46+08:00">2023-04-01</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/从零单排Golang/" itemprop="url" rel="index"><span itemprop="name">从零单排Golang</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>在<code>Golang</code>的各种用法当中，<code>context</code>可谓是最能够体现<code>Golang</code>语言特性的模块之一。<code>context</code>的本意为<code>情境、上下文</code>，而在<code>Golang</code>程序当中，则可以被用于描述一次<code>调用</code>、<code>会话</code>或者<code>任务</code>的状态信息。关于<code>context</code>网上有很多语法以及源码分析的文档，但是里面很多却不能从实战场景体现<code>context</code>的作用，导致这个概念难以理解。因此这一回，经由踩坑<code>context</code>后，笔者将结合自己的理解，给大家讲述<code>context</code>在<code>Golang</code>怎么用来最为方便，怎么理解最为实用。</p>
+<p>首先来了解一下什么是<code>context</code>。我们先走源码：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Context <span class="keyword">interface</span> &#123;</span><br><span class="line">    Deadline() (deadline time.Time, ok <span class="keyword">bool</span>)</span><br><span class="line">    Done() &lt;-<span class="keyword">chan</span> <span class="keyword">struct</span>&#123;&#125;</span><br><span class="line">    Err() error</span><br><span class="line">    Value(key any) any</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在源码定义中可以看到，<code>context</code>模块给开发者定义了一个接口约定<code>Context</code>。在先前<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjMvMDIvMTgvZ29mcm9temVyby8wOF9jYWNoZV9pbnRlcmZhY2Uv" title="https://utmhikari.top/2023/02/18/gofromzero/08_cache_interface/">关于接口的文章<i class="fa fa-external-link"></i></span>中有提到，接口本身定义的是一个实体可以做的行为，那么我们初步理解<code>context</code>的时候，就可以通过<code>Context</code>的定义，知道一个<code>Context</code>可以干什么。</p>
+<p>假设一个<code>Context</code>实例<code>ctx</code>，关联到了一次<code>会话</code>，作为当次<code>会话</code>的<code>情境</code>。根据代码定义，<code>Context</code>可以做以下几种行为：</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2023/04/01/gofromzero/10_context/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2023/03/11/pythonnotes/w3schools_sqls_crawler/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2078,189 +2263,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2022/11/20/testlife/navi_autotest/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ひかり.HDQ">
-      <meta itemprop="description" content="talk is cheap, code is rich">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HiKariのTechLab">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2022/11/20/testlife/navi_autotest/" class="post-title-link" itemprop="url">【测试人生】UE4大世界游戏寻路效果自动化测试</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2022-11-20 12:42:33" itemprop="dateCreated datePublished" datetime="2022-11-20T12:42:33+08:00">2022-11-20</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/测试人生/" itemprop="url" rel="index"><span itemprop="name">测试人生</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>在一些无缝大世界的游戏当中，我们通常能够体验到游戏的自动寻路功能，通过自动寻路，玩家可以不用任何操作就到达任务或者玩法的目的地，从而让游戏过程更加轻松。在测试寻路功能时，不仅需要检查寻路是否成功到达，而且也需要关注寻路路径呈现的效果，从而确定玩家是否走在策划预想的路径上。</p>
-<p>由于寻路起点、终点选择的随机性，人工执行寻路测试时，往往需要根据自定义的规则遍历多个特定的起点终点，这样操作起来不仅非常耗费人力，而且针对再后台存储<code>navmesh</code>数据、做动态烘焙以及计算寻路路径的场景，在验收寻路效果时，测试人员还需要多次手动从后台拉取一定范围的<code>navmesh</code>数据并绘制在客户端的路面上，才能知道玩家是走在什么样的路面。为了解决寻路效果测试的效率问题，引入自动化技术显得非常有必要。</p>
-<p>因此，笔者将结合自己实际的工作经验，分享一种在<code>UE4</code>大世界游戏中，寻路效果自动化测试的方案。</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2022/11/20/testlife/navi_autotest/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2309,7 +2311,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">191</span>
+                    <span class="site-state-item-count">192</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -3235,7 +3237,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">415</span>
+                      
+                    
+                    <span class="site-state-item-count">414</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

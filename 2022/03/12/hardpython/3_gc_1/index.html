@@ -102,14 +102,14 @@
 
 
   <meta name="description" content="对于编程语言runtime来说，建立起良好运转GC机制是非常必要的，像Java和Go，其GC机制都经历了复杂的演化，当然同时也为编程语言带来了更好的性能，这也是为什么这两门语言能成为主流服务端语言的原因之一。 相对于Java和Go，python的GC机制是相对简约的，其中最基础的机制之一就是引用计数。当对象生成时引用计数为1；对象被其它对象引用时引用计数增加1；对象没有被引用，又退出作用域的话，引">
-<meta name="keywords" content="python,gc,引用计数,内存管理,内存池">
+<meta name="keywords" content="python,gc,引用计数,内存池,内存泄漏">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【Hard Python】【第三章-GC】1、引用计数与内存释放机制">
 <meta property="og:url" content="http://utmhikari.github.io/2022/03/12/hardpython/3_gc_1/index.html">
 <meta property="og:site_name" content="HiKariのTechLab">
 <meta property="og:description" content="对于编程语言runtime来说，建立起良好运转GC机制是非常必要的，像Java和Go，其GC机制都经历了复杂的演化，当然同时也为编程语言带来了更好的性能，这也是为什么这两门语言能成为主流服务端语言的原因之一。 相对于Java和Go，python的GC机制是相对简约的，其中最基础的机制之一就是引用计数。当对象生成时引用计数为1；对象被其它对象引用时引用计数增加1；对象没有被引用，又退出作用域的话，引">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2024-04-07T02:48:06.924Z">
+<meta property="og:updated_time" content="2025-07-06T03:54:48.385Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【Hard Python】【第三章-GC】1、引用计数与内存释放机制">
 <meta name="twitter:description" content="对于编程语言runtime来说，建立起良好运转GC机制是非常必要的，像Java和Go，其GC机制都经历了复杂的演化，当然同时也为编程语言带来了更好的性能，这也是为什么这两门语言能成为主流服务端语言的原因之一。 相对于Java和Go，python的GC机制是相对简约的，其中最基础的机制之一就是引用计数。当对象生成时引用计数为1；对象被其它对象引用时引用计数增加1；对象没有被引用，又退出作用域的话，引">
@@ -464,7 +464,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+                <time title="修改时间：2025-07-06 11:54:48" itemprop="dateModified" datetime="2025-07-06T11:54:48+08:00">2025-07-06</time>
               
             
           </span>
@@ -612,9 +612,9 @@
           
             <a href="/tags/引用计数/" rel="tag"># 引用计数</a>
           
-            <a href="/tags/内存管理/" rel="tag"># 内存管理</a>
-          
             <a href="/tags/内存池/" rel="tag"># 内存池</a>
+          
+            <a href="/tags/内存泄漏/" rel="tag"># 内存泄漏</a>
           
         </div>
       
@@ -701,7 +701,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">191</span>
+                    <span class="site-state-item-count">192</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1627,7 +1627,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">415</span>
+                      
+                    
+                    <span class="site-state-item-count">414</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
