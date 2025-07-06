@@ -1,3 +1,4 @@
+http://utmhikari.github.io/2025/07/06/archiart/ic_development_planning/
 http://utmhikari.github.io/2025/07/06/geekdaily/oom_issue_solution/
 http://utmhikari.github.io/2025/06/01/archiart/balance_architecture_and_product/
 http://utmhikari.github.io/2025/06/01/geekdaily/wire_and_interface/
@@ -97,4 +98,3 @@ http://utmhikari.github.io/2022/01/30/hardpython/1_multiprocessing_3/
 http://utmhikari.github.io/2022/01/22/hardpython/1_multiprocessing_2/
 http://utmhikari.github.io/2022/01/16/hardpython/1_multiprocessing_1/
 http://utmhikari.github.io/2022/01/08/hardpython/preface/
-http://utmhikari.github.io/2021/12/12/pythonnotes/function_info/
