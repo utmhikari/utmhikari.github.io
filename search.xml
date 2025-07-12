@@ -1,6 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>【极客日常】后端任务执行时动态注入策略的一种实现方式</title>
+    <url>/2025/07/12/geekdaily/dynamic_job/</url>
+    <content><![CDATA[<p>近期做项目时遇到一个场景，是需要在后端任务执行时动态注入策略。具体而言，笔者负责的后端服务，可以理解是会在线上服务发布时，对服务风险做实时扫描，那么这个扫描就需要根据当前线上服务发布上下文，匹配对应的策略。但这里扫出来的策略都是静态持久化的，前端也有产品化的配置，而有些业务则希望能够在任务执行时，动态注入一些业务自己理解需要的扫描策略，不在前端做静态配置。</p>
+<p>对于这类定制化需求，笔者想到的一种比较低成本实现的方式是这样的：</p>
+<a id="more"></a>
+<p>首先这类动态生成的策略还是需要持久化的，但不需要在前端做产品化，只不过后端查配置的时候，能够根据一定的逻辑识别出来哪些策略是静态配置，哪些策略是动态生成。具体的识别逻辑怎么做，一个解法就回溯到刚进大学学计算机网络那个年代，IP是怎么划分的，那么动态策略的ID就可以怎样划分。</p>
+<p>首先是选数值段，这里需要确保db里面id范围和内存里面数据类型是一致的，比如mysql的bigint可以对应上Golang里面int64，那么就确保不会出现数值的隐式转换。然后我们就可以像IP划分一样，给一个非常大的prefix（比如0x1234567800000000）以及一个mask（对应的是0x7FFFFFFF00000000），那么只要有一个ID，就可以根据prefix和mask判断这个ID是动态策略的还是静态策略的，并且有了prefix，动态策略ID和落库主键ID也可以相互转化。</p>
+]]></content>
+      <categories>
+        <category>极客日常</category>
+      </categories>
+      <tags>
+        <tag>Golang</tag>
+        <tag>后端开发</tag>
+        <tag>数据库</tag>
+        <tag>计算机网络</tag>
+        <tag>业务</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【DIY小记】逸剑风云决武家旧事+碧海仙踪DLC攻略整合</title>
+    <url>/2025/07/12/diymemo/wandering_sword_tactic/</url>
+    <content><![CDATA[<p>《逸剑风云决》算是笔者认为近10年最好的国产游戏之一，不亚于黑神话。从24年开始笔者已经玩了很多个周目，甚至黑神话也没玩，终究还是因为《逸剑风云决》本格的武侠风格确实对到了笔者的胃口，并且用UE4做的效果也还不错。今年新出了2个DLC，也倒逼笔者重新开了一周目，素麟猖獗，打了次极难8+31娜乌线完整结局，204600点数。期间参考了很多攻略，踩了因此笔者今天就简单分享一下自己的攻略整合。</p>
+<p>首先先列出笔者参考过的攻略合集，包括：</p>
+<a id="more"></a>
+<ul>
+<li>「弱水三千浮生若梦」同学的<span class="exturl" data-url="aHR0cHM6Ly93d3cuYmlsaWJpbGkuY29tL3JlYWQvcmVhZGxpc3Qvcmw3NTk2MTQ=" title="https://www.bilibili.com/read/readlist/rl759614">傻瓜式南疆完美攻略<i class="fa fa-external-link"></i></span>；</li>
+<li>「喻井」同学的<span class="exturl" data-url="aHR0cHM6Ly93d3cuYmlsaWJpbGkuY29tL29wdXMvOTk4MTYyMDM0NjY0MTQ0OTE5" title="https://www.bilibili.com/opus/998162034664144919">碧海仙踪全要点攻略<i class="fa fa-external-link"></i></span>；</li>
+<li>「河图与洛书」同学的<span class="exturl" data-url="aHR0cHM6Ly9zcGFjZS5iaWxpYmlsaS5jb20vMTA1MDA0NTgvdXBsb2FkL29wdXM=" title="https://space.bilibili.com/10500458/upload/opus">攻略合集<i class="fa fa-external-link"></i></span>，碧海仙踪、武家旧事和烟尘回响都有全流程的详细指引；</li>
+<li>「虚饮茶」同学的<span class="exturl" data-url="aHR0cHM6Ly93d3cuYmlsaWJpbGkuY29tL29wdXMvOTE5NzY4Njk4MTQxNTQwMzUy" title="https://www.bilibili.com/opus/919768698141540352">萌新攻略完美路线<i class="fa fa-external-link"></i></span></li>
+</ul>
+<p>然后是各个关键点的打法顺序，尤其如果你有很多继承点的话，可以参考这个：</p>
+<ul>
+<li>梧桐村开局 + 中原全收集 + 蜃楼爬塔解锁<ul>
+<li>开局可以爬的话，留一个「五宝花蜜酒」不要喝，是九州诀解锁的依赖，其它依赖请查攻略</li>
+</ul>
+</li>
+<li>洛村+进武当<ul>
+<li>要练瑶姬的话也可以卡碗子山出去练</li>
+</ul>
+</li>
+<li>门派全切磋全收集 + 能入的队友入队<ul>
+<li>在步微月入队任务前先要剑法上100拿白猿归风剑，否则后面没有</li>
+<li>先推进吕仙儿和岳家兄妹，不进和濮山庄</li>
+<li>娜乌和商神医是两条路线，要一起推进的话得用CheatEngine或者一修大师加金蝎道具</li>
+<li>（暂未验证是否会缺队友剧情）步微月入队后，碧海仙踪推到无名岛后再回中原</li>
+</ul>
+</li>
+<li>清河村疑云 + 平康城任务</li>
+<li>雷家村大型支线 + 队友收集</li>
+<li>武家旧事<ul>
+<li>二品珠光宝气武器做一组，中期很好用</li>
+</ul>
+</li>
+<li>品剑大会 + 不风山</li>
+<li>伤魂调</li>
+<li>霹雳门</li>
+<li>天水祝寿<ul>
+<li>完事后先不要解锁云相太极，会skip掉绮罗筵</li>
+</ul>
+</li>
+<li>甘泉苦水<ul>
+<li>完美完成，保证拿到百鸟朝凤枪秘籍（继承除外）给吕仙儿解锁梨花枪极</li>
+</ul>
+</li>
+<li>碧海仙踪<ul>
+<li>九州诀理论上当前拿不到，预计到打夹馍时候才会拿到，爬塔可用</li>
+</ul>
+</li>
+<li>绮罗筵</li>
+<li>云相太极<ul>
+<li>弄完就要去南疆了，此时可以爬爬塔</li>
+</ul>
+</li>
+<li>南疆风云</li>
+<li>烟尘回响<ul>
+<li>打夹馍之前有一个时段只有叶飞不在，是最晚全员爬塔的时机</li>
+</ul>
+</li>
+</ul>
+<p>爬塔的话笔者先去掉31过的，然后爬31的心法秘籍分配：</p>
+<ul>
+<li>宇文逸：风云+关山+玉龙+春秋+须臾<ul>
+<li>秘籍：凌波微步</li>
+</ul>
+</li>
+<li>步微月：须臾+九州+玄火+天魔+睡梦<ul>
+<li>秘籍：琢玉手+天山拳</li>
+</ul>
+</li>
+<li>吕仙儿：关山+玉龙+万里+顽石+大椿<ul>
+<li>输出的话大椿可以给老燕，自己带玄火</li>
+<li>关山+玉龙最后解锁，中期可以用</li>
+</ul>
+</li>
+<li>上官虹：白帝+春秋+须臾+玄火+睡梦<ul>
+<li>秘籍：天山剑+飞仙剑</li>
+<li>笔者走了娜乌线，不算完全体，完全体可以加药圣</li>
+</ul>
+</li>
+<li>司马玲：达摩+易筋经+白帝+混沌+玄火<ul>
+<li>少林刀，主DPS，也可考虑加禅宗伏魔功</li>
+</ul>
+</li>
+<li>燕未还：御龙+云相+惔神+玄火+擒龙<ul>
+<li>秘籍：大天魔手</li>
+<li>比较脆，可以上大椿</li>
+</ul>
+</li>
+<li>荀杳杳：韶华+灭寂+吸星+兵烽+天蚕<ul>
+<li>主控，先送</li>
+</ul>
+</li>
+</ul>
+<p>当然这个分配，打法上主C还是宇文逸，如果其它人C的话，可能有更加细节合理的打法。难点主要是佛魔一念和天人，天人主要限制叔叔和青云的出手，佛魔先打夹馍后打法灭尽，注意用春秋破护盾和用达摩等无敌手段抗伤害，碰碰运气终究还是能过。</p>
+]]></content>
+      <categories>
+        <category>DIY小记</category>
+      </categories>
+      <tags>
+        <tag>UE4</tag>
+        <tag>游戏开发</tag>
+        <tag>游戏策划</tag>
+        <tag>逸剑风云决</tag>
+        <tag>游戏</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>【架构艺术】IC（个人贡献者）视角下产品研发规划的实战Tips</title>
     <url>/2025/07/06/archiart/ic_development_planning/</url>
     <content><![CDATA[<p>因工作原因，近期笔者以相对偏IC的身份，牵头一个两个team共建项目的产品研发工作。在这个过程中，笔者也简单积累了一些IC工作的经验，踩了些坑，也有一点阶段性成果。这篇文章就根据自己经验聊聊作为IC角色，怎么去把控整个产品研发的规划和节奏，给一些实战当中的Tips。</p>
@@ -6213,9 +6341,9 @@
       <tags>
         <tag>性能测试</tag>
         <tag>质量管理</tag>
-        <tag>业务测试</tag>
         <tag>软件测试</tag>
         <tag>测试管理</tag>
+        <tag>业务</tag>
       </tags>
   </entry>
   <entry>
@@ -7873,9 +8001,9 @@
       <tags>
         <tag>游戏测试</tag>
         <tag>测试</tag>
-        <tag>业务测试</tag>
         <tag>用例设计</tag>
         <tag>回归测试</tag>
+        <tag>业务</tag>
       </tags>
   </entry>
   <entry>
@@ -8211,11 +8339,11 @@
         <category>DIY小记</category>
       </categories>
       <tags>
+        <tag>渲染</tag>
         <tag>CSGO</tag>
         <tag>Win10</tag>
         <tag>NVIDIA</tag>
-        <tag>游戏优化</tag>
-        <tag>游戏设置</tag>
+        <tag>游戏</tag>
       </tags>
   </entry>
   <entry>
