@@ -101,24 +101,25 @@
 
 
 
-  <meta name="description" content="talk is cheap, code is rich">
-<meta name="keywords" content="code, life">
-<meta property="og:type" content="website">
-<meta property="og:title" content="HiKariのTechLab">
-<meta property="og:url" content="http://utmhikari.github.io/tags/业务/index.html">
+  <meta name="description" content="近期做项目时遇到一个场景，是需要在后端任务执行时动态注入策略。具体而言，笔者负责的后端服务，可以理解是会在线上服务发布时，对服务风险做实时扫描，那么这个扫描就需要根据当前线上服务发布上下文，匹配对应的策略。但这里扫出来的策略都是静态持久化的，前端也有产品化的配置，而有些业务则希望能够在任务执行时，动态注入一些业务自己理解需要的扫描策略，不在前端做静态配置。 对于这类定制化需求，笔者想到的一种比较低">
+<meta name="keywords" content="Golang,后端开发,数据库,计算机网络,业务">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【极客日常】后端任务执行时动态注入策略的一种实现方式">
+<meta property="og:url" content="http://utmhikari.github.io/2025/07/12/geekdaily/dynamic_job_impl/index.html">
 <meta property="og:site_name" content="HiKariのTechLab">
-<meta property="og:description" content="talk is cheap, code is rich">
+<meta property="og:description" content="近期做项目时遇到一个场景，是需要在后端任务执行时动态注入策略。具体而言，笔者负责的后端服务，可以理解是会在线上服务发布时，对服务风险做实时扫描，那么这个扫描就需要根据当前线上服务发布上下文，匹配对应的策略。但这里扫出来的策略都是静态持久化的，前端也有产品化的配置，而有些业务则希望能够在任务执行时，动态注入一些业务自己理解需要的扫描策略，不在前端做静态配置。 对于这类定制化需求，笔者想到的一种比较低">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2025-07-12T10:51:55.319Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HiKariのTechLab">
-<meta name="twitter:description" content="talk is cheap, code is rich">
+<meta name="twitter:title" content="【极客日常】后端任务执行时动态注入策略的一种实现方式">
+<meta name="twitter:description" content="近期做项目时遇到一个场景，是需要在后端任务执行时动态注入策略。具体而言，笔者负责的后端服务，可以理解是会在线上服务发布时，对服务风险做实时扫描，那么这个扫描就需要根据当前线上服务发布上下文，匹配对应的策略。但这里扫出来的策略都是静态持久化的，前端也有产品化的配置，而有些业务则希望能够在任务执行时，动态注入一些业务自己理解需要的扫描策略，不在前端做静态配置。 对于这类定制化需求，笔者想到的一种比较低">
 
 
 
 
 
 
-  <link rel="canonical" href="http://utmhikari.github.io/tags/业务/">
+  <link rel="canonical" href="http://utmhikari.github.io/2025/07/12/geekdaily/dynamic_job_impl/">
 
 
 
@@ -128,7 +129,7 @@
   };
 </script>
 
-  <title>标签: 业务 | HiKariのTechLab</title>
+  <title>【极客日常】后端任务执行时动态注入策略的一种实现方式 | HiKariのTechLab</title>
   
 
 
@@ -176,7 +177,7 @@
     
   
 
-  <div class="container sidebar-position-right ">
+  <div class="container sidebar-position-right page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -252,7 +253,7 @@
         
         
           
-          <li class="menu-item menu-item-tags menu-item-active">
+          <li class="menu-item menu-item-tags">
 
     
     
@@ -383,138 +384,229 @@
           
             
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
           
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block tag">
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h2>业务<small>标签</small>
-        </h2>
-      </div>
-
-      
-        
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2025/07/12/geekdaily/dynamic_job_impl/">
 
-      <h3 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
         
-          <a class="post-title-link" href="/2025/07/12/geekdaily/dynamic_job_impl/" itemprop="url">
-            
-              <span itemprop="name">【极客日常】后端任务执行时动态注入策略的一种实现方式</span>
-            
-          </a>
         
-      </h3>
+          <h2 class="post-title" itemprop="name headline">【极客日常】后端任务执行时动态注入策略的一种实现方式
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2025-07-12T18:45:59+08:00" content="2025-07-12">
-          07-12
-        </time>
-      </div>
+              
+            
+          </h2>
+        
 
-    </header>
-  </article>
+        <div class="post-meta">
+          <span class="post-time">
 
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2025-07-12 18:45:59 / 修改时间：18:51:55" itemprop="dateCreated datePublished" datetime="2025-07-12T18:45:59+08:00">2025-07-12</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/极客日常/" itemprop="url" rel="index"><span itemprop="name">极客日常</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/2021/10/04/testlife/test_architect_notes/" itemprop="url">
-            
-              <span itemprop="name">【测试人生】《测试架构师修炼之道》阅读笔记</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2021-10-04T16:01:15+08:00" content="2021-10-04">
-          10-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/2019/11/03/testlife/start_game_test/" itemprop="url">
-            
-              <span itemprop="name">【测试人生】游戏业务用例测试体验感悟</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-11-03T18:54:51+08:00" content="2019-11-03">
-          11-03
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+        <p>近期做项目时遇到一个场景，是需要在后端任务执行时动态注入策略。具体而言，笔者负责的后端服务，可以理解是会在线上服务发布时，对服务风险做实时扫描，那么这个扫描就需要根据当前线上服务发布上下文，匹配对应的策略。但这里扫出来的策略都是静态持久化的，前端也有产品化的配置，而有些业务则希望能够在任务执行时，动态注入一些业务自己理解需要的扫描策略，不在前端做静态配置。</p>
+<p>对于这类定制化需求，笔者想到的一种比较低成本实现的方式是这样的：</p>
+<a id="more"></a>
+<p>首先这类动态生成的策略还是需要持久化的，但不需要在前端做产品化，只不过后端查配置的时候，能够根据一定的逻辑识别出来哪些策略是静态配置，哪些策略是动态生成。具体的识别逻辑怎么做，一个解法就回溯到刚进大学学计算机网络那个年代，IP是怎么划分的，那么动态策略的ID就可以怎样划分。</p>
+<p>然后是选数值段，这里需要确保db里面id范围和内存里面数据类型是一致的，比如mysql的bigint可以对应上Golang里面int64，那么就确保不会出现数值的隐式转换。然后我们就可以像IP划分一样，给一个非常大的prefix（比如0x1234567800000000）以及一个mask（对应的是0x7FFFFFFF00000000），那么只要有一个ID，就可以根据prefix和mask判断这个ID是动态策略的还是静态策略的，并且有了prefix，动态策略ID和落库主键ID也可以相互转化。</p>
+<p>最后对于整个系统，根据ID去CRUD执行策略的逻辑都需要做变换，需要先校验是动态策略还是静态策略，然后再走对应的分支逻辑。否则会出现问题。</p>
 
       
     </div>
 
+    
+
+    
+    
+    
+
+    
+      
+<div style="border: 1px solid black; margin-top: 32px; margin-bottom: 32px">
+  <div style="margin-left:10px">
+    <span style="font-weight:bold">版权声明</span>
+    <br>
+    <span>本文为博客<a href="https://utmhikari.github.io" style="color:#258FC6">HiKariのTechLab</a>原创文章，转载请标明出处，谢谢~~~</span>
+  </div>
+</div>
+
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Golang/" rel="tag"># Golang</a>
+          
+            <a href="/tags/后端开发/" rel="tag"># 后端开发</a>
+          
+            <a href="/tags/数据库/" rel="tag"># 数据库</a>
+          
+            <a href="/tags/计算机网络/" rel="tag"># 计算机网络</a>
+          
+            <a href="/tags/业务/" rel="tag"># 业务</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2025/07/12/diymemo/wandering_sword_tactic/" rel="next" title="【DIY小记】逸剑风云决烟尘回响+武家旧事+碧海仙踪DLC攻略整合">
+                <i class="fa fa-chevron-left"></i> 【DIY小记】逸剑风云决烟尘回响+武家旧事+碧海仙踪DLC攻略整合
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+  </div>
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -1743,6 +1835,10 @@
 
 
   
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
 
   
 
@@ -1760,6 +1856,8 @@
 
   
 
+
+  
 
 
   

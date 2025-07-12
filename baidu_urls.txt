@@ -1,4 +1,4 @@
-http://utmhikari.github.io/2025/07/12/geekdaily/dynamic_job/
+http://utmhikari.github.io/2025/07/12/geekdaily/dynamic_job_impl/
 http://utmhikari.github.io/2025/07/12/diymemo/wandering_sword_tactic/
 http://utmhikari.github.io/2025/07/06/archiart/ic_development_planning/
 http://utmhikari.github.io/2025/07/06/geekdaily/oom_issue_solution/
