@@ -1,3 +1,4 @@
+http://utmhikari.github.io/2025/08/03/githubdiscovery/coze_studio/
 http://utmhikari.github.io/2025/07/12/geekdaily/dynamic_job_impl/
 http://utmhikari.github.io/2025/07/12/diymemo/wandering_sword_tactic/
 http://utmhikari.github.io/2025/07/06/archiart/ic_development_planning/
@@ -97,4 +98,3 @@ http://utmhikari.github.io/2022/02/26/hardpython/2_asyncio_3/
 http://utmhikari.github.io/2022/02/20/hardpython/2_asyncio_2/
 http://utmhikari.github.io/2022/02/12/hardpython/2_asyncio_1/
 http://utmhikari.github.io/2022/01/30/hardpython/1_multiprocessing_3/
-http://utmhikari.github.io/2022/01/22/hardpython/1_multiprocessing_2/

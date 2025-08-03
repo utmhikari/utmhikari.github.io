@@ -404,6 +404,193 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2021/03/06/testlife/table_check/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2021/03/06/testlife/table_check/" class="post-title-link" itemprop="url">【测试人生】游戏策划表格检查工具的一种解决方案</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2021-03-06 18:20:02" itemprop="dateCreated datePublished" datetime="2021-03-06T18:20:02+08:00">2021-03-06</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/测试人生/" itemprop="url" rel="index"><span itemprop="name">测试人生</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>策划表格数据检查是游戏测试工作的刚性需求。在游戏开发期中，有大量bug的起因是策划同学在配置上不够规范到位。因此作为测试角度而言，需要更加便捷、更加精准的方法去定位到策划表格配置的问题。除了依靠业务人员自身对业务的熟悉程度之外，也更加依赖于一个强大有力的工具，辅助表格数据检查。</p>
+<p>表格数据检查的目的有以下一些：给定某个数值策划案，检查实际配置与策划案是否有出入；给定某个配置规则，检查实际配置是否有不符合规则，造成风险的地方（除去程序导表检查的那一部分）。针对这些需求，简单粗暴的方法就是强行coding的方式，将读取表格（Excel）数据出来（或者将表格数据转化为程序文件），然后用编码的方式联表，继而通过coding逻辑，去导出不符合规则的数据。这一种方式虽然灵活，但对于业务侧同学，还存在壁垒以及需要突破的地方：</p>
+<ul>
+<li>壁垒：业务侧同学的技术能力，通常难以hold住coding的技巧。从技术人员角度而言，涵盖大量代码的臃肿的表格检查规则，可读性很差且难以维护。</li>
+<li>突破：相较于人肉检查表格数据而言，时间的消耗主要在“联表”这一操作上面。游戏内部逻辑相对复杂，策划表之间的数据也是紧密耦合，比如一个宝箱抽取，就有可能涉及4~5个表的相互关系。如果不能够解决联表耗时的问题，表格数据检查的效率会大打折扣。</li>
+</ul>
+<p>因此总体来看，除了采用coding这一备选方案之外，另外一个较好的方法是采用声明式、配置化的方式描述表格检查规则，通过一系列数据处理规则的串联，导出来一份最终数据。这样一来相对减少了学习成本，从业务侧角度而言，从“学习coding”变成了“理解配置”；二来解决了联表效率的问题，业务侧只需要描述一个联表的数据处理规则，后台就可以自动按照规则描述的方式对数据处理，最终呈现到业务的，直截了当，就是最终的结果；三来解决了根本目的，不论是策划案比对（通常是另外的文档，不能按版本diff）还是检索不合规的数据，本质上都是数据导出，因此用数据处理规则的串联，就能解决大部分的需求。</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2021/03/06/testlife/table_check/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2021/02/16/gamedev/ue4_datatable_subsystem/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2032,187 +2219,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2020/10/06/geekdaily/idea_change_config_path/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ひかり.HDQ">
-      <meta itemprop="description" content="talk is cheap, code is rich">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HiKariのTechLab">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2020/10/06/geekdaily/idea_change_config_path/" class="post-title-link" itemprop="url">【极客日常】Win10更改IDEA（Jetbrains全家桶）的插件和配置路径</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2020-10-06 22:54:09" itemprop="dateCreated datePublished" datetime="2020-10-06T22:54:09+08:00">2020-10-06</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/极客日常/" itemprop="url" rel="index"><span itemprop="name">极客日常</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>Jetbrains家的IDE，默认安装之后，配置和插件都存储在系统特定的文件夹中，如果是Windows系统的话，就会在用户文件夹存储。这样就滋生了一个问题：随着插件等安装的越来越多，系统盘也会占掉一些空间，这个时候就有了转移默认插件与配置路径的需求。今天就以IDEA为例讲述一下如何操作。</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2020/10/06/geekdaily/idea_change_config_path/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2261,7 +2267,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">195</span>
+                    <span class="site-state-item-count">196</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -3199,7 +3205,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">417</span>
+                      
+                    
+                    <span class="site-state-item-count">418</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
