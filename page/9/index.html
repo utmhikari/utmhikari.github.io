@@ -404,6 +404,194 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2022/10/02/pythonnotes/pyqt_listview_fileviewer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2022/10/02/pythonnotes/pyqt_listview_fileviewer/" class="post-title-link" itemprop="url">【Python随笔】PyQt5的QListView兼容左键双击事件和右键上下文菜单的方法</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2022-10-02 03:28:15" itemprop="dateCreated datePublished" datetime="2022-10-02T03:28:15+08:00">2022-10-02</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Python随笔/" itemprop="url" rel="index"><span itemprop="name">Python随笔</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>近期笔者因工作原因，需要做一个安卓手机的文件浏览功能，集成在笔者以前用<code>PyQt5</code>做的一个的工具当中。文件浏览功能大概做成这样：</p>
+<ul>
+<li>一个列表界面，列出某个目录下的所有文件名（不区分文件和文件夹）</li>
+<li>双击某个文件名，尝试进入这个文件名代表的文件夹（文件的情况会失败）</li>
+<li>右键某个文件名，弹出上下文菜单，可以进入这个文件名对应的文件夹，也可以复制路径到其他的输入框</li>
+</ul>
+<p>其中，文件列表选型用了<code>QListView</code>组件，但在实现兼容双击进入文件夹+右键菜单功能时，稍微踩了下坑。为了解决这个问题，笔者在网上查阅了许多资料，最后找到一种解决方法，决定记录于本文当中。</p>
+<p>首先需要了解，<code>Qt</code>对于<code>QListView</code>这类数据容器组件，是遵循<code>MVC</code>的设计模式的。<code>QListView</code>数据的初始化，方法是这样的：</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2022/10/02/pythonnotes/pyqt_listview_fileviewer/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2022/09/12/testlife/gautomator_ue4_android/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2055,197 +2243,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2022/05/14/hardpython/5_str_2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ひかり.HDQ">
-      <meta itemprop="description" content="talk is cheap, code is rich">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HiKariのTechLab">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2022/05/14/hardpython/5_str_2/" class="post-title-link" itemprop="url">【Hard Python】【第五章-字符串】2、re，正则表达式源码详解</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2022-05-14 20:50:18" itemprop="dateCreated datePublished" datetime="2022-05-14T20:50:18+08:00">2022-05-14</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Hard-Python/" itemprop="url" rel="index"><span itemprop="name">Hard Python</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>正则表达式是文本处理中的重要部分，通过匹配特定的正则表达式，能够很方便地编写提取特定文本的代码。在<code>python</code>中，同样也已经拥有了正则表达式库<code>re</code>，为各位开发者提供了正则表达式的支持。</p>
-<p>在<code>python</code>官方文档中，已经对正则表达式模块接口、词法和用法做了详细的介绍：</p>
-<ul>
-<li><span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnB5dGhvbi5vcmcvemgtY24vMy9saWJyYXJ5L3JlLmh0bWw=" title="https://docs.python.org/zh-cn/3/library/re.html"><code>re</code>——正则表达式操作<i class="fa fa-external-link"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnB5dGhvbi5vcmcvemgtY24vMy9ob3d0by9yZWdleC5odG1sI3JlZ2V4LWhvd3Rv" title="https://docs.python.org/zh-cn/3/howto/regex.html#regex-howto">正则表达式HOWTO<i class="fa fa-external-link"></i></span></li>
-</ul>
-<p>正则表达式常见的用法如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_pattern</span><span class="params">()</span>:</span></span><br><span class="line">    pat = re.compile(<span class="string">'[0-9]&#123;2,3&#125;'</span>)</span><br><span class="line">    print(pat.match(<span class="string">'a'</span>))</span><br><span class="line">    print(pat.match(<span class="string">'1'</span>))</span><br><span class="line">    print(pat.match(<span class="string">'111'</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_matches</span><span class="params">()</span>:</span></span><br><span class="line">    s = <span class="string">'123abc456def789xyz007ddc'</span></span><br><span class="line">    pat = re.compile(<span class="string">'([0-9]+)([a-z]+([0-9]+))'</span>)</span><br><span class="line">    <span class="keyword">for</span> match <span class="keyword">in</span> pat.finditer(s):</span><br><span class="line">        print(match.groups())</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    test_pattern()</span><br><span class="line">    test_matches()</span><br></pre></td></tr></table></figure>
-<p><code>test_pattern</code>中，<code>compile</code>了一个只匹配2~3个数字字符的正则对象，<code>test_matches</code>中，则匹配了数字+小写字母+数字的正则对象，并且用括号分了三个组。两个函数打印出来的结果是：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">None</span><br><span class="line">None</span><br><span class="line">&lt;re.Match object; span=(0, 3), match=&apos;111&apos;&gt;</span><br><span class="line">(&apos;123&apos;, &apos;abc456&apos;, &apos;456&apos;)</span><br><span class="line">(&apos;789&apos;, &apos;xyz007&apos;, &apos;007&apos;)</span><br></pre></td></tr></table></figure>
-<p>接下来我们就深入其中，看下源码怎么实现的。</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2022/05/14/hardpython/5_str_2/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2294,7 +2291,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">196</span>
+                    <span class="site-state-item-count">197</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -3234,7 +3231,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">418</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">420</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
