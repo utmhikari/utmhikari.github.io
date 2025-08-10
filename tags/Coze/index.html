@@ -105,7 +105,7 @@
 <meta name="keywords" content="code, life">
 <meta property="og:type" content="website">
 <meta property="og:title" content="HiKariのTechLab">
-<meta property="og:url" content="http://utmhikari.github.io/tags/Coze/index.html">
+<meta property="og:url" content="http://utmhikari.github.io/tags/coze/index.html">
 <meta property="og:site_name" content="HiKariのTechLab">
 <meta property="og:description" content="talk is cheap, code is rich">
 <meta property="og:locale" content="zh-CN">
@@ -118,7 +118,7 @@
 
 
 
-  <link rel="canonical" href="http://utmhikari.github.io/tags/Coze/">
+  <link rel="canonical" href="http://utmhikari.github.io/tags/coze/">
 
 
 
@@ -128,7 +128,7 @@
   };
 </script>
 
-  <title>标签: Coze | HiKariのTechLab</title>
+  <title>标签: coze | HiKariのTechLab</title>
   
 
 
@@ -419,7 +419,7 @@
 
     <div id="posts" class="posts-collapse">
       <div class="collection-title">
-        <h2>Coze<small>标签</small>
+        <h2>coze<small>标签</small>
         </h2>
       </div>
 
@@ -431,43 +431,17 @@
 
       <h3 class="post-title">
         
-          <a class="post-title-link" href="/2025/08/03/githubdiscovery/coze_loop/" itemprop="url">
+          <a class="post-title-link" href="/2025/08/10/geekdaily/develop_agent_by_coze/" itemprop="url">
             
-              <span itemprop="name">【GitHub探索】Prompt开发评测平台CozeLoop踩坑体验</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2025-08-03T14:35:50+08:00" content="2025-08-03">
-          08-03
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/2025/08/03/githubdiscovery/coze_studio/" itemprop="url">
-            
-              <span itemprop="name">【GitHub探索】Agent开发平台CozeStudio开源版本踩坑体验</span>
+              <span itemprop="name">【极客日常】用Coze简单开发一个Agent</span>
             
           </a>
         
       </h3>
 
       <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2025-08-03T14:09:12+08:00" content="2025-08-03">
-          08-03
+        <time class="post-time" itemprop="dateCreated" datetime="2025-08-10T14:24:15+08:00" content="2025-08-10">
+          08-10
         </time>
       </div>
 
@@ -526,7 +500,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">197</span>
+                    <span class="site-state-item-count">199</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1470,7 +1444,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">420</span>
+                      
+                    
+                    <span class="site-state-item-count">421</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -2121,6 +2097,38 @@ if ($('body').find('pre.mermaid').length) {
       var ta = document.createElement('textarea');
       var yPosition = window.pageYOffset || document.documentElement.scrollTop;
       ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+  
+
+  
+
+</body>
+</html>
+ Prevent page scroll
       ta.style.position = 'absolute';
       ta.style.opacity = '0';
       ta.readOnly = true;

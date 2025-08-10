@@ -1,6 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>【极客日常】用Coze简单开发一个Agent</title>
+    <url>/2025/08/10/geekdaily/develop_agent_by_coze/</url>
+    <content><![CDATA[<p>近来AI大模型发展迅猛，不论是工业界还是生活界都纷纷开始进军AI，了解基于LLM的问答Agent需要如何开发。为了跟风，笔者也粗浅了解了下问答Agent开发的一些基础知识，简单开发了一个主要关注Python问答的Agent，挂在了自己的微信公众号上。</p>
+<p>要开发一个问答Agent也很简单，重要的是得清楚一些本质：</p>
+<a id="more"></a>
+<ul>
+<li>问答Agent可以看作是一个函数：<code>func(userInput string) (chatOutput string)</code>。</li>
+<li>函数中间的处理过程可以由纯自然语言描述（Prompt As ByteCode），也可以抽象成结构化的图形式（Compose Graph）。图节点里面可以干任何事情，不管是调用其它大模型、外部接口（MCP）甚至是调用外部Agent都是可以的。</li>
+<li>要让chatOutput质量更好，兜底还是要产出更多的中间数据，让chatOutput能够充分理解整合上下文。中间数据可以自产自销（ReAct），先自己深入拆解问题，再每个各个击破，最后自己再整合。</li>
+</ul>
+<p>之后就可以开始开发了。笔者采用Coze平台开发，进到项目里面创建一个Agent就可以动手了。里面有几个主要栏目：</p>
+<ul>
+<li>人设与回复逻辑（Main Prompt）：本质上就是让你用自然语言描述问答Agent职责是什么，工作主流程是什么，对问答Agent做基本约束。</li>
+<li>模型：用于理解自然语言并吐出回复，有新选新，这样回复的内容能和咱们的预期更加一致。如果要快速回答就谨慎选择深度推理。</li>
+<li>插件：可以理解成外部接口，直接查外部资料，获取结构化的数据</li>
+<li>工作流：用图描述的自然语言输入输出，配合了个低代码编辑器，玩过UE4/UE5的同学都不会陌生。如果偷懒的话，其实在Main Prompt里，强行让Agent用你的工作流执行工作主流程就行。</li>
+<li>知识：可以用来约束Agent在特定问题条件下获取到的知识，防止知识污染。</li>
+<li>记忆：如果把Agent当做一个后台服务的话，这个模块提供了数据持久化以及单次对话中缓存上下文变量的能力。</li>
+<li>对话体验：主要优化Agent回答的舒适度，提供更多情绪价值。</li>
+</ul>
+<p>结合这些模块之后，开发一个简单的Agent也不难。Coze里面有自带预览调试，如果专业一点的话也有Prompt评测系统用来管理变更质量（评测的话也是用大模型+Prompt直接做理解打分，非常方便）。发布的话，Coze也支持自己平台、豆包，甚至是微信公众号的分发渠道。笔者开发的Python问答Agent「Python大佬」在Coze平台可以通过<span class="exturl" data-url="aHR0cHM6Ly93d3cuY296ZS5jbi9zL2RqanFiZjd0dVBvLw==" title="https://www.coze.cn/s/djjqbf7tuPo/">这个链接<i class="fa fa-external-link"></i></span>访问。</p>
+]]></content>
+      <categories>
+        <category>极客日常</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>LLM</tag>
+        <tag>Agent</tag>
+        <tag>python</tag>
+        <tag>coze</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【极客日常】如何用Python打开一个文件？</title>
+    <url>/2025/08/10/geekdaily/open_file_by_python/</url>
+    <content><![CDATA[<p>今天水一篇博客「如何用Python打开一个文件？」，原因是今天问到AI这个问题，但发现AI的回答不是特别符合预期。或者说，对于「打开」这个词语，AI的理解更加倾向于程序意义上的「打开」，而并非产品意义上的「打开」。所以第一感问下来，没有问到预期的答案。</p>
+<p>最后琢磨了一下，这个问题的正确问法是这样：</p>
+<a id="more"></a>
+<p><strong>如何在python程序里通过系统默认程序打开xlsx文件？</strong></p>
+<p>对于这个问题，AI给出的答案就符合预期了，并且也考虑了多OS的兼容性。给出了以下的代码：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">open_xlsx_with_default_app</span><span class="params">(file_path)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    使用系统默认程序打开XLSX文件</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    参数:</span></span><br><span class="line"><span class="string">        file_path: XLSX文件的路径（相对路径或绝对路径）</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="comment"># 检查文件是否存在</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(file_path):</span><br><span class="line">        print(<span class="string">f"错误：文件不存在 - <span class="subst">&#123;file_path&#125;</span>"</span>)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 检查文件是否为xlsx格式</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> file_path.lower().endswith(<span class="string">'.xlsx'</span>):</span><br><span class="line">        print(<span class="string">f"错误：<span class="subst">&#123;file_path&#125;</span> 不是XLSX文件"</span>)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="comment"># 根据操作系统选择不同的命令</span></span><br><span class="line">        <span class="keyword">if</span> sys.platform.startswith(<span class="string">'win32'</span>):</span><br><span class="line">            <span class="comment"># Windows系统：使用start命令（通过os.startfile更简单）</span></span><br><span class="line">            os.startfile(file_path)</span><br><span class="line">        <span class="keyword">elif</span> sys.platform.startswith(<span class="string">'darwin'</span>):</span><br><span class="line">            <span class="comment"># macOS系统：使用open命令</span></span><br><span class="line">            subprocess.run([<span class="string">'open'</span>, file_path], check=<span class="literal">True</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># Linux系统：使用xdg-open命令</span></span><br><span class="line">            subprocess.run([<span class="string">'xdg-open'</span>, file_path], check=<span class="literal">True</span>)</span><br><span class="line">        </span><br><span class="line">        print(<span class="string">f"已用默认程序打开文件：<span class="subst">&#123;file_path&#125;</span>"</span>)</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        print(<span class="string">f"打开文件失败：<span class="subst">&#123;str(e)&#125;</span>"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用示例</span></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    <span class="comment"># 替换为你的XLSX文件路径</span></span><br><span class="line">    xlsx_file = <span class="string">"example.xlsx"</span>  <span class="comment"># 相对路径（同目录下）</span></span><br><span class="line">    <span class="comment"># 或使用绝对路径：xlsx_file = "/home/user/documents/data.xlsx"</span></span><br><span class="line">    open_xlsx_with_default_app(xlsx_file)</span><br></pre></td></tr></table></figure>
+<p>当然，如果你用英文提问的话，会得到更加明确的答案，这是因为英语单词本身不会像汉语一样存在大量一词多义的情况，概念约束更严格。比如你问<code>How to execute an xlsx file (open by Microsoft Excel) in python codes?</code>，理应也会得到预期之内的答案。</p>
+]]></content>
+      <categories>
+        <category>极客日常</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>大模型</tag>
+        <tag>LLM</tag>
+        <tag>Agent</tag>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>【GitHub探索】Prompt开发评测平台CozeLoop踩坑体验</title>
     <url>/2025/08/03/githubdiscovery/coze_loop/</url>
     <content><![CDATA[<p>接续<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjUvMDgvMDMvZ2l0aHViZGlzY292ZXJ5L2NvemVfc3R1ZGlvLw==" title="https://utmhikari.top/2025/08/03/githubdiscovery/coze_studio/">先前CozeStudio的文章<i class="fa fa-external-link"></i></span>，CozeLoop相对于CozeStudio，更加专注于Prompt Engineering，打磨整个Agent Prompt的效果。因此，本篇文章也分享一下笔者使用CozeLoop的体验，源码可以从<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2NvemUtZGV2L2NvemUtbG9vcA==" title="https://github.com/coze-dev/coze-loop">这个Repo<i class="fa fa-external-link"></i></span>里面拉取。</p>
