@@ -404,176 +404,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2025/05/02/archiart/go_monorepo_modules/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ひかり.HDQ">
-      <meta itemprop="description" content="talk is cheap, code is rich">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HiKariのTechLab">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2025/05/02/archiart/go_monorepo_modules/" class="post-title-link" itemprop="url">【架构艺术】Go大仓monorepo各模块的代码组织设计</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2025-05-02 14:58:55 / 修改时间：14:58:08" itemprop="dateCreated datePublished" datetime="2025-05-02T14:58:55+08:00">2025-05-02</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/架构艺术/" itemprop="url" rel="index"><span itemprop="name">架构艺术</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>在<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjUvMDMvMDkvYXJjaGlhcnQvZ29fbW9ub3JlcG9fc3RydWN0dXJlLw==" title="https://utmhikari.top/2025/03/09/archiart/go_monorepo_structure/">先前的文章<i class="fa fa-external-link"></i></span>中，笔者分享了go语言monorepo基本的一套代码架构设计。以这个设计为基础，今天这篇文章就聊一下具体里面的代码怎么编写起来比较舒适。</p>
-<p>关于每个微服务自己的代码，其实在<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjUvMDQvMDQvYXJjaGlhcnQvZ29fbW9ub3JlcG9fd2lyZS8=" title="https://utmhikari.top/2025/04/04/archiart/go_monorepo_wire/">wire依赖注入<i class="fa fa-external-link"></i></span>这篇文章有提到过一套比较简洁的用法。如果大仓对应的服务集群有很多三方依赖，有很多错综复杂的模块的话，对三方依赖做一层抽象，加上用wire去解决重复依赖问题，是最为舒适的一套解法。当然在这个基础上，其它各模块，尤其是公有模块（lib）需要如何做代码实现，这部分是需要额外推敲的，今天这篇文章就浅聊一下。</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2025/05/02/archiart/go_monorepo_modules/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2025/05/02/diymemo/overclock_voltage/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -789,12 +619,24 @@
                 
               
 
-              <time title="创建时间：2025-04-12 23:37:07 / 修改时间：23:38:00" itemprop="dateCreated datePublished" datetime="2025-04-12T23:37:07+08:00">2025-04-12</time>
+              <time title="创建时间：2025-04-12 23:37:07" itemprop="dateCreated datePublished" datetime="2025-04-12T23:37:07+08:00">2025-04-12</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2025-04-19 16:17:28" itemprop="dateModified" datetime="2025-04-19T16:17:28+08:00">2025-04-19</time>
               
             
           </span>
@@ -1473,12 +1315,24 @@
                 
               
 
-              <time title="创建时间：2025-03-09 16:15:14 / 修改时间：16:15:44" itemprop="dateCreated datePublished" datetime="2025-03-09T16:15:14+08:00">2025-03-09</time>
+              <time title="创建时间：2025-03-09 16:15:14" itemprop="dateCreated datePublished" datetime="2025-03-09T16:15:14+08:00">2025-03-09</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2025-05-25 19:56:11" itemprop="dateModified" datetime="2025-05-25T19:56:11+08:00">2025-05-25</time>
               
             
           </span>
@@ -2093,6 +1947,190 @@
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2025/01/26/testlife/change_observe_logic/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2025/01/26/testlife/change_observe_logic/" class="post-title-link" itemprop="url">【测试人生】变更风险观测的流程逻辑设计</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2025-01-26 20:30:22" itemprop="dateCreated datePublished" datetime="2025-01-26T20:30:22+08:00">2025-01-26</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2025-02-14 00:53:35" itemprop="dateModified" datetime="2025-02-14T00:53:35+08:00">2025-02-14</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/测试人生/" itemprop="url" rel="index"><span itemprop="name">测试人生</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>在线上服务变更过程中，我们希望可以通过一套实时观测机制去监测线上服务的风险，从而能够确保线上稳定性，在出问题时可以及时回滚变更。今天这篇文章，就简单讲一下变更风险观测的流程逻辑需要怎么设计。</p>
+<p>首先我们需要建模变更观测的过程。变更观测的生命周期，一般来讲，当服务某阶段变更开始后，观测会开始，然后当服务某阶段变更完，一般还需要停留观察一段时间，确定线上没有遗留风险之后，观测才会结束。可以简单的认为，一次变更观测，关联一次发布的某一个过程。所以一个观测任务，结构数据上需要包含发布工单的元信息、观测参数的元信息，以及任务自己的运转状态，同时每个任务实例需要被有序的调度起来，因此所以要有一个调度系统去处理每个任务实例的状态推进。</p>
+<p>然后，再细一个粒度，对于一个特定的变更风险点，我们也需要用一个特定的观测能力去cover，所以对于每个观测能力，也要和上层的观测任务一样，有自己的元信息和状态转换定义。任务对能力是一对多的关系，一个观测任务当中，可以通过某种编排，把不同能力在不同的时间点启动起来，切入到发布过程的不同时机，这样就能够形成灵活的变更观测。</p>
+<p>从这些角度出发，以一个简单的串行思维，整个变更观测任务需要做以下的动作：</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2025/01/26/testlife/change_observe_logic/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
   </section>
 
   
@@ -2141,7 +2179,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">199</span>
+                    <span class="site-state-item-count">198</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2202,48 +2240,6 @@
                     
                   
                     
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
                     
                       
                     

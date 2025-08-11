@@ -9,9 +9,9 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2025/08/10/geekdaily/open_file_by_python/</loc>
+    <loc>http://utmhikari.github.io/2022/11/24/geekdaily/python_and_game_autotest_notes/</loc>
     
-    <lastmod>2025-08-10T06:20:54.753Z</lastmod>
+    <lastmod>2025-08-10T06:06:10.842Z</lastmod>
     
   </url>
   
@@ -114,6 +114,13 @@
   </url>
   
   <url>
+    <loc>http://utmhikari.github.io/2025/03/09/archiart/change_observation_worker/</loc>
+    
+    <lastmod>2025-05-25T11:56:11.955Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://utmhikari.github.io/2025/05/02/archiart/go_monorepo_modules/</loc>
     
     <lastmod>2025-05-02T06:58:08.978Z</lastmod>
@@ -131,6 +138,20 @@
     <loc>http://utmhikari.github.io/2025/05/02/diymemo/overclock_voltage/</loc>
     
     <lastmod>2025-05-02T06:19:59.364Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://utmhikari.github.io/2024/02/04/githubdiscovery/altershield_design/</loc>
+    
+    <lastmod>2025-05-02T06:19:02.543Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://utmhikari.github.io/2025/04/12/githubdiscovery/mcp_go/</loc>
+    
+    <lastmod>2025-04-19T08:17:28.629Z</lastmod>
     
   </url>
   
@@ -205,13 +226,6 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2025/04/12/githubdiscovery/mcp_go/</loc>
-    
-    <lastmod>2025-04-12T15:38:00.768Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://utmhikari.github.io/2025/04/12/geekdaily/mcp_llm_agent/</loc>
     
     <lastmod>2025-04-12T15:18:46.071Z</lastmod>
@@ -264,13 +278,6 @@
     <loc>http://utmhikari.github.io/2025/03/09/archiart/go_monorepo_structure/</loc>
     
     <lastmod>2025-03-09T08:18:05.659Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://utmhikari.github.io/2025/03/09/archiart/change_observation_worker/</loc>
-    
-    <lastmod>2025-03-09T08:15:44.024Z</lastmod>
     
   </url>
   
@@ -562,14 +569,14 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/categories/index.html</loc>
+    <loc>http://utmhikari.github.io/tags/index.html</loc>
     
     <lastmod>2024-04-07T02:48:06.930Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/tags/index.html</loc>
+    <loc>http://utmhikari.github.io/categories/index.html</loc>
     
     <lastmod>2024-04-07T02:48:06.930Z</lastmod>
     
@@ -653,13 +660,6 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2023/09/17/testlife/game_table_check/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.928Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://utmhikari.github.io/2019/12/06/testlife/game_testcase_with_code/</loc>
     
     <lastmod>2024-04-07T02:48:06.928Z</lastmod>
@@ -667,7 +667,7 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2019/08/19/testlife/ios_review/</loc>
+    <loc>http://utmhikari.github.io/2023/09/17/testlife/game_table_check/</loc>
     
     <lastmod>2024-04-07T02:48:06.928Z</lastmod>
     
@@ -681,6 +681,13 @@
   </url>
   
   <url>
+    <loc>http://utmhikari.github.io/2019/08/19/testlife/ios_review/</loc>
+    
+    <lastmod>2024-04-07T02:48:06.928Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://utmhikari.github.io/2019/07/01/testlife/mtsc2019/</loc>
     
     <lastmod>2024-04-07T02:48:06.928Z</lastmod>
@@ -688,14 +695,14 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2022/11/20/testlife/navi_autotest/</loc>
+    <loc>http://utmhikari.github.io/2021/07/11/testlife/openpyxl/</loc>
     
     <lastmod>2024-04-07T02:48:06.928Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2021/07/11/testlife/openpyxl/</loc>
+    <loc>http://utmhikari.github.io/2022/11/20/testlife/navi_autotest/</loc>
     
     <lastmod>2024-04-07T02:48:06.928Z</lastmod>
     
@@ -821,13 +828,6 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2020/11/15/pythonnotes/python_os_walk/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.926Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://utmhikari.github.io/2021/10/05/pythonnotes/python_c_extension/</loc>
     
     <lastmod>2024-04-07T02:48:06.926Z</lastmod>
@@ -835,14 +835,21 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2021/10/23/mediumpython/ii/</loc>
+    <loc>http://utmhikari.github.io/2020/11/15/pythonnotes/python_os_walk/</loc>
+    
+    <lastmod>2024-04-07T02:48:06.926Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://utmhikari.github.io/2021/10/17/mediumpython/i/</loc>
     
     <lastmod>2024-04-07T02:48:06.925Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2021/10/17/mediumpython/i/</loc>
+    <loc>http://utmhikari.github.io/2021/10/23/mediumpython/ii/</loc>
     
     <lastmod>2024-04-07T02:48:06.925Z</lastmod>
     
@@ -856,14 +863,14 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2019/04/07/luatalk/lfunctimer_capi/</loc>
+    <loc>http://utmhikari.github.io/2021/11/06/mediumpython/iv/</loc>
     
     <lastmod>2024-04-07T02:48:06.925Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2021/11/06/mediumpython/iv/</loc>
+    <loc>http://utmhikari.github.io/2019/04/07/luatalk/lfunctimer_capi/</loc>
     
     <lastmod>2024-04-07T02:48:06.925Z</lastmod>
     
@@ -926,14 +933,14 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2022/01/08/hardpython/preface/</loc>
+    <loc>http://utmhikari.github.io/2022/05/14/hardpython/5_str_2/</loc>
     
     <lastmod>2024-04-07T02:48:06.924Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2022/05/14/hardpython/5_str_2/</loc>
+    <loc>http://utmhikari.github.io/2022/01/08/hardpython/preface/</loc>
     
     <lastmod>2024-04-07T02:48:06.924Z</lastmod>
     
@@ -954,6 +961,13 @@
   </url>
   
   <url>
+    <loc>http://utmhikari.github.io/2023/07/01/gofromzero/12_singleflight/</loc>
+    
+    <lastmod>2024-04-07T02:48:06.923Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://utmhikari.github.io/2023/08/06/gofromzero/13_waitgroup/</loc>
     
     <lastmod>2024-04-07T02:48:06.923Z</lastmod>
@@ -968,28 +982,7 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2023/07/01/gofromzero/12_singleflight/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.923Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://utmhikari.github.io/2022/01/16/hardpython/1_multiprocessing_1/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.923Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://utmhikari.github.io/2022/02/12/hardpython/2_asyncio_1/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.923Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://utmhikari.github.io/2022/02/26/hardpython/2_asyncio_3/</loc>
     
     <lastmod>2024-04-07T02:48:06.923Z</lastmod>
     
@@ -1003,7 +996,21 @@
   </url>
   
   <url>
+    <loc>http://utmhikari.github.io/2022/02/12/hardpython/2_asyncio_1/</loc>
+    
+    <lastmod>2024-04-07T02:48:06.923Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://utmhikari.github.io/2022/02/20/hardpython/2_asyncio_2/</loc>
+    
+    <lastmod>2024-04-07T02:48:06.923Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://utmhikari.github.io/2022/02/26/hardpython/2_asyncio_3/</loc>
     
     <lastmod>2024-04-07T02:48:06.923Z</lastmod>
     
@@ -1017,13 +1024,6 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2022/12/03/gofromzero/06_wire_kratos/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.922Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://utmhikari.github.io/2019/10/03/gofromzero/04_kubernetes_mongo/</loc>
     
     <lastmod>2024-04-07T02:48:06.922Z</lastmod>
@@ -1031,14 +1031,14 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2023/02/18/gofromzero/08_cache_interface/</loc>
+    <loc>http://utmhikari.github.io/2023/01/01/gofromzero/07_reflect_module/</loc>
     
     <lastmod>2024-04-07T02:48:06.922Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2023/05/10/gofromzero/11_make_new/</loc>
+    <loc>http://utmhikari.github.io/2023/02/18/gofromzero/08_cache_interface/</loc>
     
     <lastmod>2024-04-07T02:48:06.922Z</lastmod>
     
@@ -1059,23 +1059,16 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2023/01/01/gofromzero/07_reflect_module/</loc>
+    <loc>http://utmhikari.github.io/2023/05/10/gofromzero/11_make_new/</loc>
     
     <lastmod>2024-04-07T02:48:06.922Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2024/02/04/githubdiscovery/altershield_design/</loc>
+    <loc>http://utmhikari.github.io/2022/12/03/gofromzero/06_wire_kratos/</loc>
     
-    <lastmod>2024-04-07T02:48:06.921Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://utmhikari.github.io/2019/05/25/githubdiscovery/pysnooper/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.921Z</lastmod>
+    <lastmod>2024-04-07T02:48:06.922Z</lastmod>
     
   </url>
   
@@ -1088,6 +1081,13 @@
   
   <url>
     <loc>http://utmhikari.github.io/2020/02/01/githubdiscovery/fastapi/</loc>
+    
+    <lastmod>2024-04-07T02:48:06.921Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://utmhikari.github.io/2019/05/25/githubdiscovery/pysnooper/</loc>
     
     <lastmod>2024-04-07T02:48:06.921Z</lastmod>
     
@@ -1115,7 +1115,7 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2022/11/24/geekdaily/python_and_game_autotest_notes/</loc>
+    <loc>http://utmhikari.github.io/2019/10/07/geekdaily/next_code_theme/</loc>
     
     <lastmod>2024-04-07T02:48:06.920Z</lastmod>
     
@@ -1143,13 +1143,6 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2023/05/01/geekdaily/rust_examples/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.920Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://utmhikari.github.io/2020/02/26/geekdaily/start_fastapi_reborn/</loc>
     
     <lastmod>2024-04-07T02:48:06.920Z</lastmod>
@@ -1157,7 +1150,7 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2019/10/07/geekdaily/next_code_theme/</loc>
+    <loc>http://utmhikari.github.io/2023/05/01/geekdaily/rust_examples/</loc>
     
     <lastmod>2024-04-07T02:48:06.920Z</lastmod>
     
@@ -1206,14 +1199,14 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2019/10/07/geekdaily/go113_proxy/</loc>
+    <loc>http://utmhikari.github.io/2020/10/18/geekdaily/fjsonobject_to_ustruct/</loc>
     
     <lastmod>2024-04-07T02:48:06.919Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2020/10/18/geekdaily/fjsonobject_to_ustruct/</loc>
+    <loc>http://utmhikari.github.io/2019/10/07/geekdaily/go113_proxy/</loc>
     
     <lastmod>2024-04-07T02:48:06.919Z</lastmod>
     
@@ -1234,14 +1227,14 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2021/02/16/gamedev/ue4_datatable_subsystem/</loc>
+    <loc>http://utmhikari.github.io/2021/09/01/gamedev/ue4_point_in_cuboid/</loc>
     
     <lastmod>2024-04-07T02:48:06.918Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2021/09/01/gamedev/ue4_point_in_cuboid/</loc>
+    <loc>http://utmhikari.github.io/2021/02/16/gamedev/ue4_datatable_subsystem/</loc>
     
     <lastmod>2024-04-07T02:48:06.918Z</lastmod>
     
@@ -1297,13 +1290,6 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2019/05/19/easypython/vii/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.917Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://utmhikari.github.io/2019/03/31/easypython/iv/</loc>
     
     <lastmod>2024-04-07T02:48:06.917Z</lastmod>
@@ -1319,6 +1305,13 @@
   
   <url>
     <loc>http://utmhikari.github.io/2019/05/11/easypython/vi/</loc>
+    
+    <lastmod>2024-04-07T02:48:06.917Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://utmhikari.github.io/2019/05/19/easypython/vii/</loc>
     
     <lastmod>2024-04-07T02:48:06.917Z</lastmod>
     
@@ -1395,14 +1388,14 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2022/10/15/diymemo/ubuntu22_floppy_disk/</loc>
+    <loc>http://utmhikari.github.io/2023/02/05/diymemo/vmware_ubuntu_network/</loc>
     
     <lastmod>2024-04-07T02:48:06.916Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2023/02/05/diymemo/vmware_ubuntu_network/</loc>
+    <loc>http://utmhikari.github.io/2022/10/15/diymemo/ubuntu22_floppy_disk/</loc>
     
     <lastmod>2024-04-07T02:48:06.916Z</lastmod>
     

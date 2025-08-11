@@ -102,7 +102,7 @@
 
 
   <meta name="description" content="最近在项目组测试有开发一个导表检查的需求，大致是在策划提交表更新到svn之后，svn发送post-commit到策划表数据服务，而后策划表数据服务下载excel文件，更新数据之后，将导表检查下游服务所需的检查数据进行整合，然后post到导表检查服务。在这个过程中，由于做的仓促没有考虑设计，最后策划表数据服务的JVM发生了OOM问题。经过一番排查改进了设计，解决了这个问题。 JVM的内存结构跟GC流">
-<meta name="keywords" content="gc,JVM,OOM,Java,内存泄漏">
+<meta name="keywords" content="gc,Java,OOM,内存泄漏,JVM">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【测试人生】记一次导表检查流程中导致JVM的OOM问题">
 <meta property="og:url" content="http://utmhikari.github.io/2020/03/14/testlife/table_check_oom/index.html">
@@ -574,13 +574,13 @@
           
             <a href="/tags/gc/" rel="tag"># gc</a>
           
-            <a href="/tags/JVM/" rel="tag"># JVM</a>
+            <a href="/tags/Java/" rel="tag"># Java</a>
           
             <a href="/tags/OOM/" rel="tag"># OOM</a>
           
-            <a href="/tags/Java/" rel="tag"># Java</a>
-          
             <a href="/tags/内存泄漏/" rel="tag"># 内存泄漏</a>
+          
+            <a href="/tags/JVM/" rel="tag"># JVM</a>
           
         </div>
       
@@ -667,7 +667,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">199</span>
+                    <span class="site-state-item-count">198</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -728,48 +728,6 @@
                     
                   
                     
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
                     
                       
                     

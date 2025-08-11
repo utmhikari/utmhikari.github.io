@@ -102,7 +102,7 @@
 
 
   <meta name="description" content="在后端开发场景，我们经常会遇到高并发的事务处理逻辑。虽然在微服务治理的机制下，能够实现多个无状态服务节点+负载均衡高并发处理请求，但对于单个服务节点来讲，如果存在某些耗时的任务需要被高并发访问，那么如果没有一套妥善的机制处理，就很容易出现大量这类任务实例堆积，导致任务返回延迟，或者节点内存暴涨的情况。今天，就来介绍Golang内部处理这种场景的一套方案：singleflight。 singlefl">
-<meta name="keywords" content="Golang,后端开发,并发,源码分析,singleflight">
+<meta name="keywords" content="后端开发,Golang,并发,源码分析,singleflight">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【从零单排Golang】第十二话：用singleflight解决单服务处理高并发任务的问题">
 <meta property="og:url" content="http://utmhikari.github.io/2023/07/01/gofromzero/12_singleflight/index.html">
@@ -615,9 +615,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Golang/" rel="tag"># Golang</a>
-          
             <a href="/tags/后端开发/" rel="tag"># 后端开发</a>
+          
+            <a href="/tags/Golang/" rel="tag"># Golang</a>
           
             <a href="/tags/并发/" rel="tag"># 并发</a>
           
@@ -719,7 +719,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">199</span>
+                    <span class="site-state-item-count">198</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -780,48 +780,6 @@
                     
                   
                     
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
                     
                       
                     
