@@ -1,3 +1,5 @@
+http://utmhikari.github.io/2025/09/06/archiart/change_control_decision_module/
+http://utmhikari.github.io/2025/09/06/archiart/change_control_schedule_event/
 http://utmhikari.github.io/2025/08/10/geekdaily/develop_agent_by_coze/
 http://utmhikari.github.io/2025/08/03/githubdiscovery/coze_loop/
 http://utmhikari.github.io/2025/08/03/githubdiscovery/coze_studio/
@@ -96,5 +98,3 @@ http://utmhikari.github.io/2022/04/09/hardpython/4_log_1/
 http://utmhikari.github.io/2022/04/03/testlife/btree_autotest_talk/
 http://utmhikari.github.io/2022/03/19/hardpython/3_gc_2/
 http://utmhikari.github.io/2022/03/12/hardpython/3_gc_1/
-http://utmhikari.github.io/2022/02/26/hardpython/2_asyncio_3/
-http://utmhikari.github.io/2022/02/20/hardpython/2_asyncio_2/

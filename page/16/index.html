@@ -404,6 +404,372 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2020/05/23/geekdaily/ue4_http_server/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2020/05/23/geekdaily/ue4_http_server/" class="post-title-link" itemprop="url">【极客日常】在UE4插件中编写一个HTTP Web Server</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-05-23 13:33:33" itemprop="dateCreated datePublished" datetime="2020-05-23T13:33:33+08:00">2020-05-23</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2025-04-12 23:45:42" itemprop="dateModified" datetime="2025-04-12T23:45:42+08:00">2025-04-12</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/极客日常/" itemprop="url" rel="index"><span itemprop="name">极客日常</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>在某些游戏研发or测试的需求中，需要在Unreal增加一个插件或者模块，里面启动一个服务器作为SDK，然后外部通过直连或者adb forward可以连接到客户端中，获取客户端实时的场景、actor信息等等。UE4本身除了socket server支持之外，也支持简单的HTTP Web Server。由于网上没有比较好的范例，因此这里给出一个例子。</p>
+<p>本文以Unreal 4.24为例。搭建HTTP Server，需要在<code>.Build.cs</code>中引入如下模块：</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">PrivateDependencyModuleNames.AddRange(</span><br><span class="line">    <span class="keyword">new</span> <span class="keyword">string</span>[]</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">"CoreUObject"</span>,</span><br><span class="line">        <span class="string">"Engine"</span>,</span><br><span class="line">        <span class="string">"Slate"</span>,</span><br><span class="line">        <span class="string">"SlateCore"</span>,</span><br><span class="line">        <span class="comment">// ... add private dependencies that you statically link with here ...</span></span><br><span class="line">        <span class="string">"HTTP"</span>,</span><br><span class="line">        <span class="string">"HttpServer"</span>,</span><br><span class="line">        <span class="string">"JsonUtilities"</span>,</span><br><span class="line">        <span class="string">"Json"</span>,</span><br><span class="line">    &#125;</span><br><span class="line">    );</span><br></pre></td></tr></table></figure>
+<p>通过<code>FHttpServerModule::Get()</code>方法，可以获得内置的HTTP Server模块的一个单例，该instance负责管理内置private的socket listeners。我们可以通过该单例获取<code>HTTPRouter</code>，然后绑定路由跟handler，然后调用<code>StartAllListeners</code>，就能够启动Web服务器。具体代码如下：</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2020/05/23/geekdaily/ue4_http_server/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2020/05/05/testlife/try_gautomator/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2020/05/05/testlife/try_gautomator/" class="post-title-link" itemprop="url">【测试人生】游戏自动化测试工具GAutomator上手</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-05-05 14:40:35" itemprop="dateCreated datePublished" datetime="2020-05-05T14:40:35+08:00">2020-05-05</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/测试人生/" itemprop="url" rel="index"><span itemprop="name">测试人生</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>最近开始研究一些游戏自动化测试方面的内容。游戏自动化测试是游戏测试研究领域的难点之一，当前主流的方案有两种，一种是采用纯粹的UI识别方法进行，典型的例子是<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0FpcnRlc3RQcm9qZWN0L0FpcnRlc3Q=" title="https://github.com/AirtestProject/Airtest">Airtest<i class="fa fa-external-link"></i></span>，另一种是直接嵌入到游戏引擎中获取节点树等元素从而对实体进行操作，典型的例子是<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1RlbmNlbnQvR0F1dG9tYXRvcg==" title="https://github.com/Tencent/GAutomator">GAutomator<i class="fa fa-external-link"></i></span>。由于笔者先前略微接触过Airtest方面的内容，因此本次决定上手GAutomator尝试游戏自动化。</p>
+<p>本次上手过程具体则用GAutomator对Unreal4.24示例mobile项目中的元素进行操作，利用安卓手机进行调试。基本原理上，GAutomator会作为插件嵌入到Unreal项目中，自己包含一些获取World中信息的功能，而后listen一个端口，从而外部请求该插件可以获取World中的信息。通过adb进行搭桥，在外部，用户可以基于<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1RlbmNlbnQvR0F1dG9tYXRvci90cmVlL21hc3Rlci9HQXV0b21hdG9yQW5kcm9pZA==" title="https://github.com/Tencent/GAutomator/tree/master/GAutomatorAndroid">GAutomatorAndroid<i class="fa fa-external-link"></i></span>编写，从而不仅可以与GAutomator的Unreal插件打通，而且也可以通过预先集成的<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3hpYW9jb25nL3VpYXV0b21hdG9y" title="https://github.com/xiaocong/uiautomator">UIAutomator<i class="fa fa-external-link"></i></span>这样的工具直接模拟屏幕操作。</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2020/05/05/testlife/try_gautomator/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2020/04/21/geekdaily/bilibili_in_hugo/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1864,372 +2230,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2019/12/22/testlife/are_testers_controlling_quality/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ひかり.HDQ">
-      <meta itemprop="description" content="talk is cheap, code is rich">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HiKariのTechLab">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/12/22/testlife/are_testers_controlling_quality/" class="post-title-link" itemprop="url">【测试人生】测试、策划与开发，谁来把控游戏的质量？</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-12-22 18:25:36" itemprop="dateCreated datePublished" datetime="2019-12-22T18:25:36+08:00">2019-12-22</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/测试人生/" itemprop="url" rel="index"><span itemprop="name">测试人生</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>近期进入了另外一个项目组，工作沟通的时候遇到了一些碰撞。在和项目组其它伙伴交换意见的同时，自己也开始思考这个问题：测试、策划与开发，这三个主导游戏研发的部门，谁才是真正把控着游戏的质量？</p>
-<p>从自己的职业立场与岗位的配置上来看，测试理所应当真正管控游戏的质量，但是实际上又不尽然。从策划和开发的立场上来看，一个关心游戏呈现的效果，一个关心游戏的稳定性，都是广义上的“质量管理”。但实际情况下，许多研发与策划同学会希望测试能专注于提bug，这方面没有什么问题，而希望测试同学只提出经过自己确认后的所谓的bug，这种观点倒是有点不靠谱。</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/12/22/testlife/are_testers_controlling_quality/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2019/12/06/testlife/game_testcase_with_code/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ひかり.HDQ">
-      <meta itemprop="description" content="talk is cheap, code is rich">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HiKariのTechLab">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/12/06/testlife/game_testcase_with_code/" class="post-title-link" itemprop="url">【测试人生】小谈游戏测试用例与代码间的联系</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-12-06 22:39:14" itemprop="dateCreated datePublished" datetime="2019-12-06T22:39:14+08:00">2019-12-06</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/测试人生/" itemprop="url" rel="index"><span itemprop="name">测试人生</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>近几周一直在某SLG项目内负责功能模块测试与周边工具推进的工作，渐渐感悟到了些用例设计与业务代码的联系。</p>
-<p>游戏的业务逻辑是比一般应用复杂的。而且对于自己项目这种强玩法的游戏而言，甚至还会出现以下的现象——<strong>QA驱动策划，策划驱动开发</strong>。</p>
-<p>策划案能够大概阐述游戏的界面、逻辑与数值，但是如果有复杂的特例，还需要QA在实际测试中去挖掘。游戏测试用例的设计过程，不仅可以看成是策划案的延伸，而且也可以看作是一份业务代码的参考文档。如果了解游戏服务端与客户端机制，跟进过代码的话，甚至可以根据它们设计一些极端的用例。</p>
-<p>好比说，某一个建筑，占地是5x5，但是它横跨国界，一部分在A国，一部分在B国。那么这个建筑，是属于A国，还是B国呢？</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/12/06/testlife/game_testcase_with_code/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2278,7 +2278,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">198</span>
+                    <span class="site-state-item-count">200</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>

@@ -404,6 +404,371 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2021/11/06/mediumpython/iv/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2021/11/06/mediumpython/iv/" class="post-title-link" itemprop="url">【Medium Python】第四话：类属性和实例属性是怎样的关系？</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2021-11-06 18:34:13" itemprop="dateCreated datePublished" datetime="2021-11-06T18:34:13+08:00">2021-11-06</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Medium-Python/" itemprop="url" rel="index"><span itemprop="name">Medium Python</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>提到编程不得不提到面向对象，一个说烂了的话题，几十年来一直都有人在争论面向对象的好坏。从宏观角度来说，一个庞大的程序本质是对业务中实体集合以及其中的关系的模拟，虽然解决实体的关系问题，用面向过程、组合等方式去体现比较方便，但要解决实体概念的抽象，就需要面向对象的编程基础。因此，面向对象在编程中是非常重要的一部分思想，不能随随便便被否定或者忽略。</p>
+<p>​<br>面向对象的灵魂在于对类（class）概念的剖析，而python中也有对类的支持，虽然不像其它静态语言有比较强的约束，但如果想将代码组织成面向对象式的话也是完全满足的。在平常python的交流以及面试的过程中，也会涉及到许多关于类的问题，比如最常见的就是阐述类与实例的关系。要理解类与实例的关系，从类属性和实例属性切入是为最直观的。因此，今天这篇文章就来讲讲python里类属性和实例属性的二三事。<br>​</p>
+<h2 id="在类和实例中访问属性"><a href="#在类和实例中访问属性" class="headerlink" title="在类和实例中访问属性"></a>在类和实例中访问属性</h2><p>首先上一段测试代码：</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2021/11/06/mediumpython/iv/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2021/10/30/mediumpython/iii/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2021/10/30/mediumpython/iii/" class="post-title-link" itemprop="url">【Medium Python】第三话：python多线程为什么不能并行？</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2021-10-30 19:44:40" itemprop="dateCreated datePublished" datetime="2021-10-30T19:44:40+08:00">2021-10-30</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Medium-Python/" itemprop="url" rel="index"><span itemprop="name">Medium Python</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>python的多线程，这是个老生常谈的话题了，网上资料也一大把。python默认的<code>threading</code>模块对多线程提供了支持，但实际多个<code>threading.Thread</code>实例无法并行运行（不是无法并发哦！）。<br>​<br>一句话概括答案：<strong>python的线程实质是操作系统原生的线程，而每个线程要执行python代码的话，需要获得对应代码解释器的锁GIL。一般我们运行python程序都只有一个解释器，这样不同线程需要获得同一个锁才能执行各自的代码，互斥了，于是代码就不能同时运行了。</strong><br>​<br>好的，接下来我们细细讲解这句话背后的故事：</p>
+<h2 id="多线程并行测试"><a href="#多线程并行测试" class="headerlink" title="多线程并行测试"></a>多线程并行测试</h2><p>首先我们通过一些代码来测试多线程是否真的并行：</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2021/10/30/mediumpython/iii/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2021/10/23/mediumpython/ii/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1862,368 +2227,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2021/09/16/geekdaily/echarts_scatter_color/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ひかり.HDQ">
-      <meta itemprop="description" content="talk is cheap, code is rich">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HiKariのTechLab">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2021/09/16/geekdaily/echarts_scatter_color/" class="post-title-link" itemprop="url">【极客日常】在Vue用echarts画带不同颜色点的散点图</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2021-09-16 23:27:20" itemprop="dateCreated datePublished" datetime="2021-09-16T23:27:20+08:00">2021-09-16</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2024-04-07 11:06:37" itemprop="dateModified" datetime="2024-04-07T11:06:37+08:00">2024-04-07</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/极客日常/" itemprop="url" rel="index"><span itemprop="name">极客日常</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>在vue技术栈下做图表需求，<span class="exturl" data-url="aHR0cHM6Ly9lY2hhcnRzLmFwYWNoZS5vcmcvemgvaW5kZXguaHRtbA==" title="https://echarts.apache.org/zh/index.html">echarts<i class="fa fa-external-link"></i></span>是一个非常棒的选择，提供了非常多种多样的图标示例以及非常复杂强大的API。由于笔者近期工作内容中需要分析采样点的分布情况，因此自然而然接触到了echarts的<span class="exturl" data-url="aHR0cHM6Ly9lY2hhcnRzLmFwYWNoZS5vcmcvZXhhbXBsZXMvemgvaW5kZXguaHRtbCNjaGFydC10eXBlLXNjYXR0ZXIzRA==" title="https://echarts.apache.org/examples/zh/index.html#chart-type-scatter3D">3D散点图<i class="fa fa-external-link"></i></span>。在笔者的需求中，需要对不同点进行分类，并按特定的颜色显示出来。经过一番踩坑，了解到了echarts在实现这方面的机制。</p>
-<p>echarts绘图/刷新只需要通过<code>setOption</code>接口即可实现。在各种options中，<span class="exturl" data-url="aHR0cHM6Ly9lY2hhcnRzLmFwYWNoZS5vcmcvaGFuZGJvb2svemgvY29uY2VwdHMvdmlzdWFsLW1hcA==" title="https://echarts.apache.org/handbook/zh/concepts/visual-map">visualMap视觉映射组件<i class="fa fa-external-link"></i></span>能够根据数据在特定维度上的值，指定对应点的视觉属性（比如颜色、透明度、图元大小等等）。</p>
-<p>要用到visualMap特性，需要import相关组件：</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2021/09/16/geekdaily/echarts_scatter_color/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2021/09/11/geekdaily/vscode_git-bash/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ひかり.HDQ">
-      <meta itemprop="description" content="talk is cheap, code is rich">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HiKariのTechLab">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2021/09/11/geekdaily/vscode_git-bash/" class="post-title-link" itemprop="url">【极客日常】2021新版本VSCode设置git-bash为终端的方法</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2021-09-11 11:50:22" itemprop="dateCreated datePublished" datetime="2021-09-11T11:50:22+08:00">2021-09-11</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/极客日常/" itemprop="url" rel="index"><span itemprop="name">极客日常</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>截至2021.9，不知道哪天更新了vscode，发现默认的终端从以前的git-bash变成了powershell，笔者用的windows电脑，于是乎要解决这个问题，把powershell变回git-bash。</p>
-<p>打开settings，发现以前的<code>terminal.integrated.shell.windows</code>设置已经失效，不能再用。在settings的图形界面查看shell设置，默认的选项变成了<code>PowerShell</code>、<code>Command Prompt</code>和<code>Javascript Debug Terminal</code>，不能直接指定git-bash路径。</p>
-<p>经过一番查找，发现<span class="exturl" data-url="aHR0cHM6Ly9jb2RlLnZpc3VhbHN0dWRpby5jb20vZG9jcy9lZGl0b3IvaW50ZWdyYXRlZC10ZXJtaW5hbA==" title="https://code.visualstudio.com/docs/editor/integrated-terminal">官方文档<i class="fa fa-external-link"></i></span>已经说明可以通过设置<code>terminal.integrated.profiles.windows</code>的方法，增加一个shell选项，从而达到目的。于是我们可以在<code>settings</code>里添加一个<code>git-bash</code>选项：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">"terminal.integrated.profiles.windows": &#123;</span><br><span class="line">    "git-bash": &#123;</span><br><span class="line">        "path": "X:\\GIT_ROOT\\bin\\bash.exe"</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>然后在shell选项里就能选择git-bash了。试试看吧~</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2272,7 +2275,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">198</span>
+                    <span class="site-state-item-count">200</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
