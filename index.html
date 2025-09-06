@@ -449,7 +449,7 @@
                 
               
 
-              <time title="创建时间：2025-09-06 15:26:50 / 修改时间：15:26:38" itemprop="dateCreated datePublished" datetime="2025-09-06T15:26:50+08:00">2025-09-06</time>
+              <time title="创建时间：2025-09-06 15:26:50 / 修改时间：15:30:38" itemprop="dateCreated datePublished" datetime="2025-09-06T15:26:50+08:00">2025-09-06</time>
             
 
             
@@ -507,8 +507,8 @@
 
       
         
-          <p>在<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjUvMDMvMDkvYXJjaGlhcnQvY2hhbmdlX29ic2VydmF0aW9uX3dvcmtlci8=" title="https://utmhikari.top/2025/03/09/archiart/change_observation_worker/">先前的文章<i class="fa fa-external-link"></i></span>中，我们聊到了一个变更观测任务可以通过什么样的方式对不同的变更防控能力做统一调度，达到优越的变更风险拦截效果。但是在实战当中，变更观测任务集成了很多能力，即便风险拦截率很高，但不同能力效果也有差距，因此会有可能出现误报，导致变更观测结论不准确，影响研发发布效率。为此，一套成熟的变更观测系统，是需要嵌入一个降噪模块，通过干预变更防控拦截结果，达到在风险召回不劣化的同时，提升准确率，让结果更加置信。</p>
-<p>因此，今天笔者决定结合自己的工作经验，简单聊一下变更风险防控架构的宏观体系当中，降噪模块应当怎样接入比较合适。需要说明的是，本文不涉及具体降噪的实现，包括算法的许多部分，主要是从后端工程架构角度，聊一下怎样的架构设计，能够让变更观测任务和降噪任务完美配合起来。</p>
+          <p>在<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjUvMDMvMDkvYXJjaGlhcnQvY2hhbmdlX29ic2VydmF0aW9uX3dvcmtlci8=" title="https://utmhikari.top/2025/03/09/archiart/change_observation_worker/">先前的文章<i class="fa fa-external-link"></i></span>中，我们聊到了一个变更观测任务可以通过什么样的方式对不同的变更防控能力做统一调度，达到优越的变更风险拦截效果。但是在实战当中，变更观测任务集成了很多能力，即便风险拦截率很高，但不同能力效果也有差距，因此会有可能出现误报，导致变更观测结论不准确，影响研发发布效率。为此，一套成熟的变更观测系统，是需要嵌入一个决策降噪模块，通过干预变更防控拦截结果，达到在风险召回不劣化的同时，提升准确率，让结果更加置信。</p>
+<p>因此，今天笔者决定结合自己的工作经验，简单聊一下变更风险防控架构的宏观体系当中，决策降噪模块应当怎样接入比较合适。需要说明的是，本文不涉及具体降噪的实现，包括算法的许多部分，主要是从后端工程架构角度，聊一下怎样的架构设计，能够让变更观测任务和决策降噪任务完美配合起来。</p>
           <!--noindex-->
           
             <div class="post-button text-center">
