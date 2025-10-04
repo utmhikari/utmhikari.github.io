@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://utmhikari.github.io/2025/10/04/archiart/change_control_ability_market/</loc>
+    <lastmod>2025-10-04</lastmod>
+  </url>  <url>
+    <loc>http://utmhikari.github.io/2025/10/04/testlife/llm_game_autotest/</loc>
+    <lastmod>2025-10-04</lastmod>
+  </url>  <url>
+    <loc>http://utmhikari.github.io/2023/10/02/testlife/game_precise_test/</loc>
+    <lastmod>2025-10-04</lastmod>
+  </url>  <url>
     <loc>http://utmhikari.github.io/2025/09/06/archiart/change_control_decision_module/</loc>
     <lastmod>2025-09-06</lastmod>
   </url>  <url>
@@ -275,9 +284,6 @@
     <lastmod>2024-04-07</lastmod>
   </url>  <url>
     <loc>http://utmhikari.github.io/2020/09/06/testlife/game_autotest/</loc>
-    <lastmod>2024-04-07</lastmod>
-  </url>  <url>
-    <loc>http://utmhikari.github.io/2023/10/02/testlife/game_precise_test/</loc>
     <lastmod>2024-04-07</lastmod>
   </url>  <url>
     <loc>http://utmhikari.github.io/2019/12/06/testlife/game_testcase_with_code/</loc>
