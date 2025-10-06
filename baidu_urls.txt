@@ -1,3 +1,4 @@
+http://utmhikari.github.io/2025/10/06/geekdaily/eino_ollama_llm/
 http://utmhikari.github.io/2025/10/04/testlife/llm_game_autotest/
 http://utmhikari.github.io/2025/10/04/archiart/change_control_ability_market/
 http://utmhikari.github.io/2025/09/06/archiart/change_control_decision_module/
@@ -97,4 +98,3 @@ http://utmhikari.github.io/2022/05/14/hardpython/5_str_2/
 http://utmhikari.github.io/2022/05/08/hardpython/5_str_1/
 http://utmhikari.github.io/2022/04/16/hardpython/4_log_2/
 http://utmhikari.github.io/2022/04/09/hardpython/4_log_1/
-http://utmhikari.github.io/2022/04/03/testlife/btree_autotest_talk/

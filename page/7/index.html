@@ -404,6 +404,189 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2023/08/06/gofromzero/13_waitgroup/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2023/08/06/gofromzero/13_waitgroup/" class="post-title-link" itemprop="url">【从零单排Golang】第十三话：使用WaitGroup等待多路并行的异步任务</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2023-08-06 21:01:02" itemprop="dateCreated datePublished" datetime="2023-08-06T21:01:02+08:00">2023-08-06</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/从零单排Golang/" itemprop="url" rel="index"><span itemprop="name">从零单排Golang</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>在后端开发当中，经常会遇到这样的场景：请求给了批量的输入，对于每一个输入，我们都要给外部发请求等待返回，然后才能继续其它自己的业务逻辑。在这样的case下，如果每一个输入串行处理的话，那么很大一部分时间都会损耗在给外部发请求这个环节，因此我们会希望把这些请求放到各个goroutine里异步执行，等待批量执行完成之后再继续后面的逻辑。这个时候，我们就可以用到这个东西：sync.WaitGroup</p>
+<p>WaitGroup提供了增减计数以及阻塞等待计数归零的线程安全接口。当主goroutine增加计数并等待的时候，子goroutine的逻辑中若引用了一个WaitGroup实例的话，也可以在结束（defer）的时候去减少计数，这样当主goroutine自旋等待计数归零时，等待的逻辑就返回了，就继续后面的内容。整体上，就达到了等待多路并行的异步任务这一效果。</p>
+<p>一个典型的代码案例如下：</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2023/08/06/gofromzero/13_waitgroup/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2023/07/09/testlife/data_wash_risk/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2044,188 +2227,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2023/04/08/testlife/alibaba_stress_test/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ひかり.HDQ">
-      <meta itemprop="description" content="talk is cheap, code is rich">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HiKariのTechLab">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2023/04/08/testlife/alibaba_stress_test/" class="post-title-link" itemprop="url">【测试人生】《阿里测试之道》笔记之大促全链路压测</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2023-04-08 22:38:06" itemprop="dateCreated datePublished" datetime="2023-04-08T22:38:06+08:00">2023-04-08</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2025-04-12 23:49:25" itemprop="dateModified" datetime="2025-04-12T23:49:25+08:00">2025-04-12</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/测试人生/" itemprop="url" rel="index"><span itemprop="name">测试人生</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>在2022年，阿里出品了一本《阿里测试之道》，讲述在阿里电商、物流、金融、大数据等业务场景下，测试活动业务层面是如何开展，以及技术层面是如何实现的。笔者有幸拜读此书，从其中也有所收获。本次以其中涉及电商的测试场景为例，记录一下“大促质量保障”一章的读书笔记。这一章主要讲述了在大促场景下，全链路压测是如何实施的，以及通过什么方式保证最终大促时的生产环境稳定性。</p>
-<h2 id="风险与挑战"><a href="#风险与挑战" class="headerlink" title="风险与挑战"></a>风险与挑战</h2><p>全链路压测目标：尽可能真实模拟流量洪峰，进行高可用验证<br>用例场景需要考虑两个方面：</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2023/04/08/testlife/alibaba_stress_test/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2274,7 +2275,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">202</span>
+                    <span class="site-state-item-count">203</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -3178,7 +3179,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">420</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">423</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

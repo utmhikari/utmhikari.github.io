@@ -404,6 +404,190 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2019/10/20/geekdaily/electron_react/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/10/20/geekdaily/electron_react/" class="post-title-link" itemprop="url">【极客日常】electron+react+antd深色主题打造桌面应用</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-10-20 20:25:55" itemprop="dateCreated datePublished" datetime="2019-10-20T20:25:55+08:00">2019-10-20</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2025-04-12 23:46:37" itemprop="dateModified" datetime="2025-04-12T23:46:37+08:00">2025-04-12</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/极客日常/" itemprop="url" rel="index"><span itemprop="name">极客日常</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>桌面应用的实现方式有很多，但谈到多操作系统平台兼容的话，就不得不提到<span class="exturl" data-url="aHR0cHM6Ly9lbGVjdHJvbmpzLm9yZy8=" title="https://electronjs.org/">electron<i class="fa fa-external-link"></i></span>。electron是前端开发的利好，做过web前端的同学只要稍微迁移下自己的项目，就能够将原本的web前端变成桌面应用。</p>
+<p>因此，本文以react为例，以antd为UI库支持，讲解基于react的electron应用该如何搭建。</p>
+<p>首先，<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2VsZWN0cm9uLXJlYWN0LWJvaWxlcnBsYXRlL2VsZWN0cm9uLXJlYWN0LWJvaWxlcnBsYXRl" title="https://github.com/electron-react-boilerplate/electron-react-boilerplate">electron-react-boilerplate<i class="fa fa-external-link"></i></span>项目，就帮助我们初始化了基于react的electron应用。electron-react-boilerplate内置了flow静态类型检查机制、基于webpack的electron应用打包支持以及with redux的前端架构。故在此基础上再引入其它的lib，也不会过于困难。本文采用的electron-react-boilerplate版本为0.17.1。</p>
+<p>通过<code>yarn add antd</code>，就可以安装上antd库。要在内置的例子里以antd为layout的话，首先需要在<code>app</code>文件夹下新建<code>app.global.less</code>文件，填充内容：<code>@import &#39;../node_modules/antd/dist/antd.less&#39;;</code>，然后我们可以再观察到，<code>app/containers/Root.js</code>是redux store的抽象层，wrap了路由；路由所在的文件为<code>app/Route.js</code>，是以<code>&lt;App&gt;</code>标签为根的路由集合；<code>&lt;App&gt;</code>主界面所在的文件为<code>app/containers/App.js</code>，我们通过更改其中的内容，就可以变换主界面的样式了。我们就以antd的layout为例，写一个App主界面：</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/10/20/geekdaily/electron_react/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2019/10/20/luatalk/skynet/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2055,188 +2239,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2019/08/19/testlife/ios_review/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ひかり.HDQ">
-      <meta itemprop="description" content="talk is cheap, code is rich">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HiKariのTechLab">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/08/19/testlife/ios_review/" class="post-title-link" itemprop="url">【测试人生】iOS审核&静态扫描二三事</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-08-19 23:33:33" itemprop="dateCreated datePublished" datetime="2019-08-19T23:33:33+08:00">2019-08-19</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/测试人生/" itemprop="url" rel="index"><span itemprop="name">测试人生</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>我们的日常生活离不开手机，有些同学喜欢用国产的安卓机，而另一些同学喜欢用简约的iPhone。</p>
-<p>对比安卓和iOS的软件生态，我们可以发现：安卓软件的投放渠道繁多，题材花样繁复，质量大小不一，而iOS的投放渠道则为App Store独家，相对安卓软件来讲，不仅质量均衡，而且用户不必担心手机病毒的困扰。这一点，就归功于App Store严格的审核制度。</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/08/19/testlife/ios_review/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2285,7 +2287,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">202</span>
+                    <span class="site-state-item-count">203</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -3189,7 +3191,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">420</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">423</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

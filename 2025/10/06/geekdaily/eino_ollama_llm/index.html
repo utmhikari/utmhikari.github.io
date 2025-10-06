@@ -1,0 +1,2254 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta name="baidu-site-verification" content="sc1B5Cxcoz">
+  <meta name="google-site-verification" content="OLcRj7lMnauxKrhFT3Q8Nvcexgv22NvlEmVZShKQKR8">
+  <meta name="msvalidate.01" content="9850C66949CEE9FC01308CA6993E7147">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link rel="stylesheet" href="//cdn.staticfile.org/font-awesome/4.6.2/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/uploads/apple-touch.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/uploads/favicon-32x32.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/uploads/favicon-16x16.png?v=7.0.1">
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.1',
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"fadeIn","sidebar":"fadeIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="十一国庆正是充电的好时机，借着假期时间充裕，笔者又浅调研了一下本地LLM开发相关的工具链，看下如果是日常业余搞个人LLM的Agent项目，具体有哪些能力可用。工业界的话，因为知识保密性等各种原因，我们可能会用到兄弟部门的LLM模型或者相关Agent能力，以及市面上收费但企业内部免费的一些技术基建。但如果是个人搞LLM应用开发，就更加倾向于看有没有低成本甚至免费的办法去做本地研发了。 基于这个目的，">
+<meta name="keywords" content="Agent,LLM,Eino,Ollama,LangChain">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【极客日常】用Eino+Ollama低成本研发LLM的Agent">
+<meta property="og:url" content="http://utmhikari.github.io/2025/10/06/geekdaily/eino_ollama_llm/index.html">
+<meta property="og:site_name" content="HiKariのTechLab">
+<meta property="og:description" content="十一国庆正是充电的好时机，借着假期时间充裕，笔者又浅调研了一下本地LLM开发相关的工具链，看下如果是日常业余搞个人LLM的Agent项目，具体有哪些能力可用。工业界的话，因为知识保密性等各种原因，我们可能会用到兄弟部门的LLM模型或者相关Agent能力，以及市面上收费但企业内部免费的一些技术基建。但如果是个人搞LLM应用开发，就更加倾向于看有没有低成本甚至免费的办法去做本地研发了。 基于这个目的，">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2025-10-06T05:06:37.794Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【极客日常】用Eino+Ollama低成本研发LLM的Agent">
+<meta name="twitter:description" content="十一国庆正是充电的好时机，借着假期时间充裕，笔者又浅调研了一下本地LLM开发相关的工具链，看下如果是日常业余搞个人LLM的Agent项目，具体有哪些能力可用。工业界的话，因为知识保密性等各种原因，我们可能会用到兄弟部门的LLM模型或者相关Agent能力，以及市面上收费但企业内部免费的一些技术基建。但如果是个人搞LLM应用开发，就更加倾向于看有没有低成本甚至免费的办法去做本地研发了。 基于这个目的，">
+
+
+
+
+
+
+  <link rel="canonical" href="http://utmhikari.github.io/2025/10/06/geekdaily/eino_ollama_llm/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>【极客日常】用Eino+Ollama低成本研发LLM的Agent | HiKariのTechLab</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HiKariのTechLab</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">光の技术屋</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+  
+
+  
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="关注HiKariのGithub" aria-label="关注HiKariのGithub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></span>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2025/10/06/geekdaily/eino_ollama_llm/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">【极客日常】用Eino+Ollama低成本研发LLM的Agent
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2025-10-06 13:04:36 / 修改时间：13:06:37" itemprop="dateCreated datePublished" datetime="2025-10-06T13:04:36+08:00">2025-10-06</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/极客日常/" itemprop="url" rel="index"><span itemprop="name">极客日常</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>十一国庆正是充电的好时机，借着假期时间充裕，笔者又浅调研了一下本地LLM开发相关的工具链，看下如果是日常业余搞个人LLM的Agent项目，具体有哪些能力可用。工业界的话，因为知识保密性等各种原因，我们可能会用到兄弟部门的LLM模型或者相关Agent能力，以及市面上收费但企业内部免费的一些技术基建。但如果是个人搞LLM应用开发，就更加倾向于看有没有低成本甚至免费的办法去做本地研发了。</p>
+<p>基于这个目的，经过一番调研实操，发现只需要一个Agent开发框架加上模型Provider就能解决问题。因此本文就介绍一下，以Agent开发框架Eino，加上Ollama这个模型Provider，如何能够低成本研发LLM的Agent。针对这个主题，虽然以前也写过<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjUvMDgvMTAvZ2Vla2RhaWx5L2RldmVsb3BfYWdlbnRfYnlfY296ZS8=" title="https://utmhikari.top/2025/08/10/geekdaily/develop_agent_by_coze/">用Coze开源版研发的Case<i class="fa fa-external-link"></i></span>，但Coze本身作为一套工业界产品基建，直接拿它工作还是比较重的，本文暂且只讨论一些比较轻量的事情。</p>
+<a id="more"></a>
+<p>首先咱们需要理解模型对标现实中的啥，具体怎么提升生产力。按笔者粗浅理解的话，一个模型实例就相当于一个大脑，它节省开发者工作量的地方在于，以前的程序是开发者一行行代码编写出来的，而现在我们可以通过微调或者工具增强等方式定制化一个大脑，使得在尽可能减少确定性折损的条件下，低成本做多模态的数据转换，甚至实现另一套我们需要的程序。不管这个理解是不是精确，但至少有了这个想法的话，开发一个LLM应用思路会清晰的多。</p>
+<p>在本地，我们可以借助<span class="exturl" data-url="aHR0cHM6Ly9vbGxhbWEuY29tLw==" title="https://ollama.com/">Ollama<i class="fa fa-external-link"></i></span>工具管理多个大脑，每个大脑有不同的能力，比如gemma3可以处理视觉信息，qwen3可以做外部工具识别，bge-m3可以做文本向量化（embedding），deepseek-r1具备自思考能力，然后基本上每个模型都有问答能力，等等。在具体实现上，我们可以组合不同的模型，打造一套完善的Agent。</p>
+<p>比方说有用户问，想要去某个图片里面的地方旅游，有什么方案？那么我们的Agent可以实现成，首先借助deepseek-r1的思考能力做意图识别，发现问题包含额外图片信息，之后就调用gemma3模型（或是封装的Agent）做图片识别，识别图片里的关键地标信息，再之后结合向量数据库跟我们通过bge-m3模型embed的大量文本，我们可以构建一套地理知识库，在这个知识库里检索到这个地标对应的城市，最后再借助qwen3以及外部高德地图等工具，规划出一套完整的旅行方案，回给主脑deepseek-r1吐出来。具体怎么管理Ollama的模型，可以参考<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLm9sbGFtYS5jb20v" title="https://docs.ollama.com/">Ollama官方文档<i class="fa fa-external-link"></i></span>。</p>
+<p>为了实现这样的编排，我们需要有一套Agent开发框架，常见的就是基于Python的<span class="exturl" data-url="aHR0cHM6Ly93d3cubGFuZ2NoYWluLmNvbS8=" title="https://www.langchain.com/">LangChain<i class="fa fa-external-link"></i></span>以及基于Golang的<span class="exturl" data-url="aHR0cHM6Ly93d3cuY2xvdWR3ZWdvLmlvL3poL2RvY3MvZWluby8=" title="https://www.cloudwego.io/zh/docs/eino/">Eino<i class="fa fa-external-link"></i></span>。本文以Eino为例子，Eino内部有封装对Ollama的调用，所以通过Eino连接Ollama模型也比较简单，示例代码：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(a *EinoOllamaAgent)</span> <span class="title">Run</span><span class="params">(ctx context.Context)</span></span> &#123;</span><br><span class="line">    <span class="comment">// connect local ollama model</span></span><br><span class="line">	model, err := ollama.NewChatModel(ctx, &amp;ollama.ChatModelConfig&#123;</span><br><span class="line">		<span class="comment">// 基础配置</span></span><br><span class="line">		BaseURL: ollamaURL,        <span class="comment">// Ollama 服务地址，通常为http://localhost:11434</span></span><br><span class="line">		Timeout: <span class="number">30</span> * time.Second, <span class="comment">// 请求超时时间</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">// 模型配置</span></span><br><span class="line">		Model:  qwen3Model,                <span class="comment">// 模型名称，比如qwen3:latest</span></span><br><span class="line">		Format: json.RawMessage(<span class="string">`"json"`</span>), <span class="comment">// 输出格式（可选）</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">// 模型参数</span></span><br><span class="line">		Options: &amp;api.Options&#123;</span><br><span class="line">			Temperature: <span class="number">0.7</span>,</span><br><span class="line">			NumPredict:  <span class="number">8192</span>,</span><br><span class="line">		&#125;,</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 推理配置</span></span><br><span class="line">		Thinking: &amp;api.ThinkValue&#123;Value: <span class="literal">false</span>&#125;,</span><br><span class="line">	&#125;)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(errors.Errorf(<span class="string">"create ollama chat model failed: %v"</span>, err))</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	messages := []*schema.Message&#123;</span><br><span class="line">		schema.SystemMessage(<span class="string">"你是一个助手"</span>),</span><br><span class="line">		schema.UserMessage(<span class="string">"请用一句话介绍Ollama"</span>),</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 普通模式</span></span><br><span class="line">	response, err := model.Generate(ctx, messages)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(errors.Errorf(<span class="string">"generate msg failed: %v"</span>, err))</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Printf(<span class="string">"resp: %s\n"</span>, response.Content)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果是需要构建知识库的场景，那么我们需要做的一是把embedding模型当成通用文本向量化工具，不单独写一套代码，二是引入一个向量数据库，持久化文本向量，提供知识访问能力。如果用Eino实现的话，先给一个以内存作为向量数据库的最简单例子，当然Eino本身也有很多向量数据库Client的抽象，此处不赘述了。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Doc <span class="keyword">struct</span> &#123;</span><br><span class="line">	ID        <span class="keyword">int</span></span><br><span class="line">	Content   <span class="keyword">string</span></span><br><span class="line">	Embedding []<span class="keyword">float64</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> EinoOllamaKnowledge <span class="keyword">struct</span> &#123;</span><br><span class="line">	docs     <span class="keyword">map</span>[<span class="keyword">int</span>]*Doc</span><br><span class="line">	embedder *openai.Embedder</span><br><span class="line">	idIncr   <span class="keyword">int</span></span><br><span class="line">	idMtx    sync.Mutex</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">NewEinoOllamaKnowledge</span><span class="params">(ctx context.Context)</span> *<span class="title">EinoOllamaKnowledge</span></span> &#123;</span><br><span class="line">	embedder, err := openai.NewEmbedder(ctx, &amp;openai.EmbeddingConfig&#123;</span><br><span class="line">		BaseURL: ollamaV1URL, <span class="comment">// Ollama服务v1地址，兼容OpenAI接口</span></span><br><span class="line">		Model:   embedModel, <span class="comment">// 模型名称，比如bge-m3:latest</span></span><br><span class="line">		Timeout: <span class="number">30</span> * time.Second,</span><br><span class="line">	&#125;)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(errors.Errorf(<span class="string">"create ollama embed model failed: %v"</span>, err))</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> &amp;EinoOllamaKnowledge&#123;</span><br><span class="line">		docs:     <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">int</span>]*Doc),</span><br><span class="line">		embedder: embedder,</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(k *EinoOllamaKnowledge)</span> <span class="title">Run</span><span class="params">(ctx context.Context)</span></span> &#123;</span><br><span class="line">	texts := []<span class="keyword">string</span>&#123;</span><br><span class="line">		<span class="string">"床前明月光，疑是地上霜。举头望明月，低头思故乡。"</span>,</span><br><span class="line">		<span class="string">"离离原上草，一岁一枯荣。野火烧不尽，春风吹又生。"</span>,</span><br><span class="line">		<span class="string">"白日依山尽，黄河入海流。欲穷千里目，更上一层楼。"</span>,</span><br><span class="line">		<span class="string">"煮豆燃豆萁，豆在釜中泣。本是同根生，相煎何太急。"</span>,</span><br><span class="line">		<span class="string">"鹅鹅鹅，曲项向天歌。白毛浮绿水，红掌拨清波。"</span>,</span><br><span class="line">	&#125;</span><br><span class="line">	k.AddDocs(ctx, texts)</span><br><span class="line"></span><br><span class="line">	queries := []<span class="keyword">string</span>&#123;</span><br><span class="line">		<span class="string">"韧性"</span>,</span><br><span class="line">		<span class="string">"登高"</span>,</span><br><span class="line">		<span class="string">"夜晚"</span>,</span><br><span class="line">		<span class="string">"动物"</span>,</span><br><span class="line">		<span class="string">"兄弟"</span>,</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> _, q := <span class="keyword">range</span> queries &#123;</span><br><span class="line">		doc := k.FindMostSimilarDoc(ctx, q)</span><br><span class="line">		<span class="keyword">if</span> doc != <span class="literal">nil</span> &#123;</span><br><span class="line">			fmt.Printf(<span class="string">"query: %s, most similar doc: %s\n"</span>, q, doc.Content)</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			fmt.Printf(<span class="string">"query: %s, no similar doc found\n"</span>, q)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(k *EinoOllamaKnowledge)</span> <span class="title">genID</span><span class="params">()</span> <span class="title">int</span></span> &#123;</span><br><span class="line">	k.idMtx.Lock()</span><br><span class="line">	<span class="keyword">defer</span> k.idMtx.Unlock()</span><br><span class="line">	k.idIncr++</span><br><span class="line">	<span class="keyword">return</span> k.idIncr</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(k *EinoOllamaKnowledge)</span> <span class="title">AddDocs</span><span class="params">(ctx context.Context, texts []<span class="keyword">string</span>)</span></span> &#123;</span><br><span class="line">	embeddings, err := k.embedder.EmbedStrings(ctx, texts)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(errors.Errorf(<span class="string">"generate embedding failed: %v"</span>, err))</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> <span class="built_in">len</span>(embeddings) != <span class="built_in">len</span>(texts) &#123;</span><br><span class="line">		<span class="built_in">panic</span>(errors.Errorf(<span class="string">"embedding count not equal to text count: %d != %d"</span>, <span class="built_in">len</span>(embeddings), <span class="built_in">len</span>(texts)))</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="built_in">len</span>(texts); i++ &#123;</span><br><span class="line">		id := k.genID()</span><br><span class="line">		doc := &amp;Doc&#123;</span><br><span class="line">			ID:        id,</span><br><span class="line">			Content:   texts[i],</span><br><span class="line">			Embedding: embeddings[i],</span><br><span class="line">		&#125;</span><br><span class="line">		k.docs[id] = doc</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(k *EinoOllamaKnowledge)</span> <span class="title">GetDoc</span><span class="params">(id <span class="keyword">int</span>)</span> *<span class="title">Doc</span></span> &#123;</span><br><span class="line">	<span class="keyword">if</span> doc, ok := k.docs[id]; ok &#123;</span><br><span class="line">		<span class="keyword">return</span> doc</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// FindMostSimilarDoc 最简单的查找最相似文档的实现</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(k *EinoOllamaKnowledge)</span> <span class="title">FindMostSimilarDoc</span><span class="params">(ctx context.Context, text <span class="keyword">string</span>)</span> *<span class="title">Doc</span></span> &#123;</span><br><span class="line">	<span class="keyword">if</span> text == <span class="string">""</span> || <span class="built_in">len</span>(k.docs) == <span class="number">0</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	embeddings, err := k.embedder.EmbedStrings(ctx, []<span class="keyword">string</span>&#123;text&#125;)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(errors.Errorf(<span class="string">"generate embedding failed: %v"</span>, err))</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> <span class="built_in">len</span>(embeddings) != <span class="number">1</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(errors.Errorf(<span class="string">"embedding count not equal to text count: %d != %d"</span>, <span class="built_in">len</span>(embeddings), <span class="number">1</span>))</span><br><span class="line">	&#125;</span><br><span class="line">	queryEmbedding := embeddings[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">	cosineSimilarity := <span class="function"><span class="keyword">func</span><span class="params">(a, b []<span class="keyword">float64</span>)</span> <span class="title">float64</span></span> &#123;</span><br><span class="line">		<span class="keyword">if</span> <span class="built_in">len</span>(a) != <span class="built_in">len</span>(b) &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">var</span> dotProduct, normA, normB <span class="keyword">float64</span></span><br><span class="line">		<span class="keyword">for</span> i := <span class="keyword">range</span> a &#123;</span><br><span class="line">			dotProduct += a[i] * b[i]</span><br><span class="line">			normA += a[i] * a[i]</span><br><span class="line">			normB += b[i] * b[i]</span><br><span class="line">			<span class="keyword">if</span> normA == <span class="number">0</span> || normB == <span class="number">0</span> &#123;</span><br><span class="line">				<span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> dotProduct / (math.Sqrt(normA) * math.Sqrt(normB))</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">var</span> mostSimilar *Doc</span><br><span class="line">	maxScore := <span class="number">-1.0</span></span><br><span class="line">	<span class="keyword">for</span> _, doc := <span class="keyword">range</span> k.docs &#123;</span><br><span class="line">		score := cosineSimilarity(queryEmbedding, doc.Embedding)</span><br><span class="line">		fmt.Printf(<span class="string">"[FindMostSimilarDoc] query: %s, doc: %s, score: %v\n"</span>, text, doc.Content, score)</span><br><span class="line">		<span class="keyword">if</span> score &gt; maxScore &#123;</span><br><span class="line">			maxScore = score</span><br><span class="line">			mostSimilar = doc</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> mostSimilar</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>值得一提的是，如果这段代码转成Python也是比较容易的，比如Trae这种善于处理代码任务的Agent就可以做不同语言代码转换。假使用LangChain实现，外加ChromaDB本地持久化向量文本的话，可以这样写：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> langchain_community.embeddings <span class="keyword">import</span> OllamaEmbeddings</span><br><span class="line"><span class="keyword">from</span> langchain_community.vectorstores <span class="keyword">import</span> Chroma</span><br><span class="line"><span class="keyword">from</span> langchain.schema <span class="keyword">import</span> Document</span><br><span class="line"><span class="keyword">import</span> uuid</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> shutil</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">OllamaKnowledge</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, model=<span class="string">"bge-m3:latest"</span>, ollama_base_url=<span class="string">"http://localhost:11434"</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">                 persist_directory=<span class="string">"./chroma_db"</span>)</span>:</span></span><br><span class="line">        <span class="comment"># 初始化Ollama嵌入模型</span></span><br><span class="line">        self.embeddings = OllamaEmbeddings(</span><br><span class="line">            model=model,</span><br><span class="line">            base_url=ollama_base_url</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 初始化Chroma向量存储</span></span><br><span class="line">        self.vector_store = Chroma(</span><br><span class="line">            embedding_function=self.embeddings,</span><br><span class="line">            persist_directory=persist_directory</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add_docs</span><span class="params">(self, texts)</span>:</span></span><br><span class="line">        <span class="string">"""添加文档到向量数据库"""</span></span><br><span class="line">        documents = []</span><br><span class="line">        <span class="keyword">for</span> text <span class="keyword">in</span> texts:</span><br><span class="line">            <span class="comment"># 为每个文档生成唯一ID</span></span><br><span class="line">            doc_id = str(uuid.uuid4())</span><br><span class="line">            <span class="comment"># 创建LangChain文档对象</span></span><br><span class="line">            document = Document(</span><br><span class="line">                page_content=text,</span><br><span class="line">                metadata=&#123;<span class="string">"id"</span>: doc_id&#125;</span><br><span class="line">            )</span><br><span class="line">            documents.append(document)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 将文档添加到向量存储</span></span><br><span class="line">        self.vector_store.add_documents(documents)</span><br><span class="line">        <span class="comment"># 持久化存储</span></span><br><span class="line">        self.vector_store.persist()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">find_most_similar_doc</span><span class="params">(self, query, k=<span class="number">1</span>)</span>:</span></span><br><span class="line">        <span class="string">"""查找与查询最相似的文档"""</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> query:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 执行相似度搜索</span></span><br><span class="line">        results = self.vector_store.similarity_search_with_score(query, k=k)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> results:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 返回最相似的文档</span></span><br><span class="line">        most_similar_doc, score = results[<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">return</span> most_similar_doc, score</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run_demo</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""运行演示：添加文档并执行查询"""</span></span><br><span class="line">        <span class="comment"># 示例文档（唐诗）</span></span><br><span class="line">        texts = [</span><br><span class="line">            <span class="string">"床前明月光，疑是地上霜。举头望明月，低头思故乡。"</span>,</span><br><span class="line">            <span class="string">"离离原上草，一岁一枯荣。野火烧不尽，春风吹又生。"</span>,</span><br><span class="line">            <span class="string">"白日依山尽，黄河入海流。欲穷千里目，更上一层楼。"</span>,</span><br><span class="line">            <span class="string">"煮豆燃豆萁，豆在釜中泣。本是同根生，相煎何太急。"</span>,</span><br><span class="line">            <span class="string">"鹅鹅鹅，曲项向天歌。白毛浮绿水，红掌拨清波。"</span>,</span><br><span class="line">        ]</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 添加文档</span></span><br><span class="line">        print(<span class="string">"正在添加文档到向量数据库..."</span>)</span><br><span class="line">        self.add_docs(texts)</span><br><span class="line">        print(<span class="string">f"成功添加了 <span class="subst">&#123;len(texts)&#125;</span> 篇文档\n"</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 查询示例</span></span><br><span class="line">        queries = [<span class="string">"韧性"</span>, <span class="string">"登高"</span>, <span class="string">"夜晚"</span>, <span class="string">"动物"</span>, <span class="string">"兄弟"</span>]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> q <span class="keyword">in</span> queries:</span><br><span class="line">            result = self.find_most_similar_doc(q)</span><br><span class="line">            <span class="keyword">if</span> result:</span><br><span class="line">                doc, score = result</span><br><span class="line">                print(<span class="string">f"查询: <span class="subst">&#123;q&#125;</span>"</span>)</span><br><span class="line">                print(<span class="string">f"最相似的文档: <span class="subst">&#123;doc.page_content&#125;</span>"</span>)</span><br><span class="line">                print(<span class="string">f"相似度得分: <span class="subst">&#123;score:<span class="number">.4</span>f&#125;</span>\n"</span>)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                print(<span class="string">f"查询: <span class="subst">&#123;q&#125;</span>, 未找到相似文档\n"</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 主函数</span></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    <span class="comment"># 创建OllamaKnowledge实例</span></span><br><span class="line">    knowledge = OllamaKnowledge()</span><br><span class="line">    <span class="comment"># 运行演示</span></span><br><span class="line">    knowledge.run_demo()</span><br></pre></td></tr></table></figure>
+<p>对于复杂编排，除了可以考虑用Dify之类的可视化工具做之外，纯程序的话，Eino也提供了一套<span class="exturl" data-url="aHR0cHM6Ly93d3cuY2xvdWR3ZWdvLmlvL3poL2RvY3MvZWluby9jb3JlX21vZHVsZXMvZWlub19hZGsv" title="https://www.cloudwego.io/zh/docs/eino/core_modules/eino_adk/">ADK<i class="fa fa-external-link"></i></span>框架封装了更复杂的Agent编排功能。除了最基础的ChatModelAgent之外，再往上实现的是WorkflowAgents，里面包括Sequential、Loop以及Parallel等编排，也就是行为树的翻版，然后再继续往上就实现了Supervisor以及Plan-Execute两类封装好的应用级编排。</p>
+<p>对于调研类任务的话，有一个封装好的Plan-Execute编排，加上靠谱的数据处理模型，就可以实现一个简单的调研类Agent：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> EinoAdkAgent <span class="keyword">struct</span> &#123;</span><br><span class="line">	runner *adk.Runner</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">NewEinoAdkAgent</span><span class="params">()</span> *<span class="title">EinoAdkAgent</span></span> &#123;</span><br><span class="line">	a := &amp;EinoAdkAgent&#123;&#125;</span><br><span class="line">	<span class="keyword">if</span> err := a.init(context.Background()); err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(errors.Errorf(<span class="string">"initialize EinoAdkAgent failed: %v"</span>, err))</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> a</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(a *EinoAdkAgent)</span> <span class="title">Run</span><span class="params">(ctx context.Context)</span></span> &#123;</span><br><span class="line">	userInput := []adk.Message&#123;</span><br><span class="line">		schema.UserMessage(<span class="string">"请用中文回答如何写一篇100000字的科幻小说？"</span>),</span><br><span class="line">	&#125;</span><br><span class="line">	events := a.runner.Run(ctx, userInput)</span><br><span class="line">	<span class="keyword">for</span> &#123;</span><br><span class="line">		event, ok := events.Next()</span><br><span class="line">		<span class="keyword">if</span> !ok &#123;</span><br><span class="line">			<span class="keyword">break</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> event.Err != <span class="literal">nil</span> &#123;</span><br><span class="line">			log.Printf(<span class="string">"执行错误: %v"</span>, event.Err)</span><br><span class="line">			<span class="keyword">break</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">// 打印智能体输出（计划、执行结果、最终响应等）</span></span><br><span class="line">		<span class="keyword">if</span> msg, err := event.Output.MessageOutput.GetMessage(); err == <span class="literal">nil</span> &amp;&amp; msg.Content != <span class="string">""</span> &#123;</span><br><span class="line">			log.Printf(<span class="string">"\n=== Agent [%s] Output ===\n%s\n"</span>, event.AgentName, msg.Content)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(a *EinoAdkAgent)</span> <span class="title">init</span><span class="params">(ctx context.Context)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">	<span class="comment">// init chat model</span></span><br><span class="line">	chatModel, err := a.initChatModel(ctx)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> errors.Errorf(<span class="string">"create ollama chat model failed: %v"</span>, err)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">var</span> agent adk.Agent</span><br><span class="line"></span><br><span class="line">	<span class="comment">// init plan-executor</span></span><br><span class="line">	planExecutor, err := a.initPlanExecutor(ctx, chatModel)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> errors.Errorf(<span class="string">"create plan-executor agent failed: %v"</span>, err)</span><br><span class="line">	&#125;</span><br><span class="line">	agent = planExecutor</span><br><span class="line"></span><br><span class="line">	<span class="comment">// init runner</span></span><br><span class="line">	a.runner = adk.NewRunner(ctx, adk.RunnerConfig&#123;Agent: agent, EnableStreaming: <span class="literal">true</span>&#125;)</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(a *EinoAdkAgent)</span> <span class="title">initChatModel</span><span class="params">(ctx context.Context)</span> <span class="params">(model.ToolCallingChatModel, error)</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> ollama.NewChatModel(ctx, &amp;ollama.ChatModelConfig&#123;</span><br><span class="line">		<span class="comment">// 基础配置</span></span><br><span class="line">		BaseURL: ollamaURL,         <span class="comment">// Ollama 服务地址</span></span><br><span class="line">		Timeout: <span class="number">300</span> * time.Second, <span class="comment">// 请求超时时间</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">// 模型配置</span></span><br><span class="line">		Model: qwen3Model, <span class="comment">// 模型名称</span></span><br><span class="line">		<span class="comment">// Format: json.RawMessage(`"json"`), // 输出格式（可选）</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">// 模型参数</span></span><br><span class="line">		Options: &amp;api.Options&#123;</span><br><span class="line">			NumPredict: <span class="number">4096</span>,</span><br><span class="line">		&#125;,</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 推理配置</span></span><br><span class="line">		Thinking: &amp;api.ThinkValue&#123;Value: <span class="literal">false</span>&#125;,</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(a *EinoAdkAgent)</span> <span class="title">initPlanExecutor</span><span class="params">(ctx context.Context, chatModel model.ToolCallingChatModel)</span> <span class="params">(adk.Agent, error)</span></span> &#123;</span><br><span class="line">	<span class="comment">// init planner</span></span><br><span class="line">	planner, err := planexecute.NewPlanner(ctx, &amp;planexecute.PlannerConfig&#123;</span><br><span class="line">		ToolCallingChatModel: chatModel,</span><br><span class="line">		ToolInfo:             &amp;planexecute.PlanToolInfo, <span class="comment">// 默认 Plan 工具 schema</span></span><br><span class="line">	&#125;)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span>, errors.Errorf(<span class="string">"create planner agent failed: %v"</span>, err)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// init executor</span></span><br><span class="line">	execAgent, err := adk.NewChatModelAgent(ctx, &amp;adk.ChatModelAgentConfig&#123;</span><br><span class="line">		Name:          <span class="string">"AnySolver"</span>,</span><br><span class="line">		Description:   <span class="string">"你是一个专业的解答者，能够为任意问题生成解答方案。"</span>,</span><br><span class="line">		Instruction:   <span class="string">"你只能根据用户的问题，生成具体可执行的解答方案，不能生成任何与问题无关的内容。"</span>,</span><br><span class="line">		Model:         chatModel,</span><br><span class="line">		MaxIterations: <span class="number">1</span>,</span><br><span class="line">	&#125;)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span>, errors.Errorf(<span class="string">"create executor chat model agent failed: %v"</span>, err)</span><br><span class="line">	&#125;</span><br><span class="line">	execTool := adk.NewAgentTool(ctx, execAgent) <span class="comment">// 一个纯ChatModel占位，MCP基本收费，先不管</span></span><br><span class="line">	executor, err := planexecute.NewExecutor(ctx, &amp;planexecute.ExecutorConfig&#123;</span><br><span class="line">		Model:         chatModel,</span><br><span class="line">		MaxIterations: <span class="number">3</span>,</span><br><span class="line">		ToolsConfig: adk.ToolsConfig&#123;</span><br><span class="line">			ToolsNodeConfig: compose.ToolsNodeConfig&#123;</span><br><span class="line">				Tools: []tool.BaseTool&#123;execTool&#125;,</span><br><span class="line">			&#125;,</span><br><span class="line">		&#125;,</span><br><span class="line">	&#125;)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span>, errors.Errorf(<span class="string">"create executor agent failed: %v"</span>, err)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// init replanner</span></span><br><span class="line">	replanner, err := planexecute.NewReplanner(ctx, &amp;planexecute.ReplannerConfig&#123;</span><br><span class="line">		ChatModel: chatModel,</span><br><span class="line">	&#125;)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span>, errors.Errorf(<span class="string">"create replanner agent failed: %v"</span>, err)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// init plan-executor agent</span></span><br><span class="line">	planExecuteAgent, err := planexecute.New(ctx, &amp;planexecute.Config&#123;</span><br><span class="line">		Planner:       planner,</span><br><span class="line">		Executor:      executor,</span><br><span class="line">		Replanner:     replanner,</span><br><span class="line">		MaxIterations: <span class="number">10</span>,</span><br><span class="line">	&#125;)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span>, errors.Errorf(<span class="string">"create plan-execute agent failed: %v"</span>, err)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> planExecuteAgent, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后，如果说要把Agent效果继续优化的话，先是要有一套完善的评测系统，然后也需要有一个Trace工具了解整个Agent链路上的弱点，最后可以从工具、Prompt、模型FineTune等很多角度去做优化，从而不断完善Agent的能力。要实现一个Demo很容易，但打磨产品的任务仍然任重道远。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+      
+<div style="border: 1px solid black; margin-top: 32px; margin-bottom: 32px">
+  <div style="margin-left:10px">
+    <span style="font-weight:bold">版权声明</span>
+    <br>
+    <span>本文为博客<a href="https://utmhikari.github.io" style="color:#258FC6">HiKariのTechLab</a>原创文章，转载请标明出处，谢谢~~~</span>
+  </div>
+</div>
+
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Agent/" rel="tag"># Agent</a>
+          
+            <a href="/tags/LLM/" rel="tag"># LLM</a>
+          
+            <a href="/tags/Eino/" rel="tag"># Eino</a>
+          
+            <a href="/tags/Ollama/" rel="tag"># Ollama</a>
+          
+            <a href="/tags/LangChain/" rel="tag"># LangChain</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2025/10/04/testlife/llm_game_autotest/" rel="next" title="【测试人生】LLM赋能游戏自动化测试的一些想法">
+                <i class="fa fa-chevron-left"></i> 【测试人生】LLM赋能游戏自动化测试的一些想法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="ひかり.HDQ">
+            
+              <p class="site-author-name" itemprop="name">ひかり.HDQ</p>
+              <div class="site-description motion-element" itemprop="description">talk is cheap, code is rich</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">203</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">423</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="GitHub &rarr; https://github.com/utmhikari"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="bWFpbHRvOmhkcTk0MDYyM0AxMjYuY29t" title="Mail &rarr; mailto:hdq940623@126.com"><i class="fa fa-fw fa-envelope"></i>Mail</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80NDg4NjUwODE4MDYyMjg2L2NvbHVtbnM=" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns"><i class="fa fa-fw fa-code"></i>Juejin</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vaWQvdXRtaGlrYXJp" title="Steam &rarr; https://steamcommunity.com/id/utmhikari"><i class="fa fa-fw fa-steam"></i>Steam</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9zcGFjZS5iaWxpYmlsaS5jb20vNzc4NDEwLw==" title="Bilibili &rarr; https://space.bilibili.com/778410/"><i class="fa fa-fw fa-bold"></i>Bilibili</span>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2019 – <span itemprop="copyrightYear">2025</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ひかり.HDQ</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="//cdn.staticfile.org/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script src="//cdn.staticfile.org/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+
+  
+  <script src="//cdn.staticfile.org/velocity/1.2.1/velocity.min.js"></script>
+
+  
+  <script src="//cdn.staticfile.org/velocity/1.2.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.1"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.1"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+  <script src="/js/src/exturl.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('5');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'manual') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+if ($('body').find('pre.mermaid').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.staticfile.org/mermaid/8.0.0-rc.8/mermaid.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      mermaid.initialize({
+        theme: 'dark',
+        logLevel: 3,
+        flowchart: { curve: 'linear' },
+        gantt: { axisFormat: '%m/%d/%Y' },
+        sequence: { actorMargin: 50 }
+      });
+    }
+  });
+}
+</script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+  $('.highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+  
+
+  
+
+</body>
+</html>
