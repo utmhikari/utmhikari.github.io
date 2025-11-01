@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://utmhikari.github.io/2025/11/01/githubdiscovery/trae_agent/</loc>
+    <lastmod>2025-11-01</lastmod>
+  </url>  <url>
+    <loc>http://utmhikari.github.io/2020/04/13/githubdiscovery/theia_and_gitpod/</loc>
+    <lastmod>2025-11-01</lastmod>
+  </url>  <url>
+    <loc>http://utmhikari.github.io/2025/04/12/githubdiscovery/mcp_go/</loc>
+    <lastmod>2025-11-01</lastmod>
+  </url>  <url>
+    <loc>http://utmhikari.github.io/2025/04/12/geekdaily/mcp_llm_agent/</loc>
+    <lastmod>2025-11-01</lastmod>
+  </url>  <url>
+    <loc>http://utmhikari.github.io/2024/04/21/diymemo/devops_ai_memo/</loc>
+    <lastmod>2025-11-01</lastmod>
+  </url>  <url>
+    <loc>http://utmhikari.github.io/2025/11/01/archiart/autotest_platform_architecture/</loc>
+    <lastmod>2025-11-01</lastmod>
+  </url>  <url>
     <loc>http://utmhikari.github.io/2025/10/06/geekdaily/eino_ollama_llm/</loc>
     <lastmod>2025-10-06</lastmod>
   </url>  <url>
@@ -82,9 +100,6 @@
     <loc>http://utmhikari.github.io/2024/02/04/githubdiscovery/altershield_design/</loc>
     <lastmod>2025-05-02</lastmod>
   </url>  <url>
-    <loc>http://utmhikari.github.io/2025/04/12/githubdiscovery/mcp_go/</loc>
-    <lastmod>2025-04-19</lastmod>
-  </url>  <url>
     <loc>http://utmhikari.github.io/2022/08/13/gameofautotest/ii/</loc>
     <lastmod>2025-04-12</lastmod>
   </url>  <url>
@@ -115,9 +130,6 @@
     <loc>http://utmhikari.github.io/2023/09/03/gofromzero/15_sync_once/</loc>
     <lastmod>2025-04-12</lastmod>
   </url>  <url>
-    <loc>http://utmhikari.github.io/2025/04/12/geekdaily/mcp_llm_agent/</loc>
-    <lastmod>2025-04-12</lastmod>
-  </url>  <url>
     <loc>http://utmhikari.github.io/2025/04/04/codegallery/homemade_toolset/</loc>
     <lastmod>2025-04-04</lastmod>
   </url>  <url>
@@ -140,9 +152,6 @@
     <lastmod>2025-02-22</lastmod>
   </url>  <url>
     <loc>http://utmhikari.github.io/2025/02/21/geekdaily/geek_sense_of_product/</loc>
-    <lastmod>2025-02-21</lastmod>
-  </url>  <url>
-    <loc>http://utmhikari.github.io/2024/04/21/diymemo/devops_ai_memo/</loc>
     <lastmod>2025-02-21</lastmod>
   </url>  <url>
     <loc>http://utmhikari.github.io/2025/01/26/testlife/change_observe_logic/</loc>
@@ -476,9 +485,6 @@
     <lastmod>2024-04-07</lastmod>
   </url>  <url>
     <loc>http://utmhikari.github.io/2019/08/11/githubdiscovery/solopi/</loc>
-    <lastmod>2024-04-07</lastmod>
-  </url>  <url>
-    <loc>http://utmhikari.github.io/2020/04/13/githubdiscovery/theia_and_gitpod/</loc>
     <lastmod>2024-04-07</lastmod>
   </url>  <url>
     <loc>http://utmhikari.github.io/2020/01/12/geekdaily/mongo_multi_updatemany/</loc>

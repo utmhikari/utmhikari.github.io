@@ -1,3 +1,5 @@
+http://utmhikari.github.io/2025/11/01/githubdiscovery/trae_agent/
+http://utmhikari.github.io/2025/11/01/archiart/autotest_platform_architecture/
 http://utmhikari.github.io/2025/10/06/geekdaily/eino_ollama_llm/
 http://utmhikari.github.io/2025/10/04/testlife/llm_game_autotest/
 http://utmhikari.github.io/2025/10/04/archiart/change_control_ability_market/
@@ -96,5 +98,3 @@ http://utmhikari.github.io/2022/06/17/geekdaily/vue3_array_update/
 http://utmhikari.github.io/2022/06/05/geekdaily/electron_motrix_launcher/
 http://utmhikari.github.io/2022/05/14/hardpython/5_str_2/
 http://utmhikari.github.io/2022/05/08/hardpython/5_str_1/
-http://utmhikari.github.io/2022/04/16/hardpython/4_log_2/
-http://utmhikari.github.io/2022/04/09/hardpython/4_log_1/
