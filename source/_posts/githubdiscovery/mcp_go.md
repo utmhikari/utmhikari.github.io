@@ -7,7 +7,7 @@ tags:
 - Golang
 - MCP
 - AI
-- 大模型
+- mcp-go
 - LLM
 ---
 

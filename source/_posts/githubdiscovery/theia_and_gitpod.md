@@ -7,7 +7,7 @@ tags:
 - eclipse theia
 - gitpod
 - cloud IDE
-- vscode
+- VSCode
 - 研发效能
 ---
 

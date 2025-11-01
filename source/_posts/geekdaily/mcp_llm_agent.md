@@ -6,7 +6,7 @@ categories:
 tags:
 - MCP
 - LLM
-- 大模型
+- 协议
 - Agent
 - AI
 ---

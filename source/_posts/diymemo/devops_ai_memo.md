@@ -6,7 +6,7 @@ categories:
 tags:
 - OCR
 - AI
-- 大模型
+- 研发效能
 - ChatGPT
 - DevOps
 ---
