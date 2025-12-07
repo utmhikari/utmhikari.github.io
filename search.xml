@@ -32,7 +32,7 @@
       </tags>
   </entry>
   <entry>
-    <title>【极客日常】智能化工程AgentFlow的代码实现分析</title>
+    <title>【极客日常】智能化工程AgentFlow代码实现分析</title>
     <url>/2025/12/07/geekdaily/agentflow_code/</url>
     <content><![CDATA[<p>近期笔者因为参与LLM增强项目攻坚，对LLM工程相关的技术也希望有一定的了解，因此希望借这个机会，读一些文章充电，看看目前LLM智能化工程的一些研究趋势。在阅读了几篇文章之后，最终读者选定<span class="exturl" data-url="aHR0cHM6Ly9hZ2VudGZsb3cuc3RhbmZvcmQuZWR1Lw==" title="https://agentflow.stanford.edu/">AgentFlow<i class="fa fa-external-link"></i></span>这个项目做代码实现分析。由于笔者在算法方面的涉猎实在不深，所以本文只是抛砖引玉，阐述上有什么不专业不严谨的地方，也辛苦大家指正。</p>
 <p>AgentFlow主要解决现有LLM在进行工具增强推理时有可扩展和泛化能力差的问题，简单来说就是在线LLM-Agent服务缺乏在生产环境中RL（强化学习）的手段。所以AgentFlow提出了以下的解决方案，一是一套动态训练Planner的编排，另外一个是一套奖励目标训练算法Flow-GRPO。源码可以通过<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2x1cGFudGVjaC9BZ2VudEZsb3c=" title="https://github.com/lupantech/AgentFlow">这个GitHub<i class="fa fa-external-link"></i></span>来下载，跑了一番看Agent编排的实现比较完整，但在线服务跟训练的部署执行会比较难搞，所以本文更倾向于对Agent编排做详细阐述。</p>
