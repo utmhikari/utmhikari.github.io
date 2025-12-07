@@ -404,6 +404,354 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2024/12/21/pythonnotes/pyside6_simple_app/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2024/12/21/pythonnotes/pyside6_simple_app/" class="post-title-link" itemprop="url">【Python随笔】如何用pyside6开发并部署简单的postman工具</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2024-12-21 19:42:13 / 修改时间：19:42:15" itemprop="dateCreated datePublished" datetime="2024-12-21T19:42:13+08:00">2024-12-21</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Python随笔/" itemprop="url" rel="index"><span itemprop="name">Python随笔</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>最近一段时间闲来无事，简单研究了一下pyside6，也就是PyQt5的升级版。做这个的目的，也是回顾下桌面开发的基础，兴许未来可能用得上。虽然在日常工作中，可能用到桌面开发的场景比较少，桌面工具的成果也比较难包装，但有一个这样的工具，确实可以解决许多工作效率方面的问题。</p>
+<p>在之前笔者也写过几篇pyside6文章，但不是特别系统，比如说：</p>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjQvMDgvMTEvcHl0aG9ubm90ZXMvcHlzaWRlNl9pbnRyby8=" title="https://utmhikari.top/2024/08/11/pythonnotes/pyside6_intro/">pyside6安装<i class="fa fa-external-link"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjQvMTAvMTMvcHl0aG9ubm90ZXMvcHlzaWRlNl9jbG9ja3Mv" title="https://utmhikari.top/2024/10/13/pythonnotes/pyside6_clocks/">pyside6绘制时钟<i class="fa fa-external-link"></i></span></li>
+</ul>
+<p>因此，今天这篇文章就系统分享一下，怎么样用pyside6写一个postman接口调用的小功能，开发并部署出来。作为一个自己写的教学文章，这篇文章会重点提一些自己觉得实操过程中的要点，少一些ChatGPT就能回答的东西。有了这些基础之后，做其他的工具需求，也会变得更加简单一点。</p>
+<h2 id="项目初始化"><a href="#项目初始化" class="headerlink" title="项目初始化"></a>项目初始化</h2><p>安装方面不再赘述，详情可以看官网的<span class="exturl" data-url="aHR0cHM6Ly9kb2MucXQuaW8vcXRmb3JweXRob24tNi9nZXR0aW5nc3RhcnRlZC5odG1s" title="https://doc.qt.io/qtforpython-6/gettingstarted.html">Getting Started<i class="fa fa-external-link"></i></span>以及<span class="exturl" data-url="aHR0cHM6Ly9kb2MucXQuaW8vcXRmb3JweXRob24tNi90b29scy9pbmRleC5odG1s" title="https://doc.qt.io/qtforpython-6/tools/index.html">Tools<i class="fa fa-external-link"></i></span>的部分，然后先前的文章也基本上把目录组织和最小demo给讲清楚了。</p>
+<p>核心要解决的问题就是通过目录组织，把工作流的每一个模块给拆出来，互不影响。比如这样：</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2024/12/21/pythonnotes/pyside6_simple_app/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2024/12/21/pythonnotes/enigma_implementation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2024/12/21/pythonnotes/enigma_implementation/" class="post-title-link" itemprop="url">【Python随笔】Enigma密码机的原理及python代码实现</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2024-12-21 17:55:59 / 修改时间：18:16:48" itemprop="dateCreated datePublished" datetime="2024-12-21T17:55:59+08:00">2024-12-21</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Python随笔/" itemprop="url" rel="index"><span itemprop="name">Python随笔</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>最近笔者接触到了Cypher这款游戏，玩法很简单，就是通过文字、图片等各种表达手段组成的谜面，猜一段英文，算是初步接触了密码学的一些知识。游戏中提到了很多类型的密码，其中Enigma密码机就是单独一种，在电影《模仿游戏》中，夏洛克.福尔摩斯费尽心力破解的德军密码，也就出自此密码机之手。在游戏里，有一道题目便是，需要根据Enigma密码机的初始设置，破译一段密文，得到明文。没办法，为了解出来这道题，只能发挥程序员的职业本性，写一段程序来跑一下了。</p>
+<p>今天，笔者就分享一下自己用python实现的Enigma密码机，虽然代码非常粗糙，有很多优化空间，但整体逻辑比较清晰，尤其是解Cypher游戏里的题目，已经够用了。</p>
+<p>简单来讲，一个Engima密码机是分层的，包含以下几个部分：</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2024/12/21/pythonnotes/enigma_implementation/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2024/11/03/archiart/stability_basics/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1761,346 +2109,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2024/08/17/testlife/work_and_study/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ひかり.HDQ">
-      <meta itemprop="description" content="talk is cheap, code is rich">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HiKariのTechLab">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2024/08/17/testlife/work_and_study/" class="post-title-link" itemprop="url">【测试人生】分享下自己对于平衡日常工作和学习提升的观点</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2024-08-17 13:29:55 / 修改时间：13:32:36" itemprop="dateCreated datePublished" datetime="2024-08-17T13:29:55+08:00">2024-08-17</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/测试人生/" itemprop="url" rel="index"><span itemprop="name">测试人生</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>日常工作总是琐碎的，尤其是技术岗，沉浸在日常的需求开发、需求测试和bugfix里，很容易对工作环境形成依赖，导致没有成长空间。那么这种情况下，怎么样去平衡日常工作和自我的学习提升呢？今天，笔者就通过这篇文章，分享下自己的观点。</p>
-<p>核心的思想是：工作只是生活的一部分，要自己掌控自己的生活，不要让工作掌控自己的生活。要相信自己的直觉，不要过分消耗自己，坚持去做自我提升的事情，无论是不是通过工作去实现。</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2024/08/17/testlife/work_and_study/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2024/08/17/geekdaily/low_code_talk/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ひかり.HDQ">
-      <meta itemprop="description" content="talk is cheap, code is rich">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HiKariのTechLab">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2024/08/17/geekdaily/low_code_talk/" class="post-title-link" itemprop="url">【极客日常】对低代码开发模式的一些思考和想法</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2024-08-17 11:21:15 / 修改时间：13:30:07" itemprop="dateCreated datePublished" datetime="2024-08-17T11:21:15+08:00">2024-08-17</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/极客日常/" itemprop="url" rel="index"><span itemprop="name">极客日常</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>低代码这个名词说起来已经有些年头了，广义上来讲可以说是达到这么一种效果，即尽量减少通过编写代码的方式来完成研发任务，甚至部署交付整个技术产品。那么低代码模式到底值不值得弄，有什么优势和缺陷，本篇文章笔者就来聊一聊自己对于低代码的一些思考跟想法。</p>
-<p>做技术的都知道，实际工作场合上，不能为了技术而技术。低代码也是一样，这门技术最重点解决的问题是，让不懂代码的人可以通过一套工具来完成自己开发的作品，所以从产品角度，低代码工具应当更加倾向于提升易用性，而非提升功能性。假设我要开发一个服务，我手写代码+手动部署需要3天，而学习低代码工具+完成服务搭建只需要1天，那么这种情境下，低代码工具就能够兑现自己的价值。</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2024/08/17/geekdaily/low_code_talk/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2149,7 +2157,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">205</span>
+                    <span class="site-state-item-count">207</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -3063,7 +3071,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">423</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">425</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

@@ -1,0 +1,2320 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta name="baidu-site-verification" content="sc1B5Cxcoz">
+  <meta name="google-site-verification" content="OLcRj7lMnauxKrhFT3Q8Nvcexgv22NvlEmVZShKQKR8">
+  <meta name="msvalidate.01" content="9850C66949CEE9FC01308CA6993E7147">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/uploads/apple-touch.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/uploads/favicon-32x32.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/uploads/favicon-16x16.png?v=7.0.1">
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.1',
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"fadeIn","sidebar":"fadeIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="近期笔者因为参与LLM增强项目攻坚，对LLM工程相关的技术也希望有一定的了解，因此希望借这个机会，读一些文章充电，看看目前LLM智能化工程的一些研究趋势。在阅读了几篇文章之后，最终读者选定AgentFlow这个项目做代码实现分析。由于笔者在算法方面的涉猎实在不深，所以本文只是抛砖引玉，阐述上有什么不专业不严谨的地方，也辛苦大家指正。 AgentFlow主要解决现有LLM在进行工具增强推理时有可扩展">
+<meta name="keywords" content="AI,源码分析,LLM,AgentFlow,强化学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【极客日常】智能化工程AgentFlow的代码实现分析">
+<meta property="og:url" content="http://utmhikari.github.io/2025/12/07/geekdaily/agentflow_code/index.html">
+<meta property="og:site_name" content="HiKariのTechLab">
+<meta property="og:description" content="近期笔者因为参与LLM增强项目攻坚，对LLM工程相关的技术也希望有一定的了解，因此希望借这个机会，读一些文章充电，看看目前LLM智能化工程的一些研究趋势。在阅读了几篇文章之后，最终读者选定AgentFlow这个项目做代码实现分析。由于笔者在算法方面的涉猎实在不深，所以本文只是抛砖引玉，阐述上有什么不专业不严谨的地方，也辛苦大家指正。 AgentFlow主要解决现有LLM在进行工具增强推理时有可扩展">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2025-12-07T06:38:06.193Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【极客日常】智能化工程AgentFlow的代码实现分析">
+<meta name="twitter:description" content="近期笔者因为参与LLM增强项目攻坚，对LLM工程相关的技术也希望有一定的了解，因此希望借这个机会，读一些文章充电，看看目前LLM智能化工程的一些研究趋势。在阅读了几篇文章之后，最终读者选定AgentFlow这个项目做代码实现分析。由于笔者在算法方面的涉猎实在不深，所以本文只是抛砖引玉，阐述上有什么不专业不严谨的地方，也辛苦大家指正。 AgentFlow主要解决现有LLM在进行工具增强推理时有可扩展">
+
+
+
+
+
+
+  <link rel="canonical" href="http://utmhikari.github.io/2025/12/07/geekdaily/agentflow_code/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>【极客日常】智能化工程AgentFlow的代码实现分析 | HiKariのTechLab</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HiKariのTechLab</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">光の技术屋</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+  
+
+  
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="关注HiKariのGithub" aria-label="关注HiKariのGithub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></span>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2025/12/07/geekdaily/agentflow_code/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">【极客日常】智能化工程AgentFlow的代码实现分析
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2025-12-07 13:30:22 / 修改时间：14:38:06" itemprop="dateCreated datePublished" datetime="2025-12-07T13:30:22+08:00">2025-12-07</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/极客日常/" itemprop="url" rel="index"><span itemprop="name">极客日常</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>近期笔者因为参与LLM增强项目攻坚，对LLM工程相关的技术也希望有一定的了解，因此希望借这个机会，读一些文章充电，看看目前LLM智能化工程的一些研究趋势。在阅读了几篇文章之后，最终读者选定<span class="exturl" data-url="aHR0cHM6Ly9hZ2VudGZsb3cuc3RhbmZvcmQuZWR1Lw==" title="https://agentflow.stanford.edu/">AgentFlow<i class="fa fa-external-link"></i></span>这个项目做代码实现分析。由于笔者在算法方面的涉猎实在不深，所以本文只是抛砖引玉，阐述上有什么不专业不严谨的地方，也辛苦大家指正。</p>
+<p>AgentFlow主要解决现有LLM在进行工具增强推理时有可扩展和泛化能力差的问题，简单来说就是在线LLM-Agent服务缺乏在生产环境中RL（强化学习）的手段。所以AgentFlow提出了以下的解决方案，一是一套动态训练Planner的编排，另外一个是一套奖励目标训练算法Flow-GRPO。源码可以通过<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2x1cGFudGVjaC9BZ2VudEZsb3c=" title="https://github.com/lupantech/AgentFlow">这个GitHub<i class="fa fa-external-link"></i></span>来下载，跑了一番看Agent编排的实现比较完整，但在线服务跟训练的部署执行会比较难搞，所以本文更倾向于对Agent编排做详细阐述。</p>
+<p>Agent编排包含Planner、Executor、Verifier跟Generator四个角色，Planner会不断Rollout判断下一步要做什么，Executor执行ToolCall，Verifier判断当前问题是否解决，Generator负责整合Output。整个核心代码集中在Solver.solve，长这个样子：</p>
+<a id="more"></a>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solver</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">solve</span><span class="params">(self, question: str, image_path: Optional[str] = None)</span>:</span></span><br><span class="line">        <span class="comment"># Update cache directory for the executor</span></span><br><span class="line">        self.executor.set_query_cache_dir(self.root_cache_dir)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Initialize json_data with basic problem information</span></span><br><span class="line">        json_data = &#123;</span><br><span class="line">            <span class="string">"query"</span>: question,</span><br><span class="line">            <span class="string">"image"</span>: image_path</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Generate base response if requested</span></span><br><span class="line">        <span class="keyword">if</span> <span class="string">'base'</span> <span class="keyword">in</span> self.output_types:</span><br><span class="line">            base_response = self.planner.generate_base_response(question, image_path, self.max_tokens)</span><br><span class="line">            json_data[<span class="string">"base_response"</span>] = base_response</span><br><span class="line"></span><br><span class="line">        <span class="comment"># If only base response is needed, save and return</span></span><br><span class="line">        <span class="keyword">if</span> set(self.output_types) == &#123;<span class="string">'base'</span>&#125;:</span><br><span class="line">            <span class="keyword">return</span> json_data</span><br><span class="line">    </span><br><span class="line">        <span class="comment"># Continue with query analysis and tool execution if final or direct responses are needed</span></span><br><span class="line">        <span class="keyword">if</span> &#123;<span class="string">'final'</span>, <span class="string">'direct'</span>&#125; &amp; set(self.output_types):</span><br><span class="line">            <span class="comment"># [1] Analyze query</span></span><br><span class="line">            query_start_time = time.time()</span><br><span class="line">            query_analysis = self.planner.analyze_query(question, image_path)</span><br><span class="line">            json_data[<span class="string">"query_analysis"</span>] = query_analysis</span><br><span class="line"></span><br><span class="line">            <span class="comment"># Main execution loop</span></span><br><span class="line">            step_count = <span class="number">0</span></span><br><span class="line">            action_times = []</span><br><span class="line">            <span class="keyword">while</span> step_count &lt; self.max_steps <span class="keyword">and</span> (time.time() - query_start_time) &lt; self.max_time:</span><br><span class="line">                step_count += <span class="number">1</span></span><br><span class="line">                step_start_time = time.time()</span><br><span class="line"></span><br><span class="line">                <span class="comment"># [2] Generate next step</span></span><br><span class="line">                local_start_time = time.time()</span><br><span class="line">                next_step = self.planner.generate_next_step(</span><br><span class="line">                    question, </span><br><span class="line">                    image_path, </span><br><span class="line">                    query_analysis, </span><br><span class="line">                    self.memory, </span><br><span class="line">                    step_count, </span><br><span class="line">                    self.max_steps,</span><br><span class="line">                    json_data</span><br><span class="line">                )</span><br><span class="line">                context, sub_goal, tool_name = self.planner.extract_context_subgoal_and_tool(next_step)</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> tool_name <span class="keyword">is</span> <span class="literal">None</span> <span class="keyword">or</span> tool_name <span class="keyword">not</span> <span class="keyword">in</span> self.planner.available_tools:</span><br><span class="line">                    print(<span class="string">f"\n==&gt; 🚫 Error: Tool '<span class="subst">&#123;tool_name&#125;</span>' is not available or not found."</span>)</span><br><span class="line">                    command = <span class="string">"No command was generated because the tool was not found."</span></span><br><span class="line">                    result = <span class="string">"No result was generated because the tool was not found."</span></span><br><span class="line"></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    <span class="comment"># [3] Generate the tool command</span></span><br><span class="line">                    local_start_time = time.time()</span><br><span class="line">                    tool_command = self.executor.generate_tool_command(</span><br><span class="line">                        question, </span><br><span class="line">                        image_path, </span><br><span class="line">                        context, </span><br><span class="line">                        sub_goal, </span><br><span class="line">                        tool_name, </span><br><span class="line">                        self.planner.toolbox_metadata[tool_name],</span><br><span class="line">                        step_count,</span><br><span class="line">                        json_data</span><br><span class="line">                    )</span><br><span class="line">                    analysis, explanation, command = self.executor.extract_explanation_and_command(tool_command)</span><br><span class="line">                    </span><br><span class="line">                    <span class="comment"># [4] Execute the tool command</span></span><br><span class="line">                    local_start_time = time.time()</span><br><span class="line">                    result = self.executor.execute_tool_command(tool_name, command)</span><br><span class="line">                    result = make_json_serializable_truncated(result) <span class="comment"># Convert to JSON serializable format</span></span><br><span class="line">                    json_data[<span class="string">f"tool_result_<span class="subst">&#123;step_count&#125;</span>"</span>] = result</span><br><span class="line">                </span><br><span class="line">                <span class="comment"># Track execution time for the current step</span></span><br><span class="line">                execution_time_step = round(time.time() - step_start_time, <span class="number">2</span>)</span><br><span class="line">                action_times.append(execution_time_step)</span><br><span class="line"></span><br><span class="line">                <span class="comment"># Update memory</span></span><br><span class="line">                self.memory.add_action(step_count, tool_name, sub_goal, command, result)</span><br><span class="line">                memory_actions = self.memory.get_actions()</span><br><span class="line"></span><br><span class="line">                <span class="comment"># [5] Verify memory (context verification)</span></span><br><span class="line">                local_start_time = time.time()</span><br><span class="line">                stop_verification = self.planner.verificate_context(</span><br><span class="line">                    question, </span><br><span class="line">                    image_path, </span><br><span class="line">                    query_analysis, </span><br><span class="line">                    self.memory,</span><br><span class="line">                    step_count,</span><br><span class="line">                    json_data</span><br><span class="line">                )</span><br><span class="line">                context_verification, conclusion = self.planner.extract_conclusion(stop_verification)</span><br><span class="line">                </span><br><span class="line">                <span class="comment"># Break the loop if the context is verified</span></span><br><span class="line">                <span class="keyword">if</span> conclusion == <span class="string">'STOP'</span>:</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">            <span class="comment"># Add memory and statistics to json_data</span></span><br><span class="line">            json_data.update(&#123;</span><br><span class="line">                <span class="string">"memory"</span>: memory_actions,</span><br><span class="line">                <span class="string">"step_count"</span>: step_count,</span><br><span class="line">                <span class="string">"execution_time"</span>: round(time.time() - query_start_time, <span class="number">2</span>),</span><br><span class="line">            &#125;)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># Generate final output if requested</span></span><br><span class="line">            <span class="keyword">if</span> <span class="string">'final'</span> <span class="keyword">in</span> self.output_types:</span><br><span class="line">                final_output = self.planner.generate_final_output(question, image_path, self.memory)</span><br><span class="line">                json_data[<span class="string">"final_output"</span>] = final_output</span><br><span class="line">                print(<span class="string">f"\n==&gt; 🐙 Detailed Solution:\n\n<span class="subst">&#123;final_output&#125;</span>"</span>)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># Generate direct output if requested</span></span><br><span class="line">            <span class="keyword">if</span> <span class="string">'direct'</span> <span class="keyword">in</span> self.output_types:</span><br><span class="line">                direct_output = self.planner.generate_direct_output(question, image_path, self.memory)</span><br><span class="line">                json_data[<span class="string">"direct_output"</span>] = direct_output</span><br><span class="line">                print(<span class="string">f"\n==&gt; 🐙 Final Answer:\n\n<span class="subst">&#123;direct_output&#125;</span>"</span>)</span><br><span class="line"></span><br><span class="line">            print(<span class="string">f"\n[Total Time]: <span class="subst">&#123;round(time.time() - query_start_time, <span class="number">2</span>)&#125;</span>s"</span>)</span><br><span class="line">            print(<span class="string">f"\n==&gt; ✅ Query Solved!"</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> json_data</span><br></pre></td></tr></table></figure>
+<p>详细来讲是这样一个流程：</p>
+<ul>
+<li>Analyze Query<ul>
+<li>Inputs：Question &amp; Tools -&gt; Inject Into Prompts</li>
+<li>Outputs: Query Analysis -&gt; Brief &amp; Concise</li>
+</ul>
+</li>
+<li>Main Execution Loop<ul>
+<li>Planner.generate_next_step<ul>
+<li>Inputs: Question, Query Analysis, Memory &amp; StepCount -&gt; Inject Into Prompts</li>
+<li>Outputs: NextStep -&gt; Justification, Context, SubGoal &amp; ToolName</li>
+</ul>
+</li>
+<li>Planner.extract_subgoal_and_tool -&gt; JSON or REGEX<ul>
+<li>Inputs: NextStep</li>
+<li>Outputs: Context, SubGoal &amp; ToolName</li>
+</ul>
+</li>
+<li>CallTool if tool is active<ul>
+<li>Executor.generate_tool_command<ul>
+<li>Inputs: Question, Context, SubGoal &amp; ToolMeta -&gt; Inject Into Prompts</li>
+<li>Outputs: ToolCommand</li>
+</ul>
+</li>
+<li>Executor.extract_explanation_and_command<ul>
+<li>Inputs: ToolCommand</li>
+<li>Outputs: analysis, explanation &amp; command</li>
+</ul>
+</li>
+<li>Executor.execute_tool_command<ul>
+<li>Inputs: ToolName &amp; Command</li>
+<li>Outputs: Result</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Memory.add_action<ul>
+<li>Inputs：StepCount, ToolName, SubGoal, Command, Result</li>
+</ul>
+</li>
+<li>Planner.verificate_context -&gt; verify memory<ul>
+<li>Inputs: Question, Query Analysis, Memory, StepCount -&gt; Inject Into Prompts</li>
+<li>Outputs: Stop Verification -&gt; Explanation + STOP/CONTINUE</li>
+</ul>
+</li>
+<li>Planner.extract_conclusion -&gt; JSON or REGEX<ul>
+<li>Inputs: Stop Verification</li>
+<li>Outputs: Context Verification (Explanation), Conclusion (STOP/CONTINUE)</li>
+</ul>
+</li>
+<li>Planner.generate_final_output/generate_direct_output<ul>
+<li>Inputs: Question, Memory -&gt; Inject Into Prompts</li>
+<li>Outputs: Chat Response</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>本质上这套流程是一个多回合的MDP（马尔可夫决策过程），通过上面4个模块的协作，不断逼近最合理的答案。但仅仅有这个框架还是不够的，纯Rollout逼近的效果理论上肯定没有经过训练之后的好。所以paper里采用Flow-GRPO这套体系提供生产环境训练能力，有两个关键点：</p>
+<ul>
+<li>QA奖励：单次QA奖励会广播到每个step，最终结果影响每个step的决策奖励；</li>
+<li>Group-Normalized-Advantages（组归一化优势）：在每个训练批次中，算法对同一批次（并行rollouts）所有轨迹的优势函数做归一化，确保优化梯度合理，本质也符合<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8yMTA0NjI2NTA3Mg==" title="https://zhuanlan.zhihu.com/p/21046265072">GRPO<i class="fa fa-external-link"></i></span>的思路。</li>
+</ul>
+<p>要详细了解AgentFlow这套GRPO实现的话，可以看<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8xOTY4OTg0NTQxNzI2MjQ1Mzc5" title="https://zhuanlan.zhihu.com/p/1968984541726245379">这个<i class="fa fa-external-link"></i></span>以及<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8xOTYwODQ0MzcwMzIxMzQ3MzUw" title="https://zhuanlan.zhihu.com/p/1960844370321347350">另一个<i class="fa fa-external-link"></i></span>知乎文章，此处不再赘述。代码方面的话，目前笔者没有跑通，也有可能需要借助verl、cuda之类环境才可以把整个训练验证跑起来。从已有信息来看，也许训练逻辑走到了下面的代码，通过training_rollout_async和_solve_and_evaluate保证训练集的Rollout和评测可并发进行，然后产出一批rollout_data，但rollout_data的消费逻辑目前还不明确。具体的话，可以参考目前rollout的逻辑：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Rollout</span><span class="params">(LitAgent)</span>:</span></span><br><span class="line">    <span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">_solve_and_evaluate</span><span class="params">(self, rollout: AgentFlowRollout, task: Any, step_n: int, val: bool = False)</span>:</span></span><br><span class="line">        <span class="string">"""A helper function to run the agent, parse the result, and evaluate it."""</span></span><br><span class="line">        result = &#123;&#125;</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            output_format = <span class="string">"When ready, output the final answer enclosed in &lt;answer&gt; and &lt;/answer&gt; tags. Do not generate any content after the &lt;/answer&gt; tag."</span></span><br><span class="line">            prompt = task[<span class="string">"question"</span>] + <span class="string">" "</span> + output_format</span><br><span class="line">            <span class="comment"># prompt = task["question"]</span></span><br><span class="line">            result = rollout.solve(question=prompt)</span><br><span class="line">            </span><br><span class="line">            <span class="comment"># Safely check for and extract the final answer</span></span><br><span class="line">            <span class="keyword">if</span> <span class="string">"direct_output"</span> <span class="keyword">in</span> result <span class="keyword">and</span> result[<span class="string">"direct_output"</span>]:</span><br><span class="line">                final_output = result[<span class="string">"direct_output"</span>]</span><br><span class="line">                all_matches = re.findall(<span class="string">r"&lt;answer&gt;(.*?)&lt;/answer&gt;"</span>, final_output, re.DOTALL)</span><br><span class="line">                <span class="keyword">if</span> all_matches:</span><br><span class="line">                    answer = all_matches[<span class="number">-1</span>].strip()</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    answer = final_output</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                print(<span class="string">"Warning: Result has no direct_output or direct_output is empty."</span>)</span><br><span class="line">                answer = <span class="string">"None"</span></span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">            print(<span class="string">f"Failure during agent execution: <span class="subst">&#123;str(e)&#125;</span>. Defaulting to 'None'."</span>)</span><br><span class="line">            answer = <span class="string">"None"</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># Evaluate the answer against the ground truth</span></span><br><span class="line">        reward_value = <span class="keyword">await</span> eval(task[<span class="string">"question"</span>], str(task[<span class="string">"result"</span>]), answer, val)  <span class="comment"># reward is tracked with the decorator</span></span><br><span class="line">        print(<span class="string">"answer: &#123;&#125; ground_truth: &#123;&#125; reward: &#123;&#125;"</span>.format(answer, task[<span class="string">"result"</span>], reward_value))</span><br><span class="line"></span><br><span class="line">        idx = task.get(<span class="string">"extra_info"</span>, &#123;&#125;).get(<span class="string">"idx"</span>, <span class="string">"unknown_idx"</span>)</span><br><span class="line"></span><br><span class="line">        rollout_data = &#123;</span><br><span class="line">            <span class="string">"step"</span>: task.get(<span class="string">"step"</span>, <span class="string">""</span>), <span class="comment"># <span class="doctag">TODO:</span> check whether it can be solved</span></span><br><span class="line">            <span class="string">"idx"</span>: idx,</span><br><span class="line">            <span class="string">"id"</span>: task.get(<span class="string">"id"</span>, <span class="string">""</span>),</span><br><span class="line">            <span class="string">"prompt"</span>: task[<span class="string">"question"</span>],</span><br><span class="line">            <span class="string">"model"</span>:rollout.llm_engine,</span><br><span class="line">            <span class="string">"tools"</span>:self.tools,</span><br><span class="line">            <span class="string">"groundtruth"</span>: task.get(<span class="string">"extra_info"</span>, &#123;&#125;).get(<span class="string">"groundtruth"</span>, task[<span class="string">"result"</span>]),</span><br><span class="line">            <span class="string">"answer_extracted"</span>: answer,</span><br><span class="line">            <span class="string">"reward"</span>: reward_value,</span><br><span class="line">            <span class="string">"total_result"</span>:result,</span><br><span class="line">            <span class="string">"timestamp"</span>: datetime.now().isoformat(),</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        data_id = str(uuid.uuid4())</span><br><span class="line">        filename = <span class="string">f"rollout_<span class="subst">&#123;data_id&#125;</span>.json"</span></span><br><span class="line"></span><br><span class="line">        save_dir = self.val_rollout_dir <span class="keyword">if</span> val <span class="keyword">else</span> self.train_rollout_dir</span><br><span class="line"></span><br><span class="line">        <span class="comment"># This function now uses the `step_n` passed as an argument.</span></span><br><span class="line">        step_dir = os.path.join(save_dir, <span class="string">f"step_<span class="subst">&#123;step_n&#125;</span>"</span>)</span><br><span class="line">        </span><br><span class="line">        idx_dir = os.path.join(step_dir, <span class="string">f"idx_<span class="subst">&#123;idx&#125;</span>"</span>)</span><br><span class="line">        os.makedirs(idx_dir, exist_ok=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">        json_count = sum(</span><br><span class="line">            len([f <span class="keyword">for</span> f <span class="keyword">in</span> files <span class="keyword">if</span> f.endswith(<span class="string">".json"</span>)])</span><br><span class="line">            <span class="keyword">for</span> root, dirs, files <span class="keyword">in</span> os.walk(idx_dir)</span><br><span class="line">        )</span><br><span class="line">        <span class="keyword">assert</span> json_count &lt; self.rollout_num, \</span><br><span class="line">            <span class="string">f"Too many rollouts for idx <span class="subst">&#123;idx&#125;</span>: already <span class="subst">&#123;json_count&#125;</span> &gt;= <span class="subst">&#123;self.rollout_num&#125;</span>"</span></span><br><span class="line"></span><br><span class="line">        save_path = os.path.join(idx_dir, filename)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">with</span> open(save_path, <span class="string">"w"</span>) <span class="keyword">as</span> f:</span><br><span class="line">            json.dump(rollout_data, f, indent=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">        print(<span class="string">f"Rollout data saved to: <span class="subst">&#123;save_path&#125;</span>"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">training_rollout_async</span><span class="params">(self, task: Any, rollout_id: str, resources: NamedResources, val: bool = False)</span> -&gt; Any:</span></span><br><span class="line">        <span class="keyword">await</span> self._initialize_run_once(resources)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> self.training_agent <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            print(<span class="string">"Initializing training agent..."</span>)</span><br><span class="line">            llm: LLM = resources.get(<span class="string">"main_llm"</span>)</span><br><span class="line">            self.training_agent = get_agent(</span><br><span class="line">                llm.model,</span><br><span class="line">                llm.endpoint,</span><br><span class="line">                temperature=self.train_temperature,</span><br><span class="line">                tools = self.tools,</span><br><span class="line">                max_steps = self.max_steps,</span><br><span class="line">                tool_engine = self.tool_engine,</span><br><span class="line">                resources = resources,</span><br><span class="line">                max_tokens = self.max_tokens,</span><br><span class="line">                output_type= self.output_type,</span><br><span class="line">                timeout= self.timeout,</span><br><span class="line">            )</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># filelock to determine step_n ---</span></span><br><span class="line">        lock = FileLock(self.train_lock_file, timeout=<span class="number">30</span>)</span><br><span class="line">        <span class="keyword">with</span> lock:</span><br><span class="line">            step_dirs = [d <span class="keyword">for</span> d <span class="keyword">in</span> os.listdir(self.train_rollout_dir) <span class="keyword">if</span> d.startswith(<span class="string">"step_"</span>)]</span><br><span class="line">            step_nums = [int(d.replace(<span class="string">"step_"</span>, <span class="string">""</span>)) <span class="keyword">for</span> d <span class="keyword">in</span> step_dirs <span class="keyword">if</span> d.replace(<span class="string">"step_"</span>, <span class="string">""</span>).isdigit()]</span><br><span class="line">            </span><br><span class="line">            current_step_n = <span class="number">1</span></span><br><span class="line">            <span class="keyword">if</span> step_nums:</span><br><span class="line">                current_step_n = max(step_nums)</span><br><span class="line"></span><br><span class="line">            current_step_dir = os.path.join(self.train_rollout_dir, <span class="string">f"step_<span class="subst">&#123;current_step_n&#125;</span>"</span>)</span><br><span class="line">            <span class="keyword">if</span> os.path.exists(current_step_dir):</span><br><span class="line">                num_items_in_step = len(os.listdir(current_step_dir))</span><br><span class="line">                <span class="keyword">if</span> num_items_in_step &gt;= self.train_batch_size:</span><br><span class="line">                    current_step_n += <span class="number">1</span></span><br><span class="line">            </span><br><span class="line">            step_n = current_step_n</span><br><span class="line"></span><br><span class="line">        <span class="keyword">await</span> self._solve_and_evaluate(self.training_agent, task, step_n, val)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+      
+<div style="border: 1px solid black; margin-top: 32px; margin-bottom: 32px">
+  <div style="margin-left:10px">
+    <span style="font-weight:bold">版权声明</span>
+    <br>
+    <span>本文为博客<a href="https://utmhikari.github.io" style="color:#258FC6">HiKariのTechLab</a>原创文章，转载请标明出处，谢谢~~~</span>
+  </div>
+</div>
+
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/AI/" rel="tag"># AI</a>
+          
+            <a href="/tags/源码分析/" rel="tag"># 源码分析</a>
+          
+            <a href="/tags/LLM/" rel="tag"># LLM</a>
+          
+            <a href="/tags/AgentFlow/" rel="tag"># AgentFlow</a>
+          
+            <a href="/tags/强化学习/" rel="tag"># 强化学习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2025/11/01/githubdiscovery/trae_agent/" rel="next" title="【GitHub探索】代码开发AI辅助工具trae-agent">
+                <i class="fa fa-chevron-left"></i> 【GitHub探索】代码开发AI辅助工具trae-agent
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2025/12/07/archiart/llm_augment_development_roles/" rel="prev" title="【架构艺术】简述LLM增强产品研发角色">
+                【架构艺术】简述LLM增强产品研发角色 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="ひかり.HDQ">
+            
+              <p class="site-author-name" itemprop="name">ひかり.HDQ</p>
+              <div class="site-description motion-element" itemprop="description">talk is cheap, code is rich</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">207</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">425</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="GitHub &rarr; https://github.com/utmhikari"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="bWFpbHRvOmhkcTk0MDYyM0AxMjYuY29t" title="Mail &rarr; mailto:hdq940623@126.com"><i class="fa fa-fw fa-envelope"></i>Mail</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80NDg4NjUwODE4MDYyMjg2L2NvbHVtbnM=" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns"><i class="fa fa-fw fa-code"></i>Juejin</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vaWQvdXRtaGlrYXJp" title="Steam &rarr; https://steamcommunity.com/id/utmhikari"><i class="fa fa-fw fa-steam"></i>Steam</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9zcGFjZS5iaWxpYmlsaS5jb20vNzc4NDEwLw==" title="Bilibili &rarr; https://space.bilibili.com/778410/"><i class="fa fa-fw fa-bold"></i>Bilibili</span>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2019 – <span itemprop="copyrightYear">2025</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ひかり.HDQ</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="//gcore.jsdelivr.net/npm/jquery@2/dist/jquery.min.js"></script>
+
+  
+  <script src="//gcore.jsdelivr.net/npm/jquery-lazyload@1/jquery.lazyload.min.js"></script>
+
+  
+  <script src="//gcore.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+
+  
+  <script src="//gcore.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.1"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.1"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+  <script src="/js/src/exturl.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('5');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'manual') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+if ($('body').find('pre.mermaid').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//gcore.jsdelivr.net/mermaid/8.0.0-rc.8/mermaid.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      mermaid.initialize({
+        theme: 'dark',
+        logLevel: 3,
+        flowchart: { curve: 'linear' },
+        gantt: { axisFormat: '%m/%d/%Y' },
+        sequence: { actorMargin: 50 }
+      });
+    }
+  });
+}
+</script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+  $('.highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+  
+
+  
+
+</body>
+</html>

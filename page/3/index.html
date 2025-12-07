@@ -404,6 +404,371 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2025/04/12/githubdiscovery/mcp_go/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2025/04/12/githubdiscovery/mcp_go/" class="post-title-link" itemprop="url">【GitHub探索】mcp-go，MCP协议的Golang-SDK</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2025-04-12 23:37:07" itemprop="dateCreated datePublished" datetime="2025-04-12T23:37:07+08:00">2025-04-12</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2025-11-01 16:10:27" itemprop="dateModified" datetime="2025-11-01T16:10:27+08:00">2025-11-01</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/GitHub探索/" itemprop="url" rel="index"><span itemprop="name">GitHub探索</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>近期大模型Agent应用开发方面，MCP的概念比较流行，基于MCP的ToolServer能力开发也逐渐成为主流趋势。由于笔者工作原因，主力是Go语言，为了调研大模型应用开发，也接触到了<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21hcmszbGFicy9tY3AtZ28=" title="https://github.com/mark3labs/mcp-go">mcp-go<i class="fa fa-external-link"></i></span>这套MCP的SDK实现。</p>
+<p>对于企业内部而言，在这个SDK基础上做封装，基本上就能够完善MCP-Server的开发生态。因此今天就简单看一下这个SDK里面，实现了什么东西。</p>
+<p>首先是Client连接的实现，这里可以看到每次连接都需要InitializeRequest、InitializeResult以及InitializeNotification这<span class="exturl" data-url="aHR0cHM6Ly9tb2RlbGNvbnRleHRwcm90b2NvbC5pby9kb2NzL2NvbmNlcHRzL2FyY2hpdGVjdHVyZQ==" title="https://modelcontextprotocol.io/docs/concepts/architecture">三次握手<i class="fa fa-external-link"></i></span>。从Client角度看逻辑是这样：</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2025/04/12/githubdiscovery/mcp_go/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2025/04/12/geekdaily/mcp_llm_agent/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2025/04/12/geekdaily/mcp_llm_agent/" class="post-title-link" itemprop="url">【极客日常】浅聊基于MCP生态的LLM-Agent开发</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2025-04-12 22:58:30" itemprop="dateCreated datePublished" datetime="2025-04-12T22:58:30+08:00">2025-04-12</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2025-11-01 16:09:24" itemprop="dateModified" datetime="2025-11-01T16:09:24+08:00">2025-11-01</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/极客日常/" itemprop="url" rel="index"><span itemprop="name">极客日常</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>最近在AI大模型领域，MCP这个概念非常火，大大小小的公众号都开始对外炒作这个概念，宣教一种新的大模型Agent开发生态。因为工作原因，近期笔者也对MCP和LLM-Agent开发做了一些接触。因此今天这篇文章就浅聊下笔者对基于MCP的LLM-Agent开发方面，自己粗浅的一些理解。</p>
+<p>首先还是聊一下什么是MCP，以及MCP在LLM-Agent开发方面，解决了什么问题。</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2025/04/12/geekdaily/mcp_llm_agent/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2025/04/04/archiart/go_monorepo_wire/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1790,354 +2155,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2024/12/21/pythonnotes/pyside6_simple_app/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ひかり.HDQ">
-      <meta itemprop="description" content="talk is cheap, code is rich">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HiKariのTechLab">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2024/12/21/pythonnotes/pyside6_simple_app/" class="post-title-link" itemprop="url">【Python随笔】如何用pyside6开发并部署简单的postman工具</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2024-12-21 19:42:13 / 修改时间：19:42:15" itemprop="dateCreated datePublished" datetime="2024-12-21T19:42:13+08:00">2024-12-21</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Python随笔/" itemprop="url" rel="index"><span itemprop="name">Python随笔</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>最近一段时间闲来无事，简单研究了一下pyside6，也就是PyQt5的升级版。做这个的目的，也是回顾下桌面开发的基础，兴许未来可能用得上。虽然在日常工作中，可能用到桌面开发的场景比较少，桌面工具的成果也比较难包装，但有一个这样的工具，确实可以解决许多工作效率方面的问题。</p>
-<p>在之前笔者也写过几篇pyside6文章，但不是特别系统，比如说：</p>
-<ul>
-<li><span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjQvMDgvMTEvcHl0aG9ubm90ZXMvcHlzaWRlNl9pbnRyby8=" title="https://utmhikari.top/2024/08/11/pythonnotes/pyside6_intro/">pyside6安装<i class="fa fa-external-link"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjQvMTAvMTMvcHl0aG9ubm90ZXMvcHlzaWRlNl9jbG9ja3Mv" title="https://utmhikari.top/2024/10/13/pythonnotes/pyside6_clocks/">pyside6绘制时钟<i class="fa fa-external-link"></i></span></li>
-</ul>
-<p>因此，今天这篇文章就系统分享一下，怎么样用pyside6写一个postman接口调用的小功能，开发并部署出来。作为一个自己写的教学文章，这篇文章会重点提一些自己觉得实操过程中的要点，少一些ChatGPT就能回答的东西。有了这些基础之后，做其他的工具需求，也会变得更加简单一点。</p>
-<h2 id="项目初始化"><a href="#项目初始化" class="headerlink" title="项目初始化"></a>项目初始化</h2><p>安装方面不再赘述，详情可以看官网的<span class="exturl" data-url="aHR0cHM6Ly9kb2MucXQuaW8vcXRmb3JweXRob24tNi9nZXR0aW5nc3RhcnRlZC5odG1s" title="https://doc.qt.io/qtforpython-6/gettingstarted.html">Getting Started<i class="fa fa-external-link"></i></span>以及<span class="exturl" data-url="aHR0cHM6Ly9kb2MucXQuaW8vcXRmb3JweXRob24tNi90b29scy9pbmRleC5odG1s" title="https://doc.qt.io/qtforpython-6/tools/index.html">Tools<i class="fa fa-external-link"></i></span>的部分，然后先前的文章也基本上把目录组织和最小demo给讲清楚了。</p>
-<p>核心要解决的问题就是通过目录组织，把工作流的每一个模块给拆出来，互不影响。比如这样：</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2024/12/21/pythonnotes/pyside6_simple_app/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2024/12/21/pythonnotes/enigma_implementation/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ひかり.HDQ">
-      <meta itemprop="description" content="talk is cheap, code is rich">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HiKariのTechLab">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2024/12/21/pythonnotes/enigma_implementation/" class="post-title-link" itemprop="url">【Python随笔】Enigma密码机的原理及python代码实现</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2024-12-21 17:55:59 / 修改时间：18:16:48" itemprop="dateCreated datePublished" datetime="2024-12-21T17:55:59+08:00">2024-12-21</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Python随笔/" itemprop="url" rel="index"><span itemprop="name">Python随笔</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>最近笔者接触到了Cypher这款游戏，玩法很简单，就是通过文字、图片等各种表达手段组成的谜面，猜一段英文，算是初步接触了密码学的一些知识。游戏中提到了很多类型的密码，其中Enigma密码机就是单独一种，在电影《模仿游戏》中，夏洛克.福尔摩斯费尽心力破解的德军密码，也就出自此密码机之手。在游戏里，有一道题目便是，需要根据Enigma密码机的初始设置，破译一段密文，得到明文。没办法，为了解出来这道题，只能发挥程序员的职业本性，写一段程序来跑一下了。</p>
-<p>今天，笔者就分享一下自己用python实现的Enigma密码机，虽然代码非常粗糙，有很多优化空间，但整体逻辑比较清晰，尤其是解Cypher游戏里的题目，已经够用了。</p>
-<p>简单来讲，一个Engima密码机是分层的，包含以下几个部分：</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2024/12/21/pythonnotes/enigma_implementation/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2186,7 +2203,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">205</span>
+                    <span class="site-state-item-count">207</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -3100,7 +3117,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">423</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">425</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

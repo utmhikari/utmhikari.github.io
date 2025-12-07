@@ -404,6 +404,383 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2021/04/02/codegallery/protobuf_grpc_starter/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2021/04/02/codegallery/protobuf_grpc_starter/" class="post-title-link" itemprop="url">【代码艺廊】Protobuf+GRPC应用范例：protobuf-grpc-starter</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2021-04-02 00:55:52" itemprop="dateCreated datePublished" datetime="2021-04-02T00:55:52+08:00">2021-04-02</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/代码艺廊/" itemprop="url" rel="index"><span itemprop="name">代码艺廊</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>后端的服务间通常采用固定的协议&amp;rpc框架通信，当前主流的方案是以<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2dvbGFuZy9wcm90b2J1Zg==" title="https://github.com/golang/protobuf">protobuf<i class="fa fa-external-link"></i></span>协议为基础，采用<span class="exturl" data-url="aHR0cHM6Ly93d3cuZ3JwYy5pby8=" title="https://www.grpc.io/">grpc<i class="fa fa-external-link"></i></span>进行通信，这种方式在Golang的开发中尤其突出。因此，笔者决定做一个小的golang应用来踩坑protobuf+grpc编码模式，上传到github分享——这便是<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaS9wcm90b2J1Zi1ncnBjLXN0YXJ0ZXI=" title="https://github.com/utmhikari/protobuf-grpc-starter">protobuf-grpc-starter<i class="fa fa-external-link"></i></span>。</p>
+<p>protobuf-grpc-starter主要受到了<span class="exturl" data-url="aHR0cHM6Ly9wYXN0ZWJpbi5jb20v" title="https://pastebin.com/">PasteBin<i class="fa fa-external-link"></i></span>的启发，用户post一段代码到服务器，得到一个短链接（shortLink），其它用户可以通过这个短链接取查看这个用户所发送的代码，实现代码文本分享。当存储文本量较大、且用户访问量较多时，数据库不一定能够承载的了查询的压力，这样就需要缓存来分担查询的任务。因此在protobuf-grpc-starter中，笔者编写了两个小server：WebSvr和CacheSvr，其中WebSvr用于处理用户的查询以及post文本请求，post的文本存储在单独的文件中；CacheSvr则在内部实现了一个驻留内存的LRU缓存，用来缓存短链接查询的结果（短链接only，保证强一致）。WebSvr和CacheSvr间基于protobuf协议采用<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2dycGMvZ3JwYy1nbw==" title="https://github.com/grpc/grpc-go">grpc-go<i class="fa fa-external-link"></i></span>框架通信，处理获取/设定查询缓存的操作。为了保证新接触protobuf+grpc的同学能够专注于此，这个项目的prerequisities里也不会引入类似redis的中间件，而只有go、grpc、protobuf等相关的内容，包括：</p>
+<ul>
+<li>golang v1.16：有最新的库和特性</li>
+<li>protoc：用来编译protobuf协议文件，需要在<span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXJzLmdvb2dsZS5jb20vcHJvdG9jb2wtYnVmZmVycy9kb2NzL2Rvd25sb2Fkcw==" title="https://developers.google.com/protocol-buffers/docs/downloads">protoc下载地址<i class="fa fa-external-link"></i></span>下载较新的版本（protobuf3）</li>
+<li>protoc-gen-go：用来生成golang的协议定义文件，可以在<span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXJzLmdvb2dsZS5jb20vcHJvdG9jb2wtYnVmZmVycy9kb2NzL2dvdHV0b3JpYWw=" title="https://developers.google.com/protocol-buffers/docs/gotutorial">protobuf-go教程<i class="fa fa-external-link"></i></span>了解如何下载及生成文件</li>
+<li>protoc-gen-go-grpc：用来生成golang的协议grpc定义的文件，可以在<span class="exturl" data-url="aHR0cHM6Ly9ncnBjLmlvL2RvY3MvbGFuZ3VhZ2VzL2dvL3F1aWNrc3RhcnQv" title="https://grpc.io/docs/languages/go/quickstart/">grpc-go教程<i class="fa fa-external-link"></i></span>了解如何下载及生成文件</li>
+<li>make：项目里用了Makefile，因此需要支持make。Makefile里包含了文件生成（proto）以及服务器二进制文件生成（server）的指令</li>
+</ul>
+<p>整个项目的结构如下：</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2021/04/02/codegallery/protobuf_grpc_starter/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2021/03/06/testlife/table_check/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2021/03/06/testlife/table_check/" class="post-title-link" itemprop="url">【测试人生】游戏策划表格检查工具的一种解决方案</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2021-03-06 18:20:02" itemprop="dateCreated datePublished" datetime="2021-03-06T18:20:02+08:00">2021-03-06</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/测试人生/" itemprop="url" rel="index"><span itemprop="name">测试人生</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>策划表格数据检查是游戏测试工作的刚性需求。在游戏开发期中，有大量bug的起因是策划同学在配置上不够规范到位。因此作为测试角度而言，需要更加便捷、更加精准的方法去定位到策划表格配置的问题。除了依靠业务人员自身对业务的熟悉程度之外，也更加依赖于一个强大有力的工具，辅助表格数据检查。</p>
+<p>表格数据检查的目的有以下一些：给定某个数值策划案，检查实际配置与策划案是否有出入；给定某个配置规则，检查实际配置是否有不符合规则，造成风险的地方（除去程序导表检查的那一部分）。针对这些需求，简单粗暴的方法就是强行coding的方式，将读取表格（Excel）数据出来（或者将表格数据转化为程序文件），然后用编码的方式联表，继而通过coding逻辑，去导出不符合规则的数据。这一种方式虽然灵活，但对于业务侧同学，还存在壁垒以及需要突破的地方：</p>
+<ul>
+<li>壁垒：业务侧同学的技术能力，通常难以hold住coding的技巧。从技术人员角度而言，涵盖大量代码的臃肿的表格检查规则，可读性很差且难以维护。</li>
+<li>突破：相较于人肉检查表格数据而言，时间的消耗主要在“联表”这一操作上面。游戏内部逻辑相对复杂，策划表之间的数据也是紧密耦合，比如一个宝箱抽取，就有可能涉及4~5个表的相互关系。如果不能够解决联表耗时的问题，表格数据检查的效率会大打折扣。</li>
+</ul>
+<p>因此总体来看，除了采用coding这一备选方案之外，另外一个较好的方法是采用声明式、配置化的方式描述表格检查规则，通过一系列数据处理规则的串联，导出来一份最终数据。这样一来相对减少了学习成本，从业务侧角度而言，从“学习coding”变成了“理解配置”；二来解决了联表效率的问题，业务侧只需要描述一个联表的数据处理规则，后台就可以自动按照规则描述的方式对数据处理，最终呈现到业务的，直截了当，就是最终的结果；三来解决了根本目的，不论是策划案比对（通常是另外的文档，不能按版本diff）还是检索不合规的数据，本质上都是数据导出，因此用数据处理规则的串联，就能解决大部分的需求。</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2021/03/06/testlife/table_check/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2021/02/16/gamedev/ue4_datatable_subsystem/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1850,369 +2227,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2020/10/18/geekdaily/fjsonobject_to_ustruct/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ひかり.HDQ">
-      <meta itemprop="description" content="talk is cheap, code is rich">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HiKariのTechLab">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2020/10/18/geekdaily/fjsonobject_to_ustruct/" class="post-title-link" itemprop="url">【极客日常】解决UE4中FJsonObject转USTRUCT的坑</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2020-10-18 22:05:13" itemprop="dateCreated datePublished" datetime="2020-10-18T22:05:13+08:00">2020-10-18</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/极客日常/" itemprop="url" rel="index"><span itemprop="name">极客日常</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>前些天在写<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaS9VbnJlYWxBdXRvbWF0b3I=" title="https://github.com/utmhikari/UnrealAutomator">UnrealAutomator<i class="fa fa-external-link"></i></span>的Web解析模块的时候，遇到了一些USTRUCT方面的问题，由于笔者以前并非UE4程序员，因此踩了一些坑，果断分享一下踩坑历程。</p>
-<p>首先聊一下USTRUCT的生成。USTRUCT是UE4的特性之一，从非C++/UE4程序员的角度来讲，USTRUCT、UPROPERTY、GENERATED_BODY之类的概念类似于注释和装饰器的作用，可以在编译等时期将代码标识的内涵纳入自己的Runtime。举一个例子，UnrealAutomator中的UIModel.h：</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2020/10/18/geekdaily/fjsonobject_to_ustruct/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2020/10/06/geekdaily/idea_change_config_path/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ひかり.HDQ">
-      <meta itemprop="description" content="talk is cheap, code is rich">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HiKariのTechLab">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2020/10/06/geekdaily/idea_change_config_path/" class="post-title-link" itemprop="url">【极客日常】Win10更改IDEA（Jetbrains全家桶）的插件和配置路径</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2020-10-06 22:54:09" itemprop="dateCreated datePublished" datetime="2020-10-06T22:54:09+08:00">2020-10-06</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/极客日常/" itemprop="url" rel="index"><span itemprop="name">极客日常</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>Jetbrains家的IDE，默认安装之后，配置和插件都存储在系统特定的文件夹中，如果是Windows系统的话，就会在用户文件夹存储。这样就滋生了一个问题：随着插件等安装的越来越多，系统盘也会占掉一些空间，这个时候就有了转移默认插件与配置路径的需求。今天就以IDEA为例讲述一下如何操作。</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2020/10/06/geekdaily/idea_change_config_path/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2261,7 +2275,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">205</span>
+                    <span class="site-state-item-count">207</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -3175,7 +3189,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">423</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">425</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

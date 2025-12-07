@@ -1,3 +1,5 @@
+http://utmhikari.github.io/2025/12/07/archiart/llm_augment_development_roles/
+http://utmhikari.github.io/2025/12/07/geekdaily/agentflow_code/
 http://utmhikari.github.io/2025/11/01/githubdiscovery/trae_agent/
 http://utmhikari.github.io/2025/11/01/archiart/autotest_platform_architecture/
 http://utmhikari.github.io/2025/10/06/geekdaily/eino_ollama_llm/
@@ -96,5 +98,3 @@ http://utmhikari.github.io/2022/07/03/pythonnotes/multithread_parallel/
 http://utmhikari.github.io/2022/07/02/pythonnotes/subprocess_popen/
 http://utmhikari.github.io/2022/06/17/geekdaily/vue3_array_update/
 http://utmhikari.github.io/2022/06/05/geekdaily/electron_motrix_launcher/
-http://utmhikari.github.io/2022/05/14/hardpython/5_str_2/
-http://utmhikari.github.io/2022/05/08/hardpython/5_str_1/
