@@ -1,3 +1,4 @@
+http://utmhikari.github.io/2026/01/17/testlife/change_observe_strategy_design/
 http://utmhikari.github.io/2026/01/17/geekdaily/project_work_quickstart/
 http://utmhikari.github.io/2025/12/07/archiart/llm_augment_development_roles/
 http://utmhikari.github.io/2025/12/07/geekdaily/agentflow_code/
@@ -97,4 +98,3 @@ http://utmhikari.github.io/2022/08/13/gameofautotest/ii/
 http://utmhikari.github.io/2022/08/02/gameofautotest/i/
 http://utmhikari.github.io/2022/07/03/pythonnotes/multithread_parallel/
 http://utmhikari.github.io/2022/07/02/pythonnotes/subprocess_popen/
-http://utmhikari.github.io/2022/06/17/geekdaily/vue3_array_update/

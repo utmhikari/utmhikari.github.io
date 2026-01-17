@@ -404,6 +404,194 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2023/11/04/archiart/code_optimization_ways/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2023/11/04/archiart/code_optimization_ways/" class="post-title-link" itemprop="url">【架构艺术】一些通用的代码优化治理经验</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2023-11-04 18:57:52" itemprop="dateCreated datePublished" datetime="2023-11-04T18:57:52+08:00">2023-11-04</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/架构艺术/" itemprop="url" rel="index"><span itemprop="name">架构艺术</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>在接手以前的项目做开发的过程中，我们经常会遇到因为既有代码理解困难，导致代码难以删改，问题难以排查的情况。一份富含技术债的代码，不论对于当下的问题解决，还是未来的需求开发，都会形成累赘。因此，本文就分享一些通用的代码优化和治理经验。</p>
+<p>首先我们需要从工作的角度去看待代码优化这件事情。需要捋清楚几件事情：</p>
+<ul>
+<li>当前工作需要研发什么内容？未来可能研发什么内容？</li>
+<li>历史的代码存在什么问题？有哪些优化的方法？</li>
+<li>从历史代码到研发的内容，中间我们需要补充什么？是否确实有必要优化历史的代码？</li>
+</ul>
+<p>比起为技术而技术地去做代码重构甚至重写，锚定当前的目标，按需优化才是最好的选择。如果历史代码存在比较严重的问题，影响了核心的业务，那么必须强行去做修复，不论代码实现是否符合自己的审美。如果历史代码写的不那么美观，但线上跑的还比较稳定，那么也不建议直接做优化，更多的优先级应该放在新研发的内容上面。</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2023/11/04/archiart/code_optimization_ways/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2023/10/02/testlife/game_precise_test/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1999,188 +2187,6 @@
           
             <div class="post-button text-center">
               <a class="btn" href="/2023/07/01/gofromzero/12_singleflight/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2023/06/11/diymemo/handle_mistakes/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ひかり.HDQ">
-      <meta itemprop="description" content="talk is cheap, code is rich">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HiKariのTechLab">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2023/06/11/diymemo/handle_mistakes/" class="post-title-link" itemprop="url">【DIY小记】工作中失误了，应该如何对待？</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2023-06-11 01:12:23" itemprop="dateCreated datePublished" datetime="2023-06-11T01:12:23+08:00">2023-06-11</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/DIY小记/" itemprop="url" rel="index"><span itemprop="name">DIY小记</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>今天整理博客时，恰好瞄到CSDN创作活动里，最近在搞这个主题：<span class="exturl" data-url="aHR0cHM6Ly9hY3Rpdml0eS5jc2RuLm5ldC9jcmVhdEFjdGl2aXR5P2lkPTEwNDY3" title="https://activity.csdn.net/creatActivity?id=10467">如何对待工作中的失误<i class="fa fa-external-link"></i></span>？笔者个人觉得，这个话题是非常有意义的，尤其是在现在经济形势不好，人人都担忧失业的情况下，怎么样对待工作的失误，甚至是工作本身，不论是从心态上，还是从策略（抓手）上，都是值得去深入讨论的。因此，笔者决定为【DIY小记】系列特别撰写一篇文章，来谈一下工作中失误了之后，到底需要如何对待。</p>
-<p>那么接下来，就以CSDN创作模板里的几个问题入手，来讨论这个话题吧！</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2023/06/11/diymemo/handle_mistakes/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
