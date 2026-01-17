@@ -7,7 +7,7 @@ tags:
 - Golang
 - strconv
 - 数据类型转换
-- go语法
+- 编程
 - rune
 ---
 
