@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>【极客日常】快速上手复杂后端项目开发的经验</title>
+    <url>/2026/01/17/geekdaily/project_work_quickstart/</url>
+    <content><![CDATA[<p>去年年底一段时间，笔者参与了组织内部智能化平台项目研发攻坚，虽然主攻平台工程部分，但多少也了解了下目前AIGC可以应用到的一些业务场景，以及技术实践、项目管理的一些事情。在<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjUvMTIvMDcvYXJjaGlhcnQvbGxtX2F1Z21lbnRfZGV2ZWxvcG1lbnRfcm9sZXMv" title="https://utmhikari.top/2025/12/07/archiart/llm_augment_development_roles/">先前的文章<i class="fa fa-external-link"></i></span>里头，有浅要描述下AIGC+Web类项目的角色分工和配合。那今天这篇文章，就浅聊一下如果你即将深入此局，适应一个复杂的后端项目开发，有什么方法论是可以通用的。</p>
+<p>主要是两个关键点：（1）理解产品及概念实体联系；（2）主动拆解目标各个击破。</p>
+<a id="more"></a>
+<p>第一个点比较重要，在理解具体代码之前，最好是熟悉产品，了解产品前端有什么功能，在这个基础上，尝试先入为主地猜想后端的设计实现，把自己的想法带入进去，再结合一些AIGC解读工具理解代码，后面就比较好下手。</p>
+<p>当然这里不排除一些情况是，比如异步任务执行流程类的实现，纯后端的部分，就可能涉及到多方的协作。这种情况还是以多沟通多了解为主，好比说一个自动化任务执行，单个任务下面包含多个用例执行，每个用例执行分多个OS，平台的任务状态管理和用例执行的任务状态管理可能存在不同的服务上，中间状态怎么流转怎么同步，卡状态了怎么补偿，这些实现都是得深入去沟通了解的。然后，自动化任务执行有AI增强的场景，也需要了解什么地方用了AI增强，比如用例本身是AI生成的，或者基于AI做了改写优化，那么平台端和AI实现端是怎么同步AIGC阶段性信息的，这些也得确认。了解了中间的机理和代码实现，自己心中有蓝图之后，后续就好下手。</p>
+<p>第二个点是要主动拆解研发目标，比如一套知识库服务，可能包含知识库/文档/切片管理、知识检索、在离线知识采集/清洗/入库，知识保鲜等模块，那么首先就要确定自己的负责范围是哪些，其次就是根据你对整套产品或者技术设计的了解，自主去拆分这些事情的依赖关系和优先级，而不是被动去迎合需求分配。</p>
+<p>比如，笔者负责知识库管理、知识检索以及历史知识回溯的事情，那么顺序上就是知识库管理-&gt;历史知识回溯-&gt;知识检索，而知识回溯也依赖知识库/文档/切片管理的完成，所以也需要了解别人在文档/切片管理方面实现是怎么样的，然后再做知识回溯的话，也需要了解离线知识入库的机制和接口是怎样的。通过化被动为主动，就可以能够对自身的职责和要做的事情有更好的把握。</p>
+<p>总的来讲，复杂的项目不可怕，可怕的是自己不知道该做什么。作为技术从业者，比起写代码本身，更需要知道写代码的目的是什么，然后再反推自己需要做什么。这样工作思路就能更清晰，做复杂项目开发也会更加容易上手。</p>
+]]></content>
+      <categories>
+        <category>极客日常</category>
+      </categories>
+      <tags>
+        <tag>后端开发</tag>
+        <tag>产品</tag>
+        <tag>系统设计</tag>
+        <tag>AI</tag>
+        <tag>知识库</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>【架构艺术】简述LLM增强产品研发角色</title>
     <url>/2025/12/07/archiart/llm_augment_development_roles/</url>
     <content><![CDATA[<p>2025年算是LLM增强产品井喷的一年，以笔者亲身经历的，不论是自动化测试平台还是云服务稳定性平台，都在已有平台基建的基础上，依靠LLM增强的AIGC能力，做了诸如XMind用例自动生成、用例步骤自主探索、RCA故障定位以及服务发布风险实时解读等有业务价值的能力。</p>
@@ -4219,10 +4242,10 @@
       </categories>
       <tags>
         <tag>python</tag>
+        <tag>字符串</tag>
         <tag>re</tag>
         <tag>正则表达式</tag>
         <tag>pattern</tag>
-        <tag>字符串匹配</tag>
       </tags>
   </entry>
   <entry>
@@ -7112,10 +7135,10 @@
         <category>极客日常</category>
       </categories>
       <tags>
+        <tag>编程</tag>
         <tag>Golang</tag>
         <tag>strconv</tag>
         <tag>数据类型转换</tag>
-        <tag>go语法</tag>
         <tag>rune</tag>
       </tags>
   </entry>
@@ -10072,6 +10095,37 @@
         <tag>函数</tag>
         <tag>输入</tag>
         <tag>输出</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【测试人生】一套灵活的变更风险观测策略匹配机制设计</title>
+    <url>/2016/01/17/testlife/change_observe_strategy_design/</url>
+    <content><![CDATA[<p>近期笔者在投入变更风险防控开放平台的额外功能开发，目的是希望设计一套更加灵活的变更风险观测策略匹配机制，能够在满足面向任意变更场景应用观测策略的同时，尽可能保证产品体验，让用户清晰地了解到自己配置的什么策略能够在什么情况的变更过程中生效。在<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjUvMDEvMjYvdGVzdGxpZmUvY2hhbmdlX29ic2VydmVfbG9naWMv" title="https://utmhikari.top/2025/01/26/testlife/change_observe_logic/">先前的文章<i class="fa fa-external-link"></i></span>当中，有粗浅提到变更观测策略匹配的事情，但没有深入探究，并且笔者以前接手的项目，很多底层设计的技术债也难以偿还，要在以前实现的基础上再做重构也不是很现实了。</p>
+<p>所以，趁着扩展新系统的机会，笔者重新思考了下变更风险观测策略匹配机制的事情，跟随这篇文章来抛砖引玉下自己的想法。</p>
+<p>首先，还是一个根本问题，一条变更风险观测策略的粒度是怎样的？如果粒度太粗，那么从产品视角，很容易导致「所见非所得」的问题；如果粒度太细，那么用户配置起来也会相当麻烦。经评估，由单个检测能力执行的粒度代表一条策略，这样的形式相对合理，不仅方便产品层面做「所见即所得」的设计，而且实际执行过程中，也可以以原子化的形式做编排，从调度角度来讲也很容易扩展。</p>
+<p>详细来讲，一条策略在设计上，需要关联以下几类概念：</p>
+<a id="more"></a>
+<ul>
+<li>检测能力：1个变更风险观测能力，和1套能力执行/调度参数</li>
+<li>变更场景：以变更渠道/类型/阶段3个维度描述变更场景，1条策略匹配1个变更渠道，N个变更类型，N个变更阶段</li>
+<li>变更对象：1个范围的变更对象，同时也要支持细粒度的变更对象KV属性</li>
+</ul>
+<p>检测能力的执行调度这部分不用太细讲，变更场景的话，从经验角度，每个变更工单有多个变更阶段，所以变更观测需要观测的维度也是阶段维度，这样的话按照变更渠道/类型/阶段去拆解变更场景也是比较合理的。设计上的纠结点主要在于变更对象匹配，在实际场景中，如果变更对象是以树的形式管理的，那么匹配变更对象可能得匹配某个非叶子节点；如果变更对象可以用通用的string表达，那么用户也可能希望一条策略匹配多个string或者正则。在这个基础上，有时用户也希望某条策略去匹配某个顶层的树节点，但又豁免掉下级的某些子节点。所以，由这些需求反推，我们可以简单得到这样的变更对象Matcher设计：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> ChangeObjectMatcher <span class="keyword">struct</span> &#123;</span><br><span class="line">    ObjectType <span class="keyword">string</span> <span class="string">`json:"object_type"`</span> <span class="comment">// 树类/字符串类变更对象</span></span><br><span class="line">    TreeNodeIDs []<span class="keyword">string</span> <span class="string">`json:"tree_node_ids"`</span> <span class="comment">// 树类变更对象，匹配的树节点ID列表</span></span><br><span class="line">    ObjectValues []<span class="keyword">string</span> <span class="string">`json:"object_values"`</span> <span class="comment">// 字符串类变更对象，匹配的字符串值列表，也可以是正则表达式</span></span><br><span class="line">    ObjectAttributes <span class="keyword">map</span>[<span class="keyword">string</span>]any <span class="string">`json:"object_attributes"`</span> <span class="comment">// 字符串类变更对象，匹配的KV属性键值对</span></span><br><span class="line">    ExcludeMatchers []ChangeObjectMatcher <span class="string">`json:"exclude_matchers"`</span> <span class="comment">// 子节点匹配器，用于排除某些子节点</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在这个基础上，我们能够很方便表达出「匹配一个范围的变更对象，豁免多个子范围的变更对象」这个事情。当然，实际ExcludeMatcher应该往外面提一个字段，做成「在多个子变更场景下，豁免多个子范围的变更对象」会更加合适。至于前端分页，需要从DB筛选一波之后，内存再筛选一波，然后再做分页，这个取决于策略的量级，至少在笔者的实战场景下，DB查询已经可以变更场景+树节点，第一波出来的策略数量也不会过百，那么在内存里做分页，对内存的开销也是可以接受的。</p>
+<p>即便如此，要兼顾产品设计和观测任务运行时的「所见即所得」的话，还有两件事情要做。</p>
+<p>第一件事情是，需要从变更对象的角度，另外增加一套ExcludeMatcher。这样做是因为，用户操作层面，可能在前端可以看到某些策略是否匹配上，但也希望能够看到这些策略的启禁用情况。这个启禁用是变更对象视角下的，所以需要有另一套ExcludeMatcher来表达。</p>
+<p>第二件事情是，需要把前端视角的匹配逻辑和检测任务视角的匹配逻辑区分两个Policy。这是因为，前端视角下筛选条件有限，理论上肯定无法「所见即所得」，比如我们需要匹配细粒度的ObjectAttributes，那只有在检测任务运行时才会知道。所以除了产品设计上需要有额外的说明之外，检索流程设计上用一个单独的MatchPolicy字段去表达，比如MatchPolicy为Runtime就匹配细粒度的变更属性，那这样写策略匹配逻辑就比较方便了。</p>
+]]></content>
+      <categories>
+        <category>测试人生</category>
+      </categories>
+      <tags>
+        <tag>后端开发</tag>
+        <tag>产品</tag>
+        <tag>变更风险</tag>
+        <tag>数据库</tag>
+        <tag>正则表达式</tag>
       </tags>
   </entry>
 </search>

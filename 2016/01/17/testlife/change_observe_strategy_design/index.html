@@ -101,24 +101,25 @@
 
 
 
-  <meta name="description" content="talk is cheap, code is rich">
-<meta name="keywords" content="code, life">
-<meta property="og:type" content="website">
-<meta property="og:title" content="HiKariのTechLab">
-<meta property="og:url" content="http://utmhikari.github.io/tags/go语法/index.html">
+  <meta name="description" content="近期笔者在投入变更风险防控开放平台的额外功能开发，目的是希望设计一套更加灵活的变更风险观测策略匹配机制，能够在满足面向任意变更场景应用观测策略的同时，尽可能保证产品体验，让用户清晰地了解到自己配置的什么策略能够在什么情况的变更过程中生效。在先前的文章当中，有粗浅提到变更观测策略匹配的事情，但没有深入探究，并且笔者以前接手的项目，很多底层设计的技术债也难以偿还，要在以前实现的基础上再做重构也不是很现">
+<meta name="keywords" content="后端开发,产品,变更风险,数据库,正则表达式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【测试人生】一套灵活的变更风险观测策略匹配机制设计">
+<meta property="og:url" content="http://utmhikari.github.io/2016/01/17/testlife/change_observe_strategy_design/index.html">
 <meta property="og:site_name" content="HiKariのTechLab">
-<meta property="og:description" content="talk is cheap, code is rich">
+<meta property="og:description" content="近期笔者在投入变更风险防控开放平台的额外功能开发，目的是希望设计一套更加灵活的变更风险观测策略匹配机制，能够在满足面向任意变更场景应用观测策略的同时，尽可能保证产品体验，让用户清晰地了解到自己配置的什么策略能够在什么情况的变更过程中生效。在先前的文章当中，有粗浅提到变更观测策略匹配的事情，但没有深入探究，并且笔者以前接手的项目，很多底层设计的技术债也难以偿还，要在以前实现的基础上再做重构也不是很现">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2026-01-17T06:01:20.067Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HiKariのTechLab">
-<meta name="twitter:description" content="talk is cheap, code is rich">
+<meta name="twitter:title" content="【测试人生】一套灵活的变更风险观测策略匹配机制设计">
+<meta name="twitter:description" content="近期笔者在投入变更风险防控开放平台的额外功能开发，目的是希望设计一套更加灵活的变更风险观测策略匹配机制，能够在满足面向任意变更场景应用观测策略的同时，尽可能保证产品体验，让用户清晰地了解到自己配置的什么策略能够在什么情况的变更过程中生效。在先前的文章当中，有粗浅提到变更观测策略匹配的事情，但没有深入探究，并且笔者以前接手的项目，很多底层设计的技术债也难以偿还，要在以前实现的基础上再做重构也不是很现">
 
 
 
 
 
 
-  <link rel="canonical" href="http://utmhikari.github.io/tags/go语法/">
+  <link rel="canonical" href="http://utmhikari.github.io/2016/01/17/testlife/change_observe_strategy_design/">
 
 
 
@@ -128,7 +129,7 @@
   };
 </script>
 
-  <title>标签: go语法 | HiKariのTechLab</title>
+  <title>【测试人生】一套灵活的变更风险观测策略匹配机制设计 | HiKariのTechLab</title>
   
 
 
@@ -176,7 +177,7 @@
     
   
 
-  <div class="container sidebar-position-right ">
+  <div class="container sidebar-position-right page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -252,7 +253,7 @@
         
         
           
-          <li class="menu-item menu-item-tags menu-item-active">
+          <li class="menu-item menu-item-tags">
 
     
     
@@ -383,86 +384,251 @@
           
             
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
           
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h2>go语法<small>标签</small>
-        </h2>
-      </div>
+  
 
-      
-        
+  
+  
+  
+
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2016/01/17/testlife/change_observe_strategy_design/">
 
-      <h3 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
         
-          <a class="post-title-link" href="/2021/06/06/geekdaily/go_basic_data_types/" itemprop="url">
-            
-              <span itemprop="name">【极客日常】Go语言string、int、float、rune、byte等数据类型的转换方法</span>
-            
-          </a>
         
-      </h3>
+          <h2 class="post-title" itemprop="name headline">【测试人生】一套灵活的变更风险观测策略匹配机制设计
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2021-06-06T21:29:39+08:00" content="2021-06-06">
-          06-06
-        </time>
-      </div>
+              
+            
+          </h2>
+        
 
-    </header>
-  </article>
+        <div class="post-meta">
+          <span class="post-time">
 
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2016-01-17 14:01:22" itemprop="dateCreated datePublished" datetime="2016-01-17T14:01:22+08:00">2016-01-17</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2026-01-17 14:01:20" itemprop="dateModified" datetime="2026-01-17T14:01:20+08:00">2026-01-17</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/测试人生/" itemprop="url" rel="index"><span itemprop="name">测试人生</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>近期笔者在投入变更风险防控开放平台的额外功能开发，目的是希望设计一套更加灵活的变更风险观测策略匹配机制，能够在满足面向任意变更场景应用观测策略的同时，尽可能保证产品体验，让用户清晰地了解到自己配置的什么策略能够在什么情况的变更过程中生效。在<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjUvMDEvMjYvdGVzdGxpZmUvY2hhbmdlX29ic2VydmVfbG9naWMv" title="https://utmhikari.top/2025/01/26/testlife/change_observe_logic/">先前的文章<i class="fa fa-external-link"></i></span>当中，有粗浅提到变更观测策略匹配的事情，但没有深入探究，并且笔者以前接手的项目，很多底层设计的技术债也难以偿还，要在以前实现的基础上再做重构也不是很现实了。</p>
+<p>所以，趁着扩展新系统的机会，笔者重新思考了下变更风险观测策略匹配机制的事情，跟随这篇文章来抛砖引玉下自己的想法。</p>
+<p>首先，还是一个根本问题，一条变更风险观测策略的粒度是怎样的？如果粒度太粗，那么从产品视角，很容易导致「所见非所得」的问题；如果粒度太细，那么用户配置起来也会相当麻烦。经评估，由单个检测能力执行的粒度代表一条策略，这样的形式相对合理，不仅方便产品层面做「所见即所得」的设计，而且实际执行过程中，也可以以原子化的形式做编排，从调度角度来讲也很容易扩展。</p>
+<p>详细来讲，一条策略在设计上，需要关联以下几类概念：</p>
+<a id="more"></a>
+<ul>
+<li>检测能力：1个变更风险观测能力，和1套能力执行/调度参数</li>
+<li>变更场景：以变更渠道/类型/阶段3个维度描述变更场景，1条策略匹配1个变更渠道，N个变更类型，N个变更阶段</li>
+<li>变更对象：1个范围的变更对象，同时也要支持细粒度的变更对象KV属性</li>
+</ul>
+<p>检测能力的执行调度这部分不用太细讲，变更场景的话，从经验角度，每个变更工单有多个变更阶段，所以变更观测需要观测的维度也是阶段维度，这样的话按照变更渠道/类型/阶段去拆解变更场景也是比较合理的。设计上的纠结点主要在于变更对象匹配，在实际场景中，如果变更对象是以树的形式管理的，那么匹配变更对象可能得匹配某个非叶子节点；如果变更对象可以用通用的string表达，那么用户也可能希望一条策略匹配多个string或者正则。在这个基础上，有时用户也希望某条策略去匹配某个顶层的树节点，但又豁免掉下级的某些子节点。所以，由这些需求反推，我们可以简单得到这样的变更对象Matcher设计：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> ChangeObjectMatcher <span class="keyword">struct</span> &#123;</span><br><span class="line">    ObjectType <span class="keyword">string</span> <span class="string">`json:"object_type"`</span> <span class="comment">// 树类/字符串类变更对象</span></span><br><span class="line">    TreeNodeIDs []<span class="keyword">string</span> <span class="string">`json:"tree_node_ids"`</span> <span class="comment">// 树类变更对象，匹配的树节点ID列表</span></span><br><span class="line">    ObjectValues []<span class="keyword">string</span> <span class="string">`json:"object_values"`</span> <span class="comment">// 字符串类变更对象，匹配的字符串值列表，也可以是正则表达式</span></span><br><span class="line">    ObjectAttributes <span class="keyword">map</span>[<span class="keyword">string</span>]any <span class="string">`json:"object_attributes"`</span> <span class="comment">// 字符串类变更对象，匹配的KV属性键值对</span></span><br><span class="line">    ExcludeMatchers []ChangeObjectMatcher <span class="string">`json:"exclude_matchers"`</span> <span class="comment">// 子节点匹配器，用于排除某些子节点</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在这个基础上，我们能够很方便表达出「匹配一个范围的变更对象，豁免多个子范围的变更对象」这个事情。当然，实际ExcludeMatcher应该往外面提一个字段，做成「在多个子变更场景下，豁免多个子范围的变更对象」会更加合适。至于前端分页，需要从DB筛选一波之后，内存再筛选一波，然后再做分页，这个取决于策略的量级，至少在笔者的实战场景下，DB查询已经可以变更场景+树节点，第一波出来的策略数量也不会过百，那么在内存里做分页，对内存的开销也是可以接受的。</p>
+<p>即便如此，要兼顾产品设计和观测任务运行时的「所见即所得」的话，还有两件事情要做。</p>
+<p>第一件事情是，需要从变更对象的角度，另外增加一套ExcludeMatcher。这样做是因为，用户操作层面，可能在前端可以看到某些策略是否匹配上，但也希望能够看到这些策略的启禁用情况。这个启禁用是变更对象视角下的，所以需要有另一套ExcludeMatcher来表达。</p>
+<p>第二件事情是，需要把前端视角的匹配逻辑和检测任务视角的匹配逻辑区分两个Policy。这是因为，前端视角下筛选条件有限，理论上肯定无法「所见即所得」，比如我们需要匹配细粒度的ObjectAttributes，那只有在检测任务运行时才会知道。所以除了产品设计上需要有额外的说明之外，检索流程设计上用一个单独的MatchPolicy字段去表达，比如MatchPolicy为Runtime就匹配细粒度的变更属性，那这样写策略匹配逻辑就比较方便了。</p>
 
       
     </div>
 
+    
+
+    
+    
+    
+
+    
+      
+<div style="border: 1px solid black; margin-top: 32px; margin-bottom: 32px">
+  <div style="margin-left:10px">
+    <span style="font-weight:bold">版权声明</span>
+    <br>
+    <span>本文为博客<a href="https://utmhikari.github.io" style="color:#258FC6">HiKariのTechLab</a>原创文章，转载请标明出处，谢谢~~~</span>
+  </div>
+</div>
+
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/后端开发/" rel="tag"># 后端开发</a>
+          
+            <a href="/tags/产品/" rel="tag"># 产品</a>
+          
+            <a href="/tags/变更风险/" rel="tag"># 变更风险</a>
+          
+            <a href="/tags/数据库/" rel="tag"># 数据库</a>
+          
+            <a href="/tags/正则表达式/" rel="tag"># 正则表达式</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/09/easypython/i/" rel="prev" title="【Easy Python】第一话：print('HelloWorld')——输入、输出与函数">
+                【Easy Python】第一话：print('HelloWorld')——输入、输出与函数 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+  </div>
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -500,7 +666,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">207</span>
+                    <span class="site-state-item-count">209</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1418,7 +1584,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">425</span>
+                      
+                    
+                    <span class="site-state-item-count">424</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1530,7 +1698,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2019 – <span itemprop="copyrightYear">2025</span>
+        <div class="copyright">&copy; 2019 – <span itemprop="copyrightYear">2026</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
@@ -1671,6 +1839,10 @@
 
 
   
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
 
   
 
@@ -1688,6 +1860,8 @@
 
   
 
+
+  
 
 
   
