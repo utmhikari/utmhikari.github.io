@@ -101,24 +101,25 @@
 
 
 
-  <meta name="description" content="talk is cheap, code is rich">
-<meta name="keywords" content="code, life">
-<meta property="og:type" content="website">
-<meta property="og:title" content="HiKariのTechLab">
-<meta property="og:url" content="http://utmhikari.github.io/tags/知识总结/index.html">
+  <meta name="description" content="稳定性保障是后端架构演进这件事情上不可缺少的部分。对于不同业务来说，稳定性可能有不同的口径，治理策略或目标也因业务规模大小或服务场景而各有差异，但共性仍然是存在的，讨论起来也逃不过SLA、可用性或者Latency之类的名词。在先前笔者关于稳定性基础保障以及OOM问题排查相关的文章中，已经提到了许多重点稳定性问题的解决措施。所以今天这篇文章，就换一个视角，以一个宏观问题解决者的角度，来聊聊治理后端稳">
+<meta name="keywords" content="架构,后端开发,异步,稳定性,问题排查">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【架构艺术】治理后端稳定性的一些实战经验">
+<meta property="og:url" content="http://utmhikari.github.io/2026/02/15/archiart/stability_experience/index.html">
 <meta property="og:site_name" content="HiKariのTechLab">
-<meta property="og:description" content="talk is cheap, code is rich">
+<meta property="og:description" content="稳定性保障是后端架构演进这件事情上不可缺少的部分。对于不同业务来说，稳定性可能有不同的口径，治理策略或目标也因业务规模大小或服务场景而各有差异，但共性仍然是存在的，讨论起来也逃不过SLA、可用性或者Latency之类的名词。在先前笔者关于稳定性基础保障以及OOM问题排查相关的文章中，已经提到了许多重点稳定性问题的解决措施。所以今天这篇文章，就换一个视角，以一个宏观问题解决者的角度，来聊聊治理后端稳">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2026-02-15T07:53:44.881Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HiKariのTechLab">
-<meta name="twitter:description" content="talk is cheap, code is rich">
+<meta name="twitter:title" content="【架构艺术】治理后端稳定性的一些实战经验">
+<meta name="twitter:description" content="稳定性保障是后端架构演进这件事情上不可缺少的部分。对于不同业务来说，稳定性可能有不同的口径，治理策略或目标也因业务规模大小或服务场景而各有差异，但共性仍然是存在的，讨论起来也逃不过SLA、可用性或者Latency之类的名词。在先前笔者关于稳定性基础保障以及OOM问题排查相关的文章中，已经提到了许多重点稳定性问题的解决措施。所以今天这篇文章，就换一个视角，以一个宏观问题解决者的角度，来聊聊治理后端稳">
 
 
 
 
 
 
-  <link rel="canonical" href="http://utmhikari.github.io/tags/知识总结/">
+  <link rel="canonical" href="http://utmhikari.github.io/2026/02/15/archiart/stability_experience/">
 
 
 
@@ -128,7 +129,7 @@
   };
 </script>
 
-  <title>标签: 知识总结 | HiKariのTechLab</title>
+  <title>【架构艺术】治理后端稳定性的一些实战经验 | HiKariのTechLab</title>
   
 
 
@@ -176,7 +177,7 @@
     
   
 
-  <div class="container sidebar-position-right ">
+  <div class="container sidebar-position-right page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -252,7 +253,7 @@
         
         
           
-          <li class="menu-item menu-item-tags menu-item-active">
+          <li class="menu-item menu-item-tags">
 
     
     
@@ -383,86 +384,253 @@
           
             
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
           
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h2>知识总结<small>标签</small>
-        </h2>
-      </div>
+  
 
-      
-        
+  
+  
+  
+
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2026/02/15/archiart/stability_experience/">
 
-      <h3 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
         
-          <a class="post-title-link" href="/2019/05/19/easypython/vii/" itemprop="url">
-            
-              <span itemprop="name">【Easy Python】最终话：重回首知识点，让python真正easy！</span>
-            
-          </a>
         
-      </h3>
+          <h2 class="post-title" itemprop="name headline">【架构艺术】治理后端稳定性的一些实战经验
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-05-19T17:01:35+08:00" content="2019-05-19">
-          05-19
-        </time>
-      </div>
+              
+            
+          </h2>
+        
 
-    </header>
-  </article>
+        <div class="post-meta">
+          <span class="post-time">
 
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2026-02-15 15:53:14 / 修改时间：15:53:44" itemprop="dateCreated datePublished" datetime="2026-02-15T15:53:14+08:00">2026-02-15</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/架构艺术/" itemprop="url" rel="index"><span itemprop="name">架构艺术</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>稳定性保障是后端架构演进这件事情上不可缺少的部分。对于不同业务来说，稳定性可能有不同的口径，治理策略或目标也因业务规模大小或服务场景而各有差异，但共性仍然是存在的，讨论起来也逃不过SLA、可用性或者Latency之类的名词。在先前笔者关于<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjQvMTEvMDMvYXJjaGlhcnQvc3RhYmlsaXR5X2Jhc2ljcy8=" title="https://utmhikari.top/2024/11/03/archiart/stability_basics/">稳定性基础保障<i class="fa fa-external-link"></i></span>以及<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjUvMDcvMDYvZ2Vla2RhaWx5L29vbV9pc3N1ZV9zb2x1dGlvbi8=" title="https://utmhikari.top/2025/07/06/geekdaily/oom_issue_solution/">OOM问题排查<i class="fa fa-external-link"></i></span>相关的文章中，已经提到了许多重点稳定性问题的解决措施。所以今天这篇文章，就换一个视角，以一个宏观问题解决者的角度，来聊聊治理后端稳定性的一些实战经验。</p>
+<a id="more"></a>
+<p>从解决稳定性bug，上升到治理稳定性问题，第一件事情就是要明确衡量稳定性的指标。制定一个明确的技术目标，再往下做拆解，不论是对于治理问题本身，还是最终包装工作结果，都会让你思路更加清晰。比如最基本的，对外有SLA承诺，对内的话可能就需要制定更高的SLO目标，衡量方式可能是以上游请求成功率（如HTTP 2xx）为主，反映服务接口能力是否持续可靠地支撑业务。如果再往下拆的话，对于业务核心接口，可能导致客诉的，也可以制定激进的SLO，更加高优去做跟进。</p>
+<p>对于任务类业务场景，可以通过执行成功率来衡量，失败场景包括执行error或卡单timeout，需要及时识别和处理。对于消费类场景，可以关注handler消费延迟或错误率等指标。对于中间件或者容器，可以关注CPU/内存指标，比如突增的内存可能导致OOM，影响整个节点运行，导致其它请求失败，进而导致SLI劣化。当然从实战角度来看，可以根据目前业务稳定性痛点来决定哪个指标是需要优先关注的，其它常规指标可以作为持续观测项来长期跟进。</p>
+<p>拆解完指标以后，第二步需要做的是怎么保证异常指标可监控可观测，而并非直接上手去尝试做技术解决。做这件事情的目的是为了给后续更方便的排障止损打下基础，最简单的方式是埋点上报异常指标到时序数据库，然后再经由grafana做时序图表展示，之后再配置一些巡检策略来实时探测异常。如果是偏业务场景，比如任务卡单或对账异常这些需要及时排查问题的场景，也需要通过自定义群通知等方式透露出更多细节，这样实际排障过程就不需要再从图表上面下钻这么麻烦了。对于panic/OOM之类问题，也可以结合pprof工具或者自建LogTrace来做简单的定位，方便快速热修。对于强关联的上下游服务，也需要梳理上下游综合的指标大盘，方便联动排障。</p>
+<p>需要注意的是，实际做治理过程中，人的精力是有限的，不是说弄了一个非常丰富的指标矩阵就完事，怎么跟进，不管是纯肉眼还是开发巡检或SREAgent，都是要耗费人力成本的。所以一定需要弄清楚，一是弄指标大盘，哪些指标可以比较方便借助外部工具实现，哪些得另外开发，二是需要分清主次，当下比较影响业务效果的，需要优先实时关注，已经治理或者相对稳定的，可以长期跟进，这样就可以更加聚焦精力，保障治理稳定性这个事情的ROI。</p>
+<p>第三步才是见招拆招，解决具体的技术性问题，举一些例子：</p>
+<ul>
+<li>接口可用性降低：有多种可能性：<ul>
+<li>一是超时的情况可以尽量减少串行或sync的逻辑，尽可能异步化处理，减少阻塞时间；</li>
+<li>二是涉及到查询的场景，可以考虑优化查询条件或者减少不必要的查询操作；</li>
+<li>三是如果流量非常大，可以通过singleflight/本地缓存/远端缓存等方式去把共性逻辑做收敛。</li>
+</ul>
+</li>
+<li>panic异常：StackTrace+日志上报+日志告警，可以快速发现问题来源。当然日常开发对于commit或者全rep代码安全的治理也不可少，这里不过多赘述。</li>
+<li>CPU/Memory使用率过高：从治理角度最好是定位到具体的业务场景，以笔者治理变更风险防控平台自身稳定性的经验为例：<ul>
+<li>一是三方检测能力返回的数据量过大，导致单节点Memory使用率过高，这种需要和三方平台沟通新的一套接口约定，减少不必要的返回数据；</li>
+<li>二是变更事件有突增，预处理变更事件逻辑CPU使用率过高，这种情况需要限制MQ消费速率，或者限制预处理事件的批次大小，对于相关查询逻辑需要确认索引或者调用超时正常设置，如果有条件也可以考虑做服务分离以减少单个节点大小的压力。</li>
+</ul>
+</li>
+<li>下游SLI降低：这个单独拎出来，本质是为了防卫多个上游依赖同一个下游（比如DB），因为某个上游出问题，下游SLO无法保障，导致其它上游出现影响，这么个场景。做防范的话需要下游对各上游做限流，监控方面需要上下游增加对突增流量的告警，止损方面也需要考虑对于对异常流量做熔断或者降级的措施。</li>
+<li>自调度任务卡单：这类场景不会和上下游直接交互，而是依赖于内部的任务调度系统，卡单会导致任务不推进，影响业务效果。要解决的话，监控方面需要有配套的定时任务去捞取一段时间内卡单的任务，比如UpdatedAt比较久远但任务一直没有结束的，就可能是badcase，之后才是具体的bug排查，当然也可以增设补偿机制，比如通过重投递消息或者重触发任务状态更新逻辑这种形式，去让任务继续推进。</li>
+</ul>
+<p>解决了各类技术性问题之后，理论上指标是向好的。在这个基础上，最后才是思考怎么样再进一步提升整个系统的稳定性，保障对外的SLA。要做到这一点，首先不能拘泥在技术问题本身，应该先要判断如果要做进一步稳定性保障，需要额外投入多少人力和精力，如果人力不充足的话，哪些事情需要舍弃，人员应该如何重新分配。在重新确定了整体的技术目标和业务目标之后，才是去思考具体拆出来有哪些措施，比如说：</p>
+<ul>
+<li>在重构方面，面向SLO提升去做的更加激进，从而能够应对更多不可抗力；</li>
+<li>在研发层面，实施更严格的CR流程，建立更完善的自动化测试、灰度发布以及回滚机制；</li>
+<li>在方案层面，怎么把先前零散的治理措施做的结构化，怎么宣贯让各方成员对稳定性治理措施有共识。</li>
+</ul>
+<p>确定了具体动作之后，就可以放手干了。</p>
 
       
     </div>
 
+    
+
+    
+    
+    
+
+    
+      
+<div style="border: 1px solid black; margin-top: 32px; margin-bottom: 32px">
+  <div style="margin-left:10px">
+    <span style="font-weight:bold">版权声明</span>
+    <br>
+    <span>本文为博客<a href="https://utmhikari.github.io" style="color:#258FC6">HiKariのTechLab</a>原创文章，转载请标明出处，谢谢~~~</span>
+  </div>
+</div>
+
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/架构/" rel="tag"># 架构</a>
+          
+            <a href="/tags/后端开发/" rel="tag"># 后端开发</a>
+          
+            <a href="/tags/异步/" rel="tag"># 异步</a>
+          
+            <a href="/tags/稳定性/" rel="tag"># 稳定性</a>
+          
+            <a href="/tags/问题排查/" rel="tag"># 问题排查</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2026/02/15/testlife/change_control_agent/" rel="next" title="【测试人生】LLMAgent在变更风险防控垂类应用的思考">
+                <i class="fa fa-chevron-left"></i> 【测试人生】LLMAgent在变更风险防控垂类应用的思考
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+  </div>
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -500,7 +668,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">209</span>
+                    <span class="site-state-item-count">211</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1420,7 +1588,7 @@
                     
                       
                     
-                    <span class="site-state-item-count">424</span>
+                    <span class="site-state-item-count">423</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1673,6 +1841,10 @@
 
 
   
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
 
   
 
@@ -1690,6 +1862,8 @@
 
   
 
+
+  
 
 
   

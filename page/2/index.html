@@ -404,6 +404,347 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2025/10/04/archiart/change_control_ability_market/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2025/10/04/archiart/change_control_ability_market/" class="post-title-link" itemprop="url">【架构艺术】构建变更风险防控能力市场的一些经验</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2025-10-04 12:33:30 / 修改时间：13:08:25" itemprop="dateCreated datePublished" datetime="2025-10-04T12:33:30+08:00">2025-10-04</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/架构艺术/" itemprop="url" rel="index"><span itemprop="name">架构艺术</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>变更风险防控的能力是多样的，除了最传统的告警检测、Metrics曲线对比以及自动化测试能力之外，像变更影响分析、风险降噪以及线上风险RCA等周边能力也是不可少的。有了更多的上下文信息，才能对变更风险做更好的判断。从中台技术视角来看，不论是传统能力还是一些AI加成的能力，如果没有一套稳固的技术基建让这些能力尽情发挥，那么这些能力将难以快速落地，充分兑现其业务价值。</p>
+<p>基于此，笔者在今年工作中，交付了一套「能力市场」产品与技术架构，旨在面向不同业务团队的自研能力，提供一套开放式标准化的接入方案，让业务自研的变更防控能力可以快速应用到变更风险质检过程中。虽然这套架构目前还有很多继续扩展和完善的空间，并且也没有蹭到LLM的噱头，但在架构迭代过程中笔者权衡了很多利害关系，主导了很多技术演进判断，最终也成功落实了这个技术结果。</p>
+<p>具体一些技术上的设计，其实前面的文章已经聊了很多，包括<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjUvMDMvMDkvYXJjaGlhcnQvY2hhbmdlX29ic2VydmF0aW9uX3dvcmtlci8=" title="https://utmhikari.top/2025/03/09/archiart/change_observation_worker/">任务调度<i class="fa fa-external-link"></i></span>、<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjUvMDkvMDYvYXJjaGlhcnQvY2hhbmdlX2NvbnRyb2xfc2NoZWR1bGVfZXZlbnQv" title="https://utmhikari.top/2025/09/06/archiart/change_control_schedule_event/">事件状态机<i class="fa fa-external-link"></i></span>以及<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjUvMDkvMDYvYXJjaGlhcnQvY2hhbmdlX2NvbnRyb2xfZGVjaXNpb25fbW9kdWxlLw==" title="https://utmhikari.top/2025/09/06/archiart/change_control_decision_module/">内置降噪模块嵌入<i class="fa fa-external-link"></i></span>之类的点都有阐述。所以今天这篇文章，不倾向于聊这些具体的技术实现，更倾向于聊下整个产品交付过程中的一些权衡和判断。</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2025/10/04/archiart/change_control_ability_market/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2025/09/06/archiart/change_control_decision_module/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2025/09/06/archiart/change_control_decision_module/" class="post-title-link" itemprop="url">【架构艺术】变更风险防控架构嵌入决策降噪模块的方法</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2025-09-06 15:26:50 / 修改时间：15:30:38" itemprop="dateCreated datePublished" datetime="2025-09-06T15:26:50+08:00">2025-09-06</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/架构艺术/" itemprop="url" rel="index"><span itemprop="name">架构艺术</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>在<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjUvMDMvMDkvYXJjaGlhcnQvY2hhbmdlX29ic2VydmF0aW9uX3dvcmtlci8=" title="https://utmhikari.top/2025/03/09/archiart/change_observation_worker/">先前的文章<i class="fa fa-external-link"></i></span>中，我们聊到了一个变更观测任务可以通过什么样的方式对不同的变更防控能力做统一调度，达到优越的变更风险拦截效果。但是在实战当中，变更观测任务集成了很多能力，即便风险拦截率很高，但不同能力效果也有差距，因此会有可能出现误报，导致变更观测结论不准确，影响研发发布效率。为此，一套成熟的变更观测系统，是需要嵌入一个决策降噪模块，通过干预变更防控拦截结果，达到在风险召回不劣化的同时，提升准确率，让结果更加置信。</p>
+<p>因此，今天笔者决定结合自己的工作经验，简单聊一下变更风险防控架构的宏观体系当中，决策降噪模块应当怎样接入比较合适。需要说明的是，本文不涉及具体降噪的实现，包括算法的许多部分，主要是从后端工程架构角度，聊一下怎样的架构设计，能够让变更观测任务和决策降噪任务完美配合起来。</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2025/09/06/archiart/change_control_decision_module/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2025/09/06/archiart/change_control_schedule_event/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1759,351 +2100,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2025/06/01/archiart/balance_architecture_and_product/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ひかり.HDQ">
-      <meta itemprop="description" content="talk is cheap, code is rich">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HiKariのTechLab">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2025/06/01/archiart/balance_architecture_and_product/" class="post-title-link" itemprop="url">【架构艺术】平衡技术架构设计和预期的产品形态</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2025-06-01 04:04:15 / 修改时间：04:04:36" itemprop="dateCreated datePublished" datetime="2025-06-01T04:04:15+08:00">2025-06-01</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/架构艺术/" itemprop="url" rel="index"><span itemprop="name">架构艺术</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>近期笔者因为工作原因，开始启动team内部部分技术项目的重构。在事情启动的过程中，内部对于这件事情的定性和投入有一些争论，但最终还是敲定了下来。其中部分争论点主要在于产品形态，因为事情涉及到跨部门合作，所以产品形态怎么符合双方的利益是比较重要的。在这个前提下，然后才是技术设计上面，怎么能够迎合长久合作的需要。</p>
-<p>因此，今天笔者就简单聊一下，怎么去做到让技术架构设计和预期产品形态能够做到有效平衡。</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2025/06/01/archiart/balance_architecture_and_product/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2025/06/01/geekdaily/wire_and_interface/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ひかり.HDQ">
-      <meta itemprop="description" content="talk is cheap, code is rich">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HiKariのTechLab">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2025/06/01/geekdaily/wire_and_interface/" class="post-title-link" itemprop="url">【极客日常】分享go开发中wire和interface配合的一些经验</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2025-06-01 02:19:33 / 修改时间：02:22:32" itemprop="dateCreated datePublished" datetime="2025-06-01T02:19:33+08:00">2025-06-01</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/极客日常/" itemprop="url" rel="index"><span itemprop="name">极客日常</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>在先前<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjUvMDQvMDQvYXJjaGlhcnQvZ29fbW9ub3JlcG9fd2lyZS8=" title="https://utmhikari.top/2025/04/04/archiart/go_monorepo_wire/">一篇文章<i class="fa fa-external-link"></i></span>中，笔者给大家提到了go语言后端编程可以用wire依赖注入模块去简化单例服务的初始化，同时也可以解决服务单例之间复杂依赖的问题。但实事求是来讲，用wire也是有一些学习成本的，wire在帮助解决复杂依赖的问题同时，也会限定你去用一些特定的编程方式来满足wire的需要，尤其需要你interface给用的更加灵活。</p>
-<p>因此今天这篇文章，笔者结合自己的经验，就和大家浅分享下，wire和interface配合的一些经验，让大家以后用wire的时候避免一些坑。</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2025/06/01/geekdaily/wire_and_interface/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -2147,7 +2148,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">209</span>
+                    <span class="site-state-item-count">211</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -3067,7 +3068,7 @@
                     
                       
                     
-                    <span class="site-state-item-count">424</span>
+                    <span class="site-state-item-count">423</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

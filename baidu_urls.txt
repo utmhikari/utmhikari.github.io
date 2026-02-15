@@ -1,3 +1,5 @@
+http://utmhikari.github.io/2026/02/15/archiart/stability_experience/
+http://utmhikari.github.io/2026/02/15/testlife/change_control_agent/
 http://utmhikari.github.io/2026/01/17/testlife/change_observe_strategy_design/
 http://utmhikari.github.io/2026/01/17/geekdaily/project_work_quickstart/
 http://utmhikari.github.io/2025/12/07/archiart/llm_augment_development_roles/
@@ -96,5 +98,3 @@ http://utmhikari.github.io/2022/09/04/gameofautotest/iii/
 http://utmhikari.github.io/2022/08/14/pythonnotes/asgi_uvicorn_fastapi/
 http://utmhikari.github.io/2022/08/13/gameofautotest/ii/
 http://utmhikari.github.io/2022/08/02/gameofautotest/i/
-http://utmhikari.github.io/2022/07/03/pythonnotes/multithread_parallel/
-http://utmhikari.github.io/2022/07/02/pythonnotes/subprocess_popen/
