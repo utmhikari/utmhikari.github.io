@@ -6,7 +6,7 @@ categories:
 tags:
 - python
 - 教程
-- 知识总结
+- 个人博客
 - 编程
 - easy python
 ---
