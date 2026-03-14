@@ -6,7 +6,7 @@ categories:
 tags:
 - Golang
 - 环境变量
-- 架构
+- 装机
 - 编程
 - go mod
 ---
