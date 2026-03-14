@@ -1,6 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>【测试人生】建设变更风险防控平台的经验总结</title>
+    <url>/2026/03/14/testlife/change_control_platform/</url>
+    <content><![CDATA[<p>不知不觉在变更风险防控领域投入了三年之久，从最早做数据类变更风险防控工程，到后续做变更风险平台架构能力，在取得些许成果的同时，也同样沉淀了很多关于变更风险防控平台的技术思考与判断。趁着阶段性收尾，今天就做个总集篇，重点针对建设变更风险防控平台的这段经历，梳理一遍核心经验。</p>
+<p>本文主要讲述4个方面：（1）基础工程架构设计（2）质检任务执行设计（3）质检稳定性与效果优化（4）应对LLM时代的挑战。</p>
+<a id="more"></a>
+<h2 id="基础工程架构设计"><a href="#基础工程架构设计" class="headerlink" title="基础工程架构设计"></a>基础工程架构设计</h2><p>从架构设计来讲，蚂蚁以前开源的AlterShield可以借鉴，参考<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjQvMDIvMDQvZ2l0aHViZGlzY292ZXJ5L2FsdGVyc2hpZWxkX2Rlc2lnbi8=" title="https://utmhikari.top/2024/02/04/githubdiscovery/altershield_design/">《【GitHub探索】蚂蚁变更管控平台AlterShield设计分析》<i class="fa fa-external-link"></i></span>一文了解，当然实际设计最好要结合自己企业内部的技术栈和习惯来定。</p>
+<p>从概念关系上来讲，需要定义的基础概念包括变更场景和变更对象，其中变更场景可以拆分成变更渠道、变更类型和变更阶段。一次变更关联一个变更场景和一个变更对象，需要执行多条变更风险观测策略，设计上可以参考<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjYvMDEvMTcvdGVzdGxpZmUvY2hhbmdlX29ic2VydmVfc3RyYXRlZ3lfZGVzaWduLw==" title="https://utmhikari.top/2026/01/17/testlife/change_observe_strategy_design/">《【测试人生】一套灵活的变更风险观测策略匹配机制设计》<i class="fa fa-external-link"></i></span>一文了解。</p>
+<p>从灵活扩展的角度来讲，一条策略关联一个能力的执行比较合适，对于如何集成多方检测能力，可以参考<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjUvMTAvMDQvYXJjaGlhcnQvY2hhbmdlX2NvbnRyb2xfYWJpbGl0eV9tYXJrZXQv" title="https://utmhikari.top/2025/10/04/archiart/change_control_ability_market/">《【架构艺术】构建变更风险防控能力市场的一些经验》<i class="fa fa-external-link"></i></span>一文的设计思路。</p>
+<p>在实际做变更观测过程中，需要获取很多关联的上下文数据，才能保证变更观测有更好的效果。所以需要有一套旁路的变更事件消费+变更元信息分析的流程，为变更观测提供足量的上下文。这套框架设计可以参考<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjQvMDQvMDQvYXJjaGlhcnQvY2hhbmdlX2FuYWx5c2lzX2ZyYW1ld29yay8=" title="https://utmhikari.top/2024/04/04/archiart/change_analysis_framework/">《【架构艺术】变更元信息分析框架设计》<i class="fa fa-external-link"></i></span>一文。</p>
+<h2 id="质检任务执行设计"><a href="#质检任务执行设计" class="headerlink" title="质检任务执行设计"></a>质检任务执行设计</h2><p>质检任务的执行调度，可以参考以下几篇文章做技术设计：</p>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjUvMDMvMDkvYXJjaGlhcnQvY2hhbmdlX29ic2VydmF0aW9uX3dvcmtlci8=" title="https://utmhikari.top/2025/03/09/archiart/change_observation_worker/">《【架构艺术】变更风险观测的任务调度设计》<i class="fa fa-external-link"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjUvMDEvMjYvdGVzdGxpZmUvY2hhbmdlX29ic2VydmVfbG9naWMv" title="https://utmhikari.top/2025/01/26/testlife/change_observe_logic/">《【测试人生】变更风险观测的流程逻辑设计》<i class="fa fa-external-link"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjUvMDkvMDYvYXJjaGlhcnQvY2hhbmdlX2NvbnRyb2xfc2NoZWR1bGVfZXZlbnQv" title="https://utmhikari.top/2025/09/06/archiart/change_control_schedule_event/">《【架构艺术】通过标准化事件解决变更检测能力的调度问题》<i class="fa fa-external-link"></i></span></li>
+</ul>
+<p>当然在某些特定的业务场景，需要根据变更场景或变更对象，动态注入质检策略。这类需求可以参考<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjUvMDcvMTIvZ2Vla2RhaWx5L2R5bmFtaWNfam9iX2ltcGwv" title="https://utmhikari.top/2025/07/12/geekdaily/dynamic_job_impl/">《【极客日常】后端任务动态注入执行策略的一种技术实现》<i class="fa fa-external-link"></i></span>一文做设计。</p>
+<h2 id="质检稳定性与效果优化"><a href="#质检稳定性与效果优化" class="headerlink" title="质检稳定性与效果优化"></a>质检稳定性与效果优化</h2><p>作为一个可靠的，服务于全公司的质检平台，后端稳定性治理是不可或缺的。可以参考<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjYvMDIvMTUvYXJjaGlhcnQvc3RhYmlsaXR5X2V4cGVyaWVuY2Uv" title="https://utmhikari.top/2026/02/15/archiart/stability_experience/">《【架构艺术】治理后端稳定性的一些实战经验》<i class="fa fa-external-link"></i></span>一篇文章，来了解如何系统性治理平台的稳定性。</p>
+<p>对于质检效果，包括拦截率和准确率等方面，需要做面向业务的定制优化，更多的动作会属于专项的范畴，可以参考<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjQvMDMvMDMvZ2Vla2RhaWx5L3JlbGVhc2VfY2hlY2tfb3B0aW1pemF0aW9uLw==" title="https://utmhikari.top/2024/03/03/geekdaily/release_check_optimization/">《【极客日常】提升发布风险检查准确率的一些思路》<i class="fa fa-external-link"></i></span>一文了解一些思路。从平台基础架构的角度，则更关心架构设计能否支撑质检效果优化的需求，这部分可以参考 <span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjUvMDkvMDYvYXJjaGlhcnQvY2hhbmdlX2NvbnRyb2xfZGVjaXNpb25fbW9kdWxlLw==" title="https://utmhikari.top/2025/09/06/archiart/change_control_decision_module/">《【架构艺术】变更风险防控架构嵌入决策降噪模块的方法》<i class="fa fa-external-link"></i></span>一文做了解。当然，除了技术优化动作，平台也需要提供必要的数据运营能力，可以参考<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjUvMDIvMjIvdGVzdGxpZmUvY2hhbmdlX2NvbnRyb2xfZGF0YV9tYXJrZXRpbmcv" title="https://utmhikari.top/2025/02/22/testlife/change_control_data_marketing/">《【测试人生】浅谈变更风险防控的数据运营》<i class="fa fa-external-link"></i></span>一文了解一些思路。</p>
+<h2 id="应对LLM时代的挑战"><a href="#应对LLM时代的挑战" class="headerlink" title="应对LLM时代的挑战"></a>应对LLM时代的挑战</h2><p>坦诚的说，如果通过古法编程手段做到以上三件事情，就已经意味着变更风险防控平台建设进入了深水区。LLMAgent虽然理论上能打平上面这些东西，但不是说就直接重做一遍，这样是纯粹为了技术而技术。所以怎么应对LLM时代的挑战，本质上一是要明确LLM带来的增量价值，二是要确保ROI使得LLM能充分发挥。</p>
+<p>整体来讲，可以参考<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjYvMDIvMTUvdGVzdGxpZmUvY2hhbmdlX2NvbnRyb2xfYWdlbnQv" title="https://utmhikari.top/2026/02/15/testlife/change_control_agent/">《【测试人生】LLMAgent在变更风险防控垂类应用的思考》<i class="fa fa-external-link"></i></span>一文，了解LLM相对容易做到但古法编程比较难做到的事情，比如变更上下文深度分析总结和风险告警的自动聚类，这个是古法编程不好描述的，但可以用LLMAgent来实现。实际的LLMAgent研发落地方面，可以参考<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjYvMDMvMTQvdGVzdGxpZmUvcnVsZV9hZ2VudC8=" title="https://utmhikari.top/2026/03/14/testlife/rule_agent/">《【测试人生】变更规则校验Agent研发的一些思路》<i class="fa fa-external-link"></i></span>一文，寻找更多的灵感。</p>
+]]></content>
+      <categories>
+        <category>测试人生</category>
+      </categories>
+      <tags>
+        <tag>后端开发</tag>
+        <tag>变更风险</tag>
+        <tag>稳定性</tag>
+        <tag>DevOps</tag>
+        <tag>LLM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【测试人生】变更规则校验Agent研发的一些思路</title>
+    <url>/2026/03/14/testlife/rule_agent/</url>
+    <content><![CDATA[<p>在变更风险防控领域，规则校验和变更中观测一样，是必不可少的能力之一。面向配置类变更和SQL数据类变更，通过严格的静态规则校验可以拦截很多事故风险，保障配置或SQL发布后的安全。从变更风险防控平台的角度来说，一个规则校验系统（规则引擎），可以简单设计成多组变更场景到校验规则的映射，业务SRE角色可以编写较大业务域的通用规则，而业务研发可以编写特定业务域的专项规则，当一个变更发起时，多条规则就统一在这个系统里做执行，这样就能够实现通用的变更规则校验需求。</p>
+<p>但是现在是2026年，是一个全民养虾的时代，以前花大力气编写的规则跟系统，不用Agent打平一遍，那怎么着都得out了。所以本文也基于这么个场景，在已有变更规则校验的标准业务流程基础上，怎么研发一个规则校验Agent，去讨论一些思路。</p>
+<a id="more"></a>
+<p>首先需要明确，如果做一个规则校验Agent，它相对于以往自己编写的规则，能有什么增量收益。笔者以为主要是两块，一块是研发提效，另一块是去挖掘更深层次的风险。研发提效会比较明显，传统的规则校验引擎要写代码或者匹配规则，扩展成本高，但LLM可以用简单的语义推理磨平这些研发成本。深层次风险挖掘这块，在把以前获取上下文的接口全部封装成MCP或Skill的基础上，Agent就可以自主获取不同来源的变更上下文，不断迭代做深层挖掘，这个是Agent固有的优势，传统的规则校验难以替代。</p>
+<p>从上我们能够明显看到LLMAgent对规则校验研发带来的变革，但反过来折损点一是在于LLM输出的不确定性，二是推理时间导致的发布效率降低。对于简单的规则校验Agent，考虑「需求推理+变更上下文收集+风险点分析+结构化输出」几个步骤，一次规则校验的时间可能会达到1到2分钟。如果再做复杂一些，做深层次的风险挖掘，那么由校验开始到分析报告生成都可能有5分钟以上，这样即便分析出来的结论可能很棒，但时间损耗对于研发发布来讲可能就无法接受了。所以，Agent需要以一套「低侵入&amp;高兼容」的模式切入到已有的规则校验流程当中，才能够给业务带来比较好的体验。</p>
+<p>具体怎么做，从用户体验角度讲，Agent可以设计成Quick和Deep两种模式。Quick模式负责做基础且通用的规则校验，且支持开放给业务RD自行编写静态校验规则，以Instruction文本或其它方式接入到Agent当中，实际执行时会直接作用于规则校验流程，在变更前做拦截。对于Deep模式，可以自主闭源做复杂编排+异步执行，执行完毕后发通知，或者在小流量发布阶段做拦截，也都是可取的呈现方式。</p>
+<p>Agent编排方面，需要并行部署多个垂直领域Agent，比如SQL校验Agent、配置变更Agent以及底层的代码分析Agent。关于上层是否要设置一个Dispatcher角色Agent，主要取决于是否有Chat的需要，如果没有的话则不是必须，通过既往工程代码控制Agent执行就可以。对于深度挖掘风险类的Agent编排，目前笔者还没有深入研究，有兴趣的读者可以深度实操下。</p>
+<p>最后一个关键问题是，怎么优化Agent的效果。首先需要定指标，基础的主要是执行成功率（稳定性）、执行时长、风险拦截率和拦截准确率几块。从这些指标出发，我们可能考虑如下的优化策略：</p>
+<ul>
+<li>执行层面，可以整合业务实际发布校验的结果还有业务手工打标准确度的数据，将其提炼成评测集，如果有配套评测平台的话，就能够在迭代Agent期间，随时对Agent效果做评测，当然如果技术上能够实现在线RL的机制那当然更好。</li>
+<li>模型层面，如果执行延时的瓶颈在推理，可以调整模型选型或者精调来纠正模型的推理思路，不至于经常想歪，或者通过Prompt调优技巧，比如加Few-Shot或者Schema定义确保结构化输出稳定性。有一个点不确定是否有既往研究，就是应用到RAG的知识，如果给到模型精调一遍，是否能提升实际作业效果，有经验的读者也可以指正一下。</li>
+<li>编排层面，由于规则校验对发布效率有要求，建议不要做过于复杂的编排。在这个基础上，如果迭代了一段时间的话，需要有意识去梳理变更上下文数据需要获取多少，有什么依赖关系，尽量精简上下文数据的获取时间和数据量。</li>
+<li>平台层面，有些业务可能对于拦截准确率有比较高的要求，所以对于用户的Instruction或其他接入方式，可以提供标准模板，让业务编写定制化的风险降噪策略，显式干预Agent的执行效果。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>测试人生</category>
+      </categories>
+      <tags>
+        <tag>变更风险</tag>
+        <tag>Agent</tag>
+        <tag>LLM</tag>
+        <tag>数据变更</tag>
+        <tag>配置变更</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>【架构艺术】治理后端稳定性的一些实战经验</title>
     <url>/2026/02/15/archiart/stability_experience/</url>
     <content><![CDATA[<p>稳定性保障是后端架构演进这件事情上不可缺少的部分。对于不同业务来说，稳定性可能有不同的口径，治理策略或目标也因业务规模大小或服务场景而各有差异，但共性仍然是存在的，讨论起来也逃不过SLA、可用性或者Latency之类的名词。在先前笔者关于<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjQvMTEvMDMvYXJjaGlhcnQvc3RhYmlsaXR5X2Jhc2ljcy8=" title="https://utmhikari.top/2024/11/03/archiart/stability_basics/">稳定性基础保障<i class="fa fa-external-link"></i></span>以及<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjUvMDcvMDYvZ2Vla2RhaWx5L29vbV9pc3N1ZV9zb2x1dGlvbi8=" title="https://utmhikari.top/2025/07/06/geekdaily/oom_issue_solution/">OOM问题排查<i class="fa fa-external-link"></i></span>相关的文章中，已经提到了许多重点稳定性问题的解决措施。所以今天这篇文章，就换一个视角，以一个宏观问题解决者的角度，来聊聊治理后端稳定性的一些实战经验。</p>
@@ -9224,9 +9286,9 @@
         <category>从零单排Golang</category>
       </categories>
       <tags>
-        <tag>架构</tag>
         <tag>编程</tag>
         <tag>Golang</tag>
+        <tag>装机</tag>
         <tag>环境变量</tag>
         <tag>go mod</tag>
       </tags>

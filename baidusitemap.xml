@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://utmhikari.github.io/2026/03/14/testlife/rule_agent/</loc>
+    <lastmod>2026-03-14</lastmod>
+  </url>  <url>
+    <loc>http://utmhikari.github.io/2026/03/14/testlife/change_control_platform/</loc>
+    <lastmod>2026-03-14</lastmod>
+  </url>  <url>
+    <loc>http://utmhikari.github.io/2019/07/20/gofromzero/01_first_code/</loc>
+    <lastmod>2026-03-14</lastmod>
+  </url>  <url>
     <loc>http://utmhikari.github.io/2026/02/15/testlife/change_control_agent/</loc>
     <lastmod>2026-02-15</lastmod>
   </url>  <url>
@@ -107,9 +116,6 @@
     <lastmod>2025-05-31</lastmod>
   </url>  <url>
     <loc>http://utmhikari.github.io/2025/06/01/geekdaily/wire_and_interface/</loc>
-    <lastmod>2025-05-31</lastmod>
-  </url>  <url>
-    <loc>http://utmhikari.github.io/2019/07/20/gofromzero/01_first_code/</loc>
     <lastmod>2025-05-31</lastmod>
   </url>  <url>
     <loc>http://utmhikari.github.io/2025/03/09/archiart/change_observation_worker/</loc>
