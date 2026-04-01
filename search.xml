@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>【DIY小记】解决MacOS上Edge浏览器bilibili全屏卡顿的问题</title>
+    <url>/2026/04/02/diymemo/edge_bilibili_ppt/</url>
+    <content><![CDATA[<p>近日笔者发现自己Macbook-Pro播放B站视频，全屏的时候必然卡顿，退出全屏就没事。笔者电脑的参数是：</p>
+<ul>
+<li>芯片：M3</li>
+<li>系统：Tahoe 26.4</li>
+<li>浏览器：Edge</li>
+</ul>
+<p>到网上一查发现<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTc5MDkxOS9hcnRpY2xlL2RldGFpbHMvMTU1NDI3ODcz" title="https://blog.csdn.net/weixin_45790919/article/details/155427873">《Edge浏览器在MacOS 26(Tahoe)系统上看B站卡顿》<i class="fa fa-external-link"></i></span>一篇文章，实测下来确实如此，拔掉电源就没事，插上电源必然卡成PPT，并且视频还比拔掉电源亮一些。</p>
+<p>至此怀疑是Edge浏览器某些设置的问题，经过一番探索，发现在Edge设置的「系统和性能-系统」栏目下，取消「增强视频」即可解决。「增强视频」的作用是，接通设备电源后，锐化视频并提高颜色、照明和对比度。「增强视频」功能启用的机制是，不会增强屏幕上较小的受保护视频和视频，当多个视频在一个网站上处于活动状态时，将仅增强最近播放的视频。这也明显符合在B站上小屏和全屏播放的情况。</p>
+<p>希望有遇到相同问题的人，可以尝试笔者提供的解决办法。</p>
+]]></content>
+      <categories>
+        <category>DIY小记</category>
+      </categories>
+      <tags>
+        <tag>问题排查</tag>
+        <tag>性能测试</tag>
+        <tag>debug</tag>
+        <tag>bilibili</tag>
+        <tag>MacOS</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>【测试人生】建设变更风险防控平台的经验总结</title>
     <url>/2026/03/14/testlife/change_control_platform/</url>
     <content><![CDATA[<p>不知不觉在变更风险防控领域投入了三年之久，从最早做数据类变更风险防控工程，到后续做变更风险平台架构能力，在取得些许成果的同时，也同样沉淀了很多关于变更风险防控平台的技术思考与判断。趁着阶段性收尾，今天就做个总集篇，重点针对建设变更风险防控平台的这段经历，梳理一遍核心经验。</p>
@@ -1428,11 +1452,11 @@
         <category>DIY小记</category>
       </categories>
       <tags>
-        <tag>Jetbrains</tag>
         <tag>IDE</tag>
         <tag>效率工具</tag>
         <tag>代码高亮</tag>
         <tag>shell</tag>
+        <tag>JetBrains</tag>
       </tags>
   </entry>
   <entry>
@@ -7900,10 +7924,10 @@
       </categories>
       <tags>
         <tag>Win10</tag>
-        <tag>Jetbrains</tag>
         <tag>IDE</tag>
         <tag>Intellij IDEA</tag>
         <tag>idea.properties</tag>
+        <tag>JetBrains</tag>
       </tags>
   </entry>
   <entry>
