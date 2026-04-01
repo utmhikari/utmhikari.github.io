@@ -4,7 +4,7 @@ date: 2024/09/15 16:22:23
 categories:
 - DIY小记
 tags:
-- Jetbrains
+- JetBrains
 - IDE
 - 效率工具
 - 代码高亮

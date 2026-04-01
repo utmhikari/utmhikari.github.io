@@ -5,7 +5,7 @@ categories:
 - 极客日常
 tags:
 - Intellij IDEA
-- Jetbrains
+- JetBrains
 - IDE
 - Win10
 - idea.properties
