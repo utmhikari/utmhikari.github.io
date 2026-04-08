@@ -5,10 +5,10 @@ categories:
 - 从零单排Golang
 tags:
 - Golang
-- docker
-- docker client
+- Docker
+- 虚拟机
 - MySQL
-- docker API
+- 数据库
 ---
 
 ## 前言

@@ -6,7 +6,7 @@ categories:
 tags:
 - Golang
 - client-go
-- kubernetes
+- Kubernetes
 - minikube
 - mongodb
 ---
