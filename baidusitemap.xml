@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://utmhikari.github.io/2026/04/08/codegallery/operator_gallery/</loc>
+    <lastmod>2026-04-08</lastmod>
+  </url>  <url>
+    <loc>http://utmhikari.github.io/2026/04/08/diymemo/qoder/</loc>
+    <lastmod>2026-04-08</lastmod>
+  </url>  <url>
+    <loc>http://utmhikari.github.io/2019/09/01/gofromzero/03_docker_client/</loc>
+    <lastmod>2026-04-08</lastmod>
+  </url>  <url>
+    <loc>http://utmhikari.github.io/2019/10/03/gofromzero/04_kubernetes_mongo/</loc>
+    <lastmod>2026-04-08</lastmod>
+  </url>  <url>
     <loc>http://utmhikari.github.io/2026/04/02/diymemo/edge_bilibili_ppt/</loc>
     <lastmod>2026-04-01</lastmod>
   </url>  <url>
@@ -482,12 +494,6 @@
     <lastmod>2024-04-07</lastmod>
   </url>  <url>
     <loc>http://utmhikari.github.io/2022/02/26/hardpython/2_asyncio_3/</loc>
-    <lastmod>2024-04-07</lastmod>
-  </url>  <url>
-    <loc>http://utmhikari.github.io/2019/09/01/gofromzero/03_docker_client/</loc>
-    <lastmod>2024-04-07</lastmod>
-  </url>  <url>
-    <loc>http://utmhikari.github.io/2019/10/03/gofromzero/04_kubernetes_mongo/</loc>
     <lastmod>2024-04-07</lastmod>
   </url>  <url>
     <loc>http://utmhikari.github.io/2023/01/01/gofromzero/07_reflect_module/</loc>

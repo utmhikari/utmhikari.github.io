@@ -1,6 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>【代码艺廊】operator-gallery：纯vibe的operator管理工具</title>
+    <url>/2026/04/08/codegallery/operator_gallery/</url>
+    <content><![CDATA[<p>近期AI编程的新概念层出不穷，从最简单的Code Completion，到NEXT预测，再到现在什么Vibe Coding、OpenClaw，外加Spec Coding、Harness Engineering等Agent工程名词，可以说随着LLM的能力增强，不考虑业务架构，纯考虑编程本身，AI几乎已经可以替代所有人类，对于程序员而言，以前要做亲自编码，现在则需要转化为一个管理者的角色，指导AI完成程序员的工作目的。</p>
+<p>为了体验AI编程的强大，近期笔者借助AI Native的开发工具，通过纯Vibe Coding的方式，开发一个基于kubebuilder的operator管理工具。kubebuilder本身提供的命令和功能已经很丰富了，但还是免不了一些小问题，比如在国内某些镜像和依赖拉不下来，或者开发多个operator没有一个工作区做统一管理，这些问题都可以由一个operator-gallery工具去做解决。</p>
+<p>换言之，operator-gallery的职责是封装kubebuilder，端到端地处理operator的构建、部署和卸载流程，这样开发者只需要专注在types和controller的实现就可以。</p>
+<a id="more"></a>
+<p>相关的代码已经放到<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaS9vcGVyYXRvci1nYWxsZXJ5" title="https://github.com/utmhikari/operator-gallery">operator-gallery<i class="fa fa-external-link"></i></span>这个GitHub仓库当中，有兴趣的读者可以随时fork做二次开发，vibe出GUI等更多实用的功能。</p>
+<p>同时也聊聊Vibe Coding吧，从笔者比较粗浅的vibe经验来看，因为Agent上下文有限，所以还是保持一个好记性不如烂笔头的原则，鼓励AI频繁做开发经验沉淀，提升自身在项目研发的拟合度。关于Skill方面笔者目前还没有过多的尝试，后续有机会也再探索一下。</p>
+]]></content>
+      <categories>
+        <category>代码艺廊</category>
+      </categories>
+      <tags>
+        <tag>Golang</tag>
+        <tag>Kubernetes</tag>
+        <tag>operator-gallery</tag>
+        <tag>Vibe Coding</tag>
+        <tag>Docker</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【DIY小记】分享自己目前在用的AI编程工具Qoder</title>
+    <url>/2026/04/08/diymemo/qoder/</url>
+    <content><![CDATA[<p>近期因为探索AI编程的缘故，希望给日常生活中多找一个AI-Native的IDE，一方面做纯Vibe Coding的开发，另一方面也能够兼顾日常手动微调编码的需要。当然由于众所周知的原因，也希望这个IDE可以照顾国内用户，不是说总是要搭梯子编程，这样编程之外的冲浪需求就不方便了。</p>
+<p>经过一番探索，在Trae、Cursor以及Claude Code等一系列候选名单中，笔者选择了Qoder。并不算是打广告，主要是基于以下的理由：</p>
+<a id="more"></a>
+<ul>
+<li>不用搭梯子，可以选择经济到极致（对标opus 4.6）的模型</li>
+<li>插件和JetBrains系结合的还不错</li>
+<li>有RepoWiki功能，对于学习源码架构而言利好</li>
+<li>界面风格比较清净</li>
+<li>一个平台一个套餐cover所有编程工具场景</li>
+</ul>
+<p>更精确来讲，笔者也不算Vibe Coding以及搞OpenClaw的发烧友，对Token的用量目前也不是特别高，所以日常Vibe时候也只是用了经济的模型，做了一个<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaS9vcGVyYXRvci1nYWxsZXJ5" title="https://github.com/utmhikari/operator-gallery">GitHub项目<i class="fa fa-external-link"></i></span>。不考虑AI编程，纯手写方面，JetBrains对于特定语言（比如Go和Python）做手码的优化是显著比VSCode系强的，所以JetBrains也一直在用，这里就需要配套一个具备Agent能力的AI工具人，那正好可以套用自己买的Qoder套餐。再者，Qoder的RepoWiki功能确实非常不错，任何时候有需要探索源码的开源项目，都可以预先分析一番。最后就是Qoder的套餐也可以用到QoderWork当中，处理一些龙虾类工作，但目前还有待挖掘。</p>
+<p>综上来讲，Qoder算是一个能兼顾AI编程和生活的，比较恰当的选择，当然也不代表就一定最好。如果你是AI编程发烧友，那肯定直接上Claude、Codex这类比较硬核，萝卜青菜各有所爱。</p>
+]]></content>
+      <categories>
+        <category>DIY小记</category>
+      </categories>
+      <tags>
+        <tag>编程</tag>
+        <tag>IDE</tag>
+        <tag>LLM</tag>
+        <tag>JetBrains</tag>
+        <tag>Qoder</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>【DIY小记】解决MacOS上Edge浏览器bilibili全屏卡顿的问题</title>
     <url>/2026/04/02/diymemo/edge_bilibili_ppt/</url>
     <content><![CDATA[<p>近日笔者发现自己Macbook-Pro播放B站视频，全屏的时候必然卡顿，退出全屏就没事。笔者电脑的参数是：</p>
@@ -8853,9 +8901,9 @@
       <tags>
         <tag>Golang</tag>
         <tag>client-go</tag>
-        <tag>kubernetes</tag>
         <tag>minikube</tag>
         <tag>mongodb</tag>
+        <tag>Kubernetes</tag>
       </tags>
   </entry>
   <entry>
@@ -9008,10 +9056,10 @@
       </categories>
       <tags>
         <tag>Golang</tag>
-        <tag>docker</tag>
-        <tag>docker client</tag>
+        <tag>虚拟机</tag>
         <tag>MySQL</tag>
-        <tag>docker API</tag>
+        <tag>数据库</tag>
+        <tag>Docker</tag>
       </tags>
   </entry>
   <entry>

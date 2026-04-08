@@ -404,6 +404,347 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2025/12/07/geekdaily/agentflow_code/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2025/12/07/geekdaily/agentflow_code/" class="post-title-link" itemprop="url">【极客日常】智能化工程AgentFlow代码实现分析</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2025-12-07 13:30:22 / 修改时间：15:46:36" itemprop="dateCreated datePublished" datetime="2025-12-07T13:30:22+08:00">2025-12-07</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/极客日常/" itemprop="url" rel="index"><span itemprop="name">极客日常</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>近期笔者因为参与LLM增强项目攻坚，对LLM工程相关的技术也希望有一定的了解，因此希望借这个机会，读一些文章充电，看看目前LLM智能化工程的一些研究趋势。在阅读了几篇文章之后，最终读者选定<span class="exturl" data-url="aHR0cHM6Ly9hZ2VudGZsb3cuc3RhbmZvcmQuZWR1Lw==" title="https://agentflow.stanford.edu/">AgentFlow<i class="fa fa-external-link"></i></span>这个项目做代码实现分析。由于笔者在算法方面的涉猎实在不深，所以本文只是抛砖引玉，阐述上有什么不专业不严谨的地方，也辛苦大家指正。</p>
+<p>AgentFlow主要解决现有LLM在进行工具增强推理时有可扩展和泛化能力差的问题，简单来说就是在线LLM-Agent服务缺乏在生产环境中RL（强化学习）的手段。所以AgentFlow提出了以下的解决方案，一是一套动态训练Planner的编排，另外一个是一套奖励目标训练算法Flow-GRPO。源码可以通过<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2x1cGFudGVjaC9BZ2VudEZsb3c=" title="https://github.com/lupantech/AgentFlow">这个GitHub<i class="fa fa-external-link"></i></span>来下载，跑了一番看Agent编排的实现比较完整，但在线服务跟训练的部署执行会比较难搞，所以本文更倾向于对Agent编排做详细阐述。</p>
+<p>Agent编排包含Planner、Executor、Verifier跟Generator四个角色，Planner会不断Rollout判断下一步要做什么，Executor执行ToolCall，Verifier判断当前问题是否解决，Generator负责整合Output。整个核心代码集中在Solver.solve，长这个样子：</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2025/12/07/geekdaily/agentflow_code/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2025/11/01/githubdiscovery/trae_agent/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2025/11/01/githubdiscovery/trae_agent/" class="post-title-link" itemprop="url">【GitHub探索】代码开发AI辅助工具trae-agent</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2025-11-01 20:20:20 / 修改时间：20:21:00" itemprop="dateCreated datePublished" datetime="2025-11-01T20:20:20+08:00">2025-11-01</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/GitHub探索/" itemprop="url" rel="index"><span itemprop="name">GitHub探索</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>作为国内表现上比较agentic的开发工具之一，trae项目开源了自家trae-agent开发工具，整体也有一段时间了。借着日常闲暇的机会，笔者计划研究下trae-agent的代码实现，看下这个本地AI开发辅助工具是如何运作的。</p>
+<p>从开源项目的角度，trae-agent给的文档信息是比较充足的，但代码实现上只能说是MVP版本，只有一些基础功能。当然这个也可以理解，相信实际生产用的trae-agent会远比这个实现更加复杂，以及不可能所有人力都投入到开源项目的建设中。所以今天就简单看看这个项目的主流程。</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2025/11/01/githubdiscovery/trae_agent/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2025/11/01/archiart/autotest_platform_architecture/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1746,358 +2087,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2025/08/03/githubdiscovery/coze_studio/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ひかり.HDQ">
-      <meta itemprop="description" content="talk is cheap, code is rich">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HiKariのTechLab">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2025/08/03/githubdiscovery/coze_studio/" class="post-title-link" itemprop="url">【GitHub探索】Agent开发平台CozeStudio开源版本踩坑体验</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2025-08-03 14:09:12" itemprop="dateCreated datePublished" datetime="2025-08-03T14:09:12+08:00">2025-08-03</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2025-08-08 18:52:38" itemprop="dateModified" datetime="2025-08-08T18:52:38+08:00">2025-08-08</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/GitHub探索/" itemprop="url" rel="index"><span itemprop="name">GitHub探索</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>近期Coze开源了自己的核心产品CozeStudio和CozeLoop，CozeStudio主要面向AI-Agent产品开发和周边生态，而CozeLoop主要面向Prompt Engineering以及效果评测。借这个机会，笔者也踩坑了下CozeStudio和CozeLoop的源码，在本地做了部署简单玩转了下，也顺带了解了下CozeStudio跟CozeLoop的一些产品原理。</p>
-<p>本篇文章就先分享一下CozeStudio的踩坑体验，源码可以从<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2NvemUtZGV2L2NvemUtc3R1ZGlv" title="https://github.com/coze-dev/coze-studio">这个Repo<i class="fa fa-external-link"></i></span>里面拉取。</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2025/08/03/githubdiscovery/coze_studio/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2025/07/12/geekdaily/dynamic_job_impl/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ひかり.HDQ">
-      <meta itemprop="description" content="talk is cheap, code is rich">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HiKariのTechLab">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2025/07/12/geekdaily/dynamic_job_impl/" class="post-title-link" itemprop="url">【极客日常】后端任务动态注入执行策略的一种技术实现</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2025-07-12 18:45:59 / 修改时间：18:52:21" itemprop="dateCreated datePublished" datetime="2025-07-12T18:45:59+08:00">2025-07-12</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/极客日常/" itemprop="url" rel="index"><span itemprop="name">极客日常</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>近期做项目时遇到一个场景，是需要在后端任务执行时动态注入策略。具体而言，笔者负责的后端服务，可以理解是会在线上服务发布时，对服务风险做实时扫描，那么这个扫描就需要根据当前线上服务发布上下文，匹配对应的策略。但这里扫出来的策略都是静态持久化的，前端也有产品化的配置，而有些业务则希望能够在任务执行时，动态注入一些业务自己理解需要的扫描策略，不在前端做静态配置。</p>
-<p>对于这类定制化需求，笔者想到的一种比较低成本实现的方式是这样的：</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2025/07/12/geekdaily/dynamic_job_impl/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2146,7 +2135,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">214</span>
+                    <span class="site-state-item-count">216</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -3074,7 +3063,17 @@
                     
                       
                     
-                    <span class="site-state-item-count">425</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">426</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

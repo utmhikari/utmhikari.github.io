@@ -2,6 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://utmhikari.github.io/2026/04/08/codegallery/operator_gallery/</loc>
+    
+    <lastmod>2026-04-08T11:09:57.110Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://utmhikari.github.io/2026/04/08/diymemo/qoder/</loc>
+    
+    <lastmod>2026-04-08T11:09:46.207Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://utmhikari.github.io/2019/09/01/gofromzero/03_docker_client/</loc>
+    
+    <lastmod>2026-04-08T09:40:50.571Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://utmhikari.github.io/2019/10/03/gofromzero/04_kubernetes_mongo/</loc>
+    
+    <lastmod>2026-04-08T09:36:47.707Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://utmhikari.github.io/2026/04/02/diymemo/edge_bilibili_ppt/</loc>
     
     <lastmod>2026-04-01T16:21:03.611Z</lastmod>
@@ -1146,20 +1174,6 @@
     <loc>http://utmhikari.github.io/2022/02/26/hardpython/2_asyncio_3/</loc>
     
     <lastmod>2024-04-07T02:48:06.923Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://utmhikari.github.io/2019/09/01/gofromzero/03_docker_client/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.922Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://utmhikari.github.io/2019/10/03/gofromzero/04_kubernetes_mongo/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.922Z</lastmod>
     
   </url>
   

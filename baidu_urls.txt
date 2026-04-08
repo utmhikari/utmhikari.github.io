@@ -1,3 +1,5 @@
+http://utmhikari.github.io/2026/04/08/codegallery/operator_gallery/
+http://utmhikari.github.io/2026/04/08/diymemo/qoder/
 http://utmhikari.github.io/2026/04/02/diymemo/edge_bilibili_ppt/
 http://utmhikari.github.io/2026/03/14/testlife/change_control_platform/
 http://utmhikari.github.io/2026/03/14/testlife/rule_agent/
@@ -96,5 +98,3 @@ http://utmhikari.github.io/2022/10/15/diymemo/ubuntu22_floppy_disk/
 http://utmhikari.github.io/2022/10/05/githubdiscovery/ebook_boilerplate/
 http://utmhikari.github.io/2022/10/03/gameofautotest/iv/
 http://utmhikari.github.io/2022/10/02/pythonnotes/pyqt_listview_fileviewer/
-http://utmhikari.github.io/2022/09/12/testlife/gautomator_ue4_android/
-http://utmhikari.github.io/2022/09/04/gameofautotest/iii/
