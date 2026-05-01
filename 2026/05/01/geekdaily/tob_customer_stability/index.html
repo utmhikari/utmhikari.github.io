@@ -101,24 +101,25 @@
 
 
 
-  <meta name="description" content="talk is cheap, code is rich">
-<meta name="keywords" content="code, life">
-<meta property="og:type" content="website">
-<meta property="og:title" content="HiKariのTechLab">
-<meta property="og:url" content="http://utmhikari.github.io/tags/质量管理/index.html">
+  <meta name="description" content="近期因为工作调整的原因，笔者从以前面向内部研发团队的变更风险防控和稳定性建设，逐渐转向面向ToB客户的云服务稳定性保障。虽然本质上都是在做SRE稳定性相关的工作，但从服务对象、技术架构到运营方式，都有非常大的差异。今天这篇文章，就结合自己以前做变更风险防控和稳定性建设的实践经验，聊一下从云服务角度做ToB客户稳定性保障的一些思考和对比。 一块是服务对象的转变，以前做变更风险防控平台，服务对象是公司">
+<meta name="keywords" content="变更风险,稳定性,业务,Kubernetes,SRE">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【极客日常】初探ToB客户稳定性保障">
+<meta property="og:url" content="http://utmhikari.github.io/2026/05/01/geekdaily/tob_customer_stability/index.html">
 <meta property="og:site_name" content="HiKariのTechLab">
-<meta property="og:description" content="talk is cheap, code is rich">
+<meta property="og:description" content="近期因为工作调整的原因，笔者从以前面向内部研发团队的变更风险防控和稳定性建设，逐渐转向面向ToB客户的云服务稳定性保障。虽然本质上都是在做SRE稳定性相关的工作，但从服务对象、技术架构到运营方式，都有非常大的差异。今天这篇文章，就结合自己以前做变更风险防控和稳定性建设的实践经验，聊一下从云服务角度做ToB客户稳定性保障的一些思考和对比。 一块是服务对象的转变，以前做变更风险防控平台，服务对象是公司">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2026-05-01T12:43:36.137Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HiKariのTechLab">
-<meta name="twitter:description" content="talk is cheap, code is rich">
+<meta name="twitter:title" content="【极客日常】初探ToB客户稳定性保障">
+<meta name="twitter:description" content="近期因为工作调整的原因，笔者从以前面向内部研发团队的变更风险防控和稳定性建设，逐渐转向面向ToB客户的云服务稳定性保障。虽然本质上都是在做SRE稳定性相关的工作，但从服务对象、技术架构到运营方式，都有非常大的差异。今天这篇文章，就结合自己以前做变更风险防控和稳定性建设的实践经验，聊一下从云服务角度做ToB客户稳定性保障的一些思考和对比。 一块是服务对象的转变，以前做变更风险防控平台，服务对象是公司">
 
 
 
 
 
 
-  <link rel="canonical" href="http://utmhikari.github.io/tags/质量管理/">
+  <link rel="canonical" href="http://utmhikari.github.io/2026/05/01/geekdaily/tob_customer_stability/">
 
 
 
@@ -128,7 +129,7 @@
   };
 </script>
 
-  <title>标签: 质量管理 | HiKariのTechLab</title>
+  <title>【极客日常】初探ToB客户稳定性保障 | HiKariのTechLab</title>
   
 
 
@@ -176,7 +177,7 @@
     
   
 
-  <div class="container sidebar-position-right ">
+  <div class="container sidebar-position-right page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -252,7 +253,7 @@
         
         
           
-          <li class="menu-item menu-item-tags menu-item-active">
+          <li class="menu-item menu-item-tags">
 
     
     
@@ -383,324 +384,236 @@
           
             
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
           
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block tag">
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h2>质量管理<small>标签</small>
-        </h2>
-      </div>
-
-      
-        
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2026/05/01/geekdaily/tob_customer_stability/">
 
-      <h3 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
         
-          <a class="post-title-link" href="/2025/02/22/testlife/change_control_data_marketing/" itemprop="url">
-            
-              <span itemprop="name">【测试人生】浅谈变更风险防控的数据运营</span>
-            
-          </a>
         
-      </h3>
+          <h2 class="post-title" itemprop="name headline">【极客日常】初探ToB客户稳定性保障
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2025-02-22T18:08:08+08:00" content="2025-02-22">
-          02-22
-        </time>
-      </div>
+              
+            
+          </h2>
+        
 
-    </header>
-  </article>
+        <div class="post-meta">
+          <span class="post-time">
 
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2026-05-01 20:43:04 / 修改时间：20:43:36" itemprop="dateCreated datePublished" datetime="2026-05-01T20:43:04+08:00">2026-05-01</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/极客日常/" itemprop="url" rel="index"><span itemprop="name">极客日常</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/2025/01/26/testlife/change_observe_logic/" itemprop="url">
-            
-              <span itemprop="name">【测试人生】变更风险观测的流程逻辑设计</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2025-01-26T20:30:22+08:00" content="2025-01-26">
-          01-26
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/2024/08/17/testlife/work_and_study/" itemprop="url">
-            
-              <span itemprop="name">【测试人生】分享下自己对于平衡日常工作和学习提升的观点</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2024-08-17T13:29:55+08:00" content="2024-08-17">
-          08-17
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/2024/05/01/geekdaily/meituan_tech_notes/" itemprop="url">
-            
-              <span itemprop="name">【极客日常】读2023美团技术年货的一些笔记</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2024-05-01T00:00:01+08:00" content="2024-05-01">
-          05-01
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/2023/12/09/testlife/data_sync_warn/" itemprop="url">
-            
-              <span itemprop="name">【测试人生】数据同步和迁移的变更注意事项</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2023-12-09T22:31:50+08:00" content="2023-12-09">
-          12-09
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/2023/01/26/testlife/quality_redline_design/" itemprop="url">
-            
-              <span itemprop="name">【测试人生】准入准出质量红线的技术设计</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2023-01-26T14:40:03+08:00" content="2023-01-26">
-          01-26
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/2022/11/02/gameofautotest/v/" itemprop="url">
-            
-              <span itemprop="name">【Game Of AutoTest】5、游戏自动化测试的价值</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2022-11-02T20:19:07+08:00" content="2022-11-02">
-          11-02
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/2021/10/04/testlife/test_architect_notes/" itemprop="url">
-            
-              <span itemprop="name">【测试人生】《测试架构师修炼之道》阅读笔记</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2021-10-04T16:01:15+08:00" content="2021-10-04">
-          10-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/2020/09/06/testlife/be_a_tester/" itemprop="url">
-            
-              <span itemprop="name">【测试人生】我心目中的测试</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2020-09-06T23:23:04+08:00" content="2020-09-06">
-          09-06
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/2019/12/22/testlife/are_testers_controlling_quality/" itemprop="url">
-            
-              <span itemprop="name">【测试人生】测试、策划与开发，谁来把控游戏的质量？</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-12-22T18:25:36+08:00" content="2019-12-22">
-          12-22
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+        <p>近期因为工作调整的原因，笔者从以前面向内部研发团队的变更风险防控和稳定性建设，逐渐转向面向ToB客户的云服务稳定性保障。虽然本质上都是在做SRE稳定性相关的工作，但从服务对象、技术架构到运营方式，都有非常大的差异。今天这篇文章，就结合自己以前做变更风险防控和稳定性建设的实践经验，聊一下从云服务角度做ToB客户稳定性保障的一些思考和对比。</p>
+<p>一块是服务对象的转变，以前做变更风险防控平台，服务对象是公司内部的研发和SRE团队，包括公司内部整体的架构也比较扁平，技术栈比较统一，所以沟通成本比较低，需求沟通起来也比较直接。在这样的场景下，变更风险防控平台的建设就会更加趋向于产品化，因为会有无数不了解稳定性业务或技术的同学来平台做咨询或者提需求，所以每项功能都做的比较细致体贴。最终呈现出来的平台不仅是功能齐全，在用户友好度上也有比较优质的体验。</p>
+<a id="more"></a>
+<p>但ToB客户稳定性保障的性质会相对不同，因为是对外服务，所以单从组织架构阵型上就不会那么扁平。笔者自己是做Kubernetes云产品的产研角色，但云产品要触及到不同外部客户的话，云产品产研和客户之间也会隔着客服和前线技术支持的角色，并不是说直接可以对接产研。或者来讲，只有必要的情况，产研才会协助解决问题，一般情况下，需要产品能力自身保障履约的SLA。</p>
+<p>所以这种情况，做稳定性治理的思路上，并不能说随便就拉群沟通优化产品体验，而是会更加依赖平台功能化的动作，在不影响各方风控敏感的基础上，一是把组织阵型之间的协作流程承接起来，二是面向内部角色的稳定性治理提供标准的技术模块，三是能够识别影响客户的风险并利用流程能力让客户更快解决。这其中，三是目的，一和二是手段。这样可以应对几种常见的业务场景：</p>
+<ul>
+<li>风险治理：客户提出问题希望产品研发协助修复，但这个问题可能遗留已久未治理的问题，并且这个过程技术支持角色没有感知，因此衍生出来的一个事情是未治理的巡检风险工单化，推送给技术支持角色，推进客户治理</li>
+<li>变更感知：云产品自身发生变更，比如Kubernetes托管面组件发生变更，这些操作影响到客户线上业务，导致发生故障，因此又衍生出来一个事情是托管面变更风险推送给技术支持角色，由技术支持角色判断并告知客户可能的影响</li>
+<li>健康检查：对于日常客户和云产品的沟通协作，客户可能因为数据面集群访问控制面出了问题，向技术支持角色咨询云产品底层健康状态，那么有什么方式可以快速判断控制面的健康情况，就需要云产品研发提供诊断能力，去落实这个事情</li>
+</ul>
+<p>有了这些能力之后，对于ToB客户稳定性治理这件事情也能做到比较基础保障。当然仅凭这些也是不够的，最终态还是说怎么从客户出发，减少因为云产品本身稳定性问题带来的不确定性，提升客户对云产品的信任，这也需要考虑到客户本身的性质。比如游戏业务对于单节点本身的性能要求比较高，AI业务训练时因为gang-scheduling，又对瞬时起大量pod的时长和稳定性要求比较高，一些涉及到人文关怀的业务虽然在云产品使用上并没有太大的投入，但如果云产品出问题会造成很多社会影响，可以说这些客户也是需要重点关注和保护的。</p>
+<p>所以说，ToB客户稳定性保障，长远看不仅需要关注产品技术指标本身，也需要有一些手段衡量客户的体验，对于不同类型的客户需要区分不同的衡量手段，对于重保客户也需要衡量相比于常规客户其稳定性提升的幅度，这样才能构建更加有效的体系去进一步指导稳定性保障的动作。</p>
+<p>总体来看，从变更风险防控到ToB客户稳定性保障，虽然工作性质有所变化，但核心理念是相通的：事前预防优于事后止损，数据驱动优于经验判断，体系建设优于单点优化。还有很多事情，笔者也会亲身经历，亲身探索，未来还有什么想法，就再继续写上。</p>
 
       
     </div>
 
+    
+
+    
+    
+    
+
+    
+      
+<div style="border: 1px solid black; margin-top: 32px; margin-bottom: 32px">
+  <div style="margin-left:10px">
+    <span style="font-weight:bold">版权声明</span>
+    <br>
+    <span>本文为博客<a href="https://utmhikari.github.io" style="color:#258FC6">HiKariのTechLab</a>原创文章，转载请标明出处，谢谢~~~</span>
+  </div>
+</div>
+
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/变更风险/" rel="tag"># 变更风险</a>
+          
+            <a href="/tags/稳定性/" rel="tag"># 稳定性</a>
+          
+            <a href="/tags/业务/" rel="tag"># 业务</a>
+          
+            <a href="/tags/Kubernetes/" rel="tag"># Kubernetes</a>
+          
+            <a href="/tags/SRE/" rel="tag"># SRE</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2026/05/01/testlife/testlife_final_article/" rel="next" title="【测试人生】【完结篇】畅聊质量技术的现状和未来发展">
+                <i class="fa fa-chevron-left"></i> 【测试人生】【完结篇】畅聊质量技术的现状和未来发展
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/tags/质量管理/page/2/">2</a><a class="extend next" rel="next" href="/tags/质量管理/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
-  </nav>
+  </article>
 
 
+  </div>
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -738,7 +651,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">216</span>
+                    <span class="site-state-item-count">218</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -799,6 +712,8 @@
                     
                   
                     
+                    
+                      
                     
                       
                     
@@ -1929,6 +1844,10 @@
 
 
   
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
 
   
 
@@ -1946,6 +1865,8 @@
 
   
 
+
+  
 
 
   

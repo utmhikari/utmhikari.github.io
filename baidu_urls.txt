@@ -1,3 +1,5 @@
+http://utmhikari.github.io/2026/05/01/geekdaily/tob_customer_stability/
+http://utmhikari.github.io/2026/05/01/testlife/testlife_final_article/
 http://utmhikari.github.io/2026/04/08/codegallery/operator_gallery/
 http://utmhikari.github.io/2026/04/08/diymemo/qoder/
 http://utmhikari.github.io/2026/04/02/diymemo/edge_bilibili_ppt/
@@ -96,5 +98,3 @@ http://utmhikari.github.io/2022/11/20/testlife/navi_autotest/
 http://utmhikari.github.io/2022/11/02/gameofautotest/v/
 http://utmhikari.github.io/2022/10/15/diymemo/ubuntu22_floppy_disk/
 http://utmhikari.github.io/2022/10/05/githubdiscovery/ebook_boilerplate/
-http://utmhikari.github.io/2022/10/03/gameofautotest/iv/
-http://utmhikari.github.io/2022/10/02/pythonnotes/pyqt_listview_fileviewer/

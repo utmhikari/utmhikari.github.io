@@ -2,6 +2,118 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://utmhikari.github.io/about/index.html</loc>
+    
+    <lastmod>2026-05-01T12:44:20.936Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://utmhikari.github.io/2026/05/01/geekdaily/tob_customer_stability/</loc>
+    
+    <lastmod>2026-05-01T12:43:36.137Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://utmhikari.github.io/2026/05/01/testlife/testlife_final_article/</loc>
+    
+    <lastmod>2026-05-01T11:25:10.624Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://utmhikari.github.io/2021/10/04/testlife/test_architect_notes/</loc>
+    
+    <lastmod>2026-05-01T10:10:31.590Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://utmhikari.github.io/2024/05/01/geekdaily/meituan_tech_notes/</loc>
+    
+    <lastmod>2026-05-01T10:10:29.357Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://utmhikari.github.io/2022/11/02/gameofautotest/v/</loc>
+    
+    <lastmod>2026-05-01T10:10:29.333Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://utmhikari.github.io/2019/12/22/testlife/are_testers_controlling_quality/</loc>
+    
+    <lastmod>2026-05-01T10:10:29.333Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://utmhikari.github.io/2020/09/06/testlife/be_a_tester/</loc>
+    
+    <lastmod>2026-05-01T10:10:29.333Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://utmhikari.github.io/2025/02/22/testlife/change_control_data_marketing/</loc>
+    
+    <lastmod>2026-05-01T10:10:29.333Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://utmhikari.github.io/2025/01/26/testlife/change_observe_logic/</loc>
+    
+    <lastmod>2026-05-01T10:10:29.333Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://utmhikari.github.io/2023/12/09/testlife/data_sync_warn/</loc>
+    
+    <lastmod>2026-05-01T10:10:29.333Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://utmhikari.github.io/2019/07/01/testlife/mtsc2019/</loc>
+    
+    <lastmod>2026-05-01T10:10:29.333Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://utmhikari.github.io/2023/01/26/testlife/quality_redline_design/</loc>
+    
+    <lastmod>2026-05-01T10:10:29.333Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://utmhikari.github.io/2024/08/17/testlife/work_and_study/</loc>
+    
+    <lastmod>2026-05-01T10:10:29.333Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://utmhikari.github.io/2023/04/08/testlife/alibaba_stress_test/</loc>
+    
+    <lastmod>2026-05-01T10:09:32.910Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://utmhikari.github.io/2024/02/04/githubdiscovery/altershield_design/</loc>
+    
+    <lastmod>2026-05-01T10:09:07.883Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://utmhikari.github.io/2026/04/08/codegallery/operator_gallery/</loc>
     
     <lastmod>2026-04-08T11:09:57.110Z</lastmod>
@@ -261,13 +373,6 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2021/10/04/testlife/test_architect_notes/</loc>
-    
-    <lastmod>2025-07-12T10:29:42.539Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://utmhikari.github.io/2019/11/03/testlife/start_game_test/</loc>
     
     <lastmod>2025-07-12T10:29:38.353Z</lastmod>
@@ -352,23 +457,9 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2024/02/04/githubdiscovery/altershield_design/</loc>
-    
-    <lastmod>2025-05-02T06:19:02.543Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://utmhikari.github.io/2022/08/13/gameofautotest/ii/</loc>
     
     <lastmod>2025-04-12T15:50:10.254Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://utmhikari.github.io/2023/04/08/testlife/alibaba_stress_test/</loc>
-    
-    <lastmod>2025-04-12T15:49:25.078Z</lastmod>
     
   </url>
   
@@ -404,13 +495,6 @@
     <loc>http://utmhikari.github.io/2019/08/04/gofromzero/02_gin_gorm/</loc>
     
     <lastmod>2025-04-12T15:45:50.187Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://utmhikari.github.io/2024/05/01/geekdaily/meituan_tech_notes/</loc>
-    
-    <lastmod>2025-04-12T15:45:48.017Z</lastmod>
     
   </url>
   
@@ -457,20 +541,6 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2023/01/26/testlife/quality_redline_design/</loc>
-    
-    <lastmod>2025-03-21T11:50:04.773Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://utmhikari.github.io/about/index.html</loc>
-    
-    <lastmod>2025-03-09T08:44:56.007Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://utmhikari.github.io/2025/03/09/archiart/go_monorepo_structure/</loc>
     
     <lastmod>2025-03-09T08:18:05.659Z</lastmod>
@@ -478,23 +548,9 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2025/02/22/testlife/change_control_data_marketing/</loc>
-    
-    <lastmod>2025-02-22T10:09:00.548Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://utmhikari.github.io/2025/02/21/geekdaily/geek_sense_of_product/</loc>
     
     <lastmod>2025-02-21T15:23:46.186Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://utmhikari.github.io/2025/01/26/testlife/change_observe_logic/</loc>
-    
-    <lastmod>2025-02-13T16:53:35.966Z</lastmod>
     
   </url>
   
@@ -628,20 +684,6 @@
     <loc>http://utmhikari.github.io/2019/06/22/githubdiscovery/terminus/</loc>
     
     <lastmod>2024-09-15T15:38:13.588Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://utmhikari.github.io/2020/09/06/testlife/be_a_tester/</loc>
-    
-    <lastmod>2024-09-15T15:30:57.278Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://utmhikari.github.io/2024/08/17/testlife/work_and_study/</loc>
-    
-    <lastmod>2024-08-17T05:32:36.762Z</lastmod>
     
   </url>
   
@@ -856,13 +898,6 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2019/07/01/testlife/mtsc2019/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.928Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://utmhikari.github.io/2021/07/11/testlife/openpyxl/</loc>
     
     <lastmod>2024-04-07T02:48:06.928Z</lastmod>
@@ -912,13 +947,6 @@
   </url>
   
   <url>
-    <loc>http://utmhikari.github.io/2019/12/22/testlife/are_testers_controlling_quality/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.927Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://utmhikari.github.io/2022/04/03/testlife/btree_autotest_talk/</loc>
     
     <lastmod>2024-04-07T02:48:06.927Z</lastmod>
@@ -934,13 +962,6 @@
   
   <url>
     <loc>http://utmhikari.github.io/2023/06/03/testlife/data_change_background/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.927Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://utmhikari.github.io/2023/12/09/testlife/data_sync_warn/</loc>
     
     <lastmod>2024-04-07T02:48:06.927Z</lastmod>
     
@@ -1312,13 +1333,6 @@
   
   <url>
     <loc>http://utmhikari.github.io/2022/09/04/gameofautotest/iii/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.919Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://utmhikari.github.io/2022/11/02/gameofautotest/v/</loc>
     
     <lastmod>2024-04-07T02:48:06.919Z</lastmod>
     
