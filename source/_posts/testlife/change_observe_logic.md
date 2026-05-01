@@ -6,7 +6,7 @@ categories:
 tags:
 - 变更风险
 - 异步
-- 质量管理
+- 质量保障
 - 行为树
 - DevOps
 ---

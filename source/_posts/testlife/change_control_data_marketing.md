@@ -6,7 +6,7 @@ categories:
 tags:
 - 变更风险
 - 准入准出
-- 质量管理
+- 质量保障
 - 数据挖掘
 - DevOps
 ---
