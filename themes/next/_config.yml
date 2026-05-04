@@ -910,7 +910,7 @@ mermaid:
   theme: dark
   # Use 8.0.0 as default, jsdelivr as default CDN, works everywhere even in China
   #cdn: //cdn.staticfile.org/mermaid/8.0.0-rc.8/mermaid.min.js
-  cdn: //gcore.jsdelivr.net/mermaid/8.0.0-rc.8/mermaid.min.js
+  cdn: //cdn.jsdelivr.net/npm/mermaid@8.0.0-rc.8/dist/mermaid.min.js
   # CDNJS, provided by cloudflare, maybe the best CDN, but not works in China
   #cdn: //cdnjs.cloudflare.com/ajax/libs/mermaid/8.0.0/mermaid.min.js
 
