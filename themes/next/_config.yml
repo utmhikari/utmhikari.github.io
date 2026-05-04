@@ -907,10 +907,11 @@ pdf:
 mermaid:
   enable: true
   # Available themes: default | dark | forest | neutral
-  theme: dark
+  theme: default
   # Use 8.0.0 as default, jsdelivr as default CDN, works everywhere even in China
   #cdn: //cdn.staticfile.org/mermaid/8.0.0-rc.8/mermaid.min.js
-  cdn: //cdn.jsdelivr.net/npm/mermaid@8.0.0-rc.8/dist/mermaid.min.js
+  #cdn: //cdn.jsdelivr.net/npm/mermaid@8.0.0-rc.8/dist/mermaid.min.js
+  cdn: //cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js
   # CDNJS, provided by cloudflare, maybe the best CDN, but not works in China
   #cdn: //cdnjs.cloudflare.com/ajax/libs/mermaid/8.0.0/mermaid.min.js
 
