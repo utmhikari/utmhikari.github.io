@@ -189,10 +189,10 @@ site_state: true
 # Value after `||` delimeter is the name of FontAwesome icon. If icon (with or without delimeter) is not specified, globe icon will be loaded.
 social:
   GitHub: https://github.com/utmhikari || github
-  Mail: mailto:hdq940623@126.com || envelope
+  #Mail: mailto:hdq940623@126.com || envelope
   CSDN: https://blog.csdn.net/u013842501 || copyright
   Juejin: https://juejin.cn/user/4488650818062286/columns || code
-  Steam: https://steamcommunity.com/id/utmhikari || steam
+  #Steam: https://steamcommunity.com/id/utmhikari || steam
   Bilibili: https://space.bilibili.com/778410/ || bold
   #Weibo: https://weibo.com/yourname || weibo
   #Google: https://plus.google.com/yourname || google
