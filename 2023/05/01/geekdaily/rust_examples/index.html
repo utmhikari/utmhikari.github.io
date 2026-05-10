@@ -102,7 +102,7 @@
 
 
   <meta name="description" content="作为一门“网红”语言，rust，已经在区块链、Web前端、游戏开发等领域凸显了作用。相对于golang、python、java、js跟cpp等其余主流语言，rust语言的编写和呈现方面都算是一个更为独立的体系。因此，本着对技术的好奇心，笔者也决定学习下rust语言，一是体验一下新一门编程语言的逻辑艺术，二来也是为未来可能的变化做一做准备。 由于还没有明确要写什么小demo的想法，笔者决定先参照官网">
-<meta name="keywords" content="编程,面试,教程,函数式编程,rust">
+<meta name="keywords" content="面试,编程,教程,函数式编程,rust">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【极客日常】初体验rust语言">
 <meta property="og:url" content="http://utmhikari.github.io/2023/05/01/geekdaily/rust_examples/index.html">
@@ -564,9 +564,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/编程/" rel="tag"># 编程</a>
-          
             <a href="/tags/面试/" rel="tag"># 面试</a>
+          
+            <a href="/tags/编程/" rel="tag"># 编程</a>
           
             <a href="/tags/教程/" rel="tag"># 教程</a>
           
@@ -1573,32 +1573,6 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
                     <span class="site-state-item-count">426</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
@@ -1633,17 +1607,6 @@
                   
                     
                   
-                  <span class="exturl" data-url="bWFpbHRvOmhkcTk0MDYyM0AxMjYuY29t" title="Mail &rarr; mailto:hdq940623@126.com"><i class="fa fa-fw fa-envelope"></i>Mail</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
                   <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
                 </span>
               
@@ -1656,17 +1619,6 @@
                     
                   
                   <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80NDg4NjUwODE4MDYyMjg2L2NvbHVtbnM=" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns"><i class="fa fa-fw fa-code"></i>Juejin</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vaWQvdXRtaGlrYXJp" title="Steam &rarr; https://steamcommunity.com/id/utmhikari"><i class="fa fa-fw fa-steam"></i>Steam</span>
                 </span>
               
                 <span class="links-of-author-item">
@@ -2215,12 +2167,12 @@
 if ($('body').find('pre.mermaid').length) {
   $.ajax({
     type: 'GET',
-    url: '//gcore.jsdelivr.net/mermaid/8.0.0-rc.8/mermaid.min.js',
+    url: '//cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js',
     dataType: 'script',
     cache: true,
     success: function() {
       mermaid.initialize({
-        theme: 'dark',
+        theme: 'default',
         logLevel: 3,
         flowchart: { curve: 'linear' },
         gantt: { axisFormat: '%m/%d/%Y' },

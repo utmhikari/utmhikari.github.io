@@ -102,7 +102,7 @@
 
 
   <meta name="description" content="在互联网上，关于游戏测试（开发）领域的技术分享，实际是非常稀少。尤其针对游戏功能测试领域，很多文章的思想维度仍然停留在很久以前，关注的更多是测试用例设计以及质量管理这些更加偏向业务方面的内容。很多同学认为游戏业务测试缺乏技术含量，其实本质上是因为，很少同学愿意投入精力去研究这个领域的技术，以及研究这些技术如何更好地契合到实际的业务当中。 为此，针对游戏测试（开发）的工作特性，笔者根据自己以前的博客">
-<meta name="keywords" content="python,游戏测试,自动化测试,测试开发,功能测试">
+<meta name="keywords" content="python,自动化测试,测试开发,游戏测试,功能测试">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【极客日常】游戏测试开发干货——Python进阶与游戏自动化测试攻略">
 <meta property="og:url" content="http://utmhikari.github.io/2022/11/24/geekdaily/python_and_game_autotest_notes/index.html">
@@ -571,11 +571,11 @@
           
             <a href="/tags/python/" rel="tag"># python</a>
           
-            <a href="/tags/游戏测试/" rel="tag"># 游戏测试</a>
-          
             <a href="/tags/自动化测试/" rel="tag"># 自动化测试</a>
           
             <a href="/tags/测试开发/" rel="tag"># 测试开发</a>
+          
+            <a href="/tags/游戏测试/" rel="tag"># 游戏测试</a>
           
             <a href="/tags/功能测试/" rel="tag"># 功能测试</a>
           
@@ -1578,32 +1578,6 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
                     <span class="site-state-item-count">426</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
@@ -1638,17 +1612,6 @@
                   
                     
                   
-                  <span class="exturl" data-url="bWFpbHRvOmhkcTk0MDYyM0AxMjYuY29t" title="Mail &rarr; mailto:hdq940623@126.com"><i class="fa fa-fw fa-envelope"></i>Mail</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
                   <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
                 </span>
               
@@ -1661,17 +1624,6 @@
                     
                   
                   <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80NDg4NjUwODE4MDYyMjg2L2NvbHVtbnM=" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns"><i class="fa fa-fw fa-code"></i>Juejin</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vaWQvdXRtaGlrYXJp" title="Steam &rarr; https://steamcommunity.com/id/utmhikari"><i class="fa fa-fw fa-steam"></i>Steam</span>
                 </span>
               
                 <span class="links-of-author-item">
@@ -2220,12 +2172,12 @@
 if ($('body').find('pre.mermaid').length) {
   $.ajax({
     type: 'GET',
-    url: '//gcore.jsdelivr.net/mermaid/8.0.0-rc.8/mermaid.min.js',
+    url: '//cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js',
     dataType: 'script',
     cache: true,
     success: function() {
       mermaid.initialize({
-        theme: 'dark',
+        theme: 'default',
         logLevel: 3,
         flowchart: { curve: 'linear' },
         gantt: { axisFormat: '%m/%d/%Y' },

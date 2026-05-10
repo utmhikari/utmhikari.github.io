@@ -102,7 +102,7 @@
 
 
   <meta name="description" content="技术风险，作为质量保障领域的重要的一环，主要研究如何通过解决方案和技术手段，解决企业内业务在基础运维、日常运营和变更上线过程中的稳定性问题，保证业务风险得到收敛。在国内，蚂蚁金服在这个方向上有沉淀很多方法论和实践经验。变更管控是技术风险地一个子领域，主要的目标是在变更过程中，通过对变更流程的管控介入，提前发现变更过程存在的事故风险，或者阻止变更过程的错误进一步扩大影响面。在这个子领域，蚂蚁开源了A">
-<meta name="keywords" content="后端开发,变更风险,DevOps,AlterShield,SRE">
+<meta name="keywords" content="后端开发,变更风险,DevOps,SRE,AlterShield">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【GitHub探索】蚂蚁变更管控平台AlterShield设计分析">
 <meta property="og:url" content="http://utmhikari.github.io/2024/02/04/githubdiscovery/altershield_design/index.html">
@@ -593,9 +593,9 @@
           
             <a href="/tags/DevOps/" rel="tag"># DevOps</a>
           
-            <a href="/tags/AlterShield/" rel="tag"># AlterShield</a>
-          
             <a href="/tags/SRE/" rel="tag"># SRE</a>
+          
+            <a href="/tags/AlterShield/" rel="tag"># AlterShield</a>
           
         </div>
       
@@ -1596,32 +1596,6 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
                     <span class="site-state-item-count">426</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
@@ -1656,17 +1630,6 @@
                   
                     
                   
-                  <span class="exturl" data-url="bWFpbHRvOmhkcTk0MDYyM0AxMjYuY29t" title="Mail &rarr; mailto:hdq940623@126.com"><i class="fa fa-fw fa-envelope"></i>Mail</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
                   <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
                 </span>
               
@@ -1679,17 +1642,6 @@
                     
                   
                   <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80NDg4NjUwODE4MDYyMjg2L2NvbHVtbnM=" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns"><i class="fa fa-fw fa-code"></i>Juejin</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vaWQvdXRtaGlrYXJp" title="Steam &rarr; https://steamcommunity.com/id/utmhikari"><i class="fa fa-fw fa-steam"></i>Steam</span>
                 </span>
               
                 <span class="links-of-author-item">
@@ -2238,12 +2190,12 @@
 if ($('body').find('pre.mermaid').length) {
   $.ajax({
     type: 'GET',
-    url: '//gcore.jsdelivr.net/mermaid/8.0.0-rc.8/mermaid.min.js',
+    url: '//cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js',
     dataType: 'script',
     cache: true,
     success: function() {
       mermaid.initialize({
-        theme: 'dark',
+        theme: 'default',
         logLevel: 3,
         flowchart: { curve: 'linear' },
         gantt: { axisFormat: '%m/%d/%Y' },

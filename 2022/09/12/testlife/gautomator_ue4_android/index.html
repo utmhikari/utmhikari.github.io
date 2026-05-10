@@ -102,7 +102,7 @@
 
 
   <meta name="description" content="在2年以前的一篇文章中，讲述了游戏UI自动化方案GAutomator的基础机理、使用方式和一些工具扩展的想法。今天，趁着Game Of AutoTest系列的连载，结合游戏自动化技术选型一文，笔者将深入剖析GAutomator作为UE4安卓游戏UI自动化方案的实现机理，以及自己在实际工作中对GAutomator的优化实践。 工作原理GAutomator是这样的调用链路：">
-<meta name="keywords" content="游戏自动化,UE4,自动化测试,GAutomator,UI自动化">
+<meta name="keywords" content="自动化测试,游戏自动化,UE4,GAutomator,UI自动化">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【测试人生】GAutomator安卓UE4版本的实现机理与优化实战">
 <meta property="og:url" content="http://utmhikari.github.io/2022/09/12/testlife/gautomator_ue4_android/index.html">
@@ -649,11 +649,11 @@
       
         <div class="post-tags">
           
+            <a href="/tags/自动化测试/" rel="tag"># 自动化测试</a>
+          
             <a href="/tags/游戏自动化/" rel="tag"># 游戏自动化</a>
           
             <a href="/tags/UE4/" rel="tag"># UE4</a>
-          
-            <a href="/tags/自动化测试/" rel="tag"># 自动化测试</a>
           
             <a href="/tags/GAutomator/" rel="tag"># GAutomator</a>
           
@@ -1667,32 +1667,6 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
                     <span class="site-state-item-count">426</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
@@ -1727,17 +1701,6 @@
                   
                     
                   
-                  <span class="exturl" data-url="bWFpbHRvOmhkcTk0MDYyM0AxMjYuY29t" title="Mail &rarr; mailto:hdq940623@126.com"><i class="fa fa-fw fa-envelope"></i>Mail</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
                   <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
                 </span>
               
@@ -1750,17 +1713,6 @@
                     
                   
                   <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80NDg4NjUwODE4MDYyMjg2L2NvbHVtbnM=" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns"><i class="fa fa-fw fa-code"></i>Juejin</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vaWQvdXRtaGlrYXJp" title="Steam &rarr; https://steamcommunity.com/id/utmhikari"><i class="fa fa-fw fa-steam"></i>Steam</span>
                 </span>
               
                 <span class="links-of-author-item">
@@ -2326,12 +2278,12 @@
 if ($('body').find('pre.mermaid').length) {
   $.ajax({
     type: 'GET',
-    url: '//gcore.jsdelivr.net/mermaid/8.0.0-rc.8/mermaid.min.js',
+    url: '//cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js',
     dataType: 'script',
     cache: true,
     success: function() {
       mermaid.initialize({
-        theme: 'dark',
+        theme: 'default',
         logLevel: 3,
         flowchart: { curve: 'linear' },
         gantt: { axisFormat: '%m/%d/%Y' },

@@ -102,7 +102,7 @@
 
 
   <meta name="description" content="前言Github传送门 最近回忆起了在学校那会儿趣事：刚开始上数据库原理课程，一开始装Microsoft SQL Server，全班同学都在吐槽，怨声载道——这个说数据库咋启动不了，那个说数据库咋卸载不干净，个个焦头烂额，实在是好一番风景。唉，那时候就在想，要是有一个类似于软件管家的东西托管Microsoft SQL Server，让我们一键安装/卸载，可不就好了。 进入工业界，接触了运维方面的知">
-<meta name="keywords" content="Golang,虚拟机,MySQL,数据库,Docker">
+<meta name="keywords" content="Golang,Docker,虚拟机,数据库,MySQL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【从零单排Golang】第三话：利用docker client本地部署MySQL">
 <meta property="og:url" content="http://utmhikari.github.io/2019/09/01/gofromzero/03_docker_client/index.html">
@@ -597,13 +597,13 @@
           
             <a href="/tags/Golang/" rel="tag"># Golang</a>
           
-            <a href="/tags/虚拟机/" rel="tag"># 虚拟机</a>
+            <a href="/tags/Docker/" rel="tag"># Docker</a>
           
-            <a href="/tags/MySQL/" rel="tag"># MySQL</a>
+            <a href="/tags/虚拟机/" rel="tag"># 虚拟机</a>
           
             <a href="/tags/数据库/" rel="tag"># 数据库</a>
           
-            <a href="/tags/Docker/" rel="tag"># Docker</a>
+            <a href="/tags/MySQL/" rel="tag"># MySQL</a>
           
         </div>
       
@@ -1613,32 +1613,6 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
                     <span class="site-state-item-count">426</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
@@ -1673,17 +1647,6 @@
                   
                     
                   
-                  <span class="exturl" data-url="bWFpbHRvOmhkcTk0MDYyM0AxMjYuY29t" title="Mail &rarr; mailto:hdq940623@126.com"><i class="fa fa-fw fa-envelope"></i>Mail</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
                   <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
                 </span>
               
@@ -1696,17 +1659,6 @@
                     
                   
                   <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80NDg4NjUwODE4MDYyMjg2L2NvbHVtbnM=" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns"><i class="fa fa-fw fa-code"></i>Juejin</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vaWQvdXRtaGlrYXJp" title="Steam &rarr; https://steamcommunity.com/id/utmhikari"><i class="fa fa-fw fa-steam"></i>Steam</span>
                 </span>
               
                 <span class="links-of-author-item">
@@ -2272,12 +2224,12 @@
 if ($('body').find('pre.mermaid').length) {
   $.ajax({
     type: 'GET',
-    url: '//gcore.jsdelivr.net/mermaid/8.0.0-rc.8/mermaid.min.js',
+    url: '//cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js',
     dataType: 'script',
     cache: true,
     success: function() {
       mermaid.initialize({
-        theme: 'dark',
+        theme: 'default',
         logLevel: 3,
         flowchart: { curve: 'linear' },
         gantt: { axisFormat: '%m/%d/%Y' },

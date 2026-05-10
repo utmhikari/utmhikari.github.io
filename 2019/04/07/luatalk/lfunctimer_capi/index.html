@@ -102,7 +102,7 @@
 
 
   <meta name="description" content="前言昨天更新了一下lfunctimer，主要把hook更改为c api的形式，并且初步加了util和config的扩展 想要试用的同学的话可以点击上面clone下来，或者安装luarocks后执行下面命令安装~ luarocks install --server=http://luarocks.org/manifests/utmhikari lfunctimer 言归正传，利用lua原生的c ap">
-<meta name="keywords" content="lua,debug,测试,lfunctimer,lua C API">
+<meta name="keywords" content="debug,lua,测试,lfunctimer,lua C API">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【Lua杂谈】debug.getinfo源码分析——使用C API重写lfunctimer">
 <meta property="og:url" content="http://utmhikari.github.io/2019/04/07/luatalk/lfunctimer_capi/index.html">
@@ -578,9 +578,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/lua/" rel="tag"># lua</a>
-          
             <a href="/tags/debug/" rel="tag"># debug</a>
+          
+            <a href="/tags/lua/" rel="tag"># lua</a>
           
             <a href="/tags/测试/" rel="tag"># 测试</a>
           
@@ -1596,32 +1596,6 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
                     <span class="site-state-item-count">426</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
@@ -1656,17 +1630,6 @@
                   
                     
                   
-                  <span class="exturl" data-url="bWFpbHRvOmhkcTk0MDYyM0AxMjYuY29t" title="Mail &rarr; mailto:hdq940623@126.com"><i class="fa fa-fw fa-envelope"></i>Mail</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
                   <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
                 </span>
               
@@ -1679,17 +1642,6 @@
                     
                   
                   <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80NDg4NjUwODE4MDYyMjg2L2NvbHVtbnM=" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns"><i class="fa fa-fw fa-code"></i>Juejin</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vaWQvdXRtaGlrYXJp" title="Steam &rarr; https://steamcommunity.com/id/utmhikari"><i class="fa fa-fw fa-steam"></i>Steam</span>
                 </span>
               
                 <span class="links-of-author-item">
@@ -2255,12 +2207,12 @@
 if ($('body').find('pre.mermaid').length) {
   $.ajax({
     type: 'GET',
-    url: '//gcore.jsdelivr.net/mermaid/8.0.0-rc.8/mermaid.min.js',
+    url: '//cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js',
     dataType: 'script',
     cache: true,
     success: function() {
       mermaid.initialize({
-        theme: 'dark',
+        theme: 'default',
         logLevel: 3,
         flowchart: { curve: 'linear' },
         gantt: { axisFormat: '%m/%d/%Y' },

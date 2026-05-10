@@ -102,7 +102,7 @@
 
 
   <meta name="description" content="桌面应用的实现方式有很多，但谈到多操作系统平台兼容的话，就不得不提到electron。electron是前端开发的利好，做过web前端的同学只要稍微迁移下自己的项目，就能够将原本的web前端变成桌面应用。 因此，本文以react为例，以antd为UI库支持，讲解基于react的electron应用该如何搭建。 首先，electron-react-boilerplate项目，就帮助我们初始化了基于r">
-<meta name="keywords" content="桌面应用,react,前端开发,electron,antd">
+<meta name="keywords" content="桌面应用,前端开发,electron,react,antd">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【极客日常】electron+react+antd深色主题打造桌面应用">
 <meta property="og:url" content="http://utmhikari.github.io/2019/10/20/geekdaily/electron_react/index.html">
@@ -580,11 +580,11 @@
           
             <a href="/tags/桌面应用/" rel="tag"># 桌面应用</a>
           
-            <a href="/tags/react/" rel="tag"># react</a>
-          
             <a href="/tags/前端开发/" rel="tag"># 前端开发</a>
           
             <a href="/tags/electron/" rel="tag"># electron</a>
+          
+            <a href="/tags/react/" rel="tag"># react</a>
           
             <a href="/tags/antd/" rel="tag"># antd</a>
           
@@ -1587,32 +1587,6 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
                     <span class="site-state-item-count">426</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
@@ -1647,17 +1621,6 @@
                   
                     
                   
-                  <span class="exturl" data-url="bWFpbHRvOmhkcTk0MDYyM0AxMjYuY29t" title="Mail &rarr; mailto:hdq940623@126.com"><i class="fa fa-fw fa-envelope"></i>Mail</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
                   <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
                 </span>
               
@@ -1670,17 +1633,6 @@
                     
                   
                   <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80NDg4NjUwODE4MDYyMjg2L2NvbHVtbnM=" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns"><i class="fa fa-fw fa-code"></i>Juejin</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vaWQvdXRtaGlrYXJp" title="Steam &rarr; https://steamcommunity.com/id/utmhikari"><i class="fa fa-fw fa-steam"></i>Steam</span>
                 </span>
               
                 <span class="links-of-author-item">
@@ -2229,12 +2181,12 @@
 if ($('body').find('pre.mermaid').length) {
   $.ajax({
     type: 'GET',
-    url: '//gcore.jsdelivr.net/mermaid/8.0.0-rc.8/mermaid.min.js',
+    url: '//cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js',
     dataType: 'script',
     cache: true,
     success: function() {
       mermaid.initialize({
-        theme: 'dark',
+        theme: 'default',
         logLevel: 3,
         flowchart: { curve: 'linear' },
         gantt: { axisFormat: '%m/%d/%Y' },

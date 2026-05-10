@@ -102,7 +102,7 @@
 
 
   <meta name="description" content="近日笔者发现自己Macbook-Pro播放B站视频，全屏的时候必然卡顿，退出全屏就没事。笔者电脑的参数是：  芯片：M3 系统：Tahoe 26.4 浏览器：Edge  到网上一查发现《Edge浏览器在MacOS 26(Tahoe)系统上看B站卡顿》一篇文章，实测下来确实如此，拔掉电源就没事，插上电源必然卡成PPT，并且视频还比拔掉电源亮一些。 至此怀疑是Edge浏览器某些设置的问题，经过一番探索">
-<meta name="keywords" content="问题排查,性能测试,debug,bilibili,前端">
+<meta name="keywords" content="问题排查,性能测试,bilibili,debug,前端">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【DIY小记】解决MacOS上Edge浏览器bilibili全屏卡顿的问题">
 <meta property="og:url" content="http://utmhikari.github.io/2026/04/02/diymemo/edge_bilibili_ppt/index.html">
@@ -560,9 +560,9 @@
           
             <a href="/tags/性能测试/" rel="tag"># 性能测试</a>
           
-            <a href="/tags/debug/" rel="tag"># debug</a>
-          
             <a href="/tags/bilibili/" rel="tag"># bilibili</a>
+          
+            <a href="/tags/debug/" rel="tag"># debug</a>
           
             <a href="/tags/前端/" rel="tag"># 前端</a>
           
@@ -1565,32 +1565,6 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
                     <span class="site-state-item-count">426</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
@@ -1625,17 +1599,6 @@
                   
                     
                   
-                  <span class="exturl" data-url="bWFpbHRvOmhkcTk0MDYyM0AxMjYuY29t" title="Mail &rarr; mailto:hdq940623@126.com"><i class="fa fa-fw fa-envelope"></i>Mail</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
                   <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
                 </span>
               
@@ -1648,17 +1611,6 @@
                     
                   
                   <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80NDg4NjUwODE4MDYyMjg2L2NvbHVtbnM=" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns"><i class="fa fa-fw fa-code"></i>Juejin</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vaWQvdXRtaGlrYXJp" title="Steam &rarr; https://steamcommunity.com/id/utmhikari"><i class="fa fa-fw fa-steam"></i>Steam</span>
                 </span>
               
                 <span class="links-of-author-item">
@@ -2207,12 +2159,12 @@
 if ($('body').find('pre.mermaid').length) {
   $.ajax({
     type: 'GET',
-    url: '//gcore.jsdelivr.net/mermaid/8.0.0-rc.8/mermaid.min.js',
+    url: '//cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js',
     dataType: 'script',
     cache: true,
     success: function() {
       mermaid.initialize({
-        theme: 'dark',
+        theme: 'default',
         logLevel: 3,
         flowchart: { curve: 'linear' },
         gantt: { axisFormat: '%m/%d/%Y' },

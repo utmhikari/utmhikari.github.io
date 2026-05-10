@@ -102,7 +102,7 @@
 
 
   <meta name="description" content="作为国内表现上比较agentic的开发工具之一，trae项目开源了自家trae-agent开发工具，整体也有一段时间了。借着日常闲暇的机会，笔者计划研究下trae-agent的代码实现，看下这个本地AI开发辅助工具是如何运作的。 从开源项目的角度，trae-agent给的文档信息是比较充足的，但代码实现上只能说是MVP版本，只有一些基础功能。当然这个也可以理解，相信实际生产用的trae-agent">
-<meta name="keywords" content="工具开发,AI,Agent,LLM,trae-agent">
+<meta name="keywords" content="LLM,AI,工具开发,Agent,trae-agent">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【GitHub探索】代码开发AI辅助工具trae-agent">
 <meta property="og:url" content="http://utmhikari.github.io/2025/11/01/githubdiscovery/trae_agent/index.html">
@@ -558,13 +558,13 @@
       
         <div class="post-tags">
           
-            <a href="/tags/工具开发/" rel="tag"># 工具开发</a>
+            <a href="/tags/LLM/" rel="tag"># LLM</a>
           
             <a href="/tags/AI/" rel="tag"># AI</a>
           
-            <a href="/tags/Agent/" rel="tag"># Agent</a>
+            <a href="/tags/工具开发/" rel="tag"># 工具开发</a>
           
-            <a href="/tags/LLM/" rel="tag"># LLM</a>
+            <a href="/tags/Agent/" rel="tag"># Agent</a>
           
             <a href="/tags/trae-agent/" rel="tag"># trae-agent</a>
           
@@ -1567,32 +1567,6 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
                     <span class="site-state-item-count">426</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
@@ -1627,17 +1601,6 @@
                   
                     
                   
-                  <span class="exturl" data-url="bWFpbHRvOmhkcTk0MDYyM0AxMjYuY29t" title="Mail &rarr; mailto:hdq940623@126.com"><i class="fa fa-fw fa-envelope"></i>Mail</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
                   <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
                 </span>
               
@@ -1650,17 +1613,6 @@
                     
                   
                   <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80NDg4NjUwODE4MDYyMjg2L2NvbHVtbnM=" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns"><i class="fa fa-fw fa-code"></i>Juejin</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vaWQvdXRtaGlrYXJp" title="Steam &rarr; https://steamcommunity.com/id/utmhikari"><i class="fa fa-fw fa-steam"></i>Steam</span>
                 </span>
               
                 <span class="links-of-author-item">
@@ -2209,12 +2161,12 @@
 if ($('body').find('pre.mermaid').length) {
   $.ajax({
     type: 'GET',
-    url: '//gcore.jsdelivr.net/mermaid/8.0.0-rc.8/mermaid.min.js',
+    url: '//cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js',
     dataType: 'script',
     cache: true,
     success: function() {
       mermaid.initialize({
-        theme: 'dark',
+        theme: 'default',
         logLevel: 3,
         flowchart: { curve: 'linear' },
         gantt: { axisFormat: '%m/%d/%Y' },

@@ -102,7 +102,7 @@
 
 
   <meta name="description" content="又到了一年一度的校招季，今年由于团队同时招聘后端和智能化方向的同学，吸引了很多不同算法领域、后端领域以及甚至已经在大厂实习过的同学的简历，可谓是每年都非常优秀。至少比起笔者本人校招那个时候，是要优秀的很多，不是一点半点。 作为一个面试官，笔者面对的是很多不同方向的同学的简历，有些方向说实在的笔者自己也对相关的技术了解的不那么清晰。但既然是面试了，就必须有个把握，心中得有杆秤，宁可强杀，也不能错选，">
-<meta name="keywords" content="后端开发,面试,八股文,个人博客,教程">
+<meta name="keywords" content="后端开发,面试,教程,个人博客,八股文">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【极客日常】由面试官角度给校招生的大厂面试要点">
 <meta property="og:url" content="http://utmhikari.github.io/2024/10/16/geekdaily/rookie_interview/index.html">
@@ -562,11 +562,11 @@
           
             <a href="/tags/面试/" rel="tag"># 面试</a>
           
-            <a href="/tags/八股文/" rel="tag"># 八股文</a>
+            <a href="/tags/教程/" rel="tag"># 教程</a>
           
             <a href="/tags/个人博客/" rel="tag"># 个人博客</a>
           
-            <a href="/tags/教程/" rel="tag"># 教程</a>
+            <a href="/tags/八股文/" rel="tag"># 八股文</a>
           
         </div>
       
@@ -1567,32 +1567,6 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
                     <span class="site-state-item-count">426</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
@@ -1627,17 +1601,6 @@
                   
                     
                   
-                  <span class="exturl" data-url="bWFpbHRvOmhkcTk0MDYyM0AxMjYuY29t" title="Mail &rarr; mailto:hdq940623@126.com"><i class="fa fa-fw fa-envelope"></i>Mail</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
                   <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
                 </span>
               
@@ -1650,17 +1613,6 @@
                     
                   
                   <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80NDg4NjUwODE4MDYyMjg2L2NvbHVtbnM=" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns"><i class="fa fa-fw fa-code"></i>Juejin</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vaWQvdXRtaGlrYXJp" title="Steam &rarr; https://steamcommunity.com/id/utmhikari"><i class="fa fa-fw fa-steam"></i>Steam</span>
                 </span>
               
                 <span class="links-of-author-item">
@@ -2209,12 +2161,12 @@
 if ($('body').find('pre.mermaid').length) {
   $.ajax({
     type: 'GET',
-    url: '//gcore.jsdelivr.net/mermaid/8.0.0-rc.8/mermaid.min.js',
+    url: '//cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js',
     dataType: 'script',
     cache: true,
     success: function() {
       mermaid.initialize({
-        theme: 'dark',
+        theme: 'default',
         logLevel: 3,
         flowchart: { curve: 'linear' },
         gantt: { axisFormat: '%m/%d/%Y' },

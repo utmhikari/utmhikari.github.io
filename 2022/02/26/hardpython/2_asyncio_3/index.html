@@ -102,7 +102,7 @@
 
 
   <meta name="description" content="说完了asyncio事件循环是如何运行异步任务的，接下来back to basic，我们一起看看async和await两个原语具体代表了什么含义。 首先是async，async通常用来修饰一个函数，表示这个函数会返回一个协程。比如说： 1234567async def _coro_maker(i):    print(i + 1)def test_async():    c = _coro_mak">
-<meta name="keywords" content="异步,python,asyncio,async,await">
+<meta name="keywords" content="python,异步,asyncio,async,await">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【Hard Python】【第二章-异步IO】3、async&#x2F;await的源码实现">
 <meta property="og:url" content="http://utmhikari.github.io/2022/02/26/hardpython/2_asyncio_3/index.html">
@@ -597,9 +597,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/异步/" rel="tag"># 异步</a>
-          
             <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/异步/" rel="tag"># 异步</a>
           
             <a href="/tags/asyncio/" rel="tag"># asyncio</a>
           
@@ -1606,32 +1606,6 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
                     <span class="site-state-item-count">426</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
@@ -1666,17 +1640,6 @@
                   
                     
                   
-                  <span class="exturl" data-url="bWFpbHRvOmhkcTk0MDYyM0AxMjYuY29t" title="Mail &rarr; mailto:hdq940623@126.com"><i class="fa fa-fw fa-envelope"></i>Mail</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
                   <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
                 </span>
               
@@ -1689,17 +1652,6 @@
                     
                   
                   <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80NDg4NjUwODE4MDYyMjg2L2NvbHVtbnM=" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns"><i class="fa fa-fw fa-code"></i>Juejin</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vaWQvdXRtaGlrYXJp" title="Steam &rarr; https://steamcommunity.com/id/utmhikari"><i class="fa fa-fw fa-steam"></i>Steam</span>
                 </span>
               
                 <span class="links-of-author-item">
@@ -2248,12 +2200,12 @@
 if ($('body').find('pre.mermaid').length) {
   $.ajax({
     type: 'GET',
-    url: '//gcore.jsdelivr.net/mermaid/8.0.0-rc.8/mermaid.min.js',
+    url: '//cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js',
     dataType: 'script',
     cache: true,
     success: function() {
       mermaid.initialize({
-        theme: 'dark',
+        theme: 'default',
         logLevel: 3,
         flowchart: { curve: 'linear' },
         gantt: { axisFormat: '%m/%d/%Y' },

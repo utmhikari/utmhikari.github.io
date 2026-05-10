@@ -102,7 +102,7 @@
 
 
   <meta name="description" content="许多游戏，尤其是MMO，会包含“副本”这个概念，玩家通过打副本从而获得物品奖励及属性收益。通常来讲，单个游戏所涉及的副本数量/品种较多，因此在游戏测试过程当中，很难一次性全部遍历完所有副本的流程与玩法。为了解决这个问题，可以通过自动化测试的方式去冒烟副本玩法流程、检查奖励。为了让自动化测试用例执行更加稳定且易于维护，需要一套通用的逻辑模版去实现副本玩法自动化。自动化测试流程涉及多个部分，包括玩家账">
-<meta name="keywords" content="游戏自动化,游戏测试,自动化测试,测试,副本自动化">
+<meta name="keywords" content="自动化测试,游戏自动化,游戏测试,测试,副本自动化">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【测试人生】副本自动化测试">
 <meta property="og:url" content="http://utmhikari.github.io/2021/05/20/testlife/dungeon_autotest/index.html">
@@ -568,11 +568,11 @@
       
         <div class="post-tags">
           
+            <a href="/tags/自动化测试/" rel="tag"># 自动化测试</a>
+          
             <a href="/tags/游戏自动化/" rel="tag"># 游戏自动化</a>
           
             <a href="/tags/游戏测试/" rel="tag"># 游戏测试</a>
-          
-            <a href="/tags/自动化测试/" rel="tag"># 自动化测试</a>
           
             <a href="/tags/测试/" rel="tag"># 测试</a>
           
@@ -1577,32 +1577,6 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
                     <span class="site-state-item-count">426</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
@@ -1637,17 +1611,6 @@
                   
                     
                   
-                  <span class="exturl" data-url="bWFpbHRvOmhkcTk0MDYyM0AxMjYuY29t" title="Mail &rarr; mailto:hdq940623@126.com"><i class="fa fa-fw fa-envelope"></i>Mail</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
                   <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
                 </span>
               
@@ -1660,17 +1623,6 @@
                     
                   
                   <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80NDg4NjUwODE4MDYyMjg2L2NvbHVtbnM=" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns"><i class="fa fa-fw fa-code"></i>Juejin</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vaWQvdXRtaGlrYXJp" title="Steam &rarr; https://steamcommunity.com/id/utmhikari"><i class="fa fa-fw fa-steam"></i>Steam</span>
                 </span>
               
                 <span class="links-of-author-item">
@@ -2219,12 +2171,12 @@
 if ($('body').find('pre.mermaid').length) {
   $.ajax({
     type: 'GET',
-    url: '//gcore.jsdelivr.net/mermaid/8.0.0-rc.8/mermaid.min.js',
+    url: '//cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js',
     dataType: 'script',
     cache: true,
     success: function() {
       mermaid.initialize({
-        theme: 'dark',
+        theme: 'default',
         logLevel: 3,
         flowchart: { curve: 'linear' },
         gantt: { axisFormat: '%m/%d/%Y' },

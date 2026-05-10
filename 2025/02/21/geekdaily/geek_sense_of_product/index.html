@@ -102,7 +102,7 @@
 
 
   <meta name="description" content="技术人培养产品思维，这一点是技术人在职业成长中不可缺少的一部分。无论是做业务开发，还是做纯粹的基础架构、技术优化，有了产品意识，才能把自己的技术作品打磨地更好，能在更多工作场景派上用场。那么，今天就聊一下作为技术人，有什么方式可以提升产品意识。 把这个问题丢给AI，概括一下答案是几大块：第一块是学习产品知识，比如阅读相关产品设计书籍，参与课程讲座；第二块是深入了解用户需求，培养用户视角；第三块是加">
-<meta name="keywords" content="产品,ChatGPT,面试,个人博客,用户">
+<meta name="keywords" content="产品,面试,个人博客,ChatGPT,用户">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【极客日常】聊聊技术人提升产品意识的经验">
 <meta property="og:url" content="http://utmhikari.github.io/2025/02/21/geekdaily/geek_sense_of_product/index.html">
@@ -558,11 +558,11 @@
           
             <a href="/tags/产品/" rel="tag"># 产品</a>
           
-            <a href="/tags/ChatGPT/" rel="tag"># ChatGPT</a>
-          
             <a href="/tags/面试/" rel="tag"># 面试</a>
           
             <a href="/tags/个人博客/" rel="tag"># 个人博客</a>
+          
+            <a href="/tags/ChatGPT/" rel="tag"># ChatGPT</a>
           
             <a href="/tags/用户/" rel="tag"># 用户</a>
           
@@ -1565,32 +1565,6 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
                     <span class="site-state-item-count">426</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
@@ -1625,17 +1599,6 @@
                   
                     
                   
-                  <span class="exturl" data-url="bWFpbHRvOmhkcTk0MDYyM0AxMjYuY29t" title="Mail &rarr; mailto:hdq940623@126.com"><i class="fa fa-fw fa-envelope"></i>Mail</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
                   <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
                 </span>
               
@@ -1648,17 +1611,6 @@
                     
                   
                   <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80NDg4NjUwODE4MDYyMjg2L2NvbHVtbnM=" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns"><i class="fa fa-fw fa-code"></i>Juejin</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vaWQvdXRtaGlrYXJp" title="Steam &rarr; https://steamcommunity.com/id/utmhikari"><i class="fa fa-fw fa-steam"></i>Steam</span>
                 </span>
               
                 <span class="links-of-author-item">
@@ -2207,12 +2159,12 @@
 if ($('body').find('pre.mermaid').length) {
   $.ajax({
     type: 'GET',
-    url: '//gcore.jsdelivr.net/mermaid/8.0.0-rc.8/mermaid.min.js',
+    url: '//cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js',
     dataType: 'script',
     cache: true,
     success: function() {
       mermaid.initialize({
-        theme: 'dark',
+        theme: 'default',
         logLevel: 3,
         flowchart: { curve: 'linear' },
         gantt: { axisFormat: '%m/%d/%Y' },

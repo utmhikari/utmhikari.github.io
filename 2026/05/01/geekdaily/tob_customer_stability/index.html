@@ -102,14 +102,14 @@
 
 
   <meta name="description" content="近期因为工作调整的原因，笔者从以前面向内部研发团队的变更风险防控和稳定性建设，逐渐转向面向ToB客户的云服务稳定性保障。虽然本质上都是在做SRE稳定性相关的工作，但从服务对象、技术架构到运营方式，都有非常大的差异。今天这篇文章，就结合自己以前做变更风险防控和稳定性建设的实践经验，聊一下从云服务角度做ToB客户稳定性保障的一些思考和对比。 一块是服务对象的转变，以前做变更风险防控平台，服务对象是公司">
-<meta name="keywords" content="变更风险,稳定性,业务,Kubernetes,SRE">
+<meta name="keywords" content="变更风险,业务,稳定性,Kubernetes,SRE">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【极客日常】初探ToB客户稳定性保障">
 <meta property="og:url" content="http://utmhikari.github.io/2026/05/01/geekdaily/tob_customer_stability/index.html">
 <meta property="og:site_name" content="HiKariのTechLab">
 <meta property="og:description" content="近期因为工作调整的原因，笔者从以前面向内部研发团队的变更风险防控和稳定性建设，逐渐转向面向ToB客户的云服务稳定性保障。虽然本质上都是在做SRE稳定性相关的工作，但从服务对象、技术架构到运营方式，都有非常大的差异。今天这篇文章，就结合自己以前做变更风险防控和稳定性建设的实践经验，聊一下从云服务角度做ToB客户稳定性保障的一些思考和对比。 一块是服务对象的转变，以前做变更风险防控平台，服务对象是公司">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2026-05-01T12:43:36.137Z">
+<meta property="og:updated_time" content="2026-05-04T04:03:51.210Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【极客日常】初探ToB客户稳定性保障">
 <meta name="twitter:description" content="近期因为工作调整的原因，笔者从以前面向内部研发团队的变更风险防控和稳定性建设，逐渐转向面向ToB客户的云服务稳定性保障。虽然本质上都是在做SRE稳定性相关的工作，但从服务对象、技术架构到运营方式，都有非常大的差异。今天这篇文章，就结合自己以前做变更风险防控和稳定性建设的实践经验，聊一下从云服务角度做ToB客户稳定性保障的一些思考和对比。 一块是服务对象的转变，以前做变更风险防控平台，服务对象是公司">
@@ -447,12 +447,24 @@
                 
               
 
-              <time title="创建时间：2026-05-01 20:43:04 / 修改时间：20:43:36" itemprop="dateCreated datePublished" datetime="2026-05-01T20:43:04+08:00">2026-05-01</time>
+              <time title="创建时间：2026-05-01 20:43:04" itemprop="dateCreated datePublished" datetime="2026-05-01T20:43:04+08:00">2026-05-01</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2026-05-04 12:03:51" itemprop="dateModified" datetime="2026-05-04T12:03:51+08:00">2026-05-04</time>
               
             
           </span>
@@ -562,9 +574,9 @@
           
             <a href="/tags/变更风险/" rel="tag"># 变更风险</a>
           
-            <a href="/tags/稳定性/" rel="tag"># 稳定性</a>
-          
             <a href="/tags/业务/" rel="tag"># 业务</a>
+          
+            <a href="/tags/稳定性/" rel="tag"># 稳定性</a>
           
             <a href="/tags/Kubernetes/" rel="tag"># Kubernetes</a>
           
@@ -1565,32 +1577,6 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
                     <span class="site-state-item-count">426</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
@@ -1625,17 +1611,6 @@
                   
                     
                   
-                  <span class="exturl" data-url="bWFpbHRvOmhkcTk0MDYyM0AxMjYuY29t" title="Mail &rarr; mailto:hdq940623@126.com"><i class="fa fa-fw fa-envelope"></i>Mail</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
                   <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
                 </span>
               
@@ -1648,17 +1623,6 @@
                     
                   
                   <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80NDg4NjUwODE4MDYyMjg2L2NvbHVtbnM=" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns"><i class="fa fa-fw fa-code"></i>Juejin</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vaWQvdXRtaGlrYXJp" title="Steam &rarr; https://steamcommunity.com/id/utmhikari"><i class="fa fa-fw fa-steam"></i>Steam</span>
                 </span>
               
                 <span class="links-of-author-item">
@@ -2207,12 +2171,12 @@
 if ($('body').find('pre.mermaid').length) {
   $.ajax({
     type: 'GET',
-    url: '//gcore.jsdelivr.net/mermaid/8.0.0-rc.8/mermaid.min.js',
+    url: '//cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js',
     dataType: 'script',
     cache: true,
     success: function() {
       mermaid.initialize({
-        theme: 'dark',
+        theme: 'default',
         logLevel: 3,
         flowchart: { curve: 'linear' },
         gantt: { axisFormat: '%m/%d/%Y' },

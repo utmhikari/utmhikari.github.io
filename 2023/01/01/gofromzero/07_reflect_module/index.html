@@ -102,7 +102,7 @@
 
 
   <meta name="description" content="Golang的反射功能，在很多场景都会用到，最基础的莫过于rpc、orm跟json的编解码，更复杂的可能会到做另外一门语言的虚拟机。通过反射模块，我们可以在编程语言的runtime运行时期间去访问内部产生对象的信息。了解反射模块的实现，对我们了解Golang对象机制本身，也是莫大的帮助。 今天，恰逢阳康+新年，就决定来探究一下Golang的反射模块——reflect。 从最基础的开始，reflec">
-<meta name="keywords" content="Golang,反射,reflect,interface,json">
+<meta name="keywords" content="Golang,interface,反射,reflect,json">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【从零单排Golang】第七话：反射模块reflect使用方式探索">
 <meta property="og:url" content="http://utmhikari.github.io/2023/01/01/gofromzero/07_reflect_module/index.html">
@@ -586,11 +586,11 @@
           
             <a href="/tags/Golang/" rel="tag"># Golang</a>
           
+            <a href="/tags/interface/" rel="tag"># interface</a>
+          
             <a href="/tags/反射/" rel="tag"># 反射</a>
           
             <a href="/tags/reflect/" rel="tag"># reflect</a>
-          
-            <a href="/tags/interface/" rel="tag"># interface</a>
           
             <a href="/tags/json/" rel="tag"># json</a>
           
@@ -1593,32 +1593,6 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
                     <span class="site-state-item-count">426</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
@@ -1653,17 +1627,6 @@
                   
                     
                   
-                  <span class="exturl" data-url="bWFpbHRvOmhkcTk0MDYyM0AxMjYuY29t" title="Mail &rarr; mailto:hdq940623@126.com"><i class="fa fa-fw fa-envelope"></i>Mail</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
                   <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
                 </span>
               
@@ -1676,17 +1639,6 @@
                     
                   
                   <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80NDg4NjUwODE4MDYyMjg2L2NvbHVtbnM=" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns"><i class="fa fa-fw fa-code"></i>Juejin</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vaWQvdXRtaGlrYXJp" title="Steam &rarr; https://steamcommunity.com/id/utmhikari"><i class="fa fa-fw fa-steam"></i>Steam</span>
                 </span>
               
                 <span class="links-of-author-item">
@@ -2235,12 +2187,12 @@
 if ($('body').find('pre.mermaid').length) {
   $.ajax({
     type: 'GET',
-    url: '//gcore.jsdelivr.net/mermaid/8.0.0-rc.8/mermaid.min.js',
+    url: '//cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js',
     dataType: 'script',
     cache: true,
     success: function() {
       mermaid.initialize({
-        theme: 'dark',
+        theme: 'default',
         logLevel: 3,
         flowchart: { curve: 'linear' },
         gantt: { axisFormat: '%m/%d/%Y' },

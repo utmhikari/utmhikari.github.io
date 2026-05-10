@@ -102,7 +102,7 @@
 
 
   <meta name="description" content="LLMAgent应用研发在当下是一个非常热门的话题，目前一个典型的趋势是，各类垂类领域都在思考LLMAgent如何能够代替人力，为其业务场景赋能，一方面是常规提效，另一方面是深度挖掘CornerCase。恰巧笔者最近在做变更风险防控领域LLMAgent应用的技术调研，所以今天这篇博客，也简单分享一下调研来的一些思考。 主要分两个部分，第一部分是LLMAgent可以用在变更风险防控的什么环节，第二部">
-<meta name="keywords" content="产品,变更风险,AI,Agent,LLM">
+<meta name="keywords" content="变更风险,产品,LLM,AI,Agent">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【测试人生】LLMAgent在变更风险防控垂类应用的思考">
 <meta property="og:url" content="http://utmhikari.github.io/2026/02/15/testlife/change_control_agent/index.html">
@@ -555,15 +555,15 @@
       
         <div class="post-tags">
           
+            <a href="/tags/变更风险/" rel="tag"># 变更风险</a>
+          
             <a href="/tags/产品/" rel="tag"># 产品</a>
           
-            <a href="/tags/变更风险/" rel="tag"># 变更风险</a>
+            <a href="/tags/LLM/" rel="tag"># LLM</a>
           
             <a href="/tags/AI/" rel="tag"># AI</a>
           
             <a href="/tags/Agent/" rel="tag"># Agent</a>
-          
-            <a href="/tags/LLM/" rel="tag"># LLM</a>
           
         </div>
       
@@ -1564,32 +1564,6 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
                     <span class="site-state-item-count">426</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
@@ -1624,17 +1598,6 @@
                   
                     
                   
-                  <span class="exturl" data-url="bWFpbHRvOmhkcTk0MDYyM0AxMjYuY29t" title="Mail &rarr; mailto:hdq940623@126.com"><i class="fa fa-fw fa-envelope"></i>Mail</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
                   <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
                 </span>
               
@@ -1647,17 +1610,6 @@
                     
                   
                   <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80NDg4NjUwODE4MDYyMjg2L2NvbHVtbnM=" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns"><i class="fa fa-fw fa-code"></i>Juejin</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vaWQvdXRtaGlrYXJp" title="Steam &rarr; https://steamcommunity.com/id/utmhikari"><i class="fa fa-fw fa-steam"></i>Steam</span>
                 </span>
               
                 <span class="links-of-author-item">
@@ -2206,12 +2158,12 @@
 if ($('body').find('pre.mermaid').length) {
   $.ajax({
     type: 'GET',
-    url: '//gcore.jsdelivr.net/mermaid/8.0.0-rc.8/mermaid.min.js',
+    url: '//cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js',
     dataType: 'script',
     cache: true,
     success: function() {
       mermaid.initialize({
-        theme: 'dark',
+        theme: 'default',
         logLevel: 3,
         flowchart: { curve: 'linear' },
         gantt: { axisFormat: '%m/%d/%Y' },

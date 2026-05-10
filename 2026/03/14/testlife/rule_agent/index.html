@@ -102,7 +102,7 @@
 
 
   <meta name="description" content="在变更风险防控领域，规则校验和变更中观测一样，是必不可少的能力之一。面向配置类变更和SQL数据类变更，通过严格的静态规则校验可以拦截很多事故风险，保障配置或SQL发布后的安全。从变更风险防控平台的角度来说，一个规则校验系统（规则引擎），可以简单设计成多组变更场景到校验规则的映射，业务SRE角色可以编写较大业务域的通用规则，而业务研发可以编写特定业务域的专项规则，当一个变更发起时，多条规则就统一在这">
-<meta name="keywords" content="变更风险,Agent,LLM,数据变更,配置变更">
+<meta name="keywords" content="变更风险,LLM,Agent,数据变更,配置变更">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【测试人生】变更规则校验Agent研发的一些思路">
 <meta property="og:url" content="http://utmhikari.github.io/2026/03/14/testlife/rule_agent/index.html">
@@ -563,9 +563,9 @@
           
             <a href="/tags/变更风险/" rel="tag"># 变更风险</a>
           
-            <a href="/tags/Agent/" rel="tag"># Agent</a>
-          
             <a href="/tags/LLM/" rel="tag"># LLM</a>
+          
+            <a href="/tags/Agent/" rel="tag"># Agent</a>
           
             <a href="/tags/数据变更/" rel="tag"># 数据变更</a>
           
@@ -1570,32 +1570,6 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
                     <span class="site-state-item-count">426</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
@@ -1630,17 +1604,6 @@
                   
                     
                   
-                  <span class="exturl" data-url="bWFpbHRvOmhkcTk0MDYyM0AxMjYuY29t" title="Mail &rarr; mailto:hdq940623@126.com"><i class="fa fa-fw fa-envelope"></i>Mail</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
                   <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
                 </span>
               
@@ -1653,17 +1616,6 @@
                     
                   
                   <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80NDg4NjUwODE4MDYyMjg2L2NvbHVtbnM=" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns"><i class="fa fa-fw fa-code"></i>Juejin</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vaWQvdXRtaGlrYXJp" title="Steam &rarr; https://steamcommunity.com/id/utmhikari"><i class="fa fa-fw fa-steam"></i>Steam</span>
                 </span>
               
                 <span class="links-of-author-item">
@@ -2212,12 +2164,12 @@
 if ($('body').find('pre.mermaid').length) {
   $.ajax({
     type: 'GET',
-    url: '//gcore.jsdelivr.net/mermaid/8.0.0-rc.8/mermaid.min.js',
+    url: '//cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js',
     dataType: 'script',
     cache: true,
     success: function() {
       mermaid.initialize({
-        theme: 'dark',
+        theme: 'default',
         logLevel: 3,
         flowchart: { curve: 'linear' },
         gantt: { axisFormat: '%m/%d/%Y' },

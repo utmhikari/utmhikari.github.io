@@ -102,7 +102,7 @@
 
 
   <meta name="description" content="近期笔者在投入变更风险防控开放平台的额外功能开发，目的是希望设计一套更加灵活的变更风险观测策略匹配机制，能够在满足面向任意变更场景应用观测策略的同时，尽可能保证产品体验，让用户清晰地了解到自己配置的什么策略能够在什么情况的变更过程中生效。在先前的文章当中，有粗浅提到变更观测策略匹配的事情，但没有深入探究，并且笔者以前接手的项目，很多底层设计的技术债也难以偿还，要在以前实现的基础上再做重构也不是很现">
-<meta name="keywords" content="后端开发,产品,变更风险,数据库,正则表达式">
+<meta name="keywords" content="后端开发,变更风险,产品,数据库,正则表达式">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【测试人生】一套灵活的变更风险观测策略匹配机制设计">
 <meta property="og:url" content="http://utmhikari.github.io/2026/01/17/testlife/change_observe_strategy_design/index.html">
@@ -565,9 +565,9 @@
           
             <a href="/tags/后端开发/" rel="tag"># 后端开发</a>
           
-            <a href="/tags/产品/" rel="tag"># 产品</a>
-          
             <a href="/tags/变更风险/" rel="tag"># 变更风险</a>
+          
+            <a href="/tags/产品/" rel="tag"># 产品</a>
           
             <a href="/tags/数据库/" rel="tag"># 数据库</a>
           
@@ -1572,32 +1572,6 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
                     <span class="site-state-item-count">426</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
@@ -1632,17 +1606,6 @@
                   
                     
                   
-                  <span class="exturl" data-url="bWFpbHRvOmhkcTk0MDYyM0AxMjYuY29t" title="Mail &rarr; mailto:hdq940623@126.com"><i class="fa fa-fw fa-envelope"></i>Mail</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
                   <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
                 </span>
               
@@ -1655,17 +1618,6 @@
                     
                   
                   <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80NDg4NjUwODE4MDYyMjg2L2NvbHVtbnM=" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns"><i class="fa fa-fw fa-code"></i>Juejin</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vaWQvdXRtaGlrYXJp" title="Steam &rarr; https://steamcommunity.com/id/utmhikari"><i class="fa fa-fw fa-steam"></i>Steam</span>
                 </span>
               
                 <span class="links-of-author-item">
@@ -2214,12 +2166,12 @@
 if ($('body').find('pre.mermaid').length) {
   $.ajax({
     type: 'GET',
-    url: '//gcore.jsdelivr.net/mermaid/8.0.0-rc.8/mermaid.min.js',
+    url: '//cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js',
     dataType: 'script',
     cache: true,
     success: function() {
       mermaid.initialize({
-        theme: 'dark',
+        theme: 'default',
         logLevel: 3,
         flowchart: { curve: 'linear' },
         gantt: { axisFormat: '%m/%d/%Y' },

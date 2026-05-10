@@ -102,7 +102,7 @@
 
 
   <meta name="description" content="最近在AI大模型领域，MCP这个概念非常火，大大小小的公众号都开始对外炒作这个概念，宣教一种新的大模型Agent开发生态。因为工作原因，近期笔者也对MCP和LLM-Agent开发做了一些接触。因此今天这篇文章就浅聊下笔者对基于MCP的LLM-Agent开发方面，自己粗浅的一些理解。 首先还是聊一下什么是MCP，以及MCP在LLM-Agent开发方面，解决了什么问题。">
-<meta name="keywords" content="AI,Agent,LLM,MCP,协议">
+<meta name="keywords" content="LLM,AI,Agent,MCP,协议">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【极客日常】浅聊基于MCP生态的LLM-Agent开发">
 <meta property="og:url" content="http://utmhikari.github.io/2025/04/12/geekdaily/mcp_llm_agent/index.html">
@@ -566,11 +566,11 @@
       
         <div class="post-tags">
           
+            <a href="/tags/LLM/" rel="tag"># LLM</a>
+          
             <a href="/tags/AI/" rel="tag"># AI</a>
           
             <a href="/tags/Agent/" rel="tag"># Agent</a>
-          
-            <a href="/tags/LLM/" rel="tag"># LLM</a>
           
             <a href="/tags/MCP/" rel="tag"># MCP</a>
           
@@ -1575,32 +1575,6 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
                     <span class="site-state-item-count">426</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
@@ -1635,17 +1609,6 @@
                   
                     
                   
-                  <span class="exturl" data-url="bWFpbHRvOmhkcTk0MDYyM0AxMjYuY29t" title="Mail &rarr; mailto:hdq940623@126.com"><i class="fa fa-fw fa-envelope"></i>Mail</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
                   <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
                 </span>
               
@@ -1658,17 +1621,6 @@
                     
                   
                   <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80NDg4NjUwODE4MDYyMjg2L2NvbHVtbnM=" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns"><i class="fa fa-fw fa-code"></i>Juejin</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vaWQvdXRtaGlrYXJp" title="Steam &rarr; https://steamcommunity.com/id/utmhikari"><i class="fa fa-fw fa-steam"></i>Steam</span>
                 </span>
               
                 <span class="links-of-author-item">
@@ -2217,12 +2169,12 @@
 if ($('body').find('pre.mermaid').length) {
   $.ajax({
     type: 'GET',
-    url: '//gcore.jsdelivr.net/mermaid/8.0.0-rc.8/mermaid.min.js',
+    url: '//cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js',
     dataType: 'script',
     cache: true,
     success: function() {
       mermaid.initialize({
-        theme: 'dark',
+        theme: 'default',
         logLevel: 3,
         flowchart: { curve: 'linear' },
         gantt: { axisFormat: '%m/%d/%Y' },

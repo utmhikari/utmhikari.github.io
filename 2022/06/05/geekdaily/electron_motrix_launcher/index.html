@@ -102,7 +102,7 @@
 
 
   <meta name="description" content="近期准备开始做electron相关的开发工作，因此借着这个机会就再去了解下electron。在很久以前的文章中有稍微玩过electron+react+antd的脚手架，但也只限于快速开发electron应用，并没有去剖析整个项目结构。因此这次，还是得深入一下。 先前一段时间特别喜欢用开源的Motrix下载器，就是基于electron+vue+aria2去实现的，所以索性就把源码给clone了下来。">
-<meta name="keywords" content="工具开发,vue,nodejs,electron,ipc">
+<meta name="keywords" content="工具开发,vue,electron,nodejs,ipc">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【极客日常】通过motrix启动逻辑初探electron的项目结构">
 <meta property="og:url" content="http://utmhikari.github.io/2022/06/05/geekdaily/electron_motrix_launcher/index.html">
@@ -643,9 +643,9 @@
           
             <a href="/tags/vue/" rel="tag"># vue</a>
           
-            <a href="/tags/nodejs/" rel="tag"># nodejs</a>
-          
             <a href="/tags/electron/" rel="tag"># electron</a>
+          
+            <a href="/tags/nodejs/" rel="tag"># nodejs</a>
           
             <a href="/tags/ipc/" rel="tag"># ipc</a>
           
@@ -1648,32 +1648,6 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
                     <span class="site-state-item-count">426</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
@@ -1708,17 +1682,6 @@
                   
                     
                   
-                  <span class="exturl" data-url="bWFpbHRvOmhkcTk0MDYyM0AxMjYuY29t" title="Mail &rarr; mailto:hdq940623@126.com"><i class="fa fa-fw fa-envelope"></i>Mail</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
                   <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
                 </span>
               
@@ -1731,17 +1694,6 @@
                     
                   
                   <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80NDg4NjUwODE4MDYyMjg2L2NvbHVtbnM=" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns"><i class="fa fa-fw fa-code"></i>Juejin</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vaWQvdXRtaGlrYXJp" title="Steam &rarr; https://steamcommunity.com/id/utmhikari"><i class="fa fa-fw fa-steam"></i>Steam</span>
                 </span>
               
                 <span class="links-of-author-item">
@@ -2290,12 +2242,12 @@
 if ($('body').find('pre.mermaid').length) {
   $.ajax({
     type: 'GET',
-    url: '//gcore.jsdelivr.net/mermaid/8.0.0-rc.8/mermaid.min.js',
+    url: '//cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js',
     dataType: 'script',
     cache: true,
     success: function() {
       mermaid.initialize({
-        theme: 'dark',
+        theme: 'default',
         logLevel: 3,
         flowchart: { curve: 'linear' },
         gantt: { axisFormat: '%m/%d/%Y' },

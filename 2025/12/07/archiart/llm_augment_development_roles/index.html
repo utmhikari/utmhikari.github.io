@@ -102,7 +102,7 @@
 
 
   <meta name="description" content="2025年算是LLM增强产品井喷的一年，以笔者亲身经历的，不论是自动化测试平台还是云服务稳定性平台，都在已有平台基建的基础上，依靠LLM增强的AIGC能力，做了诸如XMind用例自动生成、用例步骤自主探索、RCA故障定位以及服务发布风险实时解读等有业务价值的能力。 要做出这样的产品，投入的研发人力也肯定不少，而在这个体系下，怎么分配不同的研发角色，既能让每个模块的同学专注自身能力研发，又可以形成有">
-<meta name="keywords" content="架构,产品,系统设计,AI,LLM">
+<meta name="keywords" content="架构,系统设计,产品,LLM,AI">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【架构艺术】简述LLM增强产品研发角色">
 <meta property="og:url" content="http://utmhikari.github.io/2025/12/07/archiart/llm_augment_development_roles/index.html">
@@ -565,13 +565,13 @@
           
             <a href="/tags/架构/" rel="tag"># 架构</a>
           
-            <a href="/tags/产品/" rel="tag"># 产品</a>
-          
             <a href="/tags/系统设计/" rel="tag"># 系统设计</a>
           
-            <a href="/tags/AI/" rel="tag"># AI</a>
+            <a href="/tags/产品/" rel="tag"># 产品</a>
           
             <a href="/tags/LLM/" rel="tag"># LLM</a>
+          
+            <a href="/tags/AI/" rel="tag"># AI</a>
           
         </div>
       
@@ -1572,32 +1572,6 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
                     <span class="site-state-item-count">426</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
@@ -1632,17 +1606,6 @@
                   
                     
                   
-                  <span class="exturl" data-url="bWFpbHRvOmhkcTk0MDYyM0AxMjYuY29t" title="Mail &rarr; mailto:hdq940623@126.com"><i class="fa fa-fw fa-envelope"></i>Mail</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
                   <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
                 </span>
               
@@ -1655,17 +1618,6 @@
                     
                   
                   <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80NDg4NjUwODE4MDYyMjg2L2NvbHVtbnM=" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns"><i class="fa fa-fw fa-code"></i>Juejin</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vaWQvdXRtaGlrYXJp" title="Steam &rarr; https://steamcommunity.com/id/utmhikari"><i class="fa fa-fw fa-steam"></i>Steam</span>
                 </span>
               
                 <span class="links-of-author-item">
@@ -2214,12 +2166,12 @@
 if ($('body').find('pre.mermaid').length) {
   $.ajax({
     type: 'GET',
-    url: '//gcore.jsdelivr.net/mermaid/8.0.0-rc.8/mermaid.min.js',
+    url: '//cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js',
     dataType: 'script',
     cache: true,
     success: function() {
       mermaid.initialize({
-        theme: 'dark',
+        theme: 'default',
         logLevel: 3,
         flowchart: { curve: 'linear' },
         gantt: { axisFormat: '%m/%d/%Y' },

@@ -102,7 +102,7 @@
 
 
   <meta name="description" content="精准测试在互联网领域有广泛的应用。以变更为出发点，通过对变更内容进行分析，可以确定单次变更具体涉及到哪些模块和功能点，以及是否存在夹带风险，从而从QA的视角，可以知道哪些功能模块需要做测试，以及哪些变更内容不符合预期。相比于互联网QA，游戏QA接入业务项目研发过程并没有那么深入，比如项目代码权限基本上游戏QA不会拥有，但即便如此，要在游戏测试领域应用精准测试专项技术，还是有一定思路可循。 因此，本">
-<meta name="keywords" content="游戏测试,专项测试,测试,功能测试,精准测试">
+<meta name="keywords" content="游戏测试,专项测试,功能测试,测试,精准测试">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【测试人生】游戏业务测试落地精准测试专项的一些思路">
 <meta property="og:url" content="http://utmhikari.github.io/2023/10/02/testlife/game_precise_test/index.html">
@@ -571,9 +571,9 @@
           
             <a href="/tags/专项测试/" rel="tag"># 专项测试</a>
           
-            <a href="/tags/测试/" rel="tag"># 测试</a>
-          
             <a href="/tags/功能测试/" rel="tag"># 功能测试</a>
+          
+            <a href="/tags/测试/" rel="tag"># 测试</a>
           
             <a href="/tags/精准测试/" rel="tag"># 精准测试</a>
           
@@ -1576,32 +1576,6 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
                     <span class="site-state-item-count">426</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
@@ -1636,17 +1610,6 @@
                   
                     
                   
-                  <span class="exturl" data-url="bWFpbHRvOmhkcTk0MDYyM0AxMjYuY29t" title="Mail &rarr; mailto:hdq940623@126.com"><i class="fa fa-fw fa-envelope"></i>Mail</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
                   <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
                 </span>
               
@@ -1659,17 +1622,6 @@
                     
                   
                   <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80NDg4NjUwODE4MDYyMjg2L2NvbHVtbnM=" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns"><i class="fa fa-fw fa-code"></i>Juejin</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vaWQvdXRtaGlrYXJp" title="Steam &rarr; https://steamcommunity.com/id/utmhikari"><i class="fa fa-fw fa-steam"></i>Steam</span>
                 </span>
               
                 <span class="links-of-author-item">
@@ -2218,12 +2170,12 @@
 if ($('body').find('pre.mermaid').length) {
   $.ajax({
     type: 'GET',
-    url: '//gcore.jsdelivr.net/mermaid/8.0.0-rc.8/mermaid.min.js',
+    url: '//cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js',
     dataType: 'script',
     cache: true,
     success: function() {
       mermaid.initialize({
-        theme: 'dark',
+        theme: 'default',
         logLevel: 3,
         flowchart: { curve: 'linear' },
         gantt: { axisFormat: '%m/%d/%Y' },

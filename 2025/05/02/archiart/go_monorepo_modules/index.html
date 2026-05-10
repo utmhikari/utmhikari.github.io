@@ -102,7 +102,7 @@
 
 
   <meta name="description" content="在先前的文章中，笔者分享了go语言monorepo基本的一套代码架构设计。以这个设计为基础，今天这篇文章就聊一下具体里面的代码怎么编写起来比较舒适。 关于每个微服务自己的代码，其实在wire依赖注入这篇文章有提到过一套比较简洁的用法。如果大仓对应的服务集群有很多三方依赖，有很多错综复杂的模块的话，对三方依赖做一层抽象，加上用wire去解决重复依赖问题，是最为舒适的一套解法。当然在这个基础上，其它各">
-<meta name="keywords" content="架构,后端开发,monorepo,编程,Golang">
+<meta name="keywords" content="架构,后端开发,Golang,monorepo,编程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【架构艺术】Go大仓monorepo各模块的代码组织设计">
 <meta property="og:url" content="http://utmhikari.github.io/2025/05/02/archiart/go_monorepo_modules/index.html">
@@ -564,11 +564,11 @@
           
             <a href="/tags/后端开发/" rel="tag"># 后端开发</a>
           
+            <a href="/tags/Golang/" rel="tag"># Golang</a>
+          
             <a href="/tags/monorepo/" rel="tag"># monorepo</a>
           
             <a href="/tags/编程/" rel="tag"># 编程</a>
-          
-            <a href="/tags/Golang/" rel="tag"># Golang</a>
           
         </div>
       
@@ -1569,32 +1569,6 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
                     <span class="site-state-item-count">426</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
@@ -1629,17 +1603,6 @@
                   
                     
                   
-                  <span class="exturl" data-url="bWFpbHRvOmhkcTk0MDYyM0AxMjYuY29t" title="Mail &rarr; mailto:hdq940623@126.com"><i class="fa fa-fw fa-envelope"></i>Mail</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
                   <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
                 </span>
               
@@ -1652,17 +1615,6 @@
                     
                   
                   <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80NDg4NjUwODE4MDYyMjg2L2NvbHVtbnM=" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns"><i class="fa fa-fw fa-code"></i>Juejin</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vaWQvdXRtaGlrYXJp" title="Steam &rarr; https://steamcommunity.com/id/utmhikari"><i class="fa fa-fw fa-steam"></i>Steam</span>
                 </span>
               
                 <span class="links-of-author-item">
@@ -2211,12 +2163,12 @@
 if ($('body').find('pre.mermaid').length) {
   $.ajax({
     type: 'GET',
-    url: '//gcore.jsdelivr.net/mermaid/8.0.0-rc.8/mermaid.min.js',
+    url: '//cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js',
     dataType: 'script',
     cache: true,
     success: function() {
       mermaid.initialize({
-        theme: 'dark',
+        theme: 'default',
         logLevel: 3,
         flowchart: { curve: 'linear' },
         gantt: { axisFormat: '%m/%d/%Y' },

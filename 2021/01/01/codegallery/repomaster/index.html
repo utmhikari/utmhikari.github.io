@@ -102,7 +102,7 @@
 
 
   <meta name="description" content="呼吸不停，coding不止。代码艺廊新系列，将要用来陈列自己的大小作品；极客日常系列，则专门用于分享新的技术心得。开年第一作，介绍一个自制用于管理代码仓库的小工具repomaster。 代码仓库管理在许多场景能够用到，比如用作构建集群的文件缓存、构建配置的代码仓库服务、配置导出与检查等等，其中最后一种需求在游戏QA的工作场景（导表检查）会是一个比较重要的需求，而repomaster的设计方式也会更">
-<meta name="keywords" content="Golang,工具开发,gin,git,go-git">
+<meta name="keywords" content="Golang,工具开发,git,gin,go-git">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【代码艺廊】代码仓库管理小工具repomaster">
 <meta property="og:url" content="http://utmhikari.github.io/2021/01/01/codegallery/repomaster/index.html">
@@ -574,9 +574,9 @@
           
             <a href="/tags/工具开发/" rel="tag"># 工具开发</a>
           
-            <a href="/tags/gin/" rel="tag"># gin</a>
-          
             <a href="/tags/git/" rel="tag"># git</a>
+          
+            <a href="/tags/gin/" rel="tag"># gin</a>
           
             <a href="/tags/go-git/" rel="tag"># go-git</a>
           
@@ -1579,32 +1579,6 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
                     <span class="site-state-item-count">426</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
@@ -1639,17 +1613,6 @@
                   
                     
                   
-                  <span class="exturl" data-url="bWFpbHRvOmhkcTk0MDYyM0AxMjYuY29t" title="Mail &rarr; mailto:hdq940623@126.com"><i class="fa fa-fw fa-envelope"></i>Mail</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
                   <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
                 </span>
               
@@ -1662,17 +1625,6 @@
                     
                   
                   <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80NDg4NjUwODE4MDYyMjg2L2NvbHVtbnM=" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns"><i class="fa fa-fw fa-code"></i>Juejin</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vaWQvdXRtaGlrYXJp" title="Steam &rarr; https://steamcommunity.com/id/utmhikari"><i class="fa fa-fw fa-steam"></i>Steam</span>
                 </span>
               
                 <span class="links-of-author-item">
@@ -2221,12 +2173,12 @@
 if ($('body').find('pre.mermaid').length) {
   $.ajax({
     type: 'GET',
-    url: '//gcore.jsdelivr.net/mermaid/8.0.0-rc.8/mermaid.min.js',
+    url: '//cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js',
     dataType: 'script',
     cache: true,
     success: function() {
       mermaid.initialize({
-        theme: 'dark',
+        theme: 'default',
         logLevel: 3,
         flowchart: { curve: 'linear' },
         gantt: { axisFormat: '%m/%d/%Y' },

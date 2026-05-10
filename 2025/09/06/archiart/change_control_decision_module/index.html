@@ -102,14 +102,14 @@
 
 
   <meta name="description" content="在先前的文章中，我们聊到了一个变更观测任务可以通过什么样的方式对不同的变更防控能力做统一调度，达到优越的变更风险拦截效果。但是在实战当中，变更观测任务集成了很多能力，即便风险拦截率很高，但不同能力效果也有差距，因此会有可能出现误报，导致变更观测结论不准确，影响研发发布效率。为此，一套成熟的变更观测系统，是需要嵌入一个决策降噪模块，通过干预变更防控拦截结果，达到在风险召回不劣化的同时，提升准确率，让">
-<meta name="keywords" content="架构,后端开发,系统设计,变更风险,稳定性">
+<meta name="keywords" content="架构,后端开发,变更风险,系统设计,稳定性">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【架构艺术】变更风险防控架构嵌入决策降噪模块的方法">
 <meta property="og:url" content="http://utmhikari.github.io/2025/09/06/archiart/change_control_decision_module/index.html">
 <meta property="og:site_name" content="HiKariのTechLab">
 <meta property="og:description" content="在先前的文章中，我们聊到了一个变更观测任务可以通过什么样的方式对不同的变更防控能力做统一调度，达到优越的变更风险拦截效果。但是在实战当中，变更观测任务集成了很多能力，即便风险拦截率很高，但不同能力效果也有差距，因此会有可能出现误报，导致变更观测结论不准确，影响研发发布效率。为此，一套成熟的变更观测系统，是需要嵌入一个决策降噪模块，通过干预变更防控拦截结果，达到在风险召回不劣化的同时，提升准确率，让">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2025-09-06T07:30:38.784Z">
+<meta property="og:updated_time" content="2025-10-03T12:58:16.390Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【架构艺术】变更风险防控架构嵌入决策降噪模块的方法">
 <meta name="twitter:description" content="在先前的文章中，我们聊到了一个变更观测任务可以通过什么样的方式对不同的变更防控能力做统一调度，达到优越的变更风险拦截效果。但是在实战当中，变更观测任务集成了很多能力，即便风险拦截率很高，但不同能力效果也有差距，因此会有可能出现误报，导致变更观测结论不准确，影响研发发布效率。为此，一套成熟的变更观测系统，是需要嵌入一个决策降噪模块，通过干预变更防控拦截结果，达到在风险召回不劣化的同时，提升准确率，让">
@@ -447,12 +447,24 @@
                 
               
 
-              <time title="创建时间：2025-09-06 15:26:50 / 修改时间：15:30:38" itemprop="dateCreated datePublished" datetime="2025-09-06T15:26:50+08:00">2025-09-06</time>
+              <time title="创建时间：2025-09-06 15:26:50" itemprop="dateCreated datePublished" datetime="2025-09-06T15:26:50+08:00">2025-09-06</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2025-10-03 20:58:16" itemprop="dateModified" datetime="2025-10-03T20:58:16+08:00">2025-10-03</time>
               
             
           </span>
@@ -558,9 +570,9 @@
           
             <a href="/tags/后端开发/" rel="tag"># 后端开发</a>
           
-            <a href="/tags/系统设计/" rel="tag"># 系统设计</a>
-          
             <a href="/tags/变更风险/" rel="tag"># 变更风险</a>
+          
+            <a href="/tags/系统设计/" rel="tag"># 系统设计</a>
           
             <a href="/tags/稳定性/" rel="tag"># 稳定性</a>
           
@@ -1563,32 +1575,6 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
                     <span class="site-state-item-count">426</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
@@ -1623,17 +1609,6 @@
                   
                     
                   
-                  <span class="exturl" data-url="bWFpbHRvOmhkcTk0MDYyM0AxMjYuY29t" title="Mail &rarr; mailto:hdq940623@126.com"><i class="fa fa-fw fa-envelope"></i>Mail</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
                   <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
                 </span>
               
@@ -1646,17 +1621,6 @@
                     
                   
                   <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80NDg4NjUwODE4MDYyMjg2L2NvbHVtbnM=" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns"><i class="fa fa-fw fa-code"></i>Juejin</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vaWQvdXRtaGlrYXJp" title="Steam &rarr; https://steamcommunity.com/id/utmhikari"><i class="fa fa-fw fa-steam"></i>Steam</span>
                 </span>
               
                 <span class="links-of-author-item">
@@ -2205,12 +2169,12 @@
 if ($('body').find('pre.mermaid').length) {
   $.ajax({
     type: 'GET',
-    url: '//gcore.jsdelivr.net/mermaid/8.0.0-rc.8/mermaid.min.js',
+    url: '//cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js',
     dataType: 'script',
     cache: true,
     success: function() {
       mermaid.initialize({
-        theme: 'dark',
+        theme: 'default',
         logLevel: 3,
         flowchart: { curve: 'linear' },
         gantt: { axisFormat: '%m/%d/%Y' },

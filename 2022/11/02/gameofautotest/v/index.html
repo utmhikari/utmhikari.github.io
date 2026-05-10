@@ -102,7 +102,7 @@
 
 
   <meta name="description" content="《Game Of AutoTest》的最后一篇文章，聊一下游戏自动化测试的价值。 一千个人心中有一千个哈姆雷特。仅以笔者的角度，游戏自动化测试的价值，可以体现在这几个方面：  效率提升 缺陷发现 质量监控 技术支持  做好自动化测试的价值分析，不仅能够自动化测试技术落地做足理论基础，而且也能在任意时候指引自动化技术落地者做好当下的决策，从而逐渐把自动化测试做出更大的规模跟成果。">
-<meta name="keywords" content="游戏自动化,游戏测试,自动化测试,测试开发,质量保障">
+<meta name="keywords" content="自动化测试,测试开发,游戏自动化,游戏测试,质量保障">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【Game Of AutoTest】5、游戏自动化测试的价值">
 <meta property="og:url" content="http://utmhikari.github.io/2022/11/02/gameofautotest/v/index.html">
@@ -584,13 +584,13 @@
       
         <div class="post-tags">
           
-            <a href="/tags/游戏自动化/" rel="tag"># 游戏自动化</a>
-          
-            <a href="/tags/游戏测试/" rel="tag"># 游戏测试</a>
-          
             <a href="/tags/自动化测试/" rel="tag"># 自动化测试</a>
           
             <a href="/tags/测试开发/" rel="tag"># 测试开发</a>
+          
+            <a href="/tags/游戏自动化/" rel="tag"># 游戏自动化</a>
+          
+            <a href="/tags/游戏测试/" rel="tag"># 游戏测试</a>
           
             <a href="/tags/质量保障/" rel="tag"># 质量保障</a>
           
@@ -1602,32 +1602,6 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
                     <span class="site-state-item-count">426</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
@@ -1662,17 +1636,6 @@
                   
                     
                   
-                  <span class="exturl" data-url="bWFpbHRvOmhkcTk0MDYyM0AxMjYuY29t" title="Mail &rarr; mailto:hdq940623@126.com"><i class="fa fa-fw fa-envelope"></i>Mail</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
                   <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
                 </span>
               
@@ -1685,17 +1648,6 @@
                     
                   
                   <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80NDg4NjUwODE4MDYyMjg2L2NvbHVtbnM=" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns"><i class="fa fa-fw fa-code"></i>Juejin</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vaWQvdXRtaGlrYXJp" title="Steam &rarr; https://steamcommunity.com/id/utmhikari"><i class="fa fa-fw fa-steam"></i>Steam</span>
                 </span>
               
                 <span class="links-of-author-item">
@@ -2261,12 +2213,12 @@
 if ($('body').find('pre.mermaid').length) {
   $.ajax({
     type: 'GET',
-    url: '//gcore.jsdelivr.net/mermaid/8.0.0-rc.8/mermaid.min.js',
+    url: '//cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js',
     dataType: 'script',
     cache: true,
     success: function() {
       mermaid.initialize({
-        theme: 'dark',
+        theme: 'default',
         logLevel: 3,
         flowchart: { curve: 'linear' },
         gantt: { axisFormat: '%m/%d/%Y' },

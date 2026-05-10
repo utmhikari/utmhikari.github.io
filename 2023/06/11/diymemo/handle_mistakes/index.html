@@ -102,7 +102,7 @@
 
 
   <meta name="description" content="今天整理博客时，恰好瞄到CSDN创作活动里，最近在搞这个主题：如何对待工作中的失误？笔者个人觉得，这个话题是非常有意义的，尤其是在现在经济形势不好，人人都担忧失业的情况下，怎么样对待工作的失误，甚至是工作本身，不论是从心态上，还是从策略（抓手）上，都是值得去深入讨论的。因此，笔者决定为【DIY小记】系列特别撰写一篇文章，来谈一下工作中失误了之后，到底需要如何对待。 那么接下来，就以CSDN创作模板">
-<meta name="keywords" content="DevOps,面试,持续集成,八股文,研发效能">
+<meta name="keywords" content="面试,DevOps,持续集成,八股文,研发效能">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【DIY小记】工作中失误了，应该如何对待？">
 <meta property="og:url" content="http://utmhikari.github.io/2023/06/11/diymemo/handle_mistakes/index.html">
@@ -596,9 +596,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/DevOps/" rel="tag"># DevOps</a>
-          
             <a href="/tags/面试/" rel="tag"># 面试</a>
+          
+            <a href="/tags/DevOps/" rel="tag"># DevOps</a>
           
             <a href="/tags/持续集成/" rel="tag"># 持续集成</a>
           
@@ -1614,32 +1614,6 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
                     <span class="site-state-item-count">426</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
@@ -1674,17 +1648,6 @@
                   
                     
                   
-                  <span class="exturl" data-url="bWFpbHRvOmhkcTk0MDYyM0AxMjYuY29t" title="Mail &rarr; mailto:hdq940623@126.com"><i class="fa fa-fw fa-envelope"></i>Mail</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
                   <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
                 </span>
               
@@ -1697,17 +1660,6 @@
                     
                   
                   <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80NDg4NjUwODE4MDYyMjg2L2NvbHVtbnM=" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns"><i class="fa fa-fw fa-code"></i>Juejin</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vaWQvdXRtaGlrYXJp" title="Steam &rarr; https://steamcommunity.com/id/utmhikari"><i class="fa fa-fw fa-steam"></i>Steam</span>
                 </span>
               
                 <span class="links-of-author-item">
@@ -2273,12 +2225,12 @@
 if ($('body').find('pre.mermaid').length) {
   $.ajax({
     type: 'GET',
-    url: '//gcore.jsdelivr.net/mermaid/8.0.0-rc.8/mermaid.min.js',
+    url: '//cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js',
     dataType: 'script',
     cache: true,
     success: function() {
       mermaid.initialize({
-        theme: 'dark',
+        theme: 'default',
         logLevel: 3,
         flowchart: { curve: 'linear' },
         gantt: { axisFormat: '%m/%d/%Y' },

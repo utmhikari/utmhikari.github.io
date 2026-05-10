@@ -102,7 +102,7 @@
 
 
   <meta name="description" content="近期稍微停歇了下开发的任务，转为进入游戏项目组去探究真正的游戏测试业务是如何进行。在此前做测试工具与平台时会常常遇到业务需求不能准确击中的瓶颈，因此真实投入体验，调研项目组的测试痛点，能够对后续的技术支持工作大有裨益。 游戏，尤其是网游，是一类非常特殊的软件产品，可能会有以下的特点：  服务端与客户端强耦合 各个系统模块间存在复杂的联系，业务复杂度相对于一般的产品高 单体状态的变化，可能影响到多个">
-<meta name="keywords" content="游戏测试,测试,业务,用例设计,回归测试">
+<meta name="keywords" content="业务,游戏测试,测试,用例设计,回归测试">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【测试人生】游戏业务用例测试体验感悟">
 <meta property="og:url" content="http://utmhikari.github.io/2019/11/03/testlife/start_game_test/index.html">
@@ -585,11 +585,11 @@
       
         <div class="post-tags">
           
+            <a href="/tags/业务/" rel="tag"># 业务</a>
+          
             <a href="/tags/游戏测试/" rel="tag"># 游戏测试</a>
           
             <a href="/tags/测试/" rel="tag"># 测试</a>
-          
-            <a href="/tags/业务/" rel="tag"># 业务</a>
           
             <a href="/tags/用例设计/" rel="tag"># 用例设计</a>
           
@@ -1594,32 +1594,6 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
                     <span class="site-state-item-count">426</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
@@ -1654,17 +1628,6 @@
                   
                     
                   
-                  <span class="exturl" data-url="bWFpbHRvOmhkcTk0MDYyM0AxMjYuY29t" title="Mail &rarr; mailto:hdq940623@126.com"><i class="fa fa-fw fa-envelope"></i>Mail</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
                   <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
                 </span>
               
@@ -1677,17 +1640,6 @@
                     
                   
                   <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80NDg4NjUwODE4MDYyMjg2L2NvbHVtbnM=" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns"><i class="fa fa-fw fa-code"></i>Juejin</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vaWQvdXRtaGlrYXJp" title="Steam &rarr; https://steamcommunity.com/id/utmhikari"><i class="fa fa-fw fa-steam"></i>Steam</span>
                 </span>
               
                 <span class="links-of-author-item">
@@ -2236,12 +2188,12 @@
 if ($('body').find('pre.mermaid').length) {
   $.ajax({
     type: 'GET',
-    url: '//gcore.jsdelivr.net/mermaid/8.0.0-rc.8/mermaid.min.js',
+    url: '//cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js',
     dataType: 'script',
     cache: true,
     success: function() {
       mermaid.initialize({
-        theme: 'dark',
+        theme: 'default',
         logLevel: 3,
         flowchart: { curve: 'linear' },
         gantt: { axisFormat: '%m/%d/%Y' },

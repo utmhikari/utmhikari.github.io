@@ -102,7 +102,7 @@
 
 
   <meta name="description" content="前言这次又开了个新坑——GitHub探索，主要内容是试水当期GitHub上较火的repo 虽然top榜上各路新手教程跟经典老不死项目占据了大半江山，但清流总是会有的。 第一期就试水一下pysnooper吧，一个新奇实用的python调试器。 顺便源码分析一波，了解下python的debug操作。 废话不多说，进入正题~ pysnooper使用效果通常，我们可以在函数上用pysnooper.snoo">
-<meta name="keywords" content="python,源码分析,pysnooper,逆向,debug">
+<meta name="keywords" content="python,debug,源码分析,pysnooper,逆向">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【GitHub探索】python调试利器——pysnooper源码分析">
 <meta property="og:url" content="http://utmhikari.github.io/2019/05/25/githubdiscovery/pysnooper/index.html">
@@ -604,13 +604,13 @@
           
             <a href="/tags/python/" rel="tag"># python</a>
           
+            <a href="/tags/debug/" rel="tag"># debug</a>
+          
             <a href="/tags/源码分析/" rel="tag"># 源码分析</a>
           
             <a href="/tags/pysnooper/" rel="tag"># pysnooper</a>
           
             <a href="/tags/逆向/" rel="tag"># 逆向</a>
-          
-            <a href="/tags/debug/" rel="tag"># debug</a>
           
         </div>
       
@@ -1620,32 +1620,6 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
                     <span class="site-state-item-count">426</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
@@ -1680,17 +1654,6 @@
                   
                     
                   
-                  <span class="exturl" data-url="bWFpbHRvOmhkcTk0MDYyM0AxMjYuY29t" title="Mail &rarr; mailto:hdq940623@126.com"><i class="fa fa-fw fa-envelope"></i>Mail</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
                   <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
                 </span>
               
@@ -1703,17 +1666,6 @@
                     
                   
                   <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80NDg4NjUwODE4MDYyMjg2L2NvbHVtbnM=" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns"><i class="fa fa-fw fa-code"></i>Juejin</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vaWQvdXRtaGlrYXJp" title="Steam &rarr; https://steamcommunity.com/id/utmhikari"><i class="fa fa-fw fa-steam"></i>Steam</span>
                 </span>
               
                 <span class="links-of-author-item">
@@ -2279,12 +2231,12 @@
 if ($('body').find('pre.mermaid').length) {
   $.ajax({
     type: 'GET',
-    url: '//gcore.jsdelivr.net/mermaid/8.0.0-rc.8/mermaid.min.js',
+    url: '//cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js',
     dataType: 'script',
     cache: true,
     success: function() {
       mermaid.initialize({
-        theme: 'dark',
+        theme: 'default',
         logLevel: 3,
         flowchart: { curve: 'linear' },
         gantt: { axisFormat: '%m/%d/%Y' },

@@ -102,7 +102,7 @@
 
 
   <meta name="description" content="在先前的文章当中，笔者分享了一套简洁的go微服务monorepo代码架构的实现，主要解决中小团队协同开发微服务集群的代码架构组织问题。但是在实际代码开发过程中，怎么组织不同的业务服务service实例，就成了比较棘手的问题。 为什么会出现这样的场景？首先，不同的业务服务可能会用到相同的底层服务，比如DB、缓存、MQ以及三方Client等等。其次，一个底层服务实例可能会在多个业务服务复用，一个业务服">
-<meta name="keywords" content="架构,后端开发,monorepo,Golang,wire">
+<meta name="keywords" content="架构,后端开发,Golang,monorepo,wire">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【架构艺术】Go大仓monorepo中使用wire做依赖注入的经验">
 <meta property="og:url" content="http://utmhikari.github.io/2025/04/04/archiart/go_monorepo_wire/index.html">
@@ -578,9 +578,9 @@
           
             <a href="/tags/后端开发/" rel="tag"># 后端开发</a>
           
-            <a href="/tags/monorepo/" rel="tag"># monorepo</a>
-          
             <a href="/tags/Golang/" rel="tag"># Golang</a>
+          
+            <a href="/tags/monorepo/" rel="tag"># monorepo</a>
           
             <a href="/tags/wire/" rel="tag"># wire</a>
           
@@ -1583,32 +1583,6 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
                     <span class="site-state-item-count">426</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
@@ -1643,17 +1617,6 @@
                   
                     
                   
-                  <span class="exturl" data-url="bWFpbHRvOmhkcTk0MDYyM0AxMjYuY29t" title="Mail &rarr; mailto:hdq940623@126.com"><i class="fa fa-fw fa-envelope"></i>Mail</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
                   <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
                 </span>
               
@@ -1666,17 +1629,6 @@
                     
                   
                   <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80NDg4NjUwODE4MDYyMjg2L2NvbHVtbnM=" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns"><i class="fa fa-fw fa-code"></i>Juejin</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vaWQvdXRtaGlrYXJp" title="Steam &rarr; https://steamcommunity.com/id/utmhikari"><i class="fa fa-fw fa-steam"></i>Steam</span>
                 </span>
               
                 <span class="links-of-author-item">
@@ -2225,12 +2177,12 @@
 if ($('body').find('pre.mermaid').length) {
   $.ajax({
     type: 'GET',
-    url: '//gcore.jsdelivr.net/mermaid/8.0.0-rc.8/mermaid.min.js',
+    url: '//cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js',
     dataType: 'script',
     cache: true,
     success: function() {
       mermaid.initialize({
-        theme: 'dark',
+        theme: 'default',
         logLevel: 3,
         flowchart: { curve: 'linear' },
         gantt: { axisFormat: '%m/%d/%Y' },

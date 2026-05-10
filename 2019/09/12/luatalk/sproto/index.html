@@ -102,7 +102,7 @@
 
 
   <meta name="description" content="前言rpc（远程过程调用），是不同主机间的交互的机制之一。好比说，我们想要获取服务器的某个资源，我们就可以发送一条讯息给服务器，然后服务器解析信息，再返回推送资源的信息，这样，便实现了我们客户端跟服务器的相互的“远程调用”。 为了让不同主机之间能够相互理解发送的讯息，我们需要约定统一的信息格式标准，使得不同的主机可以发送基于这个信息格式的讯息，也可以解析这个格式。这种标准，我们称之为协议（prot">
-<meta name="keywords" content="lua,sproto,协议,协议测试,rpc">
+<meta name="keywords" content="lua,协议,sproto,协议测试,rpc">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【Lua杂谈】lua专用rpc协议sproto——基础介绍&amp;用于协议测试的二次开发">
 <meta property="og:url" content="http://utmhikari.github.io/2019/09/12/luatalk/sproto/index.html">
@@ -588,9 +588,9 @@
           
             <a href="/tags/lua/" rel="tag"># lua</a>
           
-            <a href="/tags/sproto/" rel="tag"># sproto</a>
-          
             <a href="/tags/协议/" rel="tag"># 协议</a>
+          
+            <a href="/tags/sproto/" rel="tag"># sproto</a>
           
             <a href="/tags/协议测试/" rel="tag"># 协议测试</a>
           
@@ -1604,32 +1604,6 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
                     <span class="site-state-item-count">426</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
@@ -1664,17 +1638,6 @@
                   
                     
                   
-                  <span class="exturl" data-url="bWFpbHRvOmhkcTk0MDYyM0AxMjYuY29t" title="Mail &rarr; mailto:hdq940623@126.com"><i class="fa fa-fw fa-envelope"></i>Mail</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
                   <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
                 </span>
               
@@ -1687,17 +1650,6 @@
                     
                   
                   <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80NDg4NjUwODE4MDYyMjg2L2NvbHVtbnM=" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns"><i class="fa fa-fw fa-code"></i>Juejin</span>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vaWQvdXRtaGlrYXJp" title="Steam &rarr; https://steamcommunity.com/id/utmhikari"><i class="fa fa-fw fa-steam"></i>Steam</span>
                 </span>
               
                 <span class="links-of-author-item">
@@ -2263,12 +2215,12 @@
 if ($('body').find('pre.mermaid').length) {
   $.ajax({
     type: 'GET',
-    url: '//gcore.jsdelivr.net/mermaid/8.0.0-rc.8/mermaid.min.js',
+    url: '//cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js',
     dataType: 'script',
     cache: true,
     success: function() {
       mermaid.initialize({
-        theme: 'dark',
+        theme: 'default',
         logLevel: 3,
         flowchart: { curve: 'linear' },
         gantt: { axisFormat: '%m/%d/%Y' },
