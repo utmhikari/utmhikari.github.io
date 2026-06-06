@@ -101,24 +101,25 @@
 
 
 
-  <meta name="description" content="talk is cheap, code is rich">
-<meta name="keywords" content="code, life">
-<meta property="og:type" content="website">
-<meta property="og:title" content="HiKariのTechLab">
-<meta property="og:url" content="http://utmhikari.github.io/tags/前端/index.html">
+  <meta name="description" content="AI Native是大势所趋，AI Coding的技能必不可少。鉴于此，笔者决定新开一个AI Native系列，记录自己后续在All-In-AI路程上的点滴，分享自己通过AI提升日常工作跟研发效率的思考和经验。 先前的文章也讨论到，因为工作的原因，笔者已经开始在做ToB稳定性治理的事情，所以近期也一直在通过Vibe Coding的方式，设计相关平台能力要做些什么，产品形式上需要如何呈现。从效果上看">
+<meta name="keywords" content="AI,Vibe Coding,Qoder,前端开发,web开发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【AI原生】用Vibe Coding写产品前端原型的一些经验">
+<meta property="og:url" content="http://utmhikari.github.io/2026/06/06/ainative/vibe_coding_frontend_prototype/index.html">
 <meta property="og:site_name" content="HiKariのTechLab">
-<meta property="og:description" content="talk is cheap, code is rich">
+<meta property="og:description" content="AI Native是大势所趋，AI Coding的技能必不可少。鉴于此，笔者决定新开一个AI Native系列，记录自己后续在All-In-AI路程上的点滴，分享自己通过AI提升日常工作跟研发效率的思考和经验。 先前的文章也讨论到，因为工作的原因，笔者已经开始在做ToB稳定性治理的事情，所以近期也一直在通过Vibe Coding的方式，设计相关平台能力要做些什么，产品形式上需要如何呈现。从效果上看">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2026-06-06T12:36:53.443Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HiKariのTechLab">
-<meta name="twitter:description" content="talk is cheap, code is rich">
+<meta name="twitter:title" content="【AI原生】用Vibe Coding写产品前端原型的一些经验">
+<meta name="twitter:description" content="AI Native是大势所趋，AI Coding的技能必不可少。鉴于此，笔者决定新开一个AI Native系列，记录自己后续在All-In-AI路程上的点滴，分享自己通过AI提升日常工作跟研发效率的思考和经验。 先前的文章也讨论到，因为工作的原因，笔者已经开始在做ToB稳定性治理的事情，所以近期也一直在通过Vibe Coding的方式，设计相关平台能力要做些什么，产品形式上需要如何呈现。从效果上看">
 
 
 
 
 
 
-  <link rel="canonical" href="http://utmhikari.github.io/tags/前端/">
+  <link rel="canonical" href="http://utmhikari.github.io/2026/06/06/ainative/vibe_coding_frontend_prototype/">
 
 
 
@@ -128,7 +129,7 @@
   };
 </script>
 
-  <title>标签: 前端 | HiKariのTechLab</title>
+  <title>【AI原生】用Vibe Coding写产品前端原型的一些经验 | HiKariのTechLab</title>
   
 
 
@@ -176,7 +177,7 @@
     
   
 
-  <div class="container sidebar-position-right ">
+  <div class="container sidebar-position-right page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -252,7 +253,7 @@
         
         
           
-          <li class="menu-item menu-item-tags menu-item-active">
+          <li class="menu-item menu-item-tags">
 
     
     
@@ -383,86 +384,235 @@
           
             
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
           
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h2>前端<small>标签</small>
-        </h2>
-      </div>
+  
 
-      
-        
+  
+  
+  
+
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2026/06/06/ainative/vibe_coding_frontend_prototype/">
 
-      <h3 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ひかり.HDQ">
+      <meta itemprop="description" content="talk is cheap, code is rich">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HiKariのTechLab">
+    </span>
+
+    
+      <header class="post-header">
+
         
-          <a class="post-title-link" href="/2026/04/02/diymemo/edge_bilibili_ppt/" itemprop="url">
-            
-              <span itemprop="name">【DIY小记】解决MacOS上Edge浏览器bilibili全屏卡顿的问题</span>
-            
-          </a>
         
-      </h3>
+          <h2 class="post-title" itemprop="name headline">【AI原生】用Vibe Coding写产品前端原型的一些经验
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2026-04-02T00:19:29+08:00" content="2026-04-02">
-          04-02
-        </time>
-      </div>
+              
+            
+          </h2>
+        
 
-    </header>
-  </article>
+        <div class="post-meta">
+          <span class="post-time">
 
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2026-06-06 20:00:01 / 修改时间：20:36:53" itemprop="dateCreated datePublished" datetime="2026-06-06T20:00:01+08:00">2026-06-06</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/AI原生/" itemprop="url" rel="index"><span itemprop="name">AI原生</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>AI Native是大势所趋，AI Coding的技能必不可少。鉴于此，笔者决定新开一个AI Native系列，记录自己后续在All-In-AI路程上的点滴，分享自己通过AI提升日常工作跟研发效率的思考和经验。</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjYvMDUvMDEvZ2Vla2RhaWx5L3RvYl9jdXN0b21lcl9zdGFiaWxpdHkv" title="https://utmhikari.top/2026/05/01/geekdaily/tob_customer_stability/">先前的文章<i class="fa fa-external-link"></i></span>也讨论到，因为工作的原因，笔者已经开始在做ToB稳定性治理的事情，所以近期也一直在通过Vibe Coding的方式，设计相关平台能力要做些什么，产品形式上需要如何呈现。从效果上看，AI写前端原型的能力还是比较OK的，能够很快速满足笔者的工作需要。今天这篇文章，就简单聊一下这个过程中的经验。</p>
+<p>笔者用的工具是Qoder，通过Quest模式去快速搭建前端原型，整一个过程是这样的：</p>
+<a id="more"></a>
+<p>首先是需求文档，这部分基本上是自己纯手写，因为设计到很多实际业务层面还有自己对实现效果预期的思考。需求文档写完后，先不急去丢给AI，先让AI理解前后端项目，沉淀一些memory，然后再丢需求文档，这样AI就能够知道可能涉及哪些地方的修改，对应模块的代码以前写的怎么样。</p>
+<p>然后因为是搭建原型，所以需要告诉AI新开一个项目，把原来前端项目copy过去（本地开发方便的话，git worktree更合适），完了之后告诉AI用原来项目的样式去搭建这个新模块（此处注明，旧版本的Qoder的Quest有内置前端原型的Skill，可以直接用）。模块功能点梳理清楚，明确页面上需要哪些元素、交互逻辑是怎样的，配合上涵盖自己设计预期的截图，这样AI也可以充分去理解。基本上搞个半天左右，就可以搭建出来一个5个主页签带上4个子页签这种规格的前端原型了。</p>
+<p>剩下的就是微调，利用AI做渐进式优化，有时如果方案需要调整，改一下描述重新生成就好，也不需要自己亲自参与重构，让AI自由发挥即可。这里需要注意的是，AI对于复杂业务状态管理的理解还是有局限的，可能某些场景下AI会get不到自己的想法，所以笔者的建议一是自己要给够足够的上下文信息，必要时喂一些文档，另一块就是拿一些rules来harness下，不要让AI过分自由发挥，想的太多。不过整体来看，原型图因为并非最终的功能实现，所以也不需要做的太细致，能表现基本内容就行。</p>
+<p>总体来看，用Vibe Coding从0到1写前端原型来辅助产品技术方案，目前已有的工具还是可以很方便达到效果的。算是AI提效的一个很成熟的场景了。</p>
 
       
     </div>
 
+    
+
+    
+    
+    
+
+    
+      
+<div style="border: 1px solid black; margin-top: 32px; margin-bottom: 32px">
+  <div style="margin-left:10px">
+    <span style="font-weight:bold">版权声明</span>
+    <br>
+    <span>本文为博客<a href="https://utmhikari.github.io" style="color:#258FC6">HiKariのTechLab</a>原创文章，转载请标明出处，谢谢~~~</span>
+  </div>
+</div>
+
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/AI/" rel="tag"># AI</a>
+          
+            <a href="/tags/Vibe-Coding/" rel="tag"># Vibe Coding</a>
+          
+            <a href="/tags/Qoder/" rel="tag"># Qoder</a>
+          
+            <a href="/tags/前端开发/" rel="tag"># 前端开发</a>
+          
+            <a href="/tags/web开发/" rel="tag"># web开发</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2026/05/01/geekdaily/tob_customer_stability/" rel="next" title="【极客日常】初探ToB客户稳定性保障">
+                <i class="fa fa-chevron-left"></i> 【极客日常】初探ToB客户稳定性保障
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2026/06/06/diymemo/talk_about_inside_ding/" rel="prev" title="【DIY小记】聊聊关于《置身钉内》的一些个人想法">
+                【DIY小记】聊聊关于《置身钉内》的一些个人想法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+  </div>
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -500,7 +650,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">218</span>
+                    <span class="site-state-item-count">220</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -545,7 +695,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">14</span>
+                      
+                    
+                    <span class="site-state-item-count">15</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1414,7 +1566,7 @@
                     
                       
                     
-                    <span class="site-state-item-count">426</span>
+                    <span class="site-state-item-count">425</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1645,6 +1797,10 @@
 
 
   
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
 
   
 
@@ -1662,6 +1818,8 @@
 
   
 
+
+  
 
 
   
