@@ -27,7 +27,7 @@
   <entry>
     <title>【Python随笔】通过多解释器并行提升python并发效率</title>
     <url>/2026/08/01/pythonnotes/concurrent_intepreters/</url>
-    <content><![CDATA[<p>在非常久远的文章中，我们提到python中实现并行执行程序的方式主要是通过<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMTkvMDUvMTEvZWFzeXB5dGhvbi92aS8=" title="https://utmhikari.top/2019/05/11/easypython/vi/">multiprocessing<i class="fa fa-external-link"></i></span>实现的，而并非多线程（Threading）。机理层面，大致是会开一个新的子进程独立执行，主进程维护一个Sentinel（fd），默认通过pickle跟pipe方式和子进程通信。</p>
+    <content><![CDATA[<p>在非常久远的文章中，我们提到python中实现并行执行程序的方式主要是通过<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjEvMDYvMDgvcHl0aG9ubm90ZXMvcHl0aG9uX3Byb2Nlc3Nwb29sZXhlY3V0b3Iv" title="https://utmhikari.top/2021/06/08/pythonnotes/python_processpoolexecutor/">multiprocessing<i class="fa fa-external-link"></i></span>实现的，而并非多线程（Threading）。机理层面，大致是会开一个新的子进程独立执行，主进程维护一个Sentinel（fd），默认通过pickle跟pipe方式和子进程通信。</p>
 <p>而现在，python也到了3.14版本，除了multiprocessing与Threading之外，对于多解释器的支持也比较完善。多解释器的机理可以参考<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnB5dGhvbi5vcmcvemgtY24vMy9saWJyYXJ5L2NvbmN1cnJlbnQuaW50ZXJwcmV0ZXJzLmh0bWw=" title="https://docs.python.org/zh-cn/3/library/concurrent.interpreters.html">concurrent.interpreters官方文档<i class="fa fa-external-link"></i></span>，简单来讲就是这类并发不像多线程受GIL的约束，一个进程里执行多套解释器，每个解释器有自己的GIL，有点类似于Golang的机制。以下是一些典型用法：</p>
 <a id="more"></a>
 <p>首先是interpreter本身，其支持的行为和thread跟process都比较类似，通信的话也可以用queue来通信。整体也比较容易理解。</p>
