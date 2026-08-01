@@ -1,6 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>【AI原生】用AI-Native的方式编写SRE告警诊断Agent和Skill</title>
+    <url>/2026/08/01/ainative/alert_agent_skill/</url>
+    <content><![CDATA[<p>在SRE和稳定性工程领域，告警诊断Agent大概是当下AI落地最热门的场景之一了。对于告警应急场景，有一个迅速可靠的Agent做根因分析，通过透出问题链路关键的信息点，可以省掉很多前期的排查精力，帮助线上问题更迅速被解决。</p>
+<p>从实现难度上看，写一个能跑的告警诊断Agent或者Skill，门槛其实不高。接几个Tool（查日志、查监控、查变更记录），写一段System Prompt描述诊断流程，大模型就能按照套路给出一个看似合理的分析结论。但如果要把它做到真正好用、能让大家都信赖程度，那难度就完全不一样了。</p>
+<p>所以今天这篇文章就聊一下，如何用AI-Native的方式去研发一个高质量的告警诊断Agent。</p>
+<a id="more"></a>
+<p>首先是为什么需要用AI-Native的方式写，因为本质上Oncall排查也是经验工程，所以很多知识的整理、梳理和表达，都是自然语言驱动的。在这个情境下，用AI-Native的方式而非手搓，肯定是相对更加合理的方案。具体而言，Agent跟Skill本体Prompt的编写，reference的蒸馏，都是可以通过LLM来做的。当然这里的前提是，你了解的整套排查流程，要排查什么信息，得到结论的话涉及哪些知识跟资料，把这些东西整合起来就肯定需要AI的协助。</p>
+<p>然后一点是，明确Agent/Skill跟运行时环境的关系。本质上写一个告警诊断Agent是在写一个数字人，从数字人的视角来看，一是知道告警的基本信息，二是手头有一些工具，要做的事情就是根据这些信息，快速推断根因，给予值班同学解决方案。在这个基础上，笔者的建议是根据专家经验，先入为主先预设一套工具集及其用途，从这个角度出发再去根据runtime提供的tool，寻找合适的工具做调用，甚至也可以考虑跟runtime做适当的耦合。这样的话一是能够明显减少工具的误调用，二是整体排查效率也会变高。</p>
+<p>之后是Agent跟Skill之间的关系。这里的关键点是，对于不同的告警场景，Agent下面需要拆出多个垂直领域的Skill按需编排，比如可以拆成”变更关联诊断”、”容量水位诊断”、”依赖链路诊断”、”数据库慢查询诊断”等独立Skill，每个Skill有明确的输入输出契约和诊断逻辑。每一个Skill可能引用相同的知识源跟工具，但是做的事情各自又不一样，术业有专攻，这样就能尽可能把不同场景的排查结论做到更加精确。此外，Agent自己接收到一个Skill的输出结论，自身也需要做一层精炼和表达，先是对结论和抽样案例做详细说明，然后得出关键结论，之后一个重点是要指导线上值班同学做什么事情，这样组织起来结论的可靠度会变得更高。</p>
+<p>最后是需要做好Agent的评测，通过数据去支撑Agent的执行效果。这里面包括一些用户反馈机制的建设，Agent执行性能/时间/ToolCall成功率的统计，大规模历史数据自动化评测等内容。这一部分也是最复杂最需要持续迭代的环节，建议是在AIOps底座工程层面，去研发更多的Sidecar Agents完善这个事情。因为Agent执行效果的判断，本质上需要与每个业务自身场景做深度绑定，所以并不能说有一个非常普世通用的机制去描述这个事情，而最终也是更多基于业务内的共识，怎么去把这个共识给量化，是要解决这个问题。</p>
+<p>总体而言，做一个告警诊断Agent很容易，但要做好，做的系统化，是有难度的。对于有足够技术力，足够技术驱动的组织，并且对于SRE稳定性非常重视，那么把这个事情做到深度投入，是非常有价值的；如果组织更加偏向业务驱动，技术力方面也不能做深的情况下，那么把这个Agent做浅一些，适当包装，尝试从运营推广角度让Agent给更多人用，采取由面到点的战术，有更多合作方背书，这样整个Agent的业务价值也是很好说明的。</p>
+]]></content>
+      <categories>
+        <category>AI原生</category>
+      </categories>
+      <tags>
+        <tag>稳定性</tag>
+        <tag>AI</tag>
+        <tag>Agent</tag>
+        <tag>SRE</tag>
+        <tag>Skill</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【Python随笔】通过多解释器并行提升python并发效率</title>
+    <url>/2026/08/01/pythonnotes/concurrent_intepreters/</url>
+    <content><![CDATA[<p>在非常久远的文章中，我们提到python中实现并行执行程序的方式主要是通过<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMTkvMDUvMTEvZWFzeXB5dGhvbi92aS8=" title="https://utmhikari.top/2019/05/11/easypython/vi/">multiprocessing<i class="fa fa-external-link"></i></span>实现的，而并非多线程（Threading）。机理层面，大致是会开一个新的子进程独立执行，主进程维护一个Sentinel（fd），默认通过pickle跟pipe方式和子进程通信。</p>
+<p>而现在，python也到了3.14版本，除了multiprocessing与Threading之外，对于多解释器的支持也比较完善。多解释器的机理可以参考<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnB5dGhvbi5vcmcvemgtY24vMy9saWJyYXJ5L2NvbmN1cnJlbnQuaW50ZXJwcmV0ZXJzLmh0bWw=" title="https://docs.python.org/zh-cn/3/library/concurrent.interpreters.html">concurrent.interpreters官方文档<i class="fa fa-external-link"></i></span>，简单来讲就是这类并发不像多线程受GIL的约束，一个进程里执行多套解释器，每个解释器有自己的GIL，有点类似于Golang的机制。以下是一些典型用法：</p>
+<a id="more"></a>
+<p>首先是interpreter本身，其支持的行为和thread跟process都比较类似，通信的话也可以用queue来通信。整体也比较容易理解。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">example_queue_communication</span><span class="params">()</span>:</span></span><br><span class="line">    queue = interpreters.create_queue()</span><br><span class="line">    interp = interpreters.create()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">worker</span><span class="params">(q)</span>:</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>):</span><br><span class="line">            q.put(i * i)</span><br><span class="line"></span><br><span class="line">    t = interp.call_in_thread(worker, queue)</span><br><span class="line">    t.join()</span><br><span class="line"></span><br><span class="line">    results = []</span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">5</span>):</span><br><span class="line">        results.append(queue.get())</span><br><span class="line">    print(<span class="string">f"Received from sub-interpreter: <span class="subst">&#123;results&#125;</span>"</span>)</span><br><span class="line"></span><br><span class="line">    interp.close()</span><br><span class="line">    print()</span><br></pre></td></tr></table></figure>
+<p>因为3.14出了InterpreterPoolExecutor，所以我们也可以更加方便去map一些并行任务。比如拿InterpreterPoolExecutor跟ThreadPoolExecutor对比：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">example_executor_vs_thread</span><span class="params">()</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">cpu_work</span><span class="params">(n)</span>:</span></span><br><span class="line">        total = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">            total += i * i</span><br><span class="line">        <span class="keyword">return</span> total</span><br><span class="line"></span><br><span class="line">    work_size = <span class="number">5</span>_000_000</span><br><span class="line">    num_tasks = <span class="number">4</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># InterpreterPoolExecutor (真正并行)</span></span><br><span class="line">    start = time.perf_counter()</span><br><span class="line">    <span class="keyword">with</span> InterpreterPoolExecutor(max_workers=num_tasks) <span class="keyword">as</span> executor:</span><br><span class="line">        list(executor.map(cpu_work, [work_size] * num_tasks))</span><br><span class="line">    interp_time = time.perf_counter() - start</span><br><span class="line"></span><br><span class="line">    <span class="comment"># ThreadPoolExecutor (受 GIL 限制)</span></span><br><span class="line">    start = time.perf_counter()</span><br><span class="line">    <span class="keyword">with</span> ThreadPoolExecutor(max_workers=num_tasks) <span class="keyword">as</span> executor:</span><br><span class="line">        list(executor.map(cpu_work, [work_size] * num_tasks))</span><br><span class="line">    thread_time = time.perf_counter() - start</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 串行基准</span></span><br><span class="line">    start = time.perf_counter()</span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(num_tasks):</span><br><span class="line">        cpu_work(work_size)</span><br><span class="line">    serial_time = time.perf_counter() - start</span><br><span class="line"></span><br><span class="line">    print(<span class="string">f"  串行:              <span class="subst">&#123;serial_time:<span class="number">.4</span>f&#125;</span>s"</span>)</span><br><span class="line">    print(<span class="string">f"  ThreadPool:        <span class="subst">&#123;thread_time:<span class="number">.4</span>f&#125;</span>s (加速比 <span class="subst">&#123;serial_time / thread_time:<span class="number">.2</span>f&#125;</span>x)"</span>)</span><br><span class="line">    print(<span class="string">f"  InterpreterPool:   <span class="subst">&#123;interp_time:<span class="number">.4</span>f&#125;</span>s (加速比 <span class="subst">&#123;serial_time / interp_time:<span class="number">.2</span>f&#125;</span>x)"</span>)</span><br><span class="line">    print()</span><br></pre></td></tr></table></figure>
+<p>打印出来结果预期是：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">串行:              0.5426s</span><br><span class="line">ThreadPool:        0.5073s (加速比 1.07x)</span><br><span class="line">InterpreterPool:   0.1932s (加速比 2.81x)</span><br></pre></td></tr></table></figure>
+<p>当然多解释器的使用也是有限制的，比如下面这一段就执行不了：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">example_executor_as_completed</span><span class="params">()</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">slow_square</span><span class="params">(n)</span>:</span></span><br><span class="line">        time.sleep(<span class="number">0.1</span> * (<span class="number">5</span> - n))  <span class="comment"># 模拟不同耗时</span></span><br><span class="line">        <span class="keyword">return</span> n * n</span><br><span class="line"></span><br><span class="line">    <span class="keyword">with</span> InterpreterPoolExecutor(max_workers=<span class="number">4</span>) <span class="keyword">as</span> executor:</span><br><span class="line">        future_to_n = &#123;executor.submit(slow_square, n): n <span class="keyword">for</span> n <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">6</span>)&#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> future <span class="keyword">in</span> as_completed(future_to_n):</span><br><span class="line">            n = future_to_n[future]</span><br><span class="line">            print(<span class="string">f"  n=<span class="subst">&#123;n&#125;</span> 完成, 结果=<span class="subst">&#123;future.result()&#125;</span>"</span>)</span><br><span class="line">    print()</span><br></pre></td></tr></table></figure>
+<p>原因是slow_square定义域在example_executor_as_completed里面，是个方法级local的对象，没法直接分享给另一个解释器，如果多线程在一个解释器里是通的，多进程新起整个Runtime也是通的。这里目前的解法是把slow_square提到global层面，才可以解决。</p>
+<p>所以整体看下来，多解释器并行也不是万能的，使用方面还是有很多限制，我们需要充分理解其行为之后，才去投入使用。如果是面对cpu密集场景，不涉及C层自己扩展模块的话，完全可以用多解释器这套机制提升性能，不需要用multiprocessing，如果涉及C层自己扩展模块的话，得保证自己模块的健壮性，否则会把整个进程搞崩。</p>
+]]></content>
+      <categories>
+        <category>Python随笔</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>并行</tag>
+        <tag>并发</tag>
+        <tag>multiprocessing</tag>
+        <tag>InterpreterPoolExecutor</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>【AI原生】深入回答纯Vibe Coding写后端项目的几个问题</title>
     <url>/2026/07/04/ainative/vibe_coding_backend/</url>
     <content><![CDATA[<p>近期笔者因为工作原因，开始大规模使用Vibe Coding的方式来编写后端项目。说实话，笔者目前大概99%的代码都是通过Vibe Coding生成的，已经基本不手写代码了。</p>

@@ -1,3 +1,5 @@
+http://utmhikari.github.io/2026/08/01/ainative/alert_agent_skill/
+http://utmhikari.github.io/2026/08/01/pythonnotes/concurrent_intepreters/
 http://utmhikari.github.io/2026/07/04/ainative/vibe_coding_backend/
 http://utmhikari.github.io/2026/07/04/archiart/customer_stability_system_ideas/
 http://utmhikari.github.io/2026/06/06/diymemo/talk_about_inside_ding/
@@ -96,5 +98,3 @@ http://utmhikari.github.io/2023/02/05/diymemo/vmware_ubuntu_network/
 http://utmhikari.github.io/2023/01/26/testlife/quality_redline_design/
 http://utmhikari.github.io/2023/01/01/gofromzero/07_reflect_module/
 http://utmhikari.github.io/2022/12/10/codegallery/daggre/
-http://utmhikari.github.io/2022/12/03/gofromzero/06_wire_kratos/
-http://utmhikari.github.io/2022/11/24/geekdaily/python_and_game_autotest_notes/
