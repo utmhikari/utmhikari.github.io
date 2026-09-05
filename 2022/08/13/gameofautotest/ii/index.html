@@ -105,7 +105,7 @@
 <meta name="keywords" content="AI,UE4,行为树,GAutomator,压力测试">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【Game Of AutoTest】2、游戏自动化测试的技术选型">
-<meta property="og:url" content="http://utmhikari.github.io/2022/08/13/gameofautotest/ii/index.html">
+<meta property="og:url" content="https://utmhikari.top/2022/08/13/gameofautotest/ii/index.html">
 <meta property="og:site_name" content="HiKariのTechLab">
 <meta property="og:description" content="要做游戏自动化测试，首先需要了解游戏自动化技术。因此，本文详细讲解下游戏自动化测试领域可能用到的一些技术以及对应的场景，为自动化测试落地的技术选型提供参考。 游戏自动化测试的测试对象是游戏本身。对于游戏这个概念，可以有以下几种：  客户端：我们实际玩到的游戏本体，比如说PC程序，手机App，Web-App。 服务器：在多人网络游戏中，用以模拟游戏世界的本体。 编辑器：包含未烘焙到OS平台的游戏程序">
 <meta property="og:locale" content="zh-CN">
@@ -116,10 +116,12 @@
 
 
 
+  <link rel="alternate" href="/atom.xml" title="HiKariのTechLab" type="application/atom+xml">
 
 
 
-  <link rel="canonical" href="http://utmhikari.github.io/2022/08/13/gameofautotest/ii/">
+
+  <link rel="canonical" href="https://utmhikari.top/2022/08/13/gameofautotest/ii/">
 
 
 
@@ -374,7 +376,7 @@
 
   
 
-  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="关注HiKariのGithub" aria-label="关注HiKariのGithub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></span>
+  <a href="https://github.com/utmhikari" class="github-corner" title="关注HiKariのGithub" aria-label="关注HiKariのGithub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
 
 
 
@@ -404,7 +406,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2022/08/13/gameofautotest/ii/">
+    <link itemprop="mainEntityOfPage" href="https://utmhikari.top/2022/08/13/gameofautotest/ii/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ひかり.HDQ">
@@ -557,12 +559,12 @@
 </ul>
 <p>客户端自动化的开源实现也有不少，其中有两个比较广泛应用：<code>Airtest</code>和<code>GAutomator</code>。</p>
 <ul>
-<li><code>Airtest</code>：一个完整的游戏自动化测试方案，参考<span class="exturl" data-url="aHR0cHM6Ly9haXJ0ZXN0LmRvYy5pby5uZXRlYXNlLmNvbS8=" title="https://airtest.doc.io.netease.com/">这个文档<i class="fa fa-external-link"></i></span><ul>
+<li><code>Airtest</code>：一个完整的游戏自动化测试方案，参考<a href="https://airtest.doc.io.netease.com/" target="_blank" rel="noopener">这个文档</a><ul>
 <li>主要实现的是面向不同平台应用的UI自动化，并且自带IDE。</li>
-<li>底层是<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0FpcnRlc3RQcm9qZWN0L1BvY28tU0RL" title="https://github.com/AirtestProject/Poco-SDK">PocoSDK<i class="fa fa-external-link"></i></span>，支持<code>Android/iOS</code>的<code>Native</code>控件，也支持<code>Unity/UE/Cocos</code>应用。</li>
+<li>底层是<a href="https://github.com/AirtestProject/Poco-SDK" target="_blank" rel="noopener">PocoSDK</a>，支持<code>Android/iOS</code>的<code>Native</code>控件，也支持<code>Unity/UE/Cocos</code>应用。</li>
 </ul>
 </li>
-<li><code>GAutomator</code>：针对<code>Unity</code>、<code>UE</code>的UI自动化测试框架，源码在<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1RlbmNlbnQvR0F1dG9tYXRvcg==" title="https://github.com/Tencent/GAutomator">这里<i class="fa fa-external-link"></i></span><ul>
+<li><code>GAutomator</code>：针对<code>Unity</code>、<code>UE</code>的UI自动化测试框架，源码在<a href="https://github.com/Tencent/GAutomator" target="_blank" rel="noopener">这里</a><ul>
 <li>相对<code>Airtest</code>比较轻量级，适合集成+二次开发</li>
 </ul>
 </li>
@@ -638,13 +640,13 @@
 </ul>
 <h2 id="编辑器自动化"><a href="#编辑器自动化" class="headerlink" title="编辑器自动化"></a>编辑器自动化</h2><p>编辑器代表着游戏的开发环境，其中的资源会直接影响到游戏的构建结果，因此针对编辑器及资产的自动化测试也是重要的一部分。以<code>UE</code>为例，其中内置了许多自动化测试的机制：</p>
 <ul>
-<li><span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnVucmVhbGVuZ2luZS5jb20vNS4wL3poLUNOL3NjcmlwdGluZy10aGUtdW5yZWFsLWVkaXRvci11c2luZy1weXRob24v" title="https://docs.unrealengine.com/5.0/zh-CN/scripting-the-unreal-editor-using-python/">Python Scriping<i class="fa fa-external-link"></i></span><ul>
+<li><a href="https://docs.unrealengine.com/5.0/zh-CN/scripting-the-unreal-editor-using-python/" target="_blank" rel="noopener">Python Scriping</a><ul>
 <li>通过<code>python</code>脚本驱动编辑器和运行的手段，可以作为编辑器开发环境的提效工具，也可以对编辑器资产做测试检查</li>
 </ul>
 </li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnVucmVhbGVuZ2luZS5jb20vNC4yNy96aC1DTi9UZXN0aW5nQW5kT3B0aW1pemF0aW9uL0F1dG9tYXRpb24v" title="https://docs.unrealengine.com/4.27/zh-CN/TestingAndOptimization/Automation/">Automation System<i class="fa fa-external-link"></i></span><ul>
+<li><a href="https://docs.unrealengine.com/4.27/zh-CN/TestingAndOptimization/Automation/" target="_blank" rel="noopener">Automation System</a><ul>
 <li>支持对编辑器资产/引擎功能的测试，或是在关卡里运行游戏功能测试用例</li>
-<li>也可以支持在多个平台同时运行<code>UE</code>游戏会话，执行简单的测试内容，是用<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnVucmVhbGVuZ2luZS5jb20vNC4yNy96aC1DTi9UZXN0aW5nQW5kT3B0aW1pemF0aW9uL0F1dG9tYXRpb24vR2F1bnRsZXQv" title="https://docs.unrealengine.com/4.27/zh-CN/TestingAndOptimization/Automation/Gauntlet/">Gauntlet<i class="fa fa-external-link"></i></span>框架实现的。</li>
+<li>也可以支持在多个平台同时运行<code>UE</code>游戏会话，执行简单的测试内容，是用<a href="https://docs.unrealengine.com/4.27/zh-CN/TestingAndOptimization/Automation/Gauntlet/" target="_blank" rel="noopener">Gauntlet</a>框架实现的。</li>
 </ul>
 </li>
 </ul>
@@ -694,7 +696,7 @@
 <li>PVE副本、任务：这类型的玩法通常分为很多环，每一环需要根据副本阶段指引信息、任务类型信息等采取行为决策，因此比较适合用行为树表征。</li>
 <li>PVP、竞技玩法：这类型的玩法通常有特定的游玩规则/目标，因此也适合行为树去做决策。</li>
 </ul>
-<p>针对自动化测试本身而言，行为树也可以帮助我们快速确定基础的自动化逻辑结构，生成基础代码，提高自动化研发效率。但也需要注意，行为树不能作为代码编程的完整代替方案，否则一旦行为复杂度较高，行为树本身就难以维护，详情可以参考<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjIvMDQvMDMvdGVzdGxpZmUvYnRyZWVfYXV0b3Rlc3RfdGFsay8=" title="https://utmhikari.top/2022/04/03/testlife/btree_autotest_talk/">这篇文章<i class="fa fa-external-link"></i></span>。</p>
+<p>针对自动化测试本身而言，行为树也可以帮助我们快速确定基础的自动化逻辑结构，生成基础代码，提高自动化研发效率。但也需要注意，行为树不能作为代码编程的完整代替方案，否则一旦行为复杂度较高，行为树本身就难以维护，详情可以参考<a href="https://utmhikari.top/2022/04/03/testlife/btree_autotest_talk/">这篇文章</a>。</p>
 <p>行为树方案，建议是配套可视化编程工具提效开发和调试工作，否则研发效率并不一定优于纯粹的代码编写。</p>
 <h3 id="机器学习"><a href="#机器学习" class="headerlink" title="机器学习"></a>机器学习</h3><p>机器学习是一种更为复杂的AI实现案例，有几个特点：</p>
 <ul>
@@ -799,6 +801,14 @@
 
 
   </div>
+
+  
+  
+  
+  
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Game Of AutoTest】2、游戏自动化测试的技术选型","description":"要做游戏自动化测试，首先需要了解游戏自动化技术。因此，本文详细讲解下游戏自动化测试领域可能用到的一些技术以及对应的场景，为自动化测试落地的技术选型提供参考。 游戏自动化测试的测试对象是游戏本身。对于游戏这个概念，可以有以下几种： 客户端：我们实际玩到的游戏本体，比如说PC程序，手机App，Web-App。 服务器：在多人网络游戏中，用以模拟游戏世界的本体。 编辑器：包含未烘焙到OS平台的游戏程序以","datePublished":"2022-08-13T05:28:46.000Z","dateModified":"2025-04-12T15:50:10.254Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2022/08/13/gameofautotest/ii/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"AI, UE4, 行为树, GAutomator, 压力测试"}</script>
+  
+  
 
 
           </div>
@@ -1777,8 +1787,6 @@
                     
                       
                     
-                      
-                    
                     <span class="site-state-item-count">430</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
@@ -1787,6 +1795,13 @@
             </nav>
           
 
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
           
 
           
@@ -1802,7 +1817,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="GitHub &rarr; https://github.com/utmhikari"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                  <a href="https://github.com/utmhikari" title="GitHub &rarr; https://github.com/utmhikari" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
                 </span>
               
                 <span class="links-of-author-item">
@@ -1813,7 +1828,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
+                  <a href="https://blog.csdn.net/u013842501" title="CSDN &rarr; https://blog.csdn.net/u013842501" rel="noopener" target="_blank"><i class="fa fa-fw fa-copyright"></i>CSDN</a>
                 </span>
               
                 <span class="links-of-author-item">
@@ -1824,7 +1839,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80NDg4NjUwODE4MDYyMjg2L2NvbHVtbnM=" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns"><i class="fa fa-fw fa-code"></i>Juejin</span>
+                  <a href="https://juejin.cn/user/4488650818062286/columns" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns" rel="noopener" target="_blank"><i class="fa fa-fw fa-code"></i>Juejin</a>
                 </span>
               
                 <span class="links-of-author-item">
@@ -1835,7 +1850,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9zcGFjZS5iaWxpYmlsaS5jb20vNzc4NDEwLw==" title="Bilibili &rarr; https://space.bilibili.com/778410/"><i class="fa fa-fw fa-bold"></i>Bilibili</span>
+                  <a href="https://space.bilibili.com/778410/" title="Bilibili &rarr; https://space.bilibili.com/778410/" rel="noopener" target="_blank"><i class="fa fa-fw fa-bold"></i>Bilibili</a>
                 </span>
               
             </div>
@@ -2041,8 +2056,6 @@
   
 
   
-  <script src="/js/src/exturl.js?v=7.0.1"></script>
-
 
   
 

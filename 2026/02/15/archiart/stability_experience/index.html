@@ -102,10 +102,10 @@
 
 
   <meta name="description" content="稳定性保障是后端架构演进这件事情上不可缺少的部分。对于不同业务来说，稳定性可能有不同的口径，治理策略或目标也因业务规模大小或服务场景而各有差异，但共性仍然是存在的，讨论起来也逃不过SLA、可用性或者Latency之类的名词。在先前笔者关于稳定性基础保障以及OOM问题排查相关的文章中，已经提到了许多重点稳定性问题的解决措施。所以今天这篇文章，就换一个视角，以一个宏观问题解决者的角度，来聊聊治理后端稳">
-<meta name="keywords" content="架构,后端开发,稳定性,异步,问题排查">
+<meta name="keywords" content="稳定性,后端开发,异步,问题排查,架构">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【架构艺术】治理后端稳定性的一些实战经验">
-<meta property="og:url" content="http://utmhikari.github.io/2026/02/15/archiart/stability_experience/index.html">
+<meta property="og:url" content="https://utmhikari.top/2026/02/15/archiart/stability_experience/index.html">
 <meta property="og:site_name" content="HiKariのTechLab">
 <meta property="og:description" content="稳定性保障是后端架构演进这件事情上不可缺少的部分。对于不同业务来说，稳定性可能有不同的口径，治理策略或目标也因业务规模大小或服务场景而各有差异，但共性仍然是存在的，讨论起来也逃不过SLA、可用性或者Latency之类的名词。在先前笔者关于稳定性基础保障以及OOM问题排查相关的文章中，已经提到了许多重点稳定性问题的解决措施。所以今天这篇文章，就换一个视角，以一个宏观问题解决者的角度，来聊聊治理后端稳">
 <meta property="og:locale" content="zh-CN">
@@ -116,10 +116,12 @@
 
 
 
+  <link rel="alternate" href="/atom.xml" title="HiKariのTechLab" type="application/atom+xml">
 
 
 
-  <link rel="canonical" href="http://utmhikari.github.io/2026/02/15/archiart/stability_experience/">
+
+  <link rel="canonical" href="https://utmhikari.top/2026/02/15/archiart/stability_experience/">
 
 
 
@@ -374,7 +376,7 @@
 
   
 
-  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="关注HiKariのGithub" aria-label="关注HiKariのGithub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></span>
+  <a href="https://github.com/utmhikari" class="github-corner" title="关注HiKariのGithub" aria-label="关注HiKariのGithub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
 
 
 
@@ -404,7 +406,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2026/02/15/archiart/stability_experience/">
+    <link itemprop="mainEntityOfPage" href="https://utmhikari.top/2026/02/15/archiart/stability_experience/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ひかり.HDQ">
@@ -511,7 +513,7 @@
       
 
       
-        <p>稳定性保障是后端架构演进这件事情上不可缺少的部分。对于不同业务来说，稳定性可能有不同的口径，治理策略或目标也因业务规模大小或服务场景而各有差异，但共性仍然是存在的，讨论起来也逃不过SLA、可用性或者Latency之类的名词。在先前笔者关于<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjQvMTEvMDMvYXJjaGlhcnQvc3RhYmlsaXR5X2Jhc2ljcy8=" title="https://utmhikari.top/2024/11/03/archiart/stability_basics/">稳定性基础保障<i class="fa fa-external-link"></i></span>以及<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjUvMDcvMDYvZ2Vla2RhaWx5L29vbV9pc3N1ZV9zb2x1dGlvbi8=" title="https://utmhikari.top/2025/07/06/geekdaily/oom_issue_solution/">OOM问题排查<i class="fa fa-external-link"></i></span>相关的文章中，已经提到了许多重点稳定性问题的解决措施。所以今天这篇文章，就换一个视角，以一个宏观问题解决者的角度，来聊聊治理后端稳定性的一些实战经验。</p>
+        <p>稳定性保障是后端架构演进这件事情上不可缺少的部分。对于不同业务来说，稳定性可能有不同的口径，治理策略或目标也因业务规模大小或服务场景而各有差异，但共性仍然是存在的，讨论起来也逃不过SLA、可用性或者Latency之类的名词。在先前笔者关于<a href="https://utmhikari.top/2024/11/03/archiart/stability_basics/">稳定性基础保障</a>以及<a href="https://utmhikari.top/2025/07/06/geekdaily/oom_issue_solution/">OOM问题排查</a>相关的文章中，已经提到了许多重点稳定性问题的解决措施。所以今天这篇文章，就换一个视角，以一个宏观问题解决者的角度，来聊聊治理后端稳定性的一些实战经验。</p>
 <a id="more"></a>
 <p>从解决稳定性bug，上升到治理稳定性问题，第一件事情就是要明确衡量稳定性的指标。制定一个明确的技术目标，再往下做拆解，不论是对于治理问题本身，还是最终包装工作结果，都会让你思路更加清晰。比如最基本的，对外有SLA承诺，对内的话可能就需要制定更高的SLO目标，衡量方式可能是以上游请求成功率（如HTTP 2xx）为主，反映服务接口能力是否持续可靠地支撑业务。如果再往下拆的话，对于业务核心接口，可能导致客诉的，也可以制定激进的SLO，更加高优去做跟进。</p>
 <p>对于任务类业务场景，可以通过执行成功率来衡量，失败场景包括执行error或卡单timeout，需要及时识别和处理。对于消费类场景，可以关注handler消费延迟或错误率等指标。对于中间件或者容器，可以关注CPU/内存指标，比如突增的内存可能导致OOM，影响整个节点运行，导致其它请求失败，进而导致SLI劣化。当然从实战角度来看，可以根据目前业务稳定性痛点来决定哪个指标是需要优先关注的，其它常规指标可以作为持续观测项来长期跟进。</p>
@@ -577,15 +579,15 @@
       
         <div class="post-tags">
           
-            <a href="/tags/架构/" rel="tag"># 架构</a>
+            <a href="/tags/稳定性/" rel="tag"># 稳定性</a>
           
             <a href="/tags/后端开发/" rel="tag"># 后端开发</a>
-          
-            <a href="/tags/稳定性/" rel="tag"># 稳定性</a>
           
             <a href="/tags/异步/" rel="tag"># 异步</a>
           
             <a href="/tags/问题排查/" rel="tag"># 问题排查</a>
+          
+            <a href="/tags/架构/" rel="tag"># 架构</a>
           
         </div>
       
@@ -627,6 +629,14 @@
 
 
   </div>
+
+  
+  
+  
+  
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【架构艺术】治理后端稳定性的一些实战经验","description":"稳定性保障是后端架构演进这件事情上不可缺少的部分。对于不同业务来说，稳定性可能有不同的口径，治理策略或目标也因业务规模大小或服务场景而各有差异，但共性仍然是存在的，讨论起来也逃不过SLA、可用性或者Latency之类的名词。在先前笔者关于稳定性基础保障以及OOM问题排查相关的文章中，已经提到了许多重点稳定性问题的解决措施。所以今天这篇文章，就换一个视角，以一个宏观问题解决者的角度，来聊聊治理后端稳","datePublished":"2026-02-15T07:53:14.000Z","dateModified":"2026-02-15T07:53:44.881Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2026/02/15/archiart/stability_experience/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"稳定性, 后端开发, 异步, 问题排查, 架构"}</script>
+  
+  
 
 
           </div>
@@ -1596,8 +1606,6 @@
                     
                       
                     
-                      
-                    
                     <span class="site-state-item-count">430</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
@@ -1606,6 +1614,13 @@
             </nav>
           
 
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
           
 
           
@@ -1621,7 +1636,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="GitHub &rarr; https://github.com/utmhikari"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                  <a href="https://github.com/utmhikari" title="GitHub &rarr; https://github.com/utmhikari" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
                 </span>
               
                 <span class="links-of-author-item">
@@ -1632,7 +1647,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
+                  <a href="https://blog.csdn.net/u013842501" title="CSDN &rarr; https://blog.csdn.net/u013842501" rel="noopener" target="_blank"><i class="fa fa-fw fa-copyright"></i>CSDN</a>
                 </span>
               
                 <span class="links-of-author-item">
@@ -1643,7 +1658,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80NDg4NjUwODE4MDYyMjg2L2NvbHVtbnM=" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns"><i class="fa fa-fw fa-code"></i>Juejin</span>
+                  <a href="https://juejin.cn/user/4488650818062286/columns" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns" rel="noopener" target="_blank"><i class="fa fa-fw fa-code"></i>Juejin</a>
                 </span>
               
                 <span class="links-of-author-item">
@@ -1654,7 +1669,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9zcGFjZS5iaWxpYmlsaS5jb20vNzc4NDEwLw==" title="Bilibili &rarr; https://space.bilibili.com/778410/"><i class="fa fa-fw fa-bold"></i>Bilibili</span>
+                  <a href="https://space.bilibili.com/778410/" title="Bilibili &rarr; https://space.bilibili.com/778410/" rel="noopener" target="_blank"><i class="fa fa-fw fa-bold"></i>Bilibili</a>
                 </span>
               
             </div>
@@ -1843,8 +1858,6 @@
   
 
   
-  <script src="/js/src/exturl.js?v=7.0.1"></script>
-
 
   
 

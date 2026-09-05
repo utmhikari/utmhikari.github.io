@@ -102,10 +102,10 @@
 
 
   <meta name="description" content="前言这次又开了个新坑——GitHub探索，主要内容是试水当期GitHub上较火的repo 虽然top榜上各路新手教程跟经典老不死项目占据了大半江山，但清流总是会有的。 第一期就试水一下pysnooper吧，一个新奇实用的python调试器。 顺便源码分析一波，了解下python的debug操作。 废话不多说，进入正题~ pysnooper使用效果通常，我们可以在函数上用pysnooper.snoo">
-<meta name="keywords" content="python,debug,源码分析,pysnooper,逆向">
+<meta name="keywords" content="python,源码分析,debug,pysnooper,逆向">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【GitHub探索】python调试利器——pysnooper源码分析">
-<meta property="og:url" content="http://utmhikari.github.io/2019/05/25/githubdiscovery/pysnooper/index.html">
+<meta property="og:url" content="https://utmhikari.top/2019/05/25/githubdiscovery/pysnooper/index.html">
 <meta property="og:site_name" content="HiKariのTechLab">
 <meta property="og:description" content="前言这次又开了个新坑——GitHub探索，主要内容是试水当期GitHub上较火的repo 虽然top榜上各路新手教程跟经典老不死项目占据了大半江山，但清流总是会有的。 第一期就试水一下pysnooper吧，一个新奇实用的python调试器。 顺便源码分析一波，了解下python的debug操作。 废话不多说，进入正题~ pysnooper使用效果通常，我们可以在函数上用pysnooper.snoo">
 <meta property="og:locale" content="zh-CN">
@@ -116,10 +116,12 @@
 
 
 
+  <link rel="alternate" href="/atom.xml" title="HiKariのTechLab" type="application/atom+xml">
 
 
 
-  <link rel="canonical" href="http://utmhikari.github.io/2019/05/25/githubdiscovery/pysnooper/">
+
+  <link rel="canonical" href="https://utmhikari.top/2019/05/25/githubdiscovery/pysnooper/">
 
 
 
@@ -374,7 +376,7 @@
 
   
 
-  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="关注HiKariのGithub" aria-label="关注HiKariのGithub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></span>
+  <a href="https://github.com/utmhikari" class="github-corner" title="关注HiKariのGithub" aria-label="关注HiKariのGithub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
 
 
 
@@ -404,7 +406,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2019/05/25/githubdiscovery/pysnooper/">
+    <link itemprop="mainEntityOfPage" href="https://utmhikari.top/2019/05/25/githubdiscovery/pysnooper/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ひかり.HDQ">
@@ -525,7 +527,7 @@
       
         <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这次又开了个新坑——GitHub探索，主要内容是试水当期GitHub上较火的repo</p>
 <p>虽然top榜上各路新手教程跟经典老不死项目占据了大半江山，但清流总是会有的。</p>
-<p>第一期就试水一下<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nvb2wtUlIvUHlTbm9vcGVy" title="https://github.com/cool-RR/PySnooper">pysnooper<i class="fa fa-external-link"></i></span>吧，一个新奇实用的python调试器。</p>
+<p>第一期就试水一下<a href="https://github.com/cool-RR/PySnooper" target="_blank" rel="noopener">pysnooper</a>吧，一个新奇实用的python调试器。</p>
 <p>顺便源码分析一波，了解下python的debug操作。</p>
 <p>废话不多说，进入正题~</p>
 <h2 id="pysnooper使用效果"><a href="#pysnooper使用效果" class="headerlink" title="pysnooper使用效果"></a>pysnooper使用效果</h2><p>通常，我们可以在函数上用<code>pysnooper.snoop</code>装饰器，给这个函数包装一个额外功能，实现在标准错误流打印函数debug信息的效果。比如说：</p>
@@ -534,9 +536,9 @@
 <p>执行main的效果就是：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">Starting var:.. x = 2</span><br><span class="line">22:24:25.476753 call         5 def factorial(x):</span><br><span class="line">22:24:25.476753 line         6     if x == 0:</span><br><span class="line">22:24:25.476753 line         8     return mul(</span><br><span class="line">22:24:25.476753 line         9         x,</span><br><span class="line">22:24:25.476753 line        10         factorial(x - 1)</span><br><span class="line">    Starting var:.. x = 1</span><br><span class="line">    22:24:25.477743 call         5 def factorial(x):</span><br><span class="line">    22:24:25.477743 line         6     if x == 0:</span><br><span class="line">    22:24:25.477743 line         8     return mul(</span><br><span class="line">    22:24:25.477743 line         9         x,</span><br><span class="line">    22:24:25.477743 line        10         factorial(x - 1)</span><br><span class="line">        Starting var:.. x = 0</span><br><span class="line">        22:24:25.477743 call         5 def factorial(x):</span><br><span class="line">        22:24:25.477743 line         6     if x == 0:</span><br><span class="line">        22:24:25.477743 line         7         return 1</span><br><span class="line">        22:24:25.477743 return       7         return 1</span><br><span class="line">        Return value:.. 1</span><br><span class="line">        Starting var:.. a = 1</span><br><span class="line">        Starting var:.. b = 1</span><br><span class="line">        22:24:25.477743 call        15 def mul(a, b):</span><br><span class="line">        22:24:25.477743 line        16     return a * b</span><br><span class="line">        22:24:25.477743 return      16     return a * b</span><br><span class="line">        Return value:.. 1</span><br><span class="line">    22:24:25.477743 return      10         factorial(x - 1)</span><br><span class="line">    Return value:.. 1</span><br><span class="line">    Starting var:.. a = 2</span><br><span class="line">    Starting var:.. b = 1</span><br><span class="line">    22:24:25.477743 call        15 def mul(a, b):</span><br><span class="line">    22:24:25.477743 line        16     return a * b</span><br><span class="line">    22:24:25.477743 return      16     return a * b</span><br><span class="line">    Return value:.. 2</span><br><span class="line">22:24:25.477743 return      10         factorial(x - 1)</span><br><span class="line">Return value:.. 2</span><br></pre></td></tr></table></figure>
 <p>这样我们就可以trace到整一个函数相关的流程了，非常方便，可以很好地代替print的工作。</p>
-<h2 id="pysnooper实现原理"><a href="#pysnooper实现原理" class="headerlink" title="pysnooper实现原理"></a>pysnooper实现原理</h2><p>pysnooper的实现涉及到python底层debug相关的知识。在以前写过的一篇<a href="https://utmhikari.github.io/2019/04/07/luatalk/lfunctimer_capi">lua的debug库源码分析</a>中提到了lua获取debug信息的相关操作，而pysnooper实现上也是通过获取底层信息进行debug trace，从结果上来看，也收集了call、line、return以及变量定义之类的操作事件信息。虽然语言不同，但基本思想都一样滴~</p>
+<h2 id="pysnooper实现原理"><a href="#pysnooper实现原理" class="headerlink" title="pysnooper实现原理"></a>pysnooper实现原理</h2><p>pysnooper的实现涉及到python底层debug相关的知识。在以前写过的一篇<a href="https://utmhikari.github.io/2019/04/07/luatalk/lfunctimer_capi" target="_blank" rel="noopener">lua的debug库源码分析</a>中提到了lua获取debug信息的相关操作，而pysnooper实现上也是通过获取底层信息进行debug trace，从结果上来看，也收集了call、line、return以及变量定义之类的操作事件信息。虽然语言不同，但基本思想都一样滴~</p>
 <p>因此，在逆向pyssnooper实现原理之时，也将先入为主地代入一些lua的相关概念。</p>
-<p>pysnooper相关的参考资料，基本可以在python标准库中的<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnB5dGhvbi5vcmcvMy9saWJyYXJ5L2luc3BlY3QuaHRtbA==" title="https://docs.python.org/3/library/inspect.html">inspect库文档<i class="fa fa-external-link"></i></span>中找到~</p>
+<p>pysnooper相关的参考资料，基本可以在python标准库中的<a href="https://docs.python.org/3/library/inspect.html" target="_blank" rel="noopener">inspect库文档</a>中找到~</p>
 <p>调用的<code>pysnooper.snoop</code>定义在pysnooper的<code>__init__.py</code>中：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> .tracer <span class="keyword">import</span> Tracer <span class="keyword">as</span> snoop</span><br></pre></td></tr></table></figure>
 <p>因此我们直接转向Tracer类一探究竟</p>
@@ -604,9 +606,9 @@
           
             <a href="/tags/python/" rel="tag"># python</a>
           
-            <a href="/tags/debug/" rel="tag"># debug</a>
-          
             <a href="/tags/源码分析/" rel="tag"># 源码分析</a>
+          
+            <a href="/tags/debug/" rel="tag"># debug</a>
           
             <a href="/tags/pysnooper/" rel="tag"># pysnooper</a>
           
@@ -652,6 +654,14 @@
 
 
   </div>
+
+  
+  
+  
+  
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【GitHub探索】python调试利器——pysnooper源码分析","description":"前言这次又开了个新坑——GitHub探索，主要内容是试水当期GitHub上较火的repo 虽然top榜上各路新手教程跟经典老不死项目占据了大半江山，但清流总是会有的。 第一期就试水一下pysnooper吧，一个新奇实用的python调试器。 顺便源码分析一波，了解下python的debug操作。 废话不多说，进入正题~ pysnooper使用效果通常，我们可以在函数上用pysnooper.snoo","datePublished":"2019-05-24T17:29:38.000Z","dateModified":"2024-04-07T02:48:06.921Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2019/05/25/githubdiscovery/pysnooper/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"python, 源码分析, debug, pysnooper, 逆向"}</script>
+  
+  
 
 
           </div>
@@ -1630,8 +1640,6 @@
                     
                       
                     
-                      
-                    
                     <span class="site-state-item-count">430</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
@@ -1640,6 +1648,13 @@
             </nav>
           
 
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
           
 
           
@@ -1655,7 +1670,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="GitHub &rarr; https://github.com/utmhikari"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                  <a href="https://github.com/utmhikari" title="GitHub &rarr; https://github.com/utmhikari" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
                 </span>
               
                 <span class="links-of-author-item">
@@ -1666,7 +1681,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
+                  <a href="https://blog.csdn.net/u013842501" title="CSDN &rarr; https://blog.csdn.net/u013842501" rel="noopener" target="_blank"><i class="fa fa-fw fa-copyright"></i>CSDN</a>
                 </span>
               
                 <span class="links-of-author-item">
@@ -1677,7 +1692,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80NDg4NjUwODE4MDYyMjg2L2NvbHVtbnM=" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns"><i class="fa fa-fw fa-code"></i>Juejin</span>
+                  <a href="https://juejin.cn/user/4488650818062286/columns" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns" rel="noopener" target="_blank"><i class="fa fa-fw fa-code"></i>Juejin</a>
                 </span>
               
                 <span class="links-of-author-item">
@@ -1688,7 +1703,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9zcGFjZS5iaWxpYmlsaS5jb20vNzc4NDEwLw==" title="Bilibili &rarr; https://space.bilibili.com/778410/"><i class="fa fa-fw fa-bold"></i>Bilibili</span>
+                  <a href="https://space.bilibili.com/778410/" title="Bilibili &rarr; https://space.bilibili.com/778410/" rel="noopener" target="_blank"><i class="fa fa-fw fa-bold"></i>Bilibili</a>
                 </span>
               
             </div>
@@ -1894,8 +1909,6 @@
   
 
   
-  <script src="/js/src/exturl.js?v=7.0.1"></script>
-
 
   
 

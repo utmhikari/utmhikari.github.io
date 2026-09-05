@@ -102,10 +102,10 @@
 
 
   <meta name="description" content="在先前的文章里，笔者聊了怎么用AI-Native的方式编写一个告警诊断Agent和Skill，那篇更多是单点视角，怎么把一个Agent做好的问题。这篇文章接续上篇的内容，从一个更加完备的工程角度，简单聊一下怎么把Agent和Skill跟自己日常做的工作做更深度的集成，让人退到工程后面去，而不是把AI当做一个外挂的提效工具。 首先是第一条原则，深度放权，核心就是承认模型的智商比自己高，而且不是高一点">
-<meta name="keywords" content="AI,Agent,知识库,Harness Engineering,Skill">
+<meta name="keywords" content="Agent,Skill,AI,知识库,Harness Engineering">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【AI原生】优化Agent和Skill工程的一些技巧">
-<meta property="og:url" content="http://utmhikari.github.io/2026/09/05/ainative/agent_skill_project/index.html">
+<meta property="og:url" content="https://utmhikari.top/2026/09/05/ainative/agent_skill_project/index.html">
 <meta property="og:site_name" content="HiKariのTechLab">
 <meta property="og:description" content="在先前的文章里，笔者聊了怎么用AI-Native的方式编写一个告警诊断Agent和Skill，那篇更多是单点视角，怎么把一个Agent做好的问题。这篇文章接续上篇的内容，从一个更加完备的工程角度，简单聊一下怎么把Agent和Skill跟自己日常做的工作做更深度的集成，让人退到工程后面去，而不是把AI当做一个外挂的提效工具。 首先是第一条原则，深度放权，核心就是承认模型的智商比自己高，而且不是高一点">
 <meta property="og:locale" content="zh-CN">
@@ -116,10 +116,12 @@
 
 
 
+  <link rel="alternate" href="/atom.xml" title="HiKariのTechLab" type="application/atom+xml">
 
 
 
-  <link rel="canonical" href="http://utmhikari.github.io/2026/09/05/ainative/agent_skill_project/">
+
+  <link rel="canonical" href="https://utmhikari.top/2026/09/05/ainative/agent_skill_project/">
 
 
 
@@ -374,7 +376,7 @@
 
   
 
-  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="关注HiKariのGithub" aria-label="关注HiKariのGithub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></span>
+  <a href="https://github.com/utmhikari" class="github-corner" title="关注HiKariのGithub" aria-label="关注HiKariのGithub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
 
 
 
@@ -404,7 +406,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2026/09/05/ainative/agent_skill_project/">
+    <link itemprop="mainEntityOfPage" href="https://utmhikari.top/2026/09/05/ainative/agent_skill_project/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ひかり.HDQ">
@@ -511,7 +513,7 @@
       
 
       
-        <p>在<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjYvMDgvMDEvYWluYXRpdmUvYWxlcnRfYWdlbnRfc2tpbGwv" title="https://utmhikari.top/2026/08/01/ainative/alert_agent_skill/">先前的文章<i class="fa fa-external-link"></i></span>里，笔者聊了怎么用AI-Native的方式编写一个告警诊断Agent和Skill，那篇更多是单点视角，怎么把一个Agent做好的问题。这篇文章接续上篇的内容，从一个更加完备的工程角度，简单聊一下怎么把Agent和Skill跟自己日常做的工作做更深度的集成，让人退到工程后面去，而不是把AI当做一个外挂的提效工具。</p>
+        <p>在<a href="https://utmhikari.top/2026/08/01/ainative/alert_agent_skill/">先前的文章</a>里，笔者聊了怎么用AI-Native的方式编写一个告警诊断Agent和Skill，那篇更多是单点视角，怎么把一个Agent做好的问题。这篇文章接续上篇的内容，从一个更加完备的工程角度，简单聊一下怎么把Agent和Skill跟自己日常做的工作做更深度的集成，让人退到工程后面去，而不是把AI当做一个外挂的提效工具。</p>
 <p>首先是第一条原则，深度放权，核心就是承认模型的智商比自己高，而且不是高一点半点。不管知识面、编码熟练度还是干活性价比，人跟模型比哪哪都差。所以能让Agent做的事情，尽量让Agent生成，Agent做不了的，才由人来做。</p>
 <a id="more"></a>
 <p>这个说起来简单，实操中却很反直觉。常见的做法是，有了Agent之后还是不放心，在上面添加各种Workflow、编排、校验节点之类人为的东西，把Agent框得死死的，结果能力施展不开，最后效果不好，反而得出”AI不行”的结论。</p>
@@ -566,15 +568,15 @@
       
         <div class="post-tags">
           
-            <a href="/tags/AI/" rel="tag"># AI</a>
-          
             <a href="/tags/Agent/" rel="tag"># Agent</a>
+          
+            <a href="/tags/Skill/" rel="tag"># Skill</a>
+          
+            <a href="/tags/AI/" rel="tag"># AI</a>
           
             <a href="/tags/知识库/" rel="tag"># 知识库</a>
           
             <a href="/tags/Harness-Engineering/" rel="tag"># Harness Engineering</a>
-          
-            <a href="/tags/Skill/" rel="tag"># Skill</a>
           
         </div>
       
@@ -612,6 +614,14 @@
 
 
   </div>
+
+  
+  
+  
+  
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【AI原生】优化Agent和Skill工程的一些技巧","description":"在先前的文章里，笔者聊了怎么用AI-Native的方式编写一个告警诊断Agent和Skill，那篇更多是单点视角，怎么把一个Agent做好的问题。这篇文章接续上篇的内容，从一个更加完备的工程角度，简单聊一下怎么把Agent和Skill跟自己日常做的工作做更深度的集成，让人退到工程后面去，而不是把AI当做一个外挂的提效工具。 首先是第一条原则，深度放权，核心就是承认模型的智商比自己高，而且不是高一点","datePublished":"2026-09-05T01:25:44.000Z","dateModified":"2026-09-05T01:25:20.564Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2026/09/05/ainative/agent_skill_project/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"Agent, Skill, AI, 知识库, Harness Engineering"}</script>
+  
+  
 
 
           </div>
@@ -1581,8 +1591,6 @@
                     
                       
                     
-                      
-                    
                     <span class="site-state-item-count">430</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
@@ -1591,6 +1599,13 @@
             </nav>
           
 
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
           
 
           
@@ -1606,7 +1621,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="GitHub &rarr; https://github.com/utmhikari"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                  <a href="https://github.com/utmhikari" title="GitHub &rarr; https://github.com/utmhikari" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
                 </span>
               
                 <span class="links-of-author-item">
@@ -1617,7 +1632,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
+                  <a href="https://blog.csdn.net/u013842501" title="CSDN &rarr; https://blog.csdn.net/u013842501" rel="noopener" target="_blank"><i class="fa fa-fw fa-copyright"></i>CSDN</a>
                 </span>
               
                 <span class="links-of-author-item">
@@ -1628,7 +1643,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80NDg4NjUwODE4MDYyMjg2L2NvbHVtbnM=" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns"><i class="fa fa-fw fa-code"></i>Juejin</span>
+                  <a href="https://juejin.cn/user/4488650818062286/columns" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns" rel="noopener" target="_blank"><i class="fa fa-fw fa-code"></i>Juejin</a>
                 </span>
               
                 <span class="links-of-author-item">
@@ -1639,7 +1654,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9zcGFjZS5iaWxpYmlsaS5jb20vNzc4NDEwLw==" title="Bilibili &rarr; https://space.bilibili.com/778410/"><i class="fa fa-fw fa-bold"></i>Bilibili</span>
+                  <a href="https://space.bilibili.com/778410/" title="Bilibili &rarr; https://space.bilibili.com/778410/" rel="noopener" target="_blank"><i class="fa fa-fw fa-bold"></i>Bilibili</a>
                 </span>
               
             </div>
@@ -1828,8 +1843,6 @@
   
 
   
-  <script src="/js/src/exturl.js?v=7.0.1"></script>
-
 
   
 

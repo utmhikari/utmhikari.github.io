@@ -1,0 +1,505 @@
+# HiKariのTechLab
+
+> 光の技术屋 — talk is cheap, code is rich
+
+技术博客，聚焦测试开发、游戏开发、Python / Golang 与 AI 原生工程实践。文章均为第一线工程经验总结。
+
+## AI原生
+
+- [【AI原生】优化Agent和Skill工程的一些技巧](https://utmhikari.top/2026/09/05/ainative/agent_skill_project/): 在先前的文章里，笔者聊了怎么用AI-Native的方式编写一个告警诊断Agent和Skill，那篇更多是单点视角，怎么把一个Agent做好的问题。这篇文章接续上篇的内容，从一个更加完备的工程角度，简单聊一下怎么把Agent和Skill跟自己日常做的工作做更深度的集成，让人退到工程后面去，而不是把AI
+- [【AI原生】用AI-Native的方式编写SRE告警诊断Agent和Skill](https://utmhikari.top/2026/08/01/ainative/alert_agent_skill/): 在SRE和稳定性工程领域，告警诊断Agent大概是当下AI落地最热门的场景之一了。对于告警应急场景，有一个迅速可靠的Agent做根因分析，通过透出问题链路关键的信息点，可以省掉很多前期的排查精力，帮助线上问题更迅速被解决。
+从实现难度上看，写一个能跑的告警诊断Agent或者Skill，门槛其实不高。
+- [【AI原生】深入回答纯Vibe Coding写后端项目的几个问题](https://utmhikari.top/2026/07/04/ainative/vibe_coding_backend/): 近期笔者因为工作原因，开始大规模使用Vibe Coding的方式来编写后端项目。说实话，笔者目前大概99%的代码都是通过Vibe Coding生成的，已经基本不手写代码了。
+在先前的文章里，笔者也聊到了用Vibe Coding写前端原型的经验，而这篇文章则聚焦后端侧，也是更加偏重于业务工程的研发场景
+- [【AI原生】用Vibe Coding写产品前端原型的一些经验](https://utmhikari.top/2026/06/06/ainative/vibe_coding_frontend_prototype/): AI Native是大势所趋，AI Coding的技能必不可少。鉴于此，笔者决定新开一个AI Native系列，记录自己后续在All-In-AI路程上的点滴，分享自己通过AI提升日常工作跟研发效率的思考和经验。
+先前的文章也讨论到，因为工作的原因，笔者已经开始在做ToB稳定性治理的事情，所以近期也一
+
+## 架构艺术
+
+- [【架构艺术】端到端监控告警和预案治理](https://utmhikari.top/2026/09/05/archiart/e2e_alarm_preplan/): 在先前治理后端稳定性的一些实战经验这篇文章里，笔者聊过稳定性治理的大致路径，先定指标，再保证可监控可观测，之后才是解决具体的技术问题。今天这篇文章就聚焦在可观测跟止损这两个环节，简单聊一下端到端的告警应该怎么梳理，以及严重告警的处理预案应该怎么做。这两块做扎实了，稳定性保障才算是有底子的，说到底目的
+- [【架构艺术】搭建客户稳定性系统的一些想法](https://utmhikari.top/2026/07/04/archiart/customer_stability_system_ideas/): 在先前的一篇文章里，笔者聊到了从内部变更风险防控转向ToB客户稳定性保障的一些思考，主要聚焦在角色转变和业务场景的差异上。今天这篇文章，就探讨一下笔者对于如何搭建一套客户稳定性系统的一些想法，算是把之前的思考往落地层面再推进一步。
+首先，一套客户稳定性系统，从产品角度考虑，需要体现对客的属性。也就是
+- [【架构艺术】治理后端稳定性的一些实战经验](https://utmhikari.top/2026/02/15/archiart/stability_experience/): 稳定性保障是后端架构演进这件事情上不可缺少的部分。对于不同业务来说，稳定性可能有不同的口径，治理策略或目标也因业务规模大小或服务场景而各有差异，但共性仍然是存在的，讨论起来也逃不过SLA、可用性或者Latency之类的名词。在先前笔者关于稳定性基础保障以及OOM问题排查相关的文章中，已经提到了许多重
+- [【架构艺术】简述LLM增强产品研发角色](https://utmhikari.top/2025/12/07/archiart/llm_augment_development_roles/): 2025年算是LLM增强产品井喷的一年，以笔者亲身经历的，不论是自动化测试平台还是云服务稳定性平台，都在已有平台基建的基础上，依靠LLM增强的AIGC能力，做了诸如XMind用例自动生成、用例步骤自主探索、RCA故障定位以及服务发布风险实时解读等有业务价值的能力。
+要做出这样的产品，投入的研发人力也
+- [【架构艺术】自动化测试平台架构设计的一些通用要点](https://utmhikari.top/2025/11/01/archiart/autotest_platform_architecture/): 在Game-Of-AutoTest系列的文章当中，曾经深入聊到如何做好游戏自动化测试的技术实践，包括用例编写和任务调度等多个方面。由于工作原因，笔者再一次需要了解自动化测试平台的整体架构，因此也借着这个机会，从更加宏观的角度，再聊一下自动化平台架构设计的一些通用要点。
+- [【架构艺术】构建变更风险防控能力市场的一些经验](https://utmhikari.top/2025/10/04/archiart/change_control_ability_market/): 变更风险防控的能力是多样的，除了最传统的告警检测、Metrics曲线对比以及自动化测试能力之外，像变更影响分析、风险降噪以及线上风险RCA等周边能力也是不可少的。有了更多的上下文信息，才能对变更风险做更好的判断。从中台技术视角来看，不论是传统能力还是一些AI加成的能力，如果没有一套稳固的技术基建让这
+- [【架构艺术】变更风险防控架构嵌入决策降噪模块的方法](https://utmhikari.top/2025/09/06/archiart/change_control_decision_module/): 在先前的文章中，我们聊到了一个变更观测任务可以通过什么样的方式对不同的变更防控能力做统一调度，达到优越的变更风险拦截效果。但是在实战当中，变更观测任务集成了很多能力，即便风险拦截率很高，但不同能力效果也有差距，因此会有可能出现误报，导致变更观测结论不准确，影响研发发布效率。为此，一套成熟的变更观测系
+- [【架构艺术】通过标准化事件解决变更检测能力的调度问题](https://utmhikari.top/2025/09/06/archiart/change_control_schedule_event/): 在变更风险观测任务调度过程当中，如何让一个观测任务在合适的时间点调用合适的变更防控能力，确保在变更过程中及时发现和处理风险，是任务调度模块设计方面比较重要的问题之一。在先前的文章中，也简单提到了变更观测任务调度的基本设计方法。但今天这篇文章，主要关注通过标准化事件的方式，通过事件驱动解决变更检测能力
+- [【架构艺术】IC（个人贡献者）视角下产品研发规划的实战Tips](https://utmhikari.top/2025/07/06/archiart/ic_development_planning/): 因工作原因，近期笔者以相对偏IC的身份，牵头一个两个team共建项目的产品研发工作。在这个过程中，笔者也简单积累了一些IC工作的经验，踩了些坑，也有一点阶段性成果。这篇文章就根据自己经验聊聊作为IC角色，怎么去把控整个产品研发的规划和节奏，给一些实战当中的Tips。
+整体来看，首要任务是了解自己角色
+- [【架构艺术】平衡技术架构设计和预期的产品形态](https://utmhikari.top/2025/06/01/archiart/balance_architecture_and_product/): 近期笔者因为工作原因，开始启动team内部部分技术项目的重构。在事情启动的过程中，内部对于这件事情的定性和投入有一些争论，但最终还是敲定了下来。其中部分争论点主要在于产品形态，因为事情涉及到跨部门合作，所以产品形态怎么符合双方的利益是比较重要的。在这个前提下，然后才是技术设计上面，怎么能够迎合长久合
+- [【架构艺术】Go大仓monorepo各模块的代码组织设计](https://utmhikari.top/2025/05/02/archiart/go_monorepo_modules/): 在先前的文章中，笔者分享了go语言monorepo基本的一套代码架构设计。以这个设计为基础，今天这篇文章就聊一下具体里面的代码怎么编写起来比较舒适。
+关于每个微服务自己的代码，其实在wire依赖注入这篇文章有提到过一套比较简洁的用法。如果大仓对应的服务集群有很多三方依赖，有很多错综复杂的模块的话，对
+- [【架构艺术】Go大仓monorepo中使用wire做依赖注入的经验](https://utmhikari.top/2025/04/04/archiart/go_monorepo_wire/): 在先前的文章当中，笔者分享了一套简洁的go微服务monorepo代码架构的实现，主要解决中小团队协同开发微服务集群的代码架构组织问题。但是在实际代码开发过程中，怎么组织不同的业务服务service实例，就成了比较棘手的问题。
+为什么会出现这样的场景？首先，不同的业务服务可能会用到相同的底层服务，比如
+- [【架构艺术】变更风险观测的任务调度设计](https://utmhikari.top/2025/03/09/archiart/change_observation_worker/): 在先前的文章中，对于变更风险观测的流程逻辑设计，有浅谈一小部分。但从宏观来讲，一个变更观测平台，需要对大量的观测任务做统一调度，这样才能把整个观测平台给支撑起来。因此，本文就简单分享一下，变更风险观测的任务调度可能怎样设计。
+这个问题可以拆分为几个子问题：多任务并发需要如何处理，任务调度的消息协议需
+- [【架构艺术】Go语言微服务monorepo的代码架构设计](https://utmhikari.top/2025/03/09/archiart/go_monorepo_structure/): 近期因为项目架构升级原因，笔者着手调研一些go项目monorepo的代码架构设计，目标是长期把既有微服务项目重要的部分都转移到monorepo上面，让代码更容易维护，协作开发更加方便。虽然经验不多，但既然有了初步的调研，今天就分享一下笔者所面临场景的monorepo设计思路。
+从语言特性上讲，Gol
+- [【架构艺术】服务架构稳定性的基础保障](https://utmhikari.top/2024/11/03/archiart/stability_basics/): 一个产品随着不断研发，其服务架构的复杂度会越来越高。随着产品的用户体量变大，为了保证产品能够长线运营，就需要保证整个服务架构的稳定性。因此，今天这篇文章，就从实操的角度，粗浅讨论一下，服务架构的稳定性需要如何做到基础保障。
+既然是基于实操的角度，那么理论上的东西不会涉及的太深刻。好比说，谈到稳定性，
+- [【架构艺术】大规模业务逻辑迁移实践](https://utmhikari.top/2024/07/20/archiart/large_scale_migration/): 对于一个成熟的工程项目而言，因为项目未来发展或是和企业内部更深度融合的需要，我们可能需要对既有业务逻辑做很大规模的改动，涉及到多方面的逻辑迁移和代码重构，才能够达到下一代产品所需要的效果。
+今天这篇文章，就来剖析一下如何做好这件事情，尤其是在历史积淀非常厚重的场景，需要通过怎么样的手段，把这个问题解
+- [【架构艺术】代码架构治理之四层境界](https://utmhikari.top/2024/06/02/archiart/code_architecture_thinkings/): 最近逐渐开始写一些简单且稍微务虚的文章。原因有挺多，其一是，自己的工作内容和企业的内部情况绑定的更加深入了，许多信息如果要在互联网上分享，需要考虑在很多地方做加工；其二是，过分拘泥于非常深度的技术挖掘，可能只能涉及到一些特定的领域，不利于技术博客的持续运营，并且从读者的视角，形式简单但内容富有思考的
+- [【架构艺术】变更元信息分析框架设计](https://utmhikari.top/2024/04/04/archiart/change_analysis_framework/): 在变更风险防控领域，对于线上变更元信息的分析是非常重要的一部分，这是因为，只有理解了变更元信息，结合自主定制的变更规范，才能够知道具体的变更风险在哪里。不同的变更风险防御能力，实现的思路可能是不同的，因此很有可能出现对于一次变更，在信息的理解上有所不一致，从而导致检测结果不够置信。基于此，我们需要一
+- [【架构艺术】可持续性架构设计的秘诀](https://utmhikari.top/2024/02/15/archiart/sustainable_architecture/): 今天闲聊一下可持续性架构设计的秘诀，总共八个字：概念拆解，重组改造。
+说到新开发一个技术工程，很多同学会引用需求拆解的思路，自顶向下拆解子需求，做对应的层次模块设计，然后直接按照拆解结果分模块编码。依照这样的思路，虽然最终架构形态比较符合预期，但不一定能够保障长线迭代。这是因为，技术实现始终是自底向
+- [【架构艺术】一些通用的代码优化治理经验](https://utmhikari.top/2023/11/04/archiart/code_optimization_ways/): 在接手以前的项目做开发的过程中，我们经常会遇到因为既有代码理解困难，导致代码难以删改，问题难以排查的情况。一份富含技术债的代码，不论对于当下的问题解决，还是未来的需求开发，都会形成累赘。因此，本文就分享一些通用的代码优化和治理经验。
+首先我们需要从工作的角度去看待代码优化这件事情。需要捋清楚几件事情
+
+## Python随笔
+
+- [【Python随笔】通过多解释器并行提升python并发效率](https://utmhikari.top/2026/08/01/pythonnotes/concurrent_intepreters/): 在非常久远的文章中，我们提到python中实现并行执行程序的方式主要是通过multiprocessing实现的，而并非多线程（Threading）。机理层面，大致是会开一个新的子进程独立执行，主进程维护一个Sentinel（fd），默认通过pickle跟pipe方式和子进程通信。
+而现在，pytho
+- [【Python随笔】如何用pyside6开发并部署简单的postman工具](https://utmhikari.top/2024/12/21/pythonnotes/pyside6_simple_app/): 最近一段时间闲来无事，简单研究了一下pyside6，也就是PyQt5的升级版。做这个的目的，也是回顾下桌面开发的基础，兴许未来可能用得上。虽然在日常工作中，可能用到桌面开发的场景比较少，桌面工具的成果也比较难包装，但有一个这样的工具，确实可以解决许多工作效率方面的问题。
+在之前笔者也写过几篇pysi
+- [【Python随笔】Enigma密码机的原理及python代码实现](https://utmhikari.top/2024/12/21/pythonnotes/enigma_implementation/): 最近笔者接触到了Cypher这款游戏，玩法很简单，就是通过文字、图片等各种表达手段组成的谜面，猜一段英文，算是初步接触了密码学的一些知识。游戏中提到了很多类型的密码，其中Enigma密码机就是单独一种，在电影《模仿游戏》中，夏洛克.福尔摩斯费尽心力破解的德军密码，也就出自此密码机之手。在游戏里，有一
+- [【Python随笔】将requests实例转换成curl语句](https://utmhikari.top/2024/11/03/pythonnotes/requests_to_curl/): 在某些python的工具模块开发场景下，我们可能需要根据用户给定的web请求输入，来转化成一个curl的输出，用于一些网络请求测试，或者方便开发之间交流信息。由于python的web请求基本上一万个人里面九成九都用requests，因此今天这篇文章就简单介绍一下，如何在python里面将reques
+- [【Python随笔】pyside6绘制表盘和数字时钟的方法](https://utmhikari.top/2024/10/13/pythonnotes/pyside6_clocks/): 最近在重玩pyside/pyqt桌面开发的内容，计划做一些日常工具来自用，顺带练练手。正好刚遇到一个问题是画时钟（表盘+数字），查了很多资料都稍微调试了下才最终解决，本文即分享一下解决方法。
+首先是数字时钟。由于pyside6本身有QLCDNumber控件的支持，所以绘制起来比较容易，官网也给了一个
+- [【Python随笔】比PyQt5更先进的pyside6安装和使用方法](https://utmhikari.top/2024/08/11/pythonnotes/pyside6_intro/): 最近因为自研日常开发工具的需求，决定重新拾起PyQt5之类的桌面工具开发技术栈，为啥选用PyQt，一是因为笔者比较精通python，二是因为不需要在外观上做什么特别的东西。经过一番调研，发现当前的PyQt5版本已经过时，用pyside6会更加贴合现在的需求。因此笔者也简单部署了下pyside6的开发
+- [【Python随笔】一天搞定，爬虫爬取w3schools的sql语句案例集](https://utmhikari.top/2023/03/11/pythonnotes/w3schools_sqls_crawler/): 在很久以前的Easy Python系列中，介绍了通过爬虫手段爬取豆瓣电影信息的一种技术套路。今天故技重施，为了迎合先前做SQL语句分析的需要，决定爬取w3schools网站上面所有SQL案例，用作测试用例。
+本文就来详细讲述，爬取w3schools网站的实现方式，以及里面需要注意的一些点。代码统一放
+- [【Python随笔】PyQt5的QListView兼容左键双击事件和右键上下文菜单的方法](https://utmhikari.top/2022/10/02/pythonnotes/pyqt_listview_fileviewer/): 近期笔者因工作原因，需要做一个安卓手机的文件浏览功能，集成在笔者以前用PyQt5做的一个的工具当中。文件浏览功能大概做成这样：
+
+一个列表界面，列出某个目录下的所有文件名（不区分文件和文件夹）
+双击某个文件名，尝试进入这个文件名代表的文件夹（文件的情况会失败）
+右键某个文件名，弹出上下文菜单，可以进
+- [【Python随笔】python的web开发——WSGI、ASGI、uvicorn与FastAPI](https://utmhikari.top/2022/08/14/pythonnotes/asgi_uvicorn_fastapi/): 今天这篇文章，聊一下python在web开发上的一些基础实现，阐述下自己理解中的WSGI、ASGI，以及拿uvicorn+FastAPI的组合举个ASGI应用的例子。
+WSGIpython的web服务的诞生，其实追溯到一种机制，叫做WSGI，全称Web Server Gateway Interfac
+- [【Python随笔】python多线程什么情况下可以并行？什么情况下不能？](https://utmhikari.top/2022/07/03/pythonnotes/multithread_parallel/): 在python面试里，多线程是避不开的话题，其中一个经典问题就是，多线程threading.Thread是不是并行运行。这个问题的答案，说是也不对，说不是也不对，得分情况讨论。本文就带领大家，分析并回答这个问题。
+我们用一段代码来做实验：
+- [【Python随笔】掌握子进程subprocess模块的使用方法](https://utmhikari.top/2022/07/02/pythonnotes/subprocess_popen/): 在python开发期间，很多时候我们会需要执行一段cmd终端命令，或者是执行其他程序返回stdout或者文件输出结果。这种时候，我们就需要用到subprocess模块。虽然我们用os.system也可以达到执行命令的需求，但用os.system只是干发一段命令，对于执行命令的程序，我们没有办法跟踪它
+- [【Python随笔】如何提取python函数的接口定义信息](https://utmhikari.top/2021/12/12/pythonnotes/function_info/): 在某些python框架底层的开发需求中，需要通过一些类似反射的手段，提取函数接口的信息，从而对一系列函数接口进行管理。本篇文章就来粗浅谈一下，如何提取python函数的接口定义信息。
+function对象的信息首先我们拿一个函数来试试手：
+12345def myprinter(s: str, /, 
+- [【Python随笔】如何访问类实例里带双下划线的属性](https://utmhikari.top/2021/10/06/pythonnotes/attr_with_underscore/): 学过python的我们都知道在python的类实例instance的__init__函数里，可以初始化这个instance的属性。属性的命名有许多种，比如有一个例子：
+12345class Student: def __init__(self, name, gender, age): self.na
+- [【Python随笔】用C++编写Python的扩展模块](https://utmhikari.top/2021/10/05/pythonnotes/python_c_extension/): 近期笔者在研究python内部部分模块的实现机理，研究着研究着就开始硬刚C源码了。想着先前工作或是日常也没有体验过用C++编写python库，于是就刚好学习了一下。
+用C或者C++编写python的扩展库，建议用Visual Studio宇宙第一IDE，一来能够同时支持python跟C，二来调试功能
+- [【Python随笔】python进程池ProcessPoolExecutor的用法与实现分析](https://utmhikari.top/2021/06/08/pythonnotes/python_processpoolexecutor/): 在python开发期间，由于GIL的原因，不能直接采用并行的方式处理代码逻辑。在multiprocessing库的支持下，python程序能够启动子进程执行特定的任务，但子进程的管理也成为了问题。为了简化用户开发成本，python在concurrent.futures下内置了ProcessPoolE
+- [【Python随笔】python轻量级消息队列库celery的应用](https://utmhikari.top/2020/11/29/pythonnotes/celery/): python语言，一般适用于快速实现业务需求的用途，在大型架构方面其应用范围并没有Java、Golang以及C++那么丰富，因此相对来讲还没有形成非常统一的技术体系。在某些需求中可能需要开发多个服务，服务之间需要实现异步通信，甚至是调用对方的函数。celery就是一个典型的例子，它提供了以将pyth
+- [【Python随笔】python的os.walk方法源码分析](https://utmhikari.top/2020/11/15/pythonnotes/python_os_walk/): 在日常python编程中，有很多遍历文件夹内文件的需求，而os.walk方法就是一个满足该需求的例子。不熟悉这个方法的同学，刚开始用os.walk的时候难免踩坑。因此本文采用源码分析的方式，讲述os.walk的机理，让大家对于这个方法有更加深入的理解。
+以python3为例，os.walk方法的源码
+
+## DIY小记
+
+- [【DIY小记】聊聊关于《置身钉内》的一些个人想法](https://utmhikari.top/2026/06/06/diymemo/talk_about_inside_ding/): 近两天最火爆的事情莫过于《置身钉内》了，一篇离职复盘写了7万多字，熟稔的笔锋之间也夹杂了很多深度的思考，堪比互联网行业里头的《活着》。
+笔者也有幸拜读了全篇文章，从作者的文风可以稍微推断其人物画像，某些特征也和笔者刚毕业那会儿比较相似，稍有一些学生思维，但不失理性的思考。不仅如此，作为同行业的工作者
+- [【DIY小记】分享自己目前在用的AI编程工具Qoder](https://utmhikari.top/2026/04/08/diymemo/qoder/): 近期因为探索AI编程的缘故，希望给日常生活中多找一个AI-Native的IDE，一方面做纯Vibe Coding的开发，另一方面也能够兼顾日常手动微调编码的需要。当然由于众所周知的原因，也希望这个IDE可以照顾国内用户，不是说总是要搭梯子编程，这样编程之外的冲浪需求就不方便了。
+经过一番探索，在Tr
+- [【DIY小记】解决MacOS上Edge浏览器bilibili全屏卡顿的问题](https://utmhikari.top/2026/04/02/diymemo/edge_bilibili_ppt/): 近日笔者发现自己Macbook-Pro播放B站视频，全屏的时候必然卡顿，退出全屏就没事。笔者电脑的参数是：
+
+- 芯片：M3
+- 系统：Tahoe 26.4
+- 浏览器：Edge
+
+到网上一查发现[《Edge浏览器在MacOS 26(Tahoe)系统上看B站卡顿》](https://blog.csd
+- [【DIY小记】逸剑风云决烟尘回响+武家旧事+碧海仙踪DLC攻略整合](https://utmhikari.top/2025/07/12/diymemo/wandering_sword_tactic/): 《逸剑风云决》算是笔者认为近10年最好的国产游戏之一，不亚于黑神话。从24年开始笔者已经玩了很多个周目，甚至黑神话也没玩，终究还是因为《逸剑风云决》本格的武侠风格确实对到了笔者的胃口，并且用UE4做的效果也还不错。今年新出了2个DLC，也倒逼笔者重新开了一周目，素麟猖獗，打了次极难8+31娜乌线完整
+- [【DIY小记】新手小白超频遇到黑屏问题解决分享](https://utmhikari.top/2025/05/02/diymemo/overclock_voltage/): 最近玩FPS游戏的时候，发现以前一顿操作超频之后的电脑，有一定概率会出问题。具体表现比如一种是，电脑显示器直接黑屏，所有键盘交互没有响应，只能直接重启电脑，还有一种是偶现卡顿，直接死机或者卡出游戏之外。
+经过排查和上网查资料发现，可能是由于超频之后，CPU的电压输出不稳定，导致偶现显示器分配到的电压
+- [【DIY小记】减肥10kg保持半年的经验分享](https://utmhikari.top/2025/01/25/diymemo/ways_to_become_fit/): 作为程序员，脑力劳动者，保持一个健康的身体，是非常重要的。回顾24年自己取得的结果，一个比较亮眼的就是减肥减了10kg，到达了一个比较健康的体重，保持了半年没有反弹，当然到现在也依然在保持。今天这篇文章就给大家分享一下自己的减肥和体重保持的经验。
+减肥的要领，主要包括以下几点：心态、吃、运动以及休息
+- [【DIY小记】通过降低电压和Process Lasso工具优化CPU超频表现](https://utmhikari.top/2024/10/16/diymemo/overclock_core/): 在上一篇文章当中，笔者介绍了一些作为新手小白超频CPU和NVIDIA显卡的经验。今天又有了更新，笔者通过降低CPU工作电压，并且结合Process Lasso对程序做CPU调度优化，成功再一次升级了CPU的表现，CS2的benchmark又提高了50左右的fps。
+本篇文章，就介绍一下笔者在这方面的
+- [【DIY小记】新手小白超频i9-12900kf和3070ti经验分享](https://utmhikari.top/2024/10/13/diymemo/overclock_try/): 最近cs2更新了之后，因为总是解决fps过高的问题，导致游戏性能降的非常明显。笔者组的老土机子先前一直没有搞超频，现在也不得不睿一下保证游戏能够稍微流畅的运作，最终比以前稍微提升了50fps左右，cs2的dust2-benchmark地图能勉强达到平均400fps。本文就分享一下笔者在这块的粗浅经验
+- [【DIY小记】分享一些让编程工作效率翻倍的实用工具](https://utmhikari.top/2024/09/15/diymemo/code_tools/): 对于一个程序员而言，拥有一套合理的编程工具集，便可以让编程工作事半功倍。本篇文章就分享下笔者当前使用的一些实用提效的编程周边工具。
+首先需要声明的是，DIY一套编程工具，一定需要贴合自己的工作或者生活需求。好比说，你是前端，你是后端，或者你是搞安卓iOS客户端的，搞图形学渲染的，那肯定用到的工具都不
+- [【DIY小记】深圳万象天地餐馆探店点评](https://utmhikari.top/2024/05/12/diymemo/sz_wxtd/): 第一次在技术博客里面写生活日记，也算是破了个小天荒。个人以为，博客是个人生活思考的载体，而技术只占生活的一部分，那么博客里为什么一定要限制只能够写技术内容，不能写点其它生活上的东西呢？思来想去，近几年在深圳万象天地和她一起探过不少餐馆，吃过不少东西。于是乎，决定写一篇万象天地餐馆探店点评，给没来过或
+- [【DIY小记】用爬虫+clean-mark+zhihu-on-vscode搬运技术博客到知乎](https://utmhikari.top/2024/05/01/diymemo/zhihu_blog_migrate/): 今天灵光一闪，决定调研一下自己的技术博客，可以怎样方便迁移到其它社媒平台。想要达到的效果是，把自己在掘金的专栏：从1到∞精通Python，迁移到知乎上面去。
+简单花了两三小时时间，找到一个比较快捷的方法，就是结合python爬虫、clean-mark工具和zhihu-on-vscode插件，实现从掘
+- [【DIY小记】用OCR和大模型GPT生成的《软件研发效能权威指南》读书笔记](https://utmhikari.top/2024/04/21/diymemo/devops_ai_memo/): 前言《软件研发效能权威指南》一书，对于软件研发效能DevOps领域做什么事情，解决什么问题，给出了非常全面详尽的说明。这本书的精华，基本全部都浓缩在一张附属的海报上，海报讲述了每个章节的精简摘要，可以说是现成的读书笔记。
+2024年，相对于古早的纸质载体，用电子作为载体的文献在维护上成本更为低廉，并
+- [【DIY小记】修复Win10启动出现蓝屏0xc0000185错误的一些方法](https://utmhikari.top/2023/09/17/diymemo/win10_0xc0000185/): 近些日子想到自己尘封已久的笔记本电脑没有开机了，很多软件驱动之类的没有更新，就打算把电脑开起来做一轮批量升级。但开电脑的时候很久没有进入Win10桌面，等了很长一段时间蓝屏提示0xc0000185错误，说系统需要恢复。经历了一番折腾之后，笔者解决了这个问题。虽然不明确这个问题的根因在哪里，但还是分享
+- [【DIY小记】工作中失误了，应该如何对待？](https://utmhikari.top/2023/06/11/diymemo/handle_mistakes/): 今天整理博客时，恰好瞄到CSDN创作活动里，最近在搞这个主题：如何对待工作中的失误？笔者个人觉得，这个话题是非常有意义的，尤其是在现在经济形势不好，人人都担忧失业的情况下，怎么样对待工作的失误，甚至是工作本身，不论是从心态上，还是从策略（抓手）上，都是值得去深入讨论的。因此，笔者决定为【DIY小记】
+- [【DIY小记】VMWare设置主机连接到的Ubuntu虚拟机的网络端口](https://utmhikari.top/2023/02/05/diymemo/vmware_ubuntu_network/): 很多同学在自己机器上玩开发的时候，都会用到VMWare、VirtualBox之类的虚拟OS容器装一个带GUI的Linux OS，然后在里面另外安装开发工具做开发。这里面遇到的最经典问题，就是比如我在虚拟机里面起了个MySQL、Redis之类的服务，如果DB的客户端/GUI工具是放在主机里面，不在虚拟
+- [【DIY小记】Ubuntu22.04去掉侧边菜单栏Floppy Disk图标的方法](https://utmhikari.top/2022/10/15/diymemo/ubuntu22_floppy_disk/): 近期装`Ubuntu22.04`虚拟机，发现侧边菜单栏多了个`Floppy Disk`图标。软驱这东西毕竟是上世纪的了，2022年也没什么用，但就是找不到入口去掉这个冗余的图标。
+
+今天偶然之间发现去掉图标的方式，供大家参考：
+
+- 右上角点`电源/声音/网络按钮`，选择`Settings设置`
+-
+- [【DIY小记】解决技嘉Z390 AORUS PRO不识别SSD/机械硬盘的问题](https://utmhikari.top/2019/10/29/diymemo/gigabyte_z390/): 笔者近期用技嘉（GIGABYTE）Z390装机时遇到了装上一个SSD跟一个机械硬盘后，机械硬盘无法被主板/操作系统识别的问题，经过一番研究后发现了解决方案，特地分享：
+
+首先本经验理论上应当适用于不同厂家的Z390主板上（比如华硕之类）
+
+SSD或机械硬盘无法识别可能是主板芯片共享频宽的问题。以技嘉
+- [【DIY小记】CSGO究极装机优化设置指南](https://utmhikari.top/2019/09/21/diymemo/csgo/): 前言上周电脑突发极其奇怪的bug，启动了不到一会儿CPU阻塞，所有程序打不开，安全模式查毒、修复系统、清存储卸软件均没有获得较好的效果。因此索性重装了Windows，所有一切推倒重来。
+既然推倒重来，那CSGO就是不得不装的一款游戏。CSGO到现在也有10年的历史了，然而在网上能搜到的游戏优化设置要
+- [【DIY小记】Win10编程字体&主题设置全攻略](https://utmhikari.top/2019/06/01/diymemo/font_theme/): 前言编程需要纠结字体跟皮肤吗？肯定要纠结的啦= = = =
+调理字体跟皮肤，就跟打扮房间一样。每当打开编程软件之时，要是看到清亮的字体，爽快的皮肤，心里肯定就特别踏实，码码起来肯定也就特别舒服。
+是时候分享一下我的编程字体以及主题设置了！！！
+- [【DIY小记】踏平Win10升级之坑——我们无法更新系统保留的分区](https://utmhikari.top/2019/05/01/diymemo/msr/): 前言前几天心血来潮，想把自己船上的Win10更新到18年10月的版本（1809），结果易升下载了更新之后，安装时提示“我们无法更新系统保留的分区”，于是一脸懵逼。
+
+坑也是要慢慢踩的。熬了两夜，终于成功解决了这个问题，将Win10升级到了最新版本。
+踩坑记录原因分析遇到这个问题后，笔者第一时间goo
+
+## 极客日常
+
+- [【极客日常】初探ToB客户稳定性保障](https://utmhikari.top/2026/05/01/geekdaily/tob_customer_stability/): 近期因为工作调整的原因，笔者从以前面向内部研发团队的变更风险防控和稳定性建设，逐渐转向面向ToB客户的云服务稳定性保障。虽然本质上都是在做SRE稳定性相关的工作，但从服务对象、技术架构到运营方式，都有非常大的差异。今天这篇文章，就结合自己以前做变更风险防控和稳定性建设的实践经验，聊一下从云服务角度做
+- [【极客日常】快速上手复杂后端项目开发的经验](https://utmhikari.top/2026/01/17/geekdaily/project_work_quickstart/): 去年年底一段时间，笔者参与了组织内部智能化平台项目研发攻坚，虽然主攻平台工程部分，但多少也了解了下目前AIGC可以应用到的一些业务场景，以及技术实践、项目管理的一些事情。在先前的文章里头，有浅要描述下AIGC+Web类项目的角色分工和配合。那今天这篇文章，就浅聊一下如果你即将深入此局，适应一个复杂的
+- [【极客日常】智能化工程AgentFlow代码实现分析](https://utmhikari.top/2025/12/07/geekdaily/agentflow_code/): 近期笔者因为参与LLM增强项目攻坚，对LLM工程相关的技术也希望有一定的了解，因此希望借这个机会，读一些文章充电，看看目前LLM智能化工程的一些研究趋势。在阅读了几篇文章之后，最终读者选定AgentFlow这个项目做代码实现分析。由于笔者在算法方面的涉猎实在不深，所以本文只是抛砖引玉，阐述上有什么不
+- [【极客日常】用Eino+Ollama低成本研发LLM的Agent](https://utmhikari.top/2025/10/06/geekdaily/eino_ollama_llm/): 十一国庆正是充电的好时机，借着假期时间充裕，笔者又浅调研了一下本地LLM开发相关的工具链，看下如果是日常业余搞个人LLM的Agent项目，具体有哪些能力可用。工业界的话，因为知识保密性等各种原因，我们可能会用到兄弟部门的LLM模型或者相关Agent能力，以及市面上收费但企业内部免费的一些技术基建。但
+- [【极客日常】用Coze简单开发一个Agent](https://utmhikari.top/2025/08/10/geekdaily/develop_agent_by_coze/): 近来AI大模型发展迅猛，不论是工业界还是生活界都纷纷开始进军AI，了解基于LLM的问答Agent需要如何开发。为了跟风，笔者也粗浅了解了下问答Agent开发的一些基础知识，简单开发了一个主要关注Python问答的Agent，挂在了自己的微信公众号上。
+要开发一个问答Agent也很简单，重要的是得清楚
+- [【极客日常】后端任务动态注入执行策略的一种技术实现](https://utmhikari.top/2025/07/12/geekdaily/dynamic_job_impl/): 近期做项目时遇到一个场景，是需要在后端任务执行时动态注入策略。具体而言，笔者负责的后端服务，可以理解是会在线上服务发布时，对服务风险做实时扫描，那么这个扫描就需要根据当前线上服务发布上下文，匹配对应的策略。但这里扫出来的策略都是静态持久化的，前端也有产品化的配置，而有些业务则希望能够在任务执行时，动
+- [【极客日常】分享下OOM问题排查解决的实战经验](https://utmhikari.top/2025/07/06/geekdaily/oom_issue_solution/): 在AI助手时代，OOM的问题排查方法论已经非常烂大街，但在实际工作中，即便我们通过很多方式查到了OOM问题，但修复还是要我们自己手动修。OOM会导致服务不可用、系统不稳定等问题，会直接影响用户体验，所以从稳定性问题解决优先级来看，是属于比较高的。
+因此，今天笔者就简单从自身经验出发，聊一下OOM问题
+- [【极客日常】分享go开发中wire和interface配合的一些经验](https://utmhikari.top/2025/06/01/geekdaily/wire_and_interface/): 在先前一篇文章中，笔者给大家提到了go语言后端编程可以用wire依赖注入模块去简化单例服务的初始化，同时也可以解决服务单例之间复杂依赖的问题。但实事求是来讲，用wire也是有一些学习成本的，wire在帮助解决复杂依赖的问题同时，也会限定你去用一些特定的编程方式来满足wire的需要，尤其需要你inte
+- [【极客日常】浅聊基于MCP生态的LLM-Agent开发](https://utmhikari.top/2025/04/12/geekdaily/mcp_llm_agent/): 最近在AI大模型领域，MCP这个概念非常火，大大小小的公众号都开始对外炒作这个概念，宣教一种新的大模型Agent开发生态。因为工作原因，近期笔者也对MCP和LLM-Agent开发做了一些接触。因此今天这篇文章就浅聊下笔者对基于MCP的LLM-Agent开发方面，自己粗浅的一些理解。
+首先还是聊一下什
+- [【极客日常】聊聊技术人提升产品意识的经验](https://utmhikari.top/2025/02/21/geekdaily/geek_sense_of_product/): 技术人培养产品思维，这一点是技术人在职业成长中不可缺少的一部分。无论是做业务开发，还是做纯粹的基础架构、技术优化，有了产品意识，才能把自己的技术作品打磨地更好，能在更多工作场景派上用场。那么，今天就聊一下作为技术人，有什么方式可以提升产品意识。
+把这个问题丢给AI，概括一下答案是几大块：第一块是学习
+- [【极客日常】由面试官角度给校招生的大厂面试要点](https://utmhikari.top/2024/10/16/geekdaily/rookie_interview/): 又到了一年一度的校招季，今年由于团队同时招聘后端和智能化方向的同学，吸引了很多不同算法领域、后端领域以及甚至已经在大厂实习过的同学的简历，可谓是每年都非常优秀。至少比起笔者本人校招那个时候，是要优秀的很多，不是一点半点。
+作为一个面试官，笔者面对的是很多不同方向的同学的简历，有些方向说实在的笔者自己
+- [【极客日常】对低代码开发模式的一些思考和想法](https://utmhikari.top/2024/08/17/geekdaily/low_code_talk/): 低代码这个名词说起来已经有些年头了，广义上来讲可以说是达到这么一种效果，即尽量减少通过编写代码的方式来完成研发任务，甚至部署交付整个技术产品。那么低代码模式到底值不值得弄，有什么优势和缺陷，本篇文章笔者就来聊一聊自己对于低代码的一些思考跟想法。
+做技术的都知道，实际工作场合上，不能为了技术而技术。低
+- [【极客日常】Go语言学习干货——从零单排Golang系列合集](https://utmhikari.top/2024/08/11/geekdaily/gofromzero_collection/): 在后端开发领域，Golang已经成为非常流行的编程语言之一，并且生态也非常成熟。虽然在应用规模上离Java还有一段距离，但其中很多编程技巧跟思路还是值得学习的，一是没有什么太多的coding约束，二是实际工作中也有可能用的上。
+在近一两年，笔者的工作也逐渐从主python转为主go语言，对于Gola
+- [【极客日常】Golang一个的slice数据替换的bug排查](https://utmhikari.top/2024/07/20/geekdaily/golang_slice_bug/): 上周某天下班前，接到同事转来一个bug要排查，症状是代码重构之后某些业务效果不符合预期，由于代码重构人是笔者，于是blame到笔者这边。经过10min左右的排查和尝试后，解决了这个问题：既往逻辑没有改动，重构时候出笔误了。
+简单来讲，重构之前的代码大概是这个样子：
+- [【极客日常】读2023美团技术年货的一些笔记](https://utmhikari.top/2024/05/01/geekdaily/meituan_tech_notes/): 正直劳动节，翻了下2023年美团的技术年货，挑选了一些和变更风险防控和稳定性建设相关主题的文章做了下浅读。本文仅简单记一下阅读笔记。
+总共选读了3篇文章，分别是《基于AI+数据驱动的慢查询索引推荐》、《代码变更风险可视化系统建设与实践》，以及《AIOps在美团的探索与实践——事件管理篇》。
+- [【极客日常】提升发布风险检查准确率的一些思路](https://utmhikari.top/2024/03/03/geekdaily/release_check_optimization/): 在服务或者其它线上资源发布新版本的时候，我们都有必要为发布信息本身和上线的资源做风险检查，以确认发布内容不会对线上造成影响。通常来说，在检查能力铺垫时，一个主旨的思路是保证问题的召回率，即检查能力本身必须理论上可以拦截更多的风险，这样才能够基本限度保证发布过程的安全。但随着检查能力集合变得成熟，业务
+- [【极客日常】慢查询的风险治理思路](https://utmhikari.top/2024/01/07/testlife/slow_query_risk/): 在线上环境运维过程中，我们通常需要治理慢查询的风险。慢查询会引起DB性能问题，并且当线上环境流量较大的情况下，就会出现因大量慢查询堆积导致DB被打挂的情况。因此，本篇文章分享一下慢查询的风险治理思路。
+首先，我们需要知道什么情况下会出现慢查询。通常对于大表，未正确引用索引导致全表扫描，就会出现慢查询
+- [【极客日常】初体验rust语言](https://utmhikari.top/2023/05/01/geekdaily/rust_examples/): 作为一门“网红”语言，rust，已经在区块链、Web前端、游戏开发等领域凸显了作用。相对于golang、python、java、js跟cpp等其余主流语言，rust语言的编写和呈现方面都算是一个更为独立的体系。因此，本着对技术的好奇心，笔者也决定学习下rust语言，一是体验一下新一门编程语言的逻辑艺
+- [【极客日常】聊聊ChatGPT对于八股文程序员的冲击](https://utmhikari.top/2023/05/01/geekdaily/chatgpt_baguwen_shock/): 2023年ChatGPT系列的问世，可谓是对整个世界的人类造成了冲击。在此之前，人们最多以为AI能够做的事情，主要是下棋玩游戏，但是对话模型AI的到来，造成的效果，是AI具备了和人交流的能力，能够理解人类语言，通过其它AI工作流，自动整合资料，生成人类想要的内容。也就是说，AI可以从事人类的工作了。
+- [【极客日常】游戏测试开发干货——Python进阶与游戏自动化测试攻略](https://utmhikari.top/2022/11/24/geekdaily/python_and_game_autotest_notes/): 在互联网上，关于游戏测试（开发）领域的技术分享，实际是非常稀少。尤其针对游戏功能测试领域，很多文章的思想维度仍然停留在很久以前，关注的更多是测试用例设计以及质量管理这些更加偏向业务方面的内容。很多同学认为游戏业务测试缺乏技术含量，其实本质上是因为，很少同学愿意投入精力去研究这个领域的技术，以及研究这
+- [【极客日常】vue3中实现Array数组更新的方法](https://utmhikari.top/2022/06/17/geekdaily/vue3_array_update/): 近期由于工作原因，开始了解vue3的内容。vue3相对于vue2采用了组合式的描述，原来的写法是：
+1234567891011121314151617export default &#123; name: 'HelloWorld', data() &#123; return &#123; a: 1,
+- [【极客日常】通过motrix启动逻辑初探electron的项目结构](https://utmhikari.top/2022/06/05/geekdaily/electron_motrix_launcher/): 近期准备开始做electron相关的开发工作，因此借着这个机会就再去了解下electron。在很久以前的文章中有稍微玩过electron+react+antd的脚手架，但也只限于快速开发electron应用，并没有去剖析整个项目结构。因此这次，还是得深入一下。
+先前一段时间特别喜欢用开源的Motri
+- [【极客日常】一种解决redis源码编译时jemalloc报No such file or directory错误的方法](https://utmhikari.top/2021/10/19/geekdaily/redis_make_jemalloc_error/): 在用源码编译redis的过程中，可能会报jemalloc出错，提示No such file or directory的问题，导致构建不能继续。一种常见的，在网上流传的方法是[调整MALLOC参数为libc](https://stackoverflow.com/questions/47088171/e
+- [【极客日常】理解javascript/python中reduce操作的含义](https://utmhikari.top/2021/10/01/geekdaily/reduce_function/): 在学习javascript和python的过程中，我们通常会接触到map、filter、reduce之类的一等公民高阶函数。理解map和filter是相对简单的事情，但理解reduce的话还是需要一番推敲。正值十一假期，今天这篇文章就好好讲讲reduce这个东西
+我们首先以python为例，看一段r
+- [【极客日常】在Vue用echarts画带不同颜色点的散点图](https://utmhikari.top/2021/09/16/geekdaily/echarts_scatter_color/): 在vue技术栈下做图表需求，echarts是一个非常棒的选择，提供了非常多种多样的图标示例以及非常复杂强大的API。由于笔者近期工作内容中需要分析采样点的分布情况，因此自然而然接触到了echarts的3D散点图。在笔者的需求中，需要对不同点进行分类，并按特定的颜色显示出来。经过一番踩坑，了解到了ec
+- [【极客日常】2021新版本VSCode设置git-bash为终端的方法](https://utmhikari.top/2021/09/11/geekdaily/vscode_git-bash/): 截至2021.9，不知道哪天更新了vscode，发现默认的终端从以前的git-bash变成了powershell，笔者用的windows电脑，于是乎要解决这个问题，把powershell变回git-bash。
+
+打开settings，发现以前的`terminal.integrated.shell.w
+- [【极客日常】Go语言string、int、float、rune、byte等数据类型的转换方法](https://utmhikari.top/2021/06/06/geekdaily/go_basic_data_types/): golang的数据类型转换是困惑新gopher的一大问题之一。相对于python，golang的数据类型转换可要麻烦的多，而且还不走寻常路地诞生了些新的方法跟名词。因此本文讲解golang常见数据类型string、int、rune等数据类型相互之间的转换方法，给大伙儿避坑。
+在讲述方法之前，首先非常
+- [【极客日常】用vxe-table展示excel-diff的结果](https://utmhikari.top/2021/05/01/geekdaily/excel_diff_vxe-table/): excel-differ是游戏测试常用的测试工具。在有些业务场景下，excel-diff的结果可能需要通过web展示。Vue技术栈下的vxe-table表格组件能够支持大量数据的展示，因此可以用vxe-table展示excel-diff的结果。
+excel-diff的算法本身，先前的文章已有讲解，在
+- [【极客日常】UE4插件通过C++导出LLM数据的方法](https://utmhikari.top/2020/11/08/geekdaily/ue4_llm_dump_cpp/): 近期为了丰富UE4插件UnrealAutomator的基础功能，在ProfileService中增加了LLM数据获取的方法。LLM拥有抓取UE4底层模块内存使用情况的功能，各种Modules按照LLM的规范实现相应宏即可将内存使用数据实时更新到LLM系统中。如果从产品外部，是难以直接访问这些信息的。
+- [【极客日常】解决UE4中FJsonObject转USTRUCT的坑](https://utmhikari.top/2020/10/18/geekdaily/fjsonobject_to_ustruct/): 前些天在写UnrealAutomator的Web解析模块的时候，遇到了一些USTRUCT方面的问题，由于笔者以前并非UE4程序员，因此踩了一些坑，果断分享一下踩坑历程。
+首先聊一下USTRUCT的生成。USTRUCT是UE4的特性之一，从非C++/UE4程序员的角度来讲，USTRUCT、UPROPE
+- [【极客日常】Win10更改IDEA（Jetbrains全家桶）的插件和配置路径](https://utmhikari.top/2020/10/06/geekdaily/idea_change_config_path/): Jetbrains家的IDE，默认安装之后，配置和插件都存储在系统特定的文件夹中，如果是Windows系统的话，就会在用户文件夹存储。这样就滋生了一个问题：随着插件等安装的越来越多，系统盘也会占掉一些空间，这个时候就有了转移默认插件与配置路径的需求。今天就以IDEA为例讲述一下如何操作。
+- [【极客日常】在UE4插件中编写一个HTTP Web Server](https://utmhikari.top/2020/05/23/geekdaily/ue4_http_server/): 在某些游戏研发or测试的需求中，需要在Unreal增加一个插件或者模块，里面启动一个服务器作为SDK，然后外部通过直连或者adb forward可以连接到客户端中，获取客户端实时的场景、actor信息等等。UE4本身除了socket server支持之外，也支持简单的HTTP Web Server。
+- [【极客日常】在hugo博客中利用shortcode嵌入bilibili视频](https://utmhikari.top/2020/04/21/geekdaily/bilibili_in_hugo/): hugo是当前热门的个人博客框架之一，和hexo同样是markdown文件跟博客帖子一一对应。有些同学想利用hugo制作个人视频博客，但发现在hugo博客中不支持直接在markdown里输入iframe标签，从而没有办法将其它网站的视频（比如b站）嵌进来。这种情况下，我们可以采用hugo内置的sho
+- [【极客日常】再度上手start-fastapi](https://utmhikari.top/2020/02/26/geekdaily/start_fastapi_reborn/): 近期项目组准备做一个新的工具，因此自个儿做的start-fastapi框架正好能派上用场试试水。在起草需求搭建最初框架的时候也逐步发现原先的start-fastapi有一些不足的地方，因此做了一些针对性的优化。
+首先必须重新介绍一下start-fastapi，其本身是轻量级web框架fastapi的
+- [【极客日常】写一个基于vuetify的v-autocomplete的自定义组件](https://utmhikari.top/2020/02/16/geekdaily/v_autocomplete/): Vuetify是Vue的一套前端组件框架，基于Material Design设计，界面较为整洁。最近由于项目需要开始入手，但在写自定义v-autocomplete组件的时候却踩了许多坑。因此本文果断记录一下踩坑的过程。
+首先新上手vue的话肯定耳边都会萦绕着“双向绑定”一词，用的最多的属性就是v-m
+- [【极客日常】解决使用mongodb时同时update多条数据的问题](https://utmhikari.top/2020/01/12/geekdaily/mongo_multi_updatemany/): 在实际使用mongodb的场景中，我们经常遇到多个请求同时在某个collection里update多条document的需求。这个需求看似有许多种解法，但是具体哪种好也说不准。现在便让我们一探究竟吧~
+首先我们利用pymongo添加1000000条数据，name字段为hello：
+123456789
+- [【极客日常】electron+react+antd深色主题打造桌面应用](https://utmhikari.top/2019/10/20/geekdaily/electron_react/): 桌面应用的实现方式有很多，但谈到多操作系统平台兼容的话，就不得不提到electron。electron是前端开发的利好，做过web前端的同学只要稍微迁移下自己的项目，就能够将原本的web前端变成桌面应用。
+因此，本文以react为例，以antd为UI库支持，讲解基于react的electron应用该
+- [【极客日常】hexo+NexT博客自定义代码高亮主题配色CSS](https://utmhikari.top/2019/10/07/geekdaily/next_code_theme/): 用hexo+NexT搭建博客的同学或许会遇到一个问题：默认的代码配色只有Tomorrow Theme五种，如果想要自己的代码配色，应当如何自定义呢？
+其实也是可以的。在NexT的source/css/highlight/theme.styl中，我们就可以看到几种主题的具体配色：
+1234567891
+- [【极客日常】解决国内go1.13的go mod无法安装依赖的问题](https://utmhikari.top/2019/10/07/geekdaily/go113_proxy/): 在[从零单排Golang第一话](https://utmhikari.github.io/2019/07/20/gofromzero/01_first_code/)中讲到了Golang的基础开发环境配置，其中讲到了Go的依赖管理方面，提及了以后的趋势会采用官方的go mod进行管理。关于这一块，现在
+
+## 测试人生
+
+- [【测试人生】【完结篇】畅聊质量技术的现状和未来发展](https://utmhikari.top/2026/05/01/testlife/testlife_final_article/): 不知不觉在质量技术领域也走过了七八年之久，从最早的覆盖率测试工具，UE4游戏客户端自动化，到后续的数据变更风险防控，再到变更风险防控平台架构建设，期间做过很多思考，也沉淀了许多技术文章。随着业务测试-&gt;质量提效-&gt;技术风险SRE-&gt;稳定性架构师的工作内容变化，笔者也自觉自己未来的工
+- [【测试人生】建设变更风险防控平台的经验总结](https://utmhikari.top/2026/03/14/testlife/change_control_platform/): 不知不觉在变更风险防控领域投入了三年之久，从最早做数据类变更风险防控工程，到后续做变更风险平台架构能力，在取得些许成果的同时，也同样沉淀了很多关于变更风险防控平台的技术思考与判断。趁着阶段性收尾，今天就做个总集篇，重点针对建设变更风险防控平台的这段经历，梳理一遍核心经验。
+本文主要讲述4个方面：（1
+- [【测试人生】变更规则校验Agent研发的一些思路](https://utmhikari.top/2026/03/14/testlife/rule_agent/): 在变更风险防控领域，规则校验和变更中观测一样，是必不可少的能力之一。面向配置类变更和SQL数据类变更，通过严格的静态规则校验可以拦截很多事故风险，保障配置或SQL发布后的安全。从变更风险防控平台的角度来说，一个规则校验系统（规则引擎），可以简单设计成多组变更场景到校验规则的映射，业务SRE角色可以编
+- [【测试人生】LLMAgent在变更风险防控垂类应用的思考](https://utmhikari.top/2026/02/15/testlife/change_control_agent/): LLMAgent应用研发在当下是一个非常热门的话题，目前一个典型的趋势是，各类垂类领域都在思考LLMAgent如何能够代替人力，为其业务场景赋能，一方面是常规提效，另一方面是深度挖掘CornerCase。恰巧笔者最近在做变更风险防控领域LLMAgent应用的技术调研，所以今天这篇博客，也简单分享一下
+- [【测试人生】一套灵活的变更风险观测策略匹配机制设计](https://utmhikari.top/2026/01/17/testlife/change_observe_strategy_design/): 近期笔者在投入变更风险防控开放平台的额外功能开发，目的是希望设计一套更加灵活的变更风险观测策略匹配机制，能够在满足面向任意变更场景应用观测策略的同时，尽可能保证产品体验，让用户清晰地了解到自己配置的什么策略能够在什么情况的变更过程中生效。在先前的文章当中，有粗浅提到变更观测策略匹配的事情，但没有深入
+- [【测试人生】LLM赋能游戏自动化测试的一些想法](https://utmhikari.top/2025/10/04/testlife/llm_game_autotest/): 在三年前笔者撰写的Game-Of-AutoTest专栏当中，聊了很多关于游戏自动化测试的实践思考。不论是对自动化测试在技术层面的认识，还是怎么落地一些技术基建保障游戏自动化测试的可扩展性，在这些专栏里都已经做了深度的科普。近年来，LLM在自然语言处理领域取得了突破性进展，并且随着游戏开发的复杂度不断
+- [【测试人生】浅谈变更风险防控的数据运营](https://utmhikari.top/2025/02/22/testlife/change_control_data_marketing/): 从质量管理角度来讲，变更风险防控算是一类重要的方向，从业务的角度来讲，通过运营变更风险数据，可以更好了解变更发布的质量，从而预防线上问题。今天就浅聊一下，变更风险防控的数据运营，需要做好哪些数据基础。
+简单来说有以下三个部分：渠道风险、准召拦截、发布效率。
+- [【测试人生】变更风险观测的流程逻辑设计](https://utmhikari.top/2025/01/26/testlife/change_observe_logic/): 在线上服务变更过程中，我们希望可以通过一套实时观测机制去监测线上服务的风险，从而能够确保线上稳定性，在出问题时可以及时回滚变更。今天这篇文章，就简单讲一下变更风险观测的流程逻辑需要怎么设计。
+首先我们需要建模变更观测的过程。变更观测的生命周期，一般来讲，当服务某阶段变更开始后，观测会开始，然后当服务
+- [【测试人生】谈研发测试人员在AI时代中的自我成长](https://utmhikari.top/2024/09/16/testlife/ai_era_challenge/): 研发测试不分家，在AI时代，LLM/GPT技术的冲击之下，不论是研发还是测试人员都可能会担忧，AI是否会取代自己的工作。从笔者的角度看来，这根本不是一个需要担心的问题，就和围棋一样，在AlphaGo之后，大家都会利用AI来学习围棋，超越以前时代的人。而作为研发或者测试人员的你，也可以利用AI技术的产
+- [【测试人生】分享下自己对于平衡日常工作和学习提升的观点](https://utmhikari.top/2024/08/17/testlife/work_and_study/): 日常工作总是琐碎的，尤其是技术岗，沉浸在日常的需求开发、需求测试和bugfix里，很容易对工作环境形成依赖，导致没有成长空间。那么这种情况下，怎么样去平衡日常工作和自我的学习提升呢？今天，笔者就通过这篇文章，分享下自己的观点。
+核心的思想是：工作只是生活的一部分，要自己掌控自己的生活，不要让工作掌控
+- [【测试人生】数据同步和迁移的变更注意事项](https://utmhikari.top/2023/12/09/testlife/data_sync_warn/): 数据同步或者迁移操作也算是线上数据变更的一种类型。由于涉及的数据量非常大，一旦发生故障，会直接影响线上业务，并且较难止损。从变更风险管控的角度考虑，数据同步或迁移操作也需要走合理的发布窗口，并且在操作前也需要做足够的影响分析。本文就来聊一下数据同步和迁移的变更期间注意事项。
+数据同步按照持续状态的不
+- [【测试人生】游戏业务测试落地精准测试专项的一些思路](https://utmhikari.top/2023/10/02/testlife/game_precise_test/): 精准测试在互联网领域有广泛的应用。以变更为出发点，通过对变更内容进行分析，可以确定单次变更具体涉及到哪些模块和功能点，以及是否存在夹带风险，从而从QA的视角，可以知道哪些功能模块需要做测试，以及哪些变更内容不符合预期。相比于互联网QA，游戏QA接入业务项目研发过程并没有那么深入，比如项目代码权限基本
+- [【测试人生】浅谈游戏策划配置表检查的技术设计](https://utmhikari.top/2023/09/17/testlife/game_table_check/): 近期在testerhome的游戏测试节点里，看到一个很有趣的帖子：针对游戏策划的配置表测试，是否有开源的框架可以用？除了问题本身之外，帖子的楼主也附了一张整个配置表测试工具的设计图，由SVN变更监控、发起检查最后到消息通知，组成了一个持续集成的配置表测试专项工程。为此，针对这个场景，笔者也希望输出一
+- [【测试人生】批量刷数的发布流程与风险点](https://utmhikari.top/2023/07/09/testlife/data_wash_risk/): 在项目日常开发过程中，批量刷数也是有一定频率的变更场景之一，同时也是容易产生风险的一种变更操作。本文就来聊下，批量刷数的发布需要经历哪些流程，以及流程中每个环节中有什么风险点需要考虑。
+首先需要了解批量刷数这个操作是个什么意义。无论是新增/删除一些数据也好，还是UPDATE某些已有线上数据也好，其背
+- [【测试人生】SQL变更的问题拦截手段](https://utmhikari.top/2023/07/08/testlife/sql_change_block/): 在DB做变更发布的各类场景当中，通过SQL更改DB数据内容，是最为常见的场景。既然是最为常见的场景，那么可能产生线上问题的概率也就越大。本篇文章就来探讨一下，要尽量减少SQL发布产生线上问题的可能性，需要采取什么样的手段。
+首先是针对SQL语句本身而言，需要做积累检查。假设用的是MySQL，那么SQ
+- [【测试人生】管控数据类变更的重要性](https://utmhikari.top/2023/06/03/testlife/data_change_background/): 大多数的事故来源于变更，这句话并不是妄言，而且确实是具有统计学意义的。在持续集成的过程中，一次发布对应的是一系列的变更，而变更意味着从一个已经稳定的状态切换到一个仅预期稳定的状态，这就导致了线上风险实际是在降低的。为了防止最终的发布的效果与预期不符，造成事故产生，除了对变更内容做业务功能上的测试之外
+- [【测试人生】《阿里测试之道》笔记之大促全链路压测](https://utmhikari.top/2023/04/08/testlife/alibaba_stress_test/): 在2022年，阿里出品了一本《阿里测试之道》，讲述在阿里电商、物流、金融、大数据等业务场景下，测试活动业务层面是如何开展，以及技术层面是如何实现的。笔者有幸拜读此书，从其中也有所收获。本次以其中涉及电商的测试场景为例，记录一下“大促质量保障”一章的读书笔记。这一章主要讲述了在大促场景下，全链路压测是
+- [【测试人生】准入准出质量红线的技术设计](https://utmhikari.top/2023/01/26/testlife/quality_redline_design/): 在应用日常开发的过程中，不论是在测试、开发联调，还是实际构建发布的时候，我们都需要一定的指标去衡量技术产物的质量，从而判断技术产物是否符合质量标准，是否能够继续发布投产，如果不符合投产标准则拦截发布。从发布过程的角度，由于一般发布过程会收口到特定的CI流水线上，因此在做这类能力的时候，通常是采用开发
+- [【测试人生】UE4大世界游戏寻路效果自动化测试](https://utmhikari.top/2022/11/20/testlife/navi_autotest/): 在一些无缝大世界的游戏当中，我们通常能够体验到游戏的自动寻路功能，通过自动寻路，玩家可以不用任何操作就到达任务或者玩法的目的地，从而让游戏过程更加轻松。在测试寻路功能时，不仅需要检查寻路是否成功到达，而且也需要关注寻路路径呈现的效果，从而确定玩家是否走在策划预想的路径上。
+由于寻路起点、终点选择的随
+- [【测试人生】GAutomator安卓UE4版本的实现机理与优化实战](https://utmhikari.top/2022/09/12/testlife/gautomator_ue4_android/): 在2年以前的一篇文章中，讲述了游戏UI自动化方案GAutomator的基础机理、使用方式和一些工具扩展的想法。今天，趁着Game Of AutoTest系列的连载，结合游戏自动化技术选型一文，笔者将深入剖析GAutomator作为UE4安卓游戏UI自动化方案的实现机理，以及自己在实际工作中对GAut
+- [【测试人生】用行为树做游戏自动化测试的误区](https://utmhikari.top/2022/04/03/testlife/btree_autotest_talk/): 在游戏自动化测试领域，行为树由于其强大的描述玩家（Agent）行为逻辑的功能，在很多场景的自动化测试都能得到应用。但是，如果对行为树的作用认识不足，很容易导致整一个自动化测试项目出现难以维护的窘境。因此，这篇文章谈一谈在游戏自动化测试里，用行为树做测试的一些误区。
+- [【测试人生】《测试架构师修炼之道》阅读笔记](https://utmhikari.top/2021/10/04/testlife/test_architect_notes/): 《测试架构师修炼之道》一书，笔者入行一年多的时候拜读过。虽然这本书主要偏向业务测试、质量管理的方向，而并非技术测试、测试开发的方向，但只要是测试行业从业者，笔者认为都值得一看。
+从笔者本人角度，对于测试人员的职业发展，是极端推崇技术方向的。但工作最终总会落实到人，近年来测试被划分为偏向技术的岗位，那
+- [【测试人生】python的excel库——openpyxl的用法](https://utmhikari.top/2021/07/11/testlife/openpyxl/): 前言在测试工具的开发过程中，可能会遇到需要生成excel文件的需求。笔者在自研excel-diff工具的过程中，也同样接到了需要生成excel文件来展示每个sheet的diff数据。每个包含diff的sheet需要生成1个excel文件，每个文件分成3个sheet，2个sheet用于展示sheet原
+- [【测试人生】游戏策划表格测试工具的技术实现](https://utmhikari.top/2021/06/01/testlife/table_test_tool/): 在先前的《游戏策划表格检查工具的一种设计》一文中，笔者分享了在一般游戏测试业务背景下设计策划表格检查工具的一种方式。本文基于先前文章的内容，将原先的表格检查工具升级为表格测试工具，涵盖更多的内容，并对其中部分技术实现进行分享。
+测试工具架构设计整个测试工具分为两个部分：
+
+仓库管理服务：负责管理多个
+- [【测试人生】副本自动化测试](https://utmhikari.top/2021/05/20/testlife/dungeon_autotest/): 许多游戏，尤其是MMO，会包含“副本”这个概念，玩家通过打副本从而获得物品奖励及属性收益。通常来讲，单个游戏所涉及的副本数量/品种较多，因此在游戏测试过程当中，很难一次性全部遍历完所有副本的流程与玩法。为了解决这个问题，可以通过自动化测试的方式去冒烟副本玩法流程、检查奖励。为了让自动化测试用例执行更
+- [【测试人生】UE4游戏枪械自动化测试的一些设计](https://utmhikari.top/2021/04/17/testlife/ue4_weapon_autotest/): 在射击类游戏中，不可避免地需要对各种枪械武器进行测试。大多数情况下，枪械种类繁多，人工遍历测试会花非常多的时间，因此引入自动化测试替代人力执行部分冒烟用例，能够增加严重问题提早发现的可能性。枪械测试包括基础行为、伤害、弹道、后坐力等方面，从功能冒烟的角度考虑，基础行为和伤害是需要优先覆盖的部分。因此
+- [【测试人生】游戏策划表格检查工具的一种解决方案](https://utmhikari.top/2021/03/06/testlife/table_check/): 策划表格数据检查是游戏测试工作的刚性需求。在游戏开发期中，有大量bug的起因是策划同学在配置上不够规范到位。因此作为测试角度而言，需要更加便捷、更加精准的方法去定位到策划表格配置的问题。除了依靠业务人员自身对业务的熟悉程度之外，也更加依赖于一个强大有力的工具，辅助表格数据检查。
+表格数据检查的目的有
+- [【测试人生】在UE4插件中启用Automation自动化测试功能](https://utmhikari.top/2020/12/20/testlife/ue4_automation/): UE4本身支持在前端会话中执行自动化测试功能。有了它，我们可以用C++编写对应的自动化脚本，在编辑器的生命周期中随时随地运行，测试整个研发系统的子功能。
+
+要深入了解UE4自带的自动化测试功能，可以参考自动化系统概述文章系列。而本文则介绍最简单的接入UE4自带Automation自动化测试的方法，以
+- [【测试人生】UE4游戏自动化测试插件——UnrealAutomator](https://utmhikari.top/2020/10/24/testlife/unreal_automator/): UE4游戏/手游自动化测试有很多方案可以执行，不论是传统的UI测试方法还是具备前瞻性质的以图像识别+机器学习技术为主的方法，都能够满足不同的需求。适逢1024节日，受到GAutomator和PocoSDK的启发，笔者近期决定开始UE4专属自动化测试插件UnrealAutomator的研发。当前已经集
+- [【测试人生】我心目中的测试](https://utmhikari.top/2020/09/06/testlife/be_a_tester/): 很久以前写过一篇文章：《测试、策划与开发，谁来把控游戏的质量》，聊了一下测试、策划和开发三者的关系。时至今日回头来看，大方向还是差不多的。在某些地方，测试地位低，被策划跟开发冷眼相看，所以让他们开心就好；在某些地方，测试、策划和开发也可以在同一层次上讨论需求与研发过程的好坏。说白了，把控游戏质量，是
+- [【测试人生】游戏自动化该怎么做？](https://utmhikari.top/2020/09/06/testlife/game_autotest/): 游戏自动化该怎么做？这是一个值得探讨的问题。在中国，用手游自动化来描述，可能更为贴切。游戏自动化技术并不难以上手，有许多现成的工具提供使用。但是，要想做好游戏自动化，让其真正服务于游戏研发/运营期业务，并不是一件容易的事情。
+- [【测试人生】安卓游戏投屏/录屏利器——scrcpy](https://utmhikari.top/2020/07/18/testlife/scrcpy/): 手机投屏/录屏在测试领域的用途有很多，比如：
+
+作为（自动化）测试报告的一部分，记录测试的实时场景
+投屏到电脑，用于UI自动化测试
+作为日常测试工作使用
+
+当前手机投屏/录屏的解决方案有两个：STF的minicap以及Genymobile的scrcpy。今天则稍微介绍一下scrcpy，能够兼容各类安
+- [【测试人生】代码覆盖率测试之代码染色优化——以lua代码覆盖为例](https://utmhikari.top/2020/06/13/testlife/coverage_beautify/): 在研发代码覆盖率测试工具的时候，通常除了代码覆盖数据收集模块之外，一般还要研发前端展示的部分以展现代码覆盖分析报告，通常会为每一个文件增加行染色，类似于jacoco这种形式。
+然而代码覆盖报告实际出来的行染色，会出现许多正常代码行没有着色的情况。这是因为编程语言认为的“行”和本身我们在文本编辑器打出
+- [【测试人生】游戏自动化测试工具GAutomator上手](https://utmhikari.top/2020/05/05/testlife/try_gautomator/): 最近开始研究一些游戏自动化测试方面的内容。游戏自动化测试是游戏测试研究领域的难点之一，当前主流的方案有两种，一种是采用纯粹的UI识别方法进行，典型的例子是Airtest，另一种是直接嵌入到游戏引擎中获取节点树等元素从而对实体进行操作，典型的例子是GAutomator。由于笔者先前略微接触过Airte
+- [【测试人生】记一次导表检查流程中导致JVM的OOM问题](https://utmhikari.top/2020/03/14/testlife/table_check_oom/): 最近在项目组测试有开发一个导表检查的需求，大致是在策划提交表更新到svn之后，svn发送post-commit到策划表数据服务，而后策划表数据服务下载excel文件，更新数据之后，将导表检查下游服务所需的检查数据进行整合，然后post到导表检查服务。在这个过程中，由于做的仓促没有考虑设计，最后策划表
+- [【测试人生】为游戏策划与QA量身定制的excel表diff算法](https://utmhikari.top/2020/01/23/testlife/excel_diff/): 国内的游戏研发团队里许多策划同学都习惯采用excel作为配表工具。因此对策划同学校对与QA同学验收工作来说，需要相应的diff工具去检测excel文件的变更，从而能够尽早发现配表的问题。为此，在笔者启动的游戏效率工具集gameff-toolset小项目中，首个小脚本便做了excel diff。
+di
+- [【测试人生】测试、策划与开发，谁来把控游戏的质量？](https://utmhikari.top/2019/12/22/testlife/are_testers_controlling_quality/): 近期进入了另外一个项目组，工作沟通的时候遇到了一些碰撞。在和项目组其它伙伴交换意见的同时，自己也开始思考这个问题：测试、策划与开发，这三个主导游戏研发的部门，谁才是真正把控着游戏的质量？
+从自己的职业立场与岗位的配置上来看，测试理所应当真正管控游戏的质量，但是实际上又不尽然。从策划和开发的立场上来看
+- [【测试人生】小谈游戏测试用例与代码间的联系](https://utmhikari.top/2019/12/06/testlife/game_testcase_with_code/): 近几周一直在某SLG项目内负责功能模块测试与周边工具推进的工作，渐渐感悟到了些用例设计与业务代码的联系。
+游戏的业务逻辑是比一般应用复杂的。而且对于自己项目这种强玩法的游戏而言，甚至还会出现以下的现象——QA驱动策划，策划驱动开发。
+策划案能够大概阐述游戏的界面、逻辑与数值，但是如果有复杂的特例，还
+- [【测试人生】游戏业务用例测试体验感悟](https://utmhikari.top/2019/11/03/testlife/start_game_test/): 近期稍微停歇了下开发的任务，转为进入游戏项目组去探究真正的游戏测试业务是如何进行。在此前做测试工具与平台时会常常遇到业务需求不能准确击中的瓶颈，因此真实投入体验，调研项目组的测试痛点，能够对后续的技术支持工作大有裨益。
+游戏，尤其是网游，是一类非常特殊的软件产品，可能会有以下的特点：
+
+服务端与客户
+- [【测试人生】iOS审核&静态扫描二三事](https://utmhikari.top/2019/08/19/testlife/ios_review/): 我们的日常生活离不开手机，有些同学喜欢用国产的安卓机，而另一些同学喜欢用简约的iPhone。
+对比安卓和iOS的软件生态，我们可以发现：安卓软件的投放渠道繁多，题材花样繁复，质量大小不一，而iOS的投放渠道则为App Store独家，相对安卓软件来讲，不仅质量均衡，而且用户不必担心手机病毒的困扰。这
+- [【测试人生】一个测试开发的用户思维](https://utmhikari.top/2019/07/28/testlife/think_as_a_user/): 近几天一直在思考什么是用户思维，决定结合这一年的工作，把自己的想法记录下来。
+在这之前，自己一直秉持一种观念——测试开发从工作内容上，更加符合“开（码）发（农）”的定义，因此应当更加着重于技术深耕，并且在业务对接时，也尽可能地从从技术实现的角度去阐述观点与想法。但是在经过同事伙伴们的提点，以及和家中
+- [【测试人生】安卓FPS测试详解](https://utmhikari.top/2019/07/13/testlife/android_fps/): 安卓的fps测试，是我打开测试开发大门的一把钥匙。两年前的现在，安卓性能测试的相关资料甚少，以fps为例在网上也只有寥寥几篇文章讲述，但到了今年，已经有许多资料在各大技术论坛上供大家看到了。对于自己，一直想找一个机会把这一段技术探索写出来。所以，心动不如行动。
+fps（frames per seco
+- [【测试人生】MTSC2019参会见闻感悟](https://utmhikari.top/2019/07/01/testlife/mtsc2019/): “测试人生”第一篇文章，献给2019年的移动测试开发大会MTSC。这一次，非常荣幸能够来到北京国际会议中心参会，一睹国内质量保障工作的现状与未来的发展趋势。
+在学校期间，我也参与过一些小型的学术会议，但并不如今年的MTSC这样声势浩大。工作一年以来参与的第一个讨论会，已然是全国顶会。借这个机会，能够
+
+## 代码艺廊
+
+- [【代码艺廊】operator-gallery：纯vibe的operator管理工具](https://utmhikari.top/2026/04/08/codegallery/operator_gallery/): 近期AI编程的新概念层出不穷，从最简单的Code Completion，到NEXT预测，再到现在什么Vibe Coding、OpenClaw，外加Spec Coding、Harness Engineering等Agent工程名词，可以说随着LLM的能力增强，不考虑业务架构，纯考虑编程本身，AI几乎已
+- [【代码艺廊】pyside6桌面应用范例：homemade-toolset](https://utmhikari.top/2025/04/04/codegallery/homemade_toolset/): 在研发测试日常工作中，通常会遇到很多琐碎的事情，占用我们工作的时间和精力，从而导致我们不能把大部分的注意力放在主要的工作上面。为了解决这个问题，除了加人之外，我们通常会开发一些日常用的效率工具，比如以pyqt、pyside为主体的桌面应用，一键化我们的日常工作，从而解放我们很多处理琐碎事情的精力，让
+- [【代码艺廊】daggre：数据聚合与联表检查工具](https://utmhikari.top/2022/12/10/codegallery/daggre/): 在以前写过的一篇关于游戏策划配置检查工具设计的文章里，笔者讲述了一种表格检查工具的分层设计方法，简而言之也就是两部分：
+
+配置数据源服务：管理本地策划配置repo，通过自定义脚本解析repo中文件，提供实际的配置数据
+配置数据处理服务：处理实际的配置测试业务，比如表格检查、excel-diff等等
+
+- [【代码艺廊】Protobuf+GRPC应用范例：protobuf-grpc-starter](https://utmhikari.top/2021/04/02/codegallery/protobuf_grpc_starter/): 后端的服务间通常采用固定的协议&amp;rpc框架通信，当前主流的方案是以protobuf协议为基础，采用grpc进行通信，这种方式在Golang的开发中尤其突出。因此，笔者决定做一个小的golang应用来踩坑protobuf+grpc编码模式，上传到github分享——这便是protobuf-gr
+- [【代码艺廊】start-fastapi升级，对FastAPI应用开发的全新理解](https://utmhikari.top/2021/01/24/codegallery/start_fastapi/): 2021，新的开始，曾经精心制作的轻量级web后端框架start-fastapi也经历了一次升级。这次升级，是基于这一年来使用start-fastapi开发以及应用与业务工作的经验，对已有框架进行的结构性的优化。
+start-fastapi，甚至是FastAPI本身，其专注的方面都是在快速实现轻量级
+- [【代码艺廊】代码仓库管理小工具repomaster](https://utmhikari.top/2021/01/01/codegallery/repomaster/): 呼吸不停，coding不止。代码艺廊新系列，将要用来陈列自己的大小作品；极客日常系列，则专门用于分享新的技术心得。开年第一作，介绍一个自制用于管理代码仓库的小工具repomaster。
+代码仓库管理在许多场景能够用到，比如用作构建集群的文件缓存、构建配置的代码仓库服务、配置导出与检查等等，其中最后一
+
+## GitHub探索
+
+- [【GitHub探索】代码开发AI辅助工具trae-agent](https://utmhikari.top/2025/11/01/githubdiscovery/trae_agent/): 作为国内表现上比较agentic的开发工具之一，trae项目开源了自家trae-agent开发工具，整体也有一段时间了。借着日常闲暇的机会，笔者计划研究下trae-agent的代码实现，看下这个本地AI开发辅助工具是如何运作的。
+从开源项目的角度，trae-agent给的文档信息是比较充足的，但代码
+- [【GitHub探索】Prompt开发评测平台CozeLoop踩坑体验](https://utmhikari.top/2025/08/03/githubdiscovery/coze_loop/): 接续先前CozeStudio的文章，CozeLoop相对于CozeStudio，更加专注于Prompt Engineering，打磨整个Agent Prompt的效果。因此，本篇文章也分享一下笔者使用CozeLoop的体验，源码可以从这个Repo里面拉取。
+- [【GitHub探索】Agent开发平台CozeStudio开源版本踩坑体验](https://utmhikari.top/2025/08/03/githubdiscovery/coze_studio/): 近期Coze开源了自己的核心产品CozeStudio和CozeLoop，CozeStudio主要面向AI-Agent产品开发和周边生态，而CozeLoop主要面向Prompt Engineering以及效果评测。借这个机会，笔者也踩坑了下CozeStudio和CozeLoop的源码，在本地做了部署简
+- [【GitHub探索】mcp-go，MCP协议的Golang-SDK](https://utmhikari.top/2025/04/12/githubdiscovery/mcp_go/): 近期大模型Agent应用开发方面，MCP的概念比较流行，基于MCP的ToolServer能力开发也逐渐成为主流趋势。由于笔者工作原因，主力是Go语言，为了调研大模型应用开发，也接触到了mcp-go这套MCP的SDK实现。
+对于企业内部而言，在这个SDK基础上做封装，基本上就能够完善MCP-Serve
+- [【GitHub探索】蚂蚁变更管控平台AlterShield设计分析](https://utmhikari.top/2024/02/04/githubdiscovery/altershield_design/): 技术风险，作为质量保障领域的重要的一环，主要研究如何通过解决方案和技术手段，解决企业内业务在基础运维、日常运营和变更上线过程中的稳定性问题，保证业务风险得到收敛。在国内，蚂蚁金服在这个方向上有沉淀很多方法论和实践经验。变更管控是技术风险地一个子领域，主要的目标是在变更过程中，通过对变更流程的管控介入
+- [【GitHub探索】用python写web前端之reactpy探索](https://utmhikari.top/2023/06/10/githubdiscovery/reactpy/): 你有想象过用python来写web前端这种操作么？近期在github-trending上就有这样的一个项目reactpy，可以满足你在python上写web前端的欲望。为此，笔者也决定踩踩坑，看看这个项目的形式到底如何，能不能很方便地实际投产。
+要用到这个项目，除了reactpy库本身外，还需要一个
+- [【GitHub探索】ebook-boilerplate——批量转markdown为PDF和电子书](https://utmhikari.top/2022/10/05/githubdiscovery/ebook_boilerplate/): 正值十一假期，近期准备把自己的python笔记精编整理，做一个pdf电子书。在调研如何把多个markdown文档转化为单个pdf的时候，试了很多种方法。最后找到了最佳方案，也就是本文的主角，由phodal前辈整理的电子书生成项目ebook-boilerplate。这个项目不仅支持批量转markdow
+- [【GitHub探索】Eclipse Theia & Gitpod——云端IDE尝鲜](https://utmhikari.top/2020/04/13/githubdiscovery/theia_and_gitpod/): 本月，eclipse theia发布了1.0版本。作为一个云端/桌面IDE框架，并且顶着eclipse foundation的名声，theia在github上受到万众瞩目。因此笔者决定上手eclipse theia，提前品尝一下云端IDE的滋味。
+笔者选择了gitpod而非本地docker作为the
+- [【GitHub探索】FastAPI——新一代实用python轻量级Web后端框架](https://utmhikari.top/2020/02/01/githubdiscovery/fastapi/): 本月，一款名为FastAPI的轻量级Web框架在trending榜上有名。本着踩坑的心态试用了fastapi，发现其坑并没有许多相同量级web框架（比如flask）来的多，上手极其容易。因此果断整理了一下fastapi的上手过程。
+FastAPI基于Starlette网络框架进行封装，不仅性能优异，
+- [【GitHub探索】v语言上手，用vlang写一个聊天应用](https://utmhikari.top/2019/11/16/githubdiscovery/vlang/): 前言vlang（v语言）自从6月份突然炒热起来，不知不觉到了11月，正式版就要出来了，在11月的GitHub Trending榜中依然排在前10。这着实令人好奇，因此笔者决定试用一下vlang，写一个小应用，体验一下感受。
+v语言上手v语言可以在GitHub传送门中clone下载，支持多操作系统，有
+- [【GitHub探索】安卓自动化测试工具SoloPi](https://utmhikari.top/2019/08/11/githubdiscovery/solopi/): 前言随着MTSC2019的召开，八月份各种测试工具相继开源，其中一款名为SoloPi的安卓自动化测试在月trending榜中排位靠前。移动App自动化测试是当前测试领域的风口之一，并且要开发一款兼容性好、需求适应多样的App，也并非三日之寒。为此，欢迎本期GitHub探索的主角——SoloPi！
+测
+- [【GitHub探索】新款命令行工具terminus测试](https://utmhikari.top/2019/06/22/githubdiscovery/terminus/): 前言六月的Github趋势榜单上，除去一些文书、教程性质的项目外，大部分项目并非自己所针对的领域。因此，果断试水了一款软件，
+Windows系统下的命令行工具配置，一直是开发者们纠结的痛点。在这一块，cmder、MobaXTerm甚至即将上线的Windows Terminal，都是不错的解决方案。
+
+- [【GitHub探索】python调试利器——pysnooper源码分析](https://utmhikari.top/2019/05/25/githubdiscovery/pysnooper/): 前言这次又开了个新坑——GitHub探索，主要内容是试水当期GitHub上较火的repo
+虽然top榜上各路新手教程跟经典老不死项目占据了大半江山，但清流总是会有的。
+第一期就试水一下pysnooper吧，一个新奇实用的python调试器。
+顺便源码分析一波，了解下python的debug操作。
+废
+
+## 从零单排Golang
+
+- [【从零单排Golang】第十六话：channel的用法和基本原则](https://utmhikari.top/2024/04/13/gofromzero/16_channel/): 在基于Golang的后端开发中，channel是一个必须要掌握的并发编程概念。和python的queue一样，channel在不同的goroutine里承担着传递信息的作用，使得业务逻辑的状态上下文可以在不同的goroutine中共享。今天，我们就来看一下channel的用法还有一些使用上的基本原则
+- [【从零单排Golang】第十五话：用sync.Once实现懒加载的用法和坑点](https://utmhikari.top/2023/09/03/gofromzero/15_sync_once/): 在使用Golang做后端开发的工程中，我们通常需要声明一些一些配置类或服务单例等在业务逻辑层面较为底层的实例。为了节省内存或是冷启动开销，我们通常采用lazy-load懒加载的方式去初始化这些实例。初始化单例这个行为是一个非常经典的并发处理的案例，比如在java当中，我们可能用到建立双重锁+vola
+- [【从零单排Golang】第十四话：使用rate和ratelimit实现限流限速](https://utmhikari.top/2023/08/26/gofromzero/14_ratelimit/): 在研发中，我们经常会面对到处理并发逻辑的场景，尤其是有时候在与第三方平台对接的场景下，会遇到请求限流限QPS的要求。对于限流或者限速，我们通常会用两种算法来满足需要：
+
+令牌桶算法：在特定容量的桶里面装令牌，当令牌数量小于桶的容量时，会持续以我们预期的限流速率生产令牌；不管桶里面是不是空的，业务都得
+- [【从零单排Golang】第十三话：使用WaitGroup等待多路并行的异步任务](https://utmhikari.top/2023/08/06/gofromzero/13_waitgroup/): 在后端开发当中，经常会遇到这样的场景：请求给了批量的输入，对于每一个输入，我们都要给外部发请求等待返回，然后才能继续其它自己的业务逻辑。在这样的case下，如果每一个输入串行处理的话，那么很大一部分时间都会损耗在给外部发请求这个环节，因此我们会希望把这些请求放到各个goroutine里异步执行，等待
+- [【从零单排Golang】第十二话：用singleflight解决单服务处理高并发任务的问题](https://utmhikari.top/2023/07/01/gofromzero/12_singleflight/): 在后端开发场景，我们经常会遇到高并发的事务处理逻辑。虽然在微服务治理的机制下，能够实现多个无状态服务节点+负载均衡高并发处理请求，但对于单个服务节点来讲，如果存在某些耗时的任务需要被高并发访问，那么如果没有一套妥善的机制处理，就很容易出现大量这类任务实例堆积，导致任务返回延迟，或者节点内存暴涨的情况
+- [【从零单排Golang】第十一话：make和new的区别和用法](https://utmhikari.top/2023/05/10/gofromzero/11_make_new/): 在Golang当中，对于常用数据结构的初始化方式，通常有2种：make跟new。这两种初始化方法用途不同，效果不同。本篇文章就来详细讲一下make和new具体都怎么用，在什么场景下会用上。
+首先来看make。比起new，make所用到的场景非常特定，一般没法直接避开。我们看下面的代码例子：
+1234
+- [【从零单排Golang】第十话：快速理解并上手context的基础用法](https://utmhikari.top/2023/04/01/gofromzero/10_context/): 在Golang的各种用法当中，context可谓是最能够体现Golang语言特性的模块之一。context的本意为情境、上下文，而在Golang程序当中，则可以被用于描述一次调用、会话或者任务的状态信息。关于context网上有很多语法以及源码分析的文档，但是里面很多却不能从实战场景体现contex
+- [【从零单排Golang】第九话：用go语言解析并分析sql语句的方法](https://utmhikari.top/2023/03/04/gofromzero/09_sql_parser/): 在Golang的实战中，总会遇到一些场景，比如抓包分析sql指纹，或者是输入sql时检查sql的风险，这类操作都需要解析sql的工具才能够生效。今天，就来介绍一些Golang当中解析sql的工具包和使用方法。
+本文介绍的工具是vitess-sqlparser，主要结合了两个sql解析工具：
+
+xwb
+- [【从零单排Golang】第八话：通过cache缓存模块示范interface该怎么用](https://utmhikari.top/2023/02/18/gofromzero/08_cache_interface/): 和许多面向对象的编程语言一样，Golang也存在interface接口这样的概念。interface相当于是一个中间层，下游只需要关心interface实现了什么行为，利用这些行为做些业务级别事情，而上游则负责实现interface，把这些行为具象化。本文就来通过一个简单的缓存cache模块的实现，
+- [【从零单排Golang】第七话：反射模块reflect使用方式探索](https://utmhikari.top/2023/01/01/gofromzero/07_reflect_module/): Golang的反射功能，在很多场景都会用到，最基础的莫过于rpc、orm跟json的编解码，更复杂的可能会到做另外一门语言的虚拟机。通过反射模块，我们可以在编程语言的runtime运行时期间去访问内部产生对象的信息。了解反射模块的实现，对我们了解Golang对象机制本身，也是莫大的帮助。
+今天，恰逢
+- [【从零单排Golang】第六话：基于wire的kratos微服务框架示例项目](https://utmhikari.top/2022/12/03/gofromzero/06_wire_kratos/): 《从零单排Golang》系列，又重新开张了。后续会不定期更新自己学习Golang的笔记跟心得。
+这次的话，就介绍一款名为奎爷kratos的微服务框架，以及讲述一下基础的使用机理。
+kratos是B站开源的微服务框架，不仅提供了grpc、http协议支持，而且有较为完善的层级架构、微服务中间件以及第三
+- [【从零单排Golang】第五话：用自带net包写一个简单的负载均衡](https://utmhikari.top/2019/11/24/gofromzero/05_load_balancer/): 前言Github传送门
+golang在工业中用途最多的方面就是编写中间件以及上游设施，因此切入golang的话，了解其网络库是很有必要的。因此，笔者上手了自带的net包，花了一天左右的时间写了个简单的负载均衡（Load Balancer），也算是能用啦= =
+用net包写负载均衡我们在浏览网页时，通
+- [【从零单排Golang】第四话：Win10安装minikube，用client-go部署mongodb](https://utmhikari.top/2019/10/03/gofromzero/04_kubernetes_mongo/): 前言Github传送门
+提起Golang，就不得不提起kubernetes，在崇尚上云的今天，kubernetes已成为服务端同学必需掌握之学问。在第三话中，我们介绍了docker容器，它相当于虚拟操作系统，可以提供环境供各种不同的应用运行，从而实现轻量部署。但要是业务复杂，需要部署较多应用的话，就
+- [【从零单排Golang】第三话：利用docker client本地部署MySQL](https://utmhikari.top/2019/09/01/gofromzero/03_docker_client/): 前言Github传送门
+最近回忆起了在学校那会儿趣事：刚开始上数据库原理课程，一开始装Microsoft SQL Server，全班同学都在吐槽，怨声载道——这个说数据库咋启动不了，那个说数据库咋卸载不干净，个个焦头烂额，实在是好一番风景。唉，那时候就在想，要是有一个类似于软件管家的东西托管Micr
+- [【从零单排Golang】第二话：初探服务端CRUD，gin+gorm黄金搭档](https://utmhikari.top/2019/08/04/gofromzero/02_gin_gorm/): 前言Github传送门
+学一门新语言，如果太专注于语法，那肯定学的不够快。如果有一定的需求目标，带着这个目标去学习一门新语言，这样才能学得快。
+工作中写后端的时间比例不在少数，而且传闻Go也因其适用于服务端而著名。在Go社区中最为火热的服务端框架跟数据库抽象ORM层当属gin跟gorm了，因此本期单
+- [【从零单排Golang】第一话：Go开发环境搭建——环境变量、依赖与目录结构踩坑](https://utmhikari.top/2019/07/20/gofromzero/01_first_code/): 前言Github传送门
+当测试开发真不容易，入行第一年，就要在python、NodeJS、lua、C、Java等语言间无缝切换。为了快速响应需求，挺难抽出时间去深耕一门语言的特性（诶羡慕那些只搞Java的人= =）。在MTSC2019分享中也谈到，测试开发归属质量保障QA，作为一个中台角色，其终极任
+
+## Game Of AutoTest
+
+- [【Game Of AutoTest】5、游戏自动化测试的价值](https://utmhikari.top/2022/11/02/gameofautotest/v/): 《Game Of AutoTest》的最后一篇文章，聊一下游戏自动化测试的价值。
+一千个人心中有一千个哈姆雷特。仅以笔者的角度，游戏自动化测试的价值，可以体现在这几个方面：
+
+效率提升
+缺陷发现
+质量监控
+技术支持
+
+做好自动化测试的价值分析，不仅能够自动化测试技术落地做足理论基础，而且也能在任意时
+- [【Game Of AutoTest】4、游戏自动化测试的稳定性保障](https://utmhikari.top/2022/10/03/gameofautotest/iv/): 在游戏自动化测试技术落地过程当中，如何保证自动化测试的稳定性，是一个需要重点优先解决的困难问题。
+以手机游戏客户端自动化测试为例，和一般服务架构的自动化单元测试或集成测试不同，自动化驱动的过程，其本质更加类似于网络爬虫，每次测试执行都是一个时间较长的过程，而流程一长，不稳定因素则随之而来。游戏自动化
+- [【Game Of AutoTest】3、游戏自动化测试的框架设计](https://utmhikari.top/2022/09/04/gameofautotest/iii/): 自动化在技术层面上，除了基础的技术选型之外，最终还是需要落实到具体的工具框架，才能够助力我们自动化脚本开发的过程。因此，本文将讲述一下如何对游戏自动化测试框架进行设计。
+在上一篇文章讲到，自动化测试的方式可以有客户端、服务器、编辑器三种方式，除了编辑器需要强依赖引擎层面的特性之外，其他两种自动化方式
+- [【Game Of AutoTest】2、游戏自动化测试的技术选型](https://utmhikari.top/2022/08/13/gameofautotest/ii/): 要做游戏自动化测试，首先需要了解游戏自动化技术。因此，本文详细讲解下游戏自动化测试领域可能用到的一些技术以及对应的场景，为自动化测试落地的技术选型提供参考。
+游戏自动化测试的测试对象是游戏本身。对于游戏这个概念，可以有以下几种：
+
+客户端：我们实际玩到的游戏本体，比如说PC程序，手机App，Web-
+- [【Game Of AutoTest】1、再度启程，重识游戏自动化测试](https://utmhikari.top/2022/08/02/gameofautotest/i/): 2022年的8月，结束了很长一段时间的犹豫，笔者决定开启新的文章系列：《Game Of AutoTest》，向外界公开自己近两年来在游戏自动化测试方面所沉淀的工作经验，以及许多关于自动化测试本身的思考跟想法。在先前的测试人生栏目中，曾经分享过许多关于游戏自动化测试的技术，但并没有一个比较系统化的输出
+
+## Hard Python
+
+- [【Hard Python】【第五章-字符串】2、re，正则表达式源码详解](https://utmhikari.top/2022/05/14/hardpython/5_str_2/): 正则表达式是文本处理中的重要部分，通过匹配特定的正则表达式，能够很方便地编写提取特定文本的代码。在python中，同样也已经拥有了正则表达式库re，为各位开发者提供了正则表达式的支持。
+在python官方文档中，已经对正则表达式模块接口、词法和用法做了详细的介绍：
+
+re——正则表达式操作
+正则表达
+- [【Hard Python】【第五章-字符串】1、unicode，py3的字符串实现](https://utmhikari.top/2022/05/08/hardpython/5_str_1/): python的字符串实质到底是什么类型的数据，这个可是困扰着很多编程者的话题。在python2我们已经被中文编码相关的问题折磨的不轻，那到了python3之后为什么又解决了这个问题呢？今天这篇文章就带大家详细剖析python3的字符串实现。
+我们首先看一段代码：
+123def test_str_ba
+- [【Hard Python】【第四章-日志】2、日志消费者Handler的实现](https://utmhikari.top/2022/04/16/hardpython/4_log_2/): 在上篇文章里说完了日志实例Logger和日志管理Manager，现在该提到Handler了。Handler是日志信息的消费者，单个Logger实例注册多个Handler，每生成一个LogRecord，就会被合法的Handler消费，在不同地方打印出日志信息。
+要研究Handler，首先需要看下基类的
+- [【Hard Python】【第四章-日志】1、Logger与Manager的源码实现](https://utmhikari.top/2022/04/09/hardpython/4_log_1/): python语言内置了一个强大的日志模块logging，也是python内部最为复杂的功能模块之一，通过这个模块我们能够实现不同样式的日志打印。关于logging模块的官方文档也非常完备：
+
+logging的用法
+日志常用指引
+日志操作手册
+
+logging API
+logging日志记录工具
+lo
+- [【Hard Python】【第三章-GC】2、python的GC流程](https://utmhikari.top/2022/03/19/hardpython/3_gc_2/): 除了通过引用计数直接销毁对象之外，python还是拥有内在GC机制的，并且也有完整的一套流程。
+如果只有通过引用计数销毁对象这种机制，那么随便构造一个循环引用就会造成内存泄漏，比如下面的代码：
+123456789101112131415161718def _dump_gc(): gcobjs = g
+- [【Hard Python】【第三章-GC】1、引用计数与内存释放机制](https://utmhikari.top/2022/03/12/hardpython/3_gc_1/): 对于编程语言runtime来说，建立起良好运转GC机制是非常必要的，像Java和Go，其GC机制都经历了复杂的演化，当然同时也为编程语言带来了更好的性能，这也是为什么这两门语言能成为主流服务端语言的原因之一。
+相对于Java和Go，python的GC机制是相对简约的，其中最基础的机制之一就是引用计数
+- [【Hard Python】【第二章-异步IO】3、async/await的源码实现](https://utmhikari.top/2022/02/26/hardpython/2_asyncio_3/): 说完了asyncio事件循环是如何运行异步任务的，接下来back to basic，我们一起看看async和await两个原语具体代表了什么含义。
+首先是async，async通常用来修饰一个函数，表示这个函数会返回一个协程。比如说：
+1234567async def _coro_maker(i):
+- [【Hard Python】【第二章-异步IO】2、异步任务在事件循环中的执行](https://utmhikari.top/2022/02/20/hardpython/2_asyncio_2/): 接续第一话的内容，事件循环在创建之后，又是如何运行协程任务以及异步IO任务的？​由asyncio.run的代码可知，loop.run_until_complete是运行协程的方法。其定义如下：
+- [【Hard Python】【第二章-异步IO】1、asyncio事件循环的创建](https://utmhikari.top/2022/02/12/hardpython/2_asyncio_1/): python3中增加的重要特性之一即为asyncio，其提供了异步编程的原语支持，从而能够让python在事件驱动、协程协同等方面的编程场景大杀四方。
+事件循环EventLoop是异步编程中的核心概念之一。python的异步IO，就从事件循环的实现开始讲起。
+首先看一段示例代码：
+123456789
+- [【Hard Python】【第一章-多进程】3、Pool，多任务并行进程池](https://utmhikari.top/2022/01/30/hardpython/1_multiprocessing_3/): 前面讲了进程创建与进程通信的内容，接下来讲一下多进程编程最能发挥的地方。对于同时运行多个同质任务来讲，采用multiprocessing.Pool进程池去管理是最方便的。Pool的用法如下：
+123456789101112131415161718192021from multiprocessing 
+- [【Hard Python】【第一章-多进程】2、Pipe和Queue，进程间通信](https://utmhikari.top/2022/01/22/hardpython/1_multiprocessing_2/): 第一话详细讲解了Process新进程是如何被创建的，接下来就来讲一下进程之间有什么通信的方法。
+要在multiprocessing中实现进程间通信，最直接的方法是采用Pipe或者Queue。其用法如下：
+- [【Hard Python】【第一章-多进程】1、Process，新进程的诞生](https://utmhikari.top/2022/01/16/hardpython/1_multiprocessing_1/): 在python中，如果要做多任务并行的编程，必须要掌握multiprocessing库的相关运用。在python的multiprocessing官方文档中，已然详细给出了multiprocessing库的相关用法。多进程编程其实还是有很多坑存在的，为了进一步探索python多进程的机制，提升对pyt
+- [【Hard Python】前言](https://utmhikari.top/2022/01/08/hardpython/preface/): 写完Medium Python之后，不知不觉就有开始继续写Hard Python的冲动。择日不如撞日，心动不如行动，2022年开篇，果断将Hard Python提上日程。
+
+截至2021年底，python依旧是最热门的语言之一，随着3.10、3.11及后续版本的发布，python的runtime在功
+
+## 游戏开发
+
+- [【游戏开发】踩坑UE4的Python脚本插件](https://utmhikari.top/2021/11/21/gamedev/ue4_python_script_plugin/): UE4以C++为基础，在游戏开发需求当中，官方推崇的是Blueprint可视化编程，而除此之外像UnLua、puerts等解决方案也提供了lua、ts等其它脚本语言的支持。至于python，UE4本身就有插件支持，叫做PythonScriptPlugin，启用插件后，在编辑器里，可以输入python
+- [【游戏开发】UE4下判断一个点是否在特定长方体内的计算方法](https://utmhikari.top/2021/09/01/gamedev/ue4_point_in_cuboid/): 近期在研究寻路功能的测试工作，需要对玩家寻路过程中的行进轨迹进行采样，判断采样点是否在特定的寻路区域内。UE4自带了NavModifierVolume的actor，可以放置到场景里标识某个区域的寻路成本（不了解寻路相关背景的话可以参考先前的文章），因此我们做采样的时候，也需要判断某个点是否在特定的N
+- [【游戏开发】UE4用C++编写行为树的Task、Service、Decorator节点](https://utmhikari.top/2021/08/21/gamedev/ue4_cpp_btree_nodes/): 在游戏领域，行为树是常用的AI解决方案，用行为树可以快速明了地描述AI的行为模型，而UE4提也供了非常完善的行为树解决方案，不仅有用户友好的界面，而且也有多样化的底层支持。在官网的行为树快速入门指南中，我们可以了解到UE4行为树编辑器的使用以及用蓝图创造行为树节点的方式，而在一些特定的需求当中，蓝图
+- [【游戏开发】初识寻路&navmesh，探索RecastDemo](https://utmhikari.top/2021/08/07/gamedev/recastdemo/): 在手游时代，尤其对于大世界游戏而言，寻路的实现基本在专门的寻路服务器上进行。在众多寻路的解决方案中，recastnavigation是最为经典实用的一个，很多游戏甚至游戏引擎都采用类似的实现。recastnavigation项目自带了RecastDemo，用图形化的界面帮助用户认识寻路网格（navm
+- [【游戏开发】UE4联机渲染swarm agent配置](https://utmhikari.top/2021/05/23/gamedev/ue4_swarm_build/): UE4在构建场景光照时，会启动swarm agent进行构建，但如果只用一台电脑会出现构建速度较慢的情况。为了加快编译的效率，需要配置联机渲染。
+首先需要注意的是，在UE4中自动打开swarm agent和手动打开swarm agent会用到不同的配置。因此，建议的方法是手动打开swarm agen
+- [【游戏开发】用UE4的Subsystem来管理DataTable表格数据](https://utmhikari.top/2021/02/16/gamedev/ue4_datatable_subsystem/): 在UE4游戏开发中，官方文档推荐了2套功能：Data Driven Gameplay Elements以及Programming Subsystems。我们可以结合这两者的功效，实现一个简单的表格配置数据管理模块。
+Data Driven Gameplay Elements讲述了一套通过DataTa
+- [【游戏开发】用Lua编写UE4游戏逻辑——UnLua上手](https://utmhikari.top/2020/08/02/gamedev/unlua_try/): 大型的游戏项目包含许多错综复杂的业务逻辑，针对UE4游戏而言，如果纯粹采用C++编写的话，一方面会增加大量的劳动成本，影响效率，另一方面难以解决游戏热更的问题。lua作为胶水语言，能够与C/C++/C#等语言互通，简化业务逻辑编写，并且支持热更。针对UE4的游戏开发，UnLua以及sluaunrea
+
+## Medium Python
+
+- [【Medium Python】最终话：如何彻底理解with关键字的用法？](https://utmhikari.top/2021/11/13/mediumpython/v/): Medium Python终于来到了最终话。经历了前四话的撰写，笔者决定以第五话作为收尾，故这段时间一直在思考python里还有什么内容是我们常见但值得推敲且有应用意义的点。绞尽脑汁，最终得到了今天这个主题：with关键字。
+with关键字的含义，是笔者接触python以来希望彻底搞懂的问题之一，也
+- [【Medium Python】第四话：类属性和实例属性是怎样的关系？](https://utmhikari.top/2021/11/06/mediumpython/iv/): 前言提到编程不得不提到面向对象，一个说烂了的话题，几十年来一直都有人在争论面向对象的好坏。从宏观角度来说，一个庞大的程序本质是对业务中实体集合以及其中的关系的模拟，虽然解决实体的关系问题，用面向过程、组合等方式去体现比较方便，但要解决实体概念的抽象，就需要面向对象的编程基础。因此，面向对象在编程中是
+- [【Medium Python】第三话：python多线程为什么不能并行？](https://utmhikari.top/2021/10/30/mediumpython/iii/): python的多线程，这是个老生常谈的话题了，网上资料也一大把。python默认的threading模块对多线程提供了支持，但实际多个threading.Thread实例无法并行运行（不是无法并发哦！）。​一句话概括答案：python的线程实质是操作系统原生的线程，而每个线程要执行python代码的
+- [【Medium Python】第二话：dict的keys()返回了什么数据类型？](https://utmhikari.top/2021/10/23/mediumpython/ii/): 在python3里面，我们经常会用if k in d.keys()来判断某个key是不是在某个dict里面，或者是用a_dict.keys() - b_dict.keys()来获取两个字典之间keys的差集。那么这里就有一个问题，dict的keys()返回了什么数据类型呢？
+list？set？两者都
+- [【Medium Python】第一话：为什么list“可变”，而tuple“不可变”？](https://utmhikari.top/2021/10/17/mediumpython/i/): 前言python面试有一道很基础的问题：list（列表）和tuple（元组）有什么不同？基本上只要背过题库的同学都知道，list（里面的元素）是可变的，tuple（里面的元素）是不可变的。
+我们尝试在python解释器中改变tuple的元素（赋另一个值），会有以下的表现：
+1234567891011
+- [【Medium Python】前言](https://utmhikari.top/2021/10/10/mediumpython/preface/): python作为最流行的语言之一，我们对python的认知到底有多少呢？大胆猜测，95%的同学对python的了解都不超过5%吧！不用说python的c源码了，就算是python每个标准库的.py源码，都有很少人去关心。结论就是，我们对python本身的理解是远远不够的，比想象中还不够！当然，这也可
+
+## Lua杂谈
+
+- [【Lua杂谈】服务端架构skynet简易入门项目——create-skynet](https://utmhikari.top/2019/10/26/luatalk/create_skynet/): 前言在skynet通信原理与源码分析一文中，我们已经详尽地弄清楚了skynet地通信架构，为我们上手skynet提供了极大的帮助。因此本篇文章接续上文，正式上手使用skynet。
+skynet入门项目：create-skynet要做一个基于skynet的项目，首先需要一个好的模板。skynet的最佳
+- [【Lua杂谈】基于lua的服务端架构——skynet通信原理与源码分析](https://utmhikari.top/2019/10/20/luatalk/skynet/): 前言提起中国的lua产品，就不得不想到skynet，一款针对游戏，但又不仅限于游戏的服务端架构。skynet充分利用了lua的特性，并且在此基础上易扩展HTTP、HTTPS、WebSocket等模块，因此由skynet入手理解lua原理以及服务端架构是一个非常不错的选择。
+通过skynet，我们可以
+- [【Lua杂谈】lua专用rpc协议sproto——基础介绍&用于协议测试的二次开发](https://utmhikari.top/2019/09/12/luatalk/sproto/): 前言rpc（远程过程调用），是不同主机间的交互的机制之一。好比说，我们想要获取服务器的某个资源，我们就可以发送一条讯息给服务器，然后服务器解析信息，再返回推送资源的信息，这样，便实现了我们客户端跟服务器的相互的“远程调用”。
+为了让不同主机之间能够相互理解发送的讯息，我们需要约定统一的信息格式标准，
+- [【Lua杂谈】一文上手coroutine协程](https://utmhikari.top/2019/08/25/luatalk/coroutine/): 前言提到lua，就不得不提协程coroutine。coroutine是lua的一种内在机制，为lua提供了原生的异步支持。从用户层面来看，用户不需关心coroutine的内在实现，而只需要用coroutine调度function即可，因此非常方便。
+对于一个function而言，coroutine可
+- [【Lua杂谈】犹豫就会败北——元表metatable解析](https://utmhikari.top/2019/06/12/luatalk/metatable/): 前言在lua的学习过程当中，元表metatable的概念及用法是常见的障碍之一
+元表，在其它lua杂谈等都提到过，是一种描述lua数据的属性以及行为的表。虽然官方给了set、account等例子详细讲解了metatable，但总还是缺乏些提炼。为了干翻这个痛点，这次，果断强上metatable的精髓
+- [【Lua杂谈】探索C API，开坑lnodelist](https://utmhikari.top/2019/04/20/luatalk/lnodelist/): 前言最近一直在探索Lua的C API编程部分，上次实现了一个函数执行时间统计库：lfunctimer，这次就果断写了一个lnodelist来玩玩。在这期间，遇到了许多纠结的问题，因此果断做下分享~
+测试用例现在贼少= =想要试用的同学可以走lnodelist的Github传送门，或者luarocks
+- [【Lua杂谈】debug.getinfo源码分析——使用C API重写lfunctimer](https://utmhikari.top/2019/04/07/luatalk/lfunctimer_capi/): 前言昨天更新了一下lfunctimer，主要把hook更改为c api的形式，并且初步加了util和config的扩展
+想要试用的同学的话可以点击上面clone下来，或者安装luarocks后执行下面命令安装~
+luarocks install --server=http://luarocks.or
+- [【Lua杂谈】Lua性能测试：函数执行时间统计](https://utmhikari.top/2019/03/25/luatalk/lfunctimer/): 前言在白盒性能测试（profiling）中，函数时间统计是一项重要的指标。对于整个以lua为基础的系统架构而言，函数时间统计数据是性能优化的直接参照。
+因此，本次Lua杂谈，将会分享一种函数执行时间统计的实现~
+函数执行时间获取单个函数执行时间的获取相对较为简单，例子如下：
+123456local 
+- [【Lua杂谈】解锁lua代码覆盖率测试：luacov源码分析](https://utmhikari.top/2019/03/10/luatalk/luacov/): Lua 杂谈系列，就以代码覆盖率测试的 luacov 开头吧
+简介说到 lua 的覆盖率测试，我们一般都会想到用luacov做代码覆盖率测试在干货｜使用 luacov 统计 lua 代码覆盖率一文中，介绍了基本的 luacov 用法，但是缺少对 luacov 深入挖掘的相关内容。并且同时，原生的 l
+
+## Easy Python
+
+- [【Easy Python】另类实用Python教程——Easy Python精编版上线](https://utmhikari.top/2019/10/08/easypython/pdf/): 最近小包装了一下[Easy Python系列](https://utmhikari.github.io/categories/Easy-Python/)，放到[语雀](https://www.yuque.com/hikari-zy5c0/easy-python)上整合精编了个pdf投放，完成Easy
+- [【Easy Python】最终话：重回首知识点，让python真正easy！](https://utmhikari.top/2019/05/19/easypython/vii/): 前言Easy Python终于来到完结，我的领导也夸奖我写作非常的卖力用心。对此，我深表欣慰！
+六章Python讲解，并不单纯是切磋代码技艺，而更是注重于每一行代码背后发生的事儿
+为此，让我们一起重回首Easy Python系列，光荣收尾吧！
+回顾
+- [【Easy Python】第六话：multiprocessing——Python多进程并行](https://utmhikari.top/2019/05/11/easypython/vi/): 前言前段时间，我和我的领导回到了母校，和我的师父师母聚餐。聚餐点了很多东西，大碗宽面，牛肉炒饭，韩国烤肉，吃都吃不完。虽然我的领导最近长得比以前p了些，但是吃饭速度还是慢悠悠。唉，要是我的领导能有个三头六臂，每个手都夹菜，每个头都去啃，那吃饭速度可就蹭蹭地涨上去了啊！
+人无法三头六臂，但在Pytho
+- [【Easy Python】第五话：小试scikit-learn数据挖掘——newsgroup数据处理与文本分类](https://utmhikari.top/2019/04/14/easypython/v/): 前言数据挖掘（Data Mining），一般指从海量抓取的数据中经过一定的数据处理、算法，从而提取出有价值的信息的过程。它大体基于统计学、机器学习（Machine Learning）等原理，辅佐了人类的信息处理工作，为人工智能（AI）铺下道路。
+幸运的是，似乎正是因数据挖掘而生的那样，Python社
+- [【Easy Python】第四话：爬虫初探——玩转豆瓣二百五（下）](https://utmhikari.top/2019/03/31/easypython/iv/): 前言在上篇，我们获得了豆瓣二百五的电影URL，然后存储在了一个文件里。接下来，我们要访问每一个电影URL，深入敌后，获取情报~
+所有的代码都已存储在我的Github仓库：Douban_250当中~
+设置爬取规则对于每一个电影，我们选择爬取如下内容（虽然电影列表页就能爬得到= =）：
+12标题（tit
+- [【Easy Python】第三话：爬虫初探——玩转豆瓣二百五（上）](https://utmhikari.top/2019/03/31/easypython/iii/): 前言一直以来，爬虫都是许多同学学Python的目的之一，就连我敬爱的领导，也经常不耻下问一些爬虫方面的问题。因此，我们开始实战——以豆瓣Top 250为例，试水一下基础的爬虫。
+“玩转豆瓣二百五”系列分为上下两部，所有代码，可以在我的Github里Douban_250找到~
+工欲善其事，必先利其器。
+- [【Easy Python】第二话：映射——输入、输出与函数的纽带](https://utmhikari.top/2019/03/16/easypython/ii/): 从dict开始说起学python的时候，我们一定会接触到dict（字典）这个数据结构。
+dict结构展示了数据间（key与value）一一对应的关系，key作为一个查询索引，是不允许有重复的，而不同key所对应的value，则允许重复值的存在。
+比如说，我们定义一群boys&amp;girls，打出
+- [【Easy Python】第一话：print('HelloWorld')——输入、输出与函数](https://utmhikari.top/2019/03/09/easypython/i/): 前言这个年代，连小学生都会Python了，我家领导还是一行代码都打不出。网上的Python教程一抓一大把，但出于让人更加深刻理解以及实用的目的（尤其是我家领导），Easy Python，开始挖坑！
+安装Python这个没有教程= =，请安装3.*最新版Python编辑器建议为vscode 、subl
+
+## About
+
+- [关于笔者](https://utmhikari.top/about/)
+- RSS 订阅: https://utmhikari.top/atom.xml
+- 全量正文（供 AI 检索）: https://utmhikari.top/llms-full.txt

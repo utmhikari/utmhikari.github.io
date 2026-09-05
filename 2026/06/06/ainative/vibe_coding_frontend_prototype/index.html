@@ -102,10 +102,10 @@
 
 
   <meta name="description" content="AI Native是大势所趋，AI Coding的技能必不可少。鉴于此，笔者决定新开一个AI Native系列，记录自己后续在All-In-AI路程上的点滴，分享自己通过AI提升日常工作跟研发效率的思考和经验。 先前的文章也讨论到，因为工作的原因，笔者已经开始在做ToB稳定性治理的事情，所以近期也一直在通过Vibe Coding的方式，设计相关平台能力要做些什么，产品形式上需要如何呈现。从效果上看">
-<meta name="keywords" content="AI,Vibe Coding,Qoder,前端开发,web开发">
+<meta name="keywords" content="AI,Vibe Coding,前端开发,Qoder,web开发">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【AI原生】用Vibe Coding写产品前端原型的一些经验">
-<meta property="og:url" content="http://utmhikari.github.io/2026/06/06/ainative/vibe_coding_frontend_prototype/index.html">
+<meta property="og:url" content="https://utmhikari.top/2026/06/06/ainative/vibe_coding_frontend_prototype/index.html">
 <meta property="og:site_name" content="HiKariのTechLab">
 <meta property="og:description" content="AI Native是大势所趋，AI Coding的技能必不可少。鉴于此，笔者决定新开一个AI Native系列，记录自己后续在All-In-AI路程上的点滴，分享自己通过AI提升日常工作跟研发效率的思考和经验。 先前的文章也讨论到，因为工作的原因，笔者已经开始在做ToB稳定性治理的事情，所以近期也一直在通过Vibe Coding的方式，设计相关平台能力要做些什么，产品形式上需要如何呈现。从效果上看">
 <meta property="og:locale" content="zh-CN">
@@ -116,10 +116,12 @@
 
 
 
+  <link rel="alternate" href="/atom.xml" title="HiKariのTechLab" type="application/atom+xml">
 
 
 
-  <link rel="canonical" href="http://utmhikari.github.io/2026/06/06/ainative/vibe_coding_frontend_prototype/">
+
+  <link rel="canonical" href="https://utmhikari.top/2026/06/06/ainative/vibe_coding_frontend_prototype/">
 
 
 
@@ -374,7 +376,7 @@
 
   
 
-  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="关注HiKariのGithub" aria-label="关注HiKariのGithub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></span>
+  <a href="https://github.com/utmhikari" class="github-corner" title="关注HiKariのGithub" aria-label="关注HiKariのGithub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
 
 
 
@@ -404,7 +406,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2026/06/06/ainative/vibe_coding_frontend_prototype/">
+    <link itemprop="mainEntityOfPage" href="https://utmhikari.top/2026/06/06/ainative/vibe_coding_frontend_prototype/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ひかり.HDQ">
@@ -512,7 +514,7 @@
 
       
         <p>AI Native是大势所趋，AI Coding的技能必不可少。鉴于此，笔者决定新开一个AI Native系列，记录自己后续在All-In-AI路程上的点滴，分享自己通过AI提升日常工作跟研发效率的思考和经验。</p>
-<p><span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjYvMDUvMDEvZ2Vla2RhaWx5L3RvYl9jdXN0b21lcl9zdGFiaWxpdHkv" title="https://utmhikari.top/2026/05/01/geekdaily/tob_customer_stability/">先前的文章<i class="fa fa-external-link"></i></span>也讨论到，因为工作的原因，笔者已经开始在做ToB稳定性治理的事情，所以近期也一直在通过Vibe Coding的方式，设计相关平台能力要做些什么，产品形式上需要如何呈现。从效果上看，AI写前端原型的能力还是比较OK的，能够很快速满足笔者的工作需要。今天这篇文章，就简单聊一下这个过程中的经验。</p>
+<p><a href="https://utmhikari.top/2026/05/01/geekdaily/tob_customer_stability/">先前的文章</a>也讨论到，因为工作的原因，笔者已经开始在做ToB稳定性治理的事情，所以近期也一直在通过Vibe Coding的方式，设计相关平台能力要做些什么，产品形式上需要如何呈现。从效果上看，AI写前端原型的能力还是比较OK的，能够很快速满足笔者的工作需要。今天这篇文章，就简单聊一下这个过程中的经验。</p>
 <p>笔者用的工具是Qoder，通过Quest模式去快速搭建前端原型，整一个过程是这样的：</p>
 <a id="more"></a>
 <p>首先是需求文档，这部分基本上是自己纯手写，因为设计到很多实际业务层面还有自己对实现效果预期的思考。需求文档写完后，先不急去丢给AI，先让AI理解前后端项目，沉淀一些memory，然后再丢需求文档，这样AI就能够知道可能涉及哪些地方的修改，对应模块的代码以前写的怎么样。</p>
@@ -559,9 +561,9 @@
           
             <a href="/tags/Vibe-Coding/" rel="tag"># Vibe Coding</a>
           
-            <a href="/tags/Qoder/" rel="tag"># Qoder</a>
-          
             <a href="/tags/前端开发/" rel="tag"># 前端开发</a>
+          
+            <a href="/tags/Qoder/" rel="tag"># Qoder</a>
           
             <a href="/tags/web开发/" rel="tag"># web开发</a>
           
@@ -605,6 +607,14 @@
 
 
   </div>
+
+  
+  
+  
+  
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【AI原生】用Vibe Coding写产品前端原型的一些经验","description":"AI Native是大势所趋，AI Coding的技能必不可少。鉴于此，笔者决定新开一个AI Native系列，记录自己后续在All-In-AI路程上的点滴，分享自己通过AI提升日常工作跟研发效率的思考和经验。 先前的文章也讨论到，因为工作的原因，笔者已经开始在做ToB稳定性治理的事情，所以近期也一直在通过Vibe Coding的方式，设计相关平台能力要做些什么，产品形式上需要如何呈现。从效果上看","datePublished":"2026-06-06T12:00:01.000Z","dateModified":"2026-06-06T12:36:53.443Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2026/06/06/ainative/vibe_coding_frontend_prototype/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"AI, Vibe Coding, 前端开发, Qoder, web开发"}</script>
+  
+  
 
 
           </div>
@@ -1574,8 +1584,6 @@
                     
                       
                     
-                      
-                    
                     <span class="site-state-item-count">430</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
@@ -1584,6 +1592,13 @@
             </nav>
           
 
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
           
 
           
@@ -1599,7 +1614,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="GitHub &rarr; https://github.com/utmhikari"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                  <a href="https://github.com/utmhikari" title="GitHub &rarr; https://github.com/utmhikari" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
                 </span>
               
                 <span class="links-of-author-item">
@@ -1610,7 +1625,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
+                  <a href="https://blog.csdn.net/u013842501" title="CSDN &rarr; https://blog.csdn.net/u013842501" rel="noopener" target="_blank"><i class="fa fa-fw fa-copyright"></i>CSDN</a>
                 </span>
               
                 <span class="links-of-author-item">
@@ -1621,7 +1636,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80NDg4NjUwODE4MDYyMjg2L2NvbHVtbnM=" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns"><i class="fa fa-fw fa-code"></i>Juejin</span>
+                  <a href="https://juejin.cn/user/4488650818062286/columns" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns" rel="noopener" target="_blank"><i class="fa fa-fw fa-code"></i>Juejin</a>
                 </span>
               
                 <span class="links-of-author-item">
@@ -1632,7 +1647,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9zcGFjZS5iaWxpYmlsaS5jb20vNzc4NDEwLw==" title="Bilibili &rarr; https://space.bilibili.com/778410/"><i class="fa fa-fw fa-bold"></i>Bilibili</span>
+                  <a href="https://space.bilibili.com/778410/" title="Bilibili &rarr; https://space.bilibili.com/778410/" rel="noopener" target="_blank"><i class="fa fa-fw fa-bold"></i>Bilibili</a>
                 </span>
               
             </div>
@@ -1821,8 +1836,6 @@
   
 
   
-  <script src="/js/src/exturl.js?v=7.0.1"></script>
-
 
   
 

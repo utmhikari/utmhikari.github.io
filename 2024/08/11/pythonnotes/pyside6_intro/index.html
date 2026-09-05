@@ -105,7 +105,7 @@
 <meta name="keywords" content="python,工具开发,pyside6,PyQt5,Qt">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【Python随笔】比PyQt5更先进的pyside6安装和使用方法">
-<meta property="og:url" content="http://utmhikari.github.io/2024/08/11/pythonnotes/pyside6_intro/index.html">
+<meta property="og:url" content="https://utmhikari.top/2024/08/11/pythonnotes/pyside6_intro/index.html">
 <meta property="og:site_name" content="HiKariのTechLab">
 <meta property="og:description" content="最近因为自研日常开发工具的需求，决定重新拾起PyQt5之类的桌面工具开发技术栈，为啥选用PyQt，一是因为笔者比较精通python，二是因为不需要在外观上做什么特别的东西。经过一番调研，发现当前的PyQt5版本已经过时，用pyside6会更加贴合现在的需求。因此笔者也简单部署了下pyside6的开发环境，通过这篇文章分享一下如何操作。 先强调一点是，所有的资料都可以在官网查到。如果有特别疑问的地方">
 <meta property="og:locale" content="zh-CN">
@@ -116,10 +116,12 @@
 
 
 
+  <link rel="alternate" href="/atom.xml" title="HiKariのTechLab" type="application/atom+xml">
 
 
 
-  <link rel="canonical" href="http://utmhikari.github.io/2024/08/11/pythonnotes/pyside6_intro/">
+
+  <link rel="canonical" href="https://utmhikari.top/2024/08/11/pythonnotes/pyside6_intro/">
 
 
 
@@ -374,7 +376,7 @@
 
   
 
-  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="关注HiKariのGithub" aria-label="关注HiKariのGithub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></span>
+  <a href="https://github.com/utmhikari" class="github-corner" title="关注HiKariのGithub" aria-label="关注HiKariのGithub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
 
 
 
@@ -404,7 +406,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2024/08/11/pythonnotes/pyside6_intro/">
+    <link itemprop="mainEntityOfPage" href="https://utmhikari.top/2024/08/11/pythonnotes/pyside6_intro/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ひかり.HDQ">
@@ -512,10 +514,10 @@
 
       
         <p>最近因为自研日常开发工具的需求，决定重新拾起PyQt5之类的桌面工具开发技术栈，为啥选用PyQt，一是因为笔者比较精通python，二是因为不需要在外观上做什么特别的东西。经过一番调研，发现当前的PyQt5版本已经过时，用pyside6会更加贴合现在的需求。因此笔者也简单部署了下pyside6的开发环境，通过这篇文章分享一下如何操作。</p>
-<p>先强调一点是，所有的资料都可以在<span class="exturl" data-url="aHR0cHM6Ly9kb2MucXQuaW8vcXRmb3JweXRob24tNi9xdWlja3N0YXJ0Lmh0bWw=" title="https://doc.qt.io/qtforpython-6/quickstart.html">官网<i class="fa fa-external-link"></i></span>查到。如果有特别疑问的地方，参考官网，实在不行就stackoverflow或者gpt，也许可以更快解决问题。</p>
+<p>先强调一点是，所有的资料都可以在<a href="https://doc.qt.io/qtforpython-6/quickstart.html" target="_blank" rel="noopener">官网</a>查到。如果有特别疑问的地方，参考官网，实在不行就stackoverflow或者gpt，也许可以更快解决问题。</p>
 <a id="more"></a>
 <p>首先是折腾项目工作区。从个人开发角度，笔者推荐所有的桌面开发项目都放在一个pyside6的工作区，并采用venv来安装pyside6相关库和工具。</p>
-<p>pyside6的工具有很多，比如把ui文件转化为python代码的pyside6-uic，以及编辑ui的可视化工具pyside6-designer之类。如果是venv安pyside6的话，这些工具都集成到了<code>${project_dir}/.venv/bin</code>下面，有需要的话也可以export到path里，具体作用详细可以参考官网的<span class="exturl" data-url="aHR0cHM6Ly9kb2MucXQuaW8vcXRmb3JweXRob24tNi90b29scy9pbmRleC5odG1s" title="https://doc.qt.io/qtforpython-6/tools/index.html">这份资料<i class="fa fa-external-link"></i></span>。通过这些工具加上一些脚本，就能简单打通ui编辑-&gt;ui转码-&gt;代码编写-&gt;部署发布的开发链路（p.s. 部署发布相关的调研暂时不多）。</p>
+<p>pyside6的工具有很多，比如把ui文件转化为python代码的pyside6-uic，以及编辑ui的可视化工具pyside6-designer之类。如果是venv安pyside6的话，这些工具都集成到了<code>${project_dir}/.venv/bin</code>下面，有需要的话也可以export到path里，具体作用详细可以参考官网的<a href="https://doc.qt.io/qtforpython-6/tools/index.html" target="_blank" rel="noopener">这份资料</a>。通过这些工具加上一些脚本，就能简单打通ui编辑-&gt;ui转码-&gt;代码编写-&gt;部署发布的开发链路（p.s. 部署发布相关的调研暂时不多）。</p>
 <p>代码组织方面，推荐先是把工具类、业务逻辑和ui逻辑几个模块分离开，然后重要一点是，把ui生成代码和实际的window跟widget类给分开来，做到view和model的区分。这样一来是大小层次比较分明，不会出现循环引用的情况，二来是从ui生成的代码，也不会直接影响到已有代码的实现，做改动也是非常方便。以笔者的项目为例，笔者用一个app文件夹来存储所有业务逻辑，通过最外层的main.py驱动app运行：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> app</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    app.run()</span><br></pre></td></tr></table></figure>
 <p>然后在app的<strong>init</strong>.py启动整个项目</p>
@@ -609,6 +611,14 @@
 
 
   </div>
+
+  
+  
+  
+  
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Python随笔】比PyQt5更先进的pyside6安装和使用方法","description":"最近因为自研日常开发工具的需求，决定重新拾起PyQt5之类的桌面工具开发技术栈，为啥选用PyQt，一是因为笔者比较精通python，二是因为不需要在外观上做什么特别的东西。经过一番调研，发现当前的PyQt5版本已经过时，用pyside6会更加贴合现在的需求。因此笔者也简单部署了下pyside6的开发环境，通过这篇文章分享一下如何操作。 先强调一点是，所有的资料都可以在官网查到。如果有特别疑问的地方","datePublished":"2024-08-11T08:12:10.000Z","dateModified":"2024-08-11T08:23:32.137Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2024/08/11/pythonnotes/pyside6_intro/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"python, 工具开发, pyside6, PyQt5, Qt"}</script>
+  
+  
 
 
           </div>
@@ -1578,8 +1588,6 @@
                     
                       
                     
-                      
-                    
                     <span class="site-state-item-count">430</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
@@ -1588,6 +1596,13 @@
             </nav>
           
 
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
           
 
           
@@ -1603,7 +1618,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="GitHub &rarr; https://github.com/utmhikari"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                  <a href="https://github.com/utmhikari" title="GitHub &rarr; https://github.com/utmhikari" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
                 </span>
               
                 <span class="links-of-author-item">
@@ -1614,7 +1629,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
+                  <a href="https://blog.csdn.net/u013842501" title="CSDN &rarr; https://blog.csdn.net/u013842501" rel="noopener" target="_blank"><i class="fa fa-fw fa-copyright"></i>CSDN</a>
                 </span>
               
                 <span class="links-of-author-item">
@@ -1625,7 +1640,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80NDg4NjUwODE4MDYyMjg2L2NvbHVtbnM=" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns"><i class="fa fa-fw fa-code"></i>Juejin</span>
+                  <a href="https://juejin.cn/user/4488650818062286/columns" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns" rel="noopener" target="_blank"><i class="fa fa-fw fa-code"></i>Juejin</a>
                 </span>
               
                 <span class="links-of-author-item">
@@ -1636,7 +1651,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9zcGFjZS5iaWxpYmlsaS5jb20vNzc4NDEwLw==" title="Bilibili &rarr; https://space.bilibili.com/778410/"><i class="fa fa-fw fa-bold"></i>Bilibili</span>
+                  <a href="https://space.bilibili.com/778410/" title="Bilibili &rarr; https://space.bilibili.com/778410/" rel="noopener" target="_blank"><i class="fa fa-fw fa-bold"></i>Bilibili</a>
                 </span>
               
             </div>
@@ -1825,8 +1840,6 @@
   
 
   
-  <script src="/js/src/exturl.js?v=7.0.1"></script>
-
 
   
 

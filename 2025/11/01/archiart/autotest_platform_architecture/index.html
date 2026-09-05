@@ -102,10 +102,10 @@
 
 
   <meta name="description" content="在Game-Of-AutoTest系列的文章当中，曾经深入聊到如何做好游戏自动化测试的技术实践，包括用例编写和任务调度等多个方面。由于工作原因，笔者再一次需要了解自动化测试平台的整体架构，因此也借着这个机会，从更加宏观的角度，再聊一下自动化平台架构设计的一些通用要点。">
-<meta name="keywords" content="架构,后端开发,系统设计,自动化测试,测试开发">
+<meta name="keywords" content="后端开发,自动化测试,测试开发,系统设计,架构">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【架构艺术】自动化测试平台架构设计的一些通用要点">
-<meta property="og:url" content="http://utmhikari.github.io/2025/11/01/archiart/autotest_platform_architecture/index.html">
+<meta property="og:url" content="https://utmhikari.top/2025/11/01/archiart/autotest_platform_architecture/index.html">
 <meta property="og:site_name" content="HiKariのTechLab">
 <meta property="og:description" content="在Game-Of-AutoTest系列的文章当中，曾经深入聊到如何做好游戏自动化测试的技术实践，包括用例编写和任务调度等多个方面。由于工作原因，笔者再一次需要了解自动化测试平台的整体架构，因此也借着这个机会，从更加宏观的角度，再聊一下自动化平台架构设计的一些通用要点。">
 <meta property="og:locale" content="zh-CN">
@@ -116,10 +116,12 @@
 
 
 
+  <link rel="alternate" href="/atom.xml" title="HiKariのTechLab" type="application/atom+xml">
 
 
 
-  <link rel="canonical" href="http://utmhikari.github.io/2025/11/01/archiart/autotest_platform_architecture/">
+
+  <link rel="canonical" href="https://utmhikari.top/2025/11/01/archiart/autotest_platform_architecture/">
 
 
 
@@ -374,7 +376,7 @@
 
   
 
-  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="关注HiKariのGithub" aria-label="关注HiKariのGithub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></span>
+  <a href="https://github.com/utmhikari" class="github-corner" title="关注HiKariのGithub" aria-label="关注HiKariのGithub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
 
 
 
@@ -404,7 +406,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2025/11/01/archiart/autotest_platform_architecture/">
+    <link itemprop="mainEntityOfPage" href="https://utmhikari.top/2025/11/01/archiart/autotest_platform_architecture/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ひかり.HDQ">
@@ -511,11 +513,11 @@
       
 
       
-        <p>在<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wL2NhdGVnb3JpZXMvR2FtZS1PZi1BdXRvVGVzdC8=" title="https://utmhikari.top/categories/Game-Of-AutoTest/">Game-Of-AutoTest<i class="fa fa-external-link"></i></span>系列的文章当中，曾经深入聊到如何做好游戏自动化测试的技术实践，包括用例编写和任务调度等多个方面。由于工作原因，笔者再一次需要了解自动化测试平台的整体架构，因此也借着这个机会，从更加宏观的角度，再聊一下自动化平台架构设计的一些通用要点。</p>
+        <p>在<a href="https://utmhikari.top/categories/Game-Of-AutoTest/">Game-Of-AutoTest</a>系列的文章当中，曾经深入聊到如何做好游戏自动化测试的技术实践，包括用例编写和任务调度等多个方面。由于工作原因，笔者再一次需要了解自动化测试平台的整体架构，因此也借着这个机会，从更加宏观的角度，再聊一下自动化平台架构设计的一些通用要点。</p>
 <a id="more"></a>
 <p>首先从细粒度的来讲，测试用例testcase管理是基础，一个最简单的测试用例需要包含标题、setup、执行步骤以及teardown等环节。而执行步骤里面，由于要做自动化测试，所以需要拆分成较细的step粒度，每个step粒度可能有不同的操作类型，比如正常和真机交互断言，或者是对外发送HTTP请求这类，都可以算作是一类步骤，所以如果有共性的步骤的话，也可以抽象出步骤集能力，方便多场景共用。再往宏观一点的话，testcase需要打标，需要通过集合、类别、场景以及业务等维度去做统一的管理。作为一个自动化测试平台，需要有这么样一套索引机制，让测试同学更好使用整套产品。</p>
 <p>然后是自动化用例的执行，这里首先需要注意执行是有多个粒度的。假使一个大的客户端版本发布，那么这个版本可能对应多个OS的客户端，执行多个场景的用例。那么自顶向下来看，首先有那么一套集成测试任务，下面会挂很多个用例的子任务，每个用例可能在多端运行，如果单端运行失败也需要有历史记录，所以起码得有4张表去描述整一套业务集成测试这个事情。一个用例执行也需要关联很多内容，除了包体信息之外，机器调度、状态周知、环境变量、执行策略以及webhook等各种任务执行相关的元素都是需要考虑的，所以如果有共性的一些东西的话，也可以抽象出来任务模板能力，方便任务复用。</p>
-<p>之后是任务调度、执行和监控。调度的话通常逻辑是先访问设备管理服务，给设备上锁，然后要求用例执行服务操作这个设备，执行自动化测试操作。任务执行过程中，就需要考虑如何保障任务执行稳定性，这部分<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjIvMTAvMDMvZ2FtZW9mYXV0b3Rlc3QvaXYv" title="https://utmhikari.top/2022/10/03/gameofautotest/iv/">先前的文章<i class="fa fa-external-link"></i></span>有聊，此处不再赘述。如果人力充足且服务数量较多的话，最好是通过MQ的形式在不同服务之间搭桥，驱动执行状态变化，这么做的原因正好是执行是多粒度且状态是相互依赖的，只有最小粒度执行状态变化了，粗粒度的执行才跟着变化，这样就不容易出现卡状态的情况。如果人力不充足的话，最好是统一通过外部定时任务推动任务状态执行跟补偿，这样服务间职责会更加清晰一些。</p>
+<p>之后是任务调度、执行和监控。调度的话通常逻辑是先访问设备管理服务，给设备上锁，然后要求用例执行服务操作这个设备，执行自动化测试操作。任务执行过程中，就需要考虑如何保障任务执行稳定性，这部分<a href="https://utmhikari.top/2022/10/03/gameofautotest/iv/">先前的文章</a>有聊，此处不再赘述。如果人力充足且服务数量较多的话，最好是通过MQ的形式在不同服务之间搭桥，驱动执行状态变化，这么做的原因正好是执行是多粒度且状态是相互依赖的，只有最小粒度执行状态变化了，粗粒度的执行才跟着变化，这样就不容易出现卡状态的情况。如果人力不充足的话，最好是统一通过外部定时任务推动任务状态执行跟补偿，这样服务间职责会更加清晰一些。</p>
 <p>最后就是需要做好任务执行的trace模块，精确到每一个客户端执行的每一个Step，每一个Step需要记录操作日志、截图、结果以及思考等多类元信息，这样不论是调试用例还是排查线上问题都是非常方便的，能显著提升工作效率。从业务视角，自动化测试的稳定性和结果的可读性会显著动化测试问题是否能快速跟进，进而影响这个事情在业务里是否能长久的推下去。</p>
 
       
@@ -553,15 +555,15 @@
       
         <div class="post-tags">
           
-            <a href="/tags/架构/" rel="tag"># 架构</a>
-          
             <a href="/tags/后端开发/" rel="tag"># 后端开发</a>
-          
-            <a href="/tags/系统设计/" rel="tag"># 系统设计</a>
           
             <a href="/tags/自动化测试/" rel="tag"># 自动化测试</a>
           
             <a href="/tags/测试开发/" rel="tag"># 测试开发</a>
+          
+            <a href="/tags/系统设计/" rel="tag"># 系统设计</a>
+          
+            <a href="/tags/架构/" rel="tag"># 架构</a>
           
         </div>
       
@@ -603,6 +605,14 @@
 
 
   </div>
+
+  
+  
+  
+  
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【架构艺术】自动化测试平台架构设计的一些通用要点","description":"在Game-Of-AutoTest系列的文章当中，曾经深入聊到如何做好游戏自动化测试的技术实践，包括用例编写和任务调度等多个方面。由于工作原因，笔者再一次需要了解自动化测试平台的整体架构，因此也借着这个机会，从更加宏观的角度，再聊一下自动化平台架构设计的一些通用要点。","datePublished":"2025-11-01T08:06:13.000Z","dateModified":"2025-11-01T08:06:44.748Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2025/11/01/archiart/autotest_platform_architecture/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"后端开发, 自动化测试, 测试开发, 系统设计, 架构"}</script>
+  
+  
 
 
           </div>
@@ -1572,8 +1582,6 @@
                     
                       
                     
-                      
-                    
                     <span class="site-state-item-count">430</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
@@ -1582,6 +1590,13 @@
             </nav>
           
 
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
           
 
           
@@ -1597,7 +1612,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="GitHub &rarr; https://github.com/utmhikari"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                  <a href="https://github.com/utmhikari" title="GitHub &rarr; https://github.com/utmhikari" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
                 </span>
               
                 <span class="links-of-author-item">
@@ -1608,7 +1623,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
+                  <a href="https://blog.csdn.net/u013842501" title="CSDN &rarr; https://blog.csdn.net/u013842501" rel="noopener" target="_blank"><i class="fa fa-fw fa-copyright"></i>CSDN</a>
                 </span>
               
                 <span class="links-of-author-item">
@@ -1619,7 +1634,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80NDg4NjUwODE4MDYyMjg2L2NvbHVtbnM=" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns"><i class="fa fa-fw fa-code"></i>Juejin</span>
+                  <a href="https://juejin.cn/user/4488650818062286/columns" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns" rel="noopener" target="_blank"><i class="fa fa-fw fa-code"></i>Juejin</a>
                 </span>
               
                 <span class="links-of-author-item">
@@ -1630,7 +1645,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9zcGFjZS5iaWxpYmlsaS5jb20vNzc4NDEwLw==" title="Bilibili &rarr; https://space.bilibili.com/778410/"><i class="fa fa-fw fa-bold"></i>Bilibili</span>
+                  <a href="https://space.bilibili.com/778410/" title="Bilibili &rarr; https://space.bilibili.com/778410/" rel="noopener" target="_blank"><i class="fa fa-fw fa-bold"></i>Bilibili</a>
                 </span>
               
             </div>
@@ -1819,8 +1834,6 @@
   
 
   
-  <script src="/js/src/exturl.js?v=7.0.1"></script>
-
 
   
 

@@ -105,7 +105,7 @@
 <meta name="keywords" content="后端开发,源码分析,lua,skynet,lua_State">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【Lua杂谈】基于lua的服务端架构——skynet通信原理与源码分析">
-<meta property="og:url" content="http://utmhikari.github.io/2019/10/20/luatalk/skynet/index.html">
+<meta property="og:url" content="https://utmhikari.top/2019/10/20/luatalk/skynet/index.html">
 <meta property="og:site_name" content="HiKariのTechLab">
 <meta property="og:description" content="前言提起中国的lua产品，就不得不想到skynet，一款针对游戏，但又不仅限于游戏的服务端架构。skynet充分利用了lua的特性，并且在此基础上易扩展HTTP、HTTPS、WebSocket等模块，因此由skynet入手理解lua原理以及服务端架构是一个非常不错的选择。 通过skynet，我们可以构建许多小巧而高性能、高可用的应用。废话不多说，让我们一起来探索skynet架构吧~ skynet通">
 <meta property="og:locale" content="zh-CN">
@@ -116,10 +116,12 @@
 
 
 
+  <link rel="alternate" href="/atom.xml" title="HiKariのTechLab" type="application/atom+xml">
 
 
 
-  <link rel="canonical" href="http://utmhikari.github.io/2019/10/20/luatalk/skynet/">
+
+  <link rel="canonical" href="https://utmhikari.top/2019/10/20/luatalk/skynet/">
 
 
 
@@ -374,7 +376,7 @@
 
   
 
-  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="关注HiKariのGithub" aria-label="关注HiKariのGithub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></span>
+  <a href="https://github.com/utmhikari" class="github-corner" title="关注HiKariのGithub" aria-label="关注HiKariのGithub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
 
 
 
@@ -404,7 +406,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2019/10/20/luatalk/skynet/">
+    <link itemprop="mainEntityOfPage" href="https://utmhikari.top/2019/10/20/luatalk/skynet/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ひかり.HDQ">
@@ -523,7 +525,7 @@
       
 
       
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>提起中国的lua产品，就不得不想到<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nsb3Vkd3Uvc2t5bmV0" title="https://github.com/cloudwu/skynet">skynet<i class="fa fa-external-link"></i></span>，一款针对游戏，但又不仅限于游戏的服务端架构。skynet充分利用了lua的特性，并且在此基础上易扩展HTTP、HTTPS、WebSocket等模块，因此由skynet入手理解lua原理以及服务端架构是一个非常不错的选择。</p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>提起中国的lua产品，就不得不想到<a href="https://github.com/cloudwu/skynet" target="_blank" rel="noopener">skynet</a>，一款针对游戏，但又不仅限于游戏的服务端架构。skynet充分利用了lua的特性，并且在此基础上易扩展HTTP、HTTPS、WebSocket等模块，因此由skynet入手理解lua原理以及服务端架构是一个非常不错的选择。</p>
 <p>通过skynet，我们可以构建许多小巧而高性能、高可用的应用。废话不多说，让我们一起来探索skynet架构吧~</p>
 <h2 id="skynet通信原理与源码分析"><a href="#skynet通信原理与源码分析" class="headerlink" title="skynet通信原理与源码分析"></a>skynet通信原理与源码分析</h2><p>服务端架构中，不同子服务的通信调度是核心功能。因此，我们以单点（standalone）的skynet实例为例，由外而内，逐步剖析。</p>
 <p>要介绍skynet的通信原理，首先要提到lua中的一个概念——lua_State。lua_State是lua的运行时（runtime），是一个原生隔离的、高性能的运行环境，若在多核并行运行lua_State，其性能一定不会差。lua作为嵌入式语言，以C为基础，可以实现操作系统粒度级的lua_State调度，因此skynet也就如同lua_State管理器一样了。</p>
@@ -642,6 +644,14 @@
 
 
   </div>
+
+  
+  
+  
+  
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Lua杂谈】基于lua的服务端架构——skynet通信原理与源码分析","description":"前言提起中国的lua产品，就不得不想到skynet，一款针对游戏，但又不仅限于游戏的服务端架构。skynet充分利用了lua的特性，并且在此基础上易扩展HTTP、HTTPS、WebSocket等模块，因此由skynet入手理解lua原理以及服务端架构是一个非常不错的选择。 通过skynet，我们可以构建许多小巧而高性能、高可用的应用。废话不多说，让我们一起来探索skynet架构吧~ skynet通","datePublished":"2019-10-19T19:32:12.000Z","dateModified":"2024-07-20T13:11:34.279Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2019/10/20/luatalk/skynet/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"后端开发, 源码分析, lua, skynet, lua_State"}</script>
+  
+  
 
 
           </div>
@@ -1620,8 +1630,6 @@
                     
                       
                     
-                      
-                    
                     <span class="site-state-item-count">430</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
@@ -1630,6 +1638,13 @@
             </nav>
           
 
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
           
 
           
@@ -1645,7 +1660,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="GitHub &rarr; https://github.com/utmhikari"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                  <a href="https://github.com/utmhikari" title="GitHub &rarr; https://github.com/utmhikari" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
                 </span>
               
                 <span class="links-of-author-item">
@@ -1656,7 +1671,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
+                  <a href="https://blog.csdn.net/u013842501" title="CSDN &rarr; https://blog.csdn.net/u013842501" rel="noopener" target="_blank"><i class="fa fa-fw fa-copyright"></i>CSDN</a>
                 </span>
               
                 <span class="links-of-author-item">
@@ -1667,7 +1682,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80NDg4NjUwODE4MDYyMjg2L2NvbHVtbnM=" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns"><i class="fa fa-fw fa-code"></i>Juejin</span>
+                  <a href="https://juejin.cn/user/4488650818062286/columns" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns" rel="noopener" target="_blank"><i class="fa fa-fw fa-code"></i>Juejin</a>
                 </span>
               
                 <span class="links-of-author-item">
@@ -1678,7 +1693,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9zcGFjZS5iaWxpYmlsaS5jb20vNzc4NDEwLw==" title="Bilibili &rarr; https://space.bilibili.com/778410/"><i class="fa fa-fw fa-bold"></i>Bilibili</span>
+                  <a href="https://space.bilibili.com/778410/" title="Bilibili &rarr; https://space.bilibili.com/778410/" rel="noopener" target="_blank"><i class="fa fa-fw fa-bold"></i>Bilibili</a>
                 </span>
               
             </div>
@@ -1884,8 +1899,6 @@
   
 
   
-  <script src="/js/src/exturl.js?v=7.0.1"></script>
-
 
   
 

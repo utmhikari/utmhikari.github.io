@@ -102,10 +102,10 @@
 
 
   <meta name="description" content="python作为最流行的语言之一，我们对python的认知到底有多少呢？大胆猜测，95%的同学对python的了解都不超过5%吧！不用说python的c源码了，就算是python每个标准库的.py源码，都有很少人去关心。结论就是，我们对python本身的理解是远远不够的，比想象中还不够！当然，这也可能是python的语言特性导致的吧，在设计方面就不需要我们去多想。 python的岗位众多，网上的教">
-<meta name="keywords" content="面试,python,教程,源码分析,Easy Python">
+<meta name="keywords" content="python,教程,源码分析,面试,Easy Python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【Medium Python】前言">
-<meta property="og:url" content="http://utmhikari.github.io/2021/10/10/mediumpython/preface/index.html">
+<meta property="og:url" content="https://utmhikari.top/2021/10/10/mediumpython/preface/index.html">
 <meta property="og:site_name" content="HiKariのTechLab">
 <meta property="og:description" content="python作为最流行的语言之一，我们对python的认知到底有多少呢？大胆猜测，95%的同学对python的了解都不超过5%吧！不用说python的c源码了，就算是python每个标准库的.py源码，都有很少人去关心。结论就是，我们对python本身的理解是远远不够的，比想象中还不够！当然，这也可能是python的语言特性导致的吧，在设计方面就不需要我们去多想。 python的岗位众多，网上的教">
 <meta property="og:locale" content="zh-CN">
@@ -116,10 +116,12 @@
 
 
 
+  <link rel="alternate" href="/atom.xml" title="HiKariのTechLab" type="application/atom+xml">
 
 
 
-  <link rel="canonical" href="http://utmhikari.github.io/2021/10/10/mediumpython/preface/">
+
+  <link rel="canonical" href="https://utmhikari.top/2021/10/10/mediumpython/preface/">
 
 
 
@@ -374,7 +376,7 @@
 
   
 
-  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="关注HiKariのGithub" aria-label="关注HiKariのGithub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></span>
+  <a href="https://github.com/utmhikari" class="github-corner" title="关注HiKariのGithub" aria-label="关注HiKariのGithub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
 
 
 
@@ -404,7 +406,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2021/10/10/mediumpython/preface/">
+    <link itemprop="mainEntityOfPage" href="https://utmhikari.top/2021/10/10/mediumpython/preface/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ひかり.HDQ">
@@ -525,13 +527,13 @@
       
         <p>python作为最流行的语言之一，我们对python的认知到底有多少呢？大胆猜测，95%的同学对python的了解都不超过5%吧！不用说python的c源码了，就算是python每个标准库的.py源码，都有很少人去关心。结论就是，我们对python本身的理解是远远不够的，比想象中还不够！当然，这也可能是python的语言特性导致的吧，在设计方面就不需要我们去多想。</p>
 <p>python的岗位众多，网上的教材跟面试题也很多，然而很多都是八股文，浅尝辄止，鲜有深度的挖掘，让人知其然而不知其所以然，处处透露着对技术的不敬！想想看，游戏程序员学lua，一些C Library的实现、Lua底层机理都需要熟悉，python比lua应用会更加广泛，为什么就不可以去熟悉类似的东西呢？python的应用场景那么多，不去深入了解这门语言的实现，怎么能够更好掌控这门语言？怎么可能做出更加优秀的产品？</p>
-<p>因此笔者决定，从一些所谓的python面试题出发，通过源码分析的方法，挖掘其思路与实现，让更多人对python有更加深入的了解。这个系列，会把一些本该属于python教程里的东西给展现出来，取名就叫做Medium Python——因为笔者刚出道（谈恋爱）时，已经写过<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wL2NhdGVnb3JpZXMvRWFzeS1QeXRob24v" title="https://utmhikari.top/categories/Easy-Python/">Easy Python<i class="fa fa-external-link"></i></span>，里面罗列了些python的简单知识。至于未来有没有Hard Python，到时候再说吧！</p>
+<p>因此笔者决定，从一些所谓的python面试题出发，通过源码分析的方法，挖掘其思路与实现，让更多人对python有更加深入的了解。这个系列，会把一些本该属于python教程里的东西给展现出来，取名就叫做Medium Python——因为笔者刚出道（谈恋爱）时，已经写过<a href="https://utmhikari.top/categories/Easy-Python/">Easy Python</a>，里面罗列了些python的简单知识。至于未来有没有Hard Python，到时候再说吧！</p>
 <h2 id="Contents"><a href="#Contents" class="headerlink" title="Contents"></a>Contents</h2><ul>
-<li><span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjEvMTAvMTcvbWVkaXVtcHl0aG9uL2kv" title="https://utmhikari.top/2021/10/17/mediumpython/i/">【Medium Python】第一话：为什么list“可变”，而tuple“不可变”？<i class="fa fa-external-link"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjEvMTAvMjMvbWVkaXVtcHl0aG9uL2lpLw==" title="https://utmhikari.top/2021/10/23/mediumpython/ii/">【Medium Python】第二话：dict的keys()返回了什么数据类型？<i class="fa fa-external-link"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjEvMTAvMzAvbWVkaXVtcHl0aG9uL2lpaS8=" title="https://utmhikari.top/2021/10/30/mediumpython/iii/">【Medium Python】第三话：python多线程为什么不能并行？<i class="fa fa-external-link"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjEvMTEvMDYvbWVkaXVtcHl0aG9uL2l2Lw==" title="https://utmhikari.top/2021/11/06/mediumpython/iv/">【Medium Python】第四话：类属性和实例属性是怎样的关系？<i class="fa fa-external-link"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjEvMTEvMTMvbWVkaXVtcHl0aG9uL3Yv" title="https://utmhikari.top/2021/11/13/mediumpython/v/">【Medium Python】最终话：如何彻底理解with关键字的用法？<i class="fa fa-external-link"></i></span></li>
+<li><a href="https://utmhikari.top/2021/10/17/mediumpython/i/">【Medium Python】第一话：为什么list“可变”，而tuple“不可变”？</a></li>
+<li><a href="https://utmhikari.top/2021/10/23/mediumpython/ii/">【Medium Python】第二话：dict的keys()返回了什么数据类型？</a></li>
+<li><a href="https://utmhikari.top/2021/10/30/mediumpython/iii/">【Medium Python】第三话：python多线程为什么不能并行？</a></li>
+<li><a href="https://utmhikari.top/2021/11/06/mediumpython/iv/">【Medium Python】第四话：类属性和实例属性是怎样的关系？</a></li>
+<li><a href="https://utmhikari.top/2021/11/13/mediumpython/v/">【Medium Python】最终话：如何彻底理解with关键字的用法？</a></li>
 </ul>
 
       
@@ -569,13 +571,13 @@
       
         <div class="post-tags">
           
-            <a href="/tags/面试/" rel="tag"># 面试</a>
-          
             <a href="/tags/python/" rel="tag"># python</a>
           
             <a href="/tags/教程/" rel="tag"># 教程</a>
           
             <a href="/tags/源码分析/" rel="tag"># 源码分析</a>
+          
+            <a href="/tags/面试/" rel="tag"># 面试</a>
           
             <a href="/tags/Easy-Python/" rel="tag"># Easy Python</a>
           
@@ -619,6 +621,14 @@
 
 
   </div>
+
+  
+  
+  
+  
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Medium Python】前言","description":"python作为最流行的语言之一，我们对python的认知到底有多少呢？大胆猜测，95%的同学对python的了解都不超过5%吧！不用说python的c源码了，就算是python每个标准库的.py源码，都有很少人去关心。结论就是，我们对python本身的理解是远远不够的，比想象中还不够！当然，这也可能是python的语言特性导致的吧，在设计方面就不需要我们去多想。 python的岗位众多，网上的教","datePublished":"2021-10-10T12:50:09.000Z","dateModified":"2024-04-07T02:48:06.926Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2021/10/10/mediumpython/preface/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"python, 教程, 源码分析, 面试, Easy Python"}</script>
+  
+  
 
 
           </div>
@@ -1597,8 +1607,6 @@
                     
                       
                     
-                      
-                    
                     <span class="site-state-item-count">430</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
@@ -1607,6 +1615,13 @@
             </nav>
           
 
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
           
 
           
@@ -1622,7 +1637,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="GitHub &rarr; https://github.com/utmhikari"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                  <a href="https://github.com/utmhikari" title="GitHub &rarr; https://github.com/utmhikari" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
                 </span>
               
                 <span class="links-of-author-item">
@@ -1633,7 +1648,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
+                  <a href="https://blog.csdn.net/u013842501" title="CSDN &rarr; https://blog.csdn.net/u013842501" rel="noopener" target="_blank"><i class="fa fa-fw fa-copyright"></i>CSDN</a>
                 </span>
               
                 <span class="links-of-author-item">
@@ -1644,7 +1659,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80NDg4NjUwODE4MDYyMjg2L2NvbHVtbnM=" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns"><i class="fa fa-fw fa-code"></i>Juejin</span>
+                  <a href="https://juejin.cn/user/4488650818062286/columns" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns" rel="noopener" target="_blank"><i class="fa fa-fw fa-code"></i>Juejin</a>
                 </span>
               
                 <span class="links-of-author-item">
@@ -1655,7 +1670,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9zcGFjZS5iaWxpYmlsaS5jb20vNzc4NDEwLw==" title="Bilibili &rarr; https://space.bilibili.com/778410/"><i class="fa fa-fw fa-bold"></i>Bilibili</span>
+                  <a href="https://space.bilibili.com/778410/" title="Bilibili &rarr; https://space.bilibili.com/778410/" rel="noopener" target="_blank"><i class="fa fa-fw fa-bold"></i>Bilibili</a>
                 </span>
               
             </div>
@@ -1861,8 +1876,6 @@
   
 
   
-  <script src="/js/src/exturl.js?v=7.0.1"></script>
-
 
   
 

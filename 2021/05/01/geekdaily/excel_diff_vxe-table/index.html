@@ -102,10 +102,10 @@
 
 
   <meta name="description" content="excel-differ是游戏测试常用的测试工具。在有些业务场景下，excel-diff的结果可能需要通过web展示。Vue技术栈下的vxe-table表格组件能够支持大量数据的展示，因此可以用vxe-table展示excel-diff的结果。 excel-diff的算法本身，先前的文章已有讲解，在结果展示上会按file-&amp;gt;sheet来分。为了让结果展示更加人性化，需要对表格的样式进行区分。">
-<meta name="keywords" content="测试开发,游戏测试,前端开发,vue,vxe-table">
+<meta name="keywords" content="前端开发,游戏测试,测试开发,vue,vxe-table">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【极客日常】用vxe-table展示excel-diff的结果">
-<meta property="og:url" content="http://utmhikari.github.io/2021/05/01/geekdaily/excel_diff_vxe-table/index.html">
+<meta property="og:url" content="https://utmhikari.top/2021/05/01/geekdaily/excel_diff_vxe-table/index.html">
 <meta property="og:site_name" content="HiKariのTechLab">
 <meta property="og:description" content="excel-differ是游戏测试常用的测试工具。在有些业务场景下，excel-diff的结果可能需要通过web展示。Vue技术栈下的vxe-table表格组件能够支持大量数据的展示，因此可以用vxe-table展示excel-diff的结果。 excel-diff的算法本身，先前的文章已有讲解，在结果展示上会按file-&amp;gt;sheet来分。为了让结果展示更加人性化，需要对表格的样式进行区分。">
 <meta property="og:locale" content="zh-CN">
@@ -116,10 +116,12 @@
 
 
 
+  <link rel="alternate" href="/atom.xml" title="HiKariのTechLab" type="application/atom+xml">
 
 
 
-  <link rel="canonical" href="http://utmhikari.github.io/2021/05/01/geekdaily/excel_diff_vxe-table/">
+
+  <link rel="canonical" href="https://utmhikari.top/2021/05/01/geekdaily/excel_diff_vxe-table/">
 
 
 
@@ -374,7 +376,7 @@
 
   
 
-  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="关注HiKariのGithub" aria-label="关注HiKariのGithub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></span>
+  <a href="https://github.com/utmhikari" class="github-corner" title="关注HiKariのGithub" aria-label="关注HiKariのGithub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
 
 
 
@@ -404,7 +406,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2021/05/01/geekdaily/excel_diff_vxe-table/">
+    <link itemprop="mainEntityOfPage" href="https://utmhikari.top/2021/05/01/geekdaily/excel_diff_vxe-table/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ひかり.HDQ">
@@ -523,8 +525,8 @@
       
 
       
-        <p>excel-differ是游戏测试常用的测试工具。在有些业务场景下，excel-diff的结果可能需要通过web展示。Vue技术栈下的<span class="exturl" data-url="aHR0cHM6Ly9naXRlZS5jb20veHVsaWFuZ3poYW5fYWRtaW4vdnhlLXRhYmxl" title="https://gitee.com/xuliangzhan_admin/vxe-table">vxe-table<i class="fa fa-external-link"></i></span>表格组件能够支持大量数据的展示，因此可以用vxe-table展示excel-diff的结果。</p>
-<p>excel-diff的算法本身，<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjAvMDEvMjMvdGVzdGxpZmUvZXhjZWxfZGlmZi8=" title="https://utmhikari.top/2020/01/23/testlife/excel_diff/">先前的文章<i class="fa fa-external-link"></i></span>已有讲解，在结果展示上会按file-&gt;sheet来分。为了让结果展示更加人性化，需要对表格的样式进行区分。在<span class="exturl" data-url="aHR0cHM6Ly94dWxpYW5nemhhbl9hZG1pbi5naXRlZS5pby92eGUtdGFibGUvdjQvdGFibGUvYXBp" title="https://xuliangzhan_admin.gitee.io/vxe-table/v4/table/api">vxe-table的api列表<i class="fa fa-external-link"></i></span>中，我们可以通过<code>cell-class-name</code>的回调函数指定每个单元格的样式。针对excel-diff的结果可以这样设计样式：</p>
+        <p>excel-differ是游戏测试常用的测试工具。在有些业务场景下，excel-diff的结果可能需要通过web展示。Vue技术栈下的<a href="https://gitee.com/xuliangzhan_admin/vxe-table" target="_blank" rel="noopener">vxe-table</a>表格组件能够支持大量数据的展示，因此可以用vxe-table展示excel-diff的结果。</p>
+<p>excel-diff的算法本身，<a href="https://utmhikari.top/2020/01/23/testlife/excel_diff/">先前的文章</a>已有讲解，在结果展示上会按file-&gt;sheet来分。为了让结果展示更加人性化，需要对表格的样式进行区分。在<a href="https://xuliangzhan_admin.gitee.io/vxe-table/v4/table/api" target="_blank" rel="noopener">vxe-table的api列表</a>中，我们可以通过<code>cell-class-name</code>的回调函数指定每个单元格的样式。针对excel-diff的结果可以这样设计样式：</p>
 <a id="more"></a>
 <ul>
 <li>新增行/列：背景浅绿色</li>
@@ -556,7 +558,7 @@
 <ul>
 <li>针对excel数据本身，过滤空表头、空行等无效数据，保证只有有效数据参与diff计算</li>
 <li>表格需要设定<code>scroll-x</code>与<code>scroll-y</code>虚拟滚动设置，尽量一次性不渲染太多内容</li>
-<li>用Object.freeze冻结excel数据、diff结果相关的object，因为这些object本身就应当是immutable的，用Object.freeze可<span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vZ29sb3ZpbmcvcC8xMzk2OTY4NS5odG1s" title="https://www.cnblogs.com/goloving/p/13969685.html">避免vue做底层各属性的getter/setter绑定<i class="fa fa-external-link"></i></span></li>
+<li>用Object.freeze冻结excel数据、diff结果相关的object，因为这些object本身就应当是immutable的，用Object.freeze可<a href="https://www.cnblogs.com/goloving/p/13969685.html" target="_blank" rel="noopener">避免vue做底层各属性的getter/setter绑定</a></li>
 <li>对于每个单元格取<code>cell-class-name</code>，也需要预先computed + Object.freeze一个缓存data，使得回调函数判断class-name直接可以在其中取字段来判断，这样逻辑复杂度会小</li>
 <li>数据预处理中，如果要用到循环逻辑，可考虑普通的for循环代替forEach</li>
 </ul>
@@ -596,11 +598,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/测试开发/" rel="tag"># 测试开发</a>
+            <a href="/tags/前端开发/" rel="tag"># 前端开发</a>
           
             <a href="/tags/游戏测试/" rel="tag"># 游戏测试</a>
           
-            <a href="/tags/前端开发/" rel="tag"># 前端开发</a>
+            <a href="/tags/测试开发/" rel="tag"># 测试开发</a>
           
             <a href="/tags/vue/" rel="tag"># vue</a>
           
@@ -646,6 +648,14 @@
 
 
   </div>
+
+  
+  
+  
+  
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【极客日常】用vxe-table展示excel-diff的结果","description":"excel-differ是游戏测试常用的测试工具。在有些业务场景下，excel-diff的结果可能需要通过web展示。Vue技术栈下的vxe-table表格组件能够支持大量数据的展示，因此可以用vxe-table展示excel-diff的结果。 excel-diff的算法本身，先前的文章已有讲解，在结果展示上会按file-&gt;sheet来分。为了让结果展示更加人性化，需要对表格的样式进行区分。","datePublished":"2021-05-01T08:50:18.000Z","dateModified":"2024-04-07T02:48:06.919Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2021/05/01/geekdaily/excel_diff_vxe-table/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"前端开发, 游戏测试, 测试开发, vue, vxe-table"}</script>
+  
+  
 
 
           </div>
@@ -1615,8 +1625,6 @@
                     
                       
                     
-                      
-                    
                     <span class="site-state-item-count">430</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
@@ -1625,6 +1633,13 @@
             </nav>
           
 
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
           
 
           
@@ -1640,7 +1655,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="GitHub &rarr; https://github.com/utmhikari"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                  <a href="https://github.com/utmhikari" title="GitHub &rarr; https://github.com/utmhikari" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
                 </span>
               
                 <span class="links-of-author-item">
@@ -1651,7 +1666,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
+                  <a href="https://blog.csdn.net/u013842501" title="CSDN &rarr; https://blog.csdn.net/u013842501" rel="noopener" target="_blank"><i class="fa fa-fw fa-copyright"></i>CSDN</a>
                 </span>
               
                 <span class="links-of-author-item">
@@ -1662,7 +1677,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80NDg4NjUwODE4MDYyMjg2L2NvbHVtbnM=" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns"><i class="fa fa-fw fa-code"></i>Juejin</span>
+                  <a href="https://juejin.cn/user/4488650818062286/columns" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns" rel="noopener" target="_blank"><i class="fa fa-fw fa-code"></i>Juejin</a>
                 </span>
               
                 <span class="links-of-author-item">
@@ -1673,7 +1688,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9zcGFjZS5iaWxpYmlsaS5jb20vNzc4NDEwLw==" title="Bilibili &rarr; https://space.bilibili.com/778410/"><i class="fa fa-fw fa-bold"></i>Bilibili</span>
+                  <a href="https://space.bilibili.com/778410/" title="Bilibili &rarr; https://space.bilibili.com/778410/" rel="noopener" target="_blank"><i class="fa fa-fw fa-bold"></i>Bilibili</a>
                 </span>
               
             </div>
@@ -1862,8 +1877,6 @@
   
 
   
-  <script src="/js/src/exturl.js?v=7.0.1"></script>
-
 
   
 

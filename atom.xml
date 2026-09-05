@@ -1,0 +1,650 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>HiKariのTechLab</title>
+  
+  <subtitle>光の技术屋</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="https://utmhikari.top/"/>
+  <updated>2026-09-05T01:25:20.564Z</updated>
+  <id>https://utmhikari.top/</id>
+  
+  <author>
+    <name>ひかり.HDQ</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【AI原生】优化Agent和Skill工程的一些技巧</title>
+    <link href="https://utmhikari.top/2026/09/05/ainative/agent_skill_project/"/>
+    <id>https://utmhikari.top/2026/09/05/ainative/agent_skill_project/</id>
+    <published>2026-09-05T01:25:44.000Z</published>
+    <updated>2026-09-05T01:25:20.564Z</updated>
+    
+    <content type="html"><![CDATA[<p>在<a href="https://utmhikari.top/2026/08/01/ainative/alert_agent_skill/">先前的文章</a>里，笔者聊了怎么用AI-Native的方式编写一个告警诊断Agent和Skill，那篇更多是单点视角，怎么把一个Agent做好的问题。这篇文章接续上篇的内容，从一个更加完备的工程角度，简单聊一下怎么把Agent和Skill跟自己日常做的工作做更深度的集成，让人退到工程后面去，而不是把AI当做一个外挂的提效工具。</p><p>首先是第一条原则，深度放权，核心就是承认模型的智商比自己高，而且不是高一点半点。不管知识面、编码熟练度还是干活性价比，人跟模型比哪哪都差。所以能让Agent做的事情，尽量让Agent生成，Agent做不了的，才由人来做。</p><a id="more"></a><p>这个说起来简单，实操中却很反直觉。常见的做法是，有了Agent之后还是不放心，在上面添加各种Workflow、编排、校验节点之类人为的东西，把Agent框得死死的，结果能力施展不开，最后效果不好，反而得出”AI不行”的结论。</p><p>举个例子，去年年底笔者在做知识库重构攻坚，6个人花20天把一个企业级的知识库重构完。如果现在用模型来做，估计一个人两周就能搞定。这中间的差距说白了就是放权程度，前者还是人在主导，AI打下手，后者是AI来主导，人只管验收和把关，两种方式出来的效率肯定不是一个量级的。</p><p>那人的核心优势在哪里？多数人的第一反应是懂业务，但并不是。智商高的模型，稍微熟悉下业务就可以把你代替掉。人的核心优势，是能做最兼顾现实和理性的判断。AI更多是理性而非现实，它给出的方案单从技术上看是没毛病的，但落地的时候有很多东西是技术覆盖不到的，比如人力够不够、上下游排期能不能配合、存量的历史包袱敢不敢动、变更窗口允不允许，这些约束下，有时候看起来次一点的方案反而是能落地的。所以充分放权的同时还是要做harness，本质上就是为了满足各类人的需求，让AI舍弃一些理性，让结果更回归现实。</p><p>其次是怎么判断哪些事情要由人来做，也就是古法编程的适用边界，笔者的判断标准是两块：</p><ul><li>涉及私域知识、业务SOP，需要由人介入把控的事情，由人来做。倒不是模型学不会这些知识，而是这类事情怎么判断，要贴着现实来，组织的共识、业务的权衡这些东西，不是纯靠理性推导出来的。</li><li>有执行效率要求的事情，比如千万级数据的处理、高频的批量任务，交给Agent写程序来做。模型直接推理一轮的成本跟时延，比起跑一段代码没有优势。</li></ul><p>值得一提的是，当前工作里最常见的形态，并不是所有情况都Agentic执行，而是在古法编程的工程基础上，对特定的一些业务场景做AI驱动。这个形态是非常合理的，因为就算让AI来搞，AI也必然会自己写一堆代码，先构建一些基础工程，然后再在上面继续做事。所以为什么AI模型用在Coding场景最多，因为就算让AI搭建一套虚拟业务，它也会认为需要Coding的场景最多。</p><p>除去这两块之外的事情，都建议交给Agent。当然有一个前提，私域知识虽然由人把控，但把控的方式不是每件事都人工盯着，而是把知识沉淀成Agent可消费的形态。这里要强调一点，要把Agent做大规模的工程化，底座的知识库也要做大规模的工程化，这个非常重要。只把Agent工程化拉起来，知识供给还停留在零散文档的阶段，那规模化落地大概率是做不起来的。</p><p>然后是知识预热。在执行效率有SLA的前提下，能不能快速精准拿到需要的知识，对Agent的效果提升非常重要。比起纯RAG或者把Reference堆在Prompt里，更好的做法是把Provider（KBase）和Consumer（Agent）这个关系做好，整体分三层：第一层，Agent在运行前主动去Claim自己需要的知识，声明清楚这个Skill需要哪些知识、什么版本；第二层，KBase针对特定版本的Agent做预热，把Claim到的知识提前准备好，注入到Agent的运行上下文里；第三层，实在hit不到的，才fallback到RAG兜底。</p><p>这套机制的好处是，知识消费从被动检索变成了主动声明，给什么知识、什么版本、什么时机注入，都是可控的，而不是像纯RAG那样，每次靠向量相似度赌一把召回质量。RAG就作为兜底，不作为第一选择，这样才能充分发挥私域知识库的优势。</p><p>再往后是定制化模型。知识预热做的事情，本质上是把知识放在模型外面，用工程手段喂给模型，那能不能直接把知识放进模型里面呢？答案是可以的，就是用冗余的知识对模型做进一步训练。这里说的冗余知识，是知识库里使用频率高、跟业务场景强绑定的内容，拿去做SFT或者继续预训练，让模型一开始就懂这部分东西，实战场景里的输出也会更加准确。当然定制化模型成本不低，建议先把预热机制跑顺，沉淀出哪些知识是高频消费的，再针对性做定制化训练，循序渐进。</p><p>最后想多说几句，给古法编程比较有经验的老手们：根本无需担忧。你对于技术演进的判断，就是让Agent/Skill发挥最大潜能的钥匙。你懂技术，AI自然知道你想要什么；对技术一知半解的话，AI就只会在你的上限游走，你想不到的东西，模型也发挥不出来。所以与其焦虑被替代，不如想想，老手对技术演进的判断力，在AI时代，难道不是最为稀缺的harness么？</p><p>总体来看，Agent和Skill跟工作的深度集成，核心还是处理好人和模型的分工，模型负责执行，人负责做兼顾现实和理性的判断，用harness让结果回归现实。知识层面则从被动RAG走向Provider/Consumer的预热，再进一步走到定制化模型。</p><p>最后再简单强调一下，这篇文章本身，也是笔者第一次极度充分借助Agent来写的，从提纲到行文都是跟Agent来回打磨出来的，也算是文中观点的一次实践了。充分放权，但把握住核心的判断，这便是Agent的Harness之道。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在&lt;a href=&quot;https://utmhikari.top/2026/08/01/ainative/alert_agent_skill/&quot;&gt;先前的文章&lt;/a&gt;里，笔者聊了怎么用AI-Native的方式编写一个告警诊断Agent和Skill，那篇更多是单点视角，怎么把一个Agent做好的问题。这篇文章接续上篇的内容，从一个更加完备的工程角度，简单聊一下怎么把Agent和Skill跟自己日常做的工作做更深度的集成，让人退到工程后面去，而不是把AI当做一个外挂的提效工具。&lt;/p&gt;
+&lt;p&gt;首先是第一条原则，深度放权，核心就是承认模型的智商比自己高，而且不是高一点半点。不管知识面、编码熟练度还是干活性价比，人跟模型比哪哪都差。所以能让Agent做的事情，尽量让Agent生成，Agent做不了的，才由人来做。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="AI原生" scheme="https://utmhikari.top/categories/AI%E5%8E%9F%E7%94%9F/"/>
+    
+    
+      <category term="Agent" scheme="https://utmhikari.top/tags/Agent/"/>
+    
+      <category term="Skill" scheme="https://utmhikari.top/tags/Skill/"/>
+    
+      <category term="AI" scheme="https://utmhikari.top/tags/AI/"/>
+    
+      <category term="知识库" scheme="https://utmhikari.top/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/"/>
+    
+      <category term="Harness Engineering" scheme="https://utmhikari.top/tags/Harness-Engineering/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【架构艺术】端到端监控告警和预案治理</title>
+    <link href="https://utmhikari.top/2026/09/05/archiart/e2e_alarm_preplan/"/>
+    <id>https://utmhikari.top/2026/09/05/archiart/e2e_alarm_preplan/</id>
+    <published>2026-09-05T01:20:13.000Z</published>
+    <updated>2026-09-05T01:27:07.374Z</updated>
+    
+    <content type="html"><![CDATA[<p>在先前<a href="https://utmhikari.top/2026/02/15/archiart/stability_experience/">治理后端稳定性的一些实战经验</a>这篇文章里，笔者聊过稳定性治理的大致路径，先定指标，再保证可监控可观测，之后才是解决具体的技术问题。今天这篇文章就聚焦在可观测跟止损这两个环节，简单聊一下端到端的告警应该怎么梳理，以及严重告警的处理预案应该怎么做。这两块做扎实了，稳定性保障才算是有底子的，说到底目的还是稳定性本身，而不是把监控大盘做得多好看。</p><a id="more"></a><p>首先是端到端告警的梳理。对于复杂的链路场景，笔者认为只了解架构本身是不够的。常见的做法是把服务依赖图画出来，然后照着架构图一层层配指标，CPU、内存、QPS、错误率都配上，看起来挺全，但真出问题的时候还是定位不到。比起技术架构来讲，更重要的是识别哪一类业务场景比较容易出问题，然后针对这个业务场景的链路，去梳理有哪些指标水位是比较敏感的，再针对性地设定告警做监控。</p><p>举个例子，一个任务类的业务场景，从上游触发到中间调度再到下游执行，链路上涉及的服务可能有很多个，但真正需要盯的可能就是其中几个关键节点，比如中间调度那一层的MQ消费方，它的消息积压量和消费时延，是最能反映这个场景健康度的水位。如果只按架构维度去配告警，每个服务的资源指标都告一遍，反而会把这类关键信息盖住。所以梳理的顺序应该是先业务场景，再链路，再指标，最后才是告警规则，这个顺序反了的话，配出来的告警大概率是不好用的。</p><p>然后是严重告警的处置，这一块就需要预案了。对于复杂链路而言，一个严重告警出来，通常一个人是解决不了的，一方面问题可能横跨好几个团队，另一方面值班同学未必熟悉这条链路的全部细节。预案为什么要有，笔者的理解是两点，一是能够有一套效率的线上问题解决办法，不用每次出事都从零开始想，二是不管谁值班，照着这个预案执行都能把问题解决掉。第二点其实更重要，因为线上出事是不挑时间的，凌晨被叫起来的人，未必是当初设计这条链路的人。</p><p>所以预案不能是一份躺在文档里的架构说明，要写清楚具体的动作，比如先关哪个降级开关、限流调到多少、要不要切流、什么情况下直接回滚，最好是能够一键触发的。预案也要跟告警关联起来，严重告警出来的时候直接带出对应的预案，值班同学不需要自己再去翻文档找。</p><p>再往后是预案的演练。预案写完了如果不去演练，等真出事的时候大概率是执行不下去的，因为预案里写的降级开关、限流阈值这些东西，很可能已经跟当前线上的配置对不上了，这样执行下去止不了损，还可能导致二次故障，影响面进一步扩大。笔者的建议是周期性地对复杂的链路场景做故障注入演练，比如把某个下游依赖打挂，或者把某个中间件的时延拉高，然后看告警有没有按时出来，预案执行下去能不能真的止损，整个耗时是多少。演练出来的问题要回流到告警和预案里做迭代，这样重点的业务链路才能长期稳定下来。</p><p>总体来看，端到端告警的梳理还是要从业务场景出发，去识别哪些指标水位比较敏感，而不是照着架构图铺指标。严重告警的处置靠的是预案，预案要能快速止损，还要保证谁值班都能照着执行。最后再配上周期性的故障演练，重点业务链路的稳定性才算是有保障的。这几块最终还是要靠实战出真知，不管是告警预案还是演练，都得多实战几轮，把问题在演练里暴露完，真出事的时候才接得住。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在先前&lt;a href=&quot;https://utmhikari.top/2026/02/15/archiart/stability_experience/&quot;&gt;治理后端稳定性的一些实战经验&lt;/a&gt;这篇文章里，笔者聊过稳定性治理的大致路径，先定指标，再保证可监控可观测，之后才是解决具体的技术问题。今天这篇文章就聚焦在可观测跟止损这两个环节，简单聊一下端到端的告警应该怎么梳理，以及严重告警的处理预案应该怎么做。这两块做扎实了，稳定性保障才算是有底子的，说到底目的还是稳定性本身，而不是把监控大盘做得多好看。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="架构艺术" scheme="https://utmhikari.top/categories/%E6%9E%B6%E6%9E%84%E8%89%BA%E6%9C%AF/"/>
+    
+    
+      <category term="稳定性" scheme="https://utmhikari.top/tags/%E7%A8%B3%E5%AE%9A%E6%80%A7/"/>
+    
+      <category term="SRE" scheme="https://utmhikari.top/tags/SRE/"/>
+    
+      <category term="架构" scheme="https://utmhikari.top/tags/%E6%9E%B6%E6%9E%84/"/>
+    
+      <category term="告警" scheme="https://utmhikari.top/tags/%E5%91%8A%E8%AD%A6/"/>
+    
+      <category term="预案" scheme="https://utmhikari.top/tags/%E9%A2%84%E6%A1%88/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【AI原生】用AI-Native的方式编写SRE告警诊断Agent和Skill</title>
+    <link href="https://utmhikari.top/2026/08/01/ainative/alert_agent_skill/"/>
+    <id>https://utmhikari.top/2026/08/01/ainative/alert_agent_skill/</id>
+    <published>2026-08-01T02:37:50.000Z</published>
+    <updated>2026-08-01T02:37:52.367Z</updated>
+    
+    <content type="html"><![CDATA[<p>在SRE和稳定性工程领域，告警诊断Agent大概是当下AI落地最热门的场景之一了。对于告警应急场景，有一个迅速可靠的Agent做根因分析，通过透出问题链路关键的信息点，可以省掉很多前期的排查精力，帮助线上问题更迅速被解决。</p><p>从实现难度上看，写一个能跑的告警诊断Agent或者Skill，门槛其实不高。接几个Tool（查日志、查监控、查变更记录），写一段System Prompt描述诊断流程，大模型就能按照套路给出一个看似合理的分析结论。但如果要把它做到真正好用、能让大家都信赖程度，那难度就完全不一样了。</p><p>所以今天这篇文章就聊一下，如何用AI-Native的方式去研发一个高质量的告警诊断Agent。</p><a id="more"></a><p>首先是为什么需要用AI-Native的方式写，因为本质上Oncall排查也是经验工程，所以很多知识的整理、梳理和表达，都是自然语言驱动的。在这个情境下，用AI-Native的方式而非手搓，肯定是相对更加合理的方案。具体而言，Agent跟Skill本体Prompt的编写，reference的蒸馏，都是可以通过LLM来做的。当然这里的前提是，你了解的整套排查流程，要排查什么信息，得到结论的话涉及哪些知识跟资料，把这些东西整合起来就肯定需要AI的协助。</p><p>然后一点是，明确Agent/Skill跟运行时环境的关系。本质上写一个告警诊断Agent是在写一个数字人，从数字人的视角来看，一是知道告警的基本信息，二是手头有一些工具，要做的事情就是根据这些信息，快速推断根因，给予值班同学解决方案。在这个基础上，笔者的建议是根据专家经验，先入为主先预设一套工具集及其用途，从这个角度出发再去根据runtime提供的tool，寻找合适的工具做调用，甚至也可以考虑跟runtime做适当的耦合。这样的话一是能够明显减少工具的误调用，二是整体排查效率也会变高。</p><p>之后是Agent跟Skill之间的关系。这里的关键点是，对于不同的告警场景，Agent下面需要拆出多个垂直领域的Skill按需编排，比如可以拆成”变更关联诊断”、”容量水位诊断”、”依赖链路诊断”、”数据库慢查询诊断”等独立Skill，每个Skill有明确的输入输出契约和诊断逻辑。每一个Skill可能引用相同的知识源跟工具，但是做的事情各自又不一样，术业有专攻，这样就能尽可能把不同场景的排查结论做到更加精确。此外，Agent自己接收到一个Skill的输出结论，自身也需要做一层精炼和表达，先是对结论和抽样案例做详细说明，然后得出关键结论，之后一个重点是要指导线上值班同学做什么事情，这样组织起来结论的可靠度会变得更高。</p><p>最后是需要做好Agent的评测，通过数据去支撑Agent的执行效果。这里面包括一些用户反馈机制的建设，Agent执行性能/时间/ToolCall成功率的统计，大规模历史数据自动化评测等内容。这一部分也是最复杂最需要持续迭代的环节，建议是在AIOps底座工程层面，去研发更多的Sidecar Agents完善这个事情。因为Agent执行效果的判断，本质上需要与每个业务自身场景做深度绑定，所以并不能说有一个非常普世通用的机制去描述这个事情，而最终也是更多基于业务内的共识，怎么去把这个共识给量化，是要解决这个问题。</p><p>总体而言，做一个告警诊断Agent很容易，但要做好，做的系统化，是有难度的。对于有足够技术力，足够技术驱动的组织，并且对于SRE稳定性非常重视，那么把这个事情做到深度投入，是非常有价值的；如果组织更加偏向业务驱动，技术力方面也不能做深的情况下，那么把这个Agent做浅一些，适当包装，尝试从运营推广角度让Agent给更多人用，采取由面到点的战术，有更多合作方背书，这样整个Agent的业务价值也是很好说明的。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在SRE和稳定性工程领域，告警诊断Agent大概是当下AI落地最热门的场景之一了。对于告警应急场景，有一个迅速可靠的Agent做根因分析，通过透出问题链路关键的信息点，可以省掉很多前期的排查精力，帮助线上问题更迅速被解决。&lt;/p&gt;
+&lt;p&gt;从实现难度上看，写一个能跑的告警诊断Agent或者Skill，门槛其实不高。接几个Tool（查日志、查监控、查变更记录），写一段System Prompt描述诊断流程，大模型就能按照套路给出一个看似合理的分析结论。但如果要把它做到真正好用、能让大家都信赖程度，那难度就完全不一样了。&lt;/p&gt;
+&lt;p&gt;所以今天这篇文章就聊一下，如何用AI-Native的方式去研发一个高质量的告警诊断Agent。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="AI原生" scheme="https://utmhikari.top/categories/AI%E5%8E%9F%E7%94%9F/"/>
+    
+    
+      <category term="Agent" scheme="https://utmhikari.top/tags/Agent/"/>
+    
+      <category term="Skill" scheme="https://utmhikari.top/tags/Skill/"/>
+    
+      <category term="AI" scheme="https://utmhikari.top/tags/AI/"/>
+    
+      <category term="稳定性" scheme="https://utmhikari.top/tags/%E7%A8%B3%E5%AE%9A%E6%80%A7/"/>
+    
+      <category term="SRE" scheme="https://utmhikari.top/tags/SRE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【Python随笔】通过多解释器并行提升python并发效率</title>
+    <link href="https://utmhikari.top/2026/08/01/pythonnotes/concurrent_intepreters/"/>
+    <id>https://utmhikari.top/2026/08/01/pythonnotes/concurrent_intepreters/</id>
+    <published>2026-08-01T01:55:14.000Z</published>
+    <updated>2026-08-01T02:41:09.550Z</updated>
+    
+    <content type="html"><![CDATA[<p>在非常久远的文章中，我们提到python中实现并行执行程序的方式主要是通过<a href="https://utmhikari.top/2021/06/08/pythonnotes/python_processpoolexecutor/">multiprocessing</a>实现的，而并非多线程（Threading）。机理层面，大致是会开一个新的子进程独立执行，主进程维护一个Sentinel（fd），默认通过pickle跟pipe方式和子进程通信。</p><p>而现在，python也到了3.14版本，除了multiprocessing与Threading之外，对于多解释器的支持也比较完善。多解释器的机理可以参考<a href="https://docs.python.org/zh-cn/3/library/concurrent.interpreters.html" target="_blank" rel="noopener">concurrent.interpreters官方文档</a>，简单来讲就是这类并发不像多线程受GIL的约束，一个进程里执行多套解释器，每个解释器有自己的GIL，有点类似于Golang的机制。以下是一些典型用法：</p><a id="more"></a><p>首先是interpreter本身，其支持的行为和thread跟process都比较类似，通信的话也可以用queue来通信。整体也比较容易理解。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">example_queue_communication</span><span class="params">()</span>:</span></span><br><span class="line">    queue = interpreters.create_queue()</span><br><span class="line">    interp = interpreters.create()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">worker</span><span class="params">(q)</span>:</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>):</span><br><span class="line">            q.put(i * i)</span><br><span class="line"></span><br><span class="line">    t = interp.call_in_thread(worker, queue)</span><br><span class="line">    t.join()</span><br><span class="line"></span><br><span class="line">    results = []</span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">5</span>):</span><br><span class="line">        results.append(queue.get())</span><br><span class="line">    print(<span class="string">f"Received from sub-interpreter: <span class="subst">&#123;results&#125;</span>"</span>)</span><br><span class="line"></span><br><span class="line">    interp.close()</span><br><span class="line">    print()</span><br></pre></td></tr></table></figure><p>因为3.14出了InterpreterPoolExecutor，所以我们也可以更加方便去map一些并行任务。比如拿InterpreterPoolExecutor跟ThreadPoolExecutor对比：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">example_executor_vs_thread</span><span class="params">()</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">cpu_work</span><span class="params">(n)</span>:</span></span><br><span class="line">        total = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">            total += i * i</span><br><span class="line">        <span class="keyword">return</span> total</span><br><span class="line"></span><br><span class="line">    work_size = <span class="number">5</span>_000_000</span><br><span class="line">    num_tasks = <span class="number">4</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># InterpreterPoolExecutor (真正并行)</span></span><br><span class="line">    start = time.perf_counter()</span><br><span class="line">    <span class="keyword">with</span> InterpreterPoolExecutor(max_workers=num_tasks) <span class="keyword">as</span> executor:</span><br><span class="line">        list(executor.map(cpu_work, [work_size] * num_tasks))</span><br><span class="line">    interp_time = time.perf_counter() - start</span><br><span class="line"></span><br><span class="line">    <span class="comment"># ThreadPoolExecutor (受 GIL 限制)</span></span><br><span class="line">    start = time.perf_counter()</span><br><span class="line">    <span class="keyword">with</span> ThreadPoolExecutor(max_workers=num_tasks) <span class="keyword">as</span> executor:</span><br><span class="line">        list(executor.map(cpu_work, [work_size] * num_tasks))</span><br><span class="line">    thread_time = time.perf_counter() - start</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 串行基准</span></span><br><span class="line">    start = time.perf_counter()</span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(num_tasks):</span><br><span class="line">        cpu_work(work_size)</span><br><span class="line">    serial_time = time.perf_counter() - start</span><br><span class="line"></span><br><span class="line">    print(<span class="string">f"  串行:              <span class="subst">&#123;serial_time:<span class="number">.4</span>f&#125;</span>s"</span>)</span><br><span class="line">    print(<span class="string">f"  ThreadPool:        <span class="subst">&#123;thread_time:<span class="number">.4</span>f&#125;</span>s (加速比 <span class="subst">&#123;serial_time / thread_time:<span class="number">.2</span>f&#125;</span>x)"</span>)</span><br><span class="line">    print(<span class="string">f"  InterpreterPool:   <span class="subst">&#123;interp_time:<span class="number">.4</span>f&#125;</span>s (加速比 <span class="subst">&#123;serial_time / interp_time:<span class="number">.2</span>f&#125;</span>x)"</span>)</span><br><span class="line">    print()</span><br></pre></td></tr></table></figure><p>打印出来结果预期是：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">串行:              0.5426s</span><br><span class="line">ThreadPool:        0.5073s (加速比 1.07x)</span><br><span class="line">InterpreterPool:   0.1932s (加速比 2.81x)</span><br></pre></td></tr></table></figure><p>当然多解释器的使用也是有限制的，比如下面这一段就执行不了：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">example_executor_as_completed</span><span class="params">()</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">slow_square</span><span class="params">(n)</span>:</span></span><br><span class="line">        time.sleep(<span class="number">0.1</span> * (<span class="number">5</span> - n))  <span class="comment"># 模拟不同耗时</span></span><br><span class="line">        <span class="keyword">return</span> n * n</span><br><span class="line"></span><br><span class="line">    <span class="keyword">with</span> InterpreterPoolExecutor(max_workers=<span class="number">4</span>) <span class="keyword">as</span> executor:</span><br><span class="line">        future_to_n = &#123;executor.submit(slow_square, n): n <span class="keyword">for</span> n <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">6</span>)&#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> future <span class="keyword">in</span> as_completed(future_to_n):</span><br><span class="line">            n = future_to_n[future]</span><br><span class="line">            print(<span class="string">f"  n=<span class="subst">&#123;n&#125;</span> 完成, 结果=<span class="subst">&#123;future.result()&#125;</span>"</span>)</span><br><span class="line">    print()</span><br></pre></td></tr></table></figure><p>原因是slow_square定义域在example_executor_as_completed里面，是个方法级local的对象，没法直接分享给另一个解释器，如果多线程在一个解释器里是通的，多进程新起整个Runtime也是通的。这里目前的解法是把slow_square提到global层面，才可以解决。</p><p>所以整体看下来，多解释器并行也不是万能的，使用方面还是有很多限制，我们需要充分理解其行为之后，才去投入使用。如果是面对cpu密集场景，不涉及C层自己扩展模块的话，完全可以用多解释器这套机制提升性能，不需要用multiprocessing，如果涉及C层自己扩展模块的话，得保证自己模块的健壮性，否则会把整个进程搞崩。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在非常久远的文章中，我们提到python中实现并行执行程序的方式主要是通过&lt;a href=&quot;https://utmhikari.top/2021/06/08/pythonnotes/python_processpoolexecutor/&quot;&gt;multiprocessing&lt;/a&gt;实现的，而并非多线程（Threading）。机理层面，大致是会开一个新的子进程独立执行，主进程维护一个Sentinel（fd），默认通过pickle跟pipe方式和子进程通信。&lt;/p&gt;
+&lt;p&gt;而现在，python也到了3.14版本，除了multiprocessing与Threading之外，对于多解释器的支持也比较完善。多解释器的机理可以参考&lt;a href=&quot;https://docs.python.org/zh-cn/3/library/concurrent.interpreters.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;concurrent.interpreters官方文档&lt;/a&gt;，简单来讲就是这类并发不像多线程受GIL的约束，一个进程里执行多套解释器，每个解释器有自己的GIL，有点类似于Golang的机制。以下是一些典型用法：&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Python随笔" scheme="https://utmhikari.top/categories/Python%E9%9A%8F%E7%AC%94/"/>
+    
+    
+      <category term="python" scheme="https://utmhikari.top/tags/python/"/>
+    
+      <category term="并行" scheme="https://utmhikari.top/tags/%E5%B9%B6%E8%A1%8C/"/>
+    
+      <category term="并发" scheme="https://utmhikari.top/tags/%E5%B9%B6%E5%8F%91/"/>
+    
+      <category term="multiprocessing" scheme="https://utmhikari.top/tags/multiprocessing/"/>
+    
+      <category term="InterpreterPoolExecutor" scheme="https://utmhikari.top/tags/InterpreterPoolExecutor/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【AI原生】深入回答纯Vibe Coding写后端项目的几个问题</title>
+    <link href="https://utmhikari.top/2026/07/04/ainative/vibe_coding_backend/"/>
+    <id>https://utmhikari.top/2026/07/04/ainative/vibe_coding_backend/</id>
+    <published>2026-07-04T03:31:15.000Z</published>
+    <updated>2026-07-04T03:31:54.986Z</updated>
+    
+    <content type="html"><![CDATA[<p>近期笔者因为工作原因，开始大规模使用Vibe Coding的方式来编写后端项目。说实话，笔者目前大概99%的代码都是通过Vibe Coding生成的，已经基本不手写代码了。</p><p>在<a href="https://utmhikari.top/2026/06/06/ainative/vibe_coding_frontend_prototype/">先前的文章</a>里，笔者也聊到了用Vibe Coding写前端原型的经验，而这篇文章则聚焦后端侧，也是更加偏重于业务工程的研发场景，今天这篇文章，笔者让AI列举了一些后端项目Vibe Coding场景下，各位开发者都比较关心的问题，然后做一些简练的回答。</p><a id="more"></a><h3 id="一、项目代码量膨胀后，AI的上下文管理怎么做？"><a href="#一、项目代码量膨胀后，AI的上下文管理怎么做？" class="headerlink" title="一、项目代码量膨胀后，AI的上下文管理怎么做？"></a>一、项目代码量膨胀后，AI的上下文管理怎么做？</h3><p>除去模型本身能力来看，一套好的项目架构，好的代码结构化的展现，能够让AI更容易理解，在不同上下文切换的时候，能够更快速知道怎么去改某个内容。所以一个action是，在项目代码量不膨胀的时候，做好架构设计，预防这类问题。</p><p>当然如果项目本身已经很臃肿了，这个时候就需要遵循「好记性不如烂笔头」的原则，多沉淀一些memory，对于具备业务上下文的逻辑去多打一些注释，日常多搞一些脚本或者skill，复刻自己的研发习惯。</p><h3 id="二、怎么减少AI生成代码的坑点，比如并发或者DB访问类的？"><a href="#二、怎么减少AI生成代码的坑点，比如并发或者DB访问类的？" class="headerlink" title="二、怎么减少AI生成代码的坑点，比如并发或者DB访问类的？"></a>二、怎么减少AI生成代码的坑点，比如并发或者DB访问类的？</h3><p>后端开发场景下，一个项目可能是多人开发，如果AI不知道哪块实现是best-practice的，那就容易踩坑。所以这里的重点是，自己需要判断怎样的实现是best-practice。</p><p>并发类的，以笔者常用的Golang为例，可能存在部分地方直接go func，也有可能某些地方通过某些并发库起goroutine，封装一些异常处理，这样会更优雅一点。在某些http框架中，随意go func可能带进一些cancel掉的ctx，这也可能是坑，解决方法就需要独立的ctx复制各类value然后再带进去。</p><p>DB访问类的，比如Update某个Record，AI可能从最小实现原则出发，做全量record修改，但某些业务场景下可能只需要改某几个字段值，这种情况最好的处理方式就是单独抽一个改这些字段值的函数，体现其业务属性。如果不告诉AI的话，AI也不会立刻明白</p><p>所以很多坑点，其实都还是要经过自己梳理一遍，然后再告诉AI怎么做，否则当年自己踩的坑，AI也会再踩一遍。</p><h3 id="三、AI写的代码出问题时，怎么提升返工效率，做好harness？"><a href="#三、AI写的代码出问题时，怎么提升返工效率，做好harness？" class="headerlink" title="三、AI写的代码出问题时，怎么提升返工效率，做好harness？"></a>三、AI写的代码出问题时，怎么提升返工效率，做好harness？</h3><p>这个和上一个问题有关联，但更加关注出了一次问题之后，怎么避免第二次。自己写的代码，出了问题通常能快速定位，因为你知道自己当时是怎么想的，代码逻辑的来龙去脉都在脑子里。但AI生成的代码不一样，你虽然review过，但对它的”思维方式”并不熟悉。出了问题之后，你往往需要先花时间理解AI为什么这么写，然后才能判断是逻辑错误还是边界条件没考虑到。所以有几个个好的办法：</p><ul><li>要求AI做计划和确认：沉淀一个rule，实现代码之前，需要强制让AI给你代码实现计划，做问题澄清和确认，然后执行。</li><li>要求AI写注释：在rules里明确要求AI对关键逻辑写清楚注释，说明”为什么这么做”而不只是”做了什么”，这样CR的时候能快速理解代码意图。</li><li>要求AI生成单元测试：是一个可选项，更是为了在出问题时有一个回归测试的基础，修改bug之后跑一遍单测，确认没有引入新问题。单测的内容尽量简洁，让自己快速看懂即可。</li><li>建立CR的CheckList：每次实现完之后，需要检查是否遵循自己的best-practice。既然代码的负责人是自己，那么实现的效果就需要遵循自己的原则。</li></ul><p>通过以上一些措施，就能够让AI生成的代码更加符合自己的taste，做好harness。</p><h3 id="四、作为Old-School程序员，如何应对Vibe-Coding时代带来的焦虑？"><a href="#四、作为Old-School程序员，如何应对Vibe-Coding时代带来的焦虑？" class="headerlink" title="四、作为Old School程序员，如何应对Vibe Coding时代带来的焦虑？"></a>四、作为Old School程序员，如何应对Vibe Coding时代带来的焦虑？</h3><p>这个问题笔者想认真聊一下，因为它比任何技术问题都更真实：传统Old School程序员，怎么应对AI时代，AI可以代替传统程序员的这个事实。笔者的答案是，保持学习，坚持判断。</p><p>AI能够代替Old School程序员的是编码本身，但是一套程序怎么做最优雅的设计，怎么反映业务，怎么满足共识，这些也都是技术研发的一部分，并且都是依赖自己的判断，是AI代替不了的。所以一方面，对于AI Vibe Coding，需要逐步适应逐步学习，这样以后能够减少手工编码，腾出更多时间；另一方面，需要把更多精力放在技术架构设计上，提升自己在技术上的判断力，这样才能够和AI做到更加效率的协作。</p><p>说白了，可以把AI当做一个智商跟知识面顶级，但对业务共识不会深刻了解的INTP，作为Vibe Coding开发者需要做的，一是给AI足够的业务上下文，让AI的思路和判断逐渐和你一致，从而发挥其最大潜力；二是把控好交付效果，把更多思考留到怎么样让Vibe Coding出来的产品落地到更多工作场景上，这样才能实现工作层面的AI提效。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;近期笔者因为工作原因，开始大规模使用Vibe Coding的方式来编写后端项目。说实话，笔者目前大概99%的代码都是通过Vibe Coding生成的，已经基本不手写代码了。&lt;/p&gt;
+&lt;p&gt;在&lt;a href=&quot;https://utmhikari.top/2026/06/06/ainative/vibe_coding_frontend_prototype/&quot;&gt;先前的文章&lt;/a&gt;里，笔者也聊到了用Vibe Coding写前端原型的经验，而这篇文章则聚焦后端侧，也是更加偏重于业务工程的研发场景，今天这篇文章，笔者让AI列举了一些后端项目Vibe Coding场景下，各位开发者都比较关心的问题，然后做一些简练的回答。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="AI原生" scheme="https://utmhikari.top/categories/AI%E5%8E%9F%E7%94%9F/"/>
+    
+    
+      <category term="AI" scheme="https://utmhikari.top/tags/AI/"/>
+    
+      <category term="Harness Engineering" scheme="https://utmhikari.top/tags/Harness-Engineering/"/>
+    
+      <category term="Vibe Coding" scheme="https://utmhikari.top/tags/Vibe-Coding/"/>
+    
+      <category term="后端开发" scheme="https://utmhikari.top/tags/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="编程" scheme="https://utmhikari.top/tags/%E7%BC%96%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【架构艺术】搭建客户稳定性系统的一些想法</title>
+    <link href="https://utmhikari.top/2026/07/04/archiart/customer_stability_system_ideas/"/>
+    <id>https://utmhikari.top/2026/07/04/archiart/customer_stability_system_ideas/</id>
+    <published>2026-07-04T03:03:56.000Z</published>
+    <updated>2026-07-04T03:03:35.841Z</updated>
+    
+    <content type="html"><![CDATA[<p>在先前的<a href="https://utmhikari.top/2026/05/01/geekdaily/tob_customer_stability/">一篇文章</a>里，笔者聊到了从内部变更风险防控转向ToB客户稳定性保障的一些思考，主要聚焦在角色转变和业务场景的差异上。今天这篇文章，就探讨一下笔者对于如何搭建一套客户稳定性系统的一些想法，算是把之前的思考往落地层面再推进一步。</p><p>首先，一套客户稳定性系统，从产品角度考虑，需要体现对客的属性。也就是说，这套系统不是单独去关联很多能力，而是结合这些能力的执行表现，去抽象出一套客户风险大盘的视图。从这个角度来讲，我们这套系统可能就需要有以下核心的内容：</p><a id="more"></a><ul><li>巡检告警：从准实时的角度，监控到当前客户资源水位如何，有多少巡检告警问题产生，处理情况怎么样</li><li>变更防控：从准实时的角度，感知并监控当前客户相关的变更记录和风险影响，确保变更引起的问题得到收敛</li><li>风险治理：从短中期的角度，反映包括客户侧和产品内部待治理的风险清单，以及风险治理的闭环情况</li><li>客情分析：从长期持续的角度，展示当前客户侧日常提过来的问题和解决情况，以及由这些问题本身提炼出来的潜在风险</li></ul><p>有这么几个功能基础，我们就可以简单搭建一套对客的稳定性系统框架。当然做了这些还是不够的，还有重要的一点是需要把这套系统跑起来，给到各类稳定性保障的角色来用。这里的角色就涉及到SRE和对客支持角色。</p><p>SRE角度比较好理解，整套系统对SRE而言是一个工具链，通过这个工具链可以很方便运维客户侧整体风险情况；而从对客支持角色角度，整套系统更需要反映产品侧整体的稳定性，保证客户侧问题能够静默解决，或者可以及时被判断出来。而这套系统怎么样让对客支持角色可以深度使用，才是落地的关键。基于此，笔者目前暂时提出一些想法。</p><p>第一点是完善风险通知机制。不论日常的监控告警和变更防控，还是稍微长期一些的风险治理跟客情分析，都需要有一套通知机制，把这些风险事件推送给对客支持角色，去辅助他们的判断。客户的类型是多样的，包括但不仅限于游戏、AI、金融还有政企类，在产品本身功能不能很好兼顾太深入的客户业务场景的情况下，最能判断怎么处理风险的角色还是需要前线同学。所以第一要义是让这套工具链服务好前线同学，给到足够的信息，让前线同学更好判断产品侧的实时情况。</p><p>第二点就是刚才提到的，需要针对特定的业务特征，做一套充分反应对应业务特征的风险汇总能力，这样才可以更深入挖掘到客户风险，做定向解决。比方说AI-Agent类客户的场景，如果采用Kubernetes+Sandbox技术做Agent托管，那么从产品侧角度，需要关注整条链路的交付风险。再往下拆的话，就分为几个方面：</p><ul><li>核心组件：包括APIServer、Etcd、Controller Manager、CoreDNS等基础组件的cpu/mem水位、可用性、调度情况等，属于是Kubernetes场景通用的基础指标</li><li>Sandbox Pod状态：需要考虑pending/terminating状态的pod数量是否过多，也需要观察休眠唤醒的时间是否过长</li><li>Sandbox交付：需要考虑sandbox申请时候，在特定限流配置基础下，能否达到特定数量交付的SLA，同时也要实时监控到sandbox交付侧的平台告警，并且有运维机制解决交付侧/集群侧状态不一致的情况</li></ul><p>最后一点就是做好周期性的数据运营，需要涵盖到产品风险和治理进展两大块。持续的数据运营加上通晒探讨，不仅能够反映产品侧/客户侧需要解决的问题，也能够促进整套客户稳定性系统做的更加深入，让整个对客稳定性体系做的更好。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在先前的&lt;a href=&quot;https://utmhikari.top/2026/05/01/geekdaily/tob_customer_stability/&quot;&gt;一篇文章&lt;/a&gt;里，笔者聊到了从内部变更风险防控转向ToB客户稳定性保障的一些思考，主要聚焦在角色转变和业务场景的差异上。今天这篇文章，就探讨一下笔者对于如何搭建一套客户稳定性系统的一些想法，算是把之前的思考往落地层面再推进一步。&lt;/p&gt;
+&lt;p&gt;首先，一套客户稳定性系统，从产品角度考虑，需要体现对客的属性。也就是说，这套系统不是单独去关联很多能力，而是结合这些能力的执行表现，去抽象出一套客户风险大盘的视图。从这个角度来讲，我们这套系统可能就需要有以下核心的内容：&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="架构艺术" scheme="https://utmhikari.top/categories/%E6%9E%B6%E6%9E%84%E8%89%BA%E6%9C%AF/"/>
+    
+    
+      <category term="Agent" scheme="https://utmhikari.top/tags/Agent/"/>
+    
+      <category term="稳定性" scheme="https://utmhikari.top/tags/%E7%A8%B3%E5%AE%9A%E6%80%A7/"/>
+    
+      <category term="SRE" scheme="https://utmhikari.top/tags/SRE/"/>
+    
+      <category term="Kubernetes" scheme="https://utmhikari.top/tags/Kubernetes/"/>
+    
+      <category term="架构" scheme="https://utmhikari.top/tags/%E6%9E%B6%E6%9E%84/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【DIY小记】聊聊关于《置身钉内》的一些个人想法</title>
+    <link href="https://utmhikari.top/2026/06/06/diymemo/talk_about_inside_ding/"/>
+    <id>https://utmhikari.top/2026/06/06/diymemo/talk_about_inside_ding/</id>
+    <published>2026-06-06T13:21:21.000Z</published>
+    <updated>2026-06-06T13:32:54.958Z</updated>
+    
+    <content type="html"><![CDATA[<p>近两天最火爆的事情莫过于《置身钉内》了，一篇离职复盘写了7万多字，熟稔的笔锋之间也夹杂了很多深度的思考，堪比互联网行业里头的《活着》。</p><p>笔者也有幸拜读了全篇文章，从作者的文风可以稍微推断其人物画像，某些特征也和笔者刚毕业那会儿比较相似，稍有一些学生思维，但不失理性的思考。不仅如此，作为同行业的工作者，同时也是一名坚持手写个人博客的作者，笔者对这篇文章里想要真实表达的情绪跟内容，也是比较有感触的。所以今天这篇文章，也简单写一下自己的感想。</p><a id="more"></a><p>第一块是对于产品的思考，一个好的产品有足够愿力的发心，理性上也需要分别用1句话回答4个问题：用户定位、场景定位、价值定位和竞争定位，但实际演进中是既要又要，最终导致产品没有往预期的方向前进。本质原因还是在人，重视汇报的项目最终的演进效果会更趋近于制作人的意志，而钉钉作为一个面向管理者的产品，制作人又是老派的管理者，这个桎梏就不可能摆脱。走上这条道路，最终也是必然。</p><p>说一句实在话，从用户视角，笔者完全没有碰过ONE，要是研发团队把这些精力，放在打磨AI听记和AI文档助手能力，都比强行通过AI构造一套新的使用习惯来的方便。目前这套能力基本上会被悟空替代掉，也希望悟空今后会有更好的表现。</p><p>第二块是关于敏捷开发，钉钉的开发压力确实比笔者所经历的都要大，笔者在300+人的游戏项目做测试开发，以及在AI自动化测试平台攻坚的期间，一般都是周或双周版本，也没有日发一版这么离谱。里头有一些话说的好，要解决的用户问题一直存在，但是因为敏捷开发过分高压，包括种种其它因素，使得大家都变得短期主义，很多长期正确的事情都不再继续推进。整个项目逐渐开始空转内耗，假努力，最终也没有达到预期的效果。</p><p>这些事情在互联网行业也非常常见，比方说在字节，字节是始终创业的企业文化，以前极端情况是双月OKR，当然现在是季度OKR，每个Q上了指标压力就得开始run，这样就会造就短期主义文化盛行，短期拿到结果就换下一个方向继续前进，长期做的事情默认就是不做了。虽然长期做的事情可能客观正确，但不是更上层管理者想要的，所以回归理性现实，作为一个受雇者，在坚定和放弃客观正确之间，怎么把握权衡，也是需要持续探讨的一个话题。</p><p>还有其它种种就不细聊了，总之文章本身更像是一面镜子，笔者也看到很多不同的读者也有很多不同的思考。一篇离职文章，先不管内容写了什么，从效果上看，能抛砖引玉，引发大家的思考，带来流量，这篇文章就已经是一个成功的产品了。再反推一下，为什么这篇文章从效果上看像是一个产品，这是因为背后必然经历了作者精心的打磨，沉淀了作者深度的思考，世界上怕就怕认真二字。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;近两天最火爆的事情莫过于《置身钉内》了，一篇离职复盘写了7万多字，熟稔的笔锋之间也夹杂了很多深度的思考，堪比互联网行业里头的《活着》。&lt;/p&gt;
+&lt;p&gt;笔者也有幸拜读了全篇文章，从作者的文风可以稍微推断其人物画像，某些特征也和笔者刚毕业那会儿比较相似，稍有一些学生思维，但不失理性的思考。不仅如此，作为同行业的工作者，同时也是一名坚持手写个人博客的作者，笔者对这篇文章里想要真实表达的情绪跟内容，也是比较有感触的。所以今天这篇文章，也简单写一下自己的感想。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="DIY小记" scheme="https://utmhikari.top/categories/DIY%E5%B0%8F%E8%AE%B0/"/>
+    
+    
+      <category term="个人博客" scheme="https://utmhikari.top/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"/>
+    
+      <category term="测试开发" scheme="https://utmhikari.top/tags/%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="产品" scheme="https://utmhikari.top/tags/%E4%BA%A7%E5%93%81/"/>
+    
+      <category term="业务" scheme="https://utmhikari.top/tags/%E4%B8%9A%E5%8A%A1/"/>
+    
+      <category term="用户" scheme="https://utmhikari.top/tags/%E7%94%A8%E6%88%B7/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【AI原生】用Vibe Coding写产品前端原型的一些经验</title>
+    <link href="https://utmhikari.top/2026/06/06/ainative/vibe_coding_frontend_prototype/"/>
+    <id>https://utmhikari.top/2026/06/06/ainative/vibe_coding_frontend_prototype/</id>
+    <published>2026-06-06T12:00:01.000Z</published>
+    <updated>2026-06-06T12:36:53.443Z</updated>
+    
+    <content type="html"><![CDATA[<p>AI Native是大势所趋，AI Coding的技能必不可少。鉴于此，笔者决定新开一个AI Native系列，记录自己后续在All-In-AI路程上的点滴，分享自己通过AI提升日常工作跟研发效率的思考和经验。</p><p><a href="https://utmhikari.top/2026/05/01/geekdaily/tob_customer_stability/">先前的文章</a>也讨论到，因为工作的原因，笔者已经开始在做ToB稳定性治理的事情，所以近期也一直在通过Vibe Coding的方式，设计相关平台能力要做些什么，产品形式上需要如何呈现。从效果上看，AI写前端原型的能力还是比较OK的，能够很快速满足笔者的工作需要。今天这篇文章，就简单聊一下这个过程中的经验。</p><p>笔者用的工具是Qoder，通过Quest模式去快速搭建前端原型，整一个过程是这样的：</p><a id="more"></a><p>首先是需求文档，这部分基本上是自己纯手写，因为设计到很多实际业务层面还有自己对实现效果预期的思考。需求文档写完后，先不急去丢给AI，先让AI理解前后端项目，沉淀一些memory，然后再丢需求文档，这样AI就能够知道可能涉及哪些地方的修改，对应模块的代码以前写的怎么样。</p><p>然后因为是搭建原型，所以需要告诉AI新开一个项目，把原来前端项目copy过去（本地开发方便的话，git worktree更合适），完了之后告诉AI用原来项目的样式去搭建这个新模块（此处注明，旧版本的Qoder的Quest有内置前端原型的Skill，可以直接用）。模块功能点梳理清楚，明确页面上需要哪些元素、交互逻辑是怎样的，配合上涵盖自己设计预期的截图，这样AI也可以充分去理解。基本上搞个半天左右，就可以搭建出来一个5个主页签带上4个子页签这种规格的前端原型了。</p><p>剩下的就是微调，利用AI做渐进式优化，有时如果方案需要调整，改一下描述重新生成就好，也不需要自己亲自参与重构，让AI自由发挥即可。这里需要注意的是，AI对于复杂业务状态管理的理解还是有局限的，可能某些场景下AI会get不到自己的想法，所以笔者的建议一是自己要给够足够的上下文信息，必要时喂一些文档，另一块就是拿一些rules来harness下，不要让AI过分自由发挥，想的太多。不过整体来看，原型图因为并非最终的功能实现，所以也不需要做的太细致，能表现基本内容就行。</p><p>总体来看，用Vibe Coding从0到1写前端原型来辅助产品技术方案，目前已有的工具还是可以很方便达到效果的。算是AI提效的一个很成熟的场景了。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;AI Native是大势所趋，AI Coding的技能必不可少。鉴于此，笔者决定新开一个AI Native系列，记录自己后续在All-In-AI路程上的点滴，分享自己通过AI提升日常工作跟研发效率的思考和经验。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://utmhikari.top/2026/05/01/geekdaily/tob_customer_stability/&quot;&gt;先前的文章&lt;/a&gt;也讨论到，因为工作的原因，笔者已经开始在做ToB稳定性治理的事情，所以近期也一直在通过Vibe Coding的方式，设计相关平台能力要做些什么，产品形式上需要如何呈现。从效果上看，AI写前端原型的能力还是比较OK的，能够很快速满足笔者的工作需要。今天这篇文章，就简单聊一下这个过程中的经验。&lt;/p&gt;
+&lt;p&gt;笔者用的工具是Qoder，通过Quest模式去快速搭建前端原型，整一个过程是这样的：&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="AI原生" scheme="https://utmhikari.top/categories/AI%E5%8E%9F%E7%94%9F/"/>
+    
+    
+      <category term="AI" scheme="https://utmhikari.top/tags/AI/"/>
+    
+      <category term="Vibe Coding" scheme="https://utmhikari.top/tags/Vibe-Coding/"/>
+    
+      <category term="前端开发" scheme="https://utmhikari.top/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="Qoder" scheme="https://utmhikari.top/tags/Qoder/"/>
+    
+      <category term="web开发" scheme="https://utmhikari.top/tags/web%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【极客日常】初探ToB客户稳定性保障</title>
+    <link href="https://utmhikari.top/2026/05/01/geekdaily/tob_customer_stability/"/>
+    <id>https://utmhikari.top/2026/05/01/geekdaily/tob_customer_stability/</id>
+    <published>2026-05-01T12:43:04.000Z</published>
+    <updated>2026-05-04T04:03:51.210Z</updated>
+    
+    <content type="html"><![CDATA[<p>近期因为工作调整的原因，笔者从以前面向内部研发团队的变更风险防控和稳定性建设，逐渐转向面向ToB客户的云服务稳定性保障。虽然本质上都是在做SRE稳定性相关的工作，但从服务对象、技术架构到运营方式，都有非常大的差异。今天这篇文章，就结合自己以前做变更风险防控和稳定性建设的实践经验，聊一下从云服务角度做ToB客户稳定性保障的一些思考和对比。</p><p>一块是服务对象的转变，以前做变更风险防控平台，服务对象是公司内部的研发和SRE团队，包括公司内部整体的架构也比较扁平，技术栈比较统一，所以沟通成本比较低，需求沟通起来也比较直接。在这样的场景下，变更风险防控平台的建设就会更加趋向于产品化，因为会有无数不了解稳定性业务或技术的同学来平台做咨询或者提需求，所以每项功能都做的比较细致体贴。最终呈现出来的平台不仅是功能齐全，在用户友好度上也有比较优质的体验。</p><a id="more"></a><p>但ToB客户稳定性保障的性质会相对不同，因为是对外服务，所以单从组织架构阵型上就不会那么扁平。笔者自己是做Kubernetes云产品的产研角色，但云产品要触及到不同外部客户的话，云产品产研和客户之间也会隔着客服和前线技术支持的角色，并不是说直接可以对接产研。或者来讲，只有必要的情况，产研才会协助解决问题，一般情况下，需要产品能力自身保障履约的SLA。</p><p>所以这种情况，做稳定性治理的思路上，并不能说随便就拉群沟通优化产品体验，而是会更加依赖平台功能化的动作，在不影响各方风控敏感的基础上，一是把组织阵型之间的协作流程承接起来，二是面向内部角色的稳定性治理提供标准的技术模块，三是能够识别影响客户的风险并利用流程能力让客户更快解决。这其中，三是目的，一和二是手段。这样可以应对几种常见的业务场景：</p><ul><li>风险治理：客户提出问题希望产品研发协助修复，但这个问题可能遗留已久未治理的问题，并且这个过程技术支持角色没有感知，因此衍生出来的一个事情是未治理的巡检风险工单化，推送给技术支持角色，推进客户治理</li><li>变更感知：云产品自身发生变更，比如Kubernetes托管面组件发生变更，这些操作影响到客户线上业务，导致发生故障，因此又衍生出来一个事情是托管面变更风险推送给技术支持角色，由技术支持角色判断并告知客户可能的影响</li><li>健康检查：对于日常客户和云产品的沟通协作，客户可能因为数据面集群访问控制面出了问题，向技术支持角色咨询云产品底层健康状态，那么有什么方式可以快速判断控制面的健康情况，就需要云产品研发提供诊断能力，去落实这个事情</li></ul><p>有了这些能力之后，对于ToB客户稳定性治理这件事情也能做到比较基础保障。当然仅凭这些也是不够的，最终态还是说怎么从客户出发，减少因为云产品本身稳定性问题带来的不确定性，提升客户对云产品的信任，这也需要考虑到客户本身的性质。比如游戏业务对于单节点本身的性能要求比较高，AI业务训练时因为gang-scheduling，又对瞬时起大量pod的时长和稳定性要求比较高，一些涉及到人文关怀的业务虽然在云产品使用上并没有太大的投入，但如果云产品出问题会造成很多社会影响，可以说这些客户也是需要重点关注和保护的。</p><p>所以说，ToB客户稳定性保障，长远看不仅需要关注产品技术指标本身，也需要有一些手段衡量客户的体验，对于不同类型的客户需要区分不同的衡量手段，对于重保客户也需要衡量相比于常规客户其稳定性提升的幅度，这样才能构建更加有效的体系去进一步指导稳定性保障的动作。</p><p>总体来看，从变更风险防控到ToB客户稳定性保障，虽然工作性质有所变化，但核心理念是相通的：事前预防优于事后止损，数据驱动优于经验判断，体系建设优于单点优化。还有很多事情，笔者也会亲身经历，亲身探索，未来还有什么想法，就再继续写上。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;近期因为工作调整的原因，笔者从以前面向内部研发团队的变更风险防控和稳定性建设，逐渐转向面向ToB客户的云服务稳定性保障。虽然本质上都是在做SRE稳定性相关的工作，但从服务对象、技术架构到运营方式，都有非常大的差异。今天这篇文章，就结合自己以前做变更风险防控和稳定性建设的实践经验，聊一下从云服务角度做ToB客户稳定性保障的一些思考和对比。&lt;/p&gt;
+&lt;p&gt;一块是服务对象的转变，以前做变更风险防控平台，服务对象是公司内部的研发和SRE团队，包括公司内部整体的架构也比较扁平，技术栈比较统一，所以沟通成本比较低，需求沟通起来也比较直接。在这样的场景下，变更风险防控平台的建设就会更加趋向于产品化，因为会有无数不了解稳定性业务或技术的同学来平台做咨询或者提需求，所以每项功能都做的比较细致体贴。最终呈现出来的平台不仅是功能齐全，在用户友好度上也有比较优质的体验。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="极客日常" scheme="https://utmhikari.top/categories/%E6%9E%81%E5%AE%A2%E6%97%A5%E5%B8%B8/"/>
+    
+    
+      <category term="稳定性" scheme="https://utmhikari.top/tags/%E7%A8%B3%E5%AE%9A%E6%80%A7/"/>
+    
+      <category term="SRE" scheme="https://utmhikari.top/tags/SRE/"/>
+    
+      <category term="Kubernetes" scheme="https://utmhikari.top/tags/Kubernetes/"/>
+    
+      <category term="业务" scheme="https://utmhikari.top/tags/%E4%B8%9A%E5%8A%A1/"/>
+    
+      <category term="变更风险" scheme="https://utmhikari.top/tags/%E5%8F%98%E6%9B%B4%E9%A3%8E%E9%99%A9/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【测试人生】【完结篇】畅聊质量技术的现状和未来发展</title>
+    <link href="https://utmhikari.top/2026/05/01/testlife/testlife_final_article/"/>
+    <id>https://utmhikari.top/2026/05/01/testlife/testlife_final_article/</id>
+    <published>2026-05-01T11:24:57.000Z</published>
+    <updated>2026-05-01T11:25:10.624Z</updated>
+    
+    <content type="html"><![CDATA[<p>不知不觉在质量技术领域也走过了七八年之久，从最早的覆盖率测试工具，UE4游戏客户端自动化，到后续的数据变更风险防控，再到变更风险防控平台架构建设，期间做过很多思考，也沉淀了许多技术文章。随着<code>业务测试-&gt;质量提效-&gt;技术风险SRE-&gt;稳定性架构师</code>的工作内容变化，笔者也自觉自己未来的工作从垂类角度，也会逐渐独立于质量技术，转而更加深入做SRE稳定性和后端架构领域。所以今天这篇博客，也决定和自己多年来的【测试人生】做一个暂时的道别，当然也借着这个机会，聊一下自己对于质量技术的现状和未来发展的思考。</p><p>首先聊一聊现状，坦白来讲因为AI时代的到来，质量技术又再一次焕发了生机。主要体现在以下几点：</p><a id="more"></a><ul><li>自动化脚本的实现与维护成本大大降低</li><li>可深入挖掘的代码缺陷越来越丰富</li><li>质量缺陷发现和解决的时间线逐渐左移</li><li>AI的不确定性为质量保障带来更多挑战</li></ul><p>第一块是自动化，过去写自动化脚本，是个实打实的“体力活”。自动化实现方面，本身从元素定位、脚本编写到后续维护，每一步都需要测试工程师投入大量精力，并且如果产品方案变动，脚本的维护成本甚至会超过重新编写的成本。再加上质量行业技术水平的局限，自动化测试工程长期就会存在瓶颈，难以突破。</p><p>AI时代的到来，从根本上改变了这一局面，可提效的点，一是测试操作可以用自然语言描述，底层自动化代码就可以AI生成，不需要人类做代码开发，二是自然语言本身维护成本低，在产品迭代比较频繁的节奏下，自然语言的迭代维护的成本相对于代码开发就低很多。两者结合起来一起看，AI自动化测试的ROI就显著有了提升。</p><p>第二块是代码缺陷，传统的静态代码分析工具，主要关注的是代码规范还有潜在的安全类等问题，但真正致命的缺陷，比如业务逻辑错误、并发问题、边界条件处理不当等，传统工具很难深入挖掘，这个时候AI介入就能够自主驱动去识别更多潜在的问题。</p><p>从技术上来讲，结合代码的模块依赖关系表达以及业务沉淀的知识库，AI可以发现很多和业务相关的问题，而不仅限于代码本身的实现。结合日常的需求迭代，AI可以在某个commit的基础上，根据需求/Bugfix的信息，判断某个commit的实现是否合理，这样的判断也会更加准确。</p><p>关于这一点就涉及到第三块，将AI结合日常的工作流，让深层次质量缺陷解决逐渐左移。首先AI可以对需求文档和技术文档本身的合理性做分析，既可以发现需求中的歧义、遗漏和矛盾，也可以分析系统设计的合理性。然后，编码阶段可以做实时的代码检查和commit检查，这样就不需要等到测试预发才发现问题了，由于单测生成也会更加方便，一些基础逻辑也能够有底线的质量保障，这样就不需要再自主写一堆单测逻辑做测试驱动开发，研发自测成为可能。</p><p>第四块是AI的不确定性带来质量保障更多的挑战。这么说是因为现在各行各业都在推广AI Coding，但AIGC是具备不确定性的，那么怎么衡量AI Coding的产品质量，就会成为质量保障的挑战。这里的关键是评测体系，对于AI Coding的输入和预期输出，可以梳理一套完善的测试集+AI驱动的评测能力，从而快速对AIGC做质量衡量。除了AI Coding之外，基于AIGC的产品，比如Chat Agent，也需要背后的评测体系去保证执行质量，可以理解新时代的产品需要新的测试范式，以前点点点的质量保障从ROI来看确实变得越来越小。</p><p>基于这些现状，从质量技术建设角度，一方面是需要基于以前的业务流，引入新的质量保障思路，另一方面是AI打平了以前很多样的研发角色，那么质量保障本身也不再仅是测试团队的责任，而是整个研发团队共同的目标。所以长期来看，如果AI相关的能力发展成熟，研发角度，以后可能不再有测试开发工程师，只有业务开发、Infra、DevOps还有SRE工程师的角色，每个角色都利用AI技术去保障自身产品的质量，做到相互协同。业务角度，以后专职做业务质量的角色也会越变越少，这类角色可能也逐渐过渡到产品线，成为产品经理或业务前线。</p><p>虽然在以后，质量技术包括质量保障的概念，可能会逐渐模糊，打散到各个其他角色当中，但质量保障的理念、风险控制的方法、系统思维的视角，这些事情对于产研领域其它角色而言，都是需要承担职责，也是需要深度掌握的。所以对于质量技术的未来怎么发展，笔者的观点是质量技术将会是大家共同建设共同发展的，不会只局限于传统的测试和质量保障领域，以后还会有更多的可能性和定义空间。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;不知不觉在质量技术领域也走过了七八年之久，从最早的覆盖率测试工具，UE4游戏客户端自动化，到后续的数据变更风险防控，再到变更风险防控平台架构建设，期间做过很多思考，也沉淀了许多技术文章。随着&lt;code&gt;业务测试-&amp;gt;质量提效-&amp;gt;技术风险SRE-&amp;gt;稳定性架构师&lt;/code&gt;的工作内容变化，笔者也自觉自己未来的工作从垂类角度，也会逐渐独立于质量技术，转而更加深入做SRE稳定性和后端架构领域。所以今天这篇博客，也决定和自己多年来的【测试人生】做一个暂时的道别，当然也借着这个机会，聊一下自己对于质量技术的现状和未来发展的思考。&lt;/p&gt;
+&lt;p&gt;首先聊一聊现状，坦白来讲因为AI时代的到来，质量技术又再一次焕发了生机。主要体现在以下几点：&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="测试人生" scheme="https://utmhikari.top/categories/%E6%B5%8B%E8%AF%95%E4%BA%BA%E7%94%9F/"/>
+    
+    
+      <category term="AI" scheme="https://utmhikari.top/tags/AI/"/>
+    
+      <category term="SRE" scheme="https://utmhikari.top/tags/SRE/"/>
+    
+      <category term="后端开发" scheme="https://utmhikari.top/tags/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="测试开发" scheme="https://utmhikari.top/tags/%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="质量保障" scheme="https://utmhikari.top/tags/%E8%B4%A8%E9%87%8F%E4%BF%9D%E9%9A%9C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【代码艺廊】operator-gallery：纯vibe的operator管理工具</title>
+    <link href="https://utmhikari.top/2026/04/08/codegallery/operator_gallery/"/>
+    <id>https://utmhikari.top/2026/04/08/codegallery/operator_gallery/</id>
+    <published>2026-04-08T11:09:45.000Z</published>
+    <updated>2026-04-08T11:09:57.110Z</updated>
+    
+    <content type="html"><![CDATA[<p>近期AI编程的新概念层出不穷，从最简单的Code Completion，到NEXT预测，再到现在什么Vibe Coding、OpenClaw，外加Spec Coding、Harness Engineering等Agent工程名词，可以说随着LLM的能力增强，不考虑业务架构，纯考虑编程本身，AI几乎已经可以替代所有人类，对于程序员而言，以前要做亲自编码，现在则需要转化为一个管理者的角色，指导AI完成程序员的工作目的。</p><p>为了体验AI编程的强大，近期笔者借助AI Native的开发工具，通过纯Vibe Coding的方式，开发一个基于kubebuilder的operator管理工具。kubebuilder本身提供的命令和功能已经很丰富了，但还是免不了一些小问题，比如在国内某些镜像和依赖拉不下来，或者开发多个operator没有一个工作区做统一管理，这些问题都可以由一个operator-gallery工具去做解决。</p><p>换言之，operator-gallery的职责是封装kubebuilder，端到端地处理operator的构建、部署和卸载流程，这样开发者只需要专注在types和controller的实现就可以。</p><a id="more"></a><p>相关的代码已经放到<a href="https://github.com/utmhikari/operator-gallery" target="_blank" rel="noopener">operator-gallery</a>这个GitHub仓库当中，有兴趣的读者可以随时fork做二次开发，vibe出GUI等更多实用的功能。</p><p>同时也聊聊Vibe Coding吧，从笔者比较粗浅的vibe经验来看，因为Agent上下文有限，所以还是保持一个好记性不如烂笔头的原则，鼓励AI频繁做开发经验沉淀，提升自身在项目研发的拟合度。关于Skill方面笔者目前还没有过多的尝试，后续有机会也再探索一下。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;近期AI编程的新概念层出不穷，从最简单的Code Completion，到NEXT预测，再到现在什么Vibe Coding、OpenClaw，外加Spec Coding、Harness Engineering等Agent工程名词，可以说随着LLM的能力增强，不考虑业务架构，纯考虑编程本身，AI几乎已经可以替代所有人类，对于程序员而言，以前要做亲自编码，现在则需要转化为一个管理者的角色，指导AI完成程序员的工作目的。&lt;/p&gt;
+&lt;p&gt;为了体验AI编程的强大，近期笔者借助AI Native的开发工具，通过纯Vibe Coding的方式，开发一个基于kubebuilder的operator管理工具。kubebuilder本身提供的命令和功能已经很丰富了，但还是免不了一些小问题，比如在国内某些镜像和依赖拉不下来，或者开发多个operator没有一个工作区做统一管理，这些问题都可以由一个operator-gallery工具去做解决。&lt;/p&gt;
+&lt;p&gt;换言之，operator-gallery的职责是封装kubebuilder，端到端地处理operator的构建、部署和卸载流程，这样开发者只需要专注在types和controller的实现就可以。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="代码艺廊" scheme="https://utmhikari.top/categories/%E4%BB%A3%E7%A0%81%E8%89%BA%E5%BB%8A/"/>
+    
+    
+      <category term="Vibe Coding" scheme="https://utmhikari.top/tags/Vibe-Coding/"/>
+    
+      <category term="Golang" scheme="https://utmhikari.top/tags/Golang/"/>
+    
+      <category term="Kubernetes" scheme="https://utmhikari.top/tags/Kubernetes/"/>
+    
+      <category term="operator-gallery" scheme="https://utmhikari.top/tags/operator-gallery/"/>
+    
+      <category term="Docker" scheme="https://utmhikari.top/tags/Docker/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【DIY小记】分享自己目前在用的AI编程工具Qoder</title>
+    <link href="https://utmhikari.top/2026/04/08/diymemo/qoder/"/>
+    <id>https://utmhikari.top/2026/04/08/diymemo/qoder/</id>
+    <published>2026-04-08T09:51:10.000Z</published>
+    <updated>2026-04-08T11:09:46.207Z</updated>
+    
+    <content type="html"><![CDATA[<p>近期因为探索AI编程的缘故，希望给日常生活中多找一个AI-Native的IDE，一方面做纯Vibe Coding的开发，另一方面也能够兼顾日常手动微调编码的需要。当然由于众所周知的原因，也希望这个IDE可以照顾国内用户，不是说总是要搭梯子编程，这样编程之外的冲浪需求就不方便了。</p><p>经过一番探索，在Trae、Cursor以及Claude Code等一系列候选名单中，笔者选择了Qoder。并不算是打广告，主要是基于以下的理由：</p><a id="more"></a><ul><li>不用搭梯子，可以选择经济到极致（对标opus 4.6）的模型</li><li>插件和JetBrains系结合的还不错</li><li>有RepoWiki功能，对于学习源码架构而言利好</li><li>界面风格比较清净</li><li>一个平台一个套餐cover所有编程工具场景</li></ul><p>更精确来讲，笔者也不算Vibe Coding以及搞OpenClaw的发烧友，对Token的用量目前也不是特别高，所以日常Vibe时候也只是用了经济的模型，做了一个<a href="https://github.com/utmhikari/operator-gallery" target="_blank" rel="noopener">GitHub项目</a>。不考虑AI编程，纯手写方面，JetBrains对于特定语言（比如Go和Python）做手码的优化是显著比VSCode系强的，所以JetBrains也一直在用，这里就需要配套一个具备Agent能力的AI工具人，那正好可以套用自己买的Qoder套餐。再者，Qoder的RepoWiki功能确实非常不错，任何时候有需要探索源码的开源项目，都可以预先分析一番。最后就是Qoder的套餐也可以用到QoderWork当中，处理一些龙虾类工作，但目前还有待挖掘。</p><p>综上来讲，Qoder算是一个能兼顾AI编程和生活的，比较恰当的选择，当然也不代表就一定最好。如果你是AI编程发烧友，那肯定直接上Claude、Codex这类比较硬核，萝卜青菜各有所爱。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;近期因为探索AI编程的缘故，希望给日常生活中多找一个AI-Native的IDE，一方面做纯Vibe Coding的开发，另一方面也能够兼顾日常手动微调编码的需要。当然由于众所周知的原因，也希望这个IDE可以照顾国内用户，不是说总是要搭梯子编程，这样编程之外的冲浪需求就不方便了。&lt;/p&gt;
+&lt;p&gt;经过一番探索，在Trae、Cursor以及Claude Code等一系列候选名单中，笔者选择了Qoder。并不算是打广告，主要是基于以下的理由：&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="DIY小记" scheme="https://utmhikari.top/categories/DIY%E5%B0%8F%E8%AE%B0/"/>
+    
+    
+      <category term="编程" scheme="https://utmhikari.top/tags/%E7%BC%96%E7%A8%8B/"/>
+    
+      <category term="Qoder" scheme="https://utmhikari.top/tags/Qoder/"/>
+    
+      <category term="JetBrains" scheme="https://utmhikari.top/tags/JetBrains/"/>
+    
+      <category term="IDE" scheme="https://utmhikari.top/tags/IDE/"/>
+    
+      <category term="LLM" scheme="https://utmhikari.top/tags/LLM/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【DIY小记】解决MacOS上Edge浏览器bilibili全屏卡顿的问题</title>
+    <link href="https://utmhikari.top/2026/04/02/diymemo/edge_bilibili_ppt/"/>
+    <id>https://utmhikari.top/2026/04/02/diymemo/edge_bilibili_ppt/</id>
+    <published>2026-04-01T16:19:29.000Z</published>
+    <updated>2026-06-06T10:19:46.730Z</updated>
+    
+    <content type="html"><![CDATA[<p>近日笔者发现自己Macbook-Pro播放B站视频，全屏的时候必然卡顿，退出全屏就没事。笔者电脑的参数是：</p><ul><li>芯片：M3</li><li>系统：Tahoe 26.4</li><li>浏览器：Edge</li></ul><p>到网上一查发现<a href="https://blog.csdn.net/weixin_45790919/article/details/155427873" target="_blank" rel="noopener">《Edge浏览器在MacOS 26(Tahoe)系统上看B站卡顿》</a>一篇文章，实测下来确实如此，拔掉电源就没事，插上电源必然卡成PPT，并且视频还比拔掉电源亮一些。</p><p>至此怀疑是Edge浏览器某些设置的问题，经过一番探索，发现在Edge设置的「系统和性能-系统」栏目下，取消「增强视频」即可解决。「增强视频」的作用是，接通设备电源后，锐化视频并提高颜色、照明和对比度。「增强视频」功能启用的机制是，不会增强屏幕上较小的受保护视频和视频，当多个视频在一个网站上处于活动状态时，将仅增强最近播放的视频。这也明显符合在B站上小屏和全屏播放的情况。</p><p>希望有遇到相同问题的人，可以尝试笔者提供的解决办法。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;近日笔者发现自己Macbook-Pro播放B站视频，全屏的时候必然卡顿，退出全屏就没事。笔者电脑的参数是：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;芯片：M3&lt;/li&gt;
+&lt;li&gt;系统：Tahoe 26.4&lt;/li&gt;
+&lt;li&gt;浏览器：Edge&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;到网上一查发现&lt;a
+      
+    
+    </summary>
+    
+      <category term="DIY小记" scheme="https://utmhikari.top/categories/DIY%E5%B0%8F%E8%AE%B0/"/>
+    
+    
+      <category term="前端开发" scheme="https://utmhikari.top/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="性能测试" scheme="https://utmhikari.top/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/"/>
+    
+      <category term="问题排查" scheme="https://utmhikari.top/tags/%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/"/>
+    
+      <category term="bilibili" scheme="https://utmhikari.top/tags/bilibili/"/>
+    
+      <category term="debug" scheme="https://utmhikari.top/tags/debug/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【测试人生】建设变更风险防控平台的经验总结</title>
+    <link href="https://utmhikari.top/2026/03/14/testlife/change_control_platform/"/>
+    <id>https://utmhikari.top/2026/03/14/testlife/change_control_platform/</id>
+    <published>2026-03-14T11:49:33.000Z</published>
+    <updated>2026-03-14T11:54:26.693Z</updated>
+    
+    <content type="html"><![CDATA[<p>不知不觉在变更风险防控领域投入了三年之久，从最早做数据类变更风险防控工程，到后续做变更风险平台架构能力，在取得些许成果的同时，也同样沉淀了很多关于变更风险防控平台的技术思考与判断。趁着阶段性收尾，今天就做个总集篇，重点针对建设变更风险防控平台的这段经历，梳理一遍核心经验。</p><p>本文主要讲述4个方面：（1）基础工程架构设计（2）质检任务执行设计（3）质检稳定性与效果优化（4）应对LLM时代的挑战。</p><a id="more"></a><h2 id="基础工程架构设计"><a href="#基础工程架构设计" class="headerlink" title="基础工程架构设计"></a>基础工程架构设计</h2><p>从架构设计来讲，蚂蚁以前开源的AlterShield可以借鉴，参考<a href="https://utmhikari.top/2024/02/04/githubdiscovery/altershield_design/">《【GitHub探索】蚂蚁变更管控平台AlterShield设计分析》</a>一文了解，当然实际设计最好要结合自己企业内部的技术栈和习惯来定。</p><p>从概念关系上来讲，需要定义的基础概念包括变更场景和变更对象，其中变更场景可以拆分成变更渠道、变更类型和变更阶段。一次变更关联一个变更场景和一个变更对象，需要执行多条变更风险观测策略，设计上可以参考<a href="https://utmhikari.top/2026/01/17/testlife/change_observe_strategy_design/">《【测试人生】一套灵活的变更风险观测策略匹配机制设计》</a>一文了解。</p><p>从灵活扩展的角度来讲，一条策略关联一个能力的执行比较合适，对于如何集成多方检测能力，可以参考<a href="https://utmhikari.top/2025/10/04/archiart/change_control_ability_market/">《【架构艺术】构建变更风险防控能力市场的一些经验》</a>一文的设计思路。</p><p>在实际做变更观测过程中，需要获取很多关联的上下文数据，才能保证变更观测有更好的效果。所以需要有一套旁路的变更事件消费+变更元信息分析的流程，为变更观测提供足量的上下文。这套框架设计可以参考<a href="https://utmhikari.top/2024/04/04/archiart/change_analysis_framework/">《【架构艺术】变更元信息分析框架设计》</a>一文。</p><h2 id="质检任务执行设计"><a href="#质检任务执行设计" class="headerlink" title="质检任务执行设计"></a>质检任务执行设计</h2><p>质检任务的执行调度，可以参考以下几篇文章做技术设计：</p><ul><li><a href="https://utmhikari.top/2025/03/09/archiart/change_observation_worker/">《【架构艺术】变更风险观测的任务调度设计》</a></li><li><a href="https://utmhikari.top/2025/01/26/testlife/change_observe_logic/">《【测试人生】变更风险观测的流程逻辑设计》</a></li><li><a href="https://utmhikari.top/2025/09/06/archiart/change_control_schedule_event/">《【架构艺术】通过标准化事件解决变更检测能力的调度问题》</a></li></ul><p>当然在某些特定的业务场景，需要根据变更场景或变更对象，动态注入质检策略。这类需求可以参考<a href="https://utmhikari.top/2025/07/12/geekdaily/dynamic_job_impl/">《【极客日常】后端任务动态注入执行策略的一种技术实现》</a>一文做设计。</p><h2 id="质检稳定性与效果优化"><a href="#质检稳定性与效果优化" class="headerlink" title="质检稳定性与效果优化"></a>质检稳定性与效果优化</h2><p>作为一个可靠的，服务于全公司的质检平台，后端稳定性治理是不可或缺的。可以参考<a href="https://utmhikari.top/2026/02/15/archiart/stability_experience/">《【架构艺术】治理后端稳定性的一些实战经验》</a>一篇文章，来了解如何系统性治理平台的稳定性。</p><p>对于质检效果，包括拦截率和准确率等方面，需要做面向业务的定制优化，更多的动作会属于专项的范畴，可以参考<a href="https://utmhikari.top/2024/03/03/geekdaily/release_check_optimization/">《【极客日常】提升发布风险检查准确率的一些思路》</a>一文了解一些思路。从平台基础架构的角度，则更关心架构设计能否支撑质检效果优化的需求，这部分可以参考 <a href="https://utmhikari.top/2025/09/06/archiart/change_control_decision_module/">《【架构艺术】变更风险防控架构嵌入决策降噪模块的方法》</a>一文做了解。当然，除了技术优化动作，平台也需要提供必要的数据运营能力，可以参考<a href="https://utmhikari.top/2025/02/22/testlife/change_control_data_marketing/">《【测试人生】浅谈变更风险防控的数据运营》</a>一文了解一些思路。</p><h2 id="应对LLM时代的挑战"><a href="#应对LLM时代的挑战" class="headerlink" title="应对LLM时代的挑战"></a>应对LLM时代的挑战</h2><p>坦诚的说，如果通过古法编程手段做到以上三件事情，就已经意味着变更风险防控平台建设进入了深水区。LLMAgent虽然理论上能打平上面这些东西，但不是说就直接重做一遍，这样是纯粹为了技术而技术。所以怎么应对LLM时代的挑战，本质上一是要明确LLM带来的增量价值，二是要确保ROI使得LLM能充分发挥。</p><p>整体来讲，可以参考<a href="https://utmhikari.top/2026/02/15/testlife/change_control_agent/">《【测试人生】LLMAgent在变更风险防控垂类应用的思考》</a>一文，了解LLM相对容易做到但古法编程比较难做到的事情，比如变更上下文深度分析总结和风险告警的自动聚类，这个是古法编程不好描述的，但可以用LLMAgent来实现。实际的LLMAgent研发落地方面，可以参考<a href="https://utmhikari.top/2026/03/14/testlife/rule_agent/">《【测试人生】变更规则校验Agent研发的一些思路》</a>一文，寻找更多的灵感。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;不知不觉在变更风险防控领域投入了三年之久，从最早做数据类变更风险防控工程，到后续做变更风险平台架构能力，在取得些许成果的同时，也同样沉淀了很多关于变更风险防控平台的技术思考与判断。趁着阶段性收尾，今天就做个总集篇，重点针对建设变更风险防控平台的这段经历，梳理一遍核心经验。&lt;/p&gt;
+&lt;p&gt;本文主要讲述4个方面：（1）基础工程架构设计（2）质检任务执行设计（3）质检稳定性与效果优化（4）应对LLM时代的挑战。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="测试人生" scheme="https://utmhikari.top/categories/%E6%B5%8B%E8%AF%95%E4%BA%BA%E7%94%9F/"/>
+    
+    
+      <category term="稳定性" scheme="https://utmhikari.top/tags/%E7%A8%B3%E5%AE%9A%E6%80%A7/"/>
+    
+      <category term="后端开发" scheme="https://utmhikari.top/tags/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="DevOps" scheme="https://utmhikari.top/tags/DevOps/"/>
+    
+      <category term="LLM" scheme="https://utmhikari.top/tags/LLM/"/>
+    
+      <category term="变更风险" scheme="https://utmhikari.top/tags/%E5%8F%98%E6%9B%B4%E9%A3%8E%E9%99%A9/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【测试人生】变更规则校验Agent研发的一些思路</title>
+    <link href="https://utmhikari.top/2026/03/14/testlife/rule_agent/"/>
+    <id>https://utmhikari.top/2026/03/14/testlife/rule_agent/</id>
+    <published>2026-03-14T10:09:01.000Z</published>
+    <updated>2026-03-14T11:54:28.184Z</updated>
+    
+    <content type="html"><![CDATA[<p>在变更风险防控领域，规则校验和变更中观测一样，是必不可少的能力之一。面向配置类变更和SQL数据类变更，通过严格的静态规则校验可以拦截很多事故风险，保障配置或SQL发布后的安全。从变更风险防控平台的角度来说，一个规则校验系统（规则引擎），可以简单设计成多组变更场景到校验规则的映射，业务SRE角色可以编写较大业务域的通用规则，而业务研发可以编写特定业务域的专项规则，当一个变更发起时，多条规则就统一在这个系统里做执行，这样就能够实现通用的变更规则校验需求。</p><p>但是现在是2026年，是一个全民养虾的时代，以前花大力气编写的规则跟系统，不用Agent打平一遍，那怎么着都得out了。所以本文也基于这么个场景，在已有变更规则校验的标准业务流程基础上，怎么研发一个规则校验Agent，去讨论一些思路。</p><a id="more"></a><p>首先需要明确，如果做一个规则校验Agent，它相对于以往自己编写的规则，能有什么增量收益。笔者以为主要是两块，一块是研发提效，另一块是去挖掘更深层次的风险。研发提效会比较明显，传统的规则校验引擎要写代码或者匹配规则，扩展成本高，但LLM可以用简单的语义推理磨平这些研发成本。深层次风险挖掘这块，在把以前获取上下文的接口全部封装成MCP或Skill的基础上，Agent就可以自主获取不同来源的变更上下文，不断迭代做深层挖掘，这个是Agent固有的优势，传统的规则校验难以替代。</p><p>从上我们能够明显看到LLMAgent对规则校验研发带来的变革，但反过来折损点一是在于LLM输出的不确定性，二是推理时间导致的发布效率降低。对于简单的规则校验Agent，考虑「需求推理+变更上下文收集+风险点分析+结构化输出」几个步骤，一次规则校验的时间可能会达到1到2分钟。如果再做复杂一些，做深层次的风险挖掘，那么由校验开始到分析报告生成都可能有5分钟以上，这样即便分析出来的结论可能很棒，但时间损耗对于研发发布来讲可能就无法接受了。所以，Agent需要以一套「低侵入&amp;高兼容」的模式切入到已有的规则校验流程当中，才能够给业务带来比较好的体验。</p><p>具体怎么做，从用户体验角度讲，Agent可以设计成Quick和Deep两种模式。Quick模式负责做基础且通用的规则校验，且支持开放给业务RD自行编写静态校验规则，以Instruction文本或其它方式接入到Agent当中，实际执行时会直接作用于规则校验流程，在变更前做拦截。对于Deep模式，可以自主闭源做复杂编排+异步执行，执行完毕后发通知，或者在小流量发布阶段做拦截，也都是可取的呈现方式。</p><p>Agent编排方面，需要并行部署多个垂直领域Agent，比如SQL校验Agent、配置变更Agent以及底层的代码分析Agent。关于上层是否要设置一个Dispatcher角色Agent，主要取决于是否有Chat的需要，如果没有的话则不是必须，通过既往工程代码控制Agent执行就可以。对于深度挖掘风险类的Agent编排，目前笔者还没有深入研究，有兴趣的读者可以深度实操下。</p><p>最后一个关键问题是，怎么优化Agent的效果。首先需要定指标，基础的主要是执行成功率（稳定性）、执行时长、风险拦截率和拦截准确率几块。从这些指标出发，我们可能考虑如下的优化策略：</p><ul><li>执行层面，可以整合业务实际发布校验的结果还有业务手工打标准确度的数据，将其提炼成评测集，如果有配套评测平台的话，就能够在迭代Agent期间，随时对Agent效果做评测，当然如果技术上能够实现在线RL的机制那当然更好。</li><li>模型层面，如果执行延时的瓶颈在推理，可以调整模型选型或者精调来纠正模型的推理思路，不至于经常想歪，或者通过Prompt调优技巧，比如加Few-Shot或者Schema定义确保结构化输出稳定性。有一个点不确定是否有既往研究，就是应用到RAG的知识，如果给到模型精调一遍，是否能提升实际作业效果，有经验的读者也可以指正一下。</li><li>编排层面，由于规则校验对发布效率有要求，建议不要做过于复杂的编排。在这个基础上，如果迭代了一段时间的话，需要有意识去梳理变更上下文数据需要获取多少，有什么依赖关系，尽量精简上下文数据的获取时间和数据量。</li><li>平台层面，有些业务可能对于拦截准确率有比较高的要求，所以对于用户的Instruction或其他接入方式，可以提供标准模板，让业务编写定制化的风险降噪策略，显式干预Agent的执行效果。</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在变更风险防控领域，规则校验和变更中观测一样，是必不可少的能力之一。面向配置类变更和SQL数据类变更，通过严格的静态规则校验可以拦截很多事故风险，保障配置或SQL发布后的安全。从变更风险防控平台的角度来说，一个规则校验系统（规则引擎），可以简单设计成多组变更场景到校验规则的映射，业务SRE角色可以编写较大业务域的通用规则，而业务研发可以编写特定业务域的专项规则，当一个变更发起时，多条规则就统一在这个系统里做执行，这样就能够实现通用的变更规则校验需求。&lt;/p&gt;
+&lt;p&gt;但是现在是2026年，是一个全民养虾的时代，以前花大力气编写的规则跟系统，不用Agent打平一遍，那怎么着都得out了。所以本文也基于这么个场景，在已有变更规则校验的标准业务流程基础上，怎么研发一个规则校验Agent，去讨论一些思路。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="测试人生" scheme="https://utmhikari.top/categories/%E6%B5%8B%E8%AF%95%E4%BA%BA%E7%94%9F/"/>
+    
+    
+      <category term="Agent" scheme="https://utmhikari.top/tags/Agent/"/>
+    
+      <category term="LLM" scheme="https://utmhikari.top/tags/LLM/"/>
+    
+      <category term="变更风险" scheme="https://utmhikari.top/tags/%E5%8F%98%E6%9B%B4%E9%A3%8E%E9%99%A9/"/>
+    
+      <category term="数据变更" scheme="https://utmhikari.top/tags/%E6%95%B0%E6%8D%AE%E5%8F%98%E6%9B%B4/"/>
+    
+      <category term="配置变更" scheme="https://utmhikari.top/tags/%E9%85%8D%E7%BD%AE%E5%8F%98%E6%9B%B4/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【架构艺术】治理后端稳定性的一些实战经验</title>
+    <link href="https://utmhikari.top/2026/02/15/archiart/stability_experience/"/>
+    <id>https://utmhikari.top/2026/02/15/archiart/stability_experience/</id>
+    <published>2026-02-15T07:53:14.000Z</published>
+    <updated>2026-02-15T07:53:44.881Z</updated>
+    
+    <content type="html"><![CDATA[<p>稳定性保障是后端架构演进这件事情上不可缺少的部分。对于不同业务来说，稳定性可能有不同的口径，治理策略或目标也因业务规模大小或服务场景而各有差异，但共性仍然是存在的，讨论起来也逃不过SLA、可用性或者Latency之类的名词。在先前笔者关于<a href="https://utmhikari.top/2024/11/03/archiart/stability_basics/">稳定性基础保障</a>以及<a href="https://utmhikari.top/2025/07/06/geekdaily/oom_issue_solution/">OOM问题排查</a>相关的文章中，已经提到了许多重点稳定性问题的解决措施。所以今天这篇文章，就换一个视角，以一个宏观问题解决者的角度，来聊聊治理后端稳定性的一些实战经验。</p><a id="more"></a><p>从解决稳定性bug，上升到治理稳定性问题，第一件事情就是要明确衡量稳定性的指标。制定一个明确的技术目标，再往下做拆解，不论是对于治理问题本身，还是最终包装工作结果，都会让你思路更加清晰。比如最基本的，对外有SLA承诺，对内的话可能就需要制定更高的SLO目标，衡量方式可能是以上游请求成功率（如HTTP 2xx）为主，反映服务接口能力是否持续可靠地支撑业务。如果再往下拆的话，对于业务核心接口，可能导致客诉的，也可以制定激进的SLO，更加高优去做跟进。</p><p>对于任务类业务场景，可以通过执行成功率来衡量，失败场景包括执行error或卡单timeout，需要及时识别和处理。对于消费类场景，可以关注handler消费延迟或错误率等指标。对于中间件或者容器，可以关注CPU/内存指标，比如突增的内存可能导致OOM，影响整个节点运行，导致其它请求失败，进而导致SLI劣化。当然从实战角度来看，可以根据目前业务稳定性痛点来决定哪个指标是需要优先关注的，其它常规指标可以作为持续观测项来长期跟进。</p><p>拆解完指标以后，第二步需要做的是怎么保证异常指标可监控可观测，而并非直接上手去尝试做技术解决。做这件事情的目的是为了给后续更方便的排障止损打下基础，最简单的方式是埋点上报异常指标到时序数据库，然后再经由grafana做时序图表展示，之后再配置一些巡检策略来实时探测异常。如果是偏业务场景，比如任务卡单或对账异常这些需要及时排查问题的场景，也需要通过自定义群通知等方式透露出更多细节，这样实际排障过程就不需要再从图表上面下钻这么麻烦了。对于panic/OOM之类问题，也可以结合pprof工具或者自建LogTrace来做简单的定位，方便快速热修。对于强关联的上下游服务，也需要梳理上下游综合的指标大盘，方便联动排障。</p><p>需要注意的是，实际做治理过程中，人的精力是有限的，不是说弄了一个非常丰富的指标矩阵就完事，怎么跟进，不管是纯肉眼还是开发巡检或SREAgent，都是要耗费人力成本的。所以一定需要弄清楚，一是弄指标大盘，哪些指标可以比较方便借助外部工具实现，哪些得另外开发，二是需要分清主次，当下比较影响业务效果的，需要优先实时关注，已经治理或者相对稳定的，可以长期跟进，这样就可以更加聚焦精力，保障治理稳定性这个事情的ROI。</p><p>第三步才是见招拆招，解决具体的技术性问题，举一些例子：</p><ul><li>接口可用性降低：有多种可能性：<ul><li>一是超时的情况可以尽量减少串行或sync的逻辑，尽可能异步化处理，减少阻塞时间；</li><li>二是涉及到查询的场景，可以考虑优化查询条件或者减少不必要的查询操作；</li><li>三是如果流量非常大，可以通过singleflight/本地缓存/远端缓存等方式去把共性逻辑做收敛。</li></ul></li><li>panic异常：StackTrace+日志上报+日志告警，可以快速发现问题来源。当然日常开发对于commit或者全rep代码安全的治理也不可少，这里不过多赘述。</li><li>CPU/Memory使用率过高：从治理角度最好是定位到具体的业务场景，以笔者治理变更风险防控平台自身稳定性的经验为例：<ul><li>一是三方检测能力返回的数据量过大，导致单节点Memory使用率过高，这种需要和三方平台沟通新的一套接口约定，减少不必要的返回数据；</li><li>二是变更事件有突增，预处理变更事件逻辑CPU使用率过高，这种情况需要限制MQ消费速率，或者限制预处理事件的批次大小，对于相关查询逻辑需要确认索引或者调用超时正常设置，如果有条件也可以考虑做服务分离以减少单个节点大小的压力。</li></ul></li><li>下游SLI降低：这个单独拎出来，本质是为了防卫多个上游依赖同一个下游（比如DB），因为某个上游出问题，下游SLO无法保障，导致其它上游出现影响，这么个场景。做防范的话需要下游对各上游做限流，监控方面需要上下游增加对突增流量的告警，止损方面也需要考虑对于对异常流量做熔断或者降级的措施。</li><li>自调度任务卡单：这类场景不会和上下游直接交互，而是依赖于内部的任务调度系统，卡单会导致任务不推进，影响业务效果。要解决的话，监控方面需要有配套的定时任务去捞取一段时间内卡单的任务，比如UpdatedAt比较久远但任务一直没有结束的，就可能是badcase，之后才是具体的bug排查，当然也可以增设补偿机制，比如通过重投递消息或者重触发任务状态更新逻辑这种形式，去让任务继续推进。</li></ul><p>解决了各类技术性问题之后，理论上指标是向好的。在这个基础上，最后才是思考怎么样再进一步提升整个系统的稳定性，保障对外的SLA。要做到这一点，首先不能拘泥在技术问题本身，应该先要判断如果要做进一步稳定性保障，需要额外投入多少人力和精力，如果人力不充足的话，哪些事情需要舍弃，人员应该如何重新分配。在重新确定了整体的技术目标和业务目标之后，才是去思考具体拆出来有哪些措施，比如说：</p><ul><li>在重构方面，面向SLO提升去做的更加激进，从而能够应对更多不可抗力；</li><li>在研发层面，实施更严格的CR流程，建立更完善的自动化测试、灰度发布以及回滚机制；</li><li>在方案层面，怎么把先前零散的治理措施做的结构化，怎么宣贯让各方成员对稳定性治理措施有共识。</li></ul><p>确定了具体动作之后，就可以放手干了。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;稳定性保障是后端架构演进这件事情上不可缺少的部分。对于不同业务来说，稳定性可能有不同的口径，治理策略或目标也因业务规模大小或服务场景而各有差异，但共性仍然是存在的，讨论起来也逃不过SLA、可用性或者Latency之类的名词。在先前笔者关于&lt;a href=&quot;https://utmhikari.top/2024/11/03/archiart/stability_basics/&quot;&gt;稳定性基础保障&lt;/a&gt;以及&lt;a href=&quot;https://utmhikari.top/2025/07/06/geekdaily/oom_issue_solution/&quot;&gt;OOM问题排查&lt;/a&gt;相关的文章中，已经提到了许多重点稳定性问题的解决措施。所以今天这篇文章，就换一个视角，以一个宏观问题解决者的角度，来聊聊治理后端稳定性的一些实战经验。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="架构艺术" scheme="https://utmhikari.top/categories/%E6%9E%B6%E6%9E%84%E8%89%BA%E6%9C%AF/"/>
+    
+    
+      <category term="稳定性" scheme="https://utmhikari.top/tags/%E7%A8%B3%E5%AE%9A%E6%80%A7/"/>
+    
+      <category term="后端开发" scheme="https://utmhikari.top/tags/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="异步" scheme="https://utmhikari.top/tags/%E5%BC%82%E6%AD%A5/"/>
+    
+      <category term="问题排查" scheme="https://utmhikari.top/tags/%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/"/>
+    
+      <category term="架构" scheme="https://utmhikari.top/tags/%E6%9E%B6%E6%9E%84/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【测试人生】LLMAgent在变更风险防控垂类应用的思考</title>
+    <link href="https://utmhikari.top/2026/02/15/testlife/change_control_agent/"/>
+    <id>https://utmhikari.top/2026/02/15/testlife/change_control_agent/</id>
+    <published>2026-02-15T06:01:47.000Z</published>
+    <updated>2026-02-15T07:58:30.069Z</updated>
+    
+    <content type="html"><![CDATA[<p>LLMAgent应用研发在当下是一个非常热门的话题，目前一个典型的趋势是，各类垂类领域都在思考LLMAgent如何能够代替人力，为其业务场景赋能，一方面是常规提效，另一方面是深度挖掘CornerCase。恰巧笔者最近在做变更风险防控领域LLMAgent应用的技术调研，所以今天这篇博客，也简单分享一下调研来的一些思考。</p><p>主要分两个部分，第一部分是LLMAgent可以用在变更风险防控的什么环节，第二部分是系统化落地需要考虑做什么事情。</p><a id="more"></a><p>先说第一部分，背景上，对于变更风险防控，其理想的终态是实现变更过程的无人值守，如果是纯Agentic模式的话，数据层面是需要一个高实时性可用性的变更上下文数据总线，然后应用层面需要一个具备丰富专家经验的Agent，能够判断变更前需要搜集哪些上下文，变更中需要观测什么，给出什么结论，变更后需要怎么做风险总结。当然这个事情会比较理想化，开发一个这样的Agent还不如纯工程来的实惠，所以整套架构形态还是以工程化的方式驱动，部分环节通过Agent深度挖掘，这种形式比较合理。</p><p>然后是Agent可以在哪些场景用上。首先是变更上下文数据的搜集，Agent可以循环往复去做深度搜集，然后把数据投到上下文总线给后面的流程用到；其次是变更风险的深度分析和总结，这部分可以增强变更风险判断的可靠度，也能够帮助研发去缩短变更风险的响应时间；还有就是变更静态规则校验，也可以以Agent驱动的方式自主做检查并汇总风险。这些场景的如果通过纯工程实现，要么扩展成本比较大，要么确定性存疑，所以用Agent来落地会比较合适。</p><p>第二部分是怎么系统化落地这些功能，这里面需要考虑的除了技术实现本身之外，产品上也需要做一些必要的开放性，使得各专项Agent能够做灵活的扩展。举一些例子，对于静态规则校验，可以允许外部开发者面向特定的变更场景，通过Skill或Prompt+MCP的方式自定义校验规则；对于变更风险总结，可以允许外部开发者输入特定异常解读的知识，从而这些知识可以最终辅助到变更风险的判断当中，提升检测任务整体效果。所以，需要抽象一套面向内部的Agent资源基建，实现这些能力的支持。</p><p>当然，产品设计方面也需要考虑怎么在保障开放性的同时，能够兼顾实际应用的效果。如果人力成本比较充裕，可以像<a href="https://docs.datadoghq.com/actions/agents/" target="_blank" rel="noopener">Datadog-Agents</a>这样，为用户提供完整的AgentIDE，包含Workflow编排+大模型调用+各类ToolUse的能力。但如果主Agent是自己闭源，或者比较效果导向的话，一是对于用户交付的内容需要有审核机制（AI审/专家人审），二是适度开放，可以参考<a href="https://www.servicenow.com/products/ai-agents.html" target="_blank" rel="noopener">ServiceNow</a>，只给Name/Description/Instructions这些类Skill的开放程度，而并非一套完整的AgentIDE形式。</p><p>总体来说，LLMAgent在变更风险防控，甚至扩展到任意垂类场景的应用，还是需要重点看相比纯工程实现，Agent能否带来增量结果，而并非为了技术而技术，研究了很多花里胡哨的Agent编排，但对实际应用效果没有一点提升。从现状来讲，笔者对于LLMAgent的大规模研发落地这件事情，还是保持一个谨慎的态度。在没有非常系统的Agent研发基建的情况下，研发LLMAgent的试错成本还是比较高的，所以找到具体的提升目标再下手比较合适。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;LLMAgent应用研发在当下是一个非常热门的话题，目前一个典型的趋势是，各类垂类领域都在思考LLMAgent如何能够代替人力，为其业务场景赋能，一方面是常规提效，另一方面是深度挖掘CornerCase。恰巧笔者最近在做变更风险防控领域LLMAgent应用的技术调研，所以今天这篇博客，也简单分享一下调研来的一些思考。&lt;/p&gt;
+&lt;p&gt;主要分两个部分，第一部分是LLMAgent可以用在变更风险防控的什么环节，第二部分是系统化落地需要考虑做什么事情。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="测试人生" scheme="https://utmhikari.top/categories/%E6%B5%8B%E8%AF%95%E4%BA%BA%E7%94%9F/"/>
+    
+    
+      <category term="Agent" scheme="https://utmhikari.top/tags/Agent/"/>
+    
+      <category term="AI" scheme="https://utmhikari.top/tags/AI/"/>
+    
+      <category term="LLM" scheme="https://utmhikari.top/tags/LLM/"/>
+    
+      <category term="产品" scheme="https://utmhikari.top/tags/%E4%BA%A7%E5%93%81/"/>
+    
+      <category term="变更风险" scheme="https://utmhikari.top/tags/%E5%8F%98%E6%9B%B4%E9%A3%8E%E9%99%A9/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【测试人生】一套灵活的变更风险观测策略匹配机制设计</title>
+    <link href="https://utmhikari.top/2026/01/17/testlife/change_observe_strategy_design/"/>
+    <id>https://utmhikari.top/2026/01/17/testlife/change_observe_strategy_design/</id>
+    <published>2026-01-17T06:01:22.000Z</published>
+    <updated>2026-01-17T14:11:26.698Z</updated>
+    
+    <content type="html"><![CDATA[<p>近期笔者在投入变更风险防控开放平台的额外功能开发，目的是希望设计一套更加灵活的变更风险观测策略匹配机制，能够在满足面向任意变更场景应用观测策略的同时，尽可能保证产品体验，让用户清晰地了解到自己配置的什么策略能够在什么情况的变更过程中生效。在<a href="https://utmhikari.top/2025/01/26/testlife/change_observe_logic/">先前的文章</a>当中，有粗浅提到变更观测策略匹配的事情，但没有深入探究，并且笔者以前接手的项目，很多底层设计的技术债也难以偿还，要在以前实现的基础上再做重构也不是很现实了。</p><p>所以，趁着扩展新系统的机会，笔者重新思考了下变更风险观测策略匹配机制的事情，跟随这篇文章来抛砖引玉下自己的想法。</p><p>首先，还是一个根本问题，一条变更风险观测策略的粒度是怎样的？如果粒度太粗，那么从产品视角，很容易导致「所见非所得」的问题；如果粒度太细，那么用户配置起来也会相当麻烦。经评估，由单个检测能力执行的粒度代表一条策略，这样的形式相对合理，不仅方便产品层面做「所见即所得」的设计，而且实际执行过程中，也可以以原子化的形式做编排，从调度角度来讲也很容易扩展。</p><p>详细来讲，一条策略在设计上，需要关联以下几类概念：</p><a id="more"></a><ul><li>检测能力：1个变更风险观测能力，和1套能力执行/调度参数</li><li>变更场景：以变更渠道/类型/阶段3个维度描述变更场景，1条策略匹配1个变更渠道，N个变更类型，N个变更阶段</li><li>变更对象：1个范围的变更对象，同时也要支持细粒度的变更对象KV属性</li></ul><p>检测能力的执行调度这部分不用太细讲，变更场景的话，从经验角度，每个变更工单有多个变更阶段，所以变更观测需要观测的维度也是阶段维度，这样的话按照变更渠道/类型/阶段去拆解变更场景也是比较合理的。设计上的纠结点主要在于变更对象匹配，在实际场景中，如果变更对象是以树的形式管理的，那么匹配变更对象可能得匹配某个非叶子节点；如果变更对象可以用通用的string表达，那么用户也可能希望一条策略匹配多个string或者正则。在这个基础上，有时用户也希望某条策略去匹配某个顶层的树节点，但又豁免掉下级的某些子节点。所以，由这些需求反推，我们可以简单得到这样的变更对象Matcher设计：</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> ChangeObjectMatcher <span class="keyword">struct</span> &#123;</span><br><span class="line">    ObjectType <span class="keyword">string</span> <span class="string">`json:"object_type"`</span> <span class="comment">// 树类/字符串类变更对象</span></span><br><span class="line">    TreeNodeIDs []<span class="keyword">string</span> <span class="string">`json:"tree_node_ids"`</span> <span class="comment">// 树类变更对象，匹配的树节点ID列表</span></span><br><span class="line">    ObjectValues []<span class="keyword">string</span> <span class="string">`json:"object_values"`</span> <span class="comment">// 字符串类变更对象，匹配的字符串值列表，也可以是正则表达式</span></span><br><span class="line">    ObjectAttributes <span class="keyword">map</span>[<span class="keyword">string</span>]any <span class="string">`json:"object_attributes"`</span> <span class="comment">// 字符串类变更对象，匹配的KV属性键值对</span></span><br><span class="line">    ExcludeMatchers []ChangeObjectMatcher <span class="string">`json:"exclude_matchers"`</span> <span class="comment">// 子节点匹配器，用于排除某些子节点</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>在这个基础上，我们能够很方便表达出「匹配一个范围的变更对象，豁免多个子范围的变更对象」这个事情。当然，实际ExcludeMatcher应该往外面提一个字段，做成「在多个子变更场景下，豁免多个子范围的变更对象」会更加合适。至于前端分页，需要从DB筛选一波之后，内存再筛选一波，然后再做分页，这个取决于策略的量级，至少在笔者的实战场景下，DB查询已经可以变更场景+树节点，第一波出来的策略数量也不会过百，那么在内存里做分页，对内存的开销也是可以接受的。</p><p>即便如此，要兼顾产品设计和观测任务运行时的「所见即所得」的话，还有两件事情要做。</p><p>第一件事情是，需要从变更对象的角度，另外增加一套ExcludeMatcher。这样做是因为，用户操作层面，可能在前端可以看到某些策略是否匹配上，但也希望能够看到这些策略的启禁用情况。这个启禁用是变更对象视角下的，所以需要有另一套ExcludeMatcher来表达。</p><p>第二件事情是，需要把前端视角的匹配逻辑和检测任务视角的匹配逻辑区分两个Policy。这是因为，前端视角下筛选条件有限，理论上肯定无法「所见即所得」，比如我们需要匹配细粒度的ObjectAttributes，那只有在检测任务运行时才会知道。所以除了产品设计上需要有额外的说明之外，检索流程设计上用一个单独的MatchPolicy字段去表达，比如MatchPolicy为Runtime就匹配细粒度的变更属性，那这样写策略匹配逻辑就比较方便了。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;近期笔者在投入变更风险防控开放平台的额外功能开发，目的是希望设计一套更加灵活的变更风险观测策略匹配机制，能够在满足面向任意变更场景应用观测策略的同时，尽可能保证产品体验，让用户清晰地了解到自己配置的什么策略能够在什么情况的变更过程中生效。在&lt;a href=&quot;https://utmhikari.top/2025/01/26/testlife/change_observe_logic/&quot;&gt;先前的文章&lt;/a&gt;当中，有粗浅提到变更观测策略匹配的事情，但没有深入探究，并且笔者以前接手的项目，很多底层设计的技术债也难以偿还，要在以前实现的基础上再做重构也不是很现实了。&lt;/p&gt;
+&lt;p&gt;所以，趁着扩展新系统的机会，笔者重新思考了下变更风险观测策略匹配机制的事情，跟随这篇文章来抛砖引玉下自己的想法。&lt;/p&gt;
+&lt;p&gt;首先，还是一个根本问题，一条变更风险观测策略的粒度是怎样的？如果粒度太粗，那么从产品视角，很容易导致「所见非所得」的问题；如果粒度太细，那么用户配置起来也会相当麻烦。经评估，由单个检测能力执行的粒度代表一条策略，这样的形式相对合理，不仅方便产品层面做「所见即所得」的设计，而且实际执行过程中，也可以以原子化的形式做编排，从调度角度来讲也很容易扩展。&lt;/p&gt;
+&lt;p&gt;详细来讲，一条策略在设计上，需要关联以下几类概念：&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="测试人生" scheme="https://utmhikari.top/categories/%E6%B5%8B%E8%AF%95%E4%BA%BA%E7%94%9F/"/>
+    
+    
+      <category term="后端开发" scheme="https://utmhikari.top/tags/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="产品" scheme="https://utmhikari.top/tags/%E4%BA%A7%E5%93%81/"/>
+    
+      <category term="变更风险" scheme="https://utmhikari.top/tags/%E5%8F%98%E6%9B%B4%E9%A3%8E%E9%99%A9/"/>
+    
+      <category term="正则表达式" scheme="https://utmhikari.top/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"/>
+    
+      <category term="数据库" scheme="https://utmhikari.top/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【极客日常】快速上手复杂后端项目开发的经验</title>
+    <link href="https://utmhikari.top/2026/01/17/geekdaily/project_work_quickstart/"/>
+    <id>https://utmhikari.top/2026/01/17/geekdaily/project_work_quickstart/</id>
+    <published>2026-01-17T05:30:08.000Z</published>
+    <updated>2026-01-17T06:01:11.251Z</updated>
+    
+    <content type="html"><![CDATA[<p>去年年底一段时间，笔者参与了组织内部智能化平台项目研发攻坚，虽然主攻平台工程部分，但多少也了解了下目前AIGC可以应用到的一些业务场景，以及技术实践、项目管理的一些事情。在<a href="https://utmhikari.top/2025/12/07/archiart/llm_augment_development_roles/">先前的文章</a>里头，有浅要描述下AIGC+Web类项目的角色分工和配合。那今天这篇文章，就浅聊一下如果你即将深入此局，适应一个复杂的后端项目开发，有什么方法论是可以通用的。</p><p>主要是两个关键点：（1）理解产品及概念实体联系；（2）主动拆解目标各个击破。</p><a id="more"></a><p>第一个点比较重要，在理解具体代码之前，最好是熟悉产品，了解产品前端有什么功能，在这个基础上，尝试先入为主地猜想后端的设计实现，把自己的想法带入进去，再结合一些AIGC解读工具理解代码，后面就比较好下手。</p><p>当然这里不排除一些情况是，比如异步任务执行流程类的实现，纯后端的部分，就可能涉及到多方的协作。这种情况还是以多沟通多了解为主，好比说一个自动化任务执行，单个任务下面包含多个用例执行，每个用例执行分多个OS，平台的任务状态管理和用例执行的任务状态管理可能存在不同的服务上，中间状态怎么流转怎么同步，卡状态了怎么补偿，这些实现都是得深入去沟通了解的。然后，自动化任务执行有AI增强的场景，也需要了解什么地方用了AI增强，比如用例本身是AI生成的，或者基于AI做了改写优化，那么平台端和AI实现端是怎么同步AIGC阶段性信息的，这些也得确认。了解了中间的机理和代码实现，自己心中有蓝图之后，后续就好下手。</p><p>第二个点是要主动拆解研发目标，比如一套知识库服务，可能包含知识库/文档/切片管理、知识检索、在离线知识采集/清洗/入库，知识保鲜等模块，那么首先就要确定自己的负责范围是哪些，其次就是根据你对整套产品或者技术设计的了解，自主去拆分这些事情的依赖关系和优先级，而不是被动去迎合需求分配。</p><p>比如，笔者负责知识库管理、知识检索以及历史知识回溯的事情，那么顺序上就是知识库管理-&gt;历史知识回溯-&gt;知识检索，而知识回溯也依赖知识库/文档/切片管理的完成，所以也需要了解别人在文档/切片管理方面实现是怎么样的，然后再做知识回溯的话，也需要了解离线知识入库的机制和接口是怎样的。通过化被动为主动，就可以能够对自身的职责和要做的事情有更好的把握。</p><p>总的来讲，复杂的项目不可怕，可怕的是自己不知道该做什么。作为技术从业者，比起写代码本身，更需要知道写代码的目的是什么，然后再反推自己需要做什么。这样工作思路就能更清晰，做复杂项目开发也会更加容易上手。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;去年年底一段时间，笔者参与了组织内部智能化平台项目研发攻坚，虽然主攻平台工程部分，但多少也了解了下目前AIGC可以应用到的一些业务场景，以及技术实践、项目管理的一些事情。在&lt;a href=&quot;https://utmhikari.top/2025/12/07/archiart/llm_augment_development_roles/&quot;&gt;先前的文章&lt;/a&gt;里头，有浅要描述下AIGC+Web类项目的角色分工和配合。那今天这篇文章，就浅聊一下如果你即将深入此局，适应一个复杂的后端项目开发，有什么方法论是可以通用的。&lt;/p&gt;
+&lt;p&gt;主要是两个关键点：（1）理解产品及概念实体联系；（2）主动拆解目标各个击破。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="极客日常" scheme="https://utmhikari.top/categories/%E6%9E%81%E5%AE%A2%E6%97%A5%E5%B8%B8/"/>
+    
+    
+      <category term="AI" scheme="https://utmhikari.top/tags/AI/"/>
+    
+      <category term="知识库" scheme="https://utmhikari.top/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/"/>
+    
+      <category term="后端开发" scheme="https://utmhikari.top/tags/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="系统设计" scheme="https://utmhikari.top/tags/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/"/>
+    
+      <category term="产品" scheme="https://utmhikari.top/tags/%E4%BA%A7%E5%93%81/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【架构艺术】简述LLM增强产品研发角色</title>
+    <link href="https://utmhikari.top/2025/12/07/archiart/llm_augment_development_roles/"/>
+    <id>https://utmhikari.top/2025/12/07/archiart/llm_augment_development_roles/</id>
+    <published>2025-12-07T07:43:10.000Z</published>
+    <updated>2025-12-07T07:44:51.412Z</updated>
+    
+    <content type="html"><![CDATA[<p>2025年算是LLM增强产品井喷的一年，以笔者亲身经历的，不论是自动化测试平台还是云服务稳定性平台，都在已有平台基建的基础上，依靠LLM增强的AIGC能力，做了诸如XMind用例自动生成、用例步骤自主探索、RCA故障定位以及服务发布风险实时解读等有业务价值的能力。</p><p>要做出这样的产品，投入的研发人力也肯定不少，而在这个体系下，怎么分配不同的研发角色，既能让每个模块的同学专注自身能力研发，又可以形成有机结合让整个产品顺利运转起来，是产品架构迭代过程中时刻都要思考的重要问题。为此，这篇文章就简单聊下，如果要大力投入这类型的产品研发，可能需要哪些角色，以及其中可能存在配合是怎样的。</p><a id="more"></a><p>首先从纯技术角度出发的话，可能需要这么几类研发：</p><ul><li>平台工程：分前后端角色，把握整个平台的核心架构迭代，主控需求交付，同时关注产品业务跟稳定性指标；</li><li>业务域工程：比如自动化测试或者稳定性，也少不了任务调度平台、SRE稳定性等业务域研发的参与；</li><li>Agent工程：在LLM增强产品少不了Chat-Agent的前提下，负责Agent平台研发，也关注Agent的业务场景和效果指标；</li><li>智能化工程：负责产品中LLM增强/AIGC能力的专项研发，一般作为产品/Agent/业务域工程的下游，主要关注能力效果；</li><li>知识库工程：一般作为智能化能力的下游，负责知识库CRUD、知识生产、RAG等功能研发，为智能化能力提供上下文基建；</li><li>智能化算法：主要负责面向业务的模型调优工作，注重智能化/Agent能力效果指标。</li></ul><p>在这样基础上，每类角色的职责就会划分地比较清晰，对于单个能力，不同角色之间如何产生技术配合也会比较清楚。</p><p>再宏观一点，从业务产品的角度出发的话，产品经理、业务运营、业务BP跟质量QA等角色也是不可少的。在现实场景下，可能是产品经理把握功能迭代和排期定容，业务运营负责产品营销和推广，业务BP负责ToB定点推广落地，而质量QA负责把控产品质量做功能测试和效果评测。通过这样的分工，整套产品研发迭代就可以有效运转起来。</p><p>这里重点说下质量QA的角色，在降本增效的大环境下，很多QA的人力都会被砍，这样必然带来产品质量风险，本质便是保质量的事情分摊到了不同人身上，但其它角色都没有足够精力去把这点做深，所以交付时候就容易出现各管各的的情况。如果有条件，愿意把产品质量做的更好的话，对于LLM增强产品研发这件事情，最好还是引入专门把控交付质量的角色，重点补位P0功能、效果评测等复杂的、各方都没有足够精力投入的、存在较大质量交付风险的事情，协力把效果指标和业务指标都优化上来。</p><p>最后就是，如果读者你正好身在此局，不妨也从宏观视角审视下自己项目的运转，看看自己身处什么角色，在这个项目里能够多做些什么，多了解些什么。除了技术研发本身之外，对于如何拉通复杂的上下游，协调各方资源，把自己负责的功能和效果都做到极致，这份思考，说不定是此刻的你所需要的。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;2025年算是LLM增强产品井喷的一年，以笔者亲身经历的，不论是自动化测试平台还是云服务稳定性平台，都在已有平台基建的基础上，依靠LLM增强的AIGC能力，做了诸如XMind用例自动生成、用例步骤自主探索、RCA故障定位以及服务发布风险实时解读等有业务价值的能力。&lt;/p&gt;
+&lt;p&gt;要做出这样的产品，投入的研发人力也肯定不少，而在这个体系下，怎么分配不同的研发角色，既能让每个模块的同学专注自身能力研发，又可以形成有机结合让整个产品顺利运转起来，是产品架构迭代过程中时刻都要思考的重要问题。为此，这篇文章就简单聊下，如果要大力投入这类型的产品研发，可能需要哪些角色，以及其中可能存在配合是怎样的。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="架构艺术" scheme="https://utmhikari.top/categories/%E6%9E%B6%E6%9E%84%E8%89%BA%E6%9C%AF/"/>
+    
+    
+      <category term="AI" scheme="https://utmhikari.top/tags/AI/"/>
+    
+      <category term="系统设计" scheme="https://utmhikari.top/tags/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/"/>
+    
+      <category term="LLM" scheme="https://utmhikari.top/tags/LLM/"/>
+    
+      <category term="产品" scheme="https://utmhikari.top/tags/%E4%BA%A7%E5%93%81/"/>
+    
+      <category term="架构" scheme="https://utmhikari.top/tags/%E6%9E%B6%E6%9E%84/"/>
+    
+  </entry>
+  
+</feed>

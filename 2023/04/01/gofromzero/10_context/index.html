@@ -105,7 +105,7 @@
 <meta name="keywords" content="Golang,context,WithCancel,WithDeadline,WithValue">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【从零单排Golang】第十话：快速理解并上手context的基础用法">
-<meta property="og:url" content="http://utmhikari.github.io/2023/04/01/gofromzero/10_context/index.html">
+<meta property="og:url" content="https://utmhikari.top/2023/04/01/gofromzero/10_context/index.html">
 <meta property="og:site_name" content="HiKariのTechLab">
 <meta property="og:description" content="在Golang的各种用法当中，context可谓是最能够体现Golang语言特性的模块之一。context的本意为情境、上下文，而在Golang程序当中，则可以被用于描述一次调用、会话或者任务的状态信息。关于context网上有很多语法以及源码分析的文档，但是里面很多却不能从实战场景体现context的作用，导致这个概念难以理解。因此这一回，经由踩坑context后，笔者将结合自己的理解，给大家讲">
 <meta property="og:locale" content="zh-CN">
@@ -116,10 +116,12 @@
 
 
 
+  <link rel="alternate" href="/atom.xml" title="HiKariのTechLab" type="application/atom+xml">
 
 
 
-  <link rel="canonical" href="http://utmhikari.github.io/2023/04/01/gofromzero/10_context/">
+
+  <link rel="canonical" href="https://utmhikari.top/2023/04/01/gofromzero/10_context/">
 
 
 
@@ -374,7 +376,7 @@
 
   
 
-  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="关注HiKariのGithub" aria-label="关注HiKariのGithub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></span>
+  <a href="https://github.com/utmhikari" class="github-corner" title="关注HiKariのGithub" aria-label="关注HiKariのGithub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
 
 
 
@@ -404,7 +406,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2023/04/01/gofromzero/10_context/">
+    <link itemprop="mainEntityOfPage" href="https://utmhikari.top/2023/04/01/gofromzero/10_context/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ひかり.HDQ">
@@ -526,7 +528,7 @@
         <p>在<code>Golang</code>的各种用法当中，<code>context</code>可谓是最能够体现<code>Golang</code>语言特性的模块之一。<code>context</code>的本意为<code>情境、上下文</code>，而在<code>Golang</code>程序当中，则可以被用于描述一次<code>调用</code>、<code>会话</code>或者<code>任务</code>的状态信息。关于<code>context</code>网上有很多语法以及源码分析的文档，但是里面很多却不能从实战场景体现<code>context</code>的作用，导致这个概念难以理解。因此这一回，经由踩坑<code>context</code>后，笔者将结合自己的理解，给大家讲述<code>context</code>在<code>Golang</code>怎么用来最为方便，怎么理解最为实用。</p>
 <p>首先来了解一下什么是<code>context</code>。我们先走源码：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Context <span class="keyword">interface</span> &#123;</span><br><span class="line">    Deadline() (deadline time.Time, ok <span class="keyword">bool</span>)</span><br><span class="line">    Done() &lt;-<span class="keyword">chan</span> <span class="keyword">struct</span>&#123;&#125;</span><br><span class="line">    Err() error</span><br><span class="line">    Value(key any) any</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在源码定义中可以看到，<code>context</code>模块给开发者定义了一个接口约定<code>Context</code>。在先前<span class="exturl" data-url="aHR0cHM6Ly91dG1oaWthcmkudG9wLzIwMjMvMDIvMTgvZ29mcm9temVyby8wOF9jYWNoZV9pbnRlcmZhY2Uv" title="https://utmhikari.top/2023/02/18/gofromzero/08_cache_interface/">关于接口的文章<i class="fa fa-external-link"></i></span>中有提到，接口本身定义的是一个实体可以做的行为，那么我们初步理解<code>context</code>的时候，就可以通过<code>Context</code>的定义，知道一个<code>Context</code>可以干什么。</p>
+<p>在源码定义中可以看到，<code>context</code>模块给开发者定义了一个接口约定<code>Context</code>。在先前<a href="https://utmhikari.top/2023/02/18/gofromzero/08_cache_interface/">关于接口的文章</a>中有提到，接口本身定义的是一个实体可以做的行为，那么我们初步理解<code>context</code>的时候，就可以通过<code>Context</code>的定义，知道一个<code>Context</code>可以干什么。</p>
 <p>假设一个<code>Context</code>实例<code>ctx</code>，关联到了一次<code>会话</code>，作为当次<code>会话</code>的<code>情境</code>。根据代码定义，<code>Context</code>可以做以下几种行为：</p>
 <a id="more"></a>
 <ul>
@@ -676,6 +678,14 @@
 
 
   </div>
+
+  
+  
+  
+  
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【从零单排Golang】第十话：快速理解并上手context的基础用法","description":"在Golang的各种用法当中，context可谓是最能够体现Golang语言特性的模块之一。context的本意为情境、上下文，而在Golang程序当中，则可以被用于描述一次调用、会话或者任务的状态信息。关于context网上有很多语法以及源码分析的文档，但是里面很多却不能从实战场景体现context的作用，导致这个概念难以理解。因此这一回，经由踩坑context后，笔者将结合自己的理解，给大家讲","datePublished":"2023-04-01T09:11:46.000Z","dateModified":"2024-04-07T02:48:06.922Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2023/04/01/gofromzero/10_context/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"Golang, context, WithCancel, WithDeadline, WithValue"}</script>
+  
+  
 
 
           </div>
@@ -1645,8 +1655,6 @@
                     
                       
                     
-                      
-                    
                     <span class="site-state-item-count">430</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
@@ -1655,6 +1663,13 @@
             </nav>
           
 
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
           
 
           
@@ -1670,7 +1685,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="GitHub &rarr; https://github.com/utmhikari"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                  <a href="https://github.com/utmhikari" title="GitHub &rarr; https://github.com/utmhikari" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
                 </span>
               
                 <span class="links-of-author-item">
@@ -1681,7 +1696,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
+                  <a href="https://blog.csdn.net/u013842501" title="CSDN &rarr; https://blog.csdn.net/u013842501" rel="noopener" target="_blank"><i class="fa fa-fw fa-copyright"></i>CSDN</a>
                 </span>
               
                 <span class="links-of-author-item">
@@ -1692,7 +1707,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80NDg4NjUwODE4MDYyMjg2L2NvbHVtbnM=" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns"><i class="fa fa-fw fa-code"></i>Juejin</span>
+                  <a href="https://juejin.cn/user/4488650818062286/columns" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns" rel="noopener" target="_blank"><i class="fa fa-fw fa-code"></i>Juejin</a>
                 </span>
               
                 <span class="links-of-author-item">
@@ -1703,7 +1718,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9zcGFjZS5iaWxpYmlsaS5jb20vNzc4NDEwLw==" title="Bilibili &rarr; https://space.bilibili.com/778410/"><i class="fa fa-fw fa-bold"></i>Bilibili</span>
+                  <a href="https://space.bilibili.com/778410/" title="Bilibili &rarr; https://space.bilibili.com/778410/" rel="noopener" target="_blank"><i class="fa fa-fw fa-bold"></i>Bilibili</a>
                 </span>
               
             </div>
@@ -1892,8 +1907,6 @@
   
 
   
-  <script src="/js/src/exturl.js?v=7.0.1"></script>
-
 
   
 

@@ -102,10 +102,10 @@
 
 
   <meta name="description" content="大型的游戏项目包含许多错综复杂的业务逻辑，针对UE4游戏而言，如果纯粹采用C++编写的话，一方面会增加大量的劳动成本，影响效率，另一方面难以解决游戏热更的问题。lua作为胶水语言，能够与C/C++/C#等语言互通，简化业务逻辑编写，并且支持热更。针对UE4的游戏开发，UnLua以及sluaunreal都是采用lua编写逻辑的解决方案。 作为一个没有怎么接触过游戏开发技术栈的小白，本文主要上手UnL">
-<meta name="keywords" content="UE4,游戏开发,C++,UnLua,lua">
+<meta name="keywords" content="UE4,C++,游戏开发,UnLua,lua">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【游戏开发】用Lua编写UE4游戏逻辑——UnLua上手">
-<meta property="og:url" content="http://utmhikari.github.io/2020/08/02/gamedev/unlua_try/index.html">
+<meta property="og:url" content="https://utmhikari.top/2020/08/02/gamedev/unlua_try/index.html">
 <meta property="og:site_name" content="HiKariのTechLab">
 <meta property="og:description" content="大型的游戏项目包含许多错综复杂的业务逻辑，针对UE4游戏而言，如果纯粹采用C++编写的话，一方面会增加大量的劳动成本，影响效率，另一方面难以解决游戏热更的问题。lua作为胶水语言，能够与C/C++/C#等语言互通，简化业务逻辑编写，并且支持热更。针对UE4的游戏开发，UnLua以及sluaunreal都是采用lua编写逻辑的解决方案。 作为一个没有怎么接触过游戏开发技术栈的小白，本文主要上手UnL">
 <meta property="og:locale" content="zh-CN">
@@ -116,10 +116,12 @@
 
 
 
+  <link rel="alternate" href="/atom.xml" title="HiKariのTechLab" type="application/atom+xml">
 
 
 
-  <link rel="canonical" href="http://utmhikari.github.io/2020/08/02/gamedev/unlua_try/">
+
+  <link rel="canonical" href="https://utmhikari.top/2020/08/02/gamedev/unlua_try/">
 
 
 
@@ -374,7 +376,7 @@
 
   
 
-  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="关注HiKariのGithub" aria-label="关注HiKariのGithub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></span>
+  <a href="https://github.com/utmhikari" class="github-corner" title="关注HiKariのGithub" aria-label="关注HiKariのGithub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
 
 
 
@@ -404,7 +406,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2020/08/02/gamedev/unlua_try/">
+    <link itemprop="mainEntityOfPage" href="https://utmhikari.top/2020/08/02/gamedev/unlua_try/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ひかり.HDQ">
@@ -523,7 +525,7 @@
       
 
       
-        <p>大型的游戏项目包含许多错综复杂的业务逻辑，针对UE4游戏而言，如果纯粹采用C++编写的话，一方面会增加大量的劳动成本，影响效率，另一方面难以解决游戏热更的问题。lua作为胶水语言，能够与C/C++/C#等语言互通，简化业务逻辑编写，并且支持热更。针对UE4的游戏开发，<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1RlbmNlbnQvVW5MdWE=" title="https://github.com/Tencent/UnLua">UnLua<i class="fa fa-external-link"></i></span>以及<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1RlbmNlbnQvc2x1YXVucmVhbA==" title="https://github.com/Tencent/sluaunreal">sluaunreal<i class="fa fa-external-link"></i></span>都是采用lua编写逻辑的解决方案。</p>
+        <p>大型的游戏项目包含许多错综复杂的业务逻辑，针对UE4游戏而言，如果纯粹采用C++编写的话，一方面会增加大量的劳动成本，影响效率，另一方面难以解决游戏热更的问题。lua作为胶水语言，能够与C/C++/C#等语言互通，简化业务逻辑编写，并且支持热更。针对UE4的游戏开发，<a href="https://github.com/Tencent/UnLua" target="_blank" rel="noopener">UnLua</a>以及<a href="https://github.com/Tencent/sluaunreal" target="_blank" rel="noopener">sluaunreal</a>都是采用lua编写逻辑的解决方案。</p>
 <p>作为一个没有怎么接触过游戏开发技术栈的小白，本文主要上手UnLua的使用。</p>
 <a id="more"></a>
 <p>从github上，我们可以clone下来示例的project，编译后即可运行。整个demo的逻辑是在一个空间中自动生成AI敌人，玩家需要射击AI以保全自身，如果碰到AI即游戏失败。整个游戏的逻辑基本在<code>Content/Script</code>下的lua文件中，对于开发者而言，只需要<code>创建蓝图——导出Lua脚本——编写逻辑</code>，就能够完成需求。</p>
@@ -537,7 +539,7 @@
 <p>这样即可根据颜色深度来判断projectile的伤害，实现伤害随机的效果。</p>
 <p>对于UMG而言，也可以在UMG蓝图中先设置各个控件为变量，然后调用各个变量的反射接口以设置控件属性。</p>
 <figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span> <span class="string">"UnLua"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">local</span> UMG_Main_C = Class()</span><br><span class="line"></span><br><span class="line">UMG_Main_C.ExitBtnText = <span class="string">"Hello World"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">UMG_Main_C:Construct</span><span class="params">()</span></span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> self.ExitButtonTextBlock <span class="keyword">then</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">"exit button text is nil!"</span>)</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">"bind exit button text..."</span>)</span><br><span class="line">        self.ExitButtonTextBlock:SetText(UMG_Main_C.ExitBtnText)</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    self.ExitButton.OnClicked:Add(self, UMG_Main_C.OnClicked_ExitButton)	</span><br><span class="line">    <span class="comment">--self.ExitButton.OnClicked:Add(self, function(Widget) UE4.UKismetSystemLibrary.ExecuteConsoleCommand(Widget, "exit") end )</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">UMG_Main_C:OnClicked_ExitButton</span><span class="params">()</span></span></span><br><span class="line">    UE4.UKismetSystemLibrary.ExecuteConsoleCommand(self, <span class="string">"exit"</span>)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> UMG_Main_C</span><br></pre></td></tr></table></figure>
-<p>从一个UE4初学者角度而言，UnLua的熟悉会有一定壁垒，需要建立在对UE4的C++变成较为熟悉的基础上，才能熟练应用。UnLua/sluaunreal相对于蓝图解决了一个最大的问题是逻辑的可维护性以及可热更的能力，以便支持业务逻辑的快速迭代。lua本身是没有强制静态类型的，虽然最近已有了<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3RlYWwtbGFuZ3VhZ2UvdGw=" title="https://github.com/teal-language/tl">teal<i class="fa fa-external-link"></i></span>的产生，但整个生态还没有完全兴起。因此如果使用lua作为胶水语言，不在lua层先做一两层业务抽象再写逻辑的话，还不如直接写C++来的稳定。因此，针对初学者或者是独立开发者，用C++加上蓝图是更加妥当的选择。</p>
+<p>从一个UE4初学者角度而言，UnLua的熟悉会有一定壁垒，需要建立在对UE4的C++变成较为熟悉的基础上，才能熟练应用。UnLua/sluaunreal相对于蓝图解决了一个最大的问题是逻辑的可维护性以及可热更的能力，以便支持业务逻辑的快速迭代。lua本身是没有强制静态类型的，虽然最近已有了<a href="https://github.com/teal-language/tl" target="_blank" rel="noopener">teal</a>的产生，但整个生态还没有完全兴起。因此如果使用lua作为胶水语言，不在lua层先做一两层业务抽象再写逻辑的话，还不如直接写C++来的稳定。因此，针对初学者或者是独立开发者，用C++加上蓝图是更加妥当的选择。</p>
 <p>That’s it，游戏开发是一门很独特的技术栈，还有许多值得探索的东西。自己虽然没有从事游戏开发工作，但说不定有一天，能够自己写一个自己的游戏呢。</p>
 
       
@@ -577,9 +579,9 @@
           
             <a href="/tags/UE4/" rel="tag"># UE4</a>
           
-            <a href="/tags/游戏开发/" rel="tag"># 游戏开发</a>
-          
             <a href="/tags/C/" rel="tag"># C++</a>
+          
+            <a href="/tags/游戏开发/" rel="tag"># 游戏开发</a>
           
             <a href="/tags/UnLua/" rel="tag"># UnLua</a>
           
@@ -625,6 +627,14 @@
 
 
   </div>
+
+  
+  
+  
+  
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【游戏开发】用Lua编写UE4游戏逻辑——UnLua上手","description":"大型的游戏项目包含许多错综复杂的业务逻辑，针对UE4游戏而言，如果纯粹采用C++编写的话，一方面会增加大量的劳动成本，影响效率，另一方面难以解决游戏热更的问题。lua作为胶水语言，能够与C/C++/C#等语言互通，简化业务逻辑编写，并且支持热更。针对UE4的游戏开发，UnLua以及sluaunreal都是采用lua编写逻辑的解决方案。 作为一个没有怎么接触过游戏开发技术栈的小白，本文主要上手UnL","datePublished":"2020-08-02T08:26:55.000Z","dateModified":"2024-04-07T02:48:06.918Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2020/08/02/gamedev/unlua_try/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"UE4, C++, 游戏开发, UnLua, lua"}</script>
+  
+  
 
 
           </div>
@@ -1594,8 +1604,6 @@
                     
                       
                     
-                      
-                    
                     <span class="site-state-item-count">430</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
@@ -1604,6 +1612,13 @@
             </nav>
           
 
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
           
 
           
@@ -1619,7 +1634,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="GitHub &rarr; https://github.com/utmhikari"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                  <a href="https://github.com/utmhikari" title="GitHub &rarr; https://github.com/utmhikari" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
                 </span>
               
                 <span class="links-of-author-item">
@@ -1630,7 +1645,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
+                  <a href="https://blog.csdn.net/u013842501" title="CSDN &rarr; https://blog.csdn.net/u013842501" rel="noopener" target="_blank"><i class="fa fa-fw fa-copyright"></i>CSDN</a>
                 </span>
               
                 <span class="links-of-author-item">
@@ -1641,7 +1656,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80NDg4NjUwODE4MDYyMjg2L2NvbHVtbnM=" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns"><i class="fa fa-fw fa-code"></i>Juejin</span>
+                  <a href="https://juejin.cn/user/4488650818062286/columns" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns" rel="noopener" target="_blank"><i class="fa fa-fw fa-code"></i>Juejin</a>
                 </span>
               
                 <span class="links-of-author-item">
@@ -1652,7 +1667,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9zcGFjZS5iaWxpYmlsaS5jb20vNzc4NDEwLw==" title="Bilibili &rarr; https://space.bilibili.com/778410/"><i class="fa fa-fw fa-bold"></i>Bilibili</span>
+                  <a href="https://space.bilibili.com/778410/" title="Bilibili &rarr; https://space.bilibili.com/778410/" rel="noopener" target="_blank"><i class="fa fa-fw fa-bold"></i>Bilibili</a>
                 </span>
               
             </div>
@@ -1841,8 +1856,6 @@
   
 
   
-  <script src="/js/src/exturl.js?v=7.0.1"></script>
-
 
   
 

@@ -105,7 +105,7 @@
 <meta name="keywords" content="python,多进程,subprocess,Popen,子进程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【Python随笔】掌握子进程subprocess模块的使用方法">
-<meta property="og:url" content="http://utmhikari.github.io/2022/07/02/pythonnotes/subprocess_popen/index.html">
+<meta property="og:url" content="https://utmhikari.top/2022/07/02/pythonnotes/subprocess_popen/index.html">
 <meta property="og:site_name" content="HiKariのTechLab">
 <meta property="og:description" content="在python开发期间，很多时候我们会需要执行一段cmd终端命令，或者是执行其他程序返回stdout或者文件输出结果。这种时候，我们就需要用到subprocess模块。虽然我们用os.system也可以达到执行命令的需求，但用os.system只是干发一段命令，对于执行命令的程序，我们没有办法跟踪它的内部状态以及执行结果，因此从稳定性的角度来讲不是一个好的选择。因此，本篇文章讲解下subproce">
 <meta property="og:locale" content="zh-CN">
@@ -116,10 +116,12 @@
 
 
 
+  <link rel="alternate" href="/atom.xml" title="HiKariのTechLab" type="application/atom+xml">
 
 
 
-  <link rel="canonical" href="http://utmhikari.github.io/2022/07/02/pythonnotes/subprocess_popen/">
+
+  <link rel="canonical" href="https://utmhikari.top/2022/07/02/pythonnotes/subprocess_popen/">
 
 
 
@@ -374,7 +376,7 @@
 
   
 
-  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="关注HiKariのGithub" aria-label="关注HiKariのGithub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></span>
+  <a href="https://github.com/utmhikari" class="github-corner" title="关注HiKariのGithub" aria-label="关注HiKariのGithub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
 
 
 
@@ -404,7 +406,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2022/07/02/pythonnotes/subprocess_popen/">
+    <link itemprop="mainEntityOfPage" href="https://utmhikari.top/2022/07/02/pythonnotes/subprocess_popen/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ひかり.HDQ">
@@ -524,7 +526,7 @@
 
       
         <p>在<code>python</code>开发期间，很多时候我们会需要执行一段<code>cmd</code>终端命令，或者是执行其他程序返回<code>stdout</code>或者文件输出结果。这种时候，我们就需要用到<code>subprocess</code>模块。虽然我们用<code>os.system</code>也可以达到执行命令的需求，但用<code>os.system</code>只是干发一段命令，对于执行命令的程序，我们没有办法跟踪它的内部状态以及执行结果，因此从稳定性的角度来讲不是一个好的选择。因此，本篇文章讲解下<code>subprocess</code>子进程模块的的基础应用，让没用过这个模块或是经常踩坑的同学都避避坑。</p>
-<p><code>subprocess</code>模块的官方文档在<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnB5dGhvbi5vcmcvMy9saWJyYXJ5L3N1YnByb2Nlc3MuaHRtbA==" title="https://docs.python.org/3/library/subprocess.html">这里<i class="fa fa-external-link"></i></span>，最核心的单位是<code>subprocess.Popen</code>类，它描述了一个正在运行中的进程。<code>subprocess</code>最基础的用法是<code>subprocess.run</code>，我们入参一段<code>cmd</code>终端命令，<code>run</code>方法内部就会启动一个<code>Popen</code>对象执行这个命令，等待命令执行结束后，返回这个命令执行的退出码<code>retcode</code>，标准输出流内容<code>stdout</code>以及标准错误流内容<code>stderr</code>。我们可以从源码中详细捋一下<code>subprocess.run</code>的流程：</p>
+<p><code>subprocess</code>模块的官方文档在<a href="https://docs.python.org/3/library/subprocess.html" target="_blank" rel="noopener">这里</a>，最核心的单位是<code>subprocess.Popen</code>类，它描述了一个正在运行中的进程。<code>subprocess</code>最基础的用法是<code>subprocess.run</code>，我们入参一段<code>cmd</code>终端命令，<code>run</code>方法内部就会启动一个<code>Popen</code>对象执行这个命令，等待命令执行结束后，返回这个命令执行的退出码<code>retcode</code>，标准输出流内容<code>stdout</code>以及标准错误流内容<code>stderr</code>。我们可以从源码中详细捋一下<code>subprocess.run</code>的流程：</p>
 <a id="more"></a>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(*popenargs,</span></span></span><br><span class="line"><span class="function"><span class="params">        input=None, capture_output=False, timeout=None, check=False, **kwargs)</span>:</span></span><br><span class="line">    <span class="comment"># 忽略上面参数处理部分</span></span><br><span class="line">    <span class="keyword">with</span> Popen(*popenargs, **kwargs) <span class="keyword">as</span> process:  <span class="comment"># 新起一个Popen的context</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="comment"># 通过communicate方法拉取最终stdout、stderr的所有数据</span></span><br><span class="line">            stdout, stderr = process.communicate(input, timeout=timeout)  </span><br><span class="line">        <span class="keyword">except</span> TimeoutExpired <span class="keyword">as</span> exc:</span><br><span class="line">            <span class="comment"># 超时处理，向os申请杀进程，等待进程结束</span></span><br><span class="line">            process.kill()</span><br><span class="line">            <span class="keyword">if</span> _mswindows:</span><br><span class="line">                exc.stdout, exc.stderr = process.communicate()  <span class="comment"># communicate也可用来模拟键盘输入</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                process.wait()</span><br><span class="line">            <span class="keyword">raise</span></span><br><span class="line">        <span class="keyword">except</span>:  <span class="comment"># Including KeyboardInterrupt, communicate handled that.</span></span><br><span class="line">            <span class="comment"># 向os申请杀进程</span></span><br><span class="line">            process.kill()</span><br><span class="line">            <span class="comment"># We don't call process.wait() as .__exit__ does that for us.</span></span><br><span class="line">            <span class="keyword">raise</span></span><br><span class="line">        retcode = process.poll()  <span class="comment"># 获取exitcode</span></span><br><span class="line">        <span class="keyword">if</span> check <span class="keyword">and</span> retcode:</span><br><span class="line">            <span class="keyword">raise</span> CalledProcessError(retcode, process.args,</span><br><span class="line">                                     output=stdout, stderr=stderr)</span><br><span class="line">    <span class="keyword">return</span> CompletedProcess(process.args, retcode, stdout, stderr)</span><br></pre></td></tr></table></figure>
 <p><code>subprocess.run</code>是一个阻塞方法，执行了这个接口后，需要等待<code>run</code>入参的命令执行完才能返回。而有些时候，我们需要单独起一个（进程执行）<code>cmd</code>命令，然后周期性每几秒钟去检查命令执行的状态，检查完之后我们还可以在主进程干别的事情，也就是搞一个独立出来的进程。这种情况下，<code>subprocess.run</code>就无法满足，必须直接开<code>subprocess.Popen</code>。</p>
@@ -618,6 +620,14 @@
 
 
   </div>
+
+  
+  
+  
+  
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Python随笔】掌握子进程subprocess模块的使用方法","description":"在python开发期间，很多时候我们会需要执行一段cmd终端命令，或者是执行其他程序返回stdout或者文件输出结果。这种时候，我们就需要用到subprocess模块。虽然我们用os.system也可以达到执行命令的需求，但用os.system只是干发一段命令，对于执行命令的程序，我们没有办法跟踪它的内部状态以及执行结果，因此从稳定性的角度来讲不是一个好的选择。因此，本篇文章讲解下subproce","datePublished":"2022-07-02T15:38:11.000Z","dateModified":"2024-04-07T02:48:06.927Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2022/07/02/pythonnotes/subprocess_popen/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"python, 多进程, subprocess, Popen, 子进程"}</script>
+  
+  
 
 
           </div>
@@ -1587,8 +1597,6 @@
                     
                       
                     
-                      
-                    
                     <span class="site-state-item-count">430</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
@@ -1597,6 +1605,13 @@
             </nav>
           
 
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
           
 
           
@@ -1612,7 +1627,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="GitHub &rarr; https://github.com/utmhikari"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                  <a href="https://github.com/utmhikari" title="GitHub &rarr; https://github.com/utmhikari" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
                 </span>
               
                 <span class="links-of-author-item">
@@ -1623,7 +1638,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
+                  <a href="https://blog.csdn.net/u013842501" title="CSDN &rarr; https://blog.csdn.net/u013842501" rel="noopener" target="_blank"><i class="fa fa-fw fa-copyright"></i>CSDN</a>
                 </span>
               
                 <span class="links-of-author-item">
@@ -1634,7 +1649,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80NDg4NjUwODE4MDYyMjg2L2NvbHVtbnM=" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns"><i class="fa fa-fw fa-code"></i>Juejin</span>
+                  <a href="https://juejin.cn/user/4488650818062286/columns" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns" rel="noopener" target="_blank"><i class="fa fa-fw fa-code"></i>Juejin</a>
                 </span>
               
                 <span class="links-of-author-item">
@@ -1645,7 +1660,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9zcGFjZS5iaWxpYmlsaS5jb20vNzc4NDEwLw==" title="Bilibili &rarr; https://space.bilibili.com/778410/"><i class="fa fa-fw fa-bold"></i>Bilibili</span>
+                  <a href="https://space.bilibili.com/778410/" title="Bilibili &rarr; https://space.bilibili.com/778410/" rel="noopener" target="_blank"><i class="fa fa-fw fa-bold"></i>Bilibili</a>
                 </span>
               
             </div>
@@ -1834,8 +1849,6 @@
   
 
   
-  <script src="/js/src/exturl.js?v=7.0.1"></script>
-
 
   
 

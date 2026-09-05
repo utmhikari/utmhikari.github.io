@@ -105,7 +105,7 @@
 <meta name="keywords" content="后端开发,v语言,聊天服务器,翻译语言,shingekinov">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【GitHub探索】v语言上手，用vlang写一个聊天应用">
-<meta property="og:url" content="http://utmhikari.github.io/2019/11/16/githubdiscovery/vlang/index.html">
+<meta property="og:url" content="https://utmhikari.top/2019/11/16/githubdiscovery/vlang/index.html">
 <meta property="og:site_name" content="HiKariのTechLab">
 <meta property="og:description" content="前言vlang（v语言）自从6月份突然炒热起来，不知不觉到了11月，正式版就要出来了，在11月的GitHub Trending榜中依然排在前10。这着实令人好奇，因此笔者决定试用一下vlang，写一个小应用，体验一下感受。 v语言上手v语言可以在GitHub传送门中clone下载，支持多操作系统，有以下的特性：  快速编译 快速转译 热更  其余的，还有自带的GUI库、结合Go与Rust的语言特性">
 <meta property="og:locale" content="zh-CN">
@@ -116,10 +116,12 @@
 
 
 
+  <link rel="alternate" href="/atom.xml" title="HiKariのTechLab" type="application/atom+xml">
 
 
 
-  <link rel="canonical" href="http://utmhikari.github.io/2019/11/16/githubdiscovery/vlang/">
+
+  <link rel="canonical" href="https://utmhikari.top/2019/11/16/githubdiscovery/vlang/">
 
 
 
@@ -374,7 +376,7 @@
 
   
 
-  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="关注HiKariのGithub" aria-label="关注HiKariのGithub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></span>
+  <a href="https://github.com/utmhikari" class="github-corner" title="关注HiKariのGithub" aria-label="关注HiKariのGithub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
 
 
 
@@ -404,7 +406,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://utmhikari.github.io/2019/11/16/githubdiscovery/vlang/">
+    <link itemprop="mainEntityOfPage" href="https://utmhikari.top/2019/11/16/githubdiscovery/vlang/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ひかり.HDQ">
@@ -524,7 +526,7 @@
 
       
         <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>vlang（v语言）自从6月份突然炒热起来，不知不觉到了11月，正式版就要出来了，在11月的GitHub Trending榜中依然排在前10。这着实令人好奇，因此笔者决定试用一下vlang，写一个小应用，体验一下感受。</p>
-<h2 id="v语言上手"><a href="#v语言上手" class="headerlink" title="v语言上手"></a>v语言上手</h2><p>v语言可以在<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3ZsYW5nL3Y=" title="https://github.com/vlang/v">GitHub传送门<i class="fa fa-external-link"></i></span>中clone下载，支持多操作系统，有以下的特性：</p>
+<h2 id="v语言上手"><a href="#v语言上手" class="headerlink" title="v语言上手"></a>v语言上手</h2><p>v语言可以在<a href="https://github.com/vlang/v" target="_blank" rel="noopener">GitHub传送门</a>中clone下载，支持多操作系统，有以下的特性：</p>
 <ul>
 <li>快速编译</li>
 <li>快速转译</li>
@@ -540,7 +542,7 @@
 <p>如果要更新vlang，则只需要：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">v up</span><br></pre></td></tr></table></figure>
 <p>就可以自动更新并编译了。</p>
-<h2 id="写一个聊天应用"><a href="#写一个聊天应用" class="headerlink" title="写一个聊天应用"></a>写一个聊天应用</h2><p>为了试用vlang，笔者简单写了个聊天应用<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaS9zaGluZ2VraW5vdg==" title="https://github.com/utmhikari/shingekinov">shingekinov<i class="fa fa-external-link"></i></span>，设计上暂时用了全局锁而非消息队列，然后也顺带把vlang的自带网络库熟悉了一下。</p>
+<h2 id="写一个聊天应用"><a href="#写一个聊天应用" class="headerlink" title="写一个聊天应用"></a>写一个聊天应用</h2><p>为了试用vlang，笔者简单写了个聊天应用<a href="https://github.com/utmhikari/shingekinov" target="_blank" rel="noopener">shingekinov</a>，设计上暂时用了全局锁而非消息队列，然后也顺带把vlang的自带网络库熟悉了一下。</p>
 <p>vlang并没有全局变量的说法，因此需要通过在main函数里保管指针启动实例。对于一个简单的聊天服务器实例可以如下设计：</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Server</span></span> &#123;</span><br><span class="line">    instance net.Socket</span><br><span class="line"><span class="keyword">mut</span>:</span><br><span class="line">    clients map[string]net.Socket</span><br><span class="line">    pairs map[string]string</span><br><span class="line">    mtx sync.Mutex</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><code>clients</code>存储客户端socket，而<code>pairs</code>存储聊天的一对。每一个客户端连接都采用<code>go</code>关键字（orz）创建一个单独的线程进行handle。要注册客户或者处理消息时，则上全局锁。全局锁lock方法会自动等待，所以暂时不会造成死锁。handle方法如下：</p>
@@ -635,6 +637,14 @@
 
 
   </div>
+
+  
+  
+  
+  
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【GitHub探索】v语言上手，用vlang写一个聊天应用","description":"前言vlang（v语言）自从6月份突然炒热起来，不知不觉到了11月，正式版就要出来了，在11月的GitHub Trending榜中依然排在前10。这着实令人好奇，因此笔者决定试用一下vlang，写一个小应用，体验一下感受。 v语言上手v语言可以在GitHub传送门中clone下载，支持多操作系统，有以下的特性： 快速编译 快速转译 热更 其余的，还有自带的GUI库、结合Go与Rust的语言特性之类","datePublished":"2019-11-15T16:06:16.000Z","dateModified":"2024-07-20T13:11:25.764Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2019/11/16/githubdiscovery/vlang/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"后端开发, v语言, 聊天服务器, 翻译语言, shingekinov"}</script>
+  
+  
 
 
           </div>
@@ -1613,8 +1623,6 @@
                     
                       
                     
-                      
-                    
                     <span class="site-state-item-count">430</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
@@ -1623,6 +1631,13 @@
             </nav>
           
 
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
           
 
           
@@ -1638,7 +1653,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3V0bWhpa2FyaQ==" title="GitHub &rarr; https://github.com/utmhikari"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                  <a href="https://github.com/utmhikari" title="GitHub &rarr; https://github.com/utmhikari" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
                 </span>
               
                 <span class="links-of-author-item">
@@ -1649,7 +1664,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NDI1MDE=" title="CSDN &rarr; https://blog.csdn.net/u013842501"><i class="fa fa-fw fa-copyright"></i>CSDN</span>
+                  <a href="https://blog.csdn.net/u013842501" title="CSDN &rarr; https://blog.csdn.net/u013842501" rel="noopener" target="_blank"><i class="fa fa-fw fa-copyright"></i>CSDN</a>
                 </span>
               
                 <span class="links-of-author-item">
@@ -1660,7 +1675,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vdXNlci80NDg4NjUwODE4MDYyMjg2L2NvbHVtbnM=" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns"><i class="fa fa-fw fa-code"></i>Juejin</span>
+                  <a href="https://juejin.cn/user/4488650818062286/columns" title="Juejin &rarr; https://juejin.cn/user/4488650818062286/columns" rel="noopener" target="_blank"><i class="fa fa-fw fa-code"></i>Juejin</a>
                 </span>
               
                 <span class="links-of-author-item">
@@ -1671,7 +1686,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9zcGFjZS5iaWxpYmlsaS5jb20vNzc4NDEwLw==" title="Bilibili &rarr; https://space.bilibili.com/778410/"><i class="fa fa-fw fa-bold"></i>Bilibili</span>
+                  <a href="https://space.bilibili.com/778410/" title="Bilibili &rarr; https://space.bilibili.com/778410/" rel="noopener" target="_blank"><i class="fa fa-fw fa-bold"></i>Bilibili</a>
                 </span>
               
             </div>
@@ -1877,8 +1892,6 @@
   
 
   
-  <script src="/js/src/exturl.js?v=7.0.1"></script>
-
 
   
 
