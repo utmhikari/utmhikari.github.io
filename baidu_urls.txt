@@ -1,3 +1,5 @@
+http://utmhikari.github.io/2026/09/05/ainative/agent_skill_project/
+http://utmhikari.github.io/2026/09/05/archiart/e2e_alarm_preplan/
 http://utmhikari.github.io/2026/08/01/ainative/alert_agent_skill/
 http://utmhikari.github.io/2026/08/01/pythonnotes/concurrent_intepreters/
 http://utmhikari.github.io/2026/07/04/ainative/vibe_coding_backend/
@@ -96,5 +98,3 @@ http://utmhikari.github.io/2023/03/04/gofromzero/09_sql_parser/
 http://utmhikari.github.io/2023/02/18/gofromzero/08_cache_interface/
 http://utmhikari.github.io/2023/02/05/diymemo/vmware_ubuntu_network/
 http://utmhikari.github.io/2023/01/26/testlife/quality_redline_design/
-http://utmhikari.github.io/2023/01/01/gofromzero/07_reflect_module/
-http://utmhikari.github.io/2022/12/10/codegallery/daggre/
