@@ -13,7 +13,7 @@ timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://utmhikari.github.io
+url: https://utmhikari.top
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -75,6 +75,12 @@ pagination_dir: page
 ## Themes: https://hexo.io/themes/
 theme: next
 
+# RSS 订阅
+feed:
+  type: atom
+  path: atom.xml
+  limit: 20
+
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
@@ -84,9 +90,11 @@ deploy:
 # - type: baidu_url_submitter
 
 # 改一下baidu_url_submitter的generator的源码，replace域名= =
+# token 已迁移至环境变量 BAIDU_PUSH_TOKEN（scripts/baidu_token.js 运行时注入），
+# 不再明文入库；启用推送时需将 deploy 中 baidu_url_submitter 取消注释
 baidu_url_submit:
   count: 100
   host: utmhikari.top
-  token: XdemKSgnew1yrpba
+  token: # 见 scripts/baidu_token.js
   path: baidu_urls.txt
 

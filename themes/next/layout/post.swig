@@ -12,6 +12,14 @@
     {{ post_template.render(page) }}
   </div>
 
+  {# 结构化数据：供搜索引擎与 AI 检索消费，置于 body 内合法 #}
+  {% set jsonld_str = jsonld(page) %}
+  {% if jsonld_str %}
+  {% autoescape false %}
+  <script type="application/ld+json">{{ jsonld_str }}</script>
+  {% endautoescape %}
+  {% endif %}
+
 {% endblock %}
 
 {% block sidebar %}

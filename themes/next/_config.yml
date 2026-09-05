@@ -21,7 +21,7 @@ cache:
 # `styles: source/_data/styles.styl`
 #custom_file_path:
   # Default paths: layout/_custom/*
-  #head: source/_data/head.swig
+  head: source/_data/head.swig
   #header: source/_data/header.swig
   #sidebar: source/_data/sidebar.swig
 
@@ -134,7 +134,8 @@ seo: true
 index_with_subtitle: true
 
 # Automatically add external URL with BASE64 encrypt & decrypt.
-exturl: true
+# 关闭外链加密：加密后外链对搜索引擎与 AI 爬虫不可见，损害引用关系
+exturl: false
 
 
 # ---------------------------------------------------------------
