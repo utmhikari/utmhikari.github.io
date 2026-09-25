@@ -103,13 +103,15 @@
 
   
 <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-serif@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-serif@5/600.css">
 <link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/400.css">
 <link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/700.css">
 <link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/400.css">
 <link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/600.css">
 
 <meta name="description" content="在先前的文章中，我们聊到了一个变更观测任务可以通过什么样的方式对不同的变更防控能力做统一调度，达到优越的变更风险拦截效果。但是在实战当中，变更观测任务集成了很多能力，即便风险拦截率很高，但不同能力效果也有差距，因此会有可能出现误报，导致变更观测结论不准确，影响研发发布效率。为此，一套成熟的变更观测系统，是需要嵌入一个决策降噪模块，通过干预变更防控拦截结果，达到在风险召回不劣化的同时，提升准确率，让">
-<meta name="keywords" content="后端开发,稳定性,架构,变更风险,系统设计">
+<meta name="keywords" content="稳定性,后端开发,架构,系统设计,变更风险">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【架构艺术】变更风险防控架构嵌入决策降噪模块的方法">
 <meta property="og:url" content="https://utmhikari.top/2025/09/06/archiart/change_control_decision_module/index.html">
@@ -573,15 +575,15 @@
       
         <div class="post-tags">
           
-            <a href="/tags/后端开发/" rel="tag"># 后端开发</a>
-          
             <a href="/tags/稳定性/" rel="tag"># 稳定性</a>
+          
+            <a href="/tags/后端开发/" rel="tag"># 后端开发</a>
           
             <a href="/tags/架构/" rel="tag"># 架构</a>
           
-            <a href="/tags/变更风险/" rel="tag"># 变更风险</a>
-          
             <a href="/tags/系统设计/" rel="tag"># 系统设计</a>
+          
+            <a href="/tags/变更风险/" rel="tag"># 变更风险</a>
           
         </div>
       
@@ -628,7 +630,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【架构艺术】变更风险防控架构嵌入决策降噪模块的方法","description":"在先前的文章中，我们聊到了一个变更观测任务可以通过什么样的方式对不同的变更防控能力做统一调度，达到优越的变更风险拦截效果。但是在实战当中，变更观测任务集成了很多能力，即便风险拦截率很高，但不同能力效果也有差距，因此会有可能出现误报，导致变更观测结论不准确，影响研发发布效率。为此，一套成熟的变更观测系统，是需要嵌入一个决策降噪模块，通过干预变更防控拦截结果，达到在风险召回不劣化的同时，提升准确率，让","datePublished":"2025-09-06T07:26:50.000Z","dateModified":"2025-10-03T12:58:16.390Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2025/09/06/archiart/change_control_decision_module/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"后端开发, 稳定性, 架构, 变更风险, 系统设计"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【架构艺术】变更风险防控架构嵌入决策降噪模块的方法","description":"在先前的文章中，我们聊到了一个变更观测任务可以通过什么样的方式对不同的变更防控能力做统一调度，达到优越的变更风险拦截效果。但是在实战当中，变更观测任务集成了很多能力，即便风险拦截率很高，但不同能力效果也有差距，因此会有可能出现误报，导致变更观测结论不准确，影响研发发布效率。为此，一套成熟的变更观测系统，是需要嵌入一个决策降噪模块，通过干预变更防控拦截结果，达到在风险召回不劣化的同时，提升准确率，让","datePublished":"2025-09-06T07:26:50.000Z","dateModified":"2025-10-03T12:58:16.390Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2025/09/06/archiart/change_control_decision_module/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"稳定性, 后端开发, 架构, 系统设计, 变更风险"}</script>
   
   
 

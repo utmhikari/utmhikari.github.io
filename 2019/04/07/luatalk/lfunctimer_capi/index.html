@@ -103,13 +103,15 @@
 
   
 <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-serif@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-serif@5/600.css">
 <link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/400.css">
 <link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/700.css">
 <link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/400.css">
 <link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/600.css">
 
 <meta name="description" content="前言昨天更新了一下lfunctimer，主要把hook更改为c api的形式，并且初步加了util和config的扩展 想要试用的同学的话可以点击上面clone下来，或者安装luarocks后执行下面命令安装~ luarocks install --server=http://luarocks.org/manifests/utmhikari lfunctimer 言归正传，利用lua原生的c ap">
-<meta name="keywords" content="lua,测试,debug,lfunctimer,lua C API">
+<meta name="keywords" content="debug,lua,测试,lfunctimer,lua C API">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【Lua杂谈】debug.getinfo源码分析——使用C API重写lfunctimer">
 <meta property="og:url" content="https://utmhikari.top/2019/04/07/luatalk/lfunctimer_capi/index.html">
@@ -585,11 +587,11 @@
       
         <div class="post-tags">
           
+            <a href="/tags/debug/" rel="tag"># debug</a>
+          
             <a href="/tags/lua/" rel="tag"># lua</a>
           
             <a href="/tags/测试/" rel="tag"># 测试</a>
-          
-            <a href="/tags/debug/" rel="tag"># debug</a>
           
             <a href="/tags/lfunctimer/" rel="tag"># lfunctimer</a>
           
@@ -640,7 +642,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Lua杂谈】debug.getinfo源码分析——使用C API重写lfunctimer","description":"前言昨天更新了一下lfunctimer，主要把hook更改为c api的形式，并且初步加了util和config的扩展 想要试用的同学的话可以点击上面clone下来，或者安装luarocks后执行下面命令安装~ luarocks install --server=http://luarocks.org/manifests/utmhikari lfunctimer 言归正传，利用lua原生的c ap","datePublished":"2019-04-07T07:47:30.000Z","dateModified":"2024-04-07T02:48:06.925Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2019/04/07/luatalk/lfunctimer_capi/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"lua, 测试, debug, lfunctimer, lua C API"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Lua杂谈】debug.getinfo源码分析——使用C API重写lfunctimer","description":"前言昨天更新了一下lfunctimer，主要把hook更改为c api的形式，并且初步加了util和config的扩展 想要试用的同学的话可以点击上面clone下来，或者安装luarocks后执行下面命令安装~ luarocks install --server=http://luarocks.org/manifests/utmhikari lfunctimer 言归正传，利用lua原生的c ap","datePublished":"2019-04-07T07:47:30.000Z","dateModified":"2024-04-07T02:48:06.925Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2019/04/07/luatalk/lfunctimer_capi/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"debug, lua, 测试, lfunctimer, lua C API"}</script>
   
   
 

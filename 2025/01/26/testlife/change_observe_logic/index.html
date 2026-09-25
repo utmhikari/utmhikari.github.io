@@ -103,13 +103,15 @@
 
   
 <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-serif@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-serif@5/600.css">
 <link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/400.css">
 <link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/700.css">
 <link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/400.css">
 <link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/600.css">
 
 <meta name="description" content="在线上服务变更过程中，我们希望可以通过一套实时观测机制去监测线上服务的风险，从而能够确保线上稳定性，在出问题时可以及时回滚变更。今天这篇文章，就简单讲一下变更风险观测的流程逻辑需要怎么设计。 首先我们需要建模变更观测的过程。变更观测的生命周期，一般来讲，当服务某阶段变更开始后，观测会开始，然后当服务某阶段变更完，一般还需要停留观察一段时间，确定线上没有遗留风险之后，观测才会结束。可以简单的认为，一">
-<meta name="keywords" content="变更风险,异步,行为树,质量保障,DevOps">
+<meta name="keywords" content="变更风险,异步,DevOps,行为树,质量保障">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【测试人生】变更风险观测的流程逻辑设计">
 <meta property="og:url" content="https://utmhikari.top/2025/01/26/testlife/change_observe_logic/index.html">
@@ -598,11 +600,11 @@
           
             <a href="/tags/异步/" rel="tag"># 异步</a>
           
+            <a href="/tags/DevOps/" rel="tag"># DevOps</a>
+          
             <a href="/tags/行为树/" rel="tag"># 行为树</a>
           
             <a href="/tags/质量保障/" rel="tag"># 质量保障</a>
-          
-            <a href="/tags/DevOps/" rel="tag"># DevOps</a>
           
         </div>
       
@@ -649,7 +651,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【测试人生】变更风险观测的流程逻辑设计","description":"在线上服务变更过程中，我们希望可以通过一套实时观测机制去监测线上服务的风险，从而能够确保线上稳定性，在出问题时可以及时回滚变更。今天这篇文章，就简单讲一下变更风险观测的流程逻辑需要怎么设计。 首先我们需要建模变更观测的过程。变更观测的生命周期，一般来讲，当服务某阶段变更开始后，观测会开始，然后当服务某阶段变更完，一般还需要停留观察一段时间，确定线上没有遗留风险之后，观测才会结束。可以简单的认为，一","datePublished":"2025-01-26T12:30:22.000Z","dateModified":"2026-05-01T10:10:29.333Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2025/01/26/testlife/change_observe_logic/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"变更风险, 异步, 行为树, 质量保障, DevOps"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【测试人生】变更风险观测的流程逻辑设计","description":"在线上服务变更过程中，我们希望可以通过一套实时观测机制去监测线上服务的风险，从而能够确保线上稳定性，在出问题时可以及时回滚变更。今天这篇文章，就简单讲一下变更风险观测的流程逻辑需要怎么设计。 首先我们需要建模变更观测的过程。变更观测的生命周期，一般来讲，当服务某阶段变更开始后，观测会开始，然后当服务某阶段变更完，一般还需要停留观察一段时间，确定线上没有遗留风险之后，观测才会结束。可以简单的认为，一","datePublished":"2025-01-26T12:30:22.000Z","dateModified":"2026-05-01T10:10:29.333Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2025/01/26/testlife/change_observe_logic/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"变更风险, 异步, DevOps, 行为树, 质量保障"}</script>
   
   
 

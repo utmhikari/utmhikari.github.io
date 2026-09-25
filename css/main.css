@@ -2050,7 +2050,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ddff3b;
+  background: #9ad793;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3688,16 +3688,19 @@ h5,
 h6,
 .site-title,
 .site-subtitle {
-  font-family: Palatino, "Palatino Linotype", "Book Antiqua", "URW Palladio L", P052, Georgia, "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", SimSun, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", serif;
+  font-family: Palatino, "Palatino Linotype", "Book Antiqua", "URW Palladio L", P052, "IBM Plex Serif", Georgia, "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", SimSun, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", serif;
 }
 .local-search-input-wrapper input,
 .copy-btn {
   font-family: inherit;
 }
+code {
+  font-family: "IBM Plex Mono", "SF Mono", Menlo, Consolas, "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", SimSun, "PingFang SC", "Microsoft YaHei", serif;
+}
 pre,
-code,
+pre code,
 kbd {
-  font-family: "IBM Plex Mono", "SF Mono", Menlo, Consolas, "PingFang SC", "Microsoft YaHei", monospace;
+  font-family: "IBM Plex Mono", "SF Mono", Menlo, Consolas, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", monospace;
 }
 .highlight,
 .highlight pre,
