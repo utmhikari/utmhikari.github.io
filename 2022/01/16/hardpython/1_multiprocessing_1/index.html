@@ -102,6 +102,13 @@
 
 
   
+<script>
+  if (/Windows NT/.test(navigator.userAgent)) {
+    document.documentElement.className += ' os-win';
+  }
+</script>
+
+
 <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-serif@5/400.css">
 <link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-serif@5/600.css">
@@ -111,7 +118,7 @@
 <link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/600.css">
 
 <meta name="description" content="在python中，如果要做多任务并行的编程，必须要掌握multiprocessing库的相关运用。在python的multiprocessing官方文档中，已然详细给出了multiprocessing库的相关用法。多进程编程其实还是有很多坑存在的，为了进一步探索python多进程的机制，提升对python多进程编程的理解，本篇文章会对多进程模块的实现进行一次详细的剖析。 多进程编程的第一话，首先来">
-<meta name="keywords" content="python,multiprocessing,Process,多进程,spawn">
+<meta name="keywords" content="python,multiprocessing,多进程,Process,spawn">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【Hard Python】【第一章-多进程】1、Process，新进程的诞生">
 <meta property="og:url" content="https://utmhikari.top/2022/01/16/hardpython/1_multiprocessing_1/index.html">
@@ -616,9 +623,9 @@
           
             <a href="/tags/multiprocessing/" rel="tag"># multiprocessing</a>
           
-            <a href="/tags/Process/" rel="tag"># Process</a>
-          
             <a href="/tags/多进程/" rel="tag"># 多进程</a>
+          
+            <a href="/tags/Process/" rel="tag"># Process</a>
           
             <a href="/tags/spawn/" rel="tag"># spawn</a>
           
@@ -667,7 +674,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Hard Python】【第一章-多进程】1、Process，新进程的诞生","description":"在python中，如果要做多任务并行的编程，必须要掌握multiprocessing库的相关运用。在python的multiprocessing官方文档中，已然详细给出了multiprocessing库的相关用法。多进程编程其实还是有很多坑存在的，为了进一步探索python多进程的机制，提升对python多进程编程的理解，本篇文章会对多进程模块的实现进行一次详细的剖析。 多进程编程的第一话，首先来","datePublished":"2022-01-16T10:36:17.000Z","dateModified":"2024-04-07T02:48:06.923Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2022/01/16/hardpython/1_multiprocessing_1/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"python, multiprocessing, Process, 多进程, spawn"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Hard Python】【第一章-多进程】1、Process，新进程的诞生","description":"在python中，如果要做多任务并行的编程，必须要掌握multiprocessing库的相关运用。在python的multiprocessing官方文档中，已然详细给出了multiprocessing库的相关用法。多进程编程其实还是有很多坑存在的，为了进一步探索python多进程的机制，提升对python多进程编程的理解，本篇文章会对多进程模块的实现进行一次详细的剖析。 多进程编程的第一话，首先来","datePublished":"2022-01-16T10:36:17.000Z","dateModified":"2024-04-07T02:48:06.923Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2022/01/16/hardpython/1_multiprocessing_1/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"python, multiprocessing, 多进程, Process, spawn"}</script>
   
   
 

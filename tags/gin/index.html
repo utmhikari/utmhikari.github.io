@@ -102,6 +102,13 @@
 
 
   
+<script>
+  if (/Windows NT/.test(navigator.userAgent)) {
+    document.documentElement.className += ' os-win';
+  }
+</script>
+
+
 <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-serif@5/400.css">
 <link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-serif@5/600.css">

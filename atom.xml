@@ -37,9 +37,9 @@
     
       <category term="Agent" scheme="https://utmhikari.top/tags/Agent/"/>
     
-      <category term="AI" scheme="https://utmhikari.top/tags/AI/"/>
-    
       <category term="Skill" scheme="https://utmhikari.top/tags/Skill/"/>
+    
+      <category term="AI" scheme="https://utmhikari.top/tags/AI/"/>
     
       <category term="知识库" scheme="https://utmhikari.top/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/"/>
     
@@ -97,13 +97,13 @@
       <category term="AI原生" scheme="https://utmhikari.top/categories/AI%E5%8E%9F%E7%94%9F/"/>
     
     
-      <category term="稳定性" scheme="https://utmhikari.top/tags/%E7%A8%B3%E5%AE%9A%E6%80%A7/"/>
-    
       <category term="Agent" scheme="https://utmhikari.top/tags/Agent/"/>
+    
+      <category term="Skill" scheme="https://utmhikari.top/tags/Skill/"/>
     
       <category term="AI" scheme="https://utmhikari.top/tags/AI/"/>
     
-      <category term="Skill" scheme="https://utmhikari.top/tags/Skill/"/>
+      <category term="稳定性" scheme="https://utmhikari.top/tags/%E7%A8%B3%E5%AE%9A%E6%80%A7/"/>
     
       <category term="SRE" scheme="https://utmhikari.top/tags/SRE/"/>
     
@@ -190,9 +190,9 @@
       <category term="架构艺术" scheme="https://utmhikari.top/categories/%E6%9E%B6%E6%9E%84%E8%89%BA%E6%9C%AF/"/>
     
     
-      <category term="稳定性" scheme="https://utmhikari.top/tags/%E7%A8%B3%E5%AE%9A%E6%80%A7/"/>
-    
       <category term="Agent" scheme="https://utmhikari.top/tags/Agent/"/>
+    
+      <category term="稳定性" scheme="https://utmhikari.top/tags/%E7%A8%B3%E5%AE%9A%E6%80%A7/"/>
     
       <category term="SRE" scheme="https://utmhikari.top/tags/SRE/"/>
     
@@ -227,9 +227,9 @@
     
       <category term="业务" scheme="https://utmhikari.top/tags/%E4%B8%9A%E5%8A%A1/"/>
     
-      <category term="个人博客" scheme="https://utmhikari.top/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"/>
-    
       <category term="用户" scheme="https://utmhikari.top/tags/%E7%94%A8%E6%88%B7/"/>
+    
+      <category term="个人博客" scheme="https://utmhikari.top/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"/>
     
   </entry>
   
@@ -378,9 +378,9 @@
       <category term="DIY小记" scheme="https://utmhikari.top/categories/DIY%E5%B0%8F%E8%AE%B0/"/>
     
     
-      <category term="编程" scheme="https://utmhikari.top/tags/%E7%BC%96%E7%A8%8B/"/>
-    
       <category term="Qoder" scheme="https://utmhikari.top/tags/Qoder/"/>
+    
+      <category term="编程" scheme="https://utmhikari.top/tags/%E7%BC%96%E7%A8%8B/"/>
     
       <category term="LLM" scheme="https://utmhikari.top/tags/LLM/"/>
     
@@ -544,9 +544,9 @@
     
       <category term="AI" scheme="https://utmhikari.top/tags/AI/"/>
     
-      <category term="变更风险" scheme="https://utmhikari.top/tags/%E5%8F%98%E6%9B%B4%E9%A3%8E%E9%99%A9/"/>
-    
       <category term="产品" scheme="https://utmhikari.top/tags/%E4%BA%A7%E5%93%81/"/>
+    
+      <category term="变更风险" scheme="https://utmhikari.top/tags/%E5%8F%98%E6%9B%B4%E9%A3%8E%E9%99%A9/"/>
     
       <category term="LLM" scheme="https://utmhikari.top/tags/LLM/"/>
     
@@ -575,9 +575,9 @@
     
       <category term="后端开发" scheme="https://utmhikari.top/tags/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/"/>
     
-      <category term="变更风险" scheme="https://utmhikari.top/tags/%E5%8F%98%E6%9B%B4%E9%A3%8E%E9%99%A9/"/>
-    
       <category term="产品" scheme="https://utmhikari.top/tags/%E4%BA%A7%E5%93%81/"/>
+    
+      <category term="变更风险" scheme="https://utmhikari.top/tags/%E5%8F%98%E6%9B%B4%E9%A3%8E%E9%99%A9/"/>
     
       <category term="数据库" scheme="https://utmhikari.top/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
     

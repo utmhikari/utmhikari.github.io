@@ -102,6 +102,13 @@
 
 
   
+<script>
+  if (/Windows NT/.test(navigator.userAgent)) {
+    document.documentElement.className += ' os-win';
+  }
+</script>
+
+
 <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-serif@5/400.css">
 <link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-serif@5/600.css">
@@ -111,7 +118,7 @@
 <link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/600.css">
 
 <meta name="description" content="最近在重玩pyside/pyqt桌面开发的内容，计划做一些日常工具来自用，顺带练练手。正好刚遇到一个问题是画时钟（表盘+数字），查了很多资料都稍微调试了下才最终解决，本文即分享一下解决方法。 首先是数字时钟。由于pyside6本身有QLCDNumber控件的支持，所以绘制起来比较容易，官网也给了一个例子。笔者自己则在这个基础上做了下修改，代码如下：">
-<meta name="keywords" content="python,工具开发,渲染,pyside6,桌面应用">
+<meta name="keywords" content="python,工具开发,pyside6,桌面应用,渲染">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【Python随笔】pyside6绘制表盘和数字时钟的方法">
 <meta property="og:url" content="https://utmhikari.top/2024/10/13/pythonnotes/pyside6_clocks/index.html">
@@ -566,11 +573,11 @@
           
             <a href="/tags/工具开发/" rel="tag"># 工具开发</a>
           
-            <a href="/tags/渲染/" rel="tag"># 渲染</a>
-          
             <a href="/tags/pyside6/" rel="tag"># pyside6</a>
           
             <a href="/tags/桌面应用/" rel="tag"># 桌面应用</a>
+          
+            <a href="/tags/渲染/" rel="tag"># 渲染</a>
           
         </div>
       
@@ -617,7 +624,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Python随笔】pyside6绘制表盘和数字时钟的方法","description":"最近在重玩pyside/pyqt桌面开发的内容，计划做一些日常工具来自用，顺带练练手。正好刚遇到一个问题是画时钟（表盘+数字），查了很多资料都稍微调试了下才最终解决，本文即分享一下解决方法。 首先是数字时钟。由于pyside6本身有QLCDNumber控件的支持，所以绘制起来比较容易，官网也给了一个例子。笔者自己则在这个基础上做了下修改，代码如下：","datePublished":"2024-10-13T05:28:01.000Z","dateModified":"2024-10-13T05:28:14.025Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2024/10/13/pythonnotes/pyside6_clocks/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"python, 工具开发, 渲染, pyside6, 桌面应用"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Python随笔】pyside6绘制表盘和数字时钟的方法","description":"最近在重玩pyside/pyqt桌面开发的内容，计划做一些日常工具来自用，顺带练练手。正好刚遇到一个问题是画时钟（表盘+数字），查了很多资料都稍微调试了下才最终解决，本文即分享一下解决方法。 首先是数字时钟。由于pyside6本身有QLCDNumber控件的支持，所以绘制起来比较容易，官网也给了一个例子。笔者自己则在这个基础上做了下修改，代码如下：","datePublished":"2024-10-13T05:28:01.000Z","dateModified":"2024-10-13T05:28:14.025Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2024/10/13/pythonnotes/pyside6_clocks/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"python, 工具开发, pyside6, 桌面应用, 渲染"}</script>
   
   
 

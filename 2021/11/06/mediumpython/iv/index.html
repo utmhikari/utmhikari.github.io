@@ -102,6 +102,13 @@
 
 
   
+<script>
+  if (/Windows NT/.test(navigator.userAgent)) {
+    document.documentElement.className += ' os-win';
+  }
+</script>
+
+
 <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-serif@5/400.css">
 <link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-serif@5/600.css">
@@ -111,7 +118,7 @@
 <link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/600.css">
 
 <meta name="description" content="前言提到编程不得不提到面向对象，一个说烂了的话题，几十年来一直都有人在争论面向对象的好坏。从宏观角度来说，一个庞大的程序本质是对业务中实体集合以及其中的关系的模拟，虽然解决实体的关系问题，用面向过程、组合等方式去体现比较方便，但要解决实体概念的抽象，就需要面向对象的编程基础。因此，面向对象在编程中是非常重要的一部分思想，不能随随便便被否定或者忽略。 ​面向对象的灵魂在于对类（class）概念的剖析">
-<meta name="keywords" content="python,源码分析,类,descriptor,property">
+<meta name="keywords" content="python,源码分析,descriptor,类,property">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【Medium Python】第四话：类属性和实例属性是怎样的关系？">
 <meta property="og:url" content="https://utmhikari.top/2021/11/06/mediumpython/iv/index.html">
@@ -681,9 +688,9 @@
           
             <a href="/tags/源码分析/" rel="tag"># 源码分析</a>
           
-            <a href="/tags/类/" rel="tag"># 类</a>
-          
             <a href="/tags/descriptor/" rel="tag"># descriptor</a>
+          
+            <a href="/tags/类/" rel="tag"># 类</a>
           
             <a href="/tags/property/" rel="tag"># property</a>
           
@@ -732,7 +739,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Medium Python】第四话：类属性和实例属性是怎样的关系？","description":"前言提到编程不得不提到面向对象，一个说烂了的话题，几十年来一直都有人在争论面向对象的好坏。从宏观角度来说，一个庞大的程序本质是对业务中实体集合以及其中的关系的模拟，虽然解决实体的关系问题，用面向过程、组合等方式去体现比较方便，但要解决实体概念的抽象，就需要面向对象的编程基础。因此，面向对象在编程中是非常重要的一部分思想，不能随随便便被否定或者忽略。 ​面向对象的灵魂在于对类（class）概念的剖析","datePublished":"2021-11-06T10:34:13.000Z","dateModified":"2024-04-07T02:48:06.925Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2021/11/06/mediumpython/iv/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"python, 源码分析, 类, descriptor, property"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Medium Python】第四话：类属性和实例属性是怎样的关系？","description":"前言提到编程不得不提到面向对象，一个说烂了的话题，几十年来一直都有人在争论面向对象的好坏。从宏观角度来说，一个庞大的程序本质是对业务中实体集合以及其中的关系的模拟，虽然解决实体的关系问题，用面向过程、组合等方式去体现比较方便，但要解决实体概念的抽象，就需要面向对象的编程基础。因此，面向对象在编程中是非常重要的一部分思想，不能随随便便被否定或者忽略。 ​面向对象的灵魂在于对类（class）概念的剖析","datePublished":"2021-11-06T10:34:13.000Z","dateModified":"2024-04-07T02:48:06.925Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2021/11/06/mediumpython/iv/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"python, 源码分析, descriptor, 类, property"}</script>
   
   
 

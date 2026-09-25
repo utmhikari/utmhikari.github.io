@@ -102,6 +102,13 @@
 
 
   
+<script>
+  if (/Windows NT/.test(navigator.userAgent)) {
+    document.documentElement.className += ' os-win';
+  }
+</script>
+
+
 <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-serif@5/400.css">
 <link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-serif@5/600.css">
@@ -111,7 +118,7 @@
 <link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/600.css">
 
 <meta name="description" content="近期准备开始做electron相关的开发工作，因此借着这个机会就再去了解下electron。在很久以前的文章中有稍微玩过electron+react+antd的脚手架，但也只限于快速开发electron应用，并没有去剖析整个项目结构。因此这次，还是得深入一下。 先前一段时间特别喜欢用开源的Motrix下载器，就是基于electron+vue+aria2去实现的，所以索性就把源码给clone了下来。">
-<meta name="keywords" content="工具开发,vue,nodejs,electron,ipc">
+<meta name="keywords" content="工具开发,vue,electron,nodejs,ipc">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【极客日常】通过motrix启动逻辑初探electron的项目结构">
 <meta property="og:url" content="https://utmhikari.top/2022/06/05/geekdaily/electron_motrix_launcher/index.html">
@@ -652,9 +659,9 @@
           
             <a href="/tags/vue/" rel="tag"># vue</a>
           
-            <a href="/tags/nodejs/" rel="tag"># nodejs</a>
-          
             <a href="/tags/electron/" rel="tag"># electron</a>
+          
+            <a href="/tags/nodejs/" rel="tag"># nodejs</a>
           
             <a href="/tags/ipc/" rel="tag"># ipc</a>
           
@@ -703,7 +710,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【极客日常】通过motrix启动逻辑初探electron的项目结构","description":"近期准备开始做electron相关的开发工作，因此借着这个机会就再去了解下electron。在很久以前的文章中有稍微玩过electron+react+antd的脚手架，但也只限于快速开发electron应用，并没有去剖析整个项目结构。因此这次，还是得深入一下。 先前一段时间特别喜欢用开源的Motrix下载器，就是基于electron+vue+aria2去实现的，所以索性就把源码给clone了下来。","datePublished":"2022-06-05T04:40:18.000Z","dateModified":"2024-08-11T07:24:51.875Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2022/06/05/geekdaily/electron_motrix_launcher/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"工具开发, vue, nodejs, electron, ipc"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【极客日常】通过motrix启动逻辑初探electron的项目结构","description":"近期准备开始做electron相关的开发工作，因此借着这个机会就再去了解下electron。在很久以前的文章中有稍微玩过electron+react+antd的脚手架，但也只限于快速开发electron应用，并没有去剖析整个项目结构。因此这次，还是得深入一下。 先前一段时间特别喜欢用开源的Motrix下载器，就是基于electron+vue+aria2去实现的，所以索性就把源码给clone了下来。","datePublished":"2022-06-05T04:40:18.000Z","dateModified":"2024-08-11T07:24:51.875Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2022/06/05/geekdaily/electron_motrix_launcher/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"工具开发, vue, electron, nodejs, ipc"}</script>
   
   
 

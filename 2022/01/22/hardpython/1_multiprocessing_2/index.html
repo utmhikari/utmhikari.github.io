@@ -102,6 +102,13 @@
 
 
   
+<script>
+  if (/Windows NT/.test(navigator.userAgent)) {
+    document.documentElement.className += ' os-win';
+  }
+</script>
+
+
 <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-serif@5/400.css">
 <link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-serif@5/600.css">
@@ -111,7 +118,7 @@
 <link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/600.css">
 
 <meta name="description" content="第一话详细讲解了Process新进程是如何被创建的，接下来就来讲一下进程之间有什么通信的方法。 要在multiprocessing中实现进程间通信，最直接的方法是采用Pipe或者Queue。其用法如下：">
-<meta name="keywords" content="python,multiprocessing,多进程,pipe,queue">
+<meta name="keywords" content="python,multiprocessing,pipe,queue,多进程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【Hard Python】【第一章-多进程】2、Pipe和Queue，进程间通信">
 <meta property="og:url" content="https://utmhikari.top/2022/01/22/hardpython/1_multiprocessing_2/index.html">
@@ -615,11 +622,11 @@
           
             <a href="/tags/multiprocessing/" rel="tag"># multiprocessing</a>
           
-            <a href="/tags/多进程/" rel="tag"># 多进程</a>
-          
             <a href="/tags/pipe/" rel="tag"># pipe</a>
           
             <a href="/tags/queue/" rel="tag"># queue</a>
+          
+            <a href="/tags/多进程/" rel="tag"># 多进程</a>
           
         </div>
       
@@ -666,7 +673,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Hard Python】【第一章-多进程】2、Pipe和Queue，进程间通信","description":"第一话详细讲解了Process新进程是如何被创建的，接下来就来讲一下进程之间有什么通信的方法。 要在multiprocessing中实现进程间通信，最直接的方法是采用Pipe或者Queue。其用法如下：","datePublished":"2022-01-22T11:05:02.000Z","dateModified":"2024-11-03T03:33:21.976Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2022/01/22/hardpython/1_multiprocessing_2/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"python, multiprocessing, 多进程, pipe, queue"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Hard Python】【第一章-多进程】2、Pipe和Queue，进程间通信","description":"第一话详细讲解了Process新进程是如何被创建的，接下来就来讲一下进程之间有什么通信的方法。 要在multiprocessing中实现进程间通信，最直接的方法是采用Pipe或者Queue。其用法如下：","datePublished":"2022-01-22T11:05:02.000Z","dateModified":"2024-11-03T03:33:21.976Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2022/01/22/hardpython/1_multiprocessing_2/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"python, multiprocessing, pipe, queue, 多进程"}</script>
   
   
 

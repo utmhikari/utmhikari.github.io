@@ -102,6 +102,13 @@
 
 
   
+<script>
+  if (/Windows NT/.test(navigator.userAgent)) {
+    document.documentElement.className += ' os-win';
+  }
+</script>
+
+
 <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-serif@5/400.css">
 <link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-serif@5/600.css">
@@ -111,7 +118,7 @@
 <link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/600.css">
 
 <meta name="description" content="前言在上篇，我们获得了豆瓣二百五的电影URL，然后存储在了一个文件里。接下来，我们要访问每一个电影URL，深入敌后，获取情报~ 所有的代码都已存储在我的Github仓库：Douban_250当中~ 设置爬取规则对于每一个电影，我们选择爬取如下内容（虽然电影列表页就能爬得到= =）： 12标题（title）、年份（year）、时长（time）、导演（director）、类型（genre）、评分（sc">
-<meta name="keywords" content="python,异步,教程,爬虫,代理">
+<meta name="keywords" content="异步,python,教程,爬虫,代理">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【Easy Python】第四话：爬虫初探——玩转豆瓣二百五（下）">
 <meta property="og:url" content="https://utmhikari.top/2019/03/31/easypython/iv/index.html">
@@ -604,9 +611,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/python/" rel="tag"># python</a>
-          
             <a href="/tags/异步/" rel="tag"># 异步</a>
+          
+            <a href="/tags/python/" rel="tag"># python</a>
           
             <a href="/tags/教程/" rel="tag"># 教程</a>
           
@@ -659,7 +666,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Easy Python】第四话：爬虫初探——玩转豆瓣二百五（下）","description":"前言在上篇，我们获得了豆瓣二百五的电影URL，然后存储在了一个文件里。接下来，我们要访问每一个电影URL，深入敌后，获取情报~ 所有的代码都已存储在我的Github仓库：Douban_250当中~ 设置爬取规则对于每一个电影，我们选择爬取如下内容（虽然电影列表页就能爬得到= =）： 12标题（title）、年份（year）、时长（time）、导演（director）、类型（genre）、评分（sc","datePublished":"2019-03-31T11:52:40.000Z","dateModified":"2024-04-07T02:48:06.917Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2019/03/31/easypython/iv/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"python, 异步, 教程, 爬虫, 代理"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Easy Python】第四话：爬虫初探——玩转豆瓣二百五（下）","description":"前言在上篇，我们获得了豆瓣二百五的电影URL，然后存储在了一个文件里。接下来，我们要访问每一个电影URL，深入敌后，获取情报~ 所有的代码都已存储在我的Github仓库：Douban_250当中~ 设置爬取规则对于每一个电影，我们选择爬取如下内容（虽然电影列表页就能爬得到= =）： 12标题（title）、年份（year）、时长（time）、导演（director）、类型（genre）、评分（sc","datePublished":"2019-03-31T11:52:40.000Z","dateModified":"2024-04-07T02:48:06.917Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2019/03/31/easypython/iv/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"异步, python, 教程, 爬虫, 代理"}</script>
   
   
 

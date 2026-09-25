@@ -102,6 +102,13 @@
 
 
   
+<script>
+  if (/Windows NT/.test(navigator.userAgent)) {
+    document.documentElement.className += ' os-win';
+  }
+</script>
+
+
 <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-serif@5/400.css">
 <link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-serif@5/600.css">
@@ -111,7 +118,7 @@
 <link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/600.css">
 
 <meta name="description" content="在某些游戏研发or测试的需求中，需要在Unreal增加一个插件或者模块，里面启动一个服务器作为SDK，然后外部通过直连或者adb forward可以连接到客户端中，获取客户端实时的场景、actor信息等等。UE4本身除了socket server支持之外，也支持简单的HTTP Web Server。由于网上没有比较好的范例，因此这里给出一个例子。 本文以Unreal 4.24为例。搭建HTTP S">
-<meta name="keywords" content="后端开发,web开发,UE4,C++,UE4插件">
+<meta name="keywords" content="web开发,后端开发,UE4,C++,UE4插件">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【极客日常】在UE4插件中编写一个HTTP Web Server">
 <meta property="og:url" content="https://utmhikari.top/2020/05/23/geekdaily/ue4_http_server/index.html">
@@ -583,9 +590,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/后端开发/" rel="tag"># 后端开发</a>
-          
             <a href="/tags/web开发/" rel="tag"># web开发</a>
+          
+            <a href="/tags/后端开发/" rel="tag"># 后端开发</a>
           
             <a href="/tags/UE4/" rel="tag"># UE4</a>
           
@@ -638,7 +645,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【极客日常】在UE4插件中编写一个HTTP Web Server","description":"在某些游戏研发or测试的需求中，需要在Unreal增加一个插件或者模块，里面启动一个服务器作为SDK，然后外部通过直连或者adb forward可以连接到客户端中，获取客户端实时的场景、actor信息等等。UE4本身除了socket server支持之外，也支持简单的HTTP Web Server。由于网上没有比较好的范例，因此这里给出一个例子。 本文以Unreal 4.24为例。搭建HTTP S","datePublished":"2020-05-23T05:33:33.000Z","dateModified":"2025-04-12T15:45:42.133Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2020/05/23/geekdaily/ue4_http_server/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"后端开发, web开发, UE4, C++, UE4插件"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【极客日常】在UE4插件中编写一个HTTP Web Server","description":"在某些游戏研发or测试的需求中，需要在Unreal增加一个插件或者模块，里面启动一个服务器作为SDK，然后外部通过直连或者adb forward可以连接到客户端中，获取客户端实时的场景、actor信息等等。UE4本身除了socket server支持之外，也支持简单的HTTP Web Server。由于网上没有比较好的范例，因此这里给出一个例子。 本文以Unreal 4.24为例。搭建HTTP S","datePublished":"2020-05-23T05:33:33.000Z","dateModified":"2025-04-12T15:45:42.133Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2020/05/23/geekdaily/ue4_http_server/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"web开发, 后端开发, UE4, C++, UE4插件"}</script>
   
   
 
