@@ -2,7 +2,8 @@
 $custom-main-color = #657A81
 $custom-bg-color = #fdf6e3  // solarized light
 $black-light = #333
-$menu-item-color = #ECE7D5
+$menu-item-color = #ECE7D5  // 初始的暖沙色，hover / 激活态统一用它
+$timeline-tint = alpha($custom-main-color, 0.22)
 
 .content-wrap {
   background: none;
@@ -12,26 +13,410 @@ $menu-item-color = #ECE7D5
   background: $custom-main-color;
 }
 
-.post-block, .sidebar, .sidebar-inner, .header-inner, .footer, .comments, .pagination {
+.header-inner, .footer, .comments, .pagination {
   background: $custom-bg-color;
 }
 
+// 正文卡片：收紧四边留白，同时透出底层主色，与 footer 拉开层次
+.post-block {
+  background: $custom-bg-color;
+  padding: 28px 32px;
+  margin-bottom: 20px;
+}
+
 .menu-item-active a {
-  background: $menu-item-color !important
+  background: $menu-item-color !important;
+  color: $custom-main-color;
+  border-bottom-color: transparent !important;
+
+  &:after { background-color: $custom-main-color; }
 }
 
 .sub-menu .menu-item-active a {
-  background: $menu-item-color !important
+  background: $menu-item-color !important;
+  color: $custom-main-color;
+  border-bottom-color: transparent !important;
 }
 
 body {
   background: $custom-bg-color;
+  font-size: 15px;
+  line-height: 1.7;
+
+  +desktop-large() { font-size: 15px; }
 }
 
 kbd {
   background: $menu-item-color;
+  border-color: alpha($custom-main-color, 0.25);
 }
 
 code {
   background: $menu-item-color;
+}
+
+// 1. 菜单 hover / 激活态：暖沙底 + 主色文字，压掉主题默认的白底白线
+.menu .menu-item a:hover,
+.menu .menu-item span.exturl:hover {
+  background: $menu-item-color;
+  color: $custom-main-color;
+  border-bottom-color: transparent;
+
+  &:after { background-color: $custom-main-color; }
+}
+
+// 2. 「阅读全文」按钮：浅色描边 + 主色文字，hover 反转为主色实底白字
+a.post-button .btn,
+.post-button .btn {
+  color: $custom-main-color;
+  background: alpha($custom-main-color, 0.06);
+  border-color: $custom-main-color;
+  border-radius: 3px;
+  padding: 0 18px;
+
+  &:hover {
+    color: #fff;
+    background: $custom-main-color;
+    border-color: $custom-main-color;
+  }
+}
+
+// 3. RSS：居中、无分隔线，与下方社交链接紧凑衔接
+.feed-link {
+  border-top: none;
+  border-bottom: none;
+  text-align: center;
+  margin: 4px 0 0;
+}
+
+.feed-link a {
+  display: inline-block;
+  padding: 0 14px;
+  color: $grey-dim;
+  border: 1px solid $gainsboro;
+  border-radius: 4px;
+
+  i { color: $grey-dim; }
+
+  &:hover {
+    color: #fff;
+    background: $custom-main-color;
+    border-color: $custom-main-color;
+
+    i { color: #fff; }
+  }
+}
+
+// 4. 社交链接（GitHub/CSDN 等）：列内居中，hover 用暖沙晕替代白灰块
+.links-of-author {
+  margin-top: 8px;
+}
+
+.links-of-author-item {
+  text-align: center;
+
+  a, span.exturl {
+    display: inline-block;
+    max-width: 100%;
+    text-decoration: none;
+  }
+
+  a:hover, span.exturl:hover {
+    background: $menu-item-color;
+    color: $custom-main-color;
+  }
+}
+
+// 7. 侧栏底色：.sidebar-inner 的白底必须一起压掉，否则名片区会发灰白
+// 底部留出间隔，避免名片与 footer 贴在一起
+.sidebar {
+  background: $custom-bg-color;
+  margin-bottom: 20px;
+}
+
+.sidebar-inner {
+  background: $custom-bg-color;
+}
+
+// 5. 版式密度：卡片、标题与段的间距整体收紧（选择器需与主题同特异性才能盖住）
+// 首卡与内容顶部完全对齐，不留间距（首页 / 关于 / 标签 / 分类 / 归档等所有页面）
+.posts-expand { padding-top: 0; }
+.posts-expand .post-body p { margin: 0 0 10px 0; }
+.posts-expand .post-meta { margin: 2px 0 22px 0; }
+.post-button { margin-top: 24px; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 14px 0 8px;
+  line-height: 1.4;
+}
+
+// 6. 归档页：字号跟进正文，时间线换成主色系，整体左移收紧
+.posts-collapse {
+  margin-left: 24px;
+
+  &::after { background: $timeline-tint; }
+
+  .collection-title {
+    margin: 32px 0;
+
+    &::before { background: $custom-main-color; }
+  }
+
+  .post-title {
+    font-size: 15px;
+
+    a, span.exturl { color: $text-color; }
+  }
+
+  .post { margin: 18px 0; }
+
+  .post-header {
+    border-bottom: 1px dotted alpha($custom-main-color, 0.3);
+
+    &::before {
+      background: $custom-main-color;
+      border-color: $custom-bg-color;
+    }
+  }
+}
+
+// 归档页顶部圆点：与年份 / 条目圆点同色，去掉半透明发灰
+.page-archive .posts-collapse .archive-move-on {
+  background: $custom-main-color;
+  border-color: $custom-bg-color;
+  opacity: 1;
+}
+
+// 8. 分页：当前页用主色实底白字，替掉主题默认的灰白色块
+// 分页条是内容列最后一个元素，主题只给了上边距，补下边距避免与 footer 贴住
+.pagination {
+  margin-bottom: 20px;
+}
+
+.comments {
+  margin-bottom: 20px;
+}
+.pagination .page-number.current {
+  color: #fff;
+  background: $custom-main-color;
+  border-top-color: $custom-main-color;
+}
+
+.pagination .page-number:hover,
+.pagination .prev:hover,
+.pagination .next:hover {
+  color: $custom-main-color;
+}
+
+// 9. 内容页标题下的主题灰白分割线换成主色系
+.post-body h1,
+.post-body h2,
+.post-body h3,
+.post-body h4 {
+  border-bottom-color: alpha($custom-main-color, 0.3);
+}
+
+// 10. 右侧「文章目录 / 站点概览」面板：选中态压掉主题橙色，换成主色系
+.sidebar-nav li:hover { color: $custom-main-color; }
+
+.sidebar-nav .sidebar-nav-active,
+.sidebar-nav .sidebar-nav-active:hover {
+  color: $custom-main-color;
+  border-bottom-color: $custom-main-color;
+}
+
+.post-toc .nav .active > a {
+  color: $custom-main-color;
+  border-bottom-color: $custom-main-color;
+}
+
+.post-toc .nav .active-current > a,
+.post-toc .nav .active-current > a:hover {
+  color: $custom-main-color;
+}
+
+// 11. 搜索弹窗：Solarized 米白底 + 暖沙头部 + 主色系点缀
+.local-search-popup {
+  background: $custom-bg-color;
+  color: $text-color;
+
+  .local-search-header { background: $menu-item-color; }
+
+  .local-search-input-wrapper input { color: $text-color; }
+
+  p.search-result { border-bottom: 1px dashed alpha($custom-main-color, 0.3); }
+
+  .search-keyword {
+    border-bottom: 1px dashed #dc322f;
+    color: #dc322f;
+  }
+
+  a.search-result-title { color: $custom-main-color; }
+
+  .search-icon, .popup-btn-close { color: $grey-dim; }
+
+  .popup-btn-close {
+    border-left: 1px solid alpha($custom-main-color, 0.25);
+
+    &:hover { color: $custom-main-color; }
+  }
+
+  #no-result { color: $grey-dark; }
+}
+
+// 16. Windows 专属渲染补偿：Palatino Linotype 字干偏细、ClearType 下发浅，
+//     用同色发丝描边模拟「加粗一丢丢」（0.2px 亚像素描边，只增视觉重量不换字体）；
+//     描边可继承，标题（已 600/700）与代码块重置为 0 避免过墨。
+//     调节粗细只改这一个数值（当前 0.2px）。
+html.os-win body {
+  -webkit-text-stroke: 0.2px currentColor;
+}
+
+html.os-win h1,
+html.os-win h2,
+html.os-win h3,
+html.os-win h4,
+html.os-win h5,
+html.os-win h6,
+html.os-win pre,
+html.os-win code,
+html.os-win kbd {
+  -webkit-text-stroke: 0;
+}
+
+// 12. 全站灰白线整改：把主题残留的 #eee/#ddd/#ccc 边框统一换成主色系浅调
+.post-nav {
+  border-top-color: alpha($custom-main-color, 0.35);
+}
+
+.post-body blockquote {
+  border-left-color: alpha($custom-main-color, 0.35);
+}
+
+.post-body th,
+.post-body td {
+  border-color: alpha($custom-main-color, 0.25);
+}
+
+.posts-expand .post-body img {
+  border-color: alpha($custom-main-color, 0.25);
+}
+
+hr {
+  background-color: alpha($custom-main-color, 0.35);
+  background-image: repeating-linear-gradient(-45deg, $custom-bg-color, $custom-bg-color 4px, transparent 4px, transparent 8px);
+}
+
+.site-author-image {
+  border-color: $menu-item-color;
+}
+
+.site-state-item {
+  border-left-color: alpha($custom-main-color, 0.25);
+}
+
+.post-toc ol a {
+  border-bottom-color: alpha($custom-main-color, 0.3);
+}
+
+.pagination .prev,
+.pagination .next,
+.pagination .page-number {
+  border-top: none;
+  border-bottom: none;
+}
+
+// 13. 橙色残留清理：移动端汉堡按钮线 + 文章内 tabs 插件的橙与灰白框
+.page-post-detail .sidebar-toggle-line {
+  background: $custom-main-color;
+}
+
+.post-body .tabs ul.nav-tabs li.tab.active {
+  border-top-color: $custom-main-color;
+  border-left-color: alpha($custom-main-color, 0.25);
+  border-right-color: alpha($custom-main-color, 0.25);
+  background-color: $custom-bg-color;
+
+  +mobile-smallest() {
+    border-top-color: alpha($custom-main-color, 0.25);
+    border-left-color: $custom-main-color;
+    border-bottom-color: alpha($custom-main-color, 0.25);
+  }
+}
+
+.post-body .tabs .tab-content {
+  background-color: $custom-bg-color;
+
+  .tab-pane {
+    border-color: alpha($custom-main-color, 0.25);
+  }
+}
+
+// 14. 字体栈：全站文案统一衬线，以 CSS 变量 --font-serif 下发，便于按平台覆盖。
+//     默认（Mac/移动端等）：拉丁走系统 Palatino 族（Mac Palatino / Linux URW Palladio L、P052），
+//     IBM Plex Serif webfont 仅作无 Palatino 环境兜底，再往后 Georgia →
+//     汉字 Noto Serif SC → 宋体系，最终兜底改造前的苹方/雅黑方案。
+//     Windows（html.os-win，UA 嗅探脚本在 head-unique.swig 注入）：字体栈与全局一致
+//     （即命中 Palatino Linotype），ClearType 发浅由 16 节的发丝描边补偿；
+//     后续任何仅针对 Windows 的样式 hack 都可挂在 html.os-win 下。
+//     主题 font.family 机制会给整栈加引号失效，故直接在此定义；
+//     webfont 链接在 head-unique.swig；字重保持主题默认（大标题 400、章节标题 600）
+$serif-stack = Palatino, "Palatino Linotype", "Book Antiqua", "URW Palladio L", P052, "IBM Plex Serif", Georgia, "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", SimSun, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", serif
+
+:root { --font-serif: $serif-stack; }
+
+body,
+.post-body,
+.posts-expand .post-meta,
+h1, h2, h3, h4, h5, h6,
+.site-title,
+.site-subtitle {
+  font-family: var(--font-serif);
+}
+
+// 表单控件默认不继承字体，显式跟上
+.local-search-input-wrapper input,
+.copy-btn {
+  font-family: inherit;
+}
+
+// 行内 code：拉丁/数字走 Plex Mono，汉字回退正文衬线（与周围文案同族，不再落回旧无衬线）
+code {
+  font-family: "IBM Plex Mono", "SF Mono", Menlo, Consolas, "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", SimSun, "PingFang SC", "Microsoft YaHei", serif;
+}
+
+// 代码块与 kbd 保持纯等宽链（注释里的汉字落苹方/雅黑，代码场景惯例）
+pre, pre code, kbd {
+  font-family: "IBM Plex Mono", "SF Mono", Menlo, Consolas, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", monospace;
+}
+
+// 15. 代码块：字号与行距收紧，复制按钮 / 标题栏去灰白
+.highlight,
+.highlight pre,
+pre {
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.highlight pre {
+  padding: 8px 0;
+}
+
+.highlight figcaption {
+  background: $menu-item-color;
+  border-bottom-color: alpha($custom-main-color, 0.25);
+}
+
+.copy-btn {
+  color: $custom-main-color;
+  background-color: $menu-item-color;
+  background-image: none;
+  border-color: alpha($custom-main-color, 0.35);
+  border-radius: 3px;
+
+  &:hover {
+    color: #fff;
+    background-color: $custom-main-color;
+    border-color: $custom-main-color;
+  }
 }

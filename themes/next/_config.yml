@@ -21,7 +21,9 @@ cache:
 # `styles: source/_data/styles.styl`
 #custom_file_path:
   # Default paths: layout/_custom/*
-  head: source/_data/head.swig
+  # head 注入已改由 layout/_partials/head/head-unique.swig 承载（webfont 链接），
+  # 此路径历史上指向的 source/_data/head.swig 并不存在，include 静默失效，故注释掉
+  #head: source/_data/head.swig
   #header: source/_data/header.swig
   #sidebar: source/_data/sidebar.swig
 
@@ -56,7 +58,8 @@ favicon:
 # Set rss to false to disable feed link.
 # Leave rss as empty to use site's feed link, and install hexo-generator-feed: `npm install hexo-generator-feed --save`.
 # Set rss to specific value if you have burned your feed already.
-rss:
+# 关闭侧栏 RSS 订阅按钮：与主题卡片风格不协调，feed 本体（atom.xml）仍正常生成
+rss: false
 
 footer:
   # Specify the date when the site was setup.
@@ -433,6 +436,7 @@ font:
   enable: false
 
   # Uri of fonts host, e.g. //fonts.googleapis.com (Default).
+  # webfont 改由 source/_data/head.swig 走 fontsource CDN 加载，此处不启用 google 链接
   host:
 
   # Font options:
@@ -441,6 +445,7 @@ font:
   # `size: xx`. Use `px` as unit.
 
   # Global font settings used for all elements in <body>.
+  # 字体栈统一在 source/css/_custom/custom.styl 定义（主题 family 机制会给整栈加引号而失效）
   global:
     external: false
     family:
