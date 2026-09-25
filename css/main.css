@@ -2050,7 +2050,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ffffba;
+  background: #ffb6ff;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3693,9 +3693,6 @@ hr {
 }
 :root {
   --font-serif: Palatino, "Palatino Linotype", "Book Antiqua", "URW Palladio L", P052, "IBM Plex Serif", Georgia, "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", SimSun, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", serif;
-}
-html.os-win {
-  --font-serif: Georgia, "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", SimSun, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", serif;
 }
 body,
 .post-body,

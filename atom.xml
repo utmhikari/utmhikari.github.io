@@ -37,9 +37,9 @@
     
       <category term="Agent" scheme="https://utmhikari.top/tags/Agent/"/>
     
-      <category term="AI" scheme="https://utmhikari.top/tags/AI/"/>
-    
       <category term="Skill" scheme="https://utmhikari.top/tags/Skill/"/>
+    
+      <category term="AI" scheme="https://utmhikari.top/tags/AI/"/>
     
       <category term="知识库" scheme="https://utmhikari.top/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/"/>
     
@@ -97,13 +97,13 @@
       <category term="AI原生" scheme="https://utmhikari.top/categories/AI%E5%8E%9F%E7%94%9F/"/>
     
     
-      <category term="稳定性" scheme="https://utmhikari.top/tags/%E7%A8%B3%E5%AE%9A%E6%80%A7/"/>
-    
       <category term="Agent" scheme="https://utmhikari.top/tags/Agent/"/>
+    
+      <category term="Skill" scheme="https://utmhikari.top/tags/Skill/"/>
     
       <category term="AI" scheme="https://utmhikari.top/tags/AI/"/>
     
-      <category term="Skill" scheme="https://utmhikari.top/tags/Skill/"/>
+      <category term="稳定性" scheme="https://utmhikari.top/tags/%E7%A8%B3%E5%AE%9A%E6%80%A7/"/>
     
       <category term="SRE" scheme="https://utmhikari.top/tags/SRE/"/>
     
@@ -190,9 +190,9 @@
       <category term="架构艺术" scheme="https://utmhikari.top/categories/%E6%9E%B6%E6%9E%84%E8%89%BA%E6%9C%AF/"/>
     
     
-      <category term="稳定性" scheme="https://utmhikari.top/tags/%E7%A8%B3%E5%AE%9A%E6%80%A7/"/>
-    
       <category term="Agent" scheme="https://utmhikari.top/tags/Agent/"/>
+    
+      <category term="稳定性" scheme="https://utmhikari.top/tags/%E7%A8%B3%E5%AE%9A%E6%80%A7/"/>
     
       <category term="SRE" scheme="https://utmhikari.top/tags/SRE/"/>
     
@@ -353,9 +353,9 @@
     
       <category term="Kubernetes" scheme="https://utmhikari.top/tags/Kubernetes/"/>
     
-      <category term="Docker" scheme="https://utmhikari.top/tags/Docker/"/>
-    
       <category term="operator-gallery" scheme="https://utmhikari.top/tags/operator-gallery/"/>
+    
+      <category term="Docker" scheme="https://utmhikari.top/tags/Docker/"/>
     
   </entry>
   
