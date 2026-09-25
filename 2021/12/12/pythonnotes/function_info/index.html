@@ -118,7 +118,7 @@
 <link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/600.css">
 
 <meta name="description" content="在某些python框架底层的开发需求中，需要通过一些类似反射的手段，提取函数接口的信息，从而对一系列函数接口进行管理。本篇文章就来粗浅谈一下，如何提取python函数的接口定义信息。 function对象的信息首先我们拿一个函数来试试手： 12345def myprinter(s: str, /, e: str = &apos;\n&apos;, *, prefix: Any = &apos;&apos;) -&amp;gt; Tuple[bo">
-<meta name="keywords" content="python,inspect,dir,typing,反射">
+<meta name="keywords" content="python,反射,inspect,dir,typing">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【Python随笔】如何提取python函数的接口定义信息">
 <meta property="og:url" content="https://utmhikari.top/2021/12/12/pythonnotes/function_info/index.html">
@@ -625,13 +625,13 @@
           
             <a href="/tags/python/" rel="tag"># python</a>
           
+            <a href="/tags/反射/" rel="tag"># 反射</a>
+          
             <a href="/tags/inspect/" rel="tag"># inspect</a>
           
             <a href="/tags/dir/" rel="tag"># dir</a>
           
             <a href="/tags/typing/" rel="tag"># typing</a>
-          
-            <a href="/tags/反射/" rel="tag"># 反射</a>
           
         </div>
       
@@ -678,7 +678,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Python随笔】如何提取python函数的接口定义信息","description":"在某些python框架底层的开发需求中，需要通过一些类似反射的手段，提取函数接口的信息，从而对一系列函数接口进行管理。本篇文章就来粗浅谈一下，如何提取python函数的接口定义信息。 function对象的信息首先我们拿一个函数来试试手： 12345def myprinter(s: str, /, e: str = '\\n', *, prefix: Any = '') -&gt; Tuple[bo","datePublished":"2021-12-12T07:36:56.000Z","dateModified":"2024-04-07T02:48:06.926Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2021/12/12/pythonnotes/function_info/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"python, inspect, dir, typing, 反射"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Python随笔】如何提取python函数的接口定义信息","description":"在某些python框架底层的开发需求中，需要通过一些类似反射的手段，提取函数接口的信息，从而对一系列函数接口进行管理。本篇文章就来粗浅谈一下，如何提取python函数的接口定义信息。 function对象的信息首先我们拿一个函数来试试手： 12345def myprinter(s: str, /, e: str = '\\n', *, prefix: Any = '') -&gt; Tuple[bo","datePublished":"2021-12-12T07:36:56.000Z","dateModified":"2024-04-07T02:48:06.926Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2021/12/12/pythonnotes/function_info/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"python, 反射, inspect, dir, typing"}</script>
   
   
 

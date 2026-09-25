@@ -2050,7 +2050,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #0eff95;
+  background: #ffffba;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3622,6 +3622,20 @@ h6 {
 }
 .local-search-popup #no-result {
   color: #999;
+}
+html.os-win body {
+  -webkit-text-stroke: 0.2px currentColor;
+}
+html.os-win h1,
+html.os-win h2,
+html.os-win h3,
+html.os-win h4,
+html.os-win h5,
+html.os-win h6,
+html.os-win pre,
+html.os-win code,
+html.os-win kbd {
+  -webkit-text-stroke: 0;
 }
 .post-nav {
   border-top-color: rgba(101,122,129,0.35);
