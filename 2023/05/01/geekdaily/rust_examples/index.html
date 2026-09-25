@@ -101,8 +101,15 @@
 
 
 
-  <meta name="description" content="作为一门“网红”语言，rust，已经在区块链、Web前端、游戏开发等领域凸显了作用。相对于golang、python、java、js跟cpp等其余主流语言，rust语言的编写和呈现方面都算是一个更为独立的体系。因此，本着对技术的好奇心，笔者也决定学习下rust语言，一是体验一下新一门编程语言的逻辑艺术，二来也是为未来可能的变化做一做准备。 由于还没有明确要写什么小demo的想法，笔者决定先参照官网">
-<meta name="keywords" content="编程,教程,函数式编程,面试,rust">
+  
+<link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/700.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/600.css">
+
+<meta name="description" content="作为一门“网红”语言，rust，已经在区块链、Web前端、游戏开发等领域凸显了作用。相对于golang、python、java、js跟cpp等其余主流语言，rust语言的编写和呈现方面都算是一个更为独立的体系。因此，本着对技术的好奇心，笔者也决定学习下rust语言，一是体验一下新一门编程语言的逻辑艺术，二来也是为未来可能的变化做一做准备。 由于还没有明确要写什么小demo的想法，笔者决定先参照官网">
+<meta name="keywords" content="编程,面试,教程,函数式编程,rust">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【极客日常】初体验rust语言">
 <meta property="og:url" content="https://utmhikari.top/2023/05/01/geekdaily/rust_examples/index.html">
@@ -115,8 +122,6 @@
 <meta name="twitter:description" content="作为一门“网红”语言，rust，已经在区块链、Web前端、游戏开发等领域凸显了作用。相对于golang、python、java、js跟cpp等其余主流语言，rust语言的编写和呈现方面都算是一个更为独立的体系。因此，本着对技术的好奇心，笔者也决定学习下rust语言，一是体验一下新一门编程语言的逻辑艺术，二来也是为未来可能的变化做一做准备。 由于还没有明确要写什么小demo的想法，笔者决定先参照官网">
 
 
-
-  <link rel="alternate" href="/atom.xml" title="HiKariのTechLab" type="application/atom+xml">
 
 
 
@@ -568,11 +573,11 @@
           
             <a href="/tags/编程/" rel="tag"># 编程</a>
           
+            <a href="/tags/面试/" rel="tag"># 面试</a>
+          
             <a href="/tags/教程/" rel="tag"># 教程</a>
           
             <a href="/tags/函数式编程/" rel="tag"># 函数式编程</a>
-          
-            <a href="/tags/面试/" rel="tag"># 面试</a>
           
             <a href="/tags/rust/" rel="tag"># rust</a>
           
@@ -621,7 +626,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【极客日常】初体验rust语言","description":"作为一门“网红”语言，rust，已经在区块链、Web前端、游戏开发等领域凸显了作用。相对于golang、python、java、js跟cpp等其余主流语言，rust语言的编写和呈现方面都算是一个更为独立的体系。因此，本着对技术的好奇心，笔者也决定学习下rust语言，一是体验一下新一门编程语言的逻辑艺术，二来也是为未来可能的变化做一做准备。 由于还没有明确要写什么小demo的想法，笔者决定先参照官网","datePublished":"2023-05-01T07:01:44.000Z","dateModified":"2024-04-07T02:48:06.920Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2023/05/01/geekdaily/rust_examples/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"编程, 教程, 函数式编程, 面试, rust"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【极客日常】初体验rust语言","description":"作为一门“网红”语言，rust，已经在区块链、Web前端、游戏开发等领域凸显了作用。相对于golang、python、java、js跟cpp等其余主流语言，rust语言的编写和呈现方面都算是一个更为独立的体系。因此，本着对技术的好奇心，笔者也决定学习下rust语言，一是体验一下新一门编程语言的逻辑艺术，二来也是为未来可能的变化做一做准备。 由于还没有明确要写什么小demo的想法，笔者决定先参照官网","datePublished":"2023-05-01T07:01:44.000Z","dateModified":"2024-04-07T02:48:06.920Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2023/05/01/geekdaily/rust_examples/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"编程, 面试, 教程, 函数式编程, rust"}</script>
   
   
 
@@ -1601,13 +1606,6 @@
             </nav>
           
 
-          
-            <div class="feed-link motion-element">
-              <a href="/atom.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
           
 
           

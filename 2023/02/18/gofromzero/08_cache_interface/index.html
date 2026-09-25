@@ -101,7 +101,14 @@
 
 
 
-  <meta name="description" content="和许多面向对象的编程语言一样，Golang也存在interface接口这样的概念。interface相当于是一个中间层，下游只需要关心interface实现了什么行为，利用这些行为做些业务级别事情，而上游则负责实现interface，把这些行为具象化。本文就来通过一个简单的缓存cache模块的实现，来示范一下Golang的interface该怎么用。 首先，从业务service角度而言，一个cac">
+  
+<link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/700.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/600.css">
+
+<meta name="description" content="和许多面向对象的编程语言一样，Golang也存在interface接口这样的概念。interface相当于是一个中间层，下游只需要关心interface实现了什么行为，利用这些行为做些业务级别事情，而上游则负责实现interface，把这些行为具象化。本文就来通过一个简单的缓存cache模块的实现，来示范一下Golang的interface该怎么用。 首先，从业务service角度而言，一个cac">
 <meta name="keywords" content="Golang,依赖注入,interface,cache,go-cache">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【从零单排Golang】第八话：通过cache缓存模块示范interface该怎么用">
@@ -115,8 +122,6 @@
 <meta name="twitter:description" content="和许多面向对象的编程语言一样，Golang也存在interface接口这样的概念。interface相当于是一个中间层，下游只需要关心interface实现了什么行为，利用这些行为做些业务级别事情，而上游则负责实现interface，把这些行为具象化。本文就来通过一个简单的缓存cache模块的实现，来示范一下Golang的interface该怎么用。 首先，从业务service角度而言，一个cac">
 
 
-
-  <link rel="alternate" href="/atom.xml" title="HiKariのTechLab" type="application/atom+xml">
 
 
 
@@ -1615,13 +1620,6 @@
             </nav>
           
 
-          
-            <div class="feed-link motion-element">
-              <a href="/atom.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
           
 
           

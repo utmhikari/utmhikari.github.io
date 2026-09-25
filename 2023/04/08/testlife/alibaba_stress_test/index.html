@@ -101,8 +101,15 @@
 
 
 
-  <meta name="description" content="在2022年，阿里出品了一本《阿里测试之道》，讲述在阿里电商、物流、金融、大数据等业务场景下，测试活动业务层面是如何开展，以及技术层面是如何实现的。笔者有幸拜读此书，从其中也有所收获。本次以其中涉及电商的测试场景为例，记录一下“大促质量保障”一章的读书笔记。这一章主要讲述了在大促场景下，全链路压测是如何实施的，以及通过什么方式保证最终大促时的生产环境稳定性。 风险与挑战全链路压测目标：尽可能真实模">
-<meta name="keywords" content="稳定性,压力测试,性能测试,测试,Java">
+  
+<link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/700.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/600.css">
+
+<meta name="description" content="在2022年，阿里出品了一本《阿里测试之道》，讲述在阿里电商、物流、金融、大数据等业务场景下，测试活动业务层面是如何开展，以及技术层面是如何实现的。笔者有幸拜读此书，从其中也有所收获。本次以其中涉及电商的测试场景为例，记录一下“大促质量保障”一章的读书笔记。这一章主要讲述了在大促场景下，全链路压测是如何实施的，以及通过什么方式保证最终大促时的生产环境稳定性。 风险与挑战全链路压测目标：尽可能真实模">
+<meta name="keywords" content="稳定性,压力测试,测试,性能测试,Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【测试人生】《阿里测试之道》笔记之大促全链路压测">
 <meta property="og:url" content="https://utmhikari.top/2023/04/08/testlife/alibaba_stress_test/index.html">
@@ -115,8 +122,6 @@
 <meta name="twitter:description" content="在2022年，阿里出品了一本《阿里测试之道》，讲述在阿里电商、物流、金融、大数据等业务场景下，测试活动业务层面是如何开展，以及技术层面是如何实现的。笔者有幸拜读此书，从其中也有所收获。本次以其中涉及电商的测试场景为例，记录一下“大促质量保障”一章的读书笔记。这一章主要讲述了在大促场景下，全链路压测是如何实施的，以及通过什么方式保证最终大促时的生产环境稳定性。 风险与挑战全链路压测目标：尽可能真实模">
 
 
-
-  <link rel="alternate" href="/atom.xml" title="HiKariのTechLab" type="application/atom+xml">
 
 
 
@@ -762,9 +767,9 @@
           
             <a href="/tags/压力测试/" rel="tag"># 压力测试</a>
           
-            <a href="/tags/性能测试/" rel="tag"># 性能测试</a>
-          
             <a href="/tags/测试/" rel="tag"># 测试</a>
+          
+            <a href="/tags/性能测试/" rel="tag"># 性能测试</a>
           
             <a href="/tags/Java/" rel="tag"># Java</a>
           
@@ -813,7 +818,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【测试人生】《阿里测试之道》笔记之大促全链路压测","description":"在2022年，阿里出品了一本《阿里测试之道》，讲述在阿里电商、物流、金融、大数据等业务场景下，测试活动业务层面是如何开展，以及技术层面是如何实现的。笔者有幸拜读此书，从其中也有所收获。本次以其中涉及电商的测试场景为例，记录一下“大促质量保障”一章的读书笔记。这一章主要讲述了在大促场景下，全链路压测是如何实施的，以及通过什么方式保证最终大促时的生产环境稳定性。 风险与挑战全链路压测目标：尽可能真实模","datePublished":"2023-04-08T14:38:06.000Z","dateModified":"2026-05-01T10:09:32.910Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2023/04/08/testlife/alibaba_stress_test/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"稳定性, 压力测试, 性能测试, 测试, Java"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【测试人生】《阿里测试之道》笔记之大促全链路压测","description":"在2022年，阿里出品了一本《阿里测试之道》，讲述在阿里电商、物流、金融、大数据等业务场景下，测试活动业务层面是如何开展，以及技术层面是如何实现的。笔者有幸拜读此书，从其中也有所收获。本次以其中涉及电商的测试场景为例，记录一下“大促质量保障”一章的读书笔记。这一章主要讲述了在大促场景下，全链路压测是如何实施的，以及通过什么方式保证最终大促时的生产环境稳定性。 风险与挑战全链路压测目标：尽可能真实模","datePublished":"2023-04-08T14:38:06.000Z","dateModified":"2026-05-01T10:09:32.910Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2023/04/08/testlife/alibaba_stress_test/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"稳定性, 压力测试, 测试, 性能测试, Java"}</script>
   
   
 
@@ -1802,13 +1807,6 @@
             </nav>
           
 
-          
-            <div class="feed-link motion-element">
-              <a href="/atom.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
           
 
           

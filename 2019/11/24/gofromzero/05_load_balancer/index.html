@@ -101,8 +101,15 @@
 
 
 
-  <meta name="description" content="前言Github传送门 golang在工业中用途最多的方面就是编写中间件以及上游设施，因此切入golang的话，了解其网络库是很有必要的。因此，笔者上手了自带的net包，花了一天左右的时间写了个简单的负载均衡（Load Balancer），也算是能用啦= = 用net包写负载均衡我们在浏览网页时，通常会遇到服务方故障的情况，提示我们nginx、apache之类的字眼。这些，便都是负载均衡的工作了。">
-<meta name="keywords" content="后端开发,并发,Golang,tcp,负载均衡">
+  
+<link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/700.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/600.css">
+
+<meta name="description" content="前言Github传送门 golang在工业中用途最多的方面就是编写中间件以及上游设施，因此切入golang的话，了解其网络库是很有必要的。因此，笔者上手了自带的net包，花了一天左右的时间写了个简单的负载均衡（Load Balancer），也算是能用啦= = 用net包写负载均衡我们在浏览网页时，通常会遇到服务方故障的情况，提示我们nginx、apache之类的字眼。这些，便都是负载均衡的工作了。">
+<meta name="keywords" content="后端开发,Golang,并发,tcp,负载均衡">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【从零单排Golang】第五话：用自带net包写一个简单的负载均衡">
 <meta property="og:url" content="https://utmhikari.top/2019/11/24/gofromzero/05_load_balancer/index.html">
@@ -115,8 +122,6 @@
 <meta name="twitter:description" content="前言Github传送门 golang在工业中用途最多的方面就是编写中间件以及上游设施，因此切入golang的话，了解其网络库是很有必要的。因此，笔者上手了自带的net包，花了一天左右的时间写了个简单的负载均衡（Load Balancer），也算是能用啦= = 用net包写负载均衡我们在浏览网页时，通常会遇到服务方故障的情况，提示我们nginx、apache之类的字眼。这些，便都是负载均衡的工作了。">
 
 
-
-  <link rel="alternate" href="/atom.xml" title="HiKariのTechLab" type="application/atom+xml">
 
 
 
@@ -613,9 +618,9 @@
           
             <a href="/tags/后端开发/" rel="tag"># 后端开发</a>
           
-            <a href="/tags/并发/" rel="tag"># 并发</a>
-          
             <a href="/tags/Golang/" rel="tag"># Golang</a>
+          
+            <a href="/tags/并发/" rel="tag"># 并发</a>
           
             <a href="/tags/tcp/" rel="tag"># tcp</a>
           
@@ -666,7 +671,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【从零单排Golang】第五话：用自带net包写一个简单的负载均衡","description":"前言Github传送门 golang在工业中用途最多的方面就是编写中间件以及上游设施，因此切入golang的话，了解其网络库是很有必要的。因此，笔者上手了自带的net包，花了一天左右的时间写了个简单的负载均衡（Load Balancer），也算是能用啦= = 用net包写负载均衡我们在浏览网页时，通常会遇到服务方故障的情况，提示我们nginx、apache之类的字眼。这些，便都是负载均衡的工作了。","datePublished":"2019-11-24T04:28:04.000Z","dateModified":"2025-04-04T08:34:32.847Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2019/11/24/gofromzero/05_load_balancer/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"后端开发, 并发, Golang, tcp, 负载均衡"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【从零单排Golang】第五话：用自带net包写一个简单的负载均衡","description":"前言Github传送门 golang在工业中用途最多的方面就是编写中间件以及上游设施，因此切入golang的话，了解其网络库是很有必要的。因此，笔者上手了自带的net包，花了一天左右的时间写了个简单的负载均衡（Load Balancer），也算是能用啦= = 用net包写负载均衡我们在浏览网页时，通常会遇到服务方故障的情况，提示我们nginx、apache之类的字眼。这些，便都是负载均衡的工作了。","datePublished":"2019-11-24T04:28:04.000Z","dateModified":"2025-04-04T08:34:32.847Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2019/11/24/gofromzero/05_load_balancer/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"后端开发, Golang, 并发, tcp, 负载均衡"}</script>
   
   
 
@@ -1655,13 +1660,6 @@
             </nav>
           
 
-          
-            <div class="feed-link motion-element">
-              <a href="/atom.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
           
 
           

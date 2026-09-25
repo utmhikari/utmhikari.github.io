@@ -101,8 +101,15 @@
 
 
 
-  <meta name="description" content="近期做项目时遇到一个场景，是需要在后端任务执行时动态注入策略。具体而言，笔者负责的后端服务，可以理解是会在线上服务发布时，对服务风险做实时扫描，那么这个扫描就需要根据当前线上服务发布上下文，匹配对应的策略。但这里扫出来的策略都是静态持久化的，前端也有产品化的配置，而有些业务则希望能够在任务执行时，动态注入一些业务自己理解需要的扫描策略，不在前端做静态配置。 对于这类定制化需求，笔者想到的一种比较低">
-<meta name="keywords" content="后端开发,Golang,业务,数据库,计算机网络">
+  
+<link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/700.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/600.css">
+
+<meta name="description" content="近期做项目时遇到一个场景，是需要在后端任务执行时动态注入策略。具体而言，笔者负责的后端服务，可以理解是会在线上服务发布时，对服务风险做实时扫描，那么这个扫描就需要根据当前线上服务发布上下文，匹配对应的策略。但这里扫出来的策略都是静态持久化的，前端也有产品化的配置，而有些业务则希望能够在任务执行时，动态注入一些业务自己理解需要的扫描策略，不在前端做静态配置。 对于这类定制化需求，笔者想到的一种比较低">
+<meta name="keywords" content="后端开发,业务,Golang,数据库,计算机网络">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【极客日常】后端任务动态注入执行策略的一种技术实现">
 <meta property="og:url" content="https://utmhikari.top/2025/07/12/geekdaily/dynamic_job_impl/index.html">
@@ -115,8 +122,6 @@
 <meta name="twitter:description" content="近期做项目时遇到一个场景，是需要在后端任务执行时动态注入策略。具体而言，笔者负责的后端服务，可以理解是会在线上服务发布时，对服务风险做实时扫描，那么这个扫描就需要根据当前线上服务发布上下文，匹配对应的策略。但这里扫出来的策略都是静态持久化的，前端也有产品化的配置，而有些业务则希望能够在任务执行时，动态注入一些业务自己理解需要的扫描策略，不在前端做静态配置。 对于这类定制化需求，笔者想到的一种比较低">
 
 
-
-  <link rel="alternate" href="/atom.xml" title="HiKariのTechLab" type="application/atom+xml">
 
 
 
@@ -557,9 +562,9 @@
           
             <a href="/tags/后端开发/" rel="tag"># 后端开发</a>
           
-            <a href="/tags/Golang/" rel="tag"># Golang</a>
-          
             <a href="/tags/业务/" rel="tag"># 业务</a>
+          
+            <a href="/tags/Golang/" rel="tag"># Golang</a>
           
             <a href="/tags/数据库/" rel="tag"># 数据库</a>
           
@@ -610,7 +615,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【极客日常】后端任务动态注入执行策略的一种技术实现","description":"近期做项目时遇到一个场景，是需要在后端任务执行时动态注入策略。具体而言，笔者负责的后端服务，可以理解是会在线上服务发布时，对服务风险做实时扫描，那么这个扫描就需要根据当前线上服务发布上下文，匹配对应的策略。但这里扫出来的策略都是静态持久化的，前端也有产品化的配置，而有些业务则希望能够在任务执行时，动态注入一些业务自己理解需要的扫描策略，不在前端做静态配置。 对于这类定制化需求，笔者想到的一种比较低","datePublished":"2025-07-12T10:45:59.000Z","dateModified":"2025-07-12T10:52:21.276Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2025/07/12/geekdaily/dynamic_job_impl/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"后端开发, Golang, 业务, 数据库, 计算机网络"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【极客日常】后端任务动态注入执行策略的一种技术实现","description":"近期做项目时遇到一个场景，是需要在后端任务执行时动态注入策略。具体而言，笔者负责的后端服务，可以理解是会在线上服务发布时，对服务风险做实时扫描，那么这个扫描就需要根据当前线上服务发布上下文，匹配对应的策略。但这里扫出来的策略都是静态持久化的，前端也有产品化的配置，而有些业务则希望能够在任务执行时，动态注入一些业务自己理解需要的扫描策略，不在前端做静态配置。 对于这类定制化需求，笔者想到的一种比较低","datePublished":"2025-07-12T10:45:59.000Z","dateModified":"2025-07-12T10:52:21.276Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2025/07/12/geekdaily/dynamic_job_impl/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"后端开发, 业务, Golang, 数据库, 计算机网络"}</script>
   
   
 
@@ -1590,13 +1595,6 @@
             </nav>
           
 
-          
-            <div class="feed-link motion-element">
-              <a href="/atom.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
           
 
           

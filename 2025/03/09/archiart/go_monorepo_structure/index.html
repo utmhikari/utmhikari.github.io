@@ -101,8 +101,15 @@
 
 
 
-  <meta name="description" content="近期因为项目架构升级原因，笔者着手调研一些go项目monorepo的代码架构设计，目标是长期把既有微服务项目重要的部分都转移到monorepo上面，让代码更容易维护，协作开发更加方便。虽然经验不多，但既然有了初步的调研，今天就分享一下笔者所面临场景的monorepo设计思路。 从语言特性上讲，Golang是非常适合做monorepo的，但根据不同项目研发需要，monorepo的目录结构可以定制成不">
-<meta name="keywords" content="后端开发,Golang,架构,微服务,monorepo">
+  
+<link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/700.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/600.css">
+
+<meta name="description" content="近期因为项目架构升级原因，笔者着手调研一些go项目monorepo的代码架构设计，目标是长期把既有微服务项目重要的部分都转移到monorepo上面，让代码更容易维护，协作开发更加方便。虽然经验不多，但既然有了初步的调研，今天就分享一下笔者所面临场景的monorepo设计思路。 从语言特性上讲，Golang是非常适合做monorepo的，但根据不同项目研发需要，monorepo的目录结构可以定制成不">
+<meta name="keywords" content="后端开发,架构,微服务,Golang,monorepo">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【架构艺术】Go语言微服务monorepo的代码架构设计">
 <meta property="og:url" content="https://utmhikari.top/2025/03/09/archiart/go_monorepo_structure/index.html">
@@ -115,8 +122,6 @@
 <meta name="twitter:description" content="近期因为项目架构升级原因，笔者着手调研一些go项目monorepo的代码架构设计，目标是长期把既有微服务项目重要的部分都转移到monorepo上面，让代码更容易维护，协作开发更加方便。虽然经验不多，但既然有了初步的调研，今天就分享一下笔者所面临场景的monorepo设计思路。 从语言特性上讲，Golang是非常适合做monorepo的，但根据不同项目研发需要，monorepo的目录结构可以定制成不">
 
 
-
-  <link rel="alternate" href="/atom.xml" title="HiKariのTechLab" type="application/atom+xml">
 
 
 
@@ -561,11 +566,11 @@
           
             <a href="/tags/后端开发/" rel="tag"># 后端开发</a>
           
-            <a href="/tags/Golang/" rel="tag"># Golang</a>
-          
             <a href="/tags/架构/" rel="tag"># 架构</a>
           
             <a href="/tags/微服务/" rel="tag"># 微服务</a>
+          
+            <a href="/tags/Golang/" rel="tag"># Golang</a>
           
             <a href="/tags/monorepo/" rel="tag"># monorepo</a>
           
@@ -614,7 +619,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【架构艺术】Go语言微服务monorepo的代码架构设计","description":"近期因为项目架构升级原因，笔者着手调研一些go项目monorepo的代码架构设计，目标是长期把既有微服务项目重要的部分都转移到monorepo上面，让代码更容易维护，协作开发更加方便。虽然经验不多，但既然有了初步的调研，今天就分享一下笔者所面临场景的monorepo设计思路。 从语言特性上讲，Golang是非常适合做monorepo的，但根据不同项目研发需要，monorepo的目录结构可以定制成不","datePublished":"2025-03-09T07:02:43.000Z","dateModified":"2025-03-09T08:18:05.659Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2025/03/09/archiart/go_monorepo_structure/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"后端开发, Golang, 架构, 微服务, monorepo"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【架构艺术】Go语言微服务monorepo的代码架构设计","description":"近期因为项目架构升级原因，笔者着手调研一些go项目monorepo的代码架构设计，目标是长期把既有微服务项目重要的部分都转移到monorepo上面，让代码更容易维护，协作开发更加方便。虽然经验不多，但既然有了初步的调研，今天就分享一下笔者所面临场景的monorepo设计思路。 从语言特性上讲，Golang是非常适合做monorepo的，但根据不同项目研发需要，monorepo的目录结构可以定制成不","datePublished":"2025-03-09T07:02:43.000Z","dateModified":"2025-03-09T08:18:05.659Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2025/03/09/archiart/go_monorepo_structure/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"后端开发, 架构, 微服务, Golang, monorepo"}</script>
   
   
 
@@ -1594,13 +1599,6 @@
             </nav>
           
 
-          
-            <div class="feed-link motion-element">
-              <a href="/atom.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
           
 
           

@@ -101,8 +101,15 @@
 
 
 
-  <meta name="description" content="去年年底一段时间，笔者参与了组织内部智能化平台项目研发攻坚，虽然主攻平台工程部分，但多少也了解了下目前AIGC可以应用到的一些业务场景，以及技术实践、项目管理的一些事情。在先前的文章里头，有浅要描述下AIGC+Web类项目的角色分工和配合。那今天这篇文章，就浅聊一下如果你即将深入此局，适应一个复杂的后端项目开发，有什么方法论是可以通用的。 主要是两个关键点：（1）理解产品及概念实体联系；（2）主动">
-<meta name="keywords" content="AI,知识库,后端开发,系统设计,产品">
+  
+<link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/700.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/600.css">
+
+<meta name="description" content="去年年底一段时间，笔者参与了组织内部智能化平台项目研发攻坚，虽然主攻平台工程部分，但多少也了解了下目前AIGC可以应用到的一些业务场景，以及技术实践、项目管理的一些事情。在先前的文章里头，有浅要描述下AIGC+Web类项目的角色分工和配合。那今天这篇文章，就浅聊一下如果你即将深入此局，适应一个复杂的后端项目开发，有什么方法论是可以通用的。 主要是两个关键点：（1）理解产品及概念实体联系；（2）主动">
+<meta name="keywords" content="AI,后端开发,知识库,系统设计,产品">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【极客日常】快速上手复杂后端项目开发的经验">
 <meta property="og:url" content="https://utmhikari.top/2026/01/17/geekdaily/project_work_quickstart/index.html">
@@ -115,8 +122,6 @@
 <meta name="twitter:description" content="去年年底一段时间，笔者参与了组织内部智能化平台项目研发攻坚，虽然主攻平台工程部分，但多少也了解了下目前AIGC可以应用到的一些业务场景，以及技术实践、项目管理的一些事情。在先前的文章里头，有浅要描述下AIGC+Web类项目的角色分工和配合。那今天这篇文章，就浅聊一下如果你即将深入此局，适应一个复杂的后端项目开发，有什么方法论是可以通用的。 主要是两个关键点：（1）理解产品及概念实体联系；（2）主动">
 
 
-
-  <link rel="alternate" href="/atom.xml" title="HiKariのTechLab" type="application/atom+xml">
 
 
 
@@ -559,9 +564,9 @@
           
             <a href="/tags/AI/" rel="tag"># AI</a>
           
-            <a href="/tags/知识库/" rel="tag"># 知识库</a>
-          
             <a href="/tags/后端开发/" rel="tag"># 后端开发</a>
+          
+            <a href="/tags/知识库/" rel="tag"># 知识库</a>
           
             <a href="/tags/系统设计/" rel="tag"># 系统设计</a>
           
@@ -612,7 +617,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【极客日常】快速上手复杂后端项目开发的经验","description":"去年年底一段时间，笔者参与了组织内部智能化平台项目研发攻坚，虽然主攻平台工程部分，但多少也了解了下目前AIGC可以应用到的一些业务场景，以及技术实践、项目管理的一些事情。在先前的文章里头，有浅要描述下AIGC+Web类项目的角色分工和配合。那今天这篇文章，就浅聊一下如果你即将深入此局，适应一个复杂的后端项目开发，有什么方法论是可以通用的。 主要是两个关键点：（1）理解产品及概念实体联系；（2）主动","datePublished":"2026-01-17T05:30:08.000Z","dateModified":"2026-01-17T06:01:11.251Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2026/01/17/geekdaily/project_work_quickstart/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"AI, 知识库, 后端开发, 系统设计, 产品"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【极客日常】快速上手复杂后端项目开发的经验","description":"去年年底一段时间，笔者参与了组织内部智能化平台项目研发攻坚，虽然主攻平台工程部分，但多少也了解了下目前AIGC可以应用到的一些业务场景，以及技术实践、项目管理的一些事情。在先前的文章里头，有浅要描述下AIGC+Web类项目的角色分工和配合。那今天这篇文章，就浅聊一下如果你即将深入此局，适应一个复杂的后端项目开发，有什么方法论是可以通用的。 主要是两个关键点：（1）理解产品及概念实体联系；（2）主动","datePublished":"2026-01-17T05:30:08.000Z","dateModified":"2026-01-17T06:01:11.251Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2026/01/17/geekdaily/project_work_quickstart/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"AI, 后端开发, 知识库, 系统设计, 产品"}</script>
   
   
 
@@ -1592,13 +1597,6 @@
             </nav>
           
 
-          
-            <div class="feed-link motion-element">
-              <a href="/atom.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
           
 
           

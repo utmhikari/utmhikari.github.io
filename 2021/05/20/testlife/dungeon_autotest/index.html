@@ -101,8 +101,15 @@
 
 
 
-  <meta name="description" content="许多游戏，尤其是MMO，会包含“副本”这个概念，玩家通过打副本从而获得物品奖励及属性收益。通常来讲，单个游戏所涉及的副本数量/品种较多，因此在游戏测试过程当中，很难一次性全部遍历完所有副本的流程与玩法。为了解决这个问题，可以通过自动化测试的方式去冒烟副本玩法流程、检查奖励。为了让自动化测试用例执行更加稳定且易于维护，需要一套通用的逻辑模版去实现副本玩法自动化。自动化测试流程涉及多个部分，包括玩家账">
-<meta name="keywords" content="自动化测试,游戏测试,游戏自动化,测试,副本自动化">
+  
+<link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/700.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/600.css">
+
+<meta name="description" content="许多游戏，尤其是MMO，会包含“副本”这个概念，玩家通过打副本从而获得物品奖励及属性收益。通常来讲，单个游戏所涉及的副本数量/品种较多，因此在游戏测试过程当中，很难一次性全部遍历完所有副本的流程与玩法。为了解决这个问题，可以通过自动化测试的方式去冒烟副本玩法流程、检查奖励。为了让自动化测试用例执行更加稳定且易于维护，需要一套通用的逻辑模版去实现副本玩法自动化。自动化测试流程涉及多个部分，包括玩家账">
+<meta name="keywords" content="自动化测试,游戏自动化,游戏测试,测试,副本自动化">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【测试人生】副本自动化测试">
 <meta property="og:url" content="https://utmhikari.top/2021/05/20/testlife/dungeon_autotest/index.html">
@@ -117,8 +124,6 @@
 <meta name="twitter:image" content="https://utmhikari.top/uploads/testlife/dungeon_autotest/dungeon_autotest.png">
 
 
-
-  <link rel="alternate" href="/atom.xml" title="HiKariのTechLab" type="application/atom+xml">
 
 
 
@@ -572,9 +577,9 @@
           
             <a href="/tags/自动化测试/" rel="tag"># 自动化测试</a>
           
-            <a href="/tags/游戏测试/" rel="tag"># 游戏测试</a>
-          
             <a href="/tags/游戏自动化/" rel="tag"># 游戏自动化</a>
+          
+            <a href="/tags/游戏测试/" rel="tag"># 游戏测试</a>
           
             <a href="/tags/测试/" rel="tag"># 测试</a>
           
@@ -625,7 +630,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【测试人生】副本自动化测试","description":"许多游戏，尤其是MMO，会包含“副本”这个概念，玩家通过打副本从而获得物品奖励及属性收益。通常来讲，单个游戏所涉及的副本数量/品种较多，因此在游戏测试过程当中，很难一次性全部遍历完所有副本的流程与玩法。为了解决这个问题，可以通过自动化测试的方式去冒烟副本玩法流程、检查奖励。为了让自动化测试用例执行更加稳定且易于维护，需要一套通用的逻辑模版去实现副本玩法自动化。自动化测试流程涉及多个部分，包括玩家账","datePublished":"2021-05-20T15:46:05.000Z","dateModified":"2025-03-23T04:59:39.660Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2021/05/20/testlife/dungeon_autotest/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"自动化测试, 游戏测试, 游戏自动化, 测试, 副本自动化"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【测试人生】副本自动化测试","description":"许多游戏，尤其是MMO，会包含“副本”这个概念，玩家通过打副本从而获得物品奖励及属性收益。通常来讲，单个游戏所涉及的副本数量/品种较多，因此在游戏测试过程当中，很难一次性全部遍历完所有副本的流程与玩法。为了解决这个问题，可以通过自动化测试的方式去冒烟副本玩法流程、检查奖励。为了让自动化测试用例执行更加稳定且易于维护，需要一套通用的逻辑模版去实现副本玩法自动化。自动化测试流程涉及多个部分，包括玩家账","datePublished":"2021-05-20T15:46:05.000Z","dateModified":"2025-03-23T04:59:39.660Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2021/05/20/testlife/dungeon_autotest/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"自动化测试, 游戏自动化, 游戏测试, 测试, 副本自动化"}</script>
   
   
 
@@ -1605,13 +1610,6 @@
             </nav>
           
 
-          
-            <div class="feed-link motion-element">
-              <a href="/atom.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
           
 
           

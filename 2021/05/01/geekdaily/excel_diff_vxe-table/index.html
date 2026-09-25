@@ -101,8 +101,15 @@
 
 
 
-  <meta name="description" content="excel-differ是游戏测试常用的测试工具。在有些业务场景下，excel-diff的结果可能需要通过web展示。Vue技术栈下的vxe-table表格组件能够支持大量数据的展示，因此可以用vxe-table展示excel-diff的结果。 excel-diff的算法本身，先前的文章已有讲解，在结果展示上会按file-&amp;gt;sheet来分。为了让结果展示更加人性化，需要对表格的样式进行区分。">
-<meta name="keywords" content="前端开发,游戏测试,测试开发,vue,vxe-table">
+  
+<link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/700.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/600.css">
+
+<meta name="description" content="excel-differ是游戏测试常用的测试工具。在有些业务场景下，excel-diff的结果可能需要通过web展示。Vue技术栈下的vxe-table表格组件能够支持大量数据的展示，因此可以用vxe-table展示excel-diff的结果。 excel-diff的算法本身，先前的文章已有讲解，在结果展示上会按file-&amp;gt;sheet来分。为了让结果展示更加人性化，需要对表格的样式进行区分。">
+<meta name="keywords" content="前端开发,测试开发,游戏测试,vue,vxe-table">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【极客日常】用vxe-table展示excel-diff的结果">
 <meta property="og:url" content="https://utmhikari.top/2021/05/01/geekdaily/excel_diff_vxe-table/index.html">
@@ -115,8 +122,6 @@
 <meta name="twitter:description" content="excel-differ是游戏测试常用的测试工具。在有些业务场景下，excel-diff的结果可能需要通过web展示。Vue技术栈下的vxe-table表格组件能够支持大量数据的展示，因此可以用vxe-table展示excel-diff的结果。 excel-diff的算法本身，先前的文章已有讲解，在结果展示上会按file-&amp;gt;sheet来分。为了让结果展示更加人性化，需要对表格的样式进行区分。">
 
 
-
-  <link rel="alternate" href="/atom.xml" title="HiKariのTechLab" type="application/atom+xml">
 
 
 
@@ -600,9 +605,9 @@
           
             <a href="/tags/前端开发/" rel="tag"># 前端开发</a>
           
-            <a href="/tags/游戏测试/" rel="tag"># 游戏测试</a>
-          
             <a href="/tags/测试开发/" rel="tag"># 测试开发</a>
+          
+            <a href="/tags/游戏测试/" rel="tag"># 游戏测试</a>
           
             <a href="/tags/vue/" rel="tag"># vue</a>
           
@@ -653,7 +658,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【极客日常】用vxe-table展示excel-diff的结果","description":"excel-differ是游戏测试常用的测试工具。在有些业务场景下，excel-diff的结果可能需要通过web展示。Vue技术栈下的vxe-table表格组件能够支持大量数据的展示，因此可以用vxe-table展示excel-diff的结果。 excel-diff的算法本身，先前的文章已有讲解，在结果展示上会按file-&gt;sheet来分。为了让结果展示更加人性化，需要对表格的样式进行区分。","datePublished":"2021-05-01T08:50:18.000Z","dateModified":"2024-04-07T02:48:06.919Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2021/05/01/geekdaily/excel_diff_vxe-table/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"前端开发, 游戏测试, 测试开发, vue, vxe-table"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【极客日常】用vxe-table展示excel-diff的结果","description":"excel-differ是游戏测试常用的测试工具。在有些业务场景下，excel-diff的结果可能需要通过web展示。Vue技术栈下的vxe-table表格组件能够支持大量数据的展示，因此可以用vxe-table展示excel-diff的结果。 excel-diff的算法本身，先前的文章已有讲解，在结果展示上会按file-&gt;sheet来分。为了让结果展示更加人性化，需要对表格的样式进行区分。","datePublished":"2021-05-01T08:50:18.000Z","dateModified":"2024-04-07T02:48:06.919Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2021/05/01/geekdaily/excel_diff_vxe-table/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"前端开发, 测试开发, 游戏测试, vue, vxe-table"}</script>
   
   
 
@@ -1633,13 +1638,6 @@
             </nav>
           
 
-          
-            <div class="feed-link motion-element">
-              <a href="/atom.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
           
 
           

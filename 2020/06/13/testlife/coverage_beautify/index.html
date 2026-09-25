@@ -101,7 +101,14 @@
 
 
 
-  <meta name="description" content="在研发代码覆盖率测试工具的时候，通常除了代码覆盖数据收集模块之外，一般还要研发前端展示的部分以展现代码覆盖分析报告，通常会为每一个文件增加行染色，类似于jacoco这种形式。 然而代码覆盖报告实际出来的行染色，会出现许多正常代码行没有着色的情况。这是因为编程语言认为的“行”和本身我们在文本编辑器打出的”行“是不一样的。编译出来的“行”实际上是一段操作，比如我们定义一个函数的时候，编译器认为我们执行">
+  
+<link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/700.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/600.css">
+
+<meta name="description" content="在研发代码覆盖率测试工具的时候，通常除了代码覆盖数据收集模块之外，一般还要研发前端展示的部分以展现代码覆盖分析报告，通常会为每一个文件增加行染色，类似于jacoco这种形式。 然而代码覆盖报告实际出来的行染色，会出现许多正常代码行没有着色的情况。这是因为编程语言认为的“行”和本身我们在文本编辑器打出的”行“是不一样的。编译出来的“行”实际上是一段操作，比如我们定义一个函数的时候，编译器认为我们执行">
 <meta name="keywords" content="lua,代码覆盖率,代码染色,语法分析,递归下降法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【测试人生】代码覆盖率测试之代码染色优化——以lua代码覆盖为例">
@@ -115,8 +122,6 @@
 <meta name="twitter:description" content="在研发代码覆盖率测试工具的时候，通常除了代码覆盖数据收集模块之外，一般还要研发前端展示的部分以展现代码覆盖分析报告，通常会为每一个文件增加行染色，类似于jacoco这种形式。 然而代码覆盖报告实际出来的行染色，会出现许多正常代码行没有着色的情况。这是因为编程语言认为的“行”和本身我们在文本编辑器打出的”行“是不一样的。编译出来的“行”实际上是一段操作，比如我们定义一个函数的时候，编译器认为我们执行">
 
 
-
-  <link rel="alternate" href="/atom.xml" title="HiKariのTechLab" type="application/atom+xml">
 
 
 
@@ -1617,13 +1622,6 @@
             </nav>
           
 
-          
-            <div class="feed-link motion-element">
-              <a href="/atom.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
           
 
           

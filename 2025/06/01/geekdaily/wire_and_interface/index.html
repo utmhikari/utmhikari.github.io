@@ -101,8 +101,15 @@
 
 
 
-  <meta name="description" content="在先前一篇文章中，笔者给大家提到了go语言后端编程可以用wire依赖注入模块去简化单例服务的初始化，同时也可以解决服务单例之间复杂依赖的问题。但实事求是来讲，用wire也是有一些学习成本的，wire在帮助解决复杂依赖的问题同时，也会限定你去用一些特定的编程方式来满足wire的需要，尤其需要你interface给用的更加灵活。 因此今天这篇文章，笔者结合自己的经验，就和大家浅分享下，wire和int">
-<meta name="keywords" content="Golang,依赖注入,wire,interface,cache">
+  
+<link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/700.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/600.css">
+
+<meta name="description" content="在先前一篇文章中，笔者给大家提到了go语言后端编程可以用wire依赖注入模块去简化单例服务的初始化，同时也可以解决服务单例之间复杂依赖的问题。但实事求是来讲，用wire也是有一些学习成本的，wire在帮助解决复杂依赖的问题同时，也会限定你去用一些特定的编程方式来满足wire的需要，尤其需要你interface给用的更加灵活。 因此今天这篇文章，笔者结合自己的经验，就和大家浅分享下，wire和int">
+<meta name="keywords" content="Golang,wire,依赖注入,interface,cache">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【极客日常】分享go开发中wire和interface配合的一些经验">
 <meta property="og:url" content="https://utmhikari.top/2025/06/01/geekdaily/wire_and_interface/index.html">
@@ -115,8 +122,6 @@
 <meta name="twitter:description" content="在先前一篇文章中，笔者给大家提到了go语言后端编程可以用wire依赖注入模块去简化单例服务的初始化，同时也可以解决服务单例之间复杂依赖的问题。但实事求是来讲，用wire也是有一些学习成本的，wire在帮助解决复杂依赖的问题同时，也会限定你去用一些特定的编程方式来满足wire的需要，尤其需要你interface给用的更加灵活。 因此今天这篇文章，笔者结合自己的经验，就和大家浅分享下，wire和int">
 
 
-
-  <link rel="alternate" href="/atom.xml" title="HiKariのTechLab" type="application/atom+xml">
 
 
 
@@ -559,9 +564,9 @@
           
             <a href="/tags/Golang/" rel="tag"># Golang</a>
           
-            <a href="/tags/依赖注入/" rel="tag"># 依赖注入</a>
-          
             <a href="/tags/wire/" rel="tag"># wire</a>
+          
+            <a href="/tags/依赖注入/" rel="tag"># 依赖注入</a>
           
             <a href="/tags/interface/" rel="tag"># interface</a>
           
@@ -612,7 +617,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【极客日常】分享go开发中wire和interface配合的一些经验","description":"在先前一篇文章中，笔者给大家提到了go语言后端编程可以用wire依赖注入模块去简化单例服务的初始化，同时也可以解决服务单例之间复杂依赖的问题。但实事求是来讲，用wire也是有一些学习成本的，wire在帮助解决复杂依赖的问题同时，也会限定你去用一些特定的编程方式来满足wire的需要，尤其需要你interface给用的更加灵活。 因此今天这篇文章，笔者结合自己的经验，就和大家浅分享下，wire和int","datePublished":"2025-05-31T18:19:33.000Z","dateModified":"2025-05-31T18:22:32.148Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2025/06/01/geekdaily/wire_and_interface/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"Golang, 依赖注入, wire, interface, cache"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【极客日常】分享go开发中wire和interface配合的一些经验","description":"在先前一篇文章中，笔者给大家提到了go语言后端编程可以用wire依赖注入模块去简化单例服务的初始化，同时也可以解决服务单例之间复杂依赖的问题。但实事求是来讲，用wire也是有一些学习成本的，wire在帮助解决复杂依赖的问题同时，也会限定你去用一些特定的编程方式来满足wire的需要，尤其需要你interface给用的更加灵活。 因此今天这篇文章，笔者结合自己的经验，就和大家浅分享下，wire和int","datePublished":"2025-05-31T18:19:33.000Z","dateModified":"2025-05-31T18:22:32.148Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2025/06/01/geekdaily/wire_and_interface/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"Golang, wire, 依赖注入, interface, cache"}</script>
   
   
 
@@ -1592,13 +1597,6 @@
             </nav>
           
 
-          
-            <div class="feed-link motion-element">
-              <a href="/atom.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
           
 
           

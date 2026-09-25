@@ -101,8 +101,15 @@
 
 
 
-  <meta name="description" content="在用源码编译redis的过程中，可能会报jemalloc出错，提示No such file or directory的问题，导致构建不能继续。一种常见的，在网上流传的方法是调整MALLOC参数为libc，但这并不是唯一解，不能一概而论。 以笔者的例子，笔者采用windows装CLion并用Remote Development连接linux虚拟机的方式来编译redis源码，版本为6.2.6，在构建的">
-<meta name="keywords" content="linux,redis,编译,jemalloc,远程开发">
+  
+<link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/700.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/600.css">
+
+<meta name="description" content="在用源码编译redis的过程中，可能会报jemalloc出错，提示No such file or directory的问题，导致构建不能继续。一种常见的，在网上流传的方法是调整MALLOC参数为libc，但这并不是唯一解，不能一概而论。 以笔者的例子，笔者采用windows装CLion并用Remote Development连接linux虚拟机的方式来编译redis源码，版本为6.2.6，在构建的">
+<meta name="keywords" content="redis,编译,jemalloc,远程开发,linux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【极客日常】一种解决redis源码编译时jemalloc报No such file or directory错误的方法">
 <meta property="og:url" content="https://utmhikari.top/2021/10/19/geekdaily/redis_make_jemalloc_error/index.html">
@@ -115,8 +122,6 @@
 <meta name="twitter:description" content="在用源码编译redis的过程中，可能会报jemalloc出错，提示No such file or directory的问题，导致构建不能继续。一种常见的，在网上流传的方法是调整MALLOC参数为libc，但这并不是唯一解，不能一概而论。 以笔者的例子，笔者采用windows装CLion并用Remote Development连接linux虚拟机的方式来编译redis源码，版本为6.2.6，在构建的">
 
 
-
-  <link rel="alternate" href="/atom.xml" title="HiKariのTechLab" type="application/atom+xml">
 
 
 
@@ -568,8 +573,6 @@
       
         <div class="post-tags">
           
-            <a href="/tags/linux/" rel="tag"># linux</a>
-          
             <a href="/tags/redis/" rel="tag"># redis</a>
           
             <a href="/tags/编译/" rel="tag"># 编译</a>
@@ -577,6 +580,8 @@
             <a href="/tags/jemalloc/" rel="tag"># jemalloc</a>
           
             <a href="/tags/远程开发/" rel="tag"># 远程开发</a>
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
           
         </div>
       
@@ -623,7 +628,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【极客日常】一种解决redis源码编译时jemalloc报No such file or directory错误的方法","description":"在用源码编译redis的过程中，可能会报jemalloc出错，提示No such file or directory的问题，导致构建不能继续。一种常见的，在网上流传的方法是调整MALLOC参数为libc，但这并不是唯一解，不能一概而论。 以笔者的例子，笔者采用windows装CLion并用Remote Development连接linux虚拟机的方式来编译redis源码，版本为6.2.6，在构建的","datePublished":"2021-10-19T15:32:16.000Z","dateModified":"2024-04-07T02:48:06.920Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2021/10/19/geekdaily/redis_make_jemalloc_error/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"linux, redis, 编译, jemalloc, 远程开发"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【极客日常】一种解决redis源码编译时jemalloc报No such file or directory错误的方法","description":"在用源码编译redis的过程中，可能会报jemalloc出错，提示No such file or directory的问题，导致构建不能继续。一种常见的，在网上流传的方法是调整MALLOC参数为libc，但这并不是唯一解，不能一概而论。 以笔者的例子，笔者采用windows装CLion并用Remote Development连接linux虚拟机的方式来编译redis源码，版本为6.2.6，在构建的","datePublished":"2021-10-19T15:32:16.000Z","dateModified":"2024-04-07T02:48:06.920Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2021/10/19/geekdaily/redis_make_jemalloc_error/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"redis, 编译, jemalloc, 远程开发, linux"}</script>
   
   
 
@@ -1603,13 +1608,6 @@
             </nav>
           
 
-          
-            <div class="feed-link motion-element">
-              <a href="/atom.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
           
 
           

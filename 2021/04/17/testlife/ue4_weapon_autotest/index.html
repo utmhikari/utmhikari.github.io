@@ -101,8 +101,15 @@
 
 
 
-  <meta name="description" content="在射击类游戏中，不可避免地需要对各种枪械武器进行测试。大多数情况下，枪械种类繁多，人工遍历测试会花非常多的时间，因此引入自动化测试替代人力执行部分冒烟用例，能够增加严重问题提早发现的可能性。枪械测试包括基础行为、伤害、弹道、后坐力等方面，从功能冒烟的角度考虑，基础行为和伤害是需要优先覆盖的部分。因此，本文以UE4引擎下的枪械测试为例，讲解基础行为跟伤害测试的一些设计。">
-<meta name="keywords" content="UE4,自动化测试,游戏测试,游戏自动化,枪械自动化">
+  
+<link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/700.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/600.css">
+
+<meta name="description" content="在射击类游戏中，不可避免地需要对各种枪械武器进行测试。大多数情况下，枪械种类繁多，人工遍历测试会花非常多的时间，因此引入自动化测试替代人力执行部分冒烟用例，能够增加严重问题提早发现的可能性。枪械测试包括基础行为、伤害、弹道、后坐力等方面，从功能冒烟的角度考虑，基础行为和伤害是需要优先覆盖的部分。因此，本文以UE4引擎下的枪械测试为例，讲解基础行为跟伤害测试的一些设计。">
+<meta name="keywords" content="自动化测试,游戏自动化,UE4,游戏测试,枪械自动化">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【测试人生】UE4游戏枪械自动化测试的一些设计">
 <meta property="og:url" content="https://utmhikari.top/2021/04/17/testlife/ue4_weapon_autotest/index.html">
@@ -115,8 +122,6 @@
 <meta name="twitter:description" content="在射击类游戏中，不可避免地需要对各种枪械武器进行测试。大多数情况下，枪械种类繁多，人工遍历测试会花非常多的时间，因此引入自动化测试替代人力执行部分冒烟用例，能够增加严重问题提早发现的可能性。枪械测试包括基础行为、伤害、弹道、后坐力等方面，从功能冒烟的角度考虑，基础行为和伤害是需要优先覆盖的部分。因此，本文以UE4引擎下的枪械测试为例，讲解基础行为跟伤害测试的一些设计。">
 
 
-
-  <link rel="alternate" href="/atom.xml" title="HiKariのTechLab" type="application/atom+xml">
 
 
 
@@ -604,13 +609,13 @@
       
         <div class="post-tags">
           
-            <a href="/tags/UE4/" rel="tag"># UE4</a>
-          
             <a href="/tags/自动化测试/" rel="tag"># 自动化测试</a>
           
-            <a href="/tags/游戏测试/" rel="tag"># 游戏测试</a>
-          
             <a href="/tags/游戏自动化/" rel="tag"># 游戏自动化</a>
+          
+            <a href="/tags/UE4/" rel="tag"># UE4</a>
+          
+            <a href="/tags/游戏测试/" rel="tag"># 游戏测试</a>
           
             <a href="/tags/枪械自动化/" rel="tag"># 枪械自动化</a>
           
@@ -659,7 +664,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【测试人生】UE4游戏枪械自动化测试的一些设计","description":"在射击类游戏中，不可避免地需要对各种枪械武器进行测试。大多数情况下，枪械种类繁多，人工遍历测试会花非常多的时间，因此引入自动化测试替代人力执行部分冒烟用例，能够增加严重问题提早发现的可能性。枪械测试包括基础行为、伤害、弹道、后坐力等方面，从功能冒烟的角度考虑，基础行为和伤害是需要优先覆盖的部分。因此，本文以UE4引擎下的枪械测试为例，讲解基础行为跟伤害测试的一些设计。","datePublished":"2021-04-17T15:54:20.000Z","dateModified":"2024-04-07T02:48:06.929Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2021/04/17/testlife/ue4_weapon_autotest/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"UE4, 自动化测试, 游戏测试, 游戏自动化, 枪械自动化"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【测试人生】UE4游戏枪械自动化测试的一些设计","description":"在射击类游戏中，不可避免地需要对各种枪械武器进行测试。大多数情况下，枪械种类繁多，人工遍历测试会花非常多的时间，因此引入自动化测试替代人力执行部分冒烟用例，能够增加严重问题提早发现的可能性。枪械测试包括基础行为、伤害、弹道、后坐力等方面，从功能冒烟的角度考虑，基础行为和伤害是需要优先覆盖的部分。因此，本文以UE4引擎下的枪械测试为例，讲解基础行为跟伤害测试的一些设计。","datePublished":"2021-04-17T15:54:20.000Z","dateModified":"2024-04-07T02:48:06.929Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2021/04/17/testlife/ue4_weapon_autotest/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"自动化测试, 游戏自动化, UE4, 游戏测试, 枪械自动化"}</script>
   
   
 
@@ -1639,13 +1644,6 @@
             </nav>
           
 
-          
-            <div class="feed-link motion-element">
-              <a href="/atom.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
           
 
           

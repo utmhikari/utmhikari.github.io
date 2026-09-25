@@ -101,8 +101,15 @@
 
 
 
-  <meta name="description" content="对于一个成熟的工程项目而言，因为项目未来发展或是和企业内部更深度融合的需要，我们可能需要对既有业务逻辑做很大规模的改动，涉及到多方面的逻辑迁移和代码重构，才能够达到下一代产品所需要的效果。 今天这篇文章，就来剖析一下如何做好这件事情，尤其是在历史积淀非常厚重的场景，需要通过怎么样的手段，把这个问题解决好。">
-<meta name="keywords" content="稳定性,后端开发,架构,重构,数据迁移">
+  
+<link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/700.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/600.css">
+
+<meta name="description" content="对于一个成熟的工程项目而言，因为项目未来发展或是和企业内部更深度融合的需要，我们可能需要对既有业务逻辑做很大规模的改动，涉及到多方面的逻辑迁移和代码重构，才能够达到下一代产品所需要的效果。 今天这篇文章，就来剖析一下如何做好这件事情，尤其是在历史积淀非常厚重的场景，需要通过怎么样的手段，把这个问题解决好。">
+<meta name="keywords" content="后端开发,稳定性,架构,重构,数据迁移">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【架构艺术】大规模业务逻辑迁移实践">
 <meta property="og:url" content="https://utmhikari.top/2024/07/20/archiart/large_scale_migration/index.html">
@@ -115,8 +122,6 @@
 <meta name="twitter:description" content="对于一个成熟的工程项目而言，因为项目未来发展或是和企业内部更深度融合的需要，我们可能需要对既有业务逻辑做很大规模的改动，涉及到多方面的逻辑迁移和代码重构，才能够达到下一代产品所需要的效果。 今天这篇文章，就来剖析一下如何做好这件事情，尤其是在历史积淀非常厚重的场景，需要通过怎么样的手段，把这个问题解决好。">
 
 
-
-  <link rel="alternate" href="/atom.xml" title="HiKariのTechLab" type="application/atom+xml">
 
 
 
@@ -562,9 +567,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/稳定性/" rel="tag"># 稳定性</a>
-          
             <a href="/tags/后端开发/" rel="tag"># 后端开发</a>
+          
+            <a href="/tags/稳定性/" rel="tag"># 稳定性</a>
           
             <a href="/tags/架构/" rel="tag"># 架构</a>
           
@@ -617,7 +622,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【架构艺术】大规模业务逻辑迁移实践","description":"对于一个成熟的工程项目而言，因为项目未来发展或是和企业内部更深度融合的需要，我们可能需要对既有业务逻辑做很大规模的改动，涉及到多方面的逻辑迁移和代码重构，才能够达到下一代产品所需要的效果。 今天这篇文章，就来剖析一下如何做好这件事情，尤其是在历史积淀非常厚重的场景，需要通过怎么样的手段，把这个问题解决好。","datePublished":"2024-07-20T14:35:26.000Z","dateModified":"2024-07-20T14:37:25.445Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2024/07/20/archiart/large_scale_migration/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"稳定性, 后端开发, 架构, 重构, 数据迁移"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【架构艺术】大规模业务逻辑迁移实践","description":"对于一个成熟的工程项目而言，因为项目未来发展或是和企业内部更深度融合的需要，我们可能需要对既有业务逻辑做很大规模的改动，涉及到多方面的逻辑迁移和代码重构，才能够达到下一代产品所需要的效果。 今天这篇文章，就来剖析一下如何做好这件事情，尤其是在历史积淀非常厚重的场景，需要通过怎么样的手段，把这个问题解决好。","datePublished":"2024-07-20T14:35:26.000Z","dateModified":"2024-07-20T14:37:25.445Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2024/07/20/archiart/large_scale_migration/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"后端开发, 稳定性, 架构, 重构, 数据迁移"}</script>
   
   
 
@@ -1597,13 +1602,6 @@
             </nav>
           
 
-          
-            <div class="feed-link motion-element">
-              <a href="/atom.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
           
 
           

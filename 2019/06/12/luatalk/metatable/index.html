@@ -101,7 +101,14 @@
 
 
 
-  <meta name="description" content="前言在lua的学习过程当中，元表metatable的概念及用法是常见的障碍之一 元表，在其它lua杂谈等都提到过，是一种描述lua数据的属性以及行为的表。虽然官方给了set、account等例子详细讲解了metatable，但总还是缺乏些提炼。为了干翻这个痛点，这次，果断强上metatable的精髓。毕竟，犹豫就会败北~ 元表有什么我们首先就会有疑问：通过哪些属性指标，可以描述lua的数据呢？通过">
+  
+<link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/700.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/600.css">
+
+<meta name="description" content="前言在lua的学习过程当中，元表metatable的概念及用法是常见的障碍之一 元表，在其它lua杂谈等都提到过，是一种描述lua数据的属性以及行为的表。虽然官方给了set、account等例子详细讲解了metatable，但总还是缺乏些提炼。为了干翻这个痛点，这次，果断强上metatable的精髓。毕竟，犹豫就会败北~ 元表有什么我们首先就会有疑问：通过哪些属性指标，可以描述lua的数据呢？通过">
 <meta name="keywords" content="lua,元表,面向对象,继承,原型模式">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【Lua杂谈】犹豫就会败北——元表metatable解析">
@@ -115,8 +122,6 @@
 <meta name="twitter:description" content="前言在lua的学习过程当中，元表metatable的概念及用法是常见的障碍之一 元表，在其它lua杂谈等都提到过，是一种描述lua数据的属性以及行为的表。虽然官方给了set、account等例子详细讲解了metatable，但总还是缺乏些提炼。为了干翻这个痛点，这次，果断强上metatable的精髓。毕竟，犹豫就会败北~ 元表有什么我们首先就会有疑问：通过哪些属性指标，可以描述lua的数据呢？通过">
 
 
-
-  <link rel="alternate" href="/atom.xml" title="HiKariのTechLab" type="application/atom+xml">
 
 
 
@@ -1655,13 +1660,6 @@
             </nav>
           
 
-          
-            <div class="feed-link motion-element">
-              <a href="/atom.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
           
 
           

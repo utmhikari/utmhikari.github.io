@@ -101,8 +101,15 @@
 
 
 
-  <meta name="description" content="在2年以前的一篇文章中，讲述了游戏UI自动化方案GAutomator的基础机理、使用方式和一些工具扩展的想法。今天，趁着Game Of AutoTest系列的连载，结合游戏自动化技术选型一文，笔者将深入剖析GAutomator作为UE4安卓游戏UI自动化方案的实现机理，以及自己在实际工作中对GAutomator的优化实践。 工作原理GAutomator是这样的调用链路：">
-<meta name="keywords" content="UE4,自动化测试,游戏自动化,GAutomator,UI自动化">
+  
+<link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/700.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/600.css">
+
+<meta name="description" content="在2年以前的一篇文章中，讲述了游戏UI自动化方案GAutomator的基础机理、使用方式和一些工具扩展的想法。今天，趁着Game Of AutoTest系列的连载，结合游戏自动化技术选型一文，笔者将深入剖析GAutomator作为UE4安卓游戏UI自动化方案的实现机理，以及自己在实际工作中对GAutomator的优化实践。 工作原理GAutomator是这样的调用链路：">
+<meta name="keywords" content="自动化测试,游戏自动化,UE4,GAutomator,UI自动化">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【测试人生】GAutomator安卓UE4版本的实现机理与优化实战">
 <meta property="og:url" content="https://utmhikari.top/2022/09/12/testlife/gautomator_ue4_android/index.html">
@@ -115,8 +122,6 @@
 <meta name="twitter:description" content="在2年以前的一篇文章中，讲述了游戏UI自动化方案GAutomator的基础机理、使用方式和一些工具扩展的想法。今天，趁着Game Of AutoTest系列的连载，结合游戏自动化技术选型一文，笔者将深入剖析GAutomator作为UE4安卓游戏UI自动化方案的实现机理，以及自己在实际工作中对GAutomator的优化实践。 工作原理GAutomator是这样的调用链路：">
 
 
-
-  <link rel="alternate" href="/atom.xml" title="HiKariのTechLab" type="application/atom+xml">
 
 
 
@@ -651,11 +656,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/UE4/" rel="tag"># UE4</a>
-          
             <a href="/tags/自动化测试/" rel="tag"># 自动化测试</a>
           
             <a href="/tags/游戏自动化/" rel="tag"># 游戏自动化</a>
+          
+            <a href="/tags/UE4/" rel="tag"># UE4</a>
           
             <a href="/tags/GAutomator/" rel="tag"># GAutomator</a>
           
@@ -706,7 +711,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【测试人生】GAutomator安卓UE4版本的实现机理与优化实战","description":"在2年以前的一篇文章中，讲述了游戏UI自动化方案GAutomator的基础机理、使用方式和一些工具扩展的想法。今天，趁着Game Of AutoTest系列的连载，结合游戏自动化技术选型一文，笔者将深入剖析GAutomator作为UE4安卓游戏UI自动化方案的实现机理，以及自己在实际工作中对GAutomator的优化实践。 工作原理GAutomator是这样的调用链路：","datePublished":"2022-09-12T09:34:58.000Z","dateModified":"2024-04-07T02:48:06.928Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2022/09/12/testlife/gautomator_ue4_android/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"UE4, 自动化测试, 游戏自动化, GAutomator, UI自动化"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【测试人生】GAutomator安卓UE4版本的实现机理与优化实战","description":"在2年以前的一篇文章中，讲述了游戏UI自动化方案GAutomator的基础机理、使用方式和一些工具扩展的想法。今天，趁着Game Of AutoTest系列的连载，结合游戏自动化技术选型一文，笔者将深入剖析GAutomator作为UE4安卓游戏UI自动化方案的实现机理，以及自己在实际工作中对GAutomator的优化实践。 工作原理GAutomator是这样的调用链路：","datePublished":"2022-09-12T09:34:58.000Z","dateModified":"2024-04-07T02:48:06.928Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2022/09/12/testlife/gautomator_ue4_android/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"自动化测试, 游戏自动化, UE4, GAutomator, UI自动化"}</script>
   
   
 
@@ -1695,13 +1700,6 @@
             </nav>
           
 
-          
-            <div class="feed-link motion-element">
-              <a href="/atom.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
           
 
           

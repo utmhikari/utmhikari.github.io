@@ -101,7 +101,14 @@
 
 
 
-  <meta name="description" content="除了通过引用计数直接销毁对象之外，python还是拥有内在GC机制的，并且也有完整的一套流程。 如果只有通过引用计数销毁对象这种机制，那么随便构造一个循环引用就会造成内存泄漏，比如下面的代码： 123456789101112131415161718def _dump_gc():    gcobjs = gc.get_objects()    pprint.pprint(len(gcobjs))de">
+  
+<link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/700.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/600.css">
+
+<meta name="description" content="除了通过引用计数直接销毁对象之外，python还是拥有内在GC机制的，并且也有完整的一套流程。 如果只有通过引用计数销毁对象这种机制，那么随便构造一个循环引用就会造成内存泄漏，比如下面的代码： 123456789101112131415161718def _dump_gc():    gcobjs = gc.get_objects()    pprint.pprint(len(gcobjs))de">
 <meta name="keywords" content="python,gc,分代回收,循环引用,垃圾回收">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【Hard Python】【第三章-GC】2、python的GC流程">
@@ -115,8 +122,6 @@
 <meta name="twitter:description" content="除了通过引用计数直接销毁对象之外，python还是拥有内在GC机制的，并且也有完整的一套流程。 如果只有通过引用计数销毁对象这种机制，那么随便构造一个循环引用就会造成内存泄漏，比如下面的代码： 123456789101112131415161718def _dump_gc():    gcobjs = gc.get_objects()    pprint.pprint(len(gcobjs))de">
 
 
-
-  <link rel="alternate" href="/atom.xml" title="HiKariのTechLab" type="application/atom+xml">
 
 
 
@@ -1631,13 +1636,6 @@
             </nav>
           
 
-          
-            <div class="feed-link motion-element">
-              <a href="/atom.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
           
 
           

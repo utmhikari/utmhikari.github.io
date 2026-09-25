@@ -101,8 +101,15 @@
 
 
 
-  <meta name="description" content="近日笔者发现自己Macbook-Pro播放B站视频，全屏的时候必然卡顿，退出全屏就没事。笔者电脑的参数是：  芯片：M3 系统：Tahoe 26.4 浏览器：Edge  到网上一查发现《Edge浏览器在MacOS 26(Tahoe)系统上看B站卡顿》一篇文章，实测下来确实如此，拔掉电源就没事，插上电源必然卡成PPT，并且视频还比拔掉电源亮一些。 至此怀疑是Edge浏览器某些设置的问题，经过一番探索">
-<meta name="keywords" content="前端开发,性能测试,问题排查,bilibili,debug">
+  
+<link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/700.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/600.css">
+
+<meta name="description" content="近日笔者发现自己Macbook-Pro播放B站视频，全屏的时候必然卡顿，退出全屏就没事。笔者电脑的参数是：  芯片：M3 系统：Tahoe 26.4 浏览器：Edge  到网上一查发现《Edge浏览器在MacOS 26(Tahoe)系统上看B站卡顿》一篇文章，实测下来确实如此，拔掉电源就没事，插上电源必然卡成PPT，并且视频还比拔掉电源亮一些。 至此怀疑是Edge浏览器某些设置的问题，经过一番探索">
+<meta name="keywords" content="前端开发,问题排查,bilibili,性能测试,debug">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【DIY小记】解决MacOS上Edge浏览器bilibili全屏卡顿的问题">
 <meta property="og:url" content="https://utmhikari.top/2026/04/02/diymemo/edge_bilibili_ppt/index.html">
@@ -115,8 +122,6 @@
 <meta name="twitter:description" content="近日笔者发现自己Macbook-Pro播放B站视频，全屏的时候必然卡顿，退出全屏就没事。笔者电脑的参数是：  芯片：M3 系统：Tahoe 26.4 浏览器：Edge  到网上一查发现《Edge浏览器在MacOS 26(Tahoe)系统上看B站卡顿》一篇文章，实测下来确实如此，拔掉电源就没事，插上电源必然卡成PPT，并且视频还比拔掉电源亮一些。 至此怀疑是Edge浏览器某些设置的问题，经过一番探索">
 
 
-
-  <link rel="alternate" href="/atom.xml" title="HiKariのTechLab" type="application/atom+xml">
 
 
 
@@ -572,11 +577,11 @@
           
             <a href="/tags/前端开发/" rel="tag"># 前端开发</a>
           
-            <a href="/tags/性能测试/" rel="tag"># 性能测试</a>
-          
             <a href="/tags/问题排查/" rel="tag"># 问题排查</a>
           
             <a href="/tags/bilibili/" rel="tag"># bilibili</a>
+          
+            <a href="/tags/性能测试/" rel="tag"># 性能测试</a>
           
             <a href="/tags/debug/" rel="tag"># debug</a>
           
@@ -625,7 +630,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【DIY小记】解决MacOS上Edge浏览器bilibili全屏卡顿的问题","description":"近日笔者发现自己Macbook-Pro播放B站视频，全屏的时候必然卡顿，退出全屏就没事。笔者电脑的参数是： 芯片：M3 系统：Tahoe 26.4 浏览器：Edge 到网上一查发现《Edge浏览器在MacOS 26(Tahoe)系统上看B站卡顿》一篇文章，实测下来确实如此，拔掉电源就没事，插上电源必然卡成PPT，并且视频还比拔掉电源亮一些。 至此怀疑是Edge浏览器某些设置的问题，经过一番探索，发","datePublished":"2026-04-01T16:19:29.000Z","dateModified":"2026-06-06T10:19:46.730Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2026/04/02/diymemo/edge_bilibili_ppt/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"前端开发, 性能测试, 问题排查, bilibili, debug"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【DIY小记】解决MacOS上Edge浏览器bilibili全屏卡顿的问题","description":"近日笔者发现自己Macbook-Pro播放B站视频，全屏的时候必然卡顿，退出全屏就没事。笔者电脑的参数是： 芯片：M3 系统：Tahoe 26.4 浏览器：Edge 到网上一查发现《Edge浏览器在MacOS 26(Tahoe)系统上看B站卡顿》一篇文章，实测下来确实如此，拔掉电源就没事，插上电源必然卡成PPT，并且视频还比拔掉电源亮一些。 至此怀疑是Edge浏览器某些设置的问题，经过一番探索，发","datePublished":"2026-04-01T16:19:29.000Z","dateModified":"2026-06-06T10:19:46.730Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2026/04/02/diymemo/edge_bilibili_ppt/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"前端开发, 问题排查, bilibili, 性能测试, debug"}</script>
   
   
 
@@ -1605,13 +1610,6 @@
             </nav>
           
 
-          
-            <div class="feed-link motion-element">
-              <a href="/atom.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
           
 
           

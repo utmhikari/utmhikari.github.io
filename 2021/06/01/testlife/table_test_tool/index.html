@@ -101,8 +101,15 @@
 
 
 
-  <meta name="description" content="在先前的《游戏策划表格检查工具的一种设计》一文中，笔者分享了在一般游戏测试业务背景下设计策划表格检查工具的一种方式。本文基于先前文章的内容，将原先的表格检查工具升级为表格测试工具，涵盖更多的内容，并对其中部分技术实现进行分享。 测试工具架构设计整个测试工具分为两个部分：  仓库管理服务：负责管理多个策划表格的svn/git仓库，并涵盖导入表格数据的功能 表格测试服务：负责接收用户的测试请求，向仓库">
-<meta name="keywords" content="表格检查,工具开发,游戏测试,测试开发,系统设计">
+  
+<link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/700.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/600.css">
+
+<meta name="description" content="在先前的《游戏策划表格检查工具的一种设计》一文中，笔者分享了在一般游戏测试业务背景下设计策划表格检查工具的一种方式。本文基于先前文章的内容，将原先的表格检查工具升级为表格测试工具，涵盖更多的内容，并对其中部分技术实现进行分享。 测试工具架构设计整个测试工具分为两个部分：  仓库管理服务：负责管理多个策划表格的svn/git仓库，并涵盖导入表格数据的功能 表格测试服务：负责接收用户的测试请求，向仓库">
+<meta name="keywords" content="系统设计,测试开发,表格检查,工具开发,游戏测试">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【测试人生】游戏策划表格测试工具的技术实现">
 <meta property="og:url" content="https://utmhikari.top/2021/06/01/testlife/table_test_tool/index.html">
@@ -117,8 +124,6 @@
 <meta name="twitter:image" content="https://utmhikari.top/uploads/testlife/table_test_tool/table_test_tool.png">
 
 
-
-  <link rel="alternate" href="/atom.xml" title="HiKariのTechLab" type="application/atom+xml">
 
 
 
@@ -627,15 +632,15 @@
       
         <div class="post-tags">
           
+            <a href="/tags/系统设计/" rel="tag"># 系统设计</a>
+          
+            <a href="/tags/测试开发/" rel="tag"># 测试开发</a>
+          
             <a href="/tags/表格检查/" rel="tag"># 表格检查</a>
           
             <a href="/tags/工具开发/" rel="tag"># 工具开发</a>
           
             <a href="/tags/游戏测试/" rel="tag"># 游戏测试</a>
-          
-            <a href="/tags/测试开发/" rel="tag"># 测试开发</a>
-          
-            <a href="/tags/系统设计/" rel="tag"># 系统设计</a>
           
         </div>
       
@@ -682,7 +687,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【测试人生】游戏策划表格测试工具的技术实现","description":"在先前的《游戏策划表格检查工具的一种设计》一文中，笔者分享了在一般游戏测试业务背景下设计策划表格检查工具的一种方式。本文基于先前文章的内容，将原先的表格检查工具升级为表格测试工具，涵盖更多的内容，并对其中部分技术实现进行分享。 测试工具架构设计整个测试工具分为两个部分： 仓库管理服务：负责管理多个策划表格的svn/git仓库，并涵盖导入表格数据的功能 表格测试服务：负责接收用户的测试请求，向仓库管","datePublished":"2021-06-01T15:40:57.000Z","dateModified":"2024-04-07T02:48:06.929Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2021/06/01/testlife/table_test_tool/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"表格检查, 工具开发, 游戏测试, 测试开发, 系统设计"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【测试人生】游戏策划表格测试工具的技术实现","description":"在先前的《游戏策划表格检查工具的一种设计》一文中，笔者分享了在一般游戏测试业务背景下设计策划表格检查工具的一种方式。本文基于先前文章的内容，将原先的表格检查工具升级为表格测试工具，涵盖更多的内容，并对其中部分技术实现进行分享。 测试工具架构设计整个测试工具分为两个部分： 仓库管理服务：负责管理多个策划表格的svn/git仓库，并涵盖导入表格数据的功能 表格测试服务：负责接收用户的测试请求，向仓库管","datePublished":"2021-06-01T15:40:57.000Z","dateModified":"2024-04-07T02:48:06.929Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2021/06/01/testlife/table_test_tool/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"系统设计, 测试开发, 表格检查, 工具开发, 游戏测试"}</script>
   
   
 
@@ -1671,13 +1676,6 @@
             </nav>
           
 
-          
-            <div class="feed-link motion-element">
-              <a href="/atom.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
           
 
           

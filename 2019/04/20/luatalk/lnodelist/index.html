@@ -101,8 +101,15 @@
 
 
 
-  <meta name="description" content="前言最近一直在探索Lua的C API编程部分，上次实现了一个函数执行时间统计库：lfunctimer，这次就果断写了一个lnodelist来玩玩。在这期间，遇到了许多纠结的问题，因此果断做下分享~ 测试用例现在贼少= =想要试用的同学可以走lnodelist的Github传送门，或者luarocks install lnodelist，就可以开始干起~ 在Lua里，table充当着array以及h">
-<meta name="keywords" content="Lua,C API,lnodelist,双向链表,array">
+  
+<link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/700.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/600.css">
+
+<meta name="description" content="前言最近一直在探索Lua的C API编程部分，上次实现了一个函数执行时间统计库：lfunctimer，这次就果断写了一个lnodelist来玩玩。在这期间，遇到了许多纠结的问题，因此果断做下分享~ 测试用例现在贼少= =想要试用的同学可以走lnodelist的Github传送门，或者luarocks install lnodelist，就可以开始干起~ 在Lua里，table充当着array以及h">
+<meta name="keywords" content="array,Lua,C API,lnodelist,双向链表">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【Lua杂谈】探索C API，开坑lnodelist">
 <meta property="og:url" content="https://utmhikari.top/2019/04/20/luatalk/lnodelist/index.html">
@@ -115,8 +122,6 @@
 <meta name="twitter:description" content="前言最近一直在探索Lua的C API编程部分，上次实现了一个函数执行时间统计库：lfunctimer，这次就果断写了一个lnodelist来玩玩。在这期间，遇到了许多纠结的问题，因此果断做下分享~ 测试用例现在贼少= =想要试用的同学可以走lnodelist的Github传送门，或者luarocks install lnodelist，就可以开始干起~ 在Lua里，table充当着array以及h">
 
 
-
-  <link rel="alternate" href="/atom.xml" title="HiKariのTechLab" type="application/atom+xml">
 
 
 
@@ -595,6 +600,8 @@
       
         <div class="post-tags">
           
+            <a href="/tags/array/" rel="tag"># array</a>
+          
             <a href="/tags/Lua/" rel="tag"># Lua</a>
           
             <a href="/tags/C-API/" rel="tag"># C API</a>
@@ -602,8 +609,6 @@
             <a href="/tags/lnodelist/" rel="tag"># lnodelist</a>
           
             <a href="/tags/双向链表/" rel="tag"># 双向链表</a>
-          
-            <a href="/tags/array/" rel="tag"># array</a>
           
         </div>
       
@@ -650,7 +655,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Lua杂谈】探索C API，开坑lnodelist","description":"前言最近一直在探索Lua的C API编程部分，上次实现了一个函数执行时间统计库：lfunctimer，这次就果断写了一个lnodelist来玩玩。在这期间，遇到了许多纠结的问题，因此果断做下分享~ 测试用例现在贼少= =想要试用的同学可以走lnodelist的Github传送门，或者luarocks install lnodelist，就可以开始干起~ 在Lua里，table充当着array以及h","datePublished":"2019-04-20T12:42:51.000Z","dateModified":"2024-04-07T02:48:06.925Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2019/04/20/luatalk/lnodelist/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"Lua, C API, lnodelist, 双向链表, array"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Lua杂谈】探索C API，开坑lnodelist","description":"前言最近一直在探索Lua的C API编程部分，上次实现了一个函数执行时间统计库：lfunctimer，这次就果断写了一个lnodelist来玩玩。在这期间，遇到了许多纠结的问题，因此果断做下分享~ 测试用例现在贼少= =想要试用的同学可以走lnodelist的Github传送门，或者luarocks install lnodelist，就可以开始干起~ 在Lua里，table充当着array以及h","datePublished":"2019-04-20T12:42:51.000Z","dateModified":"2024-04-07T02:48:06.925Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2019/04/20/luatalk/lnodelist/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"array, Lua, C API, lnodelist, 双向链表"}</script>
   
   
 
@@ -1639,13 +1644,6 @@
             </nav>
           
 
-          
-            <div class="feed-link motion-element">
-              <a href="/atom.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
           
 
           

@@ -101,8 +101,15 @@
 
 
 
-  <meta name="description" content="python3中增加的重要特性之一即为asyncio，其提供了异步编程的原语支持，从而能够让python在事件驱动、协程协同等方面的编程场景大杀四方。 事件循环EventLoop是异步编程中的核心概念之一。python的异步IO，就从事件循环的实现开始讲起。 首先看一段示例代码： 123456789async def _test_run_main():    for i in range(3):">
-<meta name="keywords" content="python,事件循环,asyncio,proactor,iocp">
+  
+<link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/700.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/600.css">
+
+<meta name="description" content="python3中增加的重要特性之一即为asyncio，其提供了异步编程的原语支持，从而能够让python在事件驱动、协程协同等方面的编程场景大杀四方。 事件循环EventLoop是异步编程中的核心概念之一。python的异步IO，就从事件循环的实现开始讲起。 首先看一段示例代码： 123456789async def _test_run_main():    for i in range(3):">
+<meta name="keywords" content="事件循环,python,asyncio,proactor,iocp">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【Hard Python】【第二章-异步IO】1、asyncio事件循环的创建">
 <meta property="og:url" content="https://utmhikari.top/2022/02/12/hardpython/2_asyncio_1/index.html">
@@ -115,8 +122,6 @@
 <meta name="twitter:description" content="python3中增加的重要特性之一即为asyncio，其提供了异步编程的原语支持，从而能够让python在事件驱动、协程协同等方面的编程场景大杀四方。 事件循环EventLoop是异步编程中的核心概念之一。python的异步IO，就从事件循环的实现开始讲起。 首先看一段示例代码： 123456789async def _test_run_main():    for i in range(3):">
 
 
-
-  <link rel="alternate" href="/atom.xml" title="HiKariのTechLab" type="application/atom+xml">
 
 
 
@@ -594,9 +599,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/python/" rel="tag"># python</a>
-          
             <a href="/tags/事件循环/" rel="tag"># 事件循环</a>
+          
+            <a href="/tags/python/" rel="tag"># python</a>
           
             <a href="/tags/asyncio/" rel="tag"># asyncio</a>
           
@@ -649,7 +654,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Hard Python】【第二章-异步IO】1、asyncio事件循环的创建","description":"python3中增加的重要特性之一即为asyncio，其提供了异步编程的原语支持，从而能够让python在事件驱动、协程协同等方面的编程场景大杀四方。 事件循环EventLoop是异步编程中的核心概念之一。python的异步IO，就从事件循环的实现开始讲起。 首先看一段示例代码： 123456789async def _test_run_main(): for i in range(3): awa","datePublished":"2022-02-12T12:24:45.000Z","dateModified":"2024-04-07T02:48:06.923Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2022/02/12/hardpython/2_asyncio_1/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"python, 事件循环, asyncio, proactor, iocp"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Hard Python】【第二章-异步IO】1、asyncio事件循环的创建","description":"python3中增加的重要特性之一即为asyncio，其提供了异步编程的原语支持，从而能够让python在事件驱动、协程协同等方面的编程场景大杀四方。 事件循环EventLoop是异步编程中的核心概念之一。python的异步IO，就从事件循环的实现开始讲起。 首先看一段示例代码： 123456789async def _test_run_main(): for i in range(3): awa","datePublished":"2022-02-12T12:24:45.000Z","dateModified":"2024-04-07T02:48:06.923Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2022/02/12/hardpython/2_asyncio_1/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"事件循环, python, asyncio, proactor, iocp"}</script>
   
   
 
@@ -1629,13 +1634,6 @@
             </nav>
           
 
-          
-            <div class="feed-link motion-element">
-              <a href="/atom.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
           
 
           

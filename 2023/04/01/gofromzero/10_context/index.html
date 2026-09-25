@@ -101,7 +101,14 @@
 
 
 
-  <meta name="description" content="在Golang的各种用法当中，context可谓是最能够体现Golang语言特性的模块之一。context的本意为情境、上下文，而在Golang程序当中，则可以被用于描述一次调用、会话或者任务的状态信息。关于context网上有很多语法以及源码分析的文档，但是里面很多却不能从实战场景体现context的作用，导致这个概念难以理解。因此这一回，经由踩坑context后，笔者将结合自己的理解，给大家讲">
+  
+<link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/700.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/600.css">
+
+<meta name="description" content="在Golang的各种用法当中，context可谓是最能够体现Golang语言特性的模块之一。context的本意为情境、上下文，而在Golang程序当中，则可以被用于描述一次调用、会话或者任务的状态信息。关于context网上有很多语法以及源码分析的文档，但是里面很多却不能从实战场景体现context的作用，导致这个概念难以理解。因此这一回，经由踩坑context后，笔者将结合自己的理解，给大家讲">
 <meta name="keywords" content="Golang,context,WithCancel,WithDeadline,WithValue">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【从零单排Golang】第十话：快速理解并上手context的基础用法">
@@ -115,8 +122,6 @@
 <meta name="twitter:description" content="在Golang的各种用法当中，context可谓是最能够体现Golang语言特性的模块之一。context的本意为情境、上下文，而在Golang程序当中，则可以被用于描述一次调用、会话或者任务的状态信息。关于context网上有很多语法以及源码分析的文档，但是里面很多却不能从实战场景体现context的作用，导致这个概念难以理解。因此这一回，经由踩坑context后，笔者将结合自己的理解，给大家讲">
 
 
-
-  <link rel="alternate" href="/atom.xml" title="HiKariのTechLab" type="application/atom+xml">
 
 
 
@@ -1663,13 +1668,6 @@
             </nav>
           
 
-          
-            <div class="feed-link motion-element">
-              <a href="/atom.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
           
 
           

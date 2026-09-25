@@ -101,8 +101,15 @@
 
 
 
-  <meta name="description" content="最近一段时间闲来无事，简单研究了一下pyside6，也就是PyQt5的升级版。做这个的目的，也是回顾下桌面开发的基础，兴许未来可能用得上。虽然在日常工作中，可能用到桌面开发的场景比较少，桌面工具的成果也比较难包装，但有一个这样的工具，确实可以解决许多工作效率方面的问题。 在之前笔者也写过几篇pyside6文章，但不是特别系统，比如说：  pyside6安装 pyside6绘制时钟  因此，今天这篇">
-<meta name="keywords" content="python,教程,工具开发,pyside6,requests">
+  
+<link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/700.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/600.css">
+
+<meta name="description" content="最近一段时间闲来无事，简单研究了一下pyside6，也就是PyQt5的升级版。做这个的目的，也是回顾下桌面开发的基础，兴许未来可能用得上。虽然在日常工作中，可能用到桌面开发的场景比较少，桌面工具的成果也比较难包装，但有一个这样的工具，确实可以解决许多工作效率方面的问题。 在之前笔者也写过几篇pyside6文章，但不是特别系统，比如说：  pyside6安装 pyside6绘制时钟  因此，今天这篇">
+<meta name="keywords" content="python,工具开发,pyside6,教程,requests">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【Python随笔】如何用pyside6开发并部署简单的postman工具">
 <meta property="og:url" content="https://utmhikari.top/2024/12/21/pythonnotes/pyside6_simple_app/index.html">
@@ -115,8 +122,6 @@
 <meta name="twitter:description" content="最近一段时间闲来无事，简单研究了一下pyside6，也就是PyQt5的升级版。做这个的目的，也是回顾下桌面开发的基础，兴许未来可能用得上。虽然在日常工作中，可能用到桌面开发的场景比较少，桌面工具的成果也比较难包装，但有一个这样的工具，确实可以解决许多工作效率方面的问题。 在之前笔者也写过几篇pyside6文章，但不是特别系统，比如说：  pyside6安装 pyside6绘制时钟  因此，今天这篇">
 
 
-
-  <link rel="alternate" href="/atom.xml" title="HiKariのTechLab" type="application/atom+xml">
 
 
 
@@ -600,11 +605,11 @@
           
             <a href="/tags/python/" rel="tag"># python</a>
           
-            <a href="/tags/教程/" rel="tag"># 教程</a>
-          
             <a href="/tags/工具开发/" rel="tag"># 工具开发</a>
           
             <a href="/tags/pyside6/" rel="tag"># pyside6</a>
+          
+            <a href="/tags/教程/" rel="tag"># 教程</a>
           
             <a href="/tags/requests/" rel="tag"># requests</a>
           
@@ -653,7 +658,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Python随笔】如何用pyside6开发并部署简单的postman工具","description":"最近一段时间闲来无事，简单研究了一下pyside6，也就是PyQt5的升级版。做这个的目的，也是回顾下桌面开发的基础，兴许未来可能用得上。虽然在日常工作中，可能用到桌面开发的场景比较少，桌面工具的成果也比较难包装，但有一个这样的工具，确实可以解决许多工作效率方面的问题。 在之前笔者也写过几篇pyside6文章，但不是特别系统，比如说： pyside6安装 pyside6绘制时钟 因此，今天这篇文章","datePublished":"2024-12-21T11:42:13.000Z","dateModified":"2024-12-21T11:42:15.392Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2024/12/21/pythonnotes/pyside6_simple_app/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"python, 教程, 工具开发, pyside6, requests"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Python随笔】如何用pyside6开发并部署简单的postman工具","description":"最近一段时间闲来无事，简单研究了一下pyside6，也就是PyQt5的升级版。做这个的目的，也是回顾下桌面开发的基础，兴许未来可能用得上。虽然在日常工作中，可能用到桌面开发的场景比较少，桌面工具的成果也比较难包装，但有一个这样的工具，确实可以解决许多工作效率方面的问题。 在之前笔者也写过几篇pyside6文章，但不是特别系统，比如说： pyside6安装 pyside6绘制时钟 因此，今天这篇文章","datePublished":"2024-12-21T11:42:13.000Z","dateModified":"2024-12-21T11:42:15.392Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2024/12/21/pythonnotes/pyside6_simple_app/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"python, 工具开发, pyside6, 教程, requests"}</script>
   
   
 
@@ -1642,13 +1647,6 @@
             </nav>
           
 
-          
-            <div class="feed-link motion-element">
-              <a href="/atom.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
           
 
           

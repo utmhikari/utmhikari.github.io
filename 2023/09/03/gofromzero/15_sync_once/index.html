@@ -101,8 +101,15 @@
 
 
 
-  <meta name="description" content="在使用Golang做后端开发的工程中，我们通常需要声明一些一些配置类或服务单例等在业务逻辑层面较为底层的实例。为了节省内存或是冷启动开销，我们通常采用lazy-load懒加载的方式去初始化这些实例。初始化单例这个行为是一个非常经典的并发处理的案例，比如在java当中，我们可能用到建立双重锁+volatile的方式保证初始化逻辑只被访问一次，并且所有线程最终都可以读取到初始化完成的实例产物。这段经典">
-<meta name="keywords" content="后端开发,并发,Golang,Once,Java">
+  
+<link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/700.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/600.css">
+
+<meta name="description" content="在使用Golang做后端开发的工程中，我们通常需要声明一些一些配置类或服务单例等在业务逻辑层面较为底层的实例。为了节省内存或是冷启动开销，我们通常采用lazy-load懒加载的方式去初始化这些实例。初始化单例这个行为是一个非常经典的并发处理的案例，比如在java当中，我们可能用到建立双重锁+volatile的方式保证初始化逻辑只被访问一次，并且所有线程最终都可以读取到初始化完成的实例产物。这段经典">
+<meta name="keywords" content="后端开发,Golang,并发,Once,Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【从零单排Golang】第十五话：用sync.Once实现懒加载的用法和坑点">
 <meta property="og:url" content="https://utmhikari.top/2023/09/03/gofromzero/15_sync_once/index.html">
@@ -115,8 +122,6 @@
 <meta name="twitter:description" content="在使用Golang做后端开发的工程中，我们通常需要声明一些一些配置类或服务单例等在业务逻辑层面较为底层的实例。为了节省内存或是冷启动开销，我们通常采用lazy-load懒加载的方式去初始化这些实例。初始化单例这个行为是一个非常经典的并发处理的案例，比如在java当中，我们可能用到建立双重锁+volatile的方式保证初始化逻辑只被访问一次，并且所有线程最终都可以读取到初始化完成的实例产物。这段经典">
 
 
-
-  <link rel="alternate" href="/atom.xml" title="HiKariのTechLab" type="application/atom+xml">
 
 
 
@@ -579,9 +584,9 @@
           
             <a href="/tags/后端开发/" rel="tag"># 后端开发</a>
           
-            <a href="/tags/并发/" rel="tag"># 并发</a>
-          
             <a href="/tags/Golang/" rel="tag"># Golang</a>
+          
+            <a href="/tags/并发/" rel="tag"># 并发</a>
           
             <a href="/tags/Once/" rel="tag"># Once</a>
           
@@ -632,7 +637,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【从零单排Golang】第十五话：用sync.Once实现懒加载的用法和坑点","description":"在使用Golang做后端开发的工程中，我们通常需要声明一些一些配置类或服务单例等在业务逻辑层面较为底层的实例。为了节省内存或是冷启动开销，我们通常采用lazy-load懒加载的方式去初始化这些实例。初始化单例这个行为是一个非常经典的并发处理的案例，比如在java当中，我们可能用到建立双重锁+volatile的方式保证初始化逻辑只被访问一次，并且所有线程最终都可以读取到初始化完成的实例产物。这段经典","datePublished":"2023-09-02T17:22:03.000Z","dateModified":"2025-04-12T15:45:38.686Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2023/09/03/gofromzero/15_sync_once/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"后端开发, 并发, Golang, Once, Java"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【从零单排Golang】第十五话：用sync.Once实现懒加载的用法和坑点","description":"在使用Golang做后端开发的工程中，我们通常需要声明一些一些配置类或服务单例等在业务逻辑层面较为底层的实例。为了节省内存或是冷启动开销，我们通常采用lazy-load懒加载的方式去初始化这些实例。初始化单例这个行为是一个非常经典的并发处理的案例，比如在java当中，我们可能用到建立双重锁+volatile的方式保证初始化逻辑只被访问一次，并且所有线程最终都可以读取到初始化完成的实例产物。这段经典","datePublished":"2023-09-02T17:22:03.000Z","dateModified":"2025-04-12T15:45:38.686Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2023/09/03/gofromzero/15_sync_once/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"后端开发, Golang, 并发, Once, Java"}</script>
   
   
 
@@ -1612,13 +1617,6 @@
             </nav>
           
 
-          
-            <div class="feed-link motion-element">
-              <a href="/atom.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
           
 
           

@@ -101,8 +101,15 @@
 
 
 
-  <meta name="description" content="截至2021.9，不知道哪天更新了vscode，发现默认的终端从以前的git-bash变成了powershell，笔者用的windows电脑，于是乎要解决这个问题，把powershell变回git-bash。 打开settings，发现以前的terminal.integrated.shell.windows设置已经失效，不能再用。在settings的图形界面查看shell设置，默认的选项变成了Po">
-<meta name="keywords" content="git,shell,VSCode,VSCode设置,git-bash">
+  
+<link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/700.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/400.css">
+<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/600.css">
+
+<meta name="description" content="截至2021.9，不知道哪天更新了vscode，发现默认的终端从以前的git-bash变成了powershell，笔者用的windows电脑，于是乎要解决这个问题，把powershell变回git-bash。 打开settings，发现以前的terminal.integrated.shell.windows设置已经失效，不能再用。在settings的图形界面查看shell设置，默认的选项变成了Po">
+<meta name="keywords" content="git,VSCode,shell,VSCode设置,git-bash">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【极客日常】2021新版本VSCode设置git-bash为终端的方法">
 <meta property="og:url" content="https://utmhikari.top/2021/09/11/geekdaily/vscode_git-bash/index.html">
@@ -115,8 +122,6 @@
 <meta name="twitter:description" content="截至2021.9，不知道哪天更新了vscode，发现默认的终端从以前的git-bash变成了powershell，笔者用的windows电脑，于是乎要解决这个问题，把powershell变回git-bash。 打开settings，发现以前的terminal.integrated.shell.windows设置已经失效，不能再用。在settings的图形界面查看shell设置，默认的选项变成了Po">
 
 
-
-  <link rel="alternate" href="/atom.xml" title="HiKariのTechLab" type="application/atom+xml">
 
 
 
@@ -568,9 +573,9 @@
           
             <a href="/tags/git/" rel="tag"># git</a>
           
-            <a href="/tags/shell/" rel="tag"># shell</a>
-          
             <a href="/tags/VSCode/" rel="tag"># VSCode</a>
+          
+            <a href="/tags/shell/" rel="tag"># shell</a>
           
             <a href="/tags/VSCode设置/" rel="tag"># VSCode设置</a>
           
@@ -621,7 +626,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【极客日常】2021新版本VSCode设置git-bash为终端的方法","description":"截至2021.9，不知道哪天更新了vscode，发现默认的终端从以前的git-bash变成了powershell，笔者用的windows电脑，于是乎要解决这个问题，把powershell变回git-bash。 打开settings，发现以前的terminal.integrated.shell.windows设置已经失效，不能再用。在settings的图形界面查看shell设置，默认的选项变成了Po","datePublished":"2021-09-11T03:50:22.000Z","dateModified":"2024-04-07T02:48:06.920Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2021/09/11/geekdaily/vscode_git-bash/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"git, shell, VSCode, VSCode设置, git-bash"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【极客日常】2021新版本VSCode设置git-bash为终端的方法","description":"截至2021.9，不知道哪天更新了vscode，发现默认的终端从以前的git-bash变成了powershell，笔者用的windows电脑，于是乎要解决这个问题，把powershell变回git-bash。 打开settings，发现以前的terminal.integrated.shell.windows设置已经失效，不能再用。在settings的图形界面查看shell设置，默认的选项变成了Po","datePublished":"2021-09-11T03:50:22.000Z","dateModified":"2024-04-07T02:48:06.920Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2021/09/11/geekdaily/vscode_git-bash/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"git, VSCode, shell, VSCode设置, git-bash"}</script>
   
   
 
@@ -1601,13 +1606,6 @@
             </nav>
           
 
-          
-            <div class="feed-link motion-element">
-              <a href="/atom.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
           
 
           
