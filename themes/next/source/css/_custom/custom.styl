@@ -369,16 +369,16 @@ hr {
   }
 }
 
-// 14. 字体栈：全站文案统一衬线，以 CSS 变量 --font-serif 下发。
+// 14. 字体栈：拉丁衬线 + 汉字无衬线，以 CSS 变量 --font-serif 下发。
 //     拉丁回退链：Palatino → Palatino Linotype → Georgia → IBM Plex Serif（webfont）：
 //     Mac 命中 Palatino；Windows 命中系统 Palatino Linotype（ClearType 发浅由 16 节描边补偿）；
-//     Georgia 作无前两者环境的兜底，再落到 Plex Serif webfont。汉字 Noto Serif SC → 宋体系，
-//     最终兜底改造前的苹方/雅黑方案。
+//     Georgia 作无前两者环境的兜底，再落到 Plex Serif webfont。
+//     汉字不挂 webfont，交由系统无衬线：Mac/移动端命中苹方，Windows 命中雅黑。
 //     Windows 专属调整经 head-unique.swig 的 UA 脚本挂 html.os-win 类实现，
 //     后续任何仅针对 Windows 的样式 hack 都可挂在 html.os-win 下。
 //     主题 font.family 机制会给整栈加引号失效，故直接在此定义；
 //     webfont 链接在 head-unique.swig；字重保持主题默认（大标题 400、章节标题 600）
-$serif-stack = Palatino, "Palatino Linotype", Georgia, "IBM Plex Serif", "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", SimSun, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", serif
+$serif-stack = Palatino, "Palatino Linotype", Georgia, "IBM Plex Serif", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif
 
 :root { --font-serif: $serif-stack; }
 
@@ -397,9 +397,9 @@ h1, h2, h3, h4, h5, h6,
   font-family: inherit;
 }
 
-// 行内 code：拉丁/数字走 Plex Mono，汉字回退正文衬线（与周围文案同族，不再落回旧无衬线）
+// 行内 code：拉丁/数字走 Plex Mono，汉字回退系统无衬线（与周围正文同族）
 code {
-  font-family: "IBM Plex Mono", "SF Mono", Menlo, Consolas, "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", SimSun, "PingFang SC", "Microsoft YaHei", serif;
+  font-family: "IBM Plex Mono", "SF Mono", Menlo, Consolas, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
 }
 
 // 代码块与 kbd 保持纯等宽链（注释里的汉字落苹方/雅黑，代码场景惯例）
