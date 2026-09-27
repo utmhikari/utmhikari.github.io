@@ -264,7 +264,7 @@ h1, h2, h3, h4, h5, h6 {
   #no-result { color: $grey-dark; }
 }
 
-// 16. Windows 专属渲染补偿：Georgia 虽壮实但 ClearType 下仍略浅，
+// 16. Windows 专属渲染补偿：Palatino Linotype 字干偏细、ClearType 下发浅，
 //     用同色发丝描边模拟「加粗一丢丢」（0.2px 亚像素描边，只增视觉重量不换字体）。
 //     描边可继承，仅豁免「真粗体」元素：正文内章节标题（600→命中 700 真粗体）、
 //     归档年份标题、代码块/行内码；卡片与文章大标题（.post-title，400 字重，
@@ -370,16 +370,15 @@ hr {
 }
 
 // 14. 字体栈：全站文案统一衬线，以 CSS 变量 --font-serif 下发。
-//     拉丁回退链精简为 Palatino → Georgia → IBM Plex Serif（webfont）：
-//     Mac 命中 Palatino；Windows 无名为 Palatino 的字体，直接命中系统 Georgia
-//     （笔画壮实，不再经过 Palatino Linotype/Book Antiqua 等中间候选）；
-//     Linux 等无前两者时落到 Plex Serif webfont。汉字 Noto Serif SC → 宋体系，
+//     拉丁回退链：Palatino → Palatino Linotype → Georgia → IBM Plex Serif（webfont）：
+//     Mac 命中 Palatino；Windows 命中系统 Palatino Linotype（ClearType 发浅由 16 节描边补偿）；
+//     Georgia 作无前两者环境的兜底，再落到 Plex Serif webfont。汉字 Noto Serif SC → 宋体系，
 //     最终兜底改造前的苹方/雅黑方案。
 //     Windows 专属调整经 head-unique.swig 的 UA 脚本挂 html.os-win 类实现，
 //     后续任何仅针对 Windows 的样式 hack 都可挂在 html.os-win 下。
 //     主题 font.family 机制会给整栈加引号失效，故直接在此定义；
 //     webfont 链接在 head-unique.swig；字重保持主题默认（大标题 400、章节标题 600）
-$serif-stack = Palatino, Georgia, "IBM Plex Serif", "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", SimSun, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", serif
+$serif-stack = Palatino, "Palatino Linotype", Georgia, "IBM Plex Serif", "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", SimSun, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", serif
 
 :root { --font-serif: $serif-stack; }
 
