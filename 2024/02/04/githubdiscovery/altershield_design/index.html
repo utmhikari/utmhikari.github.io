@@ -49,9 +49,7 @@
 
 
 
-  
-
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
 
 <link rel="stylesheet" href="/css/main.css?v=7.0.1">
 
@@ -109,11 +107,10 @@
 </script>
 
 
-<link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-serif@5/400.css">
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-serif@5/600.css">
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/400.css">
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/700.css">
+<link rel="stylesheet" href="/lib/fontsource/ibm-plex-serif/400.css">
+<link rel="stylesheet" href="/lib/fontsource/ibm-plex-serif/600.css">
+<link rel="stylesheet" href="/lib/fontsource/ibm-plex-mono/400.css">
+<link rel="stylesheet" href="/lib/fontsource/ibm-plex-mono/700.css">
 
 <meta name="description" content="技术风险，作为质量保障领域的重要的一环，主要研究如何通过解决方案和技术手段，解决企业内业务在基础运维、日常运营和变更上线过程中的稳定性问题，保证业务风险得到收敛。在国内，蚂蚁金服在这个方向上有沉淀很多方法论和实践经验。变更管控是技术风险地一个子领域，主要的目标是在变更过程中，通过对变更流程的管控介入，提前发现变更过程存在的事故风险，或者阻止变更过程的错误进一步扩大影响面。在这个子领域，蚂蚁开源了A">
 <meta name="keywords" content="SRE,后端开发,变更风险,DevOps,AlterShield">
@@ -512,11 +509,14 @@
           
 
           
+            
+            <span class="busuanzi-post-view">
             <span class="post-meta-divider">|</span>
             <span class="post-meta-item-icon">
             <i class="fa fa-eye"></i>
              阅读次数： 
             <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
             </span>
           
 
@@ -1763,6 +1763,20 @@
     </span>
   
 </div>
+<script>
+  // 不蒜子是第三方服务，脚本被拦或服务超时都会留下空白图标占位。
+  // 超时后若三个计数值一个都没填上，就把块体整体隐藏（post 页浏览数由 .busuanzi-post-view 承接）。
+  setTimeout(function () {
+    var ids = ['busuanzi_value_site_uv', 'busuanzi_value_site_pv', 'busuanzi_value_page_pv'];
+    var filled = ids.some(function (id) {
+      var el = document.getElementById(id);
+      return el && el.textContent.replace(/\s/g, '');
+    });
+    if (filled) return;
+    var nodes = document.querySelectorAll('.busuanzi-count, .busuanzi-post-view');
+    for (var i = 0; i < nodes.length; i++) nodes[i].style.display = 'none';
+  }, 5000);
+</script>
 
 
 
@@ -1826,16 +1840,16 @@
 
 
   
-  <script src="//gcore.jsdelivr.net/npm/jquery@2/dist/jquery.min.js"></script>
+  <script src="/lib/jquery/index.js?v=2.2.4"></script>
 
   
-  <script src="//gcore.jsdelivr.net/npm/jquery-lazyload@1/jquery.lazyload.min.js"></script>
+  <script src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
 
   
-  <script src="//gcore.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.5.2"></script>
 
   
-  <script src="//gcore.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.5.2"></script>
 
 
   
@@ -2216,26 +2230,6 @@
   
 
   
-<script>
-if ($('body').find('pre.mermaid').length) {
-  $.ajax({
-    type: 'GET',
-    url: '//cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js',
-    dataType: 'script',
-    cache: true,
-    success: function() {
-      mermaid.initialize({
-        theme: 'default',
-        logLevel: 3,
-        flowchart: { curve: 'linear' },
-        gantt: { axisFormat: '%m/%d/%Y' },
-        sequence: { actorMargin: 50 }
-      });
-    }
-  });
-}
-</script>
-
 
   
 

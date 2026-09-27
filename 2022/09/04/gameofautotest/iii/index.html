@@ -49,9 +49,7 @@
 
 
 
-  
-
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
 
 <link rel="stylesheet" href="/css/main.css?v=7.0.1">
 
@@ -109,14 +107,13 @@
 </script>
 
 
-<link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-serif@5/400.css">
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-serif@5/600.css">
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/400.css">
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/700.css">
+<link rel="stylesheet" href="/lib/fontsource/ibm-plex-serif/400.css">
+<link rel="stylesheet" href="/lib/fontsource/ibm-plex-serif/600.css">
+<link rel="stylesheet" href="/lib/fontsource/ibm-plex-mono/400.css">
+<link rel="stylesheet" href="/lib/fontsource/ibm-plex-mono/700.css">
 
 <meta name="description" content="自动化在技术层面上，除了基础的技术选型之外，最终还是需要落实到具体的工具框架，才能够助力我们自动化脚本开发的过程。因此，本文将讲述一下如何对游戏自动化测试框架进行设计。 在上一篇文章讲到，自动化测试的方式可以有客户端、服务器、编辑器三种方式，除了编辑器需要强依赖引擎层面的特性之外，其他两种自动化方式在工具或者框架的技术实现上有这么几个特点：  框架模块设计具有共通性，只是最终执行自动化用例/脚本的">
-<meta name="keywords" content="python,自动化测试,自动化框架,BDD,依赖注入">
+<meta name="keywords" content="自动化测试,python,自动化框架,BDD,依赖注入">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【Game Of AutoTest】3、游戏自动化测试的框架设计">
 <meta property="og:url" content="https://utmhikari.top/2022/09/04/gameofautotest/iii/index.html">
@@ -512,11 +509,14 @@
           
 
           
+            
+            <span class="busuanzi-post-view">
             <span class="post-meta-divider">|</span>
             <span class="post-meta-item-icon">
             <i class="fa fa-eye"></i>
              阅读次数： 
             <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
             </span>
           
 
@@ -671,9 +671,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/python/" rel="tag"># python</a>
-          
             <a href="/tags/自动化测试/" rel="tag"># 自动化测试</a>
+          
+            <a href="/tags/python/" rel="tag"># python</a>
           
             <a href="/tags/自动化框架/" rel="tag"># 自动化框架</a>
           
@@ -726,7 +726,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Game Of AutoTest】3、游戏自动化测试的框架设计","description":"自动化在技术层面上，除了基础的技术选型之外，最终还是需要落实到具体的工具框架，才能够助力我们自动化脚本开发的过程。因此，本文将讲述一下如何对游戏自动化测试框架进行设计。 在上一篇文章讲到，自动化测试的方式可以有客户端、服务器、编辑器三种方式，除了编辑器需要强依赖引擎层面的特性之外，其他两种自动化方式在工具或者框架的技术实现上有这么几个特点： 框架模块设计具有共通性，只是最终执行自动化用例/脚本的方","datePublished":"2022-09-04T07:52:17.000Z","dateModified":"2024-04-07T02:48:06.919Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2022/09/04/gameofautotest/iii/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"python, 自动化测试, 自动化框架, BDD, 依赖注入"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Game Of AutoTest】3、游戏自动化测试的框架设计","description":"自动化在技术层面上，除了基础的技术选型之外，最终还是需要落实到具体的工具框架，才能够助力我们自动化脚本开发的过程。因此，本文将讲述一下如何对游戏自动化测试框架进行设计。 在上一篇文章讲到，自动化测试的方式可以有客户端、服务器、编辑器三种方式，除了编辑器需要强依赖引擎层面的特性之外，其他两种自动化方式在工具或者框架的技术实现上有这么几个特点： 框架模块设计具有共通性，只是最终执行自动化用例/脚本的方","datePublished":"2022-09-04T07:52:17.000Z","dateModified":"2024-04-07T02:48:06.919Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2022/09/04/gameofautotest/iii/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"自动化测试, python, 自动化框架, BDD, 依赖注入"}</script>
   
   
 
@@ -1859,6 +1859,20 @@
     </span>
   
 </div>
+<script>
+  // 不蒜子是第三方服务，脚本被拦或服务超时都会留下空白图标占位。
+  // 超时后若三个计数值一个都没填上，就把块体整体隐藏（post 页浏览数由 .busuanzi-post-view 承接）。
+  setTimeout(function () {
+    var ids = ['busuanzi_value_site_uv', 'busuanzi_value_site_pv', 'busuanzi_value_page_pv'];
+    var filled = ids.some(function (id) {
+      var el = document.getElementById(id);
+      return el && el.textContent.replace(/\s/g, '');
+    });
+    if (filled) return;
+    var nodes = document.querySelectorAll('.busuanzi-count, .busuanzi-post-view');
+    for (var i = 0; i < nodes.length; i++) nodes[i].style.display = 'none';
+  }, 5000);
+</script>
 
 
 
@@ -1922,16 +1936,16 @@
 
 
   
-  <script src="//gcore.jsdelivr.net/npm/jquery@2/dist/jquery.min.js"></script>
+  <script src="/lib/jquery/index.js?v=2.2.4"></script>
 
   
-  <script src="//gcore.jsdelivr.net/npm/jquery-lazyload@1/jquery.lazyload.min.js"></script>
+  <script src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
 
   
-  <script src="//gcore.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.5.2"></script>
 
   
-  <script src="//gcore.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.5.2"></script>
 
 
   
@@ -2312,26 +2326,6 @@
   
 
   
-<script>
-if ($('body').find('pre.mermaid').length) {
-  $.ajax({
-    type: 'GET',
-    url: '//cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js',
-    dataType: 'script',
-    cache: true,
-    success: function() {
-      mermaid.initialize({
-        theme: 'default',
-        logLevel: 3,
-        flowchart: { curve: 'linear' },
-        gantt: { axisFormat: '%m/%d/%Y' },
-        sequence: { actorMargin: 50 }
-      });
-    }
-  });
-}
-</script>
-
 
   
 

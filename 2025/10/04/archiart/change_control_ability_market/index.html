@@ -49,9 +49,7 @@
 
 
 
-  
-
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
 
 <link rel="stylesheet" href="/css/main.css?v=7.0.1">
 
@@ -109,11 +107,10 @@
 </script>
 
 
-<link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-serif@5/400.css">
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-serif@5/600.css">
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/400.css">
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/700.css">
+<link rel="stylesheet" href="/lib/fontsource/ibm-plex-serif/400.css">
+<link rel="stylesheet" href="/lib/fontsource/ibm-plex-serif/600.css">
+<link rel="stylesheet" href="/lib/fontsource/ibm-plex-mono/400.css">
+<link rel="stylesheet" href="/lib/fontsource/ibm-plex-mono/700.css">
 
 <meta name="description" content="变更风险防控的能力是多样的，除了最传统的告警检测、Metrics曲线对比以及自动化测试能力之外，像变更影响分析、风险降噪以及线上风险RCA等周边能力也是不可少的。有了更多的上下文信息，才能对变更风险做更好的判断。从中台技术视角来看，不论是传统能力还是一些AI加成的能力，如果没有一套稳固的技术基建让这些能力尽情发挥，那么这些能力将难以快速落地，充分兑现其业务价值。 基于此，笔者在今年工作中，交付了一">
 <meta name="keywords" content="后端开发,架构,变更风险,产品,业务">
@@ -500,11 +497,14 @@
           
 
           
+            
+            <span class="busuanzi-post-view">
             <span class="post-meta-divider">|</span>
             <span class="post-meta-item-icon">
             <i class="fa fa-eye"></i>
              阅读次数： 
             <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
             </span>
           
 
@@ -1731,6 +1731,20 @@
     </span>
   
 </div>
+<script>
+  // 不蒜子是第三方服务，脚本被拦或服务超时都会留下空白图标占位。
+  // 超时后若三个计数值一个都没填上，就把块体整体隐藏（post 页浏览数由 .busuanzi-post-view 承接）。
+  setTimeout(function () {
+    var ids = ['busuanzi_value_site_uv', 'busuanzi_value_site_pv', 'busuanzi_value_page_pv'];
+    var filled = ids.some(function (id) {
+      var el = document.getElementById(id);
+      return el && el.textContent.replace(/\s/g, '');
+    });
+    if (filled) return;
+    var nodes = document.querySelectorAll('.busuanzi-count, .busuanzi-post-view');
+    for (var i = 0; i < nodes.length; i++) nodes[i].style.display = 'none';
+  }, 5000);
+</script>
 
 
 
@@ -1794,16 +1808,16 @@
 
 
   
-  <script src="//gcore.jsdelivr.net/npm/jquery@2/dist/jquery.min.js"></script>
+  <script src="/lib/jquery/index.js?v=2.2.4"></script>
 
   
-  <script src="//gcore.jsdelivr.net/npm/jquery-lazyload@1/jquery.lazyload.min.js"></script>
+  <script src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
 
   
-  <script src="//gcore.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.5.2"></script>
 
   
-  <script src="//gcore.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.5.2"></script>
 
 
   
@@ -2184,26 +2198,6 @@
   
 
   
-<script>
-if ($('body').find('pre.mermaid').length) {
-  $.ajax({
-    type: 'GET',
-    url: '//cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js',
-    dataType: 'script',
-    cache: true,
-    success: function() {
-      mermaid.initialize({
-        theme: 'default',
-        logLevel: 3,
-        flowchart: { curve: 'linear' },
-        gantt: { axisFormat: '%m/%d/%Y' },
-        sequence: { actorMargin: 50 }
-      });
-    }
-  });
-}
-</script>
-
 
   
 

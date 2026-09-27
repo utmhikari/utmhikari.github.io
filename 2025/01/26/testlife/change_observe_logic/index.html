@@ -49,9 +49,7 @@
 
 
 
-  
-
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
 
 <link rel="stylesheet" href="/css/main.css?v=7.0.1">
 
@@ -109,14 +107,13 @@
 </script>
 
 
-<link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-serif@5/400.css">
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-serif@5/600.css">
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/400.css">
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/700.css">
+<link rel="stylesheet" href="/lib/fontsource/ibm-plex-serif/400.css">
+<link rel="stylesheet" href="/lib/fontsource/ibm-plex-serif/600.css">
+<link rel="stylesheet" href="/lib/fontsource/ibm-plex-mono/400.css">
+<link rel="stylesheet" href="/lib/fontsource/ibm-plex-mono/700.css">
 
 <meta name="description" content="在线上服务变更过程中，我们希望可以通过一套实时观测机制去监测线上服务的风险，从而能够确保线上稳定性，在出问题时可以及时回滚变更。今天这篇文章，就简单讲一下变更风险观测的流程逻辑需要怎么设计。 首先我们需要建模变更观测的过程。变更观测的生命周期，一般来讲，当服务某阶段变更开始后，观测会开始，然后当服务某阶段变更完，一般还需要停留观察一段时间，确定线上没有遗留风险之后，观测才会结束。可以简单的认为，一">
-<meta name="keywords" content="变更风险,异步,行为树,DevOps,质量保障">
+<meta name="keywords" content="变更风险,异步,DevOps,行为树,质量保障">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【测试人生】变更风险观测的流程逻辑设计">
 <meta property="og:url" content="https://utmhikari.top/2025/01/26/testlife/change_observe_logic/index.html">
@@ -512,11 +509,14 @@
           
 
           
+            
+            <span class="busuanzi-post-view">
             <span class="post-meta-divider">|</span>
             <span class="post-meta-item-icon">
             <i class="fa fa-eye"></i>
              阅读次数： 
             <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
             </span>
           
 
@@ -605,9 +605,9 @@
           
             <a href="/tags/异步/" rel="tag"># 异步</a>
           
-            <a href="/tags/行为树/" rel="tag"># 行为树</a>
-          
             <a href="/tags/DevOps/" rel="tag"># DevOps</a>
+          
+            <a href="/tags/行为树/" rel="tag"># 行为树</a>
           
             <a href="/tags/质量保障/" rel="tag"># 质量保障</a>
           
@@ -656,7 +656,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【测试人生】变更风险观测的流程逻辑设计","description":"在线上服务变更过程中，我们希望可以通过一套实时观测机制去监测线上服务的风险，从而能够确保线上稳定性，在出问题时可以及时回滚变更。今天这篇文章，就简单讲一下变更风险观测的流程逻辑需要怎么设计。 首先我们需要建模变更观测的过程。变更观测的生命周期，一般来讲，当服务某阶段变更开始后，观测会开始，然后当服务某阶段变更完，一般还需要停留观察一段时间，确定线上没有遗留风险之后，观测才会结束。可以简单的认为，一","datePublished":"2025-01-26T12:30:22.000Z","dateModified":"2026-05-01T10:10:29.333Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2025/01/26/testlife/change_observe_logic/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"变更风险, 异步, 行为树, DevOps, 质量保障"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【测试人生】变更风险观测的流程逻辑设计","description":"在线上服务变更过程中，我们希望可以通过一套实时观测机制去监测线上服务的风险，从而能够确保线上稳定性，在出问题时可以及时回滚变更。今天这篇文章，就简单讲一下变更风险观测的流程逻辑需要怎么设计。 首先我们需要建模变更观测的过程。变更观测的生命周期，一般来讲，当服务某阶段变更开始后，观测会开始，然后当服务某阶段变更完，一般还需要停留观察一段时间，确定线上没有遗留风险之后，观测才会结束。可以简单的认为，一","datePublished":"2025-01-26T12:30:22.000Z","dateModified":"2026-05-01T10:10:29.333Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2025/01/26/testlife/change_observe_logic/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"变更风险, 异步, DevOps, 行为树, 质量保障"}</script>
   
   
 
@@ -1763,6 +1763,20 @@
     </span>
   
 </div>
+<script>
+  // 不蒜子是第三方服务，脚本被拦或服务超时都会留下空白图标占位。
+  // 超时后若三个计数值一个都没填上，就把块体整体隐藏（post 页浏览数由 .busuanzi-post-view 承接）。
+  setTimeout(function () {
+    var ids = ['busuanzi_value_site_uv', 'busuanzi_value_site_pv', 'busuanzi_value_page_pv'];
+    var filled = ids.some(function (id) {
+      var el = document.getElementById(id);
+      return el && el.textContent.replace(/\s/g, '');
+    });
+    if (filled) return;
+    var nodes = document.querySelectorAll('.busuanzi-count, .busuanzi-post-view');
+    for (var i = 0; i < nodes.length; i++) nodes[i].style.display = 'none';
+  }, 5000);
+</script>
 
 
 
@@ -1826,16 +1840,16 @@
 
 
   
-  <script src="//gcore.jsdelivr.net/npm/jquery@2/dist/jquery.min.js"></script>
+  <script src="/lib/jquery/index.js?v=2.2.4"></script>
 
   
-  <script src="//gcore.jsdelivr.net/npm/jquery-lazyload@1/jquery.lazyload.min.js"></script>
+  <script src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
 
   
-  <script src="//gcore.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.5.2"></script>
 
   
-  <script src="//gcore.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.5.2"></script>
 
 
   
@@ -2216,26 +2230,6 @@
   
 
   
-<script>
-if ($('body').find('pre.mermaid').length) {
-  $.ajax({
-    type: 'GET',
-    url: '//cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js',
-    dataType: 'script',
-    cache: true,
-    success: function() {
-      mermaid.initialize({
-        theme: 'default',
-        logLevel: 3,
-        flowchart: { curve: 'linear' },
-        gantt: { axisFormat: '%m/%d/%Y' },
-        sequence: { actorMargin: 50 }
-      });
-    }
-  });
-}
-</script>
-
 
   
 

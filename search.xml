@@ -27,9 +27,9 @@
         <category>AI原生</category>
       </categories>
       <tags>
-        <tag>AI</tag>
         <tag>Agent</tag>
         <tag>Skill</tag>
+        <tag>AI</tag>
         <tag>知识库</tag>
         <tag>Harness Engineering</tag>
       </tags>
@@ -74,10 +74,10 @@
         <category>AI原生</category>
       </categories>
       <tags>
-        <tag>AI</tag>
-        <tag>稳定性</tag>
         <tag>Agent</tag>
         <tag>Skill</tag>
+        <tag>AI</tag>
+        <tag>稳定性</tag>
         <tag>SRE</tag>
       </tags>
   </entry>
@@ -137,9 +137,9 @@
         <category>AI原生</category>
       </categories>
       <tags>
-        <tag>Vibe Coding</tag>
         <tag>AI</tag>
         <tag>Harness Engineering</tag>
+        <tag>Vibe Coding</tag>
         <tag>后端开发</tag>
         <tag>编程</tag>
       </tags>
@@ -171,11 +171,11 @@
         <category>架构艺术</category>
       </categories>
       <tags>
-        <tag>稳定性</tag>
         <tag>Agent</tag>
+        <tag>稳定性</tag>
         <tag>SRE</tag>
-        <tag>Kubernetes</tag>
         <tag>架构</tag>
+        <tag>Kubernetes</tag>
       </tags>
   </entry>
   <entry>
@@ -217,10 +217,10 @@
         <category>AI原生</category>
       </categories>
       <tags>
+        <tag>AI</tag>
         <tag>Vibe Coding</tag>
         <tag>前端开发</tag>
         <tag>Qoder</tag>
-        <tag>AI</tag>
         <tag>web开发</tag>
       </tags>
   </entry>
@@ -247,9 +247,9 @@
       <tags>
         <tag>稳定性</tag>
         <tag>SRE</tag>
-        <tag>Kubernetes</tag>
         <tag>变更风险</tag>
         <tag>业务</tag>
+        <tag>Kubernetes</tag>
       </tags>
   </entry>
   <entry>
@@ -479,8 +479,8 @@
         <category>测试人生</category>
       </categories>
       <tags>
-        <tag>AI</tag>
         <tag>Agent</tag>
+        <tag>AI</tag>
         <tag>变更风险</tag>
         <tag>产品</tag>
         <tag>LLM</tag>
@@ -675,10 +675,10 @@
         <category>GitHub探索</category>
       </categories>
       <tags>
-        <tag>AI</tag>
         <tag>Agent</tag>
-        <tag>工具开发</tag>
+        <tag>AI</tag>
         <tag>LLM</tag>
+        <tag>工具开发</tag>
         <tag>trae-agent</tag>
       </tags>
   </entry>
@@ -698,9 +698,9 @@
       <tags>
         <tag>后端开发</tag>
         <tag>架构</tag>
-        <tag>系统设计</tag>
         <tag>自动化测试</tag>
         <tag>测试开发</tag>
+        <tag>系统设计</tag>
       </tags>
   </entry>
   <entry>
@@ -796,8 +796,8 @@
         <tag>稳定性</tag>
         <tag>后端开发</tag>
         <tag>架构</tag>
-        <tag>变更风险</tag>
         <tag>系统设计</tag>
+        <tag>变更风险</tag>
       </tags>
   </entry>
   <entry>
@@ -814,8 +814,8 @@
       </categories>
       <tags>
         <tag>架构</tag>
-        <tag>变更风险</tag>
         <tag>系统设计</tag>
+        <tag>变更风险</tag>
         <tag>事件循环</tag>
         <tag>微服务</tag>
       </tags>
@@ -847,8 +847,8 @@
         <category>极客日常</category>
       </categories>
       <tags>
-        <tag>AI</tag>
         <tag>Agent</tag>
+        <tag>AI</tag>
         <tag>python</tag>
         <tag>LLM</tag>
         <tag>coze</tag>
@@ -872,8 +872,8 @@
         <category>GitHub探索</category>
       </categories>
       <tags>
-        <tag>AI</tag>
         <tag>Agent</tag>
+        <tag>AI</tag>
         <tag>Coze</tag>
         <tag>DDD</tag>
         <tag>Prompt</tag>
@@ -899,8 +899,8 @@
         <category>GitHub探索</category>
       </categories>
       <tags>
-        <tag>AI</tag>
         <tag>Agent</tag>
+        <tag>AI</tag>
         <tag>LLM</tag>
         <tag>Coze</tag>
         <tag>DDD</tag>
@@ -920,9 +920,9 @@
         <category>极客日常</category>
       </categories>
       <tags>
-        <tag>Golang</tag>
         <tag>后端开发</tag>
         <tag>业务</tag>
+        <tag>Golang</tag>
         <tag>数据库</tag>
         <tag>计算机网络</tag>
       </tags>
@@ -1028,10 +1028,10 @@
         <category>DIY小记</category>
       </categories>
       <tags>
-        <tag>UE4</tag>
         <tag>游戏</tag>
         <tag>游戏策划</tag>
         <tag>逸剑风云决</tag>
+        <tag>UE4</tag>
         <tag>游戏测试</tag>
       </tags>
   </entry>
@@ -1147,10 +1147,10 @@
         <category>架构艺术</category>
       </categories>
       <tags>
-        <tag>Golang</tag>
         <tag>后端开发</tag>
         <tag>编程</tag>
         <tag>架构</tag>
+        <tag>Golang</tag>
         <tag>monorepo</tag>
       </tags>
   </entry>
@@ -1168,9 +1168,9 @@
       </categories>
       <tags>
         <tag>问题排查</tag>
+        <tag>性能测试</tag>
         <tag>超频</tag>
         <tag>硬件</tag>
-        <tag>性能测试</tag>
         <tag>电压</tag>
       </tags>
   </entry>
@@ -1214,8 +1214,8 @@
         <category>极客日常</category>
       </categories>
       <tags>
-        <tag>AI</tag>
         <tag>Agent</tag>
+        <tag>AI</tag>
         <tag>LLM</tag>
         <tag>MCP</tag>
         <tag>协议</tag>
@@ -1256,9 +1256,9 @@
         <category>架构艺术</category>
       </categories>
       <tags>
-        <tag>Golang</tag>
         <tag>后端开发</tag>
         <tag>架构</tag>
+        <tag>Golang</tag>
         <tag>monorepo</tag>
         <tag>wire</tag>
       </tags>
@@ -1311,8 +1311,8 @@
         <category>代码艺廊</category>
       </categories>
       <tags>
-        <tag>工具开发</tag>
         <tag>python</tag>
+        <tag>工具开发</tag>
         <tag>pyside6</tag>
         <tag>homemade-toolset</tag>
         <tag>桌面应用</tag>
@@ -1370,10 +1370,10 @@
         <category>架构艺术</category>
       </categories>
       <tags>
-        <tag>Golang</tag>
         <tag>后端开发</tag>
         <tag>架构</tag>
         <tag>微服务</tag>
+        <tag>Golang</tag>
         <tag>monorepo</tag>
       </tags>
   </entry>
@@ -1395,8 +1395,8 @@
       </categories>
       <tags>
         <tag>变更风险</tag>
-        <tag>数据挖掘</tag>
         <tag>DevOps</tag>
+        <tag>数据挖掘</tag>
         <tag>质量保障</tag>
         <tag>准入准出</tag>
       </tags>
@@ -1420,8 +1420,8 @@
       <tags>
         <tag>产品</tag>
         <tag>面试</tag>
-        <tag>个人博客</tag>
         <tag>ChatGPT</tag>
+        <tag>个人博客</tag>
         <tag>用户</tag>
       </tags>
   </entry>
@@ -1463,8 +1463,8 @@
       <tags>
         <tag>变更风险</tag>
         <tag>异步</tag>
-        <tag>行为树</tag>
         <tag>DevOps</tag>
+        <tag>行为树</tag>
         <tag>质量保障</tag>
       </tags>
   </entry>
@@ -1550,8 +1550,8 @@
         <category>Python随笔</category>
       </categories>
       <tags>
-        <tag>工具开发</tag>
         <tag>python</tag>
+        <tag>工具开发</tag>
         <tag>pyside6</tag>
         <tag>教程</tag>
         <tag>requests</tag>
@@ -1670,9 +1670,9 @@
       <tags>
         <tag>后端开发</tag>
         <tag>面试</tag>
-        <tag>教程</tag>
-        <tag>个人博客</tag>
         <tag>八股文</tag>
+        <tag>个人博客</tag>
+        <tag>教程</tag>
       </tags>
   </entry>
   <entry>
@@ -1688,11 +1688,11 @@
         <category>DIY小记</category>
       </categories>
       <tags>
+        <tag>性能测试</tag>
         <tag>超频</tag>
         <tag>CPU</tag>
         <tag>Process Lasso</tag>
         <tag>硬件</tag>
-        <tag>性能测试</tag>
       </tags>
   </entry>
   <entry>
@@ -1709,10 +1709,10 @@
         <category>DIY小记</category>
       </categories>
       <tags>
+        <tag>性能测试</tag>
         <tag>超频</tag>
         <tag>CPU</tag>
         <tag>硬件</tag>
-        <tag>性能测试</tag>
         <tag>显卡</tag>
       </tags>
   </entry>
@@ -1730,8 +1730,8 @@
         <category>Python随笔</category>
       </categories>
       <tags>
-        <tag>工具开发</tag>
         <tag>python</tag>
+        <tag>工具开发</tag>
         <tag>pyside6</tag>
         <tag>桌面应用</tag>
         <tag>渲染</tag>
@@ -1809,8 +1809,8 @@
       </categories>
       <tags>
         <tag>测试开发</tag>
-        <tag>教程</tag>
         <tag>DevOps</tag>
+        <tag>教程</tag>
         <tag>质量保障</tag>
         <tag>测试</tag>
       </tags>
@@ -1829,11 +1829,11 @@
         <category>极客日常</category>
       </categories>
       <tags>
-        <tag>工具开发</tag>
         <tag>编程</tag>
+        <tag>工具开发</tag>
+        <tag>研发效能</tag>
         <tag>游戏开发</tag>
         <tag>低代码</tag>
-        <tag>研发效能</tag>
       </tags>
   </entry>
   <entry>
@@ -1856,8 +1856,8 @@
         <category>Python随笔</category>
       </categories>
       <tags>
-        <tag>工具开发</tag>
         <tag>python</tag>
+        <tag>工具开发</tag>
         <tag>pyside6</tag>
         <tag>PyQt5</tag>
         <tag>Qt</tag>
@@ -1882,11 +1882,11 @@
         <category>极客日常</category>
       </categories>
       <tags>
-        <tag>Golang</tag>
         <tag>后端开发</tag>
         <tag>编程</tag>
-        <tag>源码分析</tag>
+        <tag>Golang</tag>
         <tag>教程</tag>
+        <tag>源码分析</tag>
       </tags>
   </entry>
   <entry>
@@ -1904,8 +1904,8 @@
         <category>极客日常</category>
       </categories>
       <tags>
-        <tag>Golang</tag>
         <tag>重构</tag>
+        <tag>Golang</tag>
         <tag>问题排查</tag>
         <tag>slice</tag>
         <tag>指针</tag>
@@ -2145,11 +2145,11 @@
         <category>从零单排Golang</category>
       </categories>
       <tags>
-        <tag>Golang</tag>
         <tag>后端开发</tag>
+        <tag>Golang</tag>
         <tag>并发</tag>
-        <tag>channel</tag>
         <tag>多线程</tag>
+        <tag>channel</tag>
       </tags>
   </entry>
   <entry>
@@ -2171,8 +2171,8 @@
       <tags>
         <tag>后端开发</tag>
         <tag>架构</tag>
-        <tag>变更风险</tag>
         <tag>系统设计</tag>
+        <tag>变更风险</tag>
         <tag>事件循环</tag>
       </tags>
   </entry>
@@ -2352,11 +2352,11 @@
         <category>架构艺术</category>
       </categories>
       <tags>
-        <tag>Golang</tag>
         <tag>后端开发</tag>
-        <tag>python</tag>
         <tag>架构</tag>
         <tag>重构</tag>
+        <tag>Golang</tag>
+        <tag>python</tag>
       </tags>
   </entry>
   <entry>
@@ -2377,8 +2377,8 @@
       <tags>
         <tag>游戏测试</tag>
         <tag>专项测试</tag>
-        <tag>测试</tag>
         <tag>功能测试</tag>
+        <tag>测试</tag>
         <tag>精准测试</tag>
       </tags>
   </entry>
@@ -2422,9 +2422,9 @@
         <category>测试人生</category>
       </categories>
       <tags>
+        <tag>测试开发</tag>
         <tag>表格检查</tag>
         <tag>工具开发</tag>
-        <tag>测试开发</tag>
         <tag>持续集成</tag>
         <tag>游戏测试</tag>
       </tags>
@@ -2453,8 +2453,8 @@
         <category>从零单排Golang</category>
       </categories>
       <tags>
-        <tag>Golang</tag>
         <tag>后端开发</tag>
+        <tag>Golang</tag>
         <tag>并发</tag>
         <tag>Once</tag>
         <tag>Java</tag>
@@ -2506,9 +2506,9 @@
         <category>从零单排Golang</category>
       </categories>
       <tags>
-        <tag>Golang</tag>
         <tag>后端开发</tag>
         <tag>异步</tag>
+        <tag>Golang</tag>
         <tag>并行</tag>
         <tag>WaitGroup</tag>
       </tags>
@@ -2572,8 +2572,8 @@
         <tag>变更风险</tag>
         <tag>DevOps</tag>
         <tag>数据库</tag>
-        <tag>MySQL</tag>
         <tag>SQL</tag>
+        <tag>MySQL</tag>
       </tags>
   </entry>
   <entry>
@@ -2640,10 +2640,10 @@
         <category>从零单排Golang</category>
       </categories>
       <tags>
-        <tag>Golang</tag>
         <tag>后端开发</tag>
-        <tag>源码分析</tag>
+        <tag>Golang</tag>
         <tag>并发</tag>
+        <tag>源码分析</tag>
         <tag>singleflight</tag>
       </tags>
   </entry>
@@ -3286,10 +3286,10 @@
         <category>DIY小记</category>
       </categories>
       <tags>
+        <tag>Ubuntu</tag>
         <tag>虚拟机</tag>
         <tag>VMWare</tag>
         <tag>NAT</tag>
-        <tag>Ubuntu</tag>
         <tag>DHCP</tag>
       </tags>
   </entry>
@@ -3536,9 +3536,9 @@
         <category>从零单排Golang</category>
       </categories>
       <tags>
-        <tag>Golang</tag>
         <tag>后端开发</tag>
         <tag>微服务</tag>
+        <tag>Golang</tag>
         <tag>wire</tag>
         <tag>kratos</tag>
       </tags>
@@ -3561,9 +3561,9 @@
         <category>极客日常</category>
       </categories>
       <tags>
-        <tag>python</tag>
         <tag>自动化测试</tag>
         <tag>测试开发</tag>
+        <tag>python</tag>
         <tag>游戏测试</tag>
         <tag>功能测试</tag>
       </tags>
@@ -3608,10 +3608,10 @@
       </categories>
       <tags>
         <tag>自动化测试</tag>
-        <tag>寻路</tag>
-        <tag>recast</tag>
         <tag>UE4</tag>
         <tag>游戏测试</tag>
+        <tag>寻路</tag>
+        <tag>recast</tag>
       </tags>
   </entry>
   <entry>
@@ -3853,9 +3853,9 @@
       </categories>
       <tags>
         <tag>稳定性</tag>
-        <tag>系统设计</tag>
         <tag>自动化测试</tag>
         <tag>测试开发</tag>
+        <tag>系统设计</tag>
         <tag>游戏自动化</tag>
       </tags>
   </entry>
@@ -4101,8 +4101,8 @@
         <category>Game Of AutoTest</category>
       </categories>
       <tags>
-        <tag>python</tag>
         <tag>自动化测试</tag>
+        <tag>python</tag>
         <tag>自动化框架</tag>
         <tag>BDD</tag>
         <tag>依赖注入</tag>
@@ -5072,8 +5072,8 @@
       </categories>
       <tags>
         <tag>自动化测试</tag>
-        <tag>行为树</tag>
         <tag>游戏测试</tag>
+        <tag>行为树</tag>
         <tag>测试</tag>
         <tag>可视化编程</tag>
       </tags>
@@ -5236,8 +5236,8 @@
         <category>Hard Python</category>
       </categories>
       <tags>
-        <tag>python</tag>
         <tag>异步</tag>
+        <tag>python</tag>
         <tag>asyncio</tag>
         <tag>async</tag>
         <tag>await</tag>
@@ -5328,9 +5328,9 @@
         <category>Hard Python</category>
       </categories>
       <tags>
-        <tag>python</tag>
         <tag>事件循环</tag>
         <tag>异步</tag>
+        <tag>python</tag>
         <tag>asyncio</tag>
         <tag>proactor</tag>
       </tags>
@@ -5376,8 +5376,8 @@
         <category>Hard Python</category>
       </categories>
       <tags>
-        <tag>python</tag>
         <tag>事件循环</tag>
+        <tag>python</tag>
         <tag>asyncio</tag>
         <tag>proactor</tag>
         <tag>iocp</tag>
@@ -5614,8 +5614,8 @@
       </categories>
       <tags>
         <tag>python</tag>
-        <tag>源码分析</tag>
         <tag>教程</tag>
+        <tag>源码分析</tag>
         <tag>Medium Python</tag>
         <tag>Easy Python</tag>
       </tags>
@@ -5677,10 +5677,10 @@
       </categories>
       <tags>
         <tag>python</tag>
-        <tag>反射</tag>
         <tag>inspect</tag>
         <tag>dir</tag>
         <tag>typing</tag>
+        <tag>反射</tag>
       </tags>
   </entry>
   <entry>
@@ -6053,8 +6053,8 @@
       </categories>
       <tags>
         <tag>python</tag>
-        <tag>源码分析</tag>
         <tag>GIL</tag>
+        <tag>源码分析</tag>
         <tag>多线程</tag>
         <tag>opcode</tag>
       </tags>
@@ -6181,8 +6181,8 @@
       <tags>
         <tag>python</tag>
         <tag>面试</tag>
-        <tag>源码分析</tag>
         <tag>教程</tag>
+        <tag>源码分析</tag>
         <tag>Easy Python</tag>
       </tags>
   </entry>
@@ -7535,8 +7535,8 @@
         <category>测试人生</category>
       </categories>
       <tags>
-        <tag>python</tag>
         <tag>测试开发</tag>
+        <tag>python</tag>
         <tag>openpyxl</tag>
         <tag>excel</tag>
         <tag>测试工具</tag>
@@ -7652,8 +7652,8 @@
         <category>极客日常</category>
       </categories>
       <tags>
-        <tag>Golang</tag>
         <tag>编程</tag>
+        <tag>Golang</tag>
         <tag>strconv</tag>
         <tag>数据类型转换</tag>
         <tag>rune</tag>
@@ -7731,10 +7731,10 @@
         <category>测试人生</category>
       </categories>
       <tags>
+        <tag>测试开发</tag>
+        <tag>系统设计</tag>
         <tag>表格检查</tag>
         <tag>工具开发</tag>
-        <tag>系统设计</tag>
-        <tag>测试开发</tag>
         <tag>游戏测试</tag>
       </tags>
   </entry>
@@ -7769,10 +7769,10 @@
         <category>游戏开发</category>
       </categories>
       <tags>
+        <tag>渲染</tag>
         <tag>UE4</tag>
         <tag>游戏开发</tag>
         <tag>swarm agent</tag>
-        <tag>渲染</tag>
         <tag>分布式构建</tag>
       </tags>
   </entry>
@@ -7944,8 +7944,8 @@
         <category>代码艺廊</category>
       </categories>
       <tags>
-        <tag>Golang</tag>
         <tag>后端开发</tag>
+        <tag>Golang</tag>
         <tag>protobuf</tag>
         <tag>grpc</tag>
         <tag>gin</tag>
@@ -7974,9 +7974,9 @@
         <category>测试人生</category>
       </categories>
       <tags>
+        <tag>测试开发</tag>
         <tag>表格检查</tag>
         <tag>工具开发</tag>
-        <tag>测试开发</tag>
         <tag>游戏测试</tag>
         <tag>mongodb</tag>
       </tags>
@@ -8005,10 +8005,10 @@
       </categories>
       <tags>
         <tag>UE4</tag>
+        <tag>C++</tag>
         <tag>DataTable</tag>
         <tag>Subsystem</tag>
         <tag>游戏开发</tag>
-        <tag>C++</tag>
       </tags>
   </entry>
   <entry>
@@ -8032,9 +8032,9 @@
         <category>代码艺廊</category>
       </categories>
       <tags>
-        <tag>工具开发</tag>
         <tag>后端开发</tag>
         <tag>python</tag>
+        <tag>工具开发</tag>
         <tag>fastapi</tag>
         <tag>start-fastapi</tag>
       </tags>
@@ -8172,8 +8172,8 @@
         <tag>LLM</tag>
         <tag>UE4</tag>
         <tag>C++</tag>
-        <tag>UE4插件</tag>
         <tag>UnrealAutomator</tag>
+        <tag>UE4插件</tag>
       </tags>
   </entry>
   <entry>
@@ -8212,8 +8212,8 @@
         <tag>游戏自动化</tag>
         <tag>UE4</tag>
         <tag>游戏测试</tag>
-        <tag>UE4插件</tag>
         <tag>UnrealAutomator</tag>
+        <tag>UE4插件</tag>
       </tags>
   </entry>
   <entry>
@@ -8255,9 +8255,9 @@
         <category>极客日常</category>
       </categories>
       <tags>
-        <tag>Win10</tag>
         <tag>JetBrains</tag>
         <tag>IDE</tag>
+        <tag>Win10</tag>
         <tag>Intellij IDEA</tag>
         <tag>idea.properties</tag>
       </tags>
@@ -8280,8 +8280,8 @@
         <tag>测试开发</tag>
         <tag>游戏测试</tag>
         <tag>质量保障</tag>
-        <tag>测试</tag>
         <tag>功能测试</tag>
+        <tag>测试</tag>
       </tags>
   </entry>
   <entry>
@@ -8340,8 +8340,8 @@
       </categories>
       <tags>
         <tag>UE4</tag>
-        <tag>游戏开发</tag>
         <tag>C++</tag>
+        <tag>游戏开发</tag>
         <tag>UnLua</tag>
         <tag>lua</tag>
       </tags>
@@ -8492,8 +8492,8 @@
       </categories>
       <tags>
         <tag>前端开发</tag>
-        <tag>个人博客</tag>
         <tag>bilibili</tag>
+        <tag>个人博客</tag>
         <tag>hugo</tag>
         <tag>shortcode</tag>
       </tags>
@@ -8518,10 +8518,10 @@
       </categories>
       <tags>
         <tag>研发效能</tag>
+        <tag>VSCode</tag>
         <tag>eclipse theia</tag>
         <tag>gitpod</tag>
         <tag>cloud IDE</tag>
-        <tag>VSCode</tag>
       </tags>
   </entry>
   <entry>
@@ -8728,9 +8728,9 @@
         <category>测试人生</category>
       </categories>
       <tags>
-        <tag>游戏开发</tag>
         <tag>游戏策划</tag>
         <tag>游戏测试</tag>
+        <tag>游戏开发</tag>
         <tag>质量保障</tag>
         <tag>测试</tag>
       </tags>
@@ -8760,8 +8760,8 @@
       </categories>
       <tags>
         <tag>游戏测试</tag>
-        <tag>测试</tag>
         <tag>功能测试</tag>
+        <tag>测试</tag>
         <tag>code review</tag>
         <tag>测试用例</tag>
       </tags>
@@ -8824,8 +8824,8 @@
         <category>从零单排Golang</category>
       </categories>
       <tags>
-        <tag>Golang</tag>
         <tag>后端开发</tag>
+        <tag>Golang</tag>
         <tag>并发</tag>
         <tag>tcp</tag>
         <tag>负载均衡</tag>
@@ -8977,8 +8977,8 @@
       </categories>
       <tags>
         <tag>后端开发</tag>
-        <tag>lua</tag>
         <tag>教程</tag>
+        <tag>lua</tag>
         <tag>skynet</tag>
         <tag>create-skynet</tag>
       </tags>
@@ -9012,8 +9012,8 @@
       <tags>
         <tag>前端开发</tag>
         <tag>桌面应用</tag>
-        <tag>react</tag>
         <tag>electron</tag>
+        <tag>react</tag>
         <tag>antd</tag>
       </tags>
   </entry>
@@ -9246,11 +9246,11 @@
         <category>DIY小记</category>
       </categories>
       <tags>
-        <tag>渲染</tag>
         <tag>CSGO</tag>
         <tag>Win10</tag>
         <tag>NVIDIA</tag>
         <tag>游戏</tag>
+        <tag>渲染</tag>
       </tags>
   </entry>
   <entry>
@@ -9552,8 +9552,8 @@
       </categories>
       <tags>
         <tag>web开发</tag>
-        <tag>Golang</tag>
         <tag>后端开发</tag>
+        <tag>Golang</tag>
         <tag>gin</tag>
         <tag>gorm</tag>
       </tags>
@@ -9642,8 +9642,8 @@
         <category>从零单排Golang</category>
       </categories>
       <tags>
-        <tag>Golang</tag>
         <tag>编程</tag>
+        <tag>Golang</tag>
         <tag>装机</tag>
         <tag>go mod</tag>
         <tag>环境变量</tag>
@@ -9682,8 +9682,8 @@
       </categories>
       <tags>
         <tag>性能测试</tag>
-        <tag>Android</tag>
         <tag>测试</tag>
+        <tag>Android</tag>
         <tag>fps</tag>
         <tag>SurfaceFlinger</tag>
       </tags>
@@ -9773,9 +9773,9 @@
       <tags>
         <tag>效率工具</tag>
         <tag>shell</tag>
+        <tag>测试</tag>
         <tag>terminus</tag>
         <tag>terminal</tag>
-        <tag>测试</tag>
       </tags>
   </entry>
   <entry>
@@ -9951,8 +9951,8 @@
       </categories>
       <tags>
         <tag>python</tag>
-        <tag>源码分析</tag>
         <tag>debug</tag>
+        <tag>源码分析</tag>
         <tag>pysnooper</tag>
         <tag>逆向</tag>
       </tags>
@@ -10022,8 +10022,8 @@
       <tags>
         <tag>编程</tag>
         <tag>python</tag>
-        <tag>教程</tag>
         <tag>个人博客</tag>
+        <tag>教程</tag>
         <tag>easy python</tag>
       </tags>
   </entry>
@@ -10314,8 +10314,8 @@
         <category>Lua杂谈</category>
       </categories>
       <tags>
-        <tag>lua</tag>
         <tag>debug</tag>
+        <tag>lua</tag>
         <tag>测试</tag>
         <tag>lfunctimer</tag>
         <tag>lua C API</tag>
@@ -10365,8 +10365,8 @@
         <category>Easy Python</category>
       </categories>
       <tags>
-        <tag>python</tag>
         <tag>异步</tag>
+        <tag>python</tag>
         <tag>教程</tag>
         <tag>爬虫</tag>
         <tag>代理</tag>
@@ -10436,9 +10436,9 @@
         <category>Lua杂谈</category>
       </categories>
       <tags>
-        <tag>lua</tag>
         <tag>性能测试</tag>
         <tag>debug</tag>
+        <tag>lua</tag>
         <tag>测试</tag>
         <tag>lfunctimer</tag>
       </tags>
@@ -10535,8 +10535,8 @@
         <category>Lua杂谈</category>
       </categories>
       <tags>
-        <tag>lua</tag>
         <tag>debug</tag>
+        <tag>lua</tag>
         <tag>测试</tag>
         <tag>代码覆盖率</tag>
         <tag>luacov</tag>

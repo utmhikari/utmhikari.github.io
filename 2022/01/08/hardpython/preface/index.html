@@ -49,9 +49,7 @@
 
 
 
-  
-
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
 
 <link rel="stylesheet" href="/css/main.css?v=7.0.1">
 
@@ -109,14 +107,13 @@
 </script>
 
 
-<link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-serif@5/400.css">
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-serif@5/600.css">
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/400.css">
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/700.css">
+<link rel="stylesheet" href="/lib/fontsource/ibm-plex-serif/400.css">
+<link rel="stylesheet" href="/lib/fontsource/ibm-plex-serif/600.css">
+<link rel="stylesheet" href="/lib/fontsource/ibm-plex-mono/400.css">
+<link rel="stylesheet" href="/lib/fontsource/ibm-plex-mono/700.css">
 
 <meta name="description" content="写完Medium Python之后，不知不觉就有开始继续写Hard Python的冲动。择日不如撞日，心动不如行动，2022年开篇，果断将Hard Python提上日程。 截至2021年底，python依旧是最热门的语言之一，随着3.10、3.11及后续版本的发布，python的runtime在功能及性能上都会有较大的提升。时至今日，提到技术应用最广泛的语言，除了python，还会有另外的吗？排除">
-<meta name="keywords" content="python,源码分析,教程,Medium Python,Easy Python">
+<meta name="keywords" content="python,教程,源码分析,Medium Python,Easy Python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【Hard Python】前言">
 <meta property="og:url" content="https://utmhikari.top/2022/01/08/hardpython/preface/index.html">
@@ -512,11 +509,14 @@
           
 
           
+            
+            <span class="busuanzi-post-view">
             <span class="post-meta-divider">|</span>
             <span class="post-meta-item-icon">
             <i class="fa fa-eye"></i>
              阅读次数： 
             <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
             </span>
           
 
@@ -609,9 +609,9 @@
           
             <a href="/tags/python/" rel="tag"># python</a>
           
-            <a href="/tags/源码分析/" rel="tag"># 源码分析</a>
-          
             <a href="/tags/教程/" rel="tag"># 教程</a>
+          
+            <a href="/tags/源码分析/" rel="tag"># 源码分析</a>
           
             <a href="/tags/Medium-Python/" rel="tag"># Medium Python</a>
           
@@ -662,7 +662,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Hard Python】前言","description":"写完Medium Python之后，不知不觉就有开始继续写Hard Python的冲动。择日不如撞日，心动不如行动，2022年开篇，果断将Hard Python提上日程。 截至2021年底，python依旧是最热门的语言之一，随着3.10、3.11及后续版本的发布，python的runtime在功能及性能上都会有较大的提升。时至今日，提到技术应用最广泛的语言，除了python，还会有另外的吗？排除","datePublished":"2022-01-08T06:04:51.000Z","dateModified":"2024-04-07T02:48:06.924Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2022/01/08/hardpython/preface/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"python, 源码分析, 教程, Medium Python, Easy Python"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Hard Python】前言","description":"写完Medium Python之后，不知不觉就有开始继续写Hard Python的冲动。择日不如撞日，心动不如行动，2022年开篇，果断将Hard Python提上日程。 截至2021年底，python依旧是最热门的语言之一，随着3.10、3.11及后续版本的发布，python的runtime在功能及性能上都会有较大的提升。时至今日，提到技术应用最广泛的语言，除了python，还会有另外的吗？排除","datePublished":"2022-01-08T06:04:51.000Z","dateModified":"2024-04-07T02:48:06.924Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2022/01/08/hardpython/preface/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"python, 教程, 源码分析, Medium Python, Easy Python"}</script>
   
   
 
@@ -1795,6 +1795,20 @@
     </span>
   
 </div>
+<script>
+  // 不蒜子是第三方服务，脚本被拦或服务超时都会留下空白图标占位。
+  // 超时后若三个计数值一个都没填上，就把块体整体隐藏（post 页浏览数由 .busuanzi-post-view 承接）。
+  setTimeout(function () {
+    var ids = ['busuanzi_value_site_uv', 'busuanzi_value_site_pv', 'busuanzi_value_page_pv'];
+    var filled = ids.some(function (id) {
+      var el = document.getElementById(id);
+      return el && el.textContent.replace(/\s/g, '');
+    });
+    if (filled) return;
+    var nodes = document.querySelectorAll('.busuanzi-count, .busuanzi-post-view');
+    for (var i = 0; i < nodes.length; i++) nodes[i].style.display = 'none';
+  }, 5000);
+</script>
 
 
 
@@ -1858,16 +1872,16 @@
 
 
   
-  <script src="//gcore.jsdelivr.net/npm/jquery@2/dist/jquery.min.js"></script>
+  <script src="/lib/jquery/index.js?v=2.2.4"></script>
 
   
-  <script src="//gcore.jsdelivr.net/npm/jquery-lazyload@1/jquery.lazyload.min.js"></script>
+  <script src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
 
   
-  <script src="//gcore.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.5.2"></script>
 
   
-  <script src="//gcore.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.5.2"></script>
 
 
   
@@ -2248,26 +2262,6 @@
   
 
   
-<script>
-if ($('body').find('pre.mermaid').length) {
-  $.ajax({
-    type: 'GET',
-    url: '//cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js',
-    dataType: 'script',
-    cache: true,
-    success: function() {
-      mermaid.initialize({
-        theme: 'default',
-        logLevel: 3,
-        flowchart: { curve: 'linear' },
-        gantt: { axisFormat: '%m/%d/%Y' },
-        sequence: { actorMargin: 50 }
-      });
-    }
-  });
-}
-</script>
-
 
   
 

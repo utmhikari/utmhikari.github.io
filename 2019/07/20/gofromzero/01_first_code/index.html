@@ -49,9 +49,7 @@
 
 
 
-  
-
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
 
 <link rel="stylesheet" href="/css/main.css?v=7.0.1">
 
@@ -109,14 +107,13 @@
 </script>
 
 
-<link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-serif@5/400.css">
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-serif@5/600.css">
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/400.css">
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/700.css">
+<link rel="stylesheet" href="/lib/fontsource/ibm-plex-serif/400.css">
+<link rel="stylesheet" href="/lib/fontsource/ibm-plex-serif/600.css">
+<link rel="stylesheet" href="/lib/fontsource/ibm-plex-mono/400.css">
+<link rel="stylesheet" href="/lib/fontsource/ibm-plex-mono/700.css">
 
 <meta name="description" content="前言Github传送门 当测试开发真不容易，入行第一年，就要在python、NodeJS、lua、C、Java等语言间无缝切换。为了快速响应需求，挺难抽出时间去深耕一门语言的特性（诶羡慕那些只搞Java的人= =）。在MTSC2019分享中也谈到，测试开发归属质量保障QA，作为一个中台角色，其终极任务保障研发效能，因此一大需求是打通产品研发运维的生产线。说到生产线就想到上云，说到上云就想到dock">
-<meta name="keywords" content="Golang,编程,装机,go mod,环境变量">
+<meta name="keywords" content="编程,Golang,装机,go mod,环境变量">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【从零单排Golang】第一话：Go开发环境搭建——环境变量、依赖与目录结构踩坑">
 <meta property="og:url" content="https://utmhikari.top/2019/07/20/gofromzero/01_first_code/index.html">
@@ -512,11 +509,14 @@
           
 
           
+            
+            <span class="busuanzi-post-view">
             <span class="post-meta-divider">|</span>
             <span class="post-meta-item-icon">
             <i class="fa fa-eye"></i>
              阅读次数： 
             <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
             </span>
           
 
@@ -625,9 +625,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Golang/" rel="tag"># Golang</a>
-          
             <a href="/tags/编程/" rel="tag"># 编程</a>
+          
+            <a href="/tags/Golang/" rel="tag"># Golang</a>
           
             <a href="/tags/装机/" rel="tag"># 装机</a>
           
@@ -680,7 +680,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【从零单排Golang】第一话：Go开发环境搭建——环境变量、依赖与目录结构踩坑","description":"前言Github传送门 当测试开发真不容易，入行第一年，就要在python、NodeJS、lua、C、Java等语言间无缝切换。为了快速响应需求，挺难抽出时间去深耕一门语言的特性（诶羡慕那些只搞Java的人= =）。在MTSC2019分享中也谈到，测试开发归属质量保障QA，作为一个中台角色，其终极任务保障研发效能，因此一大需求是打通产品研发运维的生产线。说到生产线就想到上云，说到上云就想到dock","datePublished":"2019-07-20T11:35:05.000Z","dateModified":"2026-03-14T09:07:05.155Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2019/07/20/gofromzero/01_first_code/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"Golang, 编程, 装机, go mod, 环境变量"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【从零单排Golang】第一话：Go开发环境搭建——环境变量、依赖与目录结构踩坑","description":"前言Github传送门 当测试开发真不容易，入行第一年，就要在python、NodeJS、lua、C、Java等语言间无缝切换。为了快速响应需求，挺难抽出时间去深耕一门语言的特性（诶羡慕那些只搞Java的人= =）。在MTSC2019分享中也谈到，测试开发归属质量保障QA，作为一个中台角色，其终极任务保障研发效能，因此一大需求是打通产品研发运维的生产线。说到生产线就想到上云，说到上云就想到dock","datePublished":"2019-07-20T11:35:05.000Z","dateModified":"2026-03-14T09:07:05.155Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2019/07/20/gofromzero/01_first_code/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"编程, Golang, 装机, go mod, 环境变量"}</script>
   
   
 
@@ -1813,6 +1813,20 @@
     </span>
   
 </div>
+<script>
+  // 不蒜子是第三方服务，脚本被拦或服务超时都会留下空白图标占位。
+  // 超时后若三个计数值一个都没填上，就把块体整体隐藏（post 页浏览数由 .busuanzi-post-view 承接）。
+  setTimeout(function () {
+    var ids = ['busuanzi_value_site_uv', 'busuanzi_value_site_pv', 'busuanzi_value_page_pv'];
+    var filled = ids.some(function (id) {
+      var el = document.getElementById(id);
+      return el && el.textContent.replace(/\s/g, '');
+    });
+    if (filled) return;
+    var nodes = document.querySelectorAll('.busuanzi-count, .busuanzi-post-view');
+    for (var i = 0; i < nodes.length; i++) nodes[i].style.display = 'none';
+  }, 5000);
+</script>
 
 
 
@@ -1876,16 +1890,16 @@
 
 
   
-  <script src="//gcore.jsdelivr.net/npm/jquery@2/dist/jquery.min.js"></script>
+  <script src="/lib/jquery/index.js?v=2.2.4"></script>
 
   
-  <script src="//gcore.jsdelivr.net/npm/jquery-lazyload@1/jquery.lazyload.min.js"></script>
+  <script src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
 
   
-  <script src="//gcore.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.5.2"></script>
 
   
-  <script src="//gcore.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.5.2"></script>
 
 
   
@@ -2266,26 +2280,6 @@
   
 
   
-<script>
-if ($('body').find('pre.mermaid').length) {
-  $.ajax({
-    type: 'GET',
-    url: '//cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js',
-    dataType: 'script',
-    cache: true,
-    success: function() {
-      mermaid.initialize({
-        theme: 'default',
-        logLevel: 3,
-        flowchart: { curve: 'linear' },
-        gantt: { axisFormat: '%m/%d/%Y' },
-        sequence: { actorMargin: 50 }
-      });
-    }
-  });
-}
-</script>
-
 
   
 

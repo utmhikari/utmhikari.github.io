@@ -49,9 +49,7 @@
 
 
 
-  
-
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
 
 <link rel="stylesheet" href="/css/main.css?v=7.0.1">
 
@@ -109,14 +107,13 @@
 </script>
 
 
-<link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-serif@5/400.css">
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-serif@5/600.css">
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/400.css">
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/700.css">
+<link rel="stylesheet" href="/lib/fontsource/ibm-plex-serif/400.css">
+<link rel="stylesheet" href="/lib/fontsource/ibm-plex-serif/600.css">
+<link rel="stylesheet" href="/lib/fontsource/ibm-plex-mono/400.css">
+<link rel="stylesheet" href="/lib/fontsource/ibm-plex-mono/700.css">
 
 <meta name="description" content="在研发测试日常工作中，通常会遇到很多琐碎的事情，占用我们工作的时间和精力，从而导致我们不能把大部分的注意力放在主要的工作上面。为了解决这个问题，除了加人之外，我们通常会开发一些日常用的效率工具，比如以pyqt、pyside为主体的桌面应用，一键化我们的日常工作，从而解放我们很多处理琐碎事情的精力，让我们有更多精力打磨主业，创造更好的工作成绩。 因此，本文就分享下笔者在24年下半年调研学习pysid">
-<meta name="keywords" content="工具开发,python,pyside6,homemade-toolset,桌面应用">
+<meta name="keywords" content="python,工具开发,pyside6,homemade-toolset,桌面应用">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【代码艺廊】pyside6桌面应用范例：homemade-toolset">
 <meta property="og:url" content="https://utmhikari.top/2025/04/04/codegallery/homemade_toolset/index.html">
@@ -500,11 +497,14 @@
           
 
           
+            
+            <span class="busuanzi-post-view">
             <span class="post-meta-divider">|</span>
             <span class="post-meta-item-icon">
             <i class="fa fa-eye"></i>
              阅读次数： 
             <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
             </span>
           
 
@@ -601,9 +601,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/工具开发/" rel="tag"># 工具开发</a>
-          
             <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/工具开发/" rel="tag"># 工具开发</a>
           
             <a href="/tags/pyside6/" rel="tag"># pyside6</a>
           
@@ -656,7 +656,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【代码艺廊】pyside6桌面应用范例：homemade-toolset","description":"在研发测试日常工作中，通常会遇到很多琐碎的事情，占用我们工作的时间和精力，从而导致我们不能把大部分的注意力放在主要的工作上面。为了解决这个问题，除了加人之外，我们通常会开发一些日常用的效率工具，比如以pyqt、pyside为主体的桌面应用，一键化我们的日常工作，从而解放我们很多处理琐碎事情的精力，让我们有更多精力打磨主业，创造更好的工作成绩。 因此，本文就分享下笔者在24年下半年调研学习pysid","datePublished":"2025-04-04T08:23:10.000Z","dateModified":"2025-04-04T09:22:37.626Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2025/04/04/codegallery/homemade_toolset/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"工具开发, python, pyside6, homemade-toolset, 桌面应用"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【代码艺廊】pyside6桌面应用范例：homemade-toolset","description":"在研发测试日常工作中，通常会遇到很多琐碎的事情，占用我们工作的时间和精力，从而导致我们不能把大部分的注意力放在主要的工作上面。为了解决这个问题，除了加人之外，我们通常会开发一些日常用的效率工具，比如以pyqt、pyside为主体的桌面应用，一键化我们的日常工作，从而解放我们很多处理琐碎事情的精力，让我们有更多精力打磨主业，创造更好的工作成绩。 因此，本文就分享下笔者在24年下半年调研学习pysid","datePublished":"2025-04-04T08:23:10.000Z","dateModified":"2025-04-04T09:22:37.626Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2025/04/04/codegallery/homemade_toolset/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"python, 工具开发, pyside6, homemade-toolset, 桌面应用"}</script>
   
   
 
@@ -1763,6 +1763,20 @@
     </span>
   
 </div>
+<script>
+  // 不蒜子是第三方服务，脚本被拦或服务超时都会留下空白图标占位。
+  // 超时后若三个计数值一个都没填上，就把块体整体隐藏（post 页浏览数由 .busuanzi-post-view 承接）。
+  setTimeout(function () {
+    var ids = ['busuanzi_value_site_uv', 'busuanzi_value_site_pv', 'busuanzi_value_page_pv'];
+    var filled = ids.some(function (id) {
+      var el = document.getElementById(id);
+      return el && el.textContent.replace(/\s/g, '');
+    });
+    if (filled) return;
+    var nodes = document.querySelectorAll('.busuanzi-count, .busuanzi-post-view');
+    for (var i = 0; i < nodes.length; i++) nodes[i].style.display = 'none';
+  }, 5000);
+</script>
 
 
 
@@ -1826,16 +1840,16 @@
 
 
   
-  <script src="//gcore.jsdelivr.net/npm/jquery@2/dist/jquery.min.js"></script>
+  <script src="/lib/jquery/index.js?v=2.2.4"></script>
 
   
-  <script src="//gcore.jsdelivr.net/npm/jquery-lazyload@1/jquery.lazyload.min.js"></script>
+  <script src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
 
   
-  <script src="//gcore.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.5.2"></script>
 
   
-  <script src="//gcore.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.5.2"></script>
 
 
   
@@ -2216,26 +2230,6 @@
   
 
   
-<script>
-if ($('body').find('pre.mermaid').length) {
-  $.ajax({
-    type: 'GET',
-    url: '//cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js',
-    dataType: 'script',
-    cache: true,
-    success: function() {
-      mermaid.initialize({
-        theme: 'default',
-        logLevel: 3,
-        flowchart: { curve: 'linear' },
-        gantt: { axisFormat: '%m/%d/%Y' },
-        sequence: { actorMargin: 50 }
-      });
-    }
-  });
-}
-</script>
-
 
   
 

@@ -2050,7 +2050,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #d512f9;
+  background: #14af22;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3706,7 +3706,7 @@ hr {
   border-color: rgba(101,122,129,0.25);
 }
 :root {
-  --font-serif: Palatino, "Palatino Linotype", Georgia, "IBM Plex Serif", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --font-serif: Palatino, "Palatino Linotype", Georgia, "IBM Plex Serif", "Source Han Serif SC", "Songti SC", "STSong", SimSun, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", serif;
 }
 body,
 .post-body,
@@ -3726,7 +3726,7 @@ h6,
   font-family: inherit;
 }
 code {
-  font-family: "IBM Plex Mono", "SF Mono", Menlo, Consolas, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-family: "IBM Plex Mono", "SF Mono", Menlo, Consolas, "Source Han Serif SC", "Songti SC", "STSong", SimSun, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", serif;
 }
 pre,
 pre code,
