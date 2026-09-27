@@ -2050,7 +2050,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ffb6ff;
+  background: #ff2fff;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3626,12 +3626,13 @@ h6 {
 html.os-win body {
   -webkit-text-stroke: 0.2px currentColor;
 }
-html.os-win h1,
-html.os-win h2,
-html.os-win h3,
-html.os-win h4,
-html.os-win h5,
-html.os-win h6,
+html.os-win .post-body h1,
+html.os-win .post-body h2,
+html.os-win .post-body h3,
+html.os-win .post-body h4,
+html.os-win .post-body h5,
+html.os-win .post-body h6,
+html.os-win .collection-title,
 html.os-win pre,
 html.os-win code,
 html.os-win kbd {
@@ -3646,6 +3647,19 @@ html.os-win kbd {
 .post-body th,
 .post-body td {
   border-color: rgba(101,122,129,0.25);
+}
+.post-body table > thead > tr > th {
+  border-bottom: 2px solid #657a81;
+}
+.post-body table > tbody > tr:nth-of-type(odd) {
+  background-color: #fdf6e3;
+}
+.post-body table > tbody > tr:hover {
+  background-color: #ece7d5;
+}
+.post-body table > tbody > tr:hover > td,
+.post-body table > tbody > tr:hover > th {
+  background-color: transparent;
 }
 .posts-expand .post-body img {
   border-color: rgba(101,122,129,0.25);
@@ -3692,7 +3706,7 @@ hr {
   border-color: rgba(101,122,129,0.25);
 }
 :root {
-  --font-serif: Palatino, "Palatino Linotype", "Book Antiqua", "URW Palladio L", P052, "IBM Plex Serif", Georgia, "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", SimSun, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", serif;
+  --font-serif: Palatino, Georgia, "IBM Plex Serif", "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", SimSun, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", serif;
 }
 body,
 .post-body,
