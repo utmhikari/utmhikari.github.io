@@ -111,7 +111,7 @@
 <link rel="stylesheet" href="/lib/fontsource/ibm-plex-mono/700.css">
 
 <meta name="description" content="在python面试里，多线程是避不开的话题，其中一个经典问题就是，多线程threading.Thread是不是并行运行。这个问题的答案，说是也不对，说不是也不对，得分情况讨论。本文就带领大家，分析并回答这个问题。 我们用一段代码来做实验：">
-<meta name="keywords" content="python,GIL,并行,并发,多线程">
+<meta name="keywords" content="python,并发,并行,多线程,GIL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【Python随笔】python多线程什么情况下可以并行？什么情况下不能？">
 <meta property="og:url" content="https://utmhikari.top/2022/07/03/pythonnotes/multithread_parallel/index.html">
@@ -586,13 +586,13 @@
           
             <a href="/tags/python/" rel="tag"># python</a>
           
-            <a href="/tags/GIL/" rel="tag"># GIL</a>
+            <a href="/tags/并发/" rel="tag"># 并发</a>
           
             <a href="/tags/并行/" rel="tag"># 并行</a>
           
-            <a href="/tags/并发/" rel="tag"># 并发</a>
-          
             <a href="/tags/多线程/" rel="tag"># 多线程</a>
+          
+            <a href="/tags/GIL/" rel="tag"># GIL</a>
           
         </div>
       
@@ -639,7 +639,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Python随笔】python多线程什么情况下可以并行？什么情况下不能？","description":"在python面试里，多线程是避不开的话题，其中一个经典问题就是，多线程threading.Thread是不是并行运行。这个问题的答案，说是也不对，说不是也不对，得分情况讨论。本文就带领大家，分析并回答这个问题。 我们用一段代码来做实验：","datePublished":"2022-07-02T16:32:34.000Z","dateModified":"2024-04-07T02:48:06.926Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2022/07/03/pythonnotes/multithread_parallel/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"python, GIL, 并行, 并发, 多线程"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Python随笔】python多线程什么情况下可以并行？什么情况下不能？","description":"在python面试里，多线程是避不开的话题，其中一个经典问题就是，多线程threading.Thread是不是并行运行。这个问题的答案，说是也不对，说不是也不对，得分情况讨论。本文就带领大家，分析并回答这个问题。 我们用一段代码来做实验：","datePublished":"2022-07-02T16:32:34.000Z","dateModified":"2024-04-07T02:48:06.926Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2022/07/03/pythonnotes/multithread_parallel/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"python, 并发, 并行, 多线程, GIL"}</script>
   
   
 

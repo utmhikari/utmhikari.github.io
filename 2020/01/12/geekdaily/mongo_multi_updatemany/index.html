@@ -111,7 +111,7 @@
 <link rel="stylesheet" href="/lib/fontsource/ibm-plex-mono/700.css">
 
 <meta name="description" content="在实际使用mongodb的场景中，我们经常遇到多个请求同时在某个collection里update多条document的需求。这个需求看似有许多种解法，但是具体哪种好也说不准。现在便让我们一探究竟吧~ 首先我们利用pymongo添加1000000条数据，name字段为hello： 12345678910111213from pymongo import MongoClientclient = Mo">
-<meta name="keywords" content="并发,mongodb,pymongo,事务,原子性">
+<meta name="keywords" content="mongodb,pymongo,并发,事务,原子性">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【极客日常】解决使用mongodb时同时update多条数据的问题">
 <meta property="og:url" content="https://utmhikari.top/2020/01/12/geekdaily/mongo_multi_updatemany/index.html">
@@ -587,11 +587,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/并发/" rel="tag"># 并发</a>
-          
             <a href="/tags/mongodb/" rel="tag"># mongodb</a>
           
             <a href="/tags/pymongo/" rel="tag"># pymongo</a>
+          
+            <a href="/tags/并发/" rel="tag"># 并发</a>
           
             <a href="/tags/事务/" rel="tag"># 事务</a>
           
@@ -642,7 +642,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【极客日常】解决使用mongodb时同时update多条数据的问题","description":"在实际使用mongodb的场景中，我们经常遇到多个请求同时在某个collection里update多条document的需求。这个需求看似有许多种解法，但是具体哪种好也说不准。现在便让我们一探究竟吧~ 首先我们利用pymongo添加1000000条数据，name字段为hello： 12345678910111213from pymongo import MongoClientclient = Mo","datePublished":"2020-01-12T07:37:44.000Z","dateModified":"2024-04-07T02:48:06.920Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2020/01/12/geekdaily/mongo_multi_updatemany/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"并发, mongodb, pymongo, 事务, 原子性"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【极客日常】解决使用mongodb时同时update多条数据的问题","description":"在实际使用mongodb的场景中，我们经常遇到多个请求同时在某个collection里update多条document的需求。这个需求看似有许多种解法，但是具体哪种好也说不准。现在便让我们一探究竟吧~ 首先我们利用pymongo添加1000000条数据，name字段为hello： 12345678910111213from pymongo import MongoClientclient = Mo","datePublished":"2020-01-12T07:37:44.000Z","dateModified":"2024-04-07T02:48:06.920Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2020/01/12/geekdaily/mongo_multi_updatemany/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"mongodb, pymongo, 并发, 事务, 原子性"}</script>
   
   
 

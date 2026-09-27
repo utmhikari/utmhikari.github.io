@@ -2050,7 +2050,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #bf91ff;
+  background: #ff26a3;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3423,7 +3423,7 @@ kbd {
   border-color: rgba(101,122,129,0.25);
 }
 code {
-  background: #ece7d5;
+  background: #f6efdc;
 }
 .menu .menu-item a:hover,
 .menu .menu-item span.exturl:hover {
@@ -3691,7 +3691,7 @@ hr {
   border-color: rgba(101,122,129,0.25);
 }
 :root {
-  --font-serif: Palatino, "Palatino Linotype", Georgia, "Songti SC", "PingFang SC", "Microsoft YaHei", "Noto Serif CJK SC", serif;
+  --font-serif: Palatino, "Palatino Linotype", Georgia, "Songti SC", "PingFang SC", "Microsoft YaHei", "Noto Serif CJK SC", "Noto Sans CJK SC", serif;
 }
 body,
 .post-body,
@@ -3712,12 +3712,12 @@ h6,
 }
 code,
 samp {
-  font-family: "IBM Plex Mono", "SF Mono", Menlo, Consolas, "Ubuntu Mono", "Songti SC", "PingFang SC", "Microsoft YaHei", "Noto Serif CJK SC", monospace;
+  font-family: "IBM Plex Mono", "SF Mono", Menlo, Consolas, "Ubuntu Mono", "Songti SC", "PingFang SC", "Microsoft YaHei", "Noto Serif CJK SC", "Noto Sans CJK SC", monospace;
 }
 pre,
 pre code,
 kbd {
-  font-family: "IBM Plex Mono", "SF Mono", Menlo, Consolas, "Ubuntu Mono", "Songti SC", "PingFang SC", "Microsoft YaHei", "Noto Serif CJK SC", monospace;
+  font-family: "IBM Plex Mono", "SF Mono", Menlo, Consolas, "Ubuntu Mono", "Songti SC", "PingFang SC", "Microsoft YaHei", "Noto Serif CJK SC", "Noto Sans CJK SC", monospace;
 }
 .highlight,
 .highlight pre,
