@@ -114,8 +114,6 @@
 <link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-serif@5/600.css">
 <link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/400.css">
 <link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/700.css">
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/400.css">
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/600.css">
 
 <meta name="description" content="在上篇文章里说完了日志实例Logger和日志管理Manager，现在该提到Handler了。Handler是日志信息的消费者，单个Logger实例注册多个Handler，每生成一个LogRecord，就会被合法的Handler消费，在不同地方打印出日志信息。 要研究Handler，首先需要看下基类的实现： 12345678910class Handler(Filterer):    def han">
 <meta name="keywords" content="python,日志,Handler,stderr,TimedRotatingFileHandler">

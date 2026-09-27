@@ -114,8 +114,6 @@
 <link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-serif@5/600.css">
 <link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/400.css">
 <link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/700.css">
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/400.css">
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/600.css">
 
 <meta name="description" content="最近在项目组测试有开发一个导表检查的需求，大致是在策划提交表更新到svn之后，svn发送post-commit到策划表数据服务，而后策划表数据服务下载excel文件，更新数据之后，将导表检查下游服务所需的检查数据进行整合，然后post到导表检查服务。在这个过程中，由于做的仓促没有考虑设计，最后策划表数据服务的JVM发生了OOM问题。经过一番排查改进了设计，解决了这个问题。 JVM的内存结构跟GC流">
 <meta name="keywords" content="gc,OOM,内存泄漏,Java,JVM">
