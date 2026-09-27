@@ -2050,7 +2050,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #14af22;
+  background: #613320;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3624,7 +3624,7 @@ h6 {
   color: #999;
 }
 html.os-win body {
-  -webkit-text-stroke: 0.2px currentColor;
+  -webkit-text-stroke: 0.15px currentColor;
 }
 html.os-win .post-body h1,
 html.os-win .post-body h2,
@@ -3706,7 +3706,7 @@ hr {
   border-color: rgba(101,122,129,0.25);
 }
 :root {
-  --font-serif: Palatino, "Palatino Linotype", Georgia, "IBM Plex Serif", "Source Han Serif SC", "Songti SC", "STSong", SimSun, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", serif;
+  --font-serif: Palatino, "Palatino Linotype", Georgia, "IBM Plex Serif", "Songti SC", "Noto Serif SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", serif;
 }
 body,
 .post-body,
@@ -3726,12 +3726,12 @@ h6,
   font-family: inherit;
 }
 code {
-  font-family: "IBM Plex Mono", "SF Mono", Menlo, Consolas, "Source Han Serif SC", "Songti SC", "STSong", SimSun, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", serif;
+  font-family: "IBM Plex Mono", "SF Mono", Menlo, Consolas, "Songti SC", "Noto Serif SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", serif;
 }
 pre,
 pre code,
 kbd {
-  font-family: "IBM Plex Mono", "SF Mono", Menlo, Consolas, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", monospace;
+  font-family: "IBM Plex Mono", "SF Mono", Menlo, Consolas, "Songti SC", "Noto Serif SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", monospace;
 }
 .highlight,
 .highlight pre,
