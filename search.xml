@@ -2377,8 +2377,8 @@
       <tags>
         <tag>游戏测试</tag>
         <tag>专项测试</tag>
-        <tag>测试</tag>
         <tag>功能测试</tag>
+        <tag>测试</tag>
         <tag>精准测试</tag>
       </tags>
   </entry>
@@ -8280,8 +8280,8 @@
         <tag>测试开发</tag>
         <tag>游戏测试</tag>
         <tag>质量保障</tag>
-        <tag>测试</tag>
         <tag>功能测试</tag>
+        <tag>测试</tag>
       </tags>
   </entry>
   <entry>
@@ -8310,8 +8310,8 @@
       <tags>
         <tag>游戏自动化</tag>
         <tag>游戏测试</tag>
-        <tag>UI自动化</tag>
         <tag>手游自动化</tag>
+        <tag>UI自动化</tag>
         <tag>接口自动化</tag>
       </tags>
   </entry>
@@ -8518,10 +8518,10 @@
       </categories>
       <tags>
         <tag>研发效能</tag>
+        <tag>VSCode</tag>
         <tag>eclipse theia</tag>
         <tag>gitpod</tag>
         <tag>cloud IDE</tag>
-        <tag>VSCode</tag>
       </tags>
   </entry>
   <entry>
@@ -8633,8 +8633,8 @@
         <tag>后端开发</tag>
         <tag>web开发</tag>
         <tag>python</tag>
-        <tag>效率工具</tag>
         <tag>fastapi</tag>
+        <tag>效率工具</tag>
       </tags>
   </entry>
   <entry>
@@ -8760,8 +8760,8 @@
       </categories>
       <tags>
         <tag>游戏测试</tag>
-        <tag>测试</tag>
         <tag>功能测试</tag>
+        <tag>测试</tag>
         <tag>code review</tag>
         <tag>测试用例</tag>
       </tags>
@@ -9012,8 +9012,8 @@
       <tags>
         <tag>前端开发</tag>
         <tag>桌面应用</tag>
-        <tag>react</tag>
         <tag>electron</tag>
+        <tag>react</tag>
         <tag>antd</tag>
       </tags>
   </entry>
