@@ -52,13 +52,15 @@ kbd {
   border-color: alpha($custom-main-color, 0.25);
 }
 
-// 行内码底：不再复用 $menu-item-color——那是 hover / 按钮的语义，且它等于 Solarized base2，
-// 压在 base3 页面底上落差偏大、看着发脏。改用两者中点，保留暖沙调、深度减半。
-// 文字色覆盖主题带来的中性灰 #555（灰字配暖底是游离在体系外的组合），换成 Solarized base01。
-// 只影响行内码：<pre><code> 由主题的 pre code 规则（0-0-2）单独控制，颜色仍是主色。
+// 行内码：底色单独用 $code-inline-bg（不再复用 $menu-item-color——那是 hover / 按钮的语义，
+// 且它等于 Solarized base2，压在 base3 页面底上落差偏大、看着发脏）。
+// 文字色用 inherit 跟着上下文走——行内码嵌在正文里，颜色必须与周围文字一致；写死色值会在
+// 主题调色或换语境（链接/标题内）时脱节。曾试换成 Solarized base01 #586e75，
+// 结果那点青调在正文的中性灰里显“发绿”，已回退。
+// 只影响行内码：<pre><code> 由主题的 pre code 规则（0-0-2）单独控制，颜色仍是主色 #657a81。
 code {
   background: $code-inline-bg;
-  color: #586e75;
+  color: inherit;
 }
 
 // 1. 菜单 hover / 激活态：暖沙底 + 主色文字，压掉主题默认的白底白线
