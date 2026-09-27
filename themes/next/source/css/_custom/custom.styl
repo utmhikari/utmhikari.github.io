@@ -3,6 +3,7 @@ $custom-main-color = #657A81
 $custom-bg-color = #fdf6e3  // solarized light
 $black-light = #333
 $menu-item-color = #ECE7D5  // 初始的暖沙色，hover / 激活态统一用它
+$code-inline-bg = #F6EFDC  // 行内码底：Solarized base3(#fdf6e3) 与 base2(#eee8d5) 的中点，比暖沙浅一半
 $timeline-tint = alpha($custom-main-color, 0.22)
 
 .content-wrap {
@@ -51,8 +52,13 @@ kbd {
   border-color: alpha($custom-main-color, 0.25);
 }
 
+// 行内码底：不再复用 $menu-item-color——那是 hover / 按钮的语义，且它等于 Solarized base2，
+// 压在 base3 页面底上落差偏大、看着发脏。改用两者中点，保留暖沙调、深度减半。
+// 文字色覆盖主题带来的中性灰 #555（灰字配暖底是游离在体系外的组合），换成 Solarized base01。
+// 只影响行内码：<pre><code> 由主题的 pre code 规则（0-0-2）单独控制，颜色仍是主色。
 code {
-  background: $menu-item-color;
+  background: $code-inline-bg;
+  color: #586e75;
 }
 
 // 1. 菜单 hover / 激活态：暖沙底 + 主色文字，压掉主题默认的白底白线
@@ -264,27 +270,28 @@ h1, h2, h3, h4, h5, h6 {
   #no-result { color: $grey-dark; }
 }
 
-// 16. Windows 专属渲染补偿：Palatino Linotype 字干偏细、ClearType 下发浅，
-//     用同色发丝描边模拟「加粗一丢丢」（0.2px 亚像素描边，只增视觉重量不换字体）。
-//     描边可继承，仅豁免「真粗体」元素：正文内章节标题（600→命中 700 真粗体）、
-//     归档年份标题、代码块/行内码；卡片与文章大标题（.post-title，400 字重，
-//     不在 .post-body 内）保留描边补偿。调节粗细只改 body 那一处数值（当前 0.2px）。
-html.os-win body {
-  -webkit-text-stroke: 0.2px currentColor;
-}
+// 16. Windows 专属渲染补偿（已停用，2026-09）：
+//     原先用 0.15px 同色发丝描边补 Palatino Linotype 在 ClearType 下的发浅。
+//     但 text-stroke 作用于整个元素、无法按字符集分离，Windows 汉字改落微软雅黑后会被连带描粗。
+//     现整体注释掉 —— Windows 不再加描边，恢复各自字体的原生观感。
+//     若要重新启用，取消下面两段注释即可（豁免范围必须限定「真粗体」元素：
+//     正文内章节标题、归档年份、代码块/行内码；卡片与大标题保留描边）。
+// html.os-win body {
+//   -webkit-text-stroke: 0.15px currentColor;
+// }
 
-html.os-win .post-body h1,
-html.os-win .post-body h2,
-html.os-win .post-body h3,
-html.os-win .post-body h4,
-html.os-win .post-body h5,
-html.os-win .post-body h6,
-html.os-win .collection-title,
-html.os-win pre,
-html.os-win code,
-html.os-win kbd {
-  -webkit-text-stroke: 0;
-}
+// html.os-win .post-body h1,
+// html.os-win .post-body h2,
+// html.os-win .post-body h3,
+// html.os-win .post-body h4,
+// html.os-win .post-body h5,
+// html.os-win .post-body h6,
+// html.os-win .collection-title,
+// html.os-win pre,
+// html.os-win code,
+// html.os-win kbd {
+//   -webkit-text-stroke: 0;
+// }
 
 // 12. 全站灰白线整改：把主题残留的 #eee/#ddd/#ccc 边框统一换成主色系浅调
 .post-nav {
@@ -369,16 +376,22 @@ hr {
   }
 }
 
-// 14. 字体栈：拉丁衬线 + 汉字无衬线，以 CSS 变量 --font-serif 下发。
-//     拉丁回退链：Palatino → Palatino Linotype → Georgia → IBM Plex Serif（webfont）：
-//     Mac 命中 Palatino；Windows 命中系统 Palatino Linotype（ClearType 发浅由 16 节描边补偿）；
-//     Georgia 作无前两者环境的兜底，再落到 Plex Serif webfont。
-//     汉字不挂 webfont，交由系统无衬线：Mac/移动端命中苹方，Windows 命中雅黑。
+// 14. 字体栈：以 CSS 变量 --font-serif 下发。
+//     拉丁回退链：Palatino → Palatino Linotype → Georgia → 系统衬线。
+//     Mac 命中 Palatino，Windows 命中系统 Palatino Linotype，其余环境落系统衬线。
+//     不再挂任何拉丁 webfont（IBM Plex Serif 已移除），省掉它的请求与解析。
+//     汉字不挂 webfont：Mac 命中 Songti SC；Windows 走苹方→微软雅黑，全区统一雅黑；
+//     其余环境（如 Ubuntu）由系统默认中文衬线 Noto Serif CJK SC 兜底；
+//     最后再挂 Noto Sans CJK SC（Android 自带的思源黑体），把 Android 原本靠浏览器
+//     最后一层 fallback 的隐式命中变成显式命中，然后才是 serif 通用族。
+//     已移除：STSong / SimSun（观感）/ Source Han Serif SC（装机率）/ Hiragino Sans GB；
+//     Noto Serif SC 也移除——它在 Windows 上覆盖不全（Win10、英文版都没有），
+//     留着只会让 Windows 读者之间字体不一致，不如统一雅黑。
 //     Windows 专属调整经 head-unique.swig 的 UA 脚本挂 html.os-win 类实现，
 //     后续任何仅针对 Windows 的样式 hack 都可挂在 html.os-win 下。
 //     主题 font.family 机制会给整栈加引号失效，故直接在此定义；
-//     webfont 链接在 head-unique.swig；字重保持主题默认（大标题 400、章节标题 600）
-$serif-stack = Palatino, "Palatino Linotype", Georgia, "IBM Plex Serif", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif
+//     webfont 链接在 head-unique.swig（同域自托管）；字重保持主题默认（大标题 400、章节标题 600）
+$serif-stack = Palatino, "Palatino Linotype", Georgia, "Songti SC", "PingFang SC", "Microsoft YaHei", "Noto Serif CJK SC", "Noto Sans CJK SC", serif
 
 :root { --font-serif: $serif-stack; }
 
@@ -397,26 +410,65 @@ h1, h2, h3, h4, h5, h6,
   font-family: inherit;
 }
 
-// 行内 code：拉丁/数字走 Plex Mono，汉字回退系统无衬线（与周围正文同族）
-code {
-  font-family: "IBM Plex Mono", "SF Mono", Menlo, Consolas, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+// 行内码：拉丁/数字走等宽链（补 Ubuntu Mono 作 Linux 兜底），汉字回退正文宋体系。
+// 栈尾收 monospace 而非 serif——这是等宽语境，之前的 serif 是遗留错误，会导致
+// 所有具名字体缺失时 Latin 落系统衬线体（比例字形）出现在代码里。
+// samp 一并纳入：主题 normalize 把 code/kbd/pre/samp 当作同一组设字体，
+// 只覆盖其中三个会让 samp 留在 monospace,monospace 这套无关的栈里。
+code, samp {
+  font-family: "IBM Plex Mono", "SF Mono", Menlo, Consolas, "Ubuntu Mono", "Songti SC", "PingFang SC", "Microsoft YaHei", "Noto Serif CJK SC", "Noto Sans CJK SC", monospace;
 }
 
-// 代码块与 kbd 保持纯等宽链（注释里的汉字落苹方/雅黑，代码场景惯例）
+// 代码块与 kbd：与行内码同栈（拉丁等宽 → 汉字宋体系 → monospace 兜底）。
+// 汉字链必须排在拉丁链之后：中文字体自带拉丁字形，提前会把代码里的 Latin 接管成比例字形。
+// `pre code` 是承重不是冗余：`<code>` 自身的声明优先于从 `<pre>` 继承的值，
+// 靠它（0-0-2）压住行内码的 `code`（0-0-1），将来才能单独调代码块。别删。
 pre, pre code, kbd {
-  font-family: "IBM Plex Mono", "SF Mono", Menlo, Consolas, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", monospace;
+  font-family: "IBM Plex Mono", "SF Mono", Menlo, Consolas, "Ubuntu Mono", "Songti SC", "PingFang SC", "Microsoft YaHei", "Noto Serif CJK SC", "Noto Sans CJK SC", monospace;
 }
 
 // 15. 代码块：字号与行距收紧，复制按钮 / 标题栏去灰白
 .highlight,
 .highlight pre,
 pre {
-  font-size: 13px;
+  font-size: 12.5px;
   line-height: 1.5;
 }
 
 .highlight pre {
   padding: 8px 0;
+}
+
+// 15b. 代码块滚动条：浏览器原生滚动条是系统灰白条，与代码块底色（Solarized 米白 #fdf6e3）完全不搭。
+//      轨道透明让底色透出来；滑块用暖沙（与全站填充色同源，≈ Solarized base2）——
+//      先前用过冷调浅烟灰 #D8DFE1，在暖米白上发蓝发灰、跳出色系，故换暖沙，hover 加深一档。
+//      一律实色，不用 rgba（半透明叠在米白上会透白显灰，已定规范）。
+//      只写 ::-webkit-scrollbar（Chrome/Safari/Edge）；Firefox 一旦设 scrollbar-width/color
+//      会反过来禁掉这套伪元素，所以不混写，Firefox 保留系统滚动条。
+.highlight::-webkit-scrollbar,
+pre::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.highlight::-webkit-scrollbar-track,
+pre::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.highlight::-webkit-scrollbar-thumb,
+pre::-webkit-scrollbar-thumb {
+  background: #ECE7D5;
+  border-radius: 4px;
+
+  &:hover {
+    background: #D8D2BC;
+  }
+}
+
+.highlight::-webkit-scrollbar-corner,
+pre::-webkit-scrollbar-corner {
+  background: transparent;
 }
 
 .highlight figcaption {

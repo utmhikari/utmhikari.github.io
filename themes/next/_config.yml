@@ -911,7 +911,9 @@ pdf:
 
 # Mermaid tag
 mermaid:
-  enable: true
+  # 全站无文章使用 mermaid；开启会向每个页面的 head 注入一段引用 cdn.jsdelivr.net 的加载脚本，
+  # 国内 DNS 被污染必挂。将来要用图表时改走同域自托管再打开。
+  enable: false
   # Available themes: default | dark | forest | neutral
   theme: default
   # Use 8.0.0 as default, jsdelivr as default CDN, works everywhere even in China
@@ -1015,10 +1017,11 @@ vendors:
   _internal: lib
 
   # Internal version: 2.1.3
-  # Example:
-  jquery: //gcore.jsdelivr.net/npm/jquery@2/dist/jquery.min.js
+  # 已改为同域自托管：源文件在 themes/next/source/lib/jquery/（jQuery 2.2.4），留空即走 _internal
+  # 参考写法（CDN）:
   # jquery: //cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js
   # jquery: //cdn.staticfile.org/jquery/2.1.3/jquery.min.js
+  jquery:
 
   # Internal version: 2.1.5 & 3.5.6
   # See: https://fancyapps.com/fancybox
@@ -1039,25 +1042,24 @@ vendors:
 
   # Internal version: 1.9.7
   # See: https://github.com/tuupola/jquery_lazyload
-  # Example:
-  lazyload: //gcore.jsdelivr.net/npm/jquery-lazyload@1/jquery.lazyload.min.js
+  # 已改为同域自托管：源文件在 themes/next/source/lib/jquery_lazyload/
+  lazyload:
   # lazyload: //cdnjs.cloudflare.com/ajax/libs/jquery_lazyload/1.9.7/jquery.lazyload.min.js
   # lazyload: //cdn.staticfile.org/jquery_lazyload/1.9.7/jquery.lazyload.min.js
 
   # Internal version: 1.2.1
   # See: http://velocityjs.org
-  # Example:
-  velocity: //gcore.jsdelivr.net/npm/velocity-animate@1/velocity.min.js
-  # velocity: //cdnjs.cloudflare.com/ajax/libs/velocity/1.2.1/velocity.min.js
-  velocity_ui: //gcore.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js
+  # 已改为同域自托管：源文件在 themes/next/source/lib/velocity/（velocity-animate 1.5.2）
+  velocity:
+  velocity_ui:
   # velocity_ui: //cdnjs.cloudflare.com/ajax/libs/velocity/1.2.1/velocity.ui.min.js
   # velocity: //cdn.staticfile.org/velocity/1.2.1/velocity.min.js
   # velocity_ui: //cdn.staticfile.org/velocity/1.2.1/velocity.ui.min.js
 
   # Internal version: 4.6.2
   # See: https://fontawesome.com
-  # Example:
-  fontawesome: //gcore.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css
+  # 已改为同域自托管：源文件在 themes/next/source/lib/font-awesome/（4.7.0，仅 woff2 + woff）
+  fontawesome:
   # fontawesome: //cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css
   # fontawesome: //cdn.staticfile.org/font-awesome/4.6.2/css/font-awesome.min.css
 

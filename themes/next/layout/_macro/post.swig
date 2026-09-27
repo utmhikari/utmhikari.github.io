@@ -205,12 +205,15 @@
           {% endif %}
 
           {% if not is_index and theme.busuanzi_count.enable and theme.busuanzi_count.post_views %}
+            {# 整块挂 .busuanzi-post-view：不蒜子不可达时由 busuanzi-counter.swig 的兜底脚本连同分隔符一起隐藏 #}
+            <span class="busuanzi-post-view">
             <span class="post-meta-divider">|</span>
             <span class="post-meta-item-icon"
             {% if not theme.post_meta.item_text %} title="{{ __('post.views') }}" {% endif %}>
             <i class="fa fa-{{ theme.busuanzi_count.post_views_icon }}"></i>
             {% if theme.post_meta.item_text %} {{ __('post.views') + __('symbol.colon') }} {% endif %}
             <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
             </span>
           {% endif %}
 

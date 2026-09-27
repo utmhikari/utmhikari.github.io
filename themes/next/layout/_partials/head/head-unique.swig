@@ -9,16 +9,13 @@
 </script>
 
 {#
-  Webfont：IBM Plex Mono（代码 400/700）+ IBM Plex Serif（拉丁衬线 400/600，
-           仅作无 Palatino 环境的兜底网：栈里系统 Palatino 族命中时浏览器不会下载其字形，零成本）
-           汉字不挂 webfont，交由系统无衬线（苹方/雅黑）。
-  fontsource CDN（gcore 镜像，与主题其它 vendors 同源）；不可达时回退系统字体栈
+  Webfont：只留 IBM Plex Mono（代码 400/700），同域自托管于 lib/fontsource/。
+           IBM Plex Serif 已随字体栈移除，不再注入（省掉 2 条请求与解析）。
+           汉字不挂 webfont：Mac 落 Songti SC，Windows 统一微软雅黑，
+           其余环境由系统中文衬线（Ubuntu 的 Noto Serif CJK SC）兜底。
 #}
-<link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-serif@5/400.css">
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-serif@5/600.css">
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/400.css">
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/700.css">
+<link rel="stylesheet" href="{{ url_for(theme.vendors._internal + '/fontsource/ibm-plex-mono/400.css') }}">
+<link rel="stylesheet" href="{{ url_for(theme.vendors._internal + '/fontsource/ibm-plex-mono/700.css') }}">
 
 {{
   open_graph({
