@@ -2050,7 +2050,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #c205ff;
+  background: #bf91ff;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3722,11 +3722,33 @@ kbd {
 .highlight,
 .highlight pre,
 pre {
-  font-size: 13px;
-  line-height: 1.5;
+  font-size: 12px;
+  line-height: 1.4;
 }
 .highlight pre {
   padding: 8px 0;
+}
+.highlight::-webkit-scrollbar,
+pre::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.highlight::-webkit-scrollbar-track,
+pre::-webkit-scrollbar-track {
+  background: transparent;
+}
+.highlight::-webkit-scrollbar-thumb,
+pre::-webkit-scrollbar-thumb {
+  background: #d8dfe1;
+  border-radius: 4px;
+}
+.highlight::-webkit-scrollbar-thumb:hover,
+pre::-webkit-scrollbar-thumb:hover {
+  background: #bfcbd0;
+}
+.highlight::-webkit-scrollbar-corner,
+pre::-webkit-scrollbar-corner {
+  background: transparent;
 }
 .highlight figcaption {
   background: #ece7d5;

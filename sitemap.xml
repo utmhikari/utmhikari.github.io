@@ -107,13 +107,6 @@
   </url>
   
   <url>
-    <loc>https://utmhikari.top/2019/12/22/testlife/are_testers_controlling_quality/</loc>
-    
-    <lastmod>2026-05-01T10:10:29.333Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://utmhikari.top/2020/09/06/testlife/be_a_tester/</loc>
     
     <lastmod>2026-05-01T10:10:29.333Z</lastmod>
@@ -121,7 +114,7 @@
   </url>
   
   <url>
-    <loc>https://utmhikari.top/2025/02/22/testlife/change_control_data_marketing/</loc>
+    <loc>https://utmhikari.top/2019/12/22/testlife/are_testers_controlling_quality/</loc>
     
     <lastmod>2026-05-01T10:10:29.333Z</lastmod>
     
@@ -129,6 +122,13 @@
   
   <url>
     <loc>https://utmhikari.top/2025/01/26/testlife/change_observe_logic/</loc>
+    
+    <lastmod>2026-05-01T10:10:29.333Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://utmhikari.top/2025/02/22/testlife/change_control_data_marketing/</loc>
     
     <lastmod>2026-05-01T10:10:29.333Z</lastmod>
     
@@ -856,14 +856,14 @@
   </url>
   
   <url>
-    <loc>https://utmhikari.top/2023/07/08/testlife/sql_change_block/</loc>
+    <loc>https://utmhikari.top/2024/01/07/testlife/slow_query_risk/</loc>
     
     <lastmod>2024-04-07T02:48:06.929Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://utmhikari.top/2021/03/06/testlife/table_check/</loc>
+    <loc>https://utmhikari.top/2023/07/08/testlife/sql_change_block/</loc>
     
     <lastmod>2024-04-07T02:48:06.929Z</lastmod>
     
@@ -877,7 +877,7 @@
   </url>
   
   <url>
-    <loc>https://utmhikari.top/2024/01/07/testlife/slow_query_risk/</loc>
+    <loc>https://utmhikari.top/2021/03/06/testlife/table_check/</loc>
     
     <lastmod>2024-04-07T02:48:06.929Z</lastmod>
     
@@ -912,13 +912,6 @@
   </url>
   
   <url>
-    <loc>https://utmhikari.top/2020/01/23/testlife/excel_diff/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.928Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://utmhikari.top/2020/09/06/testlife/game_autotest/</loc>
     
     <lastmod>2024-04-07T02:48:06.928Z</lastmod>
@@ -941,6 +934,13 @@
   
   <url>
     <loc>https://utmhikari.top/2019/08/19/testlife/ios_review/</loc>
+    
+    <lastmod>2024-04-07T02:48:06.928Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://utmhikari.top/2020/01/23/testlife/excel_diff/</loc>
     
     <lastmod>2024-04-07T02:48:06.928Z</lastmod>
     
@@ -1073,6 +1073,13 @@
   </url>
   
   <url>
+    <loc>https://utmhikari.top/2020/11/15/pythonnotes/python_os_walk/</loc>
+    
+    <lastmod>2024-04-07T02:48:06.926Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://utmhikari.top/2021/10/05/pythonnotes/python_c_extension/</loc>
     
     <lastmod>2024-04-07T02:48:06.926Z</lastmod>
@@ -1080,9 +1087,9 @@
   </url>
   
   <url>
-    <loc>https://utmhikari.top/2020/11/15/pythonnotes/python_os_walk/</loc>
+    <loc>https://utmhikari.top/2019/04/07/luatalk/lfunctimer_capi/</loc>
     
-    <lastmod>2024-04-07T02:48:06.926Z</lastmod>
+    <lastmod>2024-04-07T02:48:06.925Z</lastmod>
     
   </url>
   
@@ -1101,21 +1108,14 @@
   </url>
   
   <url>
-    <loc>https://utmhikari.top/2019/06/12/luatalk/metatable/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.925Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://utmhikari.top/2019/04/07/luatalk/lfunctimer_capi/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.925Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://utmhikari.top/2019/09/12/luatalk/sproto/</loc>
+    
+    <lastmod>2024-04-07T02:48:06.925Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://utmhikari.top/2019/06/12/luatalk/metatable/</loc>
     
     <lastmod>2024-04-07T02:48:06.925Z</lastmod>
     
@@ -1171,21 +1171,14 @@
   </url>
   
   <url>
-    <loc>https://utmhikari.top/2022/05/08/hardpython/5_str_1/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.924Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://utmhikari.top/2019/08/25/luatalk/coroutine/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.924Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://utmhikari.top/2022/01/08/hardpython/preface/</loc>
+    
+    <lastmod>2024-04-07T02:48:06.924Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://utmhikari.top/2022/05/08/hardpython/5_str_1/</loc>
     
     <lastmod>2024-04-07T02:48:06.924Z</lastmod>
     
@@ -1199,9 +1192,9 @@
   </url>
   
   <url>
-    <loc>https://utmhikari.top/2023/07/01/gofromzero/12_singleflight/</loc>
+    <loc>https://utmhikari.top/2019/08/25/luatalk/coroutine/</loc>
     
-    <lastmod>2024-04-07T02:48:06.923Z</lastmod>
+    <lastmod>2024-04-07T02:48:06.924Z</lastmod>
     
   </url>
   
@@ -1213,21 +1206,14 @@
   </url>
   
   <url>
+    <loc>https://utmhikari.top/2023/07/01/gofromzero/12_singleflight/</loc>
+    
+    <lastmod>2024-04-07T02:48:06.923Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://utmhikari.top/2023/08/26/gofromzero/14_ratelimit/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.923Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://utmhikari.top/2022/01/16/hardpython/1_multiprocessing_1/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.923Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://utmhikari.top/2022/01/30/hardpython/1_multiprocessing_3/</loc>
     
     <lastmod>2024-04-07T02:48:06.923Z</lastmod>
     
@@ -1248,6 +1234,20 @@
   </url>
   
   <url>
+    <loc>https://utmhikari.top/2022/01/16/hardpython/1_multiprocessing_1/</loc>
+    
+    <lastmod>2024-04-07T02:48:06.923Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://utmhikari.top/2022/01/30/hardpython/1_multiprocessing_3/</loc>
+    
+    <lastmod>2024-04-07T02:48:06.923Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://utmhikari.top/2022/02/20/hardpython/2_asyncio_2/</loc>
     
     <lastmod>2024-04-07T02:48:06.923Z</lastmod>
@@ -1262,14 +1262,21 @@
   </url>
   
   <url>
-    <loc>https://utmhikari.top/2023/01/01/gofromzero/07_reflect_module/</loc>
+    <loc>https://utmhikari.top/2023/02/18/gofromzero/08_cache_interface/</loc>
     
     <lastmod>2024-04-07T02:48:06.922Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://utmhikari.top/2023/02/18/gofromzero/08_cache_interface/</loc>
+    <loc>https://utmhikari.top/2023/05/10/gofromzero/11_make_new/</loc>
+    
+    <lastmod>2024-04-07T02:48:06.922Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://utmhikari.top/2023/01/01/gofromzero/07_reflect_module/</loc>
     
     <lastmod>2024-04-07T02:48:06.922Z</lastmod>
     
@@ -1290,21 +1297,7 @@
   </url>
   
   <url>
-    <loc>https://utmhikari.top/2023/05/10/gofromzero/11_make_new/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.922Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://utmhikari.top/2022/10/05/githubdiscovery/ebook_boilerplate/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.921Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://utmhikari.top/2020/02/01/githubdiscovery/fastapi/</loc>
     
     <lastmod>2024-04-07T02:48:06.921Z</lastmod>
     
@@ -1318,6 +1311,13 @@
   </url>
   
   <url>
+    <loc>https://utmhikari.top/2020/02/01/githubdiscovery/fastapi/</loc>
+    
+    <lastmod>2024-04-07T02:48:06.921Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://utmhikari.top/2019/08/11/githubdiscovery/solopi/</loc>
     
     <lastmod>2024-04-07T02:48:06.921Z</lastmod>
@@ -1325,7 +1325,7 @@
   </url>
   
   <url>
-    <loc>https://utmhikari.top/2019/10/07/geekdaily/next_code_theme/</loc>
+    <loc>https://utmhikari.top/2020/01/12/geekdaily/mongo_multi_updatemany/</loc>
     
     <lastmod>2024-04-07T02:48:06.920Z</lastmod>
     
@@ -1339,7 +1339,7 @@
   </url>
   
   <url>
-    <loc>https://utmhikari.top/2020/01/12/geekdaily/mongo_multi_updatemany/</loc>
+    <loc>https://utmhikari.top/2019/10/07/geekdaily/next_code_theme/</loc>
     
     <lastmod>2024-04-07T02:48:06.920Z</lastmod>
     
@@ -1374,14 +1374,14 @@
   </url>
   
   <url>
-    <loc>https://utmhikari.top/2020/11/08/geekdaily/ue4_llm_dump_cpp/</loc>
+    <loc>https://utmhikari.top/2021/09/11/geekdaily/vscode_git-bash/</loc>
     
     <lastmod>2024-04-07T02:48:06.920Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://utmhikari.top/2021/09/11/geekdaily/vscode_git-bash/</loc>
+    <loc>https://utmhikari.top/2020/11/08/geekdaily/ue4_llm_dump_cpp/</loc>
     
     <lastmod>2024-04-07T02:48:06.920Z</lastmod>
     
@@ -1409,13 +1409,6 @@
   </url>
   
   <url>
-    <loc>https://utmhikari.top/2020/10/18/geekdaily/fjsonobject_to_ustruct/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.919Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://utmhikari.top/2019/10/07/geekdaily/go113_proxy/</loc>
     
     <lastmod>2024-04-07T02:48:06.919Z</lastmod>
@@ -1423,9 +1416,9 @@
   </url>
   
   <url>
-    <loc>https://utmhikari.top/2021/02/16/gamedev/ue4_datatable_subsystem/</loc>
+    <loc>https://utmhikari.top/2020/10/18/geekdaily/fjsonobject_to_ustruct/</loc>
     
-    <lastmod>2024-04-07T02:48:06.918Z</lastmod>
+    <lastmod>2024-04-07T02:48:06.919Z</lastmod>
     
   </url>
   
@@ -1445,6 +1438,13 @@
   
   <url>
     <loc>https://utmhikari.top/2021/11/21/gamedev/ue4_python_script_plugin/</loc>
+    
+    <lastmod>2024-04-07T02:48:06.918Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://utmhikari.top/2021/02/16/gamedev/ue4_datatable_subsystem/</loc>
     
     <lastmod>2024-04-07T02:48:06.918Z</lastmod>
     
@@ -1493,14 +1493,14 @@
   </url>
   
   <url>
-    <loc>https://utmhikari.top/2019/03/31/easypython/iv/</loc>
+    <loc>https://utmhikari.top/2019/10/08/easypython/pdf/</loc>
     
     <lastmod>2024-04-07T02:48:06.917Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://utmhikari.top/2019/10/08/easypython/pdf/</loc>
+    <loc>https://utmhikari.top/2019/05/11/easypython/vi/</loc>
     
     <lastmod>2024-04-07T02:48:06.917Z</lastmod>
     
@@ -1514,9 +1514,58 @@
   </url>
   
   <url>
-    <loc>https://utmhikari.top/2019/05/11/easypython/vi/</loc>
+    <loc>https://utmhikari.top/2019/03/31/easypython/iv/</loc>
     
     <lastmod>2024-04-07T02:48:06.917Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://utmhikari.top/2024/02/15/archiart/sustainable_architecture/</loc>
+    
+    <lastmod>2024-04-07T02:48:06.916Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://utmhikari.top/2019/06/01/diymemo/font_theme/</loc>
+    
+    <lastmod>2024-04-07T02:48:06.916Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://utmhikari.top/2019/05/01/diymemo/msr/</loc>
+    
+    <lastmod>2024-04-07T02:48:06.916Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://utmhikari.top/2023/06/11/diymemo/handle_mistakes/</loc>
+    
+    <lastmod>2024-04-07T02:48:06.916Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://utmhikari.top/2019/10/29/diymemo/gigabyte_z390/</loc>
+    
+    <lastmod>2024-04-07T02:48:06.916Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://utmhikari.top/2022/10/15/diymemo/ubuntu22_floppy_disk/</loc>
+    
+    <lastmod>2024-04-07T02:48:06.916Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://utmhikari.top/2023/02/05/diymemo/vmware_ubuntu_network/</loc>
+    
+    <lastmod>2024-04-07T02:48:06.916Z</lastmod>
     
   </url>
   
@@ -1535,20 +1584,6 @@
   </url>
   
   <url>
-    <loc>https://utmhikari.top/2024/02/15/archiart/sustainable_architecture/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.916Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://utmhikari.top/2021/01/01/codegallery/repomaster/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.916Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://utmhikari.top/2021/01/24/codegallery/start_fastapi/</loc>
     
     <lastmod>2024-04-07T02:48:06.916Z</lastmod>
@@ -1556,42 +1591,7 @@
   </url>
   
   <url>
-    <loc>https://utmhikari.top/2019/06/01/diymemo/font_theme/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.916Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://utmhikari.top/2019/10/29/diymemo/gigabyte_z390/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.916Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://utmhikari.top/2023/06/11/diymemo/handle_mistakes/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.916Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://utmhikari.top/2019/05/01/diymemo/msr/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.916Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://utmhikari.top/2022/10/15/diymemo/ubuntu22_floppy_disk/</loc>
-    
-    <lastmod>2024-04-07T02:48:06.916Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://utmhikari.top/2023/02/05/diymemo/vmware_ubuntu_network/</loc>
+    <loc>https://utmhikari.top/2021/01/01/codegallery/repomaster/</loc>
     
     <lastmod>2024-04-07T02:48:06.916Z</lastmod>
     
