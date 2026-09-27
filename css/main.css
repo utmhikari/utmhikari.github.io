@@ -2050,7 +2050,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ffff18;
+  background: #24ff3e;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3424,7 +3424,7 @@ kbd {
 }
 code {
   background: #f6efdc;
-  color: #586e75;
+  color: inherit;
 }
 .menu .menu-item a:hover,
 .menu .menu-item span.exturl:hover {
