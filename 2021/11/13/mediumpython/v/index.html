@@ -111,14 +111,14 @@
 <link rel="stylesheet" href="/lib/fontsource/ibm-plex-mono/700.css">
 
 <meta name="description" content="Medium Python终于来到了最终话。经历了前四话的撰写，笔者决定以第五话作为收尾，故这段时间一直在思考python里还有什么内容是我们常见但值得推敲且有应用意义的点。绞尽脑汁，最终得到了今天这个主题：with关键字。 with关键字的含义，是笔者接触python以来希望彻底搞懂的问题之一，也是一定会困惑大量玩python的同学的问题之一。相信每一个玩过python的同学都接触过with语法">
-<meta name="keywords" content="python,源码分析,with,字节码,异常处理">
+<meta name="keywords" content="python,教程,源码分析,字节码,异常处理">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【Medium Python】最终话：如何彻底理解with关键字的用法？">
 <meta property="og:url" content="https://utmhikari.top/2021/11/13/mediumpython/v/index.html">
 <meta property="og:site_name" content="HiKariのTechLab">
 <meta property="og:description" content="Medium Python终于来到了最终话。经历了前四话的撰写，笔者决定以第五话作为收尾，故这段时间一直在思考python里还有什么内容是我们常见但值得推敲且有应用意义的点。绞尽脑汁，最终得到了今天这个主题：with关键字。 with关键字的含义，是笔者接触python以来希望彻底搞懂的问题之一，也是一定会困惑大量玩python的同学的问题之一。相信每一个玩过python的同学都接触过with语法">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2024-04-07T02:48:06.926Z">
+<meta property="og:updated_time" content="2026-09-29T02:03:50.970Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【Medium Python】最终话：如何彻底理解with关键字的用法？">
 <meta name="twitter:description" content="Medium Python终于来到了最终话。经历了前四话的撰写，笔者决定以第五话作为收尾，故这段时间一直在思考python里还有什么内容是我们常见但值得推敲且有应用意义的点。绞尽脑汁，最终得到了今天这个主题：with关键字。 with关键字的含义，是笔者接触python以来希望彻底搞懂的问题之一，也是一定会困惑大量玩python的同学的问题之一。相信每一个玩过python的同学都接触过with语法">
@@ -473,7 +473,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+                <time title="修改时间：2026-09-29 10:03:50" itemprop="dateModified" datetime="2026-09-29T10:03:50+08:00">2026-09-29</time>
               
             
           </span>
@@ -677,9 +677,9 @@
           
             <a href="/tags/python/" rel="tag"># python</a>
           
-            <a href="/tags/源码分析/" rel="tag"># 源码分析</a>
+            <a href="/tags/教程/" rel="tag"># 教程</a>
           
-            <a href="/tags/with/" rel="tag"># with</a>
+            <a href="/tags/源码分析/" rel="tag"># 源码分析</a>
           
             <a href="/tags/字节码/" rel="tag"># 字节码</a>
           
@@ -730,7 +730,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Medium Python】最终话：如何彻底理解with关键字的用法？","description":"Medium Python终于来到了最终话。经历了前四话的撰写，笔者决定以第五话作为收尾，故这段时间一直在思考python里还有什么内容是我们常见但值得推敲且有应用意义的点。绞尽脑汁，最终得到了今天这个主题：with关键字。 with关键字的含义，是笔者接触python以来希望彻底搞懂的问题之一，也是一定会困惑大量玩python的同学的问题之一。相信每一个玩过python的同学都接触过with语法","datePublished":"2021-11-13T09:18:06.000Z","dateModified":"2024-04-07T02:48:06.926Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2021/11/13/mediumpython/v/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"python, 源码分析, with, 字节码, 异常处理"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Medium Python】最终话：如何彻底理解with关键字的用法？","description":"Medium Python终于来到了最终话。经历了前四话的撰写，笔者决定以第五话作为收尾，故这段时间一直在思考python里还有什么内容是我们常见但值得推敲且有应用意义的点。绞尽脑汁，最终得到了今天这个主题：with关键字。 with关键字的含义，是笔者接触python以来希望彻底搞懂的问题之一，也是一定会困惑大量玩python的同学的问题之一。相信每一个玩过python的同学都接触过with语法","datePublished":"2021-11-13T09:18:06.000Z","dateModified":"2026-09-29T02:03:50.970Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2021/11/13/mediumpython/v/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"python, 教程, 源码分析, 字节码, 异常处理"}</script>
   
   
 
@@ -1467,251 +1467,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">430</span>
+                    <span class="site-state-item-count">308</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

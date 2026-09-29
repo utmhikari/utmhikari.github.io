@@ -111,14 +111,14 @@
 <link rel="stylesheet" href="/lib/fontsource/ibm-plex-mono/700.css">
 
 <meta name="description" content="在研发代码覆盖率测试工具的时候，通常除了代码覆盖数据收集模块之外，一般还要研发前端展示的部分以展现代码覆盖分析报告，通常会为每一个文件增加行染色，类似于jacoco这种形式。 然而代码覆盖报告实际出来的行染色，会出现许多正常代码行没有着色的情况。这是因为编程语言认为的“行”和本身我们在文本编辑器打出的”行“是不一样的。编译出来的“行”实际上是一段操作，比如我们定义一个函数的时候，编译器认为我们执行">
-<meta name="keywords" content="lua,代码覆盖率,代码染色,语法分析,递归下降法">
+<meta name="keywords" content="源码分析,lua,代码覆盖率,语法分析,递归下降法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【测试人生】代码覆盖率测试之代码染色优化——以lua代码覆盖为例">
 <meta property="og:url" content="https://utmhikari.top/2020/06/13/testlife/coverage_beautify/index.html">
 <meta property="og:site_name" content="HiKariのTechLab">
 <meta property="og:description" content="在研发代码覆盖率测试工具的时候，通常除了代码覆盖数据收集模块之外，一般还要研发前端展示的部分以展现代码覆盖分析报告，通常会为每一个文件增加行染色，类似于jacoco这种形式。 然而代码覆盖报告实际出来的行染色，会出现许多正常代码行没有着色的情况。这是因为编程语言认为的“行”和本身我们在文本编辑器打出的”行“是不一样的。编译出来的“行”实际上是一段操作，比如我们定义一个函数的时候，编译器认为我们执行">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2024-04-07T02:48:06.927Z">
+<meta property="og:updated_time" content="2026-09-29T02:03:50.971Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【测试人生】代码覆盖率测试之代码染色优化——以lua代码覆盖为例">
 <meta name="twitter:description" content="在研发代码覆盖率测试工具的时候，通常除了代码覆盖数据收集模块之外，一般还要研发前端展示的部分以展现代码覆盖分析报告，通常会为每一个文件增加行染色，类似于jacoco这种形式。 然而代码覆盖报告实际出来的行染色，会出现许多正常代码行没有着色的情况。这是因为编程语言认为的“行”和本身我们在文本编辑器打出的”行“是不一样的。编译出来的“行”实际上是一段操作，比如我们定义一个函数的时候，编译器认为我们执行">
@@ -473,7 +473,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+                <time title="修改时间：2026-09-29 10:03:50" itemprop="dateModified" datetime="2026-09-29T10:03:50+08:00">2026-09-29</time>
               
             
           </span>
@@ -592,11 +592,11 @@
       
         <div class="post-tags">
           
+            <a href="/tags/源码分析/" rel="tag"># 源码分析</a>
+          
             <a href="/tags/lua/" rel="tag"># lua</a>
           
             <a href="/tags/代码覆盖率/" rel="tag"># 代码覆盖率</a>
-          
-            <a href="/tags/代码染色/" rel="tag"># 代码染色</a>
           
             <a href="/tags/语法分析/" rel="tag"># 语法分析</a>
           
@@ -647,7 +647,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【测试人生】代码覆盖率测试之代码染色优化——以lua代码覆盖为例","description":"在研发代码覆盖率测试工具的时候，通常除了代码覆盖数据收集模块之外，一般还要研发前端展示的部分以展现代码覆盖分析报告，通常会为每一个文件增加行染色，类似于jacoco这种形式。 然而代码覆盖报告实际出来的行染色，会出现许多正常代码行没有着色的情况。这是因为编程语言认为的“行”和本身我们在文本编辑器打出的”行“是不一样的。编译出来的“行”实际上是一段操作，比如我们定义一个函数的时候，编译器认为我们执行","datePublished":"2020-06-13T06:47:09.000Z","dateModified":"2024-04-07T02:48:06.927Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2020/06/13/testlife/coverage_beautify/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"lua, 代码覆盖率, 代码染色, 语法分析, 递归下降法"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【测试人生】代码覆盖率测试之代码染色优化——以lua代码覆盖为例","description":"在研发代码覆盖率测试工具的时候，通常除了代码覆盖数据收集模块之外，一般还要研发前端展示的部分以展现代码覆盖分析报告，通常会为每一个文件增加行染色，类似于jacoco这种形式。 然而代码覆盖报告实际出来的行染色，会出现许多正常代码行没有着色的情况。这是因为编程语言认为的“行”和本身我们在文本编辑器打出的”行“是不一样的。编译出来的“行”实际上是一段操作，比如我们定义一个函数的时候，编译器认为我们执行","datePublished":"2020-06-13T06:47:09.000Z","dateModified":"2026-09-29T02:03:50.971Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2020/06/13/testlife/coverage_beautify/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"源码分析, lua, 代码覆盖率, 语法分析, 递归下降法"}</script>
   
   
 
@@ -1375,251 +1375,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">430</span>
+                    <span class="site-state-item-count">308</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

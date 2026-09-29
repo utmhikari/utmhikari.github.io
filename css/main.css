@@ -635,7 +635,7 @@ pre .addition {
   background: #008000;
 }
 pre .meta {
-  color: #b58900;
+  color: #859900;
 }
 pre .comment {
   color: #93a1a1;
@@ -654,7 +654,7 @@ pre .html .doctype,
 pre .css .id,
 pre .css .class,
 pre .css .pseudo {
-  color: #d30102;
+  color: #dc322f;
 }
 pre .number,
 pre .preprocessor,
@@ -664,10 +664,10 @@ pre .literal,
 pre .params,
 pre .constant,
 pre .command {
-  color: #657a81;
+  color: #cb4b16;
 }
 pre .constant {
-  color: #0f0;
+  color: #cb4b16;
 }
 pre .ruby .class .title,
 pre .css .rules .attribute,
@@ -684,7 +684,7 @@ pre .formula {
 }
 pre .title,
 pre .css .hexcolor {
-  color: #657a81;
+  color: #268bd2;
 }
 pre .function,
 pre .python .decorator,
@@ -694,11 +694,11 @@ pre .ruby .title .keyword,
 pre .perl .sub,
 pre .javascript .title,
 pre .coffeescript .title {
-  color: #657a81;
+  color: #268bd2;
 }
 pre .keyword,
 pre .javascript .function {
-  color: #b58900;
+  color: #859900;
 }
 .posts-expand .post-body img.full-image {
   border: none;
@@ -2050,7 +2050,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #abfa3d;
+  background: #2688c8;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3761,7 +3761,9 @@ pre::-webkit-scrollbar-corner,
   border-bottom-color: rgba(101,122,129,0.25);
 }
 .copy-btn {
-  color: #657a81;
+  color: inherit;
+  font-size: inherit;
+  font-weight: normal;
   background-color: #ece7d5;
   background-image: none;
   border-color: rgba(101,122,129,0.35);

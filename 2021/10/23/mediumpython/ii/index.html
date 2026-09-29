@@ -111,14 +111,14 @@
 <link rel="stylesheet" href="/lib/fontsource/ibm-plex-mono/700.css">
 
 <meta name="description" content="在python3里面，我们经常会用if k in d.keys()来判断某个key是不是在某个dict里面，或者是用a_dict.keys() - b_dict.keys()来获取两个字典之间keys的差集。那么这里就有一个问题，dict的keys()返回了什么数据类型呢？ list？set？两者都是错误答案。Don’t say so much，打印一下type，发现是这么个数据类型：&amp;lt;cl">
-<meta name="keywords" content="python,DictView,dict,C,dict_keys">
+<meta name="keywords" content="python,教程,源码分析,dict,C">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【Medium Python】第二话：dict的keys()返回了什么数据类型？">
 <meta property="og:url" content="https://utmhikari.top/2021/10/23/mediumpython/ii/index.html">
 <meta property="og:site_name" content="HiKariのTechLab">
 <meta property="og:description" content="在python3里面，我们经常会用if k in d.keys()来判断某个key是不是在某个dict里面，或者是用a_dict.keys() - b_dict.keys()来获取两个字典之间keys的差集。那么这里就有一个问题，dict的keys()返回了什么数据类型呢？ list？set？两者都是错误答案。Don’t say so much，打印一下type，发现是这么个数据类型：&amp;lt;cl">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2024-04-07T02:48:06.925Z">
+<meta property="og:updated_time" content="2026-09-29T02:03:50.968Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【Medium Python】第二话：dict的keys()返回了什么数据类型？">
 <meta name="twitter:description" content="在python3里面，我们经常会用if k in d.keys()来判断某个key是不是在某个dict里面，或者是用a_dict.keys() - b_dict.keys()来获取两个字典之间keys的差集。那么这里就有一个问题，dict的keys()返回了什么数据类型呢？ list？set？两者都是错误答案。Don’t say so much，打印一下type，发现是这么个数据类型：&amp;lt;cl">
@@ -473,7 +473,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+                <time title="修改时间：2026-09-29 10:03:50" itemprop="dateModified" datetime="2026-09-29T10:03:50+08:00">2026-09-29</time>
               
             
           </span>
@@ -593,13 +593,13 @@
           
             <a href="/tags/python/" rel="tag"># python</a>
           
-            <a href="/tags/DictView/" rel="tag"># DictView</a>
+            <a href="/tags/教程/" rel="tag"># 教程</a>
+          
+            <a href="/tags/源码分析/" rel="tag"># 源码分析</a>
           
             <a href="/tags/dict/" rel="tag"># dict</a>
           
             <a href="/tags/C/" rel="tag"># C</a>
-          
-            <a href="/tags/dict-keys/" rel="tag"># dict_keys</a>
           
         </div>
       
@@ -646,7 +646,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Medium Python】第二话：dict的keys()返回了什么数据类型？","description":"在python3里面，我们经常会用if k in d.keys()来判断某个key是不是在某个dict里面，或者是用a_dict.keys() - b_dict.keys()来获取两个字典之间keys的差集。那么这里就有一个问题，dict的keys()返回了什么数据类型呢？ list？set？两者都是错误答案。Don’t say so much，打印一下type，发现是这么个数据类型：&lt;cl","datePublished":"2021-10-23T09:55:52.000Z","dateModified":"2024-04-07T02:48:06.925Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2021/10/23/mediumpython/ii/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"python, DictView, dict, C, dict_keys"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Medium Python】第二话：dict的keys()返回了什么数据类型？","description":"在python3里面，我们经常会用if k in d.keys()来判断某个key是不是在某个dict里面，或者是用a_dict.keys() - b_dict.keys()来获取两个字典之间keys的差集。那么这里就有一个问题，dict的keys()返回了什么数据类型呢？ list？set？两者都是错误答案。Don’t say so much，打印一下type，发现是这么个数据类型：&lt;cl","datePublished":"2021-10-23T09:55:52.000Z","dateModified":"2026-09-29T02:03:50.968Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2021/10/23/mediumpython/ii/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"python, 教程, 源码分析, dict, C"}</script>
   
   
 
@@ -1383,251 +1383,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">430</span>
+                    <span class="site-state-item-count">308</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

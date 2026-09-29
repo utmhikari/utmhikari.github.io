@@ -111,7 +111,7 @@
 <link rel="stylesheet" href="/lib/fontsource/ibm-plex-mono/700.css">
 
 <meta name="description" content="前言Github传送门 当测试开发真不容易，入行第一年，就要在python、NodeJS、lua、C、Java等语言间无缝切换。为了快速响应需求，挺难抽出时间去深耕一门语言的特性（诶羡慕那些只搞Java的人= =）。在MTSC2019分享中也谈到，测试开发归属质量保障QA，作为一个中台角色，其终极任务保障研发效能，因此一大需求是打通产品研发运维的生产线。说到生产线就想到上云，说到上云就想到dock">
-<meta name="keywords" content="编程,Golang,装机,go mod,环境变量">
+<meta name="keywords" content="Golang,编程,装机,环境变量,go mod">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【从零单排Golang】第一话：Go开发环境搭建——环境变量、依赖与目录结构踩坑">
 <meta property="og:url" content="https://utmhikari.top/2019/07/20/gofromzero/01_first_code/index.html">
@@ -623,15 +623,15 @@
       
         <div class="post-tags">
           
-            <a href="/tags/编程/" rel="tag"># 编程</a>
-          
             <a href="/tags/Golang/" rel="tag"># Golang</a>
+          
+            <a href="/tags/编程/" rel="tag"># 编程</a>
           
             <a href="/tags/装机/" rel="tag"># 装机</a>
           
-            <a href="/tags/go-mod/" rel="tag"># go mod</a>
-          
             <a href="/tags/环境变量/" rel="tag"># 环境变量</a>
+          
+            <a href="/tags/go-mod/" rel="tag"># go mod</a>
           
         </div>
       
@@ -678,7 +678,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【从零单排Golang】第一话：Go开发环境搭建——环境变量、依赖与目录结构踩坑","description":"前言Github传送门 当测试开发真不容易，入行第一年，就要在python、NodeJS、lua、C、Java等语言间无缝切换。为了快速响应需求，挺难抽出时间去深耕一门语言的特性（诶羡慕那些只搞Java的人= =）。在MTSC2019分享中也谈到，测试开发归属质量保障QA，作为一个中台角色，其终极任务保障研发效能，因此一大需求是打通产品研发运维的生产线。说到生产线就想到上云，说到上云就想到dock","datePublished":"2019-07-20T11:35:05.000Z","dateModified":"2026-03-14T09:07:05.155Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2019/07/20/gofromzero/01_first_code/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"编程, Golang, 装机, go mod, 环境变量"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【从零单排Golang】第一话：Go开发环境搭建——环境变量、依赖与目录结构踩坑","description":"前言Github传送门 当测试开发真不容易，入行第一年，就要在python、NodeJS、lua、C、Java等语言间无缝切换。为了快速响应需求，挺难抽出时间去深耕一门语言的特性（诶羡慕那些只搞Java的人= =）。在MTSC2019分享中也谈到，测试开发归属质量保障QA，作为一个中台角色，其终极任务保障研发效能，因此一大需求是打通产品研发运维的生产线。说到生产线就想到上云，说到上云就想到dock","datePublished":"2019-07-20T11:35:05.000Z","dateModified":"2026-03-14T09:07:05.155Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2019/07/20/gofromzero/01_first_code/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"Golang, 编程, 装机, 环境变量, go mod"}</script>
   
   
 
@@ -1415,251 +1415,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">430</span>
+                    <span class="site-state-item-count">308</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

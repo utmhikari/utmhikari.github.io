@@ -111,14 +111,14 @@
 <link rel="stylesheet" href="/lib/fontsource/ibm-plex-mono/700.css">
 
 <meta name="description" content="前言python面试有一道很基础的问题：list（列表）和tuple（元组）有什么不同？基本上只要背过题库的同学都知道，list（里面的元素）是可变的，tuple（里面的元素）是不可变的。 我们尝试在python解释器中改变tuple的元素（赋另一个值），会有以下的表现： 123456789101112def tuple_check():    tp = (&apos;123&apos;, 123)    tp[1]">
-<meta name="keywords" content="python,源码分析,list,tuple,元组">
+<meta name="keywords" content="python,教程,源码分析,list,元组">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【Medium Python】第一话：为什么list“可变”，而tuple“不可变”？">
 <meta property="og:url" content="https://utmhikari.top/2021/10/17/mediumpython/i/index.html">
 <meta property="og:site_name" content="HiKariのTechLab">
 <meta property="og:description" content="前言python面试有一道很基础的问题：list（列表）和tuple（元组）有什么不同？基本上只要背过题库的同学都知道，list（里面的元素）是可变的，tuple（里面的元素）是不可变的。 我们尝试在python解释器中改变tuple的元素（赋另一个值），会有以下的表现： 123456789101112def tuple_check():    tp = (&apos;123&apos;, 123)    tp[1]">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2024-04-07T02:48:06.925Z">
+<meta property="og:updated_time" content="2026-09-29T02:03:50.968Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【Medium Python】第一话：为什么list“可变”，而tuple“不可变”？">
 <meta name="twitter:description" content="前言python面试有一道很基础的问题：list（列表）和tuple（元组）有什么不同？基本上只要背过题库的同学都知道，list（里面的元素）是可变的，tuple（里面的元素）是不可变的。 我们尝试在python解释器中改变tuple的元素（赋另一个值），会有以下的表现： 123456789101112def tuple_check():    tp = (&apos;123&apos;, 123)    tp[1]">
@@ -473,7 +473,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+                <time title="修改时间：2026-09-29 10:03:50" itemprop="dateModified" datetime="2026-09-29T10:03:50+08:00">2026-09-29</time>
               
             
           </span>
@@ -603,11 +603,11 @@
           
             <a href="/tags/python/" rel="tag"># python</a>
           
+            <a href="/tags/教程/" rel="tag"># 教程</a>
+          
             <a href="/tags/源码分析/" rel="tag"># 源码分析</a>
           
             <a href="/tags/list/" rel="tag"># list</a>
-          
-            <a href="/tags/tuple/" rel="tag"># tuple</a>
           
             <a href="/tags/元组/" rel="tag"># 元组</a>
           
@@ -656,7 +656,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Medium Python】第一话：为什么list“可变”，而tuple“不可变”？","description":"前言python面试有一道很基础的问题：list（列表）和tuple（元组）有什么不同？基本上只要背过题库的同学都知道，list（里面的元素）是可变的，tuple（里面的元素）是不可变的。 我们尝试在python解释器中改变tuple的元素（赋另一个值），会有以下的表现： 123456789101112def tuple_check(): tp = ('123', 123) tp[1] = 13 ","datePublished":"2021-10-17T09:55:52.000Z","dateModified":"2024-04-07T02:48:06.925Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2021/10/17/mediumpython/i/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"python, 源码分析, list, tuple, 元组"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Medium Python】第一话：为什么list“可变”，而tuple“不可变”？","description":"前言python面试有一道很基础的问题：list（列表）和tuple（元组）有什么不同？基本上只要背过题库的同学都知道，list（里面的元素）是可变的，tuple（里面的元素）是不可变的。 我们尝试在python解释器中改变tuple的元素（赋另一个值），会有以下的表现： 123456789101112def tuple_check(): tp = ('123', 123) tp[1] = 13 ","datePublished":"2021-10-17T09:55:52.000Z","dateModified":"2026-09-29T02:03:50.968Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2021/10/17/mediumpython/i/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"python, 教程, 源码分析, list, 元组"}</script>
   
   
 
@@ -1393,251 +1393,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">430</span>
+                    <span class="site-state-item-count">308</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

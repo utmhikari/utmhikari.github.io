@@ -111,14 +111,14 @@
 <link rel="stylesheet" href="/lib/fontsource/ibm-plex-mono/700.css">
 
 <meta name="description" content="学过python的我们都知道在python的类实例instance的__init__函数里，可以初始化这个instance的属性。属性的命名有许多种，比如有一个例子： 12345class Student:    def __init__(self, name, gender, age):        self.name = name        self._gender = gender">
-<meta name="keywords" content="python,编译,面向对象,类,下划线">
+<meta name="keywords" content="python,源码分析,类,面向对象,编译">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【Python随笔】如何访问类实例里带双下划线的属性">
 <meta property="og:url" content="https://utmhikari.top/2021/10/06/pythonnotes/attr_with_underscore/index.html">
 <meta property="og:site_name" content="HiKariのTechLab">
 <meta property="og:description" content="学过python的我们都知道在python的类实例instance的__init__函数里，可以初始化这个instance的属性。属性的命名有许多种，比如有一个例子： 12345class Student:    def __init__(self, name, gender, age):        self.name = name        self._gender = gender">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2024-11-03T03:49:07.746Z">
+<meta property="og:updated_time" content="2026-09-29T02:03:50.970Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【Python随笔】如何访问类实例里带双下划线的属性">
 <meta name="twitter:description" content="学过python的我们都知道在python的类实例instance的__init__函数里，可以初始化这个instance的属性。属性的命名有许多种，比如有一个例子： 12345class Student:    def __init__(self, name, gender, age):        self.name = name        self._gender = gender">
@@ -473,7 +473,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2024-11-03 11:49:07" itemprop="dateModified" datetime="2024-11-03T11:49:07+08:00">2024-11-03</time>
+                <time title="修改时间：2026-09-29 10:03:50" itemprop="dateModified" datetime="2026-09-29T10:03:50+08:00">2026-09-29</time>
               
             
           </span>
@@ -585,13 +585,13 @@
           
             <a href="/tags/python/" rel="tag"># python</a>
           
-            <a href="/tags/编译/" rel="tag"># 编译</a>
-          
-            <a href="/tags/面向对象/" rel="tag"># 面向对象</a>
+            <a href="/tags/源码分析/" rel="tag"># 源码分析</a>
           
             <a href="/tags/类/" rel="tag"># 类</a>
           
-            <a href="/tags/下划线/" rel="tag"># 下划线</a>
+            <a href="/tags/面向对象/" rel="tag"># 面向对象</a>
+          
+            <a href="/tags/编译/" rel="tag"># 编译</a>
           
         </div>
       
@@ -638,7 +638,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Python随笔】如何访问类实例里带双下划线的属性","description":"学过python的我们都知道在python的类实例instance的__init__函数里，可以初始化这个instance的属性。属性的命名有许多种，比如有一个例子： 12345class Student: def __init__(self, name, gender, age): self.name = name self._gender = gender self.__age = age 这","datePublished":"2021-10-06T12:41:24.000Z","dateModified":"2024-11-03T03:49:07.746Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2021/10/06/pythonnotes/attr_with_underscore/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"python, 编译, 面向对象, 类, 下划线"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Python随笔】如何访问类实例里带双下划线的属性","description":"学过python的我们都知道在python的类实例instance的__init__函数里，可以初始化这个instance的属性。属性的命名有许多种，比如有一个例子： 12345class Student: def __init__(self, name, gender, age): self.name = name self._gender = gender self.__age = age 这","datePublished":"2021-10-06T12:41:24.000Z","dateModified":"2026-09-29T02:03:50.970Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2021/10/06/pythonnotes/attr_with_underscore/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"python, 源码分析, 类, 面向对象, 编译"}</script>
   
   
 
@@ -1366,251 +1366,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">430</span>
+                    <span class="site-state-item-count">308</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

@@ -111,14 +111,14 @@
 <link rel="stylesheet" href="/lib/fontsource/ibm-plex-mono/700.css">
 
 <meta name="description" content="接续第一话的内容，事件循环在创建之后，又是如何运行协程任务以及异步IO任务的？​由asyncio.run的代码可知，loop.run_until_complete是运行协程的方法。其定义如下：">
-<meta name="keywords" content="事件循环,python,异步,asyncio,proactor">
+<meta name="keywords" content="python,事件循环,异步,并发,asyncio">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【Hard Python】【第二章-异步IO】2、异步任务在事件循环中的执行">
 <meta property="og:url" content="https://utmhikari.top/2022/02/20/hardpython/2_asyncio_2/index.html">
 <meta property="og:site_name" content="HiKariのTechLab">
 <meta property="og:description" content="接续第一话的内容，事件循环在创建之后，又是如何运行协程任务以及异步IO任务的？​由asyncio.run的代码可知，loop.run_until_complete是运行协程的方法。其定义如下：">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2024-04-07T02:48:06.923Z">
+<meta property="og:updated_time" content="2026-09-29T02:03:50.966Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【Hard Python】【第二章-异步IO】2、异步任务在事件循环中的执行">
 <meta name="twitter:description" content="接续第一话的内容，事件循环在创建之后，又是如何运行协程任务以及异步IO任务的？​由asyncio.run的代码可知，loop.run_until_complete是运行协程的方法。其定义如下：">
@@ -473,7 +473,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+                <time title="修改时间：2026-09-29 10:03:50" itemprop="dateModified" datetime="2026-09-29T10:03:50+08:00">2026-09-29</time>
               
             
           </span>
@@ -648,15 +648,15 @@
       
         <div class="post-tags">
           
-            <a href="/tags/事件循环/" rel="tag"># 事件循环</a>
-          
             <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/事件循环/" rel="tag"># 事件循环</a>
           
             <a href="/tags/异步/" rel="tag"># 异步</a>
           
-            <a href="/tags/asyncio/" rel="tag"># asyncio</a>
+            <a href="/tags/并发/" rel="tag"># 并发</a>
           
-            <a href="/tags/proactor/" rel="tag"># proactor</a>
+            <a href="/tags/asyncio/" rel="tag"># asyncio</a>
           
         </div>
       
@@ -703,7 +703,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Hard Python】【第二章-异步IO】2、异步任务在事件循环中的执行","description":"接续第一话的内容，事件循环在创建之后，又是如何运行协程任务以及异步IO任务的？​由asyncio.run的代码可知，loop.run_until_complete是运行协程的方法。其定义如下：","datePublished":"2022-02-20T11:22:53.000Z","dateModified":"2024-04-07T02:48:06.923Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2022/02/20/hardpython/2_asyncio_2/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"事件循环, python, 异步, asyncio, proactor"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Hard Python】【第二章-异步IO】2、异步任务在事件循环中的执行","description":"接续第一话的内容，事件循环在创建之后，又是如何运行协程任务以及异步IO任务的？​由asyncio.run的代码可知，loop.run_until_complete是运行协程的方法。其定义如下：","datePublished":"2022-02-20T11:22:53.000Z","dateModified":"2026-09-29T02:03:50.966Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2022/02/20/hardpython/2_asyncio_2/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"python, 事件循环, 异步, 并发, asyncio"}</script>
   
   
 
@@ -1431,251 +1431,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">430</span>
+                    <span class="site-state-item-count">308</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

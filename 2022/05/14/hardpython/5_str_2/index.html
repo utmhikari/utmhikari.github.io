@@ -111,14 +111,14 @@
 <link rel="stylesheet" href="/lib/fontsource/ibm-plex-mono/700.css">
 
 <meta name="description" content="正则表达式是文本处理中的重要部分，通过匹配特定的正则表达式，能够很方便地编写提取特定文本的代码。在python中，同样也已经拥有了正则表达式库re，为各位开发者提供了正则表达式的支持。 在python官方文档中，已经对正则表达式模块接口、词法和用法做了详细的介绍：  re——正则表达式操作 正则表达式HOWTO  正则表达式常见的用法如下： 1234567891011121314151617181">
-<meta name="keywords" content="python,字符串,re,正则表达式,pattern">
+<meta name="keywords" content="python,教程,源码分析,字符串,正则表达式">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【Hard Python】【第五章-字符串】2、re，正则表达式源码详解">
 <meta property="og:url" content="https://utmhikari.top/2022/05/14/hardpython/5_str_2/index.html">
 <meta property="og:site_name" content="HiKariのTechLab">
 <meta property="og:description" content="正则表达式是文本处理中的重要部分，通过匹配特定的正则表达式，能够很方便地编写提取特定文本的代码。在python中，同样也已经拥有了正则表达式库re，为各位开发者提供了正则表达式的支持。 在python官方文档中，已经对正则表达式模块接口、词法和用法做了详细的介绍：  re——正则表达式操作 正则表达式HOWTO  正则表达式常见的用法如下： 1234567891011121314151617181">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2026-01-17T04:14:06.138Z">
+<meta property="og:updated_time" content="2026-09-29T02:03:50.968Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【Hard Python】【第五章-字符串】2、re，正则表达式源码详解">
 <meta name="twitter:description" content="正则表达式是文本处理中的重要部分，通过匹配特定的正则表达式，能够很方便地编写提取特定文本的代码。在python中，同样也已经拥有了正则表达式库re，为各位开发者提供了正则表达式的支持。 在python官方文档中，已经对正则表达式模块接口、词法和用法做了详细的介绍：  re——正则表达式操作 正则表达式HOWTO  正则表达式常见的用法如下： 1234567891011121314151617181">
@@ -473,7 +473,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2026-01-17 12:14:06" itemprop="dateModified" datetime="2026-01-17T12:14:06+08:00">2026-01-17</time>
+                <time title="修改时间：2026-09-29 10:03:50" itemprop="dateModified" datetime="2026-09-29T10:03:50+08:00">2026-09-29</time>
               
             
           </span>
@@ -725,13 +725,13 @@
           
             <a href="/tags/python/" rel="tag"># python</a>
           
+            <a href="/tags/教程/" rel="tag"># 教程</a>
+          
+            <a href="/tags/源码分析/" rel="tag"># 源码分析</a>
+          
             <a href="/tags/字符串/" rel="tag"># 字符串</a>
           
-            <a href="/tags/re/" rel="tag"># re</a>
-          
             <a href="/tags/正则表达式/" rel="tag"># 正则表达式</a>
-          
-            <a href="/tags/pattern/" rel="tag"># pattern</a>
           
         </div>
       
@@ -778,7 +778,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Hard Python】【第五章-字符串】2、re，正则表达式源码详解","description":"正则表达式是文本处理中的重要部分，通过匹配特定的正则表达式，能够很方便地编写提取特定文本的代码。在python中，同样也已经拥有了正则表达式库re，为各位开发者提供了正则表达式的支持。 在python官方文档中，已经对正则表达式模块接口、词法和用法做了详细的介绍： re——正则表达式操作 正则表达式HOWTO 正则表达式常见的用法如下： 123456789101112131415161718192","datePublished":"2022-05-14T12:50:18.000Z","dateModified":"2026-01-17T04:14:06.138Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2022/05/14/hardpython/5_str_2/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"python, 字符串, re, 正则表达式, pattern"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Hard Python】【第五章-字符串】2、re，正则表达式源码详解","description":"正则表达式是文本处理中的重要部分，通过匹配特定的正则表达式，能够很方便地编写提取特定文本的代码。在python中，同样也已经拥有了正则表达式库re，为各位开发者提供了正则表达式的支持。 在python官方文档中，已经对正则表达式模块接口、词法和用法做了详细的介绍： re——正则表达式操作 正则表达式HOWTO 正则表达式常见的用法如下： 123456789101112131415161718192","datePublished":"2022-05-14T12:50:18.000Z","dateModified":"2026-09-29T02:03:50.968Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2022/05/14/hardpython/5_str_2/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"python, 教程, 源码分析, 字符串, 正则表达式"}</script>
   
   
 
@@ -1506,251 +1506,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">430</span>
+                    <span class="site-state-item-count">308</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

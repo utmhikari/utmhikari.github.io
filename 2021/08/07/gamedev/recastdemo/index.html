@@ -111,7 +111,7 @@
 <link rel="stylesheet" href="/lib/fontsource/ibm-plex-mono/700.css">
 
 <meta name="description" content="在手游时代，尤其对于大世界游戏而言，寻路的实现基本在专门的寻路服务器上进行。在众多寻路的解决方案中，recastnavigation是最为经典实用的一个，很多游戏甚至游戏引擎都采用类似的实现。recastnavigation项目自带了RecastDemo，用图形化的界面帮助用户认识寻路网格（navmesh）的生成以及寻路的过程。因此，作为初学者的笔者，也决定通过RecastDemo去初步认识寻路的">
-<meta name="keywords" content="寻路,recast,RecastDemo,navmesh,recastnavigation">
+<meta name="keywords" content="寻路,RecastDemo,navmesh,recastnavigation,C++">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【游戏开发】初识寻路&amp;navmesh，探索RecastDemo">
 <meta property="og:url" content="https://utmhikari.top/2021/08/07/gamedev/recastdemo/index.html">
@@ -123,7 +123,7 @@
 <meta property="og:image" content="https://utmhikari.top/uploads/gamedev/recastdemo/tile_mesh.png">
 <meta property="og:image" content="https://utmhikari.top/uploads/gamedev/recastdemo/off_mesh.png">
 <meta property="og:image" content="https://utmhikari.top/uploads/gamedev/recastdemo/convex_volume.png">
-<meta property="og:updated_time" content="2024-04-07T02:48:06.918Z">
+<meta property="og:updated_time" content="2026-09-29T02:03:50.961Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【游戏开发】初识寻路&amp;navmesh，探索RecastDemo">
 <meta name="twitter:description" content="在手游时代，尤其对于大世界游戏而言，寻路的实现基本在专门的寻路服务器上进行。在众多寻路的解决方案中，recastnavigation是最为经典实用的一个，很多游戏甚至游戏引擎都采用类似的实现。recastnavigation项目自带了RecastDemo，用图形化的界面帮助用户认识寻路网格（navmesh）的生成以及寻路的过程。因此，作为初学者的笔者，也决定通过RecastDemo去初步认识寻路的">
@@ -479,7 +479,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2024-04-07 10:48:06" itemprop="dateModified" datetime="2024-04-07T10:48:06+08:00">2024-04-07</time>
+                <time title="修改时间：2026-09-29 10:03:50" itemprop="dateModified" datetime="2026-09-29T10:03:50+08:00">2026-09-29</time>
               
             
           </span>
@@ -608,13 +608,13 @@
           
             <a href="/tags/寻路/" rel="tag"># 寻路</a>
           
-            <a href="/tags/recast/" rel="tag"># recast</a>
-          
             <a href="/tags/RecastDemo/" rel="tag"># RecastDemo</a>
           
             <a href="/tags/navmesh/" rel="tag"># navmesh</a>
           
             <a href="/tags/recastnavigation/" rel="tag"># recastnavigation</a>
+          
+            <a href="/tags/C/" rel="tag"># C++</a>
           
         </div>
       
@@ -661,7 +661,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【游戏开发】初识寻路&navmesh，探索RecastDemo","description":"在手游时代，尤其对于大世界游戏而言，寻路的实现基本在专门的寻路服务器上进行。在众多寻路的解决方案中，recastnavigation是最为经典实用的一个，很多游戏甚至游戏引擎都采用类似的实现。recastnavigation项目自带了RecastDemo，用图形化的界面帮助用户认识寻路网格（navmesh）的生成以及寻路的过程。因此，作为初学者的笔者，也决定通过RecastDemo去初步认识寻路的","datePublished":"2021-08-07T13:35:28.000Z","dateModified":"2024-04-07T02:48:06.918Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2021/08/07/gamedev/recastdemo/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"寻路, recast, RecastDemo, navmesh, recastnavigation"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【游戏开发】初识寻路&navmesh，探索RecastDemo","description":"在手游时代，尤其对于大世界游戏而言，寻路的实现基本在专门的寻路服务器上进行。在众多寻路的解决方案中，recastnavigation是最为经典实用的一个，很多游戏甚至游戏引擎都采用类似的实现。recastnavigation项目自带了RecastDemo，用图形化的界面帮助用户认识寻路网格（navmesh）的生成以及寻路的过程。因此，作为初学者的笔者，也决定通过RecastDemo去初步认识寻路的","datePublished":"2021-08-07T13:35:28.000Z","dateModified":"2026-09-29T02:03:50.961Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2021/08/07/gamedev/recastdemo/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"寻路, RecastDemo, navmesh, recastnavigation, C++"}</script>
   
   
 
@@ -1398,251 +1398,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">430</span>
+                    <span class="site-state-item-count">308</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

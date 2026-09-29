@@ -111,14 +111,14 @@
 <link rel="stylesheet" href="/lib/fontsource/ibm-plex-mono/700.css">
 
 <meta name="description" content="在非常久远的文章中，我们提到python中实现并行执行程序的方式主要是通过multiprocessing实现的，而并非多线程（Threading）。机理层面，大致是会开一个新的子进程独立执行，主进程维护一个Sentinel（fd），默认通过pickle跟pipe方式和子进程通信。 而现在，python也到了3.14版本，除了multiprocessing与Threading之外，对于多解释器的支持">
-<meta name="keywords" content="python,并行,并发,multiprocessing,InterpreterPoolExecutor">
+<meta name="keywords" content="python,并行,并发,multiprocessing,进程池">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【Python随笔】通过多解释器并行提升python并发效率">
 <meta property="og:url" content="https://utmhikari.top/2026/08/01/pythonnotes/concurrent_intepreters/index.html">
 <meta property="og:site_name" content="HiKariのTechLab">
 <meta property="og:description" content="在非常久远的文章中，我们提到python中实现并行执行程序的方式主要是通过multiprocessing实现的，而并非多线程（Threading）。机理层面，大致是会开一个新的子进程独立执行，主进程维护一个Sentinel（fd），默认通过pickle跟pipe方式和子进程通信。 而现在，python也到了3.14版本，除了multiprocessing与Threading之外，对于多解释器的支持">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2026-08-01T02:41:09.550Z">
+<meta property="og:updated_time" content="2026-09-29T02:03:50.970Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【Python随笔】通过多解释器并行提升python并发效率">
 <meta name="twitter:description" content="在非常久远的文章中，我们提到python中实现并行执行程序的方式主要是通过multiprocessing实现的，而并非多线程（Threading）。机理层面，大致是会开一个新的子进程独立执行，主进程维护一个Sentinel（fd），默认通过pickle跟pipe方式和子进程通信。 而现在，python也到了3.14版本，除了multiprocessing与Threading之外，对于多解释器的支持">
@@ -456,12 +456,24 @@
                 
               
 
-              <time title="创建时间：2026-08-01 09:55:14 / 修改时间：10:41:09" itemprop="dateCreated datePublished" datetime="2026-08-01T09:55:14+08:00">2026-08-01</time>
+              <time title="创建时间：2026-08-01 09:55:14" itemprop="dateCreated datePublished" datetime="2026-08-01T09:55:14+08:00">2026-08-01</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2026-09-29 10:03:50" itemprop="dateModified" datetime="2026-09-29T10:03:50+08:00">2026-09-29</time>
               
             
           </span>
@@ -580,7 +592,7 @@
           
             <a href="/tags/multiprocessing/" rel="tag"># multiprocessing</a>
           
-            <a href="/tags/InterpreterPoolExecutor/" rel="tag"># InterpreterPoolExecutor</a>
+            <a href="/tags/进程池/" rel="tag"># 进程池</a>
           
         </div>
       
@@ -627,7 +639,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Python随笔】通过多解释器并行提升python并发效率","description":"在非常久远的文章中，我们提到python中实现并行执行程序的方式主要是通过multiprocessing实现的，而并非多线程（Threading）。机理层面，大致是会开一个新的子进程独立执行，主进程维护一个Sentinel（fd），默认通过pickle跟pipe方式和子进程通信。 而现在，python也到了3.14版本，除了multiprocessing与Threading之外，对于多解释器的支持","datePublished":"2026-08-01T01:55:14.000Z","dateModified":"2026-08-01T02:41:09.550Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2026/08/01/pythonnotes/concurrent_intepreters/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"python, 并行, 并发, multiprocessing, InterpreterPoolExecutor"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Python随笔】通过多解释器并行提升python并发效率","description":"在非常久远的文章中，我们提到python中实现并行执行程序的方式主要是通过multiprocessing实现的，而并非多线程（Threading）。机理层面，大致是会开一个新的子进程独立执行，主进程维护一个Sentinel（fd），默认通过pickle跟pipe方式和子进程通信。 而现在，python也到了3.14版本，除了multiprocessing与Threading之外，对于多解释器的支持","datePublished":"2026-08-01T01:55:14.000Z","dateModified":"2026-09-29T02:03:50.970Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2026/08/01/pythonnotes/concurrent_intepreters/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"python, 并行, 并发, multiprocessing, 进程池"}</script>
   
   
 
@@ -1355,251 +1367,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">430</span>
+                    <span class="site-state-item-count">308</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
