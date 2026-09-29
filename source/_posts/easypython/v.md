@@ -8,7 +8,7 @@ tags:
 - 数据挖掘
 - 文本分类
 - scikit-learn
-- newsgroup
+- 教程
 ---
 
 ## 前言

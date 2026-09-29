@@ -6,9 +6,9 @@ categories:
 tags:
 - Golang
 - 反射
-- reflect
 - interface
 - json
+- 教程
 ---
 
 `Golang`的反射功能，在很多场景都会用到，最基础的莫过于`rpc`、`orm`跟`json`的编解码，更复杂的可能会到做另外一门语言的虚拟机。通过反射模块，我们可以在编程语言的`runtime`运行时期间去访问内部产生对象的信息。了解反射模块的实现，对我们了解`Golang`对象机制本身，也是莫大的帮助。

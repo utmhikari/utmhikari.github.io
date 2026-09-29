@@ -5,10 +5,10 @@ categories:
 - 游戏开发
 tags:
 - 寻路
-- recast
 - RecastDemo
 - navmesh
 - recastnavigation
+- C++
 ---
 
 在手游时代，尤其对于大世界游戏而言，寻路的实现基本在专门的寻路服务器上进行。在众多寻路的解决方案中，[recastnavigation](https://github.com/recastnavigation/recastnavigation)是最为经典实用的一个，很多游戏甚至游戏引擎都采用类似的实现。recastnavigation项目自带了RecastDemo，用图形化的界面帮助用户认识寻路网格（navmesh）的生成以及寻路的过程。因此，作为初学者的笔者，也决定通过RecastDemo去初步认识寻路的机理奥秘。

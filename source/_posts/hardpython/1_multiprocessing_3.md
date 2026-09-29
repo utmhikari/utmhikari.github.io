@@ -6,9 +6,9 @@ categories:
 tags:
 - python
 - multiprocessing
-- pool
 - 进程池
 - 并行
+- 多进程
 ---
 
 前面讲了进程创建与进程通信的内容，接下来讲一下多进程编程最能发挥的地方。对于同时运行多个同质任务来讲，采用`multiprocessing.Pool`进程池去管理是最方便的。`Pool`的用法如下：

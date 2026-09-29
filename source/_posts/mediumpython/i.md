@@ -7,8 +7,8 @@ tags:
 - python
 - 源码分析
 - list
-- tuple
 - 元组
+- 教程
 ---
 
 ## 前言

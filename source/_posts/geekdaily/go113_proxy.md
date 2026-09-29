@@ -5,10 +5,10 @@ categories:
 - 极客日常
 tags:
 - Golang
-- GOPROXY
 - go mod
-- GOSUMDB
-- go env
+- 后端开发
+- 问题排查
+- 环境变量
 ---
 
 在[从零单排Golang第一话](https://utmhikari.github.io/2019/07/20/gofromzero/01_first_code/)中讲到了Golang的基础开发环境配置，其中讲到了Go的依赖管理方面，提及了以后的趋势会采用官方的go mod进行管理。关于这一块，现在有了更加简单的方法。

@@ -6,9 +6,9 @@ categories:
 tags:
 - python
 - multiprocessing
-- Process
 - 多进程
-- spawn
+- 子进程
+- 并发
 ---
 
 在python中，如果要做多任务并行的编程，必须要掌握`multiprocessing`库的相关运用。在python的[multiprocessing官方文档](https://docs.python.org/zh-cn/3/library/multiprocessing.html)中，已然详细给出了`multiprocessing`库的相关用法。多进程编程其实还是有很多坑存在的，为了进一步探索python多进程的机制，提升对python多进程编程的理解，本篇文章会对多进程模块的实现进行一次详细的剖析。

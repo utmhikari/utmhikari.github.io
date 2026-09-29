@@ -7,8 +7,8 @@ tags:
 - UE4
 - C++
 - python
-- PythonScriptPlugin
 - UE4编辑器
+- UE4插件
 ---
 
 UE4以C++为基础，在游戏开发需求当中，官方推崇的是Blueprint可视化编程，而除此之外像UnLua、puerts等解决方案也提供了lua、ts等其它脚本语言的支持。至于python，UE4本身就有插件支持，叫做`PythonScriptPlugin`，启用插件后，在编辑器里，可以输入python代码执行一系列命令。在最新的4.27版本中，python的版本是3.7.7。

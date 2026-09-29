@@ -6,9 +6,9 @@ categories:
 tags:
 - vue
 - echarts
-- 散点图
-- scatter3D
-- visualMap
+- 前端开发
+- web开发
+- 数据挖掘
 ---
 
 在vue技术栈下做图表需求，[echarts](https://echarts.apache.org/zh/index.html)是一个非常棒的选择，提供了非常多种多样的图标示例以及非常复杂强大的API。由于笔者近期工作内容中需要分析采样点的分布情况，因此自然而然接触到了echarts的[3D散点图](https://echarts.apache.org/examples/zh/index.html#chart-type-scatter3D)。在笔者的需求中，需要对不同点进行分类，并按特定的颜色显示出来。经过一番踩坑，了解到了echarts在实现这方面的机制。

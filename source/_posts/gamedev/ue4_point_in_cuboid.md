@@ -7,8 +7,8 @@ tags:
 - UE4
 - 数学
 - 源码分析
-- NavModifierVolume
-- 旋转矩阵
+- C++
+- navmesh
 ---
 
 近期在研究寻路功能的测试工作，需要对玩家寻路过程中的行进轨迹进行采样，判断采样点是否在特定的寻路区域内。UE4自带了`NavModifierVolume`的actor，可以放置到场景里标识某个区域的寻路成本（不了解寻路相关背景的话可以参考[先前的文章](https://utmhikari.top/2021/08/07/gamedev/recastdemo/)），因此我们做采样的时候，也需要判断某个点是否在特定的`NavModifierVolume`里。由于自己所负责的游戏是网游，`NavModifierVolume`最后导出给服务器用了，实际游戏里获取不到这些actor的数据，因此实际测试时，一方面需要下载服务器上的`NavModifierVolume`数据，另一方面还要手写相关的计算方法，来达到我们的工作目的。

@@ -92,20 +92,26 @@ if $highlight_theme == "night bright"
   }
 
 if $highlight_theme == "solarized light"
-  $highlight-background   = #FDF6E3
-  $highlight-constant     = #00FF00
-  $highlight-current-line = #FDF6E3
-  $highlight-selection    = #ECE7D5
-  $highlight-foreground   = #657A81
-  $highlight-comment      = #93A1A1
-  $highlight-red          = #D30102
-  $highlight-orange       = #657A81
-  $highlight-yellow       = #657A81
-  $highlight-green        = #2AA198
-  $highlight-aqua         = #657A81
-  $highlight-blue         = #657A81
-  $highlight-purple       = #B58900
+  // 2026-09 修正：原值四处偏离 Solarized——constant 是荧光绿 #00FF00、red 是过刺的
+  // #D30102、orange/aqua/blue 三槽等于 foreground 导致数字/内置/函数名全部无色。
+  // 现全部换成 Solarized 官方 accent。回滚值：constant=#00FF00 current-line=#FDF6E3
+  // red=#D30102 orange=#657A81 yellow=#657A81 aqua=#657A81 blue=#657A81。
+  // 关键字槽(purple)：2026-09-29 起按官方标准改 green #859900 试看效果
+  // （此前为金色 #B58900；用户先看效果再定，回滚值 #B58900）。
+  $highlight-background   = #FDF6E3  // base3
+  $highlight-constant     = #CB4B16  // orange：常量与数字/字面量同族
+  $highlight-current-line = #EEE8D5  // base2：原与背景同色，行高亮等于没有
+  $highlight-selection    = #ECE7D5  // 暖沙
+  $highlight-foreground   = #657A81  // ≈ base00
+  $highlight-comment      = #93A1A1  // base1
+  $highlight-red          = #DC322F  // Solarized red
+  $highlight-orange       = #CB4B16  // Solarized orange：数字/内置/字面量/参数
+  $highlight-yellow       = #B58900  // Solarized yellow（highlight.styl 未引用，备位）
+  $highlight-green        = #2AA198  // 字符串槽：值用 Solarized cyan（槽名错位但观感正确）
+  $highlight-aqua         = #268BD2  // Solarized blue：函数标题/.title
+  $highlight-blue         = #268BD2  // Solarized blue：函数定义
+  $highlight-purple       = #859900  // 关键字槽：Solarized green（官方标准）
   $highlight-gutter       = {
-    color: #586E75
+    color: #586E75  // base01
     bg-color: #FDF6E3
   }

@@ -6,9 +6,9 @@ categories:
 tags:
 - python
 - 日志
-- Handler
-- stderr
-- TimedRotatingFileHandler
+- 源码分析
+- 设计模式
+- 教程
 ---
 
 在[上篇文章](https://utmhikari.top/2022/04/09/hardpython/4_log_1/)里说完了日志实例`Logger`和日志管理`Manager`，现在该提到`Handler`了。`Handler`是日志信息的消费者，单个`Logger`实例注册多个`Handler`，每生成一个`LogRecord`，就会被合法的`Handler`消费，在不同地方打印出日志信息。

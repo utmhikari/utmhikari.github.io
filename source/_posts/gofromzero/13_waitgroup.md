@@ -5,9 +5,9 @@ categories:
 - 从零单排Golang
 tags:
 - Golang
-- WaitGroup
 - 并行
 - 异步
+- 并发
 - 后端开发
 ---
 

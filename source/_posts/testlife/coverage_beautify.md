@@ -5,10 +5,10 @@ categories:
 - 测试人生
 tags:
 - 代码覆盖率
-- 代码染色
 - 语法分析
 - 递归下降法
 - lua
+- 源码分析
 ---
 
 在研发代码覆盖率测试工具的时候，通常除了代码覆盖数据收集模块之外，一般还要研发前端展示的部分以展现代码覆盖分析报告，通常会为每一个文件增加行染色，类似于[jacoco](https://www.jacoco.org/jacoco/trunk/coverage/org.jacoco.core/org.jacoco.core.internal.analysis.filter/TryWithResourcesJavacFilter.java.html#L184)这种形式。

@@ -6,9 +6,9 @@ categories:
 tags:
 - Golang
 - context
-- WithCancel
-- WithDeadline
-- WithValue
+- 并发
+- 异步
+- 后端开发
 ---
 
 在`Golang`的各种用法当中，`context`可谓是最能够体现`Golang`语言特性的模块之一。`context`的本意为`情境、上下文`，而在`Golang`程序当中，则可以被用于描述一次`调用`、`会话`或者`任务`的状态信息。关于`context`网上有很多语法以及源码分析的文档，但是里面很多却不能从实战场景体现`context`的作用，导致这个概念难以理解。因此这一回，经由踩坑`context`后，笔者将结合自己的理解，给大家讲述`context`在`Golang`怎么用来最为方便，怎么理解最为实用。

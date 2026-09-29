@@ -8,7 +8,7 @@ tags:
 - 自动化测试
 - GAutomator
 - UE4
-- 手游自动化
+- 游戏自动化
 ---
 
 最近开始研究一些游戏自动化测试方面的内容。游戏自动化测试是游戏测试研究领域的难点之一，当前主流的方案有两种，一种是采用纯粹的UI识别方法进行，典型的例子是[Airtest](https://github.com/AirtestProject/Airtest)，另一种是直接嵌入到游戏引擎中获取节点树等元素从而对实体进行操作，典型的例子是[GAutomator](https://github.com/Tencent/GAutomator)。由于笔者先前略微接触过Airtest方面的内容，因此本次决定上手GAutomator尝试游戏自动化。

@@ -5,10 +5,10 @@ categories:
 - 极客日常
 tags:
 - UE4
-- FJsonObject
-- USTRUCT
 - C++
 - 源码分析
+- json
+- 游戏开发
 ---
 
 前些天在写[UnrealAutomator](https://github.com/utmhikari/UnrealAutomator)的Web解析模块的时候，遇到了一些USTRUCT方面的问题，由于笔者以前并非UE4程序员，因此踩了一些坑，果断分享一下踩坑历程。

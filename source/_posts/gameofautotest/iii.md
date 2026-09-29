@@ -5,7 +5,7 @@ categories:
 - Game Of AutoTest
 tags:
 - 自动化测试
-- 自动化框架
+- 测试开发
 - python
 - BDD
 - 依赖注入

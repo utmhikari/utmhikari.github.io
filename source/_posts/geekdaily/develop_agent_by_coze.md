@@ -4,7 +4,7 @@ date: 2025/08/10 14:24:15
 categories:
 - 极客日常
 tags:
-- coze
+- Coze
 - LLM
 - python
 - Agent

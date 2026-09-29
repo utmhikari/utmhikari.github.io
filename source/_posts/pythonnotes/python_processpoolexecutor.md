@@ -6,9 +6,9 @@ categories:
 tags:
 - python
 - 并发
-- ProcessPoolExecutor
-- multiprocessing
 - 进程池
+- multiprocessing
+- 多进程
 ---
 
 在python开发期间，由于GIL的原因，不能直接采用并行的方式处理代码逻辑。在multiprocessing库的支持下，python程序能够启动子进程执行特定的任务，但子进程的管理也成为了问题。为了简化用户开发成本，python在concurrent.futures下内置了ProcessPoolExecutor这一数据结构，实现了简单的进程管理及任务调度。如果没有特别的需求，开发者只需要用ProcessPoolExecutor即可实现并行执行任务。因此，本文简单对ProcessPoolExecutor的实现进行分析，帮助大家更加了解python开发中进程/任务调度的一种方式。

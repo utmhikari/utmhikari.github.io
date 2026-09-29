@@ -5,10 +5,10 @@ categories:
 - Hard Python
 tags:
 - python
-- re
 - 正则表达式
-- pattern
 - 字符串
+- 源码分析
+- 教程
 ---
 
 

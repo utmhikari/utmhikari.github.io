@@ -7,8 +7,8 @@ tags:
 - python
 - asyncio
 - 事件循环
-- proactor
 - 异步
+- 并发
 ---
 
 接续[第一话](https://utmhikari.top/2022/02/12/hardpython/2_asyncio_1/)的内容，事件循环在创建之后，又是如何运行协程任务以及异步IO任务的？

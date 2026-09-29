@@ -6,9 +6,9 @@ categories:
 tags:
 - python
 - multiprocessing
-- pipe
-- queue
 - 多进程
+- ipc
+- 并发
 ---
 
 [第一话](https://utmhikari.top/2022/01/16/hardpython/1_multiprocessing_1/)详细讲解了Process新进程是如何被创建的，接下来就来讲一下进程之间有什么通信的方法。

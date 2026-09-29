@@ -5,10 +5,10 @@ categories:
 - Medium Python
 tags:
 - python
-- DictView
 - dict
 - C
-- dict_keys
+- 源码分析
+- 教程
 ---
 
 在python3里面，我们经常会用`if k in d.keys()`来判断某个key是不是在某个dict里面，或者是用`a_dict.keys() - b_dict.keys()`来获取两个字典之间keys的差集。那么这里就有一个问题，dict的`keys()`返回了什么数据类型呢？

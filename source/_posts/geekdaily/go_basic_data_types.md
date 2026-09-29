@@ -5,10 +5,10 @@ categories:
 - 极客日常
 tags:
 - Golang
-- strconv
 - 数据类型转换
 - 编程
-- rune
+- 字符串
+- 教程
 ---
 
 golang的数据类型转换是困惑新gopher的一大问题之一。相对于python，golang的数据类型转换可要麻烦的多，而且还不走寻常路地诞生了些新的方法跟名词。因此本文讲解golang常见数据类型string、int、rune等数据类型相互之间的转换方法，给大伙儿避坑。

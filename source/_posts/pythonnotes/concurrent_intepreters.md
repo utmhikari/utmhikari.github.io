@@ -8,7 +8,7 @@ tags:
 - multiprocessing
 - 并发
 - 并行
-- InterpreterPoolExecutor
+- 进程池
 ---
 
 在非常久远的文章中，我们提到python中实现并行执行程序的方式主要是通过[multiprocessing](https://utmhikari.top/2021/06/08/pythonnotes/python_processpoolexecutor/)实现的，而并非多线程（Threading）。机理层面，大致是会开一个新的子进程独立执行，主进程维护一个Sentinel（fd），默认通过pickle跟pipe方式和子进程通信。

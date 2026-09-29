@@ -7,8 +7,8 @@ tags:
 - lua
 - skynet
 - 后端开发
-- lua_State
 - 源码分析
+- lua C API
 ---
 
 ## 前言

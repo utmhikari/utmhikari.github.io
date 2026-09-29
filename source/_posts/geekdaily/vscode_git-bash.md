@@ -7,8 +7,8 @@ tags:
 - VSCode
 - git
 - shell
-- VSCode设置
 - git-bash
+- 效率工具
 ---
 
 截至2021.9，不知道哪天更新了vscode，发现默认的终端从以前的git-bash变成了powershell，笔者用的windows电脑，于是乎要解决这个问题，把powershell变回git-bash。

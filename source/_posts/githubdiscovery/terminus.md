@@ -6,9 +6,9 @@ categories:
 tags:
 - terminus
 - 效率工具
-- terminal
 - shell
 - 测试
+- 工具开发
 ---
 
 ## 前言

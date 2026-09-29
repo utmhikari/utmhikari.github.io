@@ -4,11 +4,11 @@ date: 2019/04/20 20:42:51
 categories:
 - Lua杂谈
 tags:
-- Lua
-- C API
+- lua
+- lua C API
 - lnodelist
 - 双向链表
-- array
+- C
 ---
 
 ## 前言

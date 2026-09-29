@@ -441,25 +441,32 @@ pre {
   padding: 8px 0;
 }
 
-// 15b. 代码块滚动条：浏览器原生滚动条是系统灰白条，与代码块底色（Solarized 米白 #fdf6e3）完全不搭。
-//      轨道透明让底色透出来；滑块用暖沙（与全站填充色同源，≈ Solarized base2）——
+// 15b. 滚动条：浏览器原生滚动条是系统灰白条，与 Solarized 米白底完全不搭。
+//      轨道透明让容器底色透出来；滑块用暖沙（与全站填充色同源，≈ Solarized base2）——
 //      先前用过冷调浅烟灰 #D8DFE1，在暖米白上发蓝发灰、跳出色系，故换暖沙，hover 加深一档。
 //      一律实色，不用 rgba（半透明叠在米白上会透白显灰，已定规范）。
+//      覆盖范围：代码块（.highlight / pre）+ 搜索弹窗结果区（#local-search-result）。
+//      为什么搜索弹窗在 Mac 上看着没问题、Windows 上发白：macOS 默认是 overlay 滚动条
+//      （半透明、无轨道、浮在内容上），Windows/Edge 是经典滚动条（实心轨道、占布局宽度），
+//      那条白轨就是 Windows 经典滚动条的默认 track，必须显式定制才能盖掉。
 //      只写 ::-webkit-scrollbar（Chrome/Safari/Edge）；Firefox 一旦设 scrollbar-width/color
 //      会反过来禁掉这套伪元素，所以不混写，Firefox 保留系统滚动条。
 .highlight::-webkit-scrollbar,
-pre::-webkit-scrollbar {
+pre::-webkit-scrollbar,
+#local-search-result::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 .highlight::-webkit-scrollbar-track,
-pre::-webkit-scrollbar-track {
+pre::-webkit-scrollbar-track,
+#local-search-result::-webkit-scrollbar-track {
   background: transparent;
 }
 
 .highlight::-webkit-scrollbar-thumb,
-pre::-webkit-scrollbar-thumb {
+pre::-webkit-scrollbar-thumb,
+#local-search-result::-webkit-scrollbar-thumb {
   background: #ECE7D5;
   border-radius: 4px;
 
@@ -469,7 +476,8 @@ pre::-webkit-scrollbar-thumb {
 }
 
 .highlight::-webkit-scrollbar-corner,
-pre::-webkit-scrollbar-corner {
+pre::-webkit-scrollbar-corner,
+#local-search-result::-webkit-scrollbar-corner {
   background: transparent;
 }
 
@@ -478,8 +486,12 @@ pre::-webkit-scrollbar-corner {
   border-bottom-color: alpha($custom-main-color, 0.25);
 }
 
+// 复制按钮的文字排版跟正文对齐：主题带来 13px / 700 粗体，颜色此前又被覆成主色，
+// 三样都与正文不一致。现字号/字重/颜色全部继承正文，只保留底色、边框、hover 这些按钮属性作 UI 提示。
 .copy-btn {
-  color: $custom-main-color;
+  color: inherit;
+  font-size: inherit;
+  font-weight: normal;
   background-color: $menu-item-color;
   background-image: none;
   border-color: alpha($custom-main-color, 0.35);

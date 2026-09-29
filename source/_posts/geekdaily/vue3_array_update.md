@@ -4,11 +4,11 @@ date: 2022/06/17 20:59:28
 categories:
 - 极客日常
 tags:
-- vue3
+- vue
 - nodejs
-- array
-- state
 - reactive
+- 前端开发
+- web开发
 ---
 
 近期由于工作原因，开始了解`vue3`的内容。`vue3`相对于`vue2`采用了组合式的描述，原来的写法是：

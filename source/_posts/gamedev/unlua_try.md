@@ -7,8 +7,8 @@ tags:
 - UE4
 - UnLua
 - lua
-- 游戏开发
 - C++
+- UE4插件
 ---
 
 大型的游戏项目包含许多错综复杂的业务逻辑，针对UE4游戏而言，如果纯粹采用C++编写的话，一方面会增加大量的劳动成本，影响效率，另一方面难以解决游戏热更的问题。lua作为胶水语言，能够与C/C++/C#等语言互通，简化业务逻辑编写，并且支持热更。针对UE4的游戏开发，[UnLua](https://github.com/Tencent/UnLua)以及[sluaunreal](https://github.com/Tencent/sluaunreal)都是采用lua编写逻辑的解决方案。

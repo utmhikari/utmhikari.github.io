@@ -7,8 +7,8 @@ tags:
 - hexo
 - NexT
 - 代码高亮
-- styl
 - CSS
+- 前端开发
 ---
 
 用hexo+NexT搭建博客的同学或许会遇到一个问题：默认的代码配色只有[Tomorrow Theme](https://github.com/chriskempson/tomorrow-theme)五种，如果想要自己的代码配色，应当如何自定义呢？

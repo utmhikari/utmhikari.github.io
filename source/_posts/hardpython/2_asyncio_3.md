@@ -6,9 +6,9 @@ categories:
 tags:
 - python
 - asyncio
-- async
-- await
 - 异步
+- 事件循环
+- 源码分析
 ---
 
 说完了`asyncio`事件循环是如何运行异步任务的，接下来back to basic，我们一起看看`async`和`await`两个原语具体代表了什么含义。

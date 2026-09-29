@@ -5,10 +5,10 @@ categories:
 - 极客日常
 tags:
 - vuetify
-- v-autocomplete
 - vue
-- v-model
 - 前端开发
+- web开发
+- HTML
 ---
 
 [Vuetify](https://vuetifyjs.com/zh-Hans/)是Vue的一套前端组件框架，基于Material Design设计，界面较为整洁。最近由于项目需要开始入手，但在写自定义`v-autocomplete`组件的时候却踩了许多坑。因此本文果断记录一下踩坑的过程。

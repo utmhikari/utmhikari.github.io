@@ -5,10 +5,10 @@ categories:
 - 从零单排Golang
 tags:
 - Golang
-- make
-- new
 - 初始化
 - 零值
+- 编程
+- 教程
 ---
 
 在Golang当中，对于常用数据结构的初始化方式，通常有2种：make跟new。这两种初始化方法用途不同，效果不同。本篇文章就来详细讲一下make和new具体都怎么用，在什么场景下会用上。

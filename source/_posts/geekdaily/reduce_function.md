@@ -4,11 +4,11 @@ date: 2021/10/01 12:56:21
 categories:
 - 极客日常
 tags:
-- reduce
+- python
 - 函数式编程
 - 归并
-- python
-- fold
+- 前端开发
+- web开发
 ---
 
 在学习javascript和python的过程中，我们通常会接触到`map`、`filter`、`reduce`之类的一等公民高阶函数。理解`map`和`filter`是相对简单的事情，但理解`reduce`的话还是需要一番推敲。正值十一假期，今天这篇文章就好好讲讲`reduce`这个东西

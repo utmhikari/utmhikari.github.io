@@ -7,8 +7,8 @@ tags:
 - python
 - 多线程
 - GIL
-- opcode
 - 源码分析
+- 并发
 ---
 
 python的多线程，这是个老生常谈的话题了，网上资料也一大把。python默认的`threading`模块对多线程提供了支持，但实际多个`threading.Thread`实例无法并行运行（不是无法并发哦！）。

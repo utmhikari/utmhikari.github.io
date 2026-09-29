@@ -5,10 +5,10 @@ categories:
 - 游戏开发
 tags:
 - UE4
-- DataTable
-- Subsystem
-- 游戏开发
 - C++
+- UE4插件
+- 工具开发
+- 源码分析
 ---
 
 在UE4游戏开发中，官方文档推荐了2套功能：[Data Driven Gameplay Elements](https://docs.unrealengine.com/en-US/InteractiveExperiences/DataDriven/index.html)以及[Programming Subsystems](https://docs.unrealengine.com/en-US/ProgrammingAndScripting/Subsystems/index.html)。我们可以结合这两者的功效，实现一个简单的表格配置数据管理模块。

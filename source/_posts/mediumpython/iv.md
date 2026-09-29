@@ -6,9 +6,9 @@ categories:
 tags:
 - python
 - 源码分析
-- descriptor
 - 类
-- property
+- 面向对象
+- 教程
 ---
 
 ## 前言

@@ -7,8 +7,8 @@ tags:
 - python
 - asyncio
 - 事件循环
-- proactor
-- iocp
+- 异步
+- 并发
 ---
 
 python3中增加的重要特性之一即为`asyncio`，其提供了异步编程的原语支持，从而能够让python在事件驱动、协程协同等方面的编程场景大杀四方。
