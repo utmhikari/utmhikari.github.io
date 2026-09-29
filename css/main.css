@@ -2050,7 +2050,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #24ff3e;
+  background: #abfa3d;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3730,25 +3730,30 @@ pre {
   padding: 8px 0;
 }
 .highlight::-webkit-scrollbar,
-pre::-webkit-scrollbar {
+pre::-webkit-scrollbar,
+#local-search-result::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 .highlight::-webkit-scrollbar-track,
-pre::-webkit-scrollbar-track {
+pre::-webkit-scrollbar-track,
+#local-search-result::-webkit-scrollbar-track {
   background: transparent;
 }
 .highlight::-webkit-scrollbar-thumb,
-pre::-webkit-scrollbar-thumb {
+pre::-webkit-scrollbar-thumb,
+#local-search-result::-webkit-scrollbar-thumb {
   background: #ece7d5;
   border-radius: 4px;
 }
 .highlight::-webkit-scrollbar-thumb:hover,
-pre::-webkit-scrollbar-thumb:hover {
+pre::-webkit-scrollbar-thumb:hover,
+#local-search-result::-webkit-scrollbar-thumb:hover {
   background: #d8d2bc;
 }
 .highlight::-webkit-scrollbar-corner,
-pre::-webkit-scrollbar-corner {
+pre::-webkit-scrollbar-corner,
+#local-search-result::-webkit-scrollbar-corner {
   background: transparent;
 }
 .highlight figcaption {

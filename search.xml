@@ -299,8 +299,8 @@
       </categories>
       <tags>
         <tag>Vibe Coding</tag>
-        <tag>Kubernetes</tag>
         <tag>Golang</tag>
+        <tag>Kubernetes</tag>
         <tag>operator-gallery</tag>
         <tag>Docker</tag>
       </tags>
@@ -325,8 +325,8 @@
         <category>DIY小记</category>
       </categories>
       <tags>
-        <tag>编程</tag>
         <tag>Qoder</tag>
+        <tag>编程</tag>
         <tag>LLM</tag>
         <tag>JetBrains</tag>
         <tag>IDE</tag>
@@ -921,8 +921,8 @@
       </categories>
       <tags>
         <tag>后端开发</tag>
-        <tag>业务</tag>
         <tag>Golang</tag>
+        <tag>业务</tag>
         <tag>数据库</tag>
         <tag>计算机网络</tag>
       </tags>
@@ -1832,8 +1832,8 @@
         <tag>编程</tag>
         <tag>工具开发</tag>
         <tag>研发效能</tag>
-        <tag>低代码</tag>
         <tag>游戏开发</tag>
+        <tag>低代码</tag>
       </tags>
   </entry>
   <entry>
@@ -2114,10 +2114,10 @@
       </categories>
       <tags>
         <tag>AI</tag>
-        <tag>OCR</tag>
-        <tag>研发效能</tag>
-        <tag>ChatGPT</tag>
         <tag>DevOps</tag>
+        <tag>研发效能</tag>
+        <tag>OCR</tag>
+        <tag>ChatGPT</tag>
       </tags>
   </entry>
   <entry>
@@ -2194,9 +2194,9 @@
       <tags>
         <tag>稳定性</tag>
         <tag>变更风险</tag>
-        <tag>研发效能</tag>
         <tag>DevOps</tag>
         <tag>持续集成</tag>
+        <tag>研发效能</tag>
       </tags>
   </entry>
   <entry>
@@ -2507,8 +2507,8 @@
       </categories>
       <tags>
         <tag>后端开发</tag>
-        <tag>异步</tag>
         <tag>Golang</tag>
+        <tag>异步</tag>
         <tag>并行</tag>
         <tag>WaitGroup</tag>
       </tags>
@@ -2693,10 +2693,10 @@
       </categories>
       <tags>
         <tag>面试</tag>
-        <tag>研发效能</tag>
         <tag>DevOps</tag>
         <tag>持续集成</tag>
         <tag>八股文</tag>
+        <tag>研发效能</tag>
       </tags>
   </entry>
   <entry>
@@ -2832,8 +2832,8 @@
       <tags>
         <tag>AI</tag>
         <tag>面试</tag>
-        <tag>ChatGPT</tag>
         <tag>八股文</tag>
+        <tag>ChatGPT</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -5236,8 +5236,8 @@
         <category>Hard Python</category>
       </categories>
       <tags>
-        <tag>异步</tag>
         <tag>python</tag>
+        <tag>异步</tag>
         <tag>asyncio</tag>
         <tag>async</tag>
         <tag>await</tag>
@@ -5329,8 +5329,8 @@
       </categories>
       <tags>
         <tag>事件循环</tag>
-        <tag>异步</tag>
         <tag>python</tag>
+        <tag>异步</tag>
         <tag>asyncio</tag>
         <tag>proactor</tag>
       </tags>
@@ -8005,10 +8005,10 @@
       </categories>
       <tags>
         <tag>UE4</tag>
-        <tag>C++</tag>
         <tag>DataTable</tag>
         <tag>Subsystem</tag>
         <tag>游戏开发</tag>
+        <tag>C++</tag>
       </tags>
   </entry>
   <entry>
@@ -8255,9 +8255,9 @@
         <category>极客日常</category>
       </categories>
       <tags>
+        <tag>Win10</tag>
         <tag>JetBrains</tag>
         <tag>IDE</tag>
-        <tag>Win10</tag>
         <tag>Intellij IDEA</tag>
         <tag>idea.properties</tag>
       </tags>
@@ -8340,8 +8340,8 @@
       </categories>
       <tags>
         <tag>UE4</tag>
-        <tag>C++</tag>
         <tag>游戏开发</tag>
+        <tag>C++</tag>
         <tag>UnLua</tag>
         <tag>lua</tag>
       </tags>
@@ -8441,8 +8441,8 @@
         <category>极客日常</category>
       </categories>
       <tags>
-        <tag>后端开发</tag>
         <tag>web开发</tag>
+        <tag>后端开发</tag>
         <tag>UE4</tag>
         <tag>C++</tag>
         <tag>UE4插件</tag>
@@ -8630,8 +8630,8 @@
         <category>GitHub探索</category>
       </categories>
       <tags>
-        <tag>后端开发</tag>
         <tag>web开发</tag>
+        <tag>后端开发</tag>
         <tag>python</tag>
         <tag>fastapi</tag>
         <tag>效率工具</tag>
@@ -9080,8 +9080,8 @@
       </categories>
       <tags>
         <tag>python</tag>
-        <tag>爬虫</tag>
         <tag>教程</tag>
+        <tag>爬虫</tag>
         <tag>数据挖掘</tag>
         <tag>pdf</tag>
       </tags>
@@ -9183,8 +9183,8 @@
         <category>从零单排Golang</category>
       </categories>
       <tags>
-        <tag>Kubernetes</tag>
         <tag>Golang</tag>
+        <tag>Kubernetes</tag>
         <tag>mongodb</tag>
         <tag>client-go</tag>
         <tag>minikube</tag>
@@ -9551,8 +9551,8 @@
         <category>从零单排Golang</category>
       </categories>
       <tags>
-        <tag>后端开发</tag>
         <tag>web开发</tag>
+        <tag>后端开发</tag>
         <tag>Golang</tag>
         <tag>gin</tag>
         <tag>gorm</tag>
@@ -10365,10 +10365,10 @@
         <category>Easy Python</category>
       </categories>
       <tags>
-        <tag>异步</tag>
         <tag>python</tag>
-        <tag>爬虫</tag>
+        <tag>异步</tag>
         <tag>教程</tag>
+        <tag>爬虫</tag>
         <tag>代理</tag>
       </tags>
   </entry>
@@ -10409,9 +10409,9 @@
       </categories>
       <tags>
         <tag>python</tag>
+        <tag>教程</tag>
         <tag>爬虫</tag>
         <tag>BeautifulSoup</tag>
-        <tag>教程</tag>
         <tag>HTML</tag>
       </tags>
   </entry>
