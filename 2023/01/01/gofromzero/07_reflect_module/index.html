@@ -111,7 +111,7 @@
 <link rel="stylesheet" href="/lib/fontsource/ibm-plex-mono/700.css">
 
 <meta name="description" content="Golang的反射功能，在很多场景都会用到，最基础的莫过于rpc、orm跟json的编解码，更复杂的可能会到做另外一门语言的虚拟机。通过反射模块，我们可以在编程语言的runtime运行时期间去访问内部产生对象的信息。了解反射模块的实现，对我们了解Golang对象机制本身，也是莫大的帮助。 今天，恰逢阳康+新年，就决定来探究一下Golang的反射模块——reflect。 从最基础的开始，reflec">
-<meta name="keywords" content="Golang,教程,反射,interface,json">
+<meta name="keywords" content="Golang,教程,json,interface,反射">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【从零单排Golang】第七话：反射模块reflect使用方式探索">
 <meta property="og:url" content="https://utmhikari.top/2023/01/01/gofromzero/07_reflect_module/index.html">
@@ -600,11 +600,11 @@
           
             <a href="/tags/教程/" rel="tag"># 教程</a>
           
-            <a href="/tags/反射/" rel="tag"># 反射</a>
+            <a href="/tags/json/" rel="tag"># json</a>
           
             <a href="/tags/interface/" rel="tag"># interface</a>
           
-            <a href="/tags/json/" rel="tag"># json</a>
+            <a href="/tags/反射/" rel="tag"># 反射</a>
           
         </div>
       
@@ -651,7 +651,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【从零单排Golang】第七话：反射模块reflect使用方式探索","description":"Golang的反射功能，在很多场景都会用到，最基础的莫过于rpc、orm跟json的编解码，更复杂的可能会到做另外一门语言的虚拟机。通过反射模块，我们可以在编程语言的runtime运行时期间去访问内部产生对象的信息。了解反射模块的实现，对我们了解Golang对象机制本身，也是莫大的帮助。 今天，恰逢阳康+新年，就决定来探究一下Golang的反射模块——reflect。 从最基础的开始，reflec","datePublished":"2022-12-31T18:16:48.000Z","dateModified":"2026-09-29T02:03:50.964Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2023/01/01/gofromzero/07_reflect_module/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"Golang, 教程, 反射, interface, json"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【从零单排Golang】第七话：反射模块reflect使用方式探索","description":"Golang的反射功能，在很多场景都会用到，最基础的莫过于rpc、orm跟json的编解码，更复杂的可能会到做另外一门语言的虚拟机。通过反射模块，我们可以在编程语言的runtime运行时期间去访问内部产生对象的信息。了解反射模块的实现，对我们了解Golang对象机制本身，也是莫大的帮助。 今天，恰逢阳康+新年，就决定来探究一下Golang的反射模块——reflect。 从最基础的开始，reflec","datePublished":"2022-12-31T18:16:48.000Z","dateModified":"2026-09-29T02:03:50.964Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2023/01/01/gofromzero/07_reflect_module/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"Golang, 教程, json, interface, 反射"}</script>
   
   
 
@@ -699,7 +699,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">226</span>
+                    <span class="site-state-item-count">228</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>

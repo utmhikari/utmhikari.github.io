@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://utmhikari.top/"/>
-  <updated>2026-09-05T01:25:20.564Z</updated>
+  <updated>2026-10-01T05:35:13.643Z</updated>
   <id>https://utmhikari.top/</id>
   
   <author>
@@ -15,6 +15,74 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【AI原生】借助AI之力优化个人博客前端样式</title>
+    <link href="https://utmhikari.top/2026/10/01/ainative/ai_blog_improvement/"/>
+    <id>https://utmhikari.top/2026/10/01/ainative/ai_blog_improvement/</id>
+    <published>2026-10-01T05:31:57.000Z</published>
+    <updated>2026-10-01T05:35:13.643Z</updated>
+    
+    <content type="html"><![CDATA[<p>恰逢中秋十一假期，想到自己的<a href="https://utmhikari.top/">个人博客</a>已经很久没有做前端优化了，趁着这段时间决定借助AI Coding的力量，把博客的前端样式整体优化一下，调整到自己预期内的效果。不得不说现在即便是很廉价的模型，最终都能够达成这个目标，因此打算写这篇博客，记录一下自己优化的历程。</p><p>先说结果，新的博客前端，主要优化了下面一些事情：</p><ul><li>字体调整：默认采用衬线字体，文本展现更加美观，尤其在Mac上效果更好；</li><li>标签优化：聚合删减了100个左右的标签；</li><li>颜色调整：搜索页、按钮和Scroll的背景色，全部调成和Solarized体系搭配的颜色，代码染色也和Solarized Light对标。</li></ul><p>具体执行时，还是踩了一些坑，最终也都得到解决。</p><a id="more"></a><p>首先字体方面遇到的是兼容性问题，主要是Windows下渲染中文衬线字体，默认Win10、Win11有的宋体展现非常丑，其他一些字体比如Noto Serif SC这种，如果不增加描边的话，在不同ClearType配置下可能会显得非常浅看不清，但描边的话也并非能够兼容所有Windows电脑的配置，所以这里退而求其次，直接全部上微软雅黑，但英文还是保留Palatino Linotype跟Georgia的兜底。其它设备上目前看起来还好，至少Mac、iPhone跟华为机子上还没看出啥问题，如果哪台机子有兼容性问题，也欢迎做下反馈。</p><p>代码字体方面，根据自己经验，统一用了IBM Plex Mono这个更加重视观感的字体，外加上对字体大小跟code配色的调整，像以前<a href="https://utmhikari.top/2022/02/12/hardpython/2_asyncio_1/">asyncio源码分析</a>这类文章整体的观感也更加出色了。</p><p>染色方面，笔者还是决定继续用Solarized比较柔和的观感，主要的背景色维持比Solarized Dark浅一些，这样阅读起来不会显得对比度太高。其它一些简单的Bugfix，比如正文Card和页面Footer黏住，正文字体大小适当调小，跟Title的Margin这种细微调整，都在这次整改中搞定了，可以说是非常爽快。</p><p>有了AI，自己的NexT vendor短期也不需要更新了，完全可以自给自足，说到底这次整改最大的功劳还是归功于咱们很多廉价的模型。从体验上来讲，截至今日性价比最高的模型还是DeepSeek-v4.1-Flash，然后表现最全面均衡的还是Qwen3.8系列，上述的事情都是用这两套模型搞定的。其他的GLM和Kimi是各有千秋，GLM5.3-Flash也不错，GLM5.3跟Kimi消耗Token就相对高些，因为没有特别重的需求，所以这次还没有用上。</p><p>也顺带提一嘴，工业生产环境上，如果考虑Token性价比的话，短平快的任务此时此刻还是推荐DeepSeek-V4.1-Flash，长程任务可以考虑Qwen3.8、GLM5.3跟Kimi-K3系列。但要注意几点：</p><ul><li>很多模型长程任务会一步步推导，本质上在模型训练时候就往高Token消耗的路线走，所以如果对效率有所追求的话需要着重Harness下；</li><li>现在类似Qwen3.8的模型，虽然独立工作很优秀，但可能有比较严重的自言自语问题，交流时只输出一些只有模型自己理解的事情，并不是按照正常和人工作交流的目的去输出结论的，所以如果遇到看不懂结论的情况，建议就是让AI重新叙述一遍，或者Harness下AI的输出规范，减少沟通成本。</li></ul><p>最后也展示下，现在博文在Mac上的效果，相比以前明显格局更高了。</p><p><img src="/uploads/ainative/ai_blog_improvement/mac_effect.png" alt="Mac上的博客效果"></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;恰逢中秋十一假期，想到自己的&lt;a href=&quot;https://utmhikari.top/&quot;&gt;个人博客&lt;/a&gt;已经很久没有做前端优化了，趁着这段时间决定借助AI Coding的力量，把博客的前端样式整体优化一下，调整到自己预期内的效果。不得不说现在即便是很廉价的模型，最终都能够达成这个目标，因此打算写这篇博客，记录一下自己优化的历程。&lt;/p&gt;
+&lt;p&gt;先说结果，新的博客前端，主要优化了下面一些事情：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;字体调整：默认采用衬线字体，文本展现更加美观，尤其在Mac上效果更好；&lt;/li&gt;
+&lt;li&gt;标签优化：聚合删减了100个左右的标签；&lt;/li&gt;
+&lt;li&gt;颜色调整：搜索页、按钮和Scroll的背景色，全部调成和Solarized体系搭配的颜色，代码染色也和Solarized Light对标。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;具体执行时，还是踩了一些坑，最终也都得到解决。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="AI原生" scheme="https://utmhikari.top/categories/AI%E5%8E%9F%E7%94%9F/"/>
+    
+    
+      <category term="AI" scheme="https://utmhikari.top/tags/AI/"/>
+    
+      <category term="Vibe Coding" scheme="https://utmhikari.top/tags/Vibe-Coding/"/>
+    
+      <category term="个人博客" scheme="https://utmhikari.top/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"/>
+    
+      <category term="NexT" scheme="https://utmhikari.top/tags/NexT/"/>
+    
+      <category term="前端开发" scheme="https://utmhikari.top/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【DIY小记】解决散热问题提升超频性能的经验</title>
+    <link href="https://utmhikari.top/2026/10/01/diymemo/overclock_cooling/"/>
+    <id>https://utmhikari.top/2026/10/01/diymemo/overclock_cooling/</id>
+    <published>2026-10-01T05:30:30.000Z</published>
+    <updated>2026-10-01T05:33:47.162Z</updated>
+    
+    <content type="html"><![CDATA[<p>笔者的这台老土机器，超频折腾从<a href="https://utmhikari.top/2024/10/13/diymemo/overclock_try/">第一次上手</a>到后来靠<a href="https://utmhikari.top/2024/10/16/diymemo/overclock_core/">降压加Process Lasso的优化</a>，最终发现只能给CPU上到4.5GHz比较稳定，再上去散热就扛不住了，烤鸡直接到90度。</p><p>最近两天索性把主机拆了开来排查，另买了一套帝王引擎重新组装了风扇水冷，最终终于解决了散热问题，把老土机器的性能拉满。特此写一篇文章，分享一些经验。</p><a id="more"></a><p>首先是一通排查，笔者的机箱是追风者G400A，CPU是i9-12900KF，主板微星Z690刀锋钛，水冷是追风者M25装在顶部，风扇有3个14cm的，前面2个进风后面1个出风，但都比较廉价。判断下来散热差的一部分在于进风的风力太小，另一部分还是水冷本身压不住。此外就是进风面已经满了灰尘，所以第一件事情就是清灰完了之后再烤FPU，发现4.6GHz温度还是上90，这就说明进风跟水冷性能还是比较差劲，是得真的换了。</p><p>然后就是风扇和水冷的选择。为了彻底解决问题，风扇选用了4个台达AK-12B，12cm的，3个前面进风1个后面出风，水冷选择了TCOMAS LG700 Pro，和LX800 Pro的区别只有外观上的区别，省了100块。刚开机的时候很明显能感受到帝王引擎在轰鸣，所以调整了一下风扇转速配置，还是按照4个风扇跟CPU_FAN通过PWM控转速，PUMP_FAN通过DC控转速的方式，40度以下固定转速，40～70度比较缓的线性上升，70度以上陡峭线性上升，通过这样一套配置既保证散热性能，又保证日常使用的时候不会声音太大。</p><p>在这个基础上，P-Core主频拉到5.1GHz，CPU温度能够控在80度以内，效果还是非常理想的。考虑到日常体验，笔者最终先调整到5.0GHz，这样日常风扇转起来也不会特别响。</p><p>内存的话，笔者还是遗留2条Kingston Fury Beast 32G DDR4，先前已经开了XMP 3600MHz了。考虑到主板不支持DDR5，并且先前开的Profile已经基本到达极限，所以笔者简单收紧了一点时序。Ring笔者也调大了2号，先前的大幅度降压（-0.08）也酌情调小一些，这样整体的性能和稳定性都提升上来了。</p><p>总的来讲这次散热带来的性能提升效果还是比较显著的，后面再优化的话，估计只能买一套新电脑才能保障性价比了。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;笔者的这台老土机器，超频折腾从&lt;a href=&quot;https://utmhikari.top/2024/10/13/diymemo/overclock_try/&quot;&gt;第一次上手&lt;/a&gt;到后来靠&lt;a href=&quot;https://utmhikari.top/2024/10/16/diymemo/overclock_core/&quot;&gt;降压加Process Lasso的优化&lt;/a&gt;，最终发现只能给CPU上到4.5GHz比较稳定，再上去散热就扛不住了，烤鸡直接到90度。&lt;/p&gt;
+&lt;p&gt;最近两天索性把主机拆了开来排查，另买了一套帝王引擎重新组装了风扇水冷，最终终于解决了散热问题，把老土机器的性能拉满。特此写一篇文章，分享一些经验。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="DIY小记" scheme="https://utmhikari.top/categories/DIY%E5%B0%8F%E8%AE%B0/"/>
+    
+    
+      <category term="性能测试" scheme="https://utmhikari.top/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/"/>
+    
+      <category term="BIOS" scheme="https://utmhikari.top/tags/BIOS/"/>
+    
+      <category term="超频" scheme="https://utmhikari.top/tags/%E8%B6%85%E9%A2%91/"/>
+    
+      <category term="CPU" scheme="https://utmhikari.top/tags/CPU/"/>
+    
+      <category term="硬件" scheme="https://utmhikari.top/tags/%E7%A1%AC%E4%BB%B6/"/>
+    
+  </entry>
   
   <entry>
     <title>【AI原生】优化Agent和Skill工程的一些技巧</title>
@@ -37,9 +105,9 @@
     
       <category term="Agent" scheme="https://utmhikari.top/tags/Agent/"/>
     
-      <category term="AI" scheme="https://utmhikari.top/tags/AI/"/>
-    
       <category term="Skill" scheme="https://utmhikari.top/tags/Skill/"/>
+    
+      <category term="AI" scheme="https://utmhikari.top/tags/AI/"/>
     
       <category term="知识库" scheme="https://utmhikari.top/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/"/>
     
@@ -65,11 +133,11 @@
       <category term="架构艺术" scheme="https://utmhikari.top/categories/%E6%9E%B6%E6%9E%84%E8%89%BA%E6%9C%AF/"/>
     
     
-      <category term="架构" scheme="https://utmhikari.top/tags/%E6%9E%B6%E6%9E%84/"/>
-    
       <category term="稳定性" scheme="https://utmhikari.top/tags/%E7%A8%B3%E5%AE%9A%E6%80%A7/"/>
     
       <category term="SRE" scheme="https://utmhikari.top/tags/SRE/"/>
+    
+      <category term="架构" scheme="https://utmhikari.top/tags/%E6%9E%B6%E6%9E%84/"/>
     
       <category term="告警" scheme="https://utmhikari.top/tags/%E5%91%8A%E8%AD%A6/"/>
     
@@ -97,15 +165,15 @@
       <category term="AI原生" scheme="https://utmhikari.top/categories/AI%E5%8E%9F%E7%94%9F/"/>
     
     
-      <category term="稳定性" scheme="https://utmhikari.top/tags/%E7%A8%B3%E5%AE%9A%E6%80%A7/"/>
-    
-      <category term="SRE" scheme="https://utmhikari.top/tags/SRE/"/>
-    
       <category term="Agent" scheme="https://utmhikari.top/tags/Agent/"/>
+    
+      <category term="Skill" scheme="https://utmhikari.top/tags/Skill/"/>
     
       <category term="AI" scheme="https://utmhikari.top/tags/AI/"/>
     
-      <category term="Skill" scheme="https://utmhikari.top/tags/Skill/"/>
+      <category term="稳定性" scheme="https://utmhikari.top/tags/%E7%A8%B3%E5%AE%9A%E6%80%A7/"/>
+    
+      <category term="SRE" scheme="https://utmhikari.top/tags/SRE/"/>
     
   </entry>
   
@@ -159,15 +227,15 @@
       <category term="AI原生" scheme="https://utmhikari.top/categories/AI%E5%8E%9F%E7%94%9F/"/>
     
     
-      <category term="后端开发" scheme="https://utmhikari.top/tags/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/"/>
-    
-      <category term="Vibe Coding" scheme="https://utmhikari.top/tags/Vibe-Coding/"/>
-    
-      <category term="编程" scheme="https://utmhikari.top/tags/%E7%BC%96%E7%A8%8B/"/>
-    
       <category term="AI" scheme="https://utmhikari.top/tags/AI/"/>
     
       <category term="Harness Engineering" scheme="https://utmhikari.top/tags/Harness-Engineering/"/>
+    
+      <category term="Vibe Coding" scheme="https://utmhikari.top/tags/Vibe-Coding/"/>
+    
+      <category term="后端开发" scheme="https://utmhikari.top/tags/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="编程" scheme="https://utmhikari.top/tags/%E7%BC%96%E7%A8%8B/"/>
     
   </entry>
   
@@ -190,15 +258,15 @@
       <category term="架构艺术" scheme="https://utmhikari.top/categories/%E6%9E%B6%E6%9E%84%E8%89%BA%E6%9C%AF/"/>
     
     
-      <category term="Kubernetes" scheme="https://utmhikari.top/tags/Kubernetes/"/>
-    
-      <category term="架构" scheme="https://utmhikari.top/tags/%E6%9E%B6%E6%9E%84/"/>
+      <category term="Agent" scheme="https://utmhikari.top/tags/Agent/"/>
     
       <category term="稳定性" scheme="https://utmhikari.top/tags/%E7%A8%B3%E5%AE%9A%E6%80%A7/"/>
     
       <category term="SRE" scheme="https://utmhikari.top/tags/SRE/"/>
     
-      <category term="Agent" scheme="https://utmhikari.top/tags/Agent/"/>
+      <category term="架构" scheme="https://utmhikari.top/tags/%E6%9E%B6%E6%9E%84/"/>
+    
+      <category term="Kubernetes" scheme="https://utmhikari.top/tags/Kubernetes/"/>
     
   </entry>
   
@@ -221,13 +289,13 @@
       <category term="DIY小记" scheme="https://utmhikari.top/categories/DIY%E5%B0%8F%E8%AE%B0/"/>
     
     
+      <category term="个人博客" scheme="https://utmhikari.top/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"/>
+    
       <category term="产品" scheme="https://utmhikari.top/tags/%E4%BA%A7%E5%93%81/"/>
     
       <category term="测试开发" scheme="https://utmhikari.top/tags/%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91/"/>
     
       <category term="业务" scheme="https://utmhikari.top/tags/%E4%B8%9A%E5%8A%A1/"/>
-    
-      <category term="个人博客" scheme="https://utmhikari.top/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"/>
     
       <category term="用户" scheme="https://utmhikari.top/tags/%E7%94%A8%E6%88%B7/"/>
     
@@ -253,9 +321,9 @@
       <category term="AI原生" scheme="https://utmhikari.top/categories/AI%E5%8E%9F%E7%94%9F/"/>
     
     
-      <category term="Vibe Coding" scheme="https://utmhikari.top/tags/Vibe-Coding/"/>
-    
       <category term="AI" scheme="https://utmhikari.top/tags/AI/"/>
+    
+      <category term="Vibe Coding" scheme="https://utmhikari.top/tags/Vibe-Coding/"/>
     
       <category term="前端开发" scheme="https://utmhikari.top/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/"/>
     
@@ -284,15 +352,15 @@
       <category term="极客日常" scheme="https://utmhikari.top/categories/%E6%9E%81%E5%AE%A2%E6%97%A5%E5%B8%B8/"/>
     
     
-      <category term="Kubernetes" scheme="https://utmhikari.top/tags/Kubernetes/"/>
-    
-      <category term="变更风险" scheme="https://utmhikari.top/tags/%E5%8F%98%E6%9B%B4%E9%A3%8E%E9%99%A9/"/>
-    
       <category term="稳定性" scheme="https://utmhikari.top/tags/%E7%A8%B3%E5%AE%9A%E6%80%A7/"/>
     
       <category term="SRE" scheme="https://utmhikari.top/tags/SRE/"/>
     
+      <category term="变更风险" scheme="https://utmhikari.top/tags/%E5%8F%98%E6%9B%B4%E9%A3%8E%E9%99%A9/"/>
+    
       <category term="业务" scheme="https://utmhikari.top/tags/%E4%B8%9A%E5%8A%A1/"/>
+    
+      <category term="Kubernetes" scheme="https://utmhikari.top/tags/Kubernetes/"/>
     
   </entry>
   
@@ -315,13 +383,13 @@
       <category term="测试人生" scheme="https://utmhikari.top/categories/%E6%B5%8B%E8%AF%95%E4%BA%BA%E7%94%9F/"/>
     
     
-      <category term="后端开发" scheme="https://utmhikari.top/tags/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/"/>
-    
-      <category term="测试开发" scheme="https://utmhikari.top/tags/%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91/"/>
+      <category term="AI" scheme="https://utmhikari.top/tags/AI/"/>
     
       <category term="SRE" scheme="https://utmhikari.top/tags/SRE/"/>
     
-      <category term="AI" scheme="https://utmhikari.top/tags/AI/"/>
+      <category term="后端开发" scheme="https://utmhikari.top/tags/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="测试开发" scheme="https://utmhikari.top/tags/%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91/"/>
     
       <category term="质量保障" scheme="https://utmhikari.top/tags/%E8%B4%A8%E9%87%8F%E4%BF%9D%E9%9A%9C/"/>
     
@@ -347,13 +415,13 @@
       <category term="代码艺廊" scheme="https://utmhikari.top/categories/%E4%BB%A3%E7%A0%81%E8%89%BA%E5%BB%8A/"/>
     
     
+      <category term="Vibe Coding" scheme="https://utmhikari.top/tags/Vibe-Coding/"/>
+    
       <category term="Golang" scheme="https://utmhikari.top/tags/Golang/"/>
     
       <category term="Kubernetes" scheme="https://utmhikari.top/tags/Kubernetes/"/>
     
       <category term="operator-gallery" scheme="https://utmhikari.top/tags/operator-gallery/"/>
-    
-      <category term="Vibe Coding" scheme="https://utmhikari.top/tags/Vibe-Coding/"/>
     
       <category term="Docker" scheme="https://utmhikari.top/tags/Docker/"/>
     
@@ -380,9 +448,9 @@
     
       <category term="编程" scheme="https://utmhikari.top/tags/%E7%BC%96%E7%A8%8B/"/>
     
-      <category term="LLM" scheme="https://utmhikari.top/tags/LLM/"/>
-    
       <category term="Qoder" scheme="https://utmhikari.top/tags/Qoder/"/>
+    
+      <category term="LLM" scheme="https://utmhikari.top/tags/LLM/"/>
     
       <category term="JetBrains" scheme="https://utmhikari.top/tags/JetBrains/"/>
     
@@ -417,15 +485,15 @@
       <category term="DIY小记" scheme="https://utmhikari.top/categories/DIY%E5%B0%8F%E8%AE%B0/"/>
     
     
-      <category term="问题排查" scheme="https://utmhikari.top/tags/%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/"/>
-    
       <category term="前端开发" scheme="https://utmhikari.top/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="问题排查" scheme="https://utmhikari.top/tags/%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/"/>
     
       <category term="性能测试" scheme="https://utmhikari.top/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/"/>
     
-      <category term="bilibili" scheme="https://utmhikari.top/tags/bilibili/"/>
-    
       <category term="debug" scheme="https://utmhikari.top/tags/debug/"/>
+    
+      <category term="bilibili" scheme="https://utmhikari.top/tags/bilibili/"/>
     
   </entry>
   
@@ -448,11 +516,11 @@
       <category term="测试人生" scheme="https://utmhikari.top/categories/%E6%B5%8B%E8%AF%95%E4%BA%BA%E7%94%9F/"/>
     
     
+      <category term="稳定性" scheme="https://utmhikari.top/tags/%E7%A8%B3%E5%AE%9A%E6%80%A7/"/>
+    
       <category term="后端开发" scheme="https://utmhikari.top/tags/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/"/>
     
       <category term="变更风险" scheme="https://utmhikari.top/tags/%E5%8F%98%E6%9B%B4%E9%A3%8E%E9%99%A9/"/>
-    
-      <category term="稳定性" scheme="https://utmhikari.top/tags/%E7%A8%B3%E5%AE%9A%E6%80%A7/"/>
     
       <category term="LLM" scheme="https://utmhikari.top/tags/LLM/"/>
     
@@ -479,9 +547,9 @@
       <category term="测试人生" scheme="https://utmhikari.top/categories/%E6%B5%8B%E8%AF%95%E4%BA%BA%E7%94%9F/"/>
     
     
-      <category term="变更风险" scheme="https://utmhikari.top/tags/%E5%8F%98%E6%9B%B4%E9%A3%8E%E9%99%A9/"/>
-    
       <category term="Agent" scheme="https://utmhikari.top/tags/Agent/"/>
+    
+      <category term="变更风险" scheme="https://utmhikari.top/tags/%E5%8F%98%E6%9B%B4%E9%A3%8E%E9%99%A9/"/>
     
       <category term="LLM" scheme="https://utmhikari.top/tags/LLM/"/>
     
@@ -509,11 +577,11 @@
       <category term="架构艺术" scheme="https://utmhikari.top/categories/%E6%9E%B6%E6%9E%84%E8%89%BA%E6%9C%AF/"/>
     
     
+      <category term="稳定性" scheme="https://utmhikari.top/tags/%E7%A8%B3%E5%AE%9A%E6%80%A7/"/>
+    
       <category term="后端开发" scheme="https://utmhikari.top/tags/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/"/>
     
       <category term="架构" scheme="https://utmhikari.top/tags/%E6%9E%B6%E6%9E%84/"/>
-    
-      <category term="稳定性" scheme="https://utmhikari.top/tags/%E7%A8%B3%E5%AE%9A%E6%80%A7/"/>
     
       <category term="异步" scheme="https://utmhikari.top/tags/%E5%BC%82%E6%AD%A5/"/>
     
@@ -540,15 +608,15 @@
       <category term="测试人生" scheme="https://utmhikari.top/categories/%E6%B5%8B%E8%AF%95%E4%BA%BA%E7%94%9F/"/>
     
     
-      <category term="变更风险" scheme="https://utmhikari.top/tags/%E5%8F%98%E6%9B%B4%E9%A3%8E%E9%99%A9/"/>
+      <category term="Agent" scheme="https://utmhikari.top/tags/Agent/"/>
+    
+      <category term="AI" scheme="https://utmhikari.top/tags/AI/"/>
     
       <category term="产品" scheme="https://utmhikari.top/tags/%E4%BA%A7%E5%93%81/"/>
     
-      <category term="Agent" scheme="https://utmhikari.top/tags/Agent/"/>
+      <category term="变更风险" scheme="https://utmhikari.top/tags/%E5%8F%98%E6%9B%B4%E9%A3%8E%E9%99%A9/"/>
     
       <category term="LLM" scheme="https://utmhikari.top/tags/LLM/"/>
-    
-      <category term="AI" scheme="https://utmhikari.top/tags/AI/"/>
     
   </entry>
   
@@ -575,75 +643,13 @@
     
       <category term="后端开发" scheme="https://utmhikari.top/tags/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/"/>
     
-      <category term="变更风险" scheme="https://utmhikari.top/tags/%E5%8F%98%E6%9B%B4%E9%A3%8E%E9%99%A9/"/>
-    
       <category term="产品" scheme="https://utmhikari.top/tags/%E4%BA%A7%E5%93%81/"/>
+    
+      <category term="变更风险" scheme="https://utmhikari.top/tags/%E5%8F%98%E6%9B%B4%E9%A3%8E%E9%99%A9/"/>
     
       <category term="数据库" scheme="https://utmhikari.top/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
     
       <category term="正则表达式" scheme="https://utmhikari.top/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【极客日常】快速上手复杂后端项目开发的经验</title>
-    <link href="https://utmhikari.top/2026/01/17/geekdaily/project_work_quickstart/"/>
-    <id>https://utmhikari.top/2026/01/17/geekdaily/project_work_quickstart/</id>
-    <published>2026-01-17T05:30:08.000Z</published>
-    <updated>2026-01-17T06:01:11.251Z</updated>
-    
-    <content type="html"><![CDATA[<p>去年年底一段时间，笔者参与了组织内部智能化平台项目研发攻坚，虽然主攻平台工程部分，但多少也了解了下目前AIGC可以应用到的一些业务场景，以及技术实践、项目管理的一些事情。在<a href="https://utmhikari.top/2025/12/07/archiart/llm_augment_development_roles/">先前的文章</a>里头，有浅要描述下AIGC+Web类项目的角色分工和配合。那今天这篇文章，就浅聊一下如果你即将深入此局，适应一个复杂的后端项目开发，有什么方法论是可以通用的。</p><p>主要是两个关键点：（1）理解产品及概念实体联系；（2）主动拆解目标各个击破。</p><a id="more"></a><p>第一个点比较重要，在理解具体代码之前，最好是熟悉产品，了解产品前端有什么功能，在这个基础上，尝试先入为主地猜想后端的设计实现，把自己的想法带入进去，再结合一些AIGC解读工具理解代码，后面就比较好下手。</p><p>当然这里不排除一些情况是，比如异步任务执行流程类的实现，纯后端的部分，就可能涉及到多方的协作。这种情况还是以多沟通多了解为主，好比说一个自动化任务执行，单个任务下面包含多个用例执行，每个用例执行分多个OS，平台的任务状态管理和用例执行的任务状态管理可能存在不同的服务上，中间状态怎么流转怎么同步，卡状态了怎么补偿，这些实现都是得深入去沟通了解的。然后，自动化任务执行有AI增强的场景，也需要了解什么地方用了AI增强，比如用例本身是AI生成的，或者基于AI做了改写优化，那么平台端和AI实现端是怎么同步AIGC阶段性信息的，这些也得确认。了解了中间的机理和代码实现，自己心中有蓝图之后，后续就好下手。</p><p>第二个点是要主动拆解研发目标，比如一套知识库服务，可能包含知识库/文档/切片管理、知识检索、在离线知识采集/清洗/入库，知识保鲜等模块，那么首先就要确定自己的负责范围是哪些，其次就是根据你对整套产品或者技术设计的了解，自主去拆分这些事情的依赖关系和优先级，而不是被动去迎合需求分配。</p><p>比如，笔者负责知识库管理、知识检索以及历史知识回溯的事情，那么顺序上就是知识库管理-&gt;历史知识回溯-&gt;知识检索，而知识回溯也依赖知识库/文档/切片管理的完成，所以也需要了解别人在文档/切片管理方面实现是怎么样的，然后再做知识回溯的话，也需要了解离线知识入库的机制和接口是怎样的。通过化被动为主动，就可以能够对自身的职责和要做的事情有更好的把握。</p><p>总的来讲，复杂的项目不可怕，可怕的是自己不知道该做什么。作为技术从业者，比起写代码本身，更需要知道写代码的目的是什么，然后再反推自己需要做什么。这样工作思路就能更清晰，做复杂项目开发也会更加容易上手。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;去年年底一段时间，笔者参与了组织内部智能化平台项目研发攻坚，虽然主攻平台工程部分，但多少也了解了下目前AIGC可以应用到的一些业务场景，以及技术实践、项目管理的一些事情。在&lt;a href=&quot;https://utmhikari.top/2025/12/07/archiart/llm_augment_development_roles/&quot;&gt;先前的文章&lt;/a&gt;里头，有浅要描述下AIGC+Web类项目的角色分工和配合。那今天这篇文章，就浅聊一下如果你即将深入此局，适应一个复杂的后端项目开发，有什么方法论是可以通用的。&lt;/p&gt;
-&lt;p&gt;主要是两个关键点：（1）理解产品及概念实体联系；（2）主动拆解目标各个击破。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="极客日常" scheme="https://utmhikari.top/categories/%E6%9E%81%E5%AE%A2%E6%97%A5%E5%B8%B8/"/>
-    
-    
-      <category term="后端开发" scheme="https://utmhikari.top/tags/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/"/>
-    
-      <category term="系统设计" scheme="https://utmhikari.top/tags/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/"/>
-    
-      <category term="产品" scheme="https://utmhikari.top/tags/%E4%BA%A7%E5%93%81/"/>
-    
-      <category term="AI" scheme="https://utmhikari.top/tags/AI/"/>
-    
-      <category term="知识库" scheme="https://utmhikari.top/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【架构艺术】简述LLM增强产品研发角色</title>
-    <link href="https://utmhikari.top/2025/12/07/archiart/llm_augment_development_roles/"/>
-    <id>https://utmhikari.top/2025/12/07/archiart/llm_augment_development_roles/</id>
-    <published>2025-12-07T07:43:10.000Z</published>
-    <updated>2025-12-07T07:44:51.412Z</updated>
-    
-    <content type="html"><![CDATA[<p>2025年算是LLM增强产品井喷的一年，以笔者亲身经历的，不论是自动化测试平台还是云服务稳定性平台，都在已有平台基建的基础上，依靠LLM增强的AIGC能力，做了诸如XMind用例自动生成、用例步骤自主探索、RCA故障定位以及服务发布风险实时解读等有业务价值的能力。</p><p>要做出这样的产品，投入的研发人力也肯定不少，而在这个体系下，怎么分配不同的研发角色，既能让每个模块的同学专注自身能力研发，又可以形成有机结合让整个产品顺利运转起来，是产品架构迭代过程中时刻都要思考的重要问题。为此，这篇文章就简单聊下，如果要大力投入这类型的产品研发，可能需要哪些角色，以及其中可能存在配合是怎样的。</p><a id="more"></a><p>首先从纯技术角度出发的话，可能需要这么几类研发：</p><ul><li>平台工程：分前后端角色，把握整个平台的核心架构迭代，主控需求交付，同时关注产品业务跟稳定性指标；</li><li>业务域工程：比如自动化测试或者稳定性，也少不了任务调度平台、SRE稳定性等业务域研发的参与；</li><li>Agent工程：在LLM增强产品少不了Chat-Agent的前提下，负责Agent平台研发，也关注Agent的业务场景和效果指标；</li><li>智能化工程：负责产品中LLM增强/AIGC能力的专项研发，一般作为产品/Agent/业务域工程的下游，主要关注能力效果；</li><li>知识库工程：一般作为智能化能力的下游，负责知识库CRUD、知识生产、RAG等功能研发，为智能化能力提供上下文基建；</li><li>智能化算法：主要负责面向业务的模型调优工作，注重智能化/Agent能力效果指标。</li></ul><p>在这样基础上，每类角色的职责就会划分地比较清晰，对于单个能力，不同角色之间如何产生技术配合也会比较清楚。</p><p>再宏观一点，从业务产品的角度出发的话，产品经理、业务运营、业务BP跟质量QA等角色也是不可少的。在现实场景下，可能是产品经理把握功能迭代和排期定容，业务运营负责产品营销和推广，业务BP负责ToB定点推广落地，而质量QA负责把控产品质量做功能测试和效果评测。通过这样的分工，整套产品研发迭代就可以有效运转起来。</p><p>这里重点说下质量QA的角色，在降本增效的大环境下，很多QA的人力都会被砍，这样必然带来产品质量风险，本质便是保质量的事情分摊到了不同人身上，但其它角色都没有足够精力去把这点做深，所以交付时候就容易出现各管各的的情况。如果有条件，愿意把产品质量做的更好的话，对于LLM增强产品研发这件事情，最好还是引入专门把控交付质量的角色，重点补位P0功能、效果评测等复杂的、各方都没有足够精力投入的、存在较大质量交付风险的事情，协力把效果指标和业务指标都优化上来。</p><p>最后就是，如果读者你正好身在此局，不妨也从宏观视角审视下自己项目的运转，看看自己身处什么角色，在这个项目里能够多做些什么，多了解些什么。除了技术研发本身之外，对于如何拉通复杂的上下游，协调各方资源，把自己负责的功能和效果都做到极致，这份思考，说不定是此刻的你所需要的。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;2025年算是LLM增强产品井喷的一年，以笔者亲身经历的，不论是自动化测试平台还是云服务稳定性平台，都在已有平台基建的基础上，依靠LLM增强的AIGC能力，做了诸如XMind用例自动生成、用例步骤自主探索、RCA故障定位以及服务发布风险实时解读等有业务价值的能力。&lt;/p&gt;
-&lt;p&gt;要做出这样的产品，投入的研发人力也肯定不少，而在这个体系下，怎么分配不同的研发角色，既能让每个模块的同学专注自身能力研发，又可以形成有机结合让整个产品顺利运转起来，是产品架构迭代过程中时刻都要思考的重要问题。为此，这篇文章就简单聊下，如果要大力投入这类型的产品研发，可能需要哪些角色，以及其中可能存在配合是怎样的。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="架构艺术" scheme="https://utmhikari.top/categories/%E6%9E%B6%E6%9E%84%E8%89%BA%E6%9C%AF/"/>
-    
-    
-      <category term="架构" scheme="https://utmhikari.top/tags/%E6%9E%B6%E6%9E%84/"/>
-    
-      <category term="系统设计" scheme="https://utmhikari.top/tags/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/"/>
-    
-      <category term="产品" scheme="https://utmhikari.top/tags/%E4%BA%A7%E5%93%81/"/>
-    
-      <category term="LLM" scheme="https://utmhikari.top/tags/LLM/"/>
-    
-      <category term="AI" scheme="https://utmhikari.top/tags/AI/"/>
     
   </entry>
   

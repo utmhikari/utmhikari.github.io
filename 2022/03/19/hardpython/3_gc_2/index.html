@@ -111,7 +111,7 @@
 <link rel="stylesheet" href="/lib/fontsource/ibm-plex-mono/700.css">
 
 <meta name="description" content="除了通过引用计数直接销毁对象之外，python还是拥有内在GC机制的，并且也有完整的一套流程。 如果只有通过引用计数销毁对象这种机制，那么随便构造一个循环引用就会造成内存泄漏，比如下面的代码： 123456789101112131415161718def _dump_gc():    gcobjs = gc.get_objects()    pprint.pprint(len(gcobjs))de">
-<meta name="keywords" content="python,编程,教程,gc,源码分析">
+<meta name="keywords" content="编程,python,教程,源码分析,gc">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【Hard Python】【第三章-GC】2、python的GC流程">
 <meta property="og:url" content="https://utmhikari.top/2022/03/19/hardpython/3_gc_2/index.html">
@@ -606,15 +606,15 @@
       
         <div class="post-tags">
           
-            <a href="/tags/python/" rel="tag"># python</a>
-          
             <a href="/tags/编程/" rel="tag"># 编程</a>
+          
+            <a href="/tags/python/" rel="tag"># python</a>
           
             <a href="/tags/教程/" rel="tag"># 教程</a>
           
-            <a href="/tags/gc/" rel="tag"># gc</a>
-          
             <a href="/tags/源码分析/" rel="tag"># 源码分析</a>
+          
+            <a href="/tags/gc/" rel="tag"># gc</a>
           
         </div>
       
@@ -661,7 +661,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Hard Python】【第三章-GC】2、python的GC流程","description":"除了通过引用计数直接销毁对象之外，python还是拥有内在GC机制的，并且也有完整的一套流程。 如果只有通过引用计数销毁对象这种机制，那么随便构造一个循环引用就会造成内存泄漏，比如下面的代码： 123456789101112131415161718def _dump_gc(): gcobjs = gc.get_objects() pprint.pprint(len(gcobjs))def test","datePublished":"2022-03-19T06:09:44.000Z","dateModified":"2026-09-29T02:03:50.967Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2022/03/19/hardpython/3_gc_2/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"python, 编程, 教程, gc, 源码分析"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Hard Python】【第三章-GC】2、python的GC流程","description":"除了通过引用计数直接销毁对象之外，python还是拥有内在GC机制的，并且也有完整的一套流程。 如果只有通过引用计数销毁对象这种机制，那么随便构造一个循环引用就会造成内存泄漏，比如下面的代码： 123456789101112131415161718def _dump_gc(): gcobjs = gc.get_objects() pprint.pprint(len(gcobjs))def test","datePublished":"2022-03-19T06:09:44.000Z","dateModified":"2026-09-29T02:03:50.967Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2022/03/19/hardpython/3_gc_2/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"编程, python, 教程, 源码分析, gc"}</script>
   
   
 
@@ -709,7 +709,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">226</span>
+                    <span class="site-state-item-count">228</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
