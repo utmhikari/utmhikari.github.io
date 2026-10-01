@@ -111,7 +111,7 @@
 <link rel="stylesheet" href="/lib/fontsource/ibm-plex-mono/700.css">
 
 <meta name="description" content="前言Github传送门 最近回忆起了在学校那会儿趣事：刚开始上数据库原理课程，一开始装Microsoft SQL Server，全班同学都在吐槽，怨声载道——这个说数据库咋启动不了，那个说数据库咋卸载不干净，个个焦头烂额，实在是好一番风景。唉，那时候就在想，要是有一个类似于软件管家的东西托管Microsoft SQL Server，让我们一键安装/卸载，可不就好了。 进入工业界，接触了运维方面的知">
-<meta name="keywords" content="Golang,虚拟机,Docker,MySQL,数据库">
+<meta name="keywords" content="Golang,Docker,虚拟机,MySQL,数据库">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【从零单排Golang】第三话：利用docker client本地部署MySQL">
 <meta property="og:url" content="https://utmhikari.top/2019/09/01/gofromzero/03_docker_client/index.html">
@@ -609,9 +609,9 @@
           
             <a href="/tags/Golang/" rel="tag"># Golang</a>
           
-            <a href="/tags/虚拟机/" rel="tag"># 虚拟机</a>
-          
             <a href="/tags/Docker/" rel="tag"># Docker</a>
+          
+            <a href="/tags/虚拟机/" rel="tag"># 虚拟机</a>
           
             <a href="/tags/MySQL/" rel="tag"># MySQL</a>
           
@@ -662,7 +662,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【从零单排Golang】第三话：利用docker client本地部署MySQL","description":"前言Github传送门 最近回忆起了在学校那会儿趣事：刚开始上数据库原理课程，一开始装Microsoft SQL Server，全班同学都在吐槽，怨声载道——这个说数据库咋启动不了，那个说数据库咋卸载不干净，个个焦头烂额，实在是好一番风景。唉，那时候就在想，要是有一个类似于软件管家的东西托管Microsoft SQL Server，让我们一键安装/卸载，可不就好了。 进入工业界，接触了运维方面的知","datePublished":"2019-09-01T10:50:17.000Z","dateModified":"2026-04-08T09:40:50.571Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2019/09/01/gofromzero/03_docker_client/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"Golang, 虚拟机, Docker, MySQL, 数据库"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【从零单排Golang】第三话：利用docker client本地部署MySQL","description":"前言Github传送门 最近回忆起了在学校那会儿趣事：刚开始上数据库原理课程，一开始装Microsoft SQL Server，全班同学都在吐槽，怨声载道——这个说数据库咋启动不了，那个说数据库咋卸载不干净，个个焦头烂额，实在是好一番风景。唉，那时候就在想，要是有一个类似于软件管家的东西托管Microsoft SQL Server，让我们一键安装/卸载，可不就好了。 进入工业界，接触了运维方面的知","datePublished":"2019-09-01T10:50:17.000Z","dateModified":"2026-04-08T09:40:50.571Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2019/09/01/gofromzero/03_docker_client/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"Golang, Docker, 虚拟机, MySQL, 数据库"}</script>
   
   
 
@@ -1527,8 +1527,6 @@
 
         
 <div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
   
     <span class="post-meta-item-icon">
       <i class="fa fa-user"></i>
@@ -1552,18 +1550,37 @@
   
 </div>
 <script>
-  // 不蒜子是第三方服务，脚本被拦或服务超时都会留下空白图标占位。
-  // 超时后若三个计数值一个都没填上，就把块体整体隐藏（post 页浏览数由 .busuanzi-post-view 承接）。
-  setTimeout(function () {
-    var ids = ['busuanzi_value_site_uv', 'busuanzi_value_site_pv', 'busuanzi_value_page_pv'];
-    var filled = ids.some(function (id) {
-      var el = document.getElementById(id);
-      return el && el.textContent.replace(/\s/g, '');
-    });
-    if (filled) return;
-    var nodes = document.querySelectorAll('.busuanzi-count, .busuanzi-post-view');
-    for (var i = 0; i < nodes.length; i++) nodes[i].style.display = 'none';
-  }, 5000);
+  // 不蒜子是第三方服务：脚本本体 + 其内部再发的 JSONP 数据接口，任一请求挂起都会拖住
+  // window load 事件（标签页一直转圈）。原先的 async script 标签直接挂在关键路径上——
+  // async 只免解析阻塞、仍参与 load 完成判定；现改为 load 完成后才动态注入，不蒜子的
+  // 全部网络活动都发生在页面可交互之后，502 / 超时不再阻塞页面。
+  // 注入后再给 5s 兜底：三个计数值一个都没填上就整体隐藏块体（post 页浏览数由
+  // .busuanzi-post-view 承接，见 _macro/post.swig）。
+  (function () {
+    function loadBusuanzi() {
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js';
+      document.body.appendChild(s);
+
+      setTimeout(function () {
+        var ids = ['busuanzi_value_site_uv', 'busuanzi_value_site_pv', 'busuanzi_value_page_pv'];
+        var filled = ids.some(function (id) {
+          var el = document.getElementById(id);
+          return el && el.textContent.replace(/\s/g, '');
+        });
+        if (filled) return;
+        var nodes = document.querySelectorAll('.busuanzi-count, .busuanzi-post-view');
+        for (var i = 0; i < nodes.length; i++) nodes[i].style.display = 'none';
+      }, 5000);
+    }
+
+    if (document.readyState === 'complete') {
+      loadBusuanzi();
+    } else {
+      window.addEventListener('load', loadBusuanzi);
+    }
+  })();
 </script>
 
 

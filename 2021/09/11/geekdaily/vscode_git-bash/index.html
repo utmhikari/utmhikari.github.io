@@ -111,7 +111,7 @@
 <link rel="stylesheet" href="/lib/fontsource/ibm-plex-mono/700.css">
 
 <meta name="description" content="截至2021.9，不知道哪天更新了vscode，发现默认的终端从以前的git-bash变成了powershell，笔者用的windows电脑，于是乎要解决这个问题，把powershell变回git-bash。 打开settings，发现以前的terminal.integrated.shell.windows设置已经失效，不能再用。在settings的图形界面查看shell设置，默认的选项变成了Po">
-<meta name="keywords" content="效率工具,shell,git,VSCode,git-bash">
+<meta name="keywords" content="git,效率工具,shell,VSCode,git-bash">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【极客日常】2021新版本VSCode设置git-bash为终端的方法">
 <meta property="og:url" content="https://utmhikari.top/2021/09/11/geekdaily/vscode_git-bash/index.html">
@@ -576,11 +576,11 @@
       
         <div class="post-tags">
           
+            <a href="/tags/git/" rel="tag"># git</a>
+          
             <a href="/tags/效率工具/" rel="tag"># 效率工具</a>
           
             <a href="/tags/shell/" rel="tag"># shell</a>
-          
-            <a href="/tags/git/" rel="tag"># git</a>
           
             <a href="/tags/VSCode/" rel="tag"># VSCode</a>
           
@@ -631,7 +631,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【极客日常】2021新版本VSCode设置git-bash为终端的方法","description":"截至2021.9，不知道哪天更新了vscode，发现默认的终端从以前的git-bash变成了powershell，笔者用的windows电脑，于是乎要解决这个问题，把powershell变回git-bash。 打开settings，发现以前的terminal.integrated.shell.windows设置已经失效，不能再用。在settings的图形界面查看shell设置，默认的选项变成了Po","datePublished":"2021-09-11T03:50:22.000Z","dateModified":"2026-09-29T02:03:50.963Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2021/09/11/geekdaily/vscode_git-bash/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"效率工具, shell, git, VSCode, git-bash"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【极客日常】2021新版本VSCode设置git-bash为终端的方法","description":"截至2021.9，不知道哪天更新了vscode，发现默认的终端从以前的git-bash变成了powershell，笔者用的windows电脑，于是乎要解决这个问题，把powershell变回git-bash。 打开settings，发现以前的terminal.integrated.shell.windows设置已经失效，不能再用。在settings的图形界面查看shell设置，默认的选项变成了Po","datePublished":"2021-09-11T03:50:22.000Z","dateModified":"2026-09-29T02:03:50.963Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2021/09/11/geekdaily/vscode_git-bash/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"git, 效率工具, shell, VSCode, git-bash"}</script>
   
   
 
@@ -1470,8 +1470,6 @@
 
         
 <div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
   
     <span class="post-meta-item-icon">
       <i class="fa fa-user"></i>
@@ -1495,18 +1493,37 @@
   
 </div>
 <script>
-  // 不蒜子是第三方服务，脚本被拦或服务超时都会留下空白图标占位。
-  // 超时后若三个计数值一个都没填上，就把块体整体隐藏（post 页浏览数由 .busuanzi-post-view 承接）。
-  setTimeout(function () {
-    var ids = ['busuanzi_value_site_uv', 'busuanzi_value_site_pv', 'busuanzi_value_page_pv'];
-    var filled = ids.some(function (id) {
-      var el = document.getElementById(id);
-      return el && el.textContent.replace(/\s/g, '');
-    });
-    if (filled) return;
-    var nodes = document.querySelectorAll('.busuanzi-count, .busuanzi-post-view');
-    for (var i = 0; i < nodes.length; i++) nodes[i].style.display = 'none';
-  }, 5000);
+  // 不蒜子是第三方服务：脚本本体 + 其内部再发的 JSONP 数据接口，任一请求挂起都会拖住
+  // window load 事件（标签页一直转圈）。原先的 async script 标签直接挂在关键路径上——
+  // async 只免解析阻塞、仍参与 load 完成判定；现改为 load 完成后才动态注入，不蒜子的
+  // 全部网络活动都发生在页面可交互之后，502 / 超时不再阻塞页面。
+  // 注入后再给 5s 兜底：三个计数值一个都没填上就整体隐藏块体（post 页浏览数由
+  // .busuanzi-post-view 承接，见 _macro/post.swig）。
+  (function () {
+    function loadBusuanzi() {
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js';
+      document.body.appendChild(s);
+
+      setTimeout(function () {
+        var ids = ['busuanzi_value_site_uv', 'busuanzi_value_site_pv', 'busuanzi_value_page_pv'];
+        var filled = ids.some(function (id) {
+          var el = document.getElementById(id);
+          return el && el.textContent.replace(/\s/g, '');
+        });
+        if (filled) return;
+        var nodes = document.querySelectorAll('.busuanzi-count, .busuanzi-post-view');
+        for (var i = 0; i < nodes.length; i++) nodes[i].style.display = 'none';
+      }, 5000);
+    }
+
+    if (document.readyState === 'complete') {
+      loadBusuanzi();
+    } else {
+      window.addEventListener('load', loadBusuanzi);
+    }
+  })();
 </script>
 
 

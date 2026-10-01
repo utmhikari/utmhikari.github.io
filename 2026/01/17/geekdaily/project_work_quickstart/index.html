@@ -111,7 +111,7 @@
 <link rel="stylesheet" href="/lib/fontsource/ibm-plex-mono/700.css">
 
 <meta name="description" content="去年年底一段时间，笔者参与了组织内部智能化平台项目研发攻坚，虽然主攻平台工程部分，但多少也了解了下目前AIGC可以应用到的一些业务场景，以及技术实践、项目管理的一些事情。在先前的文章里头，有浅要描述下AIGC+Web类项目的角色分工和配合。那今天这篇文章，就浅聊一下如果你即将深入此局，适应一个复杂的后端项目开发，有什么方法论是可以通用的。 主要是两个关键点：（1）理解产品及概念实体联系；（2）主动">
-<meta name="keywords" content="AI,知识库,后端开发,产品,系统设计">
+<meta name="keywords" content="后端开发,产品,系统设计,AI,知识库">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【极客日常】快速上手复杂后端项目开发的经验">
 <meta property="og:url" content="https://utmhikari.top/2026/01/17/geekdaily/project_work_quickstart/index.html">
@@ -567,15 +567,15 @@
       
         <div class="post-tags">
           
-            <a href="/tags/AI/" rel="tag"># AI</a>
-          
-            <a href="/tags/知识库/" rel="tag"># 知识库</a>
-          
             <a href="/tags/后端开发/" rel="tag"># 后端开发</a>
           
             <a href="/tags/产品/" rel="tag"># 产品</a>
           
             <a href="/tags/系统设计/" rel="tag"># 系统设计</a>
+          
+            <a href="/tags/AI/" rel="tag"># AI</a>
+          
+            <a href="/tags/知识库/" rel="tag"># 知识库</a>
           
         </div>
       
@@ -622,7 +622,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【极客日常】快速上手复杂后端项目开发的经验","description":"去年年底一段时间，笔者参与了组织内部智能化平台项目研发攻坚，虽然主攻平台工程部分，但多少也了解了下目前AIGC可以应用到的一些业务场景，以及技术实践、项目管理的一些事情。在先前的文章里头，有浅要描述下AIGC+Web类项目的角色分工和配合。那今天这篇文章，就浅聊一下如果你即将深入此局，适应一个复杂的后端项目开发，有什么方法论是可以通用的。 主要是两个关键点：（1）理解产品及概念实体联系；（2）主动","datePublished":"2026-01-17T05:30:08.000Z","dateModified":"2026-01-17T06:01:11.251Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2026/01/17/geekdaily/project_work_quickstart/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"AI, 知识库, 后端开发, 产品, 系统设计"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【极客日常】快速上手复杂后端项目开发的经验","description":"去年年底一段时间，笔者参与了组织内部智能化平台项目研发攻坚，虽然主攻平台工程部分，但多少也了解了下目前AIGC可以应用到的一些业务场景，以及技术实践、项目管理的一些事情。在先前的文章里头，有浅要描述下AIGC+Web类项目的角色分工和配合。那今天这篇文章，就浅聊一下如果你即将深入此局，适应一个复杂的后端项目开发，有什么方法论是可以通用的。 主要是两个关键点：（1）理解产品及概念实体联系；（2）主动","datePublished":"2026-01-17T05:30:08.000Z","dateModified":"2026-01-17T06:01:11.251Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2026/01/17/geekdaily/project_work_quickstart/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"后端开发, 产品, 系统设计, AI, 知识库"}</script>
   
   
 
@@ -1461,8 +1461,6 @@
 
         
 <div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
   
     <span class="post-meta-item-icon">
       <i class="fa fa-user"></i>
@@ -1486,18 +1484,37 @@
   
 </div>
 <script>
-  // 不蒜子是第三方服务，脚本被拦或服务超时都会留下空白图标占位。
-  // 超时后若三个计数值一个都没填上，就把块体整体隐藏（post 页浏览数由 .busuanzi-post-view 承接）。
-  setTimeout(function () {
-    var ids = ['busuanzi_value_site_uv', 'busuanzi_value_site_pv', 'busuanzi_value_page_pv'];
-    var filled = ids.some(function (id) {
-      var el = document.getElementById(id);
-      return el && el.textContent.replace(/\s/g, '');
-    });
-    if (filled) return;
-    var nodes = document.querySelectorAll('.busuanzi-count, .busuanzi-post-view');
-    for (var i = 0; i < nodes.length; i++) nodes[i].style.display = 'none';
-  }, 5000);
+  // 不蒜子是第三方服务：脚本本体 + 其内部再发的 JSONP 数据接口，任一请求挂起都会拖住
+  // window load 事件（标签页一直转圈）。原先的 async script 标签直接挂在关键路径上——
+  // async 只免解析阻塞、仍参与 load 完成判定；现改为 load 完成后才动态注入，不蒜子的
+  // 全部网络活动都发生在页面可交互之后，502 / 超时不再阻塞页面。
+  // 注入后再给 5s 兜底：三个计数值一个都没填上就整体隐藏块体（post 页浏览数由
+  // .busuanzi-post-view 承接，见 _macro/post.swig）。
+  (function () {
+    function loadBusuanzi() {
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js';
+      document.body.appendChild(s);
+
+      setTimeout(function () {
+        var ids = ['busuanzi_value_site_uv', 'busuanzi_value_site_pv', 'busuanzi_value_page_pv'];
+        var filled = ids.some(function (id) {
+          var el = document.getElementById(id);
+          return el && el.textContent.replace(/\s/g, '');
+        });
+        if (filled) return;
+        var nodes = document.querySelectorAll('.busuanzi-count, .busuanzi-post-view');
+        for (var i = 0; i < nodes.length; i++) nodes[i].style.display = 'none';
+      }, 5000);
+    }
+
+    if (document.readyState === 'complete') {
+      loadBusuanzi();
+    } else {
+      window.addEventListener('load', loadBusuanzi);
+    }
+  })();
 </script>
 
 

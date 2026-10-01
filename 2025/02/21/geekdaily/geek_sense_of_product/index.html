@@ -111,7 +111,7 @@
 <link rel="stylesheet" href="/lib/fontsource/ibm-plex-mono/700.css">
 
 <meta name="description" content="技术人培养产品思维，这一点是技术人在职业成长中不可缺少的一部分。无论是做业务开发，还是做纯粹的基础架构、技术优化，有了产品意识，才能把自己的技术作品打磨地更好，能在更多工作场景派上用场。那么，今天就聊一下作为技术人，有什么方式可以提升产品意识。 把这个问题丢给AI，概括一下答案是几大块：第一块是学习产品知识，比如阅读相关产品设计书籍，参与课程讲座；第二块是深入了解用户需求，培养用户视角；第三块是加">
-<meta name="keywords" content="个人博客,产品,面试,用户,ChatGPT">
+<meta name="keywords" content="产品,面试,个人博客,ChatGPT,用户">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【极客日常】聊聊技术人提升产品意识的经验">
 <meta property="og:url" content="https://utmhikari.top/2025/02/21/geekdaily/geek_sense_of_product/index.html">
@@ -568,15 +568,15 @@
       
         <div class="post-tags">
           
-            <a href="/tags/个人博客/" rel="tag"># 个人博客</a>
-          
             <a href="/tags/产品/" rel="tag"># 产品</a>
           
             <a href="/tags/面试/" rel="tag"># 面试</a>
           
-            <a href="/tags/用户/" rel="tag"># 用户</a>
+            <a href="/tags/个人博客/" rel="tag"># 个人博客</a>
           
             <a href="/tags/ChatGPT/" rel="tag"># ChatGPT</a>
+          
+            <a href="/tags/用户/" rel="tag"># 用户</a>
           
         </div>
       
@@ -623,7 +623,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【极客日常】聊聊技术人提升产品意识的经验","description":"技术人培养产品思维，这一点是技术人在职业成长中不可缺少的一部分。无论是做业务开发，还是做纯粹的基础架构、技术优化，有了产品意识，才能把自己的技术作品打磨地更好，能在更多工作场景派上用场。那么，今天就聊一下作为技术人，有什么方式可以提升产品意识。 把这个问题丢给AI，概括一下答案是几大块：第一块是学习产品知识，比如阅读相关产品设计书籍，参与课程讲座；第二块是深入了解用户需求，培养用户视角；第三块是加","datePublished":"2025-02-21T14:53:01.000Z","dateModified":"2025-02-21T15:23:46.186Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2025/02/21/geekdaily/geek_sense_of_product/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"个人博客, 产品, 面试, 用户, ChatGPT"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【极客日常】聊聊技术人提升产品意识的经验","description":"技术人培养产品思维，这一点是技术人在职业成长中不可缺少的一部分。无论是做业务开发，还是做纯粹的基础架构、技术优化，有了产品意识，才能把自己的技术作品打磨地更好，能在更多工作场景派上用场。那么，今天就聊一下作为技术人，有什么方式可以提升产品意识。 把这个问题丢给AI，概括一下答案是几大块：第一块是学习产品知识，比如阅读相关产品设计书籍，参与课程讲座；第二块是深入了解用户需求，培养用户视角；第三块是加","datePublished":"2025-02-21T14:53:01.000Z","dateModified":"2025-02-21T15:23:46.186Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2025/02/21/geekdaily/geek_sense_of_product/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"产品, 面试, 个人博客, ChatGPT, 用户"}</script>
   
   
 
@@ -1462,8 +1462,6 @@
 
         
 <div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
   
     <span class="post-meta-item-icon">
       <i class="fa fa-user"></i>
@@ -1487,18 +1485,37 @@
   
 </div>
 <script>
-  // 不蒜子是第三方服务，脚本被拦或服务超时都会留下空白图标占位。
-  // 超时后若三个计数值一个都没填上，就把块体整体隐藏（post 页浏览数由 .busuanzi-post-view 承接）。
-  setTimeout(function () {
-    var ids = ['busuanzi_value_site_uv', 'busuanzi_value_site_pv', 'busuanzi_value_page_pv'];
-    var filled = ids.some(function (id) {
-      var el = document.getElementById(id);
-      return el && el.textContent.replace(/\s/g, '');
-    });
-    if (filled) return;
-    var nodes = document.querySelectorAll('.busuanzi-count, .busuanzi-post-view');
-    for (var i = 0; i < nodes.length; i++) nodes[i].style.display = 'none';
-  }, 5000);
+  // 不蒜子是第三方服务：脚本本体 + 其内部再发的 JSONP 数据接口，任一请求挂起都会拖住
+  // window load 事件（标签页一直转圈）。原先的 async script 标签直接挂在关键路径上——
+  // async 只免解析阻塞、仍参与 load 完成判定；现改为 load 完成后才动态注入，不蒜子的
+  // 全部网络活动都发生在页面可交互之后，502 / 超时不再阻塞页面。
+  // 注入后再给 5s 兜底：三个计数值一个都没填上就整体隐藏块体（post 页浏览数由
+  // .busuanzi-post-view 承接，见 _macro/post.swig）。
+  (function () {
+    function loadBusuanzi() {
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js';
+      document.body.appendChild(s);
+
+      setTimeout(function () {
+        var ids = ['busuanzi_value_site_uv', 'busuanzi_value_site_pv', 'busuanzi_value_page_pv'];
+        var filled = ids.some(function (id) {
+          var el = document.getElementById(id);
+          return el && el.textContent.replace(/\s/g, '');
+        });
+        if (filled) return;
+        var nodes = document.querySelectorAll('.busuanzi-count, .busuanzi-post-view');
+        for (var i = 0; i < nodes.length; i++) nodes[i].style.display = 'none';
+      }, 5000);
+    }
+
+    if (document.readyState === 'complete') {
+      loadBusuanzi();
+    } else {
+      window.addEventListener('load', loadBusuanzi);
+    }
+  })();
 </script>
 
 

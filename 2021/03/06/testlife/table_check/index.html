@@ -111,7 +111,7 @@
 <link rel="stylesheet" href="/lib/fontsource/ibm-plex-mono/700.css">
 
 <meta name="description" content="策划表格数据检查是游戏测试工作的刚性需求。在游戏开发期中，有大量bug的起因是策划同学在配置上不够规范到位。因此作为测试角度而言，需要更加便捷、更加精准的方法去定位到策划表格配置的问题。除了依靠业务人员自身对业务的熟悉程度之外，也更加依赖于一个强大有力的工具，辅助表格数据检查。 表格数据检查的目的有以下一些：给定某个数值策划案，检查实际配置与策划案是否有出入；给定某个配置规则，检查实际配置是否有不">
-<meta name="keywords" content="测试开发,游戏测试,工具开发,表格检查,mongodb">
+<meta name="keywords" content="工具开发,表格检查,测试开发,游戏测试,mongodb">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【测试人生】游戏策划表格检查工具的一种解决方案">
 <meta property="og:url" content="https://utmhikari.top/2021/03/06/testlife/table_check/index.html">
@@ -586,13 +586,13 @@
       
         <div class="post-tags">
           
-            <a href="/tags/测试开发/" rel="tag"># 测试开发</a>
-          
-            <a href="/tags/游戏测试/" rel="tag"># 游戏测试</a>
-          
             <a href="/tags/工具开发/" rel="tag"># 工具开发</a>
           
             <a href="/tags/表格检查/" rel="tag"># 表格检查</a>
+          
+            <a href="/tags/测试开发/" rel="tag"># 测试开发</a>
+          
+            <a href="/tags/游戏测试/" rel="tag"># 游戏测试</a>
           
             <a href="/tags/mongodb/" rel="tag"># mongodb</a>
           
@@ -641,7 +641,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【测试人生】游戏策划表格检查工具的一种解决方案","description":"策划表格数据检查是游戏测试工作的刚性需求。在游戏开发期中，有大量bug的起因是策划同学在配置上不够规范到位。因此作为测试角度而言，需要更加便捷、更加精准的方法去定位到策划表格配置的问题。除了依靠业务人员自身对业务的熟悉程度之外，也更加依赖于一个强大有力的工具，辅助表格数据检查。 表格数据检查的目的有以下一些：给定某个数值策划案，检查实际配置与策划案是否有出入；给定某个配置规则，检查实际配置是否有不","datePublished":"2021-03-06T10:20:02.000Z","dateModified":"2024-04-07T02:48:06.929Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2021/03/06/testlife/table_check/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"测试开发, 游戏测试, 工具开发, 表格检查, mongodb"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【测试人生】游戏策划表格检查工具的一种解决方案","description":"策划表格数据检查是游戏测试工作的刚性需求。在游戏开发期中，有大量bug的起因是策划同学在配置上不够规范到位。因此作为测试角度而言，需要更加便捷、更加精准的方法去定位到策划表格配置的问题。除了依靠业务人员自身对业务的熟悉程度之外，也更加依赖于一个强大有力的工具，辅助表格数据检查。 表格数据检查的目的有以下一些：给定某个数值策划案，检查实际配置与策划案是否有出入；给定某个配置规则，检查实际配置是否有不","datePublished":"2021-03-06T10:20:02.000Z","dateModified":"2024-04-07T02:48:06.929Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2021/03/06/testlife/table_check/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"工具开发, 表格检查, 测试开发, 游戏测试, mongodb"}</script>
   
   
 
@@ -1480,8 +1480,6 @@
 
         
 <div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
   
     <span class="post-meta-item-icon">
       <i class="fa fa-user"></i>
@@ -1505,18 +1503,37 @@
   
 </div>
 <script>
-  // 不蒜子是第三方服务，脚本被拦或服务超时都会留下空白图标占位。
-  // 超时后若三个计数值一个都没填上，就把块体整体隐藏（post 页浏览数由 .busuanzi-post-view 承接）。
-  setTimeout(function () {
-    var ids = ['busuanzi_value_site_uv', 'busuanzi_value_site_pv', 'busuanzi_value_page_pv'];
-    var filled = ids.some(function (id) {
-      var el = document.getElementById(id);
-      return el && el.textContent.replace(/\s/g, '');
-    });
-    if (filled) return;
-    var nodes = document.querySelectorAll('.busuanzi-count, .busuanzi-post-view');
-    for (var i = 0; i < nodes.length; i++) nodes[i].style.display = 'none';
-  }, 5000);
+  // 不蒜子是第三方服务：脚本本体 + 其内部再发的 JSONP 数据接口，任一请求挂起都会拖住
+  // window load 事件（标签页一直转圈）。原先的 async script 标签直接挂在关键路径上——
+  // async 只免解析阻塞、仍参与 load 完成判定；现改为 load 完成后才动态注入，不蒜子的
+  // 全部网络活动都发生在页面可交互之后，502 / 超时不再阻塞页面。
+  // 注入后再给 5s 兜底：三个计数值一个都没填上就整体隐藏块体（post 页浏览数由
+  // .busuanzi-post-view 承接，见 _macro/post.swig）。
+  (function () {
+    function loadBusuanzi() {
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js';
+      document.body.appendChild(s);
+
+      setTimeout(function () {
+        var ids = ['busuanzi_value_site_uv', 'busuanzi_value_site_pv', 'busuanzi_value_page_pv'];
+        var filled = ids.some(function (id) {
+          var el = document.getElementById(id);
+          return el && el.textContent.replace(/\s/g, '');
+        });
+        if (filled) return;
+        var nodes = document.querySelectorAll('.busuanzi-count, .busuanzi-post-view');
+        for (var i = 0; i < nodes.length; i++) nodes[i].style.display = 'none';
+      }, 5000);
+    }
+
+    if (document.readyState === 'complete') {
+      loadBusuanzi();
+    } else {
+      window.addEventListener('load', loadBusuanzi);
+    }
+  })();
 </script>
 
 

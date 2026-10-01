@@ -111,7 +111,7 @@
 <link rel="stylesheet" href="/lib/fontsource/ibm-plex-mono/700.css">
 
 <meta name="description" content="近些日子想到自己尘封已久的笔记本电脑没有开机了，很多软件驱动之类的没有更新，就打算把电脑开起来做一轮批量升级。但开电脑的时候很久没有进入Win10桌面，等了很长一段时间蓝屏提示0xc0000185错误，说系统需要恢复。经历了一番折腾之后，笔者解决了这个问题。虽然不明确这个问题的根因在哪里，但还是分享一下自己收集到的一些解决方式。 首先，重装系统肯定是能解决这个问题，但不一定需要真的重装，这个成本太">
-<meta name="keywords" content="Win10,系统设置,WinPE,BIOS,操作系统">
+<meta name="keywords" content="Win10,BIOS,系统设置,WinPE,操作系统">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【DIY小记】修复Win10启动出现蓝屏0xc0000185错误的一些方法">
 <meta property="og:url" content="https://utmhikari.top/2023/09/17/diymemo/win10_0xc0000185/index.html">
@@ -579,11 +579,11 @@
           
             <a href="/tags/Win10/" rel="tag"># Win10</a>
           
+            <a href="/tags/BIOS/" rel="tag"># BIOS</a>
+          
             <a href="/tags/系统设置/" rel="tag"># 系统设置</a>
           
             <a href="/tags/WinPE/" rel="tag"># WinPE</a>
-          
-            <a href="/tags/BIOS/" rel="tag"># BIOS</a>
           
             <a href="/tags/操作系统/" rel="tag"># 操作系统</a>
           
@@ -632,7 +632,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【DIY小记】修复Win10启动出现蓝屏0xc0000185错误的一些方法","description":"近些日子想到自己尘封已久的笔记本电脑没有开机了，很多软件驱动之类的没有更新，就打算把电脑开起来做一轮批量升级。但开电脑的时候很久没有进入Win10桌面，等了很长一段时间蓝屏提示0xc0000185错误，说系统需要恢复。经历了一番折腾之后，笔者解决了这个问题。虽然不明确这个问题的根因在哪里，但还是分享一下自己收集到的一些解决方式。 首先，重装系统肯定是能解决这个问题，但不一定需要真的重装，这个成本太","datePublished":"2023-09-17T07:43:20.000Z","dateModified":"2024-04-07T02:48:06.917Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2023/09/17/diymemo/win10_0xc0000185/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"Win10, 系统设置, WinPE, BIOS, 操作系统"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【DIY小记】修复Win10启动出现蓝屏0xc0000185错误的一些方法","description":"近些日子想到自己尘封已久的笔记本电脑没有开机了，很多软件驱动之类的没有更新，就打算把电脑开起来做一轮批量升级。但开电脑的时候很久没有进入Win10桌面，等了很长一段时间蓝屏提示0xc0000185错误，说系统需要恢复。经历了一番折腾之后，笔者解决了这个问题。虽然不明确这个问题的根因在哪里，但还是分享一下自己收集到的一些解决方式。 首先，重装系统肯定是能解决这个问题，但不一定需要真的重装，这个成本太","datePublished":"2023-09-17T07:43:20.000Z","dateModified":"2024-04-07T02:48:06.917Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2023/09/17/diymemo/win10_0xc0000185/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"Win10, BIOS, 系统设置, WinPE, 操作系统"}</script>
   
   
 
@@ -1471,8 +1471,6 @@
 
         
 <div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
   
     <span class="post-meta-item-icon">
       <i class="fa fa-user"></i>
@@ -1496,18 +1494,37 @@
   
 </div>
 <script>
-  // 不蒜子是第三方服务，脚本被拦或服务超时都会留下空白图标占位。
-  // 超时后若三个计数值一个都没填上，就把块体整体隐藏（post 页浏览数由 .busuanzi-post-view 承接）。
-  setTimeout(function () {
-    var ids = ['busuanzi_value_site_uv', 'busuanzi_value_site_pv', 'busuanzi_value_page_pv'];
-    var filled = ids.some(function (id) {
-      var el = document.getElementById(id);
-      return el && el.textContent.replace(/\s/g, '');
-    });
-    if (filled) return;
-    var nodes = document.querySelectorAll('.busuanzi-count, .busuanzi-post-view');
-    for (var i = 0; i < nodes.length; i++) nodes[i].style.display = 'none';
-  }, 5000);
+  // 不蒜子是第三方服务：脚本本体 + 其内部再发的 JSONP 数据接口，任一请求挂起都会拖住
+  // window load 事件（标签页一直转圈）。原先的 async script 标签直接挂在关键路径上——
+  // async 只免解析阻塞、仍参与 load 完成判定；现改为 load 完成后才动态注入，不蒜子的
+  // 全部网络活动都发生在页面可交互之后，502 / 超时不再阻塞页面。
+  // 注入后再给 5s 兜底：三个计数值一个都没填上就整体隐藏块体（post 页浏览数由
+  // .busuanzi-post-view 承接，见 _macro/post.swig）。
+  (function () {
+    function loadBusuanzi() {
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js';
+      document.body.appendChild(s);
+
+      setTimeout(function () {
+        var ids = ['busuanzi_value_site_uv', 'busuanzi_value_site_pv', 'busuanzi_value_page_pv'];
+        var filled = ids.some(function (id) {
+          var el = document.getElementById(id);
+          return el && el.textContent.replace(/\s/g, '');
+        });
+        if (filled) return;
+        var nodes = document.querySelectorAll('.busuanzi-count, .busuanzi-post-view');
+        for (var i = 0; i < nodes.length; i++) nodes[i].style.display = 'none';
+      }, 5000);
+    }
+
+    if (document.readyState === 'complete') {
+      loadBusuanzi();
+    } else {
+      window.addEventListener('load', loadBusuanzi);
+    }
+  })();
 </script>
 
 

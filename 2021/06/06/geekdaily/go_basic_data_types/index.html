@@ -111,7 +111,7 @@
 <link rel="stylesheet" href="/lib/fontsource/ibm-plex-mono/700.css">
 
 <meta name="description" content="golang的数据类型转换是困惑新gopher的一大问题之一。相对于python，golang的数据类型转换可要麻烦的多，而且还不走寻常路地诞生了些新的方法跟名词。因此本文讲解golang常见数据类型string、int、rune等数据类型相互之间的转换方法，给大伙儿避坑。 在讲述方法之前，首先非常有必要讲下go源码对这些数据类型的表述：">
-<meta name="keywords" content="编程,Golang,教程,数据类型转换,字符串">
+<meta name="keywords" content="Golang,编程,教程,数据类型转换,字符串">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【极客日常】Go语言string、int、float、rune、byte等数据类型的转换方法">
 <meta property="og:url" content="https://utmhikari.top/2021/06/06/geekdaily/go_basic_data_types/index.html">
@@ -596,9 +596,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/编程/" rel="tag"># 编程</a>
-          
             <a href="/tags/Golang/" rel="tag"># Golang</a>
+          
+            <a href="/tags/编程/" rel="tag"># 编程</a>
           
             <a href="/tags/教程/" rel="tag"># 教程</a>
           
@@ -651,7 +651,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【极客日常】Go语言string、int、float、rune、byte等数据类型的转换方法","description":"golang的数据类型转换是困惑新gopher的一大问题之一。相对于python，golang的数据类型转换可要麻烦的多，而且还不走寻常路地诞生了些新的方法跟名词。因此本文讲解golang常见数据类型string、int、rune等数据类型相互之间的转换方法，给大伙儿避坑。 在讲述方法之前，首先非常有必要讲下go源码对这些数据类型的表述：","datePublished":"2021-06-06T13:29:39.000Z","dateModified":"2026-09-29T02:03:50.963Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2021/06/06/geekdaily/go_basic_data_types/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"编程, Golang, 教程, 数据类型转换, 字符串"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【极客日常】Go语言string、int、float、rune、byte等数据类型的转换方法","description":"golang的数据类型转换是困惑新gopher的一大问题之一。相对于python，golang的数据类型转换可要麻烦的多，而且还不走寻常路地诞生了些新的方法跟名词。因此本文讲解golang常见数据类型string、int、rune等数据类型相互之间的转换方法，给大伙儿避坑。 在讲述方法之前，首先非常有必要讲下go源码对这些数据类型的表述：","datePublished":"2021-06-06T13:29:39.000Z","dateModified":"2026-09-29T02:03:50.963Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2021/06/06/geekdaily/go_basic_data_types/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"Golang, 编程, 教程, 数据类型转换, 字符串"}</script>
   
   
 
@@ -1490,8 +1490,6 @@
 
         
 <div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
   
     <span class="post-meta-item-icon">
       <i class="fa fa-user"></i>
@@ -1515,18 +1513,37 @@
   
 </div>
 <script>
-  // 不蒜子是第三方服务，脚本被拦或服务超时都会留下空白图标占位。
-  // 超时后若三个计数值一个都没填上，就把块体整体隐藏（post 页浏览数由 .busuanzi-post-view 承接）。
-  setTimeout(function () {
-    var ids = ['busuanzi_value_site_uv', 'busuanzi_value_site_pv', 'busuanzi_value_page_pv'];
-    var filled = ids.some(function (id) {
-      var el = document.getElementById(id);
-      return el && el.textContent.replace(/\s/g, '');
-    });
-    if (filled) return;
-    var nodes = document.querySelectorAll('.busuanzi-count, .busuanzi-post-view');
-    for (var i = 0; i < nodes.length; i++) nodes[i].style.display = 'none';
-  }, 5000);
+  // 不蒜子是第三方服务：脚本本体 + 其内部再发的 JSONP 数据接口，任一请求挂起都会拖住
+  // window load 事件（标签页一直转圈）。原先的 async script 标签直接挂在关键路径上——
+  // async 只免解析阻塞、仍参与 load 完成判定；现改为 load 完成后才动态注入，不蒜子的
+  // 全部网络活动都发生在页面可交互之后，502 / 超时不再阻塞页面。
+  // 注入后再给 5s 兜底：三个计数值一个都没填上就整体隐藏块体（post 页浏览数由
+  // .busuanzi-post-view 承接，见 _macro/post.swig）。
+  (function () {
+    function loadBusuanzi() {
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js';
+      document.body.appendChild(s);
+
+      setTimeout(function () {
+        var ids = ['busuanzi_value_site_uv', 'busuanzi_value_site_pv', 'busuanzi_value_page_pv'];
+        var filled = ids.some(function (id) {
+          var el = document.getElementById(id);
+          return el && el.textContent.replace(/\s/g, '');
+        });
+        if (filled) return;
+        var nodes = document.querySelectorAll('.busuanzi-count, .busuanzi-post-view');
+        for (var i = 0; i < nodes.length; i++) nodes[i].style.display = 'none';
+      }, 5000);
+    }
+
+    if (document.readyState === 'complete') {
+      loadBusuanzi();
+    } else {
+      window.addEventListener('load', loadBusuanzi);
+    }
+  })();
 </script>
 
 

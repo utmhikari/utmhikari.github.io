@@ -111,7 +111,7 @@
 <link rel="stylesheet" href="/lib/fontsource/ibm-plex-mono/700.css">
 
 <meta name="description" content="前言Github传送门 学一门新语言，如果太专注于语法，那肯定学的不够快。如果有一定的需求目标，带着这个目标去学习一门新语言，这样才能学得快。 工作中写后端的时间比例不在少数，而且传闻Go也因其适用于服务端而著名。在Go社区中最为火热的服务端框架跟数据库抽象ORM层当属gin跟gorm了，因此本期单排的目标便是用gin+gorm打一个简易的框架，实现基本CRUD的目标。走你~ 准备工作在第一话中已">
-<meta name="keywords" content="后端开发,web开发,Golang,gin,gorm">
+<meta name="keywords" content="Golang,后端开发,gin,web开发,gorm">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【从零单排Golang】第二话：初探服务端CRUD，gin+gorm黄金搭档">
 <meta property="og:url" content="https://utmhikari.top/2019/08/04/gofromzero/02_gin_gorm/index.html">
@@ -630,13 +630,13 @@
       
         <div class="post-tags">
           
-            <a href="/tags/后端开发/" rel="tag"># 后端开发</a>
-          
-            <a href="/tags/web开发/" rel="tag"># web开发</a>
-          
             <a href="/tags/Golang/" rel="tag"># Golang</a>
           
+            <a href="/tags/后端开发/" rel="tag"># 后端开发</a>
+          
             <a href="/tags/gin/" rel="tag"># gin</a>
+          
+            <a href="/tags/web开发/" rel="tag"># web开发</a>
           
             <a href="/tags/gorm/" rel="tag"># gorm</a>
           
@@ -685,7 +685,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【从零单排Golang】第二话：初探服务端CRUD，gin+gorm黄金搭档","description":"前言Github传送门 学一门新语言，如果太专注于语法，那肯定学的不够快。如果有一定的需求目标，带着这个目标去学习一门新语言，这样才能学得快。 工作中写后端的时间比例不在少数，而且传闻Go也因其适用于服务端而著名。在Go社区中最为火热的服务端框架跟数据库抽象ORM层当属gin跟gorm了，因此本期单排的目标便是用gin+gorm打一个简易的框架，实现基本CRUD的目标。走你~ 准备工作在第一话中已","datePublished":"2019-08-04T10:38:41.000Z","dateModified":"2025-04-12T15:45:50.187Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2019/08/04/gofromzero/02_gin_gorm/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"后端开发, web开发, Golang, gin, gorm"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【从零单排Golang】第二话：初探服务端CRUD，gin+gorm黄金搭档","description":"前言Github传送门 学一门新语言，如果太专注于语法，那肯定学的不够快。如果有一定的需求目标，带着这个目标去学习一门新语言，这样才能学得快。 工作中写后端的时间比例不在少数，而且传闻Go也因其适用于服务端而著名。在Go社区中最为火热的服务端框架跟数据库抽象ORM层当属gin跟gorm了，因此本期单排的目标便是用gin+gorm打一个简易的框架，实现基本CRUD的目标。走你~ 准备工作在第一话中已","datePublished":"2019-08-04T10:38:41.000Z","dateModified":"2025-04-12T15:45:50.187Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2019/08/04/gofromzero/02_gin_gorm/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"Golang, 后端开发, gin, web开发, gorm"}</script>
   
   
 
@@ -1550,8 +1550,6 @@
 
         
 <div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
   
     <span class="post-meta-item-icon">
       <i class="fa fa-user"></i>
@@ -1575,18 +1573,37 @@
   
 </div>
 <script>
-  // 不蒜子是第三方服务，脚本被拦或服务超时都会留下空白图标占位。
-  // 超时后若三个计数值一个都没填上，就把块体整体隐藏（post 页浏览数由 .busuanzi-post-view 承接）。
-  setTimeout(function () {
-    var ids = ['busuanzi_value_site_uv', 'busuanzi_value_site_pv', 'busuanzi_value_page_pv'];
-    var filled = ids.some(function (id) {
-      var el = document.getElementById(id);
-      return el && el.textContent.replace(/\s/g, '');
-    });
-    if (filled) return;
-    var nodes = document.querySelectorAll('.busuanzi-count, .busuanzi-post-view');
-    for (var i = 0; i < nodes.length; i++) nodes[i].style.display = 'none';
-  }, 5000);
+  // 不蒜子是第三方服务：脚本本体 + 其内部再发的 JSONP 数据接口，任一请求挂起都会拖住
+  // window load 事件（标签页一直转圈）。原先的 async script 标签直接挂在关键路径上——
+  // async 只免解析阻塞、仍参与 load 完成判定；现改为 load 完成后才动态注入，不蒜子的
+  // 全部网络活动都发生在页面可交互之后，502 / 超时不再阻塞页面。
+  // 注入后再给 5s 兜底：三个计数值一个都没填上就整体隐藏块体（post 页浏览数由
+  // .busuanzi-post-view 承接，见 _macro/post.swig）。
+  (function () {
+    function loadBusuanzi() {
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js';
+      document.body.appendChild(s);
+
+      setTimeout(function () {
+        var ids = ['busuanzi_value_site_uv', 'busuanzi_value_site_pv', 'busuanzi_value_page_pv'];
+        var filled = ids.some(function (id) {
+          var el = document.getElementById(id);
+          return el && el.textContent.replace(/\s/g, '');
+        });
+        if (filled) return;
+        var nodes = document.querySelectorAll('.busuanzi-count, .busuanzi-post-view');
+        for (var i = 0; i < nodes.length; i++) nodes[i].style.display = 'none';
+      }, 5000);
+    }
+
+    if (document.readyState === 'complete') {
+      loadBusuanzi();
+    } else {
+      window.addEventListener('load', loadBusuanzi);
+    }
+  })();
 </script>
 
 

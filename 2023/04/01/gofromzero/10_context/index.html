@@ -111,7 +111,7 @@
 <link rel="stylesheet" href="/lib/fontsource/ibm-plex-mono/700.css">
 
 <meta name="description" content="在Golang的各种用法当中，context可谓是最能够体现Golang语言特性的模块之一。context的本意为情境、上下文，而在Golang程序当中，则可以被用于描述一次调用、会话或者任务的状态信息。关于context网上有很多语法以及源码分析的文档，但是里面很多却不能从实战场景体现context的作用，导致这个概念难以理解。因此这一回，经由踩坑context后，笔者将结合自己的理解，给大家讲">
-<meta name="keywords" content="后端开发,异步,Golang,并发,context">
+<meta name="keywords" content="Golang,后端开发,异步,并发,context">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【从零单排Golang】第十话：快速理解并上手context的基础用法">
 <meta property="og:url" content="https://utmhikari.top/2023/04/01/gofromzero/10_context/index.html">
@@ -638,11 +638,11 @@
       
         <div class="post-tags">
           
+            <a href="/tags/Golang/" rel="tag"># Golang</a>
+          
             <a href="/tags/后端开发/" rel="tag"># 后端开发</a>
           
             <a href="/tags/异步/" rel="tag"># 异步</a>
-          
-            <a href="/tags/Golang/" rel="tag"># Golang</a>
           
             <a href="/tags/并发/" rel="tag"># 并发</a>
           
@@ -693,7 +693,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【从零单排Golang】第十话：快速理解并上手context的基础用法","description":"在Golang的各种用法当中，context可谓是最能够体现Golang语言特性的模块之一。context的本意为情境、上下文，而在Golang程序当中，则可以被用于描述一次调用、会话或者任务的状态信息。关于context网上有很多语法以及源码分析的文档，但是里面很多却不能从实战场景体现context的作用，导致这个概念难以理解。因此这一回，经由踩坑context后，笔者将结合自己的理解，给大家讲","datePublished":"2023-04-01T09:11:46.000Z","dateModified":"2026-09-29T02:03:50.964Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2023/04/01/gofromzero/10_context/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"后端开发, 异步, Golang, 并发, context"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【从零单排Golang】第十话：快速理解并上手context的基础用法","description":"在Golang的各种用法当中，context可谓是最能够体现Golang语言特性的模块之一。context的本意为情境、上下文，而在Golang程序当中，则可以被用于描述一次调用、会话或者任务的状态信息。关于context网上有很多语法以及源码分析的文档，但是里面很多却不能从实战场景体现context的作用，导致这个概念难以理解。因此这一回，经由踩坑context后，笔者将结合自己的理解，给大家讲","datePublished":"2023-04-01T09:11:46.000Z","dateModified":"2026-09-29T02:03:50.964Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2023/04/01/gofromzero/10_context/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"Golang, 后端开发, 异步, 并发, context"}</script>
   
   
 
@@ -1532,8 +1532,6 @@
 
         
 <div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
   
     <span class="post-meta-item-icon">
       <i class="fa fa-user"></i>
@@ -1557,18 +1555,37 @@
   
 </div>
 <script>
-  // 不蒜子是第三方服务，脚本被拦或服务超时都会留下空白图标占位。
-  // 超时后若三个计数值一个都没填上，就把块体整体隐藏（post 页浏览数由 .busuanzi-post-view 承接）。
-  setTimeout(function () {
-    var ids = ['busuanzi_value_site_uv', 'busuanzi_value_site_pv', 'busuanzi_value_page_pv'];
-    var filled = ids.some(function (id) {
-      var el = document.getElementById(id);
-      return el && el.textContent.replace(/\s/g, '');
-    });
-    if (filled) return;
-    var nodes = document.querySelectorAll('.busuanzi-count, .busuanzi-post-view');
-    for (var i = 0; i < nodes.length; i++) nodes[i].style.display = 'none';
-  }, 5000);
+  // 不蒜子是第三方服务：脚本本体 + 其内部再发的 JSONP 数据接口，任一请求挂起都会拖住
+  // window load 事件（标签页一直转圈）。原先的 async script 标签直接挂在关键路径上——
+  // async 只免解析阻塞、仍参与 load 完成判定；现改为 load 完成后才动态注入，不蒜子的
+  // 全部网络活动都发生在页面可交互之后，502 / 超时不再阻塞页面。
+  // 注入后再给 5s 兜底：三个计数值一个都没填上就整体隐藏块体（post 页浏览数由
+  // .busuanzi-post-view 承接，见 _macro/post.swig）。
+  (function () {
+    function loadBusuanzi() {
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js';
+      document.body.appendChild(s);
+
+      setTimeout(function () {
+        var ids = ['busuanzi_value_site_uv', 'busuanzi_value_site_pv', 'busuanzi_value_page_pv'];
+        var filled = ids.some(function (id) {
+          var el = document.getElementById(id);
+          return el && el.textContent.replace(/\s/g, '');
+        });
+        if (filled) return;
+        var nodes = document.querySelectorAll('.busuanzi-count, .busuanzi-post-view');
+        for (var i = 0; i < nodes.length; i++) nodes[i].style.display = 'none';
+      }, 5000);
+    }
+
+    if (document.readyState === 'complete') {
+      loadBusuanzi();
+    } else {
+      window.addEventListener('load', loadBusuanzi);
+    }
+  })();
 </script>
 
 

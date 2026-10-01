@@ -111,7 +111,7 @@
 <link rel="stylesheet" href="/lib/fontsource/ibm-plex-mono/700.css">
 
 <meta name="description" content="前言在测试工具的开发过程中，可能会遇到需要生成excel文件的需求。笔者在自研excel-diff工具的过程中，也同样接到了需要生成excel文件来展示每个sheet的diff数据。每个包含diff的sheet需要生成1个excel文件，每个文件分成3个sheet，2个sheet用于展示sheet原先的数据与修改后的数据，1个sheet用于描述性统计和超链接每个diff的情况。要生成这样的exce">
-<meta name="keywords" content="测试开发,python,工具开发,openpyxl,excel">
+<meta name="keywords" content="python,工具开发,测试开发,openpyxl,excel">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【测试人生】python的excel库——openpyxl的用法">
 <meta property="og:url" content="https://utmhikari.top/2021/07/11/testlife/openpyxl/index.html">
@@ -597,11 +597,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/测试开发/" rel="tag"># 测试开发</a>
-          
             <a href="/tags/python/" rel="tag"># python</a>
           
             <a href="/tags/工具开发/" rel="tag"># 工具开发</a>
+          
+            <a href="/tags/测试开发/" rel="tag"># 测试开发</a>
           
             <a href="/tags/openpyxl/" rel="tag"># openpyxl</a>
           
@@ -652,7 +652,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【测试人生】python的excel库——openpyxl的用法","description":"前言在测试工具的开发过程中，可能会遇到需要生成excel文件的需求。笔者在自研excel-diff工具的过程中，也同样接到了需要生成excel文件来展示每个sheet的diff数据。每个包含diff的sheet需要生成1个excel文件，每个文件分成3个sheet，2个sheet用于展示sheet原先的数据与修改后的数据，1个sheet用于描述性统计和超链接每个diff的情况。要生成这样的exce","datePublished":"2021-07-10T16:03:07.000Z","dateModified":"2026-09-29T02:03:50.973Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2021/07/11/testlife/openpyxl/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"测试开发, python, 工具开发, openpyxl, excel"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【测试人生】python的excel库——openpyxl的用法","description":"前言在测试工具的开发过程中，可能会遇到需要生成excel文件的需求。笔者在自研excel-diff工具的过程中，也同样接到了需要生成excel文件来展示每个sheet的diff数据。每个包含diff的sheet需要生成1个excel文件，每个文件分成3个sheet，2个sheet用于展示sheet原先的数据与修改后的数据，1个sheet用于描述性统计和超链接每个diff的情况。要生成这样的exce","datePublished":"2021-07-10T16:03:07.000Z","dateModified":"2026-09-29T02:03:50.973Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2021/07/11/testlife/openpyxl/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"python, 工具开发, 测试开发, openpyxl, excel"}</script>
   
   
 
@@ -1517,8 +1517,6 @@
 
         
 <div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
   
     <span class="post-meta-item-icon">
       <i class="fa fa-user"></i>
@@ -1542,18 +1540,37 @@
   
 </div>
 <script>
-  // 不蒜子是第三方服务，脚本被拦或服务超时都会留下空白图标占位。
-  // 超时后若三个计数值一个都没填上，就把块体整体隐藏（post 页浏览数由 .busuanzi-post-view 承接）。
-  setTimeout(function () {
-    var ids = ['busuanzi_value_site_uv', 'busuanzi_value_site_pv', 'busuanzi_value_page_pv'];
-    var filled = ids.some(function (id) {
-      var el = document.getElementById(id);
-      return el && el.textContent.replace(/\s/g, '');
-    });
-    if (filled) return;
-    var nodes = document.querySelectorAll('.busuanzi-count, .busuanzi-post-view');
-    for (var i = 0; i < nodes.length; i++) nodes[i].style.display = 'none';
-  }, 5000);
+  // 不蒜子是第三方服务：脚本本体 + 其内部再发的 JSONP 数据接口，任一请求挂起都会拖住
+  // window load 事件（标签页一直转圈）。原先的 async script 标签直接挂在关键路径上——
+  // async 只免解析阻塞、仍参与 load 完成判定；现改为 load 完成后才动态注入，不蒜子的
+  // 全部网络活动都发生在页面可交互之后，502 / 超时不再阻塞页面。
+  // 注入后再给 5s 兜底：三个计数值一个都没填上就整体隐藏块体（post 页浏览数由
+  // .busuanzi-post-view 承接，见 _macro/post.swig）。
+  (function () {
+    function loadBusuanzi() {
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js';
+      document.body.appendChild(s);
+
+      setTimeout(function () {
+        var ids = ['busuanzi_value_site_uv', 'busuanzi_value_site_pv', 'busuanzi_value_page_pv'];
+        var filled = ids.some(function (id) {
+          var el = document.getElementById(id);
+          return el && el.textContent.replace(/\s/g, '');
+        });
+        if (filled) return;
+        var nodes = document.querySelectorAll('.busuanzi-count, .busuanzi-post-view');
+        for (var i = 0; i < nodes.length; i++) nodes[i].style.display = 'none';
+      }, 5000);
+    }
+
+    if (document.readyState === 'complete') {
+      loadBusuanzi();
+    } else {
+      window.addEventListener('load', loadBusuanzi);
+    }
+  })();
 </script>
 
 

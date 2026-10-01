@@ -111,7 +111,7 @@
 <link rel="stylesheet" href="/lib/fontsource/ibm-plex-mono/700.css">
 
 <meta name="description" content="excel-differ是游戏测试常用的测试工具。在有些业务场景下，excel-diff的结果可能需要通过web展示。Vue技术栈下的vxe-table表格组件能够支持大量数据的展示，因此可以用vxe-table展示excel-diff的结果。 excel-diff的算法本身，先前的文章已有讲解，在结果展示上会按file-&amp;gt;sheet来分。为了让结果展示更加人性化，需要对表格的样式进行区分。">
-<meta name="keywords" content="前端开发,测试开发,游戏测试,vue,vxe-table">
+<meta name="keywords" content="测试开发,前端开发,游戏测试,vue,vxe-table">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【极客日常】用vxe-table展示excel-diff的结果">
 <meta property="og:url" content="https://utmhikari.top/2021/05/01/geekdaily/excel_diff_vxe-table/index.html">
@@ -608,9 +608,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/前端开发/" rel="tag"># 前端开发</a>
-          
             <a href="/tags/测试开发/" rel="tag"># 测试开发</a>
+          
+            <a href="/tags/前端开发/" rel="tag"># 前端开发</a>
           
             <a href="/tags/游戏测试/" rel="tag"># 游戏测试</a>
           
@@ -663,7 +663,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【极客日常】用vxe-table展示excel-diff的结果","description":"excel-differ是游戏测试常用的测试工具。在有些业务场景下，excel-diff的结果可能需要通过web展示。Vue技术栈下的vxe-table表格组件能够支持大量数据的展示，因此可以用vxe-table展示excel-diff的结果。 excel-diff的算法本身，先前的文章已有讲解，在结果展示上会按file-&gt;sheet来分。为了让结果展示更加人性化，需要对表格的样式进行区分。","datePublished":"2021-05-01T08:50:18.000Z","dateModified":"2024-04-07T02:48:06.919Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2021/05/01/geekdaily/excel_diff_vxe-table/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"前端开发, 测试开发, 游戏测试, vue, vxe-table"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【极客日常】用vxe-table展示excel-diff的结果","description":"excel-differ是游戏测试常用的测试工具。在有些业务场景下，excel-diff的结果可能需要通过web展示。Vue技术栈下的vxe-table表格组件能够支持大量数据的展示，因此可以用vxe-table展示excel-diff的结果。 excel-diff的算法本身，先前的文章已有讲解，在结果展示上会按file-&gt;sheet来分。为了让结果展示更加人性化，需要对表格的样式进行区分。","datePublished":"2021-05-01T08:50:18.000Z","dateModified":"2024-04-07T02:48:06.919Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2021/05/01/geekdaily/excel_diff_vxe-table/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"测试开发, 前端开发, 游戏测试, vue, vxe-table"}</script>
   
   
 
@@ -1502,8 +1502,6 @@
 
         
 <div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
   
     <span class="post-meta-item-icon">
       <i class="fa fa-user"></i>
@@ -1527,18 +1525,37 @@
   
 </div>
 <script>
-  // 不蒜子是第三方服务，脚本被拦或服务超时都会留下空白图标占位。
-  // 超时后若三个计数值一个都没填上，就把块体整体隐藏（post 页浏览数由 .busuanzi-post-view 承接）。
-  setTimeout(function () {
-    var ids = ['busuanzi_value_site_uv', 'busuanzi_value_site_pv', 'busuanzi_value_page_pv'];
-    var filled = ids.some(function (id) {
-      var el = document.getElementById(id);
-      return el && el.textContent.replace(/\s/g, '');
-    });
-    if (filled) return;
-    var nodes = document.querySelectorAll('.busuanzi-count, .busuanzi-post-view');
-    for (var i = 0; i < nodes.length; i++) nodes[i].style.display = 'none';
-  }, 5000);
+  // 不蒜子是第三方服务：脚本本体 + 其内部再发的 JSONP 数据接口，任一请求挂起都会拖住
+  // window load 事件（标签页一直转圈）。原先的 async script 标签直接挂在关键路径上——
+  // async 只免解析阻塞、仍参与 load 完成判定；现改为 load 完成后才动态注入，不蒜子的
+  // 全部网络活动都发生在页面可交互之后，502 / 超时不再阻塞页面。
+  // 注入后再给 5s 兜底：三个计数值一个都没填上就整体隐藏块体（post 页浏览数由
+  // .busuanzi-post-view 承接，见 _macro/post.swig）。
+  (function () {
+    function loadBusuanzi() {
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js';
+      document.body.appendChild(s);
+
+      setTimeout(function () {
+        var ids = ['busuanzi_value_site_uv', 'busuanzi_value_site_pv', 'busuanzi_value_page_pv'];
+        var filled = ids.some(function (id) {
+          var el = document.getElementById(id);
+          return el && el.textContent.replace(/\s/g, '');
+        });
+        if (filled) return;
+        var nodes = document.querySelectorAll('.busuanzi-count, .busuanzi-post-view');
+        for (var i = 0; i < nodes.length; i++) nodes[i].style.display = 'none';
+      }, 5000);
+    }
+
+    if (document.readyState === 'complete') {
+      loadBusuanzi();
+    } else {
+      window.addEventListener('load', loadBusuanzi);
+    }
+  })();
 </script>
 
 

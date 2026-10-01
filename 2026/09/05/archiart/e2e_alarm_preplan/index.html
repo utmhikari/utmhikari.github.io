@@ -111,7 +111,7 @@
 <link rel="stylesheet" href="/lib/fontsource/ibm-plex-mono/700.css">
 
 <meta name="description" content="在先前治理后端稳定性的一些实战经验这篇文章里，笔者聊过稳定性治理的大致路径，先定指标，再保证可监控可观测，之后才是解决具体的技术问题。今天这篇文章就聚焦在可观测跟止损这两个环节，简单聊一下端到端的告警应该怎么梳理，以及严重告警的处理预案应该怎么做。这两块做扎实了，稳定性保障才算是有底子的，说到底目的还是稳定性本身，而不是把监控大盘做得多好看。">
-<meta name="keywords" content="稳定性,SRE,架构,告警,预案">
+<meta name="keywords" content="架构,稳定性,SRE,告警,预案">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【架构艺术】端到端监控告警和预案治理">
 <meta property="og:url" content="https://utmhikari.top/2026/09/05/archiart/e2e_alarm_preplan/index.html">
@@ -567,11 +567,11 @@
       
         <div class="post-tags">
           
+            <a href="/tags/架构/" rel="tag"># 架构</a>
+          
             <a href="/tags/稳定性/" rel="tag"># 稳定性</a>
           
             <a href="/tags/SRE/" rel="tag"># SRE</a>
-          
-            <a href="/tags/架构/" rel="tag"># 架构</a>
           
             <a href="/tags/告警/" rel="tag"># 告警</a>
           
@@ -622,7 +622,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【架构艺术】端到端监控告警和预案治理","description":"在先前治理后端稳定性的一些实战经验这篇文章里，笔者聊过稳定性治理的大致路径，先定指标，再保证可监控可观测，之后才是解决具体的技术问题。今天这篇文章就聚焦在可观测跟止损这两个环节，简单聊一下端到端的告警应该怎么梳理，以及严重告警的处理预案应该怎么做。这两块做扎实了，稳定性保障才算是有底子的，说到底目的还是稳定性本身，而不是把监控大盘做得多好看。","datePublished":"2026-09-05T01:20:13.000Z","dateModified":"2026-09-05T01:27:07.374Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2026/09/05/archiart/e2e_alarm_preplan/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"稳定性, SRE, 架构, 告警, 预案"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【架构艺术】端到端监控告警和预案治理","description":"在先前治理后端稳定性的一些实战经验这篇文章里，笔者聊过稳定性治理的大致路径，先定指标，再保证可监控可观测，之后才是解决具体的技术问题。今天这篇文章就聚焦在可观测跟止损这两个环节，简单聊一下端到端的告警应该怎么梳理，以及严重告警的处理预案应该怎么做。这两块做扎实了，稳定性保障才算是有底子的，说到底目的还是稳定性本身，而不是把监控大盘做得多好看。","datePublished":"2026-09-05T01:20:13.000Z","dateModified":"2026-09-05T01:27:07.374Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2026/09/05/archiart/e2e_alarm_preplan/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"架构, 稳定性, SRE, 告警, 预案"}</script>
   
   
 
@@ -1461,8 +1461,6 @@
 
         
 <div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
   
     <span class="post-meta-item-icon">
       <i class="fa fa-user"></i>
@@ -1486,18 +1484,37 @@
   
 </div>
 <script>
-  // 不蒜子是第三方服务，脚本被拦或服务超时都会留下空白图标占位。
-  // 超时后若三个计数值一个都没填上，就把块体整体隐藏（post 页浏览数由 .busuanzi-post-view 承接）。
-  setTimeout(function () {
-    var ids = ['busuanzi_value_site_uv', 'busuanzi_value_site_pv', 'busuanzi_value_page_pv'];
-    var filled = ids.some(function (id) {
-      var el = document.getElementById(id);
-      return el && el.textContent.replace(/\s/g, '');
-    });
-    if (filled) return;
-    var nodes = document.querySelectorAll('.busuanzi-count, .busuanzi-post-view');
-    for (var i = 0; i < nodes.length; i++) nodes[i].style.display = 'none';
-  }, 5000);
+  // 不蒜子是第三方服务：脚本本体 + 其内部再发的 JSONP 数据接口，任一请求挂起都会拖住
+  // window load 事件（标签页一直转圈）。原先的 async script 标签直接挂在关键路径上——
+  // async 只免解析阻塞、仍参与 load 完成判定；现改为 load 完成后才动态注入，不蒜子的
+  // 全部网络活动都发生在页面可交互之后，502 / 超时不再阻塞页面。
+  // 注入后再给 5s 兜底：三个计数值一个都没填上就整体隐藏块体（post 页浏览数由
+  // .busuanzi-post-view 承接，见 _macro/post.swig）。
+  (function () {
+    function loadBusuanzi() {
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js';
+      document.body.appendChild(s);
+
+      setTimeout(function () {
+        var ids = ['busuanzi_value_site_uv', 'busuanzi_value_site_pv', 'busuanzi_value_page_pv'];
+        var filled = ids.some(function (id) {
+          var el = document.getElementById(id);
+          return el && el.textContent.replace(/\s/g, '');
+        });
+        if (filled) return;
+        var nodes = document.querySelectorAll('.busuanzi-count, .busuanzi-post-view');
+        for (var i = 0; i < nodes.length; i++) nodes[i].style.display = 'none';
+      }, 5000);
+    }
+
+    if (document.readyState === 'complete') {
+      loadBusuanzi();
+    } else {
+      window.addEventListener('load', loadBusuanzi);
+    }
+  })();
 </script>
 
 

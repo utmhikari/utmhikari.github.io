@@ -111,7 +111,7 @@
 <link rel="stylesheet" href="/lib/fontsource/ibm-plex-mono/700.css">
 
 <meta name="description" content="近期在testerhome的游戏测试节点里，看到一个很有趣的帖子：针对游戏策划的配置表测试，是否有开源的框架可以用？除了问题本身之外，帖子的楼主也附了一张整个配置表测试工具的设计图，由SVN变更监控、发起检查最后到消息通知，组成了一个持续集成的配置表测试专项工程。为此，针对这个场景，笔者也希望输出一些自己对于配置表检查测试技术的一些思考。 本篇文章讲述两块内容，第一块讲下测试框架的开源，第二块讲下">
-<meta name="keywords" content="测试开发,持续集成,游戏测试,工具开发,表格检查">
+<meta name="keywords" content="工具开发,表格检查,测试开发,持续集成,游戏测试">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【测试人生】浅谈游戏策划配置表检查的技术设计">
 <meta property="og:url" content="https://utmhikari.top/2023/09/17/testlife/game_table_check/index.html">
@@ -582,15 +582,15 @@
       
         <div class="post-tags">
           
+            <a href="/tags/工具开发/" rel="tag"># 工具开发</a>
+          
+            <a href="/tags/表格检查/" rel="tag"># 表格检查</a>
+          
             <a href="/tags/测试开发/" rel="tag"># 测试开发</a>
           
             <a href="/tags/持续集成/" rel="tag"># 持续集成</a>
           
             <a href="/tags/游戏测试/" rel="tag"># 游戏测试</a>
-          
-            <a href="/tags/工具开发/" rel="tag"># 工具开发</a>
-          
-            <a href="/tags/表格检查/" rel="tag"># 表格检查</a>
           
         </div>
       
@@ -637,7 +637,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【测试人生】浅谈游戏策划配置表检查的技术设计","description":"近期在testerhome的游戏测试节点里，看到一个很有趣的帖子：针对游戏策划的配置表测试，是否有开源的框架可以用？除了问题本身之外，帖子的楼主也附了一张整个配置表测试工具的设计图，由SVN变更监控、发起检查最后到消息通知，组成了一个持续集成的配置表测试专项工程。为此，针对这个场景，笔者也希望输出一些自己对于配置表检查测试技术的一些思考。 本篇文章讲述两块内容，第一块讲下测试框架的开源，第二块讲下","datePublished":"2023-09-17T07:18:33.000Z","dateModified":"2024-04-07T02:48:06.928Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2023/09/17/testlife/game_table_check/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"测试开发, 持续集成, 游戏测试, 工具开发, 表格检查"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【测试人生】浅谈游戏策划配置表检查的技术设计","description":"近期在testerhome的游戏测试节点里，看到一个很有趣的帖子：针对游戏策划的配置表测试，是否有开源的框架可以用？除了问题本身之外，帖子的楼主也附了一张整个配置表测试工具的设计图，由SVN变更监控、发起检查最后到消息通知，组成了一个持续集成的配置表测试专项工程。为此，针对这个场景，笔者也希望输出一些自己对于配置表检查测试技术的一些思考。 本篇文章讲述两块内容，第一块讲下测试框架的开源，第二块讲下","datePublished":"2023-09-17T07:18:33.000Z","dateModified":"2024-04-07T02:48:06.928Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2023/09/17/testlife/game_table_check/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"工具开发, 表格检查, 测试开发, 持续集成, 游戏测试"}</script>
   
   
 
@@ -1476,8 +1476,6 @@
 
         
 <div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
   
     <span class="post-meta-item-icon">
       <i class="fa fa-user"></i>
@@ -1501,18 +1499,37 @@
   
 </div>
 <script>
-  // 不蒜子是第三方服务，脚本被拦或服务超时都会留下空白图标占位。
-  // 超时后若三个计数值一个都没填上，就把块体整体隐藏（post 页浏览数由 .busuanzi-post-view 承接）。
-  setTimeout(function () {
-    var ids = ['busuanzi_value_site_uv', 'busuanzi_value_site_pv', 'busuanzi_value_page_pv'];
-    var filled = ids.some(function (id) {
-      var el = document.getElementById(id);
-      return el && el.textContent.replace(/\s/g, '');
-    });
-    if (filled) return;
-    var nodes = document.querySelectorAll('.busuanzi-count, .busuanzi-post-view');
-    for (var i = 0; i < nodes.length; i++) nodes[i].style.display = 'none';
-  }, 5000);
+  // 不蒜子是第三方服务：脚本本体 + 其内部再发的 JSONP 数据接口，任一请求挂起都会拖住
+  // window load 事件（标签页一直转圈）。原先的 async script 标签直接挂在关键路径上——
+  // async 只免解析阻塞、仍参与 load 完成判定；现改为 load 完成后才动态注入，不蒜子的
+  // 全部网络活动都发生在页面可交互之后，502 / 超时不再阻塞页面。
+  // 注入后再给 5s 兜底：三个计数值一个都没填上就整体隐藏块体（post 页浏览数由
+  // .busuanzi-post-view 承接，见 _macro/post.swig）。
+  (function () {
+    function loadBusuanzi() {
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js';
+      document.body.appendChild(s);
+
+      setTimeout(function () {
+        var ids = ['busuanzi_value_site_uv', 'busuanzi_value_site_pv', 'busuanzi_value_page_pv'];
+        var filled = ids.some(function (id) {
+          var el = document.getElementById(id);
+          return el && el.textContent.replace(/\s/g, '');
+        });
+        if (filled) return;
+        var nodes = document.querySelectorAll('.busuanzi-count, .busuanzi-post-view');
+        for (var i = 0; i < nodes.length; i++) nodes[i].style.display = 'none';
+      }, 5000);
+    }
+
+    if (document.readyState === 'complete') {
+      loadBusuanzi();
+    } else {
+      window.addEventListener('load', loadBusuanzi);
+    }
+  })();
 </script>
 
 

@@ -111,7 +111,7 @@
 <link rel="stylesheet" href="/lib/fontsource/ibm-plex-mono/700.css">
 
 <meta name="description" content="python的字符串实质到底是什么类型的数据，这个可是困扰着很多编程者的话题。在python2我们已经被中文编码相关的问题折磨的不轻，那到了python3之后为什么又解决了这个问题呢？今天这篇文章就带大家详细剖析python3的字符串实现。 我们首先看一段代码： 123def test_str_basic():    s = &apos;123456789&apos;    print(type(s)) 这段代码打印">
-<meta name="keywords" content="编程,python,教程,源码分析,字符串">
+<meta name="keywords" content="python,编程,教程,源码分析,字符串">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【Hard Python】【第五章-字符串】1、unicode，py3的字符串实现">
 <meta property="og:url" content="https://utmhikari.top/2022/05/08/hardpython/5_str_1/index.html">
@@ -669,9 +669,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/编程/" rel="tag"># 编程</a>
-          
             <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/编程/" rel="tag"># 编程</a>
           
             <a href="/tags/教程/" rel="tag"># 教程</a>
           
@@ -724,7 +724,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Hard Python】【第五章-字符串】1、unicode，py3的字符串实现","description":"python的字符串实质到底是什么类型的数据，这个可是困扰着很多编程者的话题。在python2我们已经被中文编码相关的问题折磨的不轻，那到了python3之后为什么又解决了这个问题呢？今天这篇文章就带大家详细剖析python3的字符串实现。 我们首先看一段代码： 123def test_str_basic(): s = '123456789' print(type(s)) 这段代码打印了一个字符串","datePublished":"2022-05-08T06:36:30.000Z","dateModified":"2026-09-29T02:03:50.967Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2022/05/08/hardpython/5_str_1/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"编程, python, 教程, 源码分析, 字符串"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Hard Python】【第五章-字符串】1、unicode，py3的字符串实现","description":"python的字符串实质到底是什么类型的数据，这个可是困扰着很多编程者的话题。在python2我们已经被中文编码相关的问题折磨的不轻，那到了python3之后为什么又解决了这个问题呢？今天这篇文章就带大家详细剖析python3的字符串实现。 我们首先看一段代码： 123def test_str_basic(): s = '123456789' print(type(s)) 这段代码打印了一个字符串","datePublished":"2022-05-08T06:36:30.000Z","dateModified":"2026-09-29T02:03:50.967Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2022/05/08/hardpython/5_str_1/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"python, 编程, 教程, 源码分析, 字符串"}</script>
   
   
 
@@ -1563,8 +1563,6 @@
 
         
 <div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
   
     <span class="post-meta-item-icon">
       <i class="fa fa-user"></i>
@@ -1588,18 +1586,37 @@
   
 </div>
 <script>
-  // 不蒜子是第三方服务，脚本被拦或服务超时都会留下空白图标占位。
-  // 超时后若三个计数值一个都没填上，就把块体整体隐藏（post 页浏览数由 .busuanzi-post-view 承接）。
-  setTimeout(function () {
-    var ids = ['busuanzi_value_site_uv', 'busuanzi_value_site_pv', 'busuanzi_value_page_pv'];
-    var filled = ids.some(function (id) {
-      var el = document.getElementById(id);
-      return el && el.textContent.replace(/\s/g, '');
-    });
-    if (filled) return;
-    var nodes = document.querySelectorAll('.busuanzi-count, .busuanzi-post-view');
-    for (var i = 0; i < nodes.length; i++) nodes[i].style.display = 'none';
-  }, 5000);
+  // 不蒜子是第三方服务：脚本本体 + 其内部再发的 JSONP 数据接口，任一请求挂起都会拖住
+  // window load 事件（标签页一直转圈）。原先的 async script 标签直接挂在关键路径上——
+  // async 只免解析阻塞、仍参与 load 完成判定；现改为 load 完成后才动态注入，不蒜子的
+  // 全部网络活动都发生在页面可交互之后，502 / 超时不再阻塞页面。
+  // 注入后再给 5s 兜底：三个计数值一个都没填上就整体隐藏块体（post 页浏览数由
+  // .busuanzi-post-view 承接，见 _macro/post.swig）。
+  (function () {
+    function loadBusuanzi() {
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js';
+      document.body.appendChild(s);
+
+      setTimeout(function () {
+        var ids = ['busuanzi_value_site_uv', 'busuanzi_value_site_pv', 'busuanzi_value_page_pv'];
+        var filled = ids.some(function (id) {
+          var el = document.getElementById(id);
+          return el && el.textContent.replace(/\s/g, '');
+        });
+        if (filled) return;
+        var nodes = document.querySelectorAll('.busuanzi-count, .busuanzi-post-view');
+        for (var i = 0; i < nodes.length; i++) nodes[i].style.display = 'none';
+      }, 5000);
+    }
+
+    if (document.readyState === 'complete') {
+      loadBusuanzi();
+    } else {
+      window.addEventListener('load', loadBusuanzi);
+    }
+  })();
 </script>
 
 

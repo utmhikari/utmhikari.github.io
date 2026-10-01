@@ -111,7 +111,7 @@
 <link rel="stylesheet" href="/lib/fontsource/ibm-plex-mono/700.css">
 
 <meta name="description" content="第一次在技术博客里面写生活日记，也算是破了个小天荒。个人以为，博客是个人生活思考的载体，而技术只占生活的一部分，那么博客里为什么一定要限制只能够写技术内容，不能写点其它生活上的东西呢？思来想去，近几年在深圳万象天地和她一起探过不少餐馆，吃过不少东西。于是乎，决定写一篇万象天地餐馆探店点评，给没来过或者想来深圳万象天地的人一些参考，少点踩坑。 本文评价纯粹综合她和自己的主观意见，胃口分布于北京、江南">
-<meta name="keywords" content="个人博客,产品,测试开发,业务,用户">
+<meta name="keywords" content="产品,业务,测试开发,个人博客,用户">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【DIY小记】深圳万象天地餐馆探店点评">
 <meta property="og:url" content="https://utmhikari.top/2024/05/12/diymemo/sz_wxtd/index.html">
@@ -577,13 +577,13 @@
       
         <div class="post-tags">
           
-            <a href="/tags/个人博客/" rel="tag"># 个人博客</a>
-          
             <a href="/tags/产品/" rel="tag"># 产品</a>
+          
+            <a href="/tags/业务/" rel="tag"># 业务</a>
           
             <a href="/tags/测试开发/" rel="tag"># 测试开发</a>
           
-            <a href="/tags/业务/" rel="tag"># 业务</a>
+            <a href="/tags/个人博客/" rel="tag"># 个人博客</a>
           
             <a href="/tags/用户/" rel="tag"># 用户</a>
           
@@ -632,7 +632,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【DIY小记】深圳万象天地餐馆探店点评","description":"第一次在技术博客里面写生活日记，也算是破了个小天荒。个人以为，博客是个人生活思考的载体，而技术只占生活的一部分，那么博客里为什么一定要限制只能够写技术内容，不能写点其它生活上的东西呢？思来想去，近几年在深圳万象天地和她一起探过不少餐馆，吃过不少东西。于是乎，决定写一篇万象天地餐馆探店点评，给没来过或者想来深圳万象天地的人一些参考，少点踩坑。 本文评价纯粹综合她和自己的主观意见，胃口分布于北京、江南","datePublished":"2024-05-12T08:46:22.000Z","dateModified":"2026-09-29T02:03:50.959Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2024/05/12/diymemo/sz_wxtd/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"个人博客, 产品, 测试开发, 业务, 用户"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【DIY小记】深圳万象天地餐馆探店点评","description":"第一次在技术博客里面写生活日记，也算是破了个小天荒。个人以为，博客是个人生活思考的载体，而技术只占生活的一部分，那么博客里为什么一定要限制只能够写技术内容，不能写点其它生活上的东西呢？思来想去，近几年在深圳万象天地和她一起探过不少餐馆，吃过不少东西。于是乎，决定写一篇万象天地餐馆探店点评，给没来过或者想来深圳万象天地的人一些参考，少点踩坑。 本文评价纯粹综合她和自己的主观意见，胃口分布于北京、江南","datePublished":"2024-05-12T08:46:22.000Z","dateModified":"2026-09-29T02:03:50.959Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2024/05/12/diymemo/sz_wxtd/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"产品, 业务, 测试开发, 个人博客, 用户"}</script>
   
   
 
@@ -1471,8 +1471,6 @@
 
         
 <div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
   
     <span class="post-meta-item-icon">
       <i class="fa fa-user"></i>
@@ -1496,18 +1494,37 @@
   
 </div>
 <script>
-  // 不蒜子是第三方服务，脚本被拦或服务超时都会留下空白图标占位。
-  // 超时后若三个计数值一个都没填上，就把块体整体隐藏（post 页浏览数由 .busuanzi-post-view 承接）。
-  setTimeout(function () {
-    var ids = ['busuanzi_value_site_uv', 'busuanzi_value_site_pv', 'busuanzi_value_page_pv'];
-    var filled = ids.some(function (id) {
-      var el = document.getElementById(id);
-      return el && el.textContent.replace(/\s/g, '');
-    });
-    if (filled) return;
-    var nodes = document.querySelectorAll('.busuanzi-count, .busuanzi-post-view');
-    for (var i = 0; i < nodes.length; i++) nodes[i].style.display = 'none';
-  }, 5000);
+  // 不蒜子是第三方服务：脚本本体 + 其内部再发的 JSONP 数据接口，任一请求挂起都会拖住
+  // window load 事件（标签页一直转圈）。原先的 async script 标签直接挂在关键路径上——
+  // async 只免解析阻塞、仍参与 load 完成判定；现改为 load 完成后才动态注入，不蒜子的
+  // 全部网络活动都发生在页面可交互之后，502 / 超时不再阻塞页面。
+  // 注入后再给 5s 兜底：三个计数值一个都没填上就整体隐藏块体（post 页浏览数由
+  // .busuanzi-post-view 承接，见 _macro/post.swig）。
+  (function () {
+    function loadBusuanzi() {
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js';
+      document.body.appendChild(s);
+
+      setTimeout(function () {
+        var ids = ['busuanzi_value_site_uv', 'busuanzi_value_site_pv', 'busuanzi_value_page_pv'];
+        var filled = ids.some(function (id) {
+          var el = document.getElementById(id);
+          return el && el.textContent.replace(/\s/g, '');
+        });
+        if (filled) return;
+        var nodes = document.querySelectorAll('.busuanzi-count, .busuanzi-post-view');
+        for (var i = 0; i < nodes.length; i++) nodes[i].style.display = 'none';
+      }, 5000);
+    }
+
+    if (document.readyState === 'complete') {
+      loadBusuanzi();
+    } else {
+      window.addEventListener('load', loadBusuanzi);
+    }
+  })();
 </script>
 
 

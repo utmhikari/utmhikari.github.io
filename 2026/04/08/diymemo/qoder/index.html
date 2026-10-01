@@ -111,7 +111,7 @@
 <link rel="stylesheet" href="/lib/fontsource/ibm-plex-mono/700.css">
 
 <meta name="description" content="近期因为探索AI编程的缘故，希望给日常生活中多找一个AI-Native的IDE，一方面做纯Vibe Coding的开发，另一方面也能够兼顾日常手动微调编码的需要。当然由于众所周知的原因，也希望这个IDE可以照顾国内用户，不是说总是要搭梯子编程，这样编程之外的冲浪需求就不方便了。 经过一番探索，在Trae、Cursor以及Claude Code等一系列候选名单中，笔者选择了Qoder。并不算是打广告">
-<meta name="keywords" content="编程,Qoder,LLM,JetBrains,IDE">
+<meta name="keywords" content="编程,LLM,JetBrains,IDE,Qoder">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【DIY小记】分享自己目前在用的AI编程工具Qoder">
 <meta property="og:url" content="https://utmhikari.top/2026/04/08/diymemo/qoder/index.html">
@@ -573,13 +573,13 @@
           
             <a href="/tags/编程/" rel="tag"># 编程</a>
           
-            <a href="/tags/Qoder/" rel="tag"># Qoder</a>
-          
             <a href="/tags/LLM/" rel="tag"># LLM</a>
           
             <a href="/tags/JetBrains/" rel="tag"># JetBrains</a>
           
             <a href="/tags/IDE/" rel="tag"># IDE</a>
+          
+            <a href="/tags/Qoder/" rel="tag"># Qoder</a>
           
         </div>
       
@@ -626,7 +626,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【DIY小记】分享自己目前在用的AI编程工具Qoder","description":"近期因为探索AI编程的缘故，希望给日常生活中多找一个AI-Native的IDE，一方面做纯Vibe Coding的开发，另一方面也能够兼顾日常手动微调编码的需要。当然由于众所周知的原因，也希望这个IDE可以照顾国内用户，不是说总是要搭梯子编程，这样编程之外的冲浪需求就不方便了。 经过一番探索，在Trae、Cursor以及Claude Code等一系列候选名单中，笔者选择了Qoder。并不算是打广告","datePublished":"2026-04-08T09:51:10.000Z","dateModified":"2026-04-08T11:09:46.207Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2026/04/08/diymemo/qoder/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"编程, Qoder, LLM, JetBrains, IDE"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【DIY小记】分享自己目前在用的AI编程工具Qoder","description":"近期因为探索AI编程的缘故，希望给日常生活中多找一个AI-Native的IDE，一方面做纯Vibe Coding的开发，另一方面也能够兼顾日常手动微调编码的需要。当然由于众所周知的原因，也希望这个IDE可以照顾国内用户，不是说总是要搭梯子编程，这样编程之外的冲浪需求就不方便了。 经过一番探索，在Trae、Cursor以及Claude Code等一系列候选名单中，笔者选择了Qoder。并不算是打广告","datePublished":"2026-04-08T09:51:10.000Z","dateModified":"2026-04-08T11:09:46.207Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2026/04/08/diymemo/qoder/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"编程, LLM, JetBrains, IDE, Qoder"}</script>
   
   
 
@@ -1465,8 +1465,6 @@
 
         
 <div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
   
     <span class="post-meta-item-icon">
       <i class="fa fa-user"></i>
@@ -1490,18 +1488,37 @@
   
 </div>
 <script>
-  // 不蒜子是第三方服务，脚本被拦或服务超时都会留下空白图标占位。
-  // 超时后若三个计数值一个都没填上，就把块体整体隐藏（post 页浏览数由 .busuanzi-post-view 承接）。
-  setTimeout(function () {
-    var ids = ['busuanzi_value_site_uv', 'busuanzi_value_site_pv', 'busuanzi_value_page_pv'];
-    var filled = ids.some(function (id) {
-      var el = document.getElementById(id);
-      return el && el.textContent.replace(/\s/g, '');
-    });
-    if (filled) return;
-    var nodes = document.querySelectorAll('.busuanzi-count, .busuanzi-post-view');
-    for (var i = 0; i < nodes.length; i++) nodes[i].style.display = 'none';
-  }, 5000);
+  // 不蒜子是第三方服务：脚本本体 + 其内部再发的 JSONP 数据接口，任一请求挂起都会拖住
+  // window load 事件（标签页一直转圈）。原先的 async script 标签直接挂在关键路径上——
+  // async 只免解析阻塞、仍参与 load 完成判定；现改为 load 完成后才动态注入，不蒜子的
+  // 全部网络活动都发生在页面可交互之后，502 / 超时不再阻塞页面。
+  // 注入后再给 5s 兜底：三个计数值一个都没填上就整体隐藏块体（post 页浏览数由
+  // .busuanzi-post-view 承接，见 _macro/post.swig）。
+  (function () {
+    function loadBusuanzi() {
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js';
+      document.body.appendChild(s);
+
+      setTimeout(function () {
+        var ids = ['busuanzi_value_site_uv', 'busuanzi_value_site_pv', 'busuanzi_value_page_pv'];
+        var filled = ids.some(function (id) {
+          var el = document.getElementById(id);
+          return el && el.textContent.replace(/\s/g, '');
+        });
+        if (filled) return;
+        var nodes = document.querySelectorAll('.busuanzi-count, .busuanzi-post-view');
+        for (var i = 0; i < nodes.length; i++) nodes[i].style.display = 'none';
+      }, 5000);
+    }
+
+    if (document.readyState === 'complete') {
+      loadBusuanzi();
+    } else {
+      window.addEventListener('load', loadBusuanzi);
+    }
+  })();
 </script>
 
 

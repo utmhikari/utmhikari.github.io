@@ -111,7 +111,7 @@
 <link rel="stylesheet" href="/lib/fontsource/ibm-plex-mono/700.css">
 
 <meta name="description" content="近日笔者发现自己Macbook-Pro播放B站视频，全屏的时候必然卡顿，退出全屏就没事。笔者电脑的参数是：  芯片：M3 系统：Tahoe 26.4 浏览器：Edge  到网上一查发现《Edge浏览器在MacOS 26(Tahoe)系统上看B站卡顿》一篇文章，实测下来确实如此，拔掉电源就没事，插上电源必然卡成PPT，并且视频还比拔掉电源亮一些。 至此怀疑是Edge浏览器某些设置的问题，经过一番探索">
-<meta name="keywords" content="前端开发,问题排查,性能测试,bilibili,debug">
+<meta name="keywords" content="问题排查,性能测试,bilibili,debug,前端开发">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【DIY小记】解决MacOS上Edge浏览器bilibili全屏卡顿的问题">
 <meta property="og:url" content="https://utmhikari.top/2026/04/02/diymemo/edge_bilibili_ppt/index.html">
@@ -580,8 +580,6 @@
       
         <div class="post-tags">
           
-            <a href="/tags/前端开发/" rel="tag"># 前端开发</a>
-          
             <a href="/tags/问题排查/" rel="tag"># 问题排查</a>
           
             <a href="/tags/性能测试/" rel="tag"># 性能测试</a>
@@ -589,6 +587,8 @@
             <a href="/tags/bilibili/" rel="tag"># bilibili</a>
           
             <a href="/tags/debug/" rel="tag"># debug</a>
+          
+            <a href="/tags/前端开发/" rel="tag"># 前端开发</a>
           
         </div>
       
@@ -635,7 +635,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【DIY小记】解决MacOS上Edge浏览器bilibili全屏卡顿的问题","description":"近日笔者发现自己Macbook-Pro播放B站视频，全屏的时候必然卡顿，退出全屏就没事。笔者电脑的参数是： 芯片：M3 系统：Tahoe 26.4 浏览器：Edge 到网上一查发现《Edge浏览器在MacOS 26(Tahoe)系统上看B站卡顿》一篇文章，实测下来确实如此，拔掉电源就没事，插上电源必然卡成PPT，并且视频还比拔掉电源亮一些。 至此怀疑是Edge浏览器某些设置的问题，经过一番探索，发","datePublished":"2026-04-01T16:19:29.000Z","dateModified":"2026-06-06T10:19:46.730Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2026/04/02/diymemo/edge_bilibili_ppt/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"前端开发, 问题排查, 性能测试, bilibili, debug"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【DIY小记】解决MacOS上Edge浏览器bilibili全屏卡顿的问题","description":"近日笔者发现自己Macbook-Pro播放B站视频，全屏的时候必然卡顿，退出全屏就没事。笔者电脑的参数是： 芯片：M3 系统：Tahoe 26.4 浏览器：Edge 到网上一查发现《Edge浏览器在MacOS 26(Tahoe)系统上看B站卡顿》一篇文章，实测下来确实如此，拔掉电源就没事，插上电源必然卡成PPT，并且视频还比拔掉电源亮一些。 至此怀疑是Edge浏览器某些设置的问题，经过一番探索，发","datePublished":"2026-04-01T16:19:29.000Z","dateModified":"2026-06-06T10:19:46.730Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2026/04/02/diymemo/edge_bilibili_ppt/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"问题排查, 性能测试, bilibili, debug, 前端开发"}</script>
   
   
 
@@ -1474,8 +1474,6 @@
 
         
 <div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
   
     <span class="post-meta-item-icon">
       <i class="fa fa-user"></i>
@@ -1499,18 +1497,37 @@
   
 </div>
 <script>
-  // 不蒜子是第三方服务，脚本被拦或服务超时都会留下空白图标占位。
-  // 超时后若三个计数值一个都没填上，就把块体整体隐藏（post 页浏览数由 .busuanzi-post-view 承接）。
-  setTimeout(function () {
-    var ids = ['busuanzi_value_site_uv', 'busuanzi_value_site_pv', 'busuanzi_value_page_pv'];
-    var filled = ids.some(function (id) {
-      var el = document.getElementById(id);
-      return el && el.textContent.replace(/\s/g, '');
-    });
-    if (filled) return;
-    var nodes = document.querySelectorAll('.busuanzi-count, .busuanzi-post-view');
-    for (var i = 0; i < nodes.length; i++) nodes[i].style.display = 'none';
-  }, 5000);
+  // 不蒜子是第三方服务：脚本本体 + 其内部再发的 JSONP 数据接口，任一请求挂起都会拖住
+  // window load 事件（标签页一直转圈）。原先的 async script 标签直接挂在关键路径上——
+  // async 只免解析阻塞、仍参与 load 完成判定；现改为 load 完成后才动态注入，不蒜子的
+  // 全部网络活动都发生在页面可交互之后，502 / 超时不再阻塞页面。
+  // 注入后再给 5s 兜底：三个计数值一个都没填上就整体隐藏块体（post 页浏览数由
+  // .busuanzi-post-view 承接，见 _macro/post.swig）。
+  (function () {
+    function loadBusuanzi() {
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js';
+      document.body.appendChild(s);
+
+      setTimeout(function () {
+        var ids = ['busuanzi_value_site_uv', 'busuanzi_value_site_pv', 'busuanzi_value_page_pv'];
+        var filled = ids.some(function (id) {
+          var el = document.getElementById(id);
+          return el && el.textContent.replace(/\s/g, '');
+        });
+        if (filled) return;
+        var nodes = document.querySelectorAll('.busuanzi-count, .busuanzi-post-view');
+        for (var i = 0; i < nodes.length; i++) nodes[i].style.display = 'none';
+      }, 5000);
+    }
+
+    if (document.readyState === 'complete') {
+      loadBusuanzi();
+    } else {
+      window.addEventListener('load', loadBusuanzi);
+    }
+  })();
 </script>
 
 
