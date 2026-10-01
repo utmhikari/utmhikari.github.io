@@ -118,7 +118,7 @@
 <meta property="og:site_name" content="HiKariのTechLab">
 <meta property="og:description" content="笔者的这台老土机器，超频折腾从第一次上手到后来靠降压加Process Lasso的优化，最终发现只能给CPU上到4.5GHz比较稳定，再上去散热就扛不住了，烤鸡直接到90度。 最近两天索性把主机拆了开来排查，另买了一套帝王引擎重新组装了风扇水冷，最终终于解决了散热问题，把老土机器的性能拉满。特此写一篇文章，分享一些经验。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2026-10-01T05:33:47.162Z">
+<meta property="og:updated_time" content="2026-10-01T05:36:43.245Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【DIY小记】解决散热问题提升超频性能的经验">
 <meta name="twitter:description" content="笔者的这台老土机器，超频折腾从第一次上手到后来靠降压加Process Lasso的优化，最终发现只能给CPU上到4.5GHz比较稳定，再上去散热就扛不住了，烤鸡直接到90度。 最近两天索性把主机拆了开来排查，另买了一套帝王引擎重新组装了风扇水冷，最终终于解决了散热问题，把老土机器的性能拉满。特此写一篇文章，分享一些经验。">
@@ -456,7 +456,7 @@
                 
               
 
-              <time title="创建时间：2026-10-01 13:30:30 / 修改时间：13:33:47" itemprop="dateCreated datePublished" datetime="2026-10-01T13:30:30+08:00">2026-10-01</time>
+              <time title="创建时间：2026-10-01 13:30:30 / 修改时间：13:36:43" itemprop="dateCreated datePublished" datetime="2026-10-01T13:30:30+08:00">2026-10-01</time>
             
 
             
@@ -528,7 +528,7 @@
 <a id="more"></a>
 <p>首先是一通排查，笔者的机箱是追风者G400A，CPU是i9-12900KF，主板微星Z690刀锋钛，水冷是追风者M25装在顶部，风扇有3个14cm的，前面2个进风后面1个出风，但都比较廉价。判断下来散热差的一部分在于进风的风力太小，另一部分还是水冷本身压不住。此外就是进风面已经满了灰尘，所以第一件事情就是清灰完了之后再烤FPU，发现4.6GHz温度还是上90，这就说明进风跟水冷性能还是比较差劲，是得真的换了。</p>
 <p>然后就是风扇和水冷的选择。为了彻底解决问题，风扇选用了4个台达AK-12B，12cm的，3个前面进风1个后面出风，水冷选择了TCOMAS LG700 Pro，和LX800 Pro的区别只有外观上的区别，省了100块。刚开机的时候很明显能感受到帝王引擎在轰鸣，所以调整了一下风扇转速配置，还是按照4个风扇跟CPU_FAN通过PWM控转速，PUMP_FAN通过DC控转速的方式，40度以下固定转速，40～70度比较缓的线性上升，70度以上陡峭线性上升，通过这样一套配置既保证散热性能，又保证日常使用的时候不会声音太大。</p>
-<p>在这个基础上，P-Core主频拉到5.1GHz，CPU温度能够控在80度以内，效果还是非常理想的。考虑到日常体验，笔者最终先调整到5.0GHz，这样日常风扇转起来也不会特别响。</p>
+<p>在这个基础上，P-Core拉到5.1GHz，CPU温度能够控在80度以内，效果还是非常理想的。考虑到日常体验，笔者最终先调整到5.0GHz，这样日常风扇转起来也不会特别响。</p>
 <p>内存的话，笔者还是遗留2条Kingston Fury Beast 32G DDR4，先前已经开了XMP 3600MHz了。考虑到主板不支持DDR5，并且先前开的Profile已经基本到达极限，所以笔者简单收紧了一点时序。Ring笔者也调大了2号，先前的大幅度降压（-0.08）也酌情调小一些，这样整体的性能和稳定性都提升上来了。</p>
 <p>总的来讲这次散热带来的性能提升效果还是比较显著的，后面再优化的话，估计只能买一套新电脑才能保障性价比了。</p>
 
@@ -622,7 +622,7 @@
   
   
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【DIY小记】解决散热问题提升超频性能的经验","description":"笔者的这台老土机器，超频折腾从第一次上手到后来靠降压加Process Lasso的优化，最终发现只能给CPU上到4.5GHz比较稳定，再上去散热就扛不住了，烤鸡直接到90度。 最近两天索性把主机拆了开来排查，另买了一套帝王引擎重新组装了风扇水冷，最终终于解决了散热问题，把老土机器的性能拉满。特此写一篇文章，分享一些经验。","datePublished":"2026-10-01T05:30:30.000Z","dateModified":"2026-10-01T05:33:47.162Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2026/10/01/diymemo/overclock_cooling/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"性能测试, BIOS, 超频, CPU, 硬件"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【DIY小记】解决散热问题提升超频性能的经验","description":"笔者的这台老土机器，超频折腾从第一次上手到后来靠降压加Process Lasso的优化，最终发现只能给CPU上到4.5GHz比较稳定，再上去散热就扛不住了，烤鸡直接到90度。 最近两天索性把主机拆了开来排查，另买了一套帝王引擎重新组装了风扇水冷，最终终于解决了散热问题，把老土机器的性能拉满。特此写一篇文章，分享一些经验。","datePublished":"2026-10-01T05:30:30.000Z","dateModified":"2026-10-01T05:36:43.245Z","author":{"@type":"Person","name":"ひかり.HDQ","url":"https://utmhikari.top/about/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://utmhikari.top/2026/10/01/diymemo/overclock_cooling/"},"inLanguage":"zh-CN","publisher":{"@type":"Organization","name":"HiKariのTechLab"},"keywords":"性能测试, BIOS, 超频, CPU, 硬件"}</script>
   
   
 

@@ -58,9 +58,9 @@
     <link href="https://utmhikari.top/2026/10/01/diymemo/overclock_cooling/"/>
     <id>https://utmhikari.top/2026/10/01/diymemo/overclock_cooling/</id>
     <published>2026-10-01T05:30:30.000Z</published>
-    <updated>2026-10-01T05:33:47.162Z</updated>
+    <updated>2026-10-01T05:36:43.245Z</updated>
     
-    <content type="html"><![CDATA[<p>笔者的这台老土机器，超频折腾从<a href="https://utmhikari.top/2024/10/13/diymemo/overclock_try/">第一次上手</a>到后来靠<a href="https://utmhikari.top/2024/10/16/diymemo/overclock_core/">降压加Process Lasso的优化</a>，最终发现只能给CPU上到4.5GHz比较稳定，再上去散热就扛不住了，烤鸡直接到90度。</p><p>最近两天索性把主机拆了开来排查，另买了一套帝王引擎重新组装了风扇水冷，最终终于解决了散热问题，把老土机器的性能拉满。特此写一篇文章，分享一些经验。</p><a id="more"></a><p>首先是一通排查，笔者的机箱是追风者G400A，CPU是i9-12900KF，主板微星Z690刀锋钛，水冷是追风者M25装在顶部，风扇有3个14cm的，前面2个进风后面1个出风，但都比较廉价。判断下来散热差的一部分在于进风的风力太小，另一部分还是水冷本身压不住。此外就是进风面已经满了灰尘，所以第一件事情就是清灰完了之后再烤FPU，发现4.6GHz温度还是上90，这就说明进风跟水冷性能还是比较差劲，是得真的换了。</p><p>然后就是风扇和水冷的选择。为了彻底解决问题，风扇选用了4个台达AK-12B，12cm的，3个前面进风1个后面出风，水冷选择了TCOMAS LG700 Pro，和LX800 Pro的区别只有外观上的区别，省了100块。刚开机的时候很明显能感受到帝王引擎在轰鸣，所以调整了一下风扇转速配置，还是按照4个风扇跟CPU_FAN通过PWM控转速，PUMP_FAN通过DC控转速的方式，40度以下固定转速，40～70度比较缓的线性上升，70度以上陡峭线性上升，通过这样一套配置既保证散热性能，又保证日常使用的时候不会声音太大。</p><p>在这个基础上，P-Core主频拉到5.1GHz，CPU温度能够控在80度以内，效果还是非常理想的。考虑到日常体验，笔者最终先调整到5.0GHz，这样日常风扇转起来也不会特别响。</p><p>内存的话，笔者还是遗留2条Kingston Fury Beast 32G DDR4，先前已经开了XMP 3600MHz了。考虑到主板不支持DDR5，并且先前开的Profile已经基本到达极限，所以笔者简单收紧了一点时序。Ring笔者也调大了2号，先前的大幅度降压（-0.08）也酌情调小一些，这样整体的性能和稳定性都提升上来了。</p><p>总的来讲这次散热带来的性能提升效果还是比较显著的，后面再优化的话，估计只能买一套新电脑才能保障性价比了。</p>]]></content>
+    <content type="html"><![CDATA[<p>笔者的这台老土机器，超频折腾从<a href="https://utmhikari.top/2024/10/13/diymemo/overclock_try/">第一次上手</a>到后来靠<a href="https://utmhikari.top/2024/10/16/diymemo/overclock_core/">降压加Process Lasso的优化</a>，最终发现只能给CPU上到4.5GHz比较稳定，再上去散热就扛不住了，烤鸡直接到90度。</p><p>最近两天索性把主机拆了开来排查，另买了一套帝王引擎重新组装了风扇水冷，最终终于解决了散热问题，把老土机器的性能拉满。特此写一篇文章，分享一些经验。</p><a id="more"></a><p>首先是一通排查，笔者的机箱是追风者G400A，CPU是i9-12900KF，主板微星Z690刀锋钛，水冷是追风者M25装在顶部，风扇有3个14cm的，前面2个进风后面1个出风，但都比较廉价。判断下来散热差的一部分在于进风的风力太小，另一部分还是水冷本身压不住。此外就是进风面已经满了灰尘，所以第一件事情就是清灰完了之后再烤FPU，发现4.6GHz温度还是上90，这就说明进风跟水冷性能还是比较差劲，是得真的换了。</p><p>然后就是风扇和水冷的选择。为了彻底解决问题，风扇选用了4个台达AK-12B，12cm的，3个前面进风1个后面出风，水冷选择了TCOMAS LG700 Pro，和LX800 Pro的区别只有外观上的区别，省了100块。刚开机的时候很明显能感受到帝王引擎在轰鸣，所以调整了一下风扇转速配置，还是按照4个风扇跟CPU_FAN通过PWM控转速，PUMP_FAN通过DC控转速的方式，40度以下固定转速，40～70度比较缓的线性上升，70度以上陡峭线性上升，通过这样一套配置既保证散热性能，又保证日常使用的时候不会声音太大。</p><p>在这个基础上，P-Core拉到5.1GHz，CPU温度能够控在80度以内，效果还是非常理想的。考虑到日常体验，笔者最终先调整到5.0GHz，这样日常风扇转起来也不会特别响。</p><p>内存的话，笔者还是遗留2条Kingston Fury Beast 32G DDR4，先前已经开了XMP 3600MHz了。考虑到主板不支持DDR5，并且先前开的Profile已经基本到达极限，所以笔者简单收紧了一点时序。Ring笔者也调大了2号，先前的大幅度降压（-0.08）也酌情调小一些，这样整体的性能和稳定性都提升上来了。</p><p>总的来讲这次散热带来的性能提升效果还是比较显著的，后面再优化的话，估计只能买一套新电脑才能保障性价比了。</p>]]></content>
     
     <summary type="html">
     
@@ -105,9 +105,9 @@
     
       <category term="Agent" scheme="https://utmhikari.top/tags/Agent/"/>
     
-      <category term="Skill" scheme="https://utmhikari.top/tags/Skill/"/>
-    
       <category term="AI" scheme="https://utmhikari.top/tags/AI/"/>
+    
+      <category term="Skill" scheme="https://utmhikari.top/tags/Skill/"/>
     
       <category term="知识库" scheme="https://utmhikari.top/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/"/>
     
@@ -165,13 +165,13 @@
       <category term="AI原生" scheme="https://utmhikari.top/categories/AI%E5%8E%9F%E7%94%9F/"/>
     
     
-      <category term="Agent" scheme="https://utmhikari.top/tags/Agent/"/>
+      <category term="稳定性" scheme="https://utmhikari.top/tags/%E7%A8%B3%E5%AE%9A%E6%80%A7/"/>
     
-      <category term="Skill" scheme="https://utmhikari.top/tags/Skill/"/>
+      <category term="Agent" scheme="https://utmhikari.top/tags/Agent/"/>
     
       <category term="AI" scheme="https://utmhikari.top/tags/AI/"/>
     
-      <category term="稳定性" scheme="https://utmhikari.top/tags/%E7%A8%B3%E5%AE%9A%E6%80%A7/"/>
+      <category term="Skill" scheme="https://utmhikari.top/tags/Skill/"/>
     
       <category term="SRE" scheme="https://utmhikari.top/tags/SRE/"/>
     
@@ -229,9 +229,9 @@
     
       <category term="AI" scheme="https://utmhikari.top/tags/AI/"/>
     
-      <category term="Harness Engineering" scheme="https://utmhikari.top/tags/Harness-Engineering/"/>
-    
       <category term="Vibe Coding" scheme="https://utmhikari.top/tags/Vibe-Coding/"/>
+    
+      <category term="Harness Engineering" scheme="https://utmhikari.top/tags/Harness-Engineering/"/>
     
       <category term="后端开发" scheme="https://utmhikari.top/tags/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/"/>
     
@@ -258,9 +258,9 @@
       <category term="架构艺术" scheme="https://utmhikari.top/categories/%E6%9E%B6%E6%9E%84%E8%89%BA%E6%9C%AF/"/>
     
     
-      <category term="Agent" scheme="https://utmhikari.top/tags/Agent/"/>
-    
       <category term="稳定性" scheme="https://utmhikari.top/tags/%E7%A8%B3%E5%AE%9A%E6%80%A7/"/>
+    
+      <category term="Agent" scheme="https://utmhikari.top/tags/Agent/"/>
     
       <category term="SRE" scheme="https://utmhikari.top/tags/SRE/"/>
     

@@ -43,7 +43,7 @@
 <a id="more"></a>
 <p>首先是一通排查，笔者的机箱是追风者G400A，CPU是i9-12900KF，主板微星Z690刀锋钛，水冷是追风者M25装在顶部，风扇有3个14cm的，前面2个进风后面1个出风，但都比较廉价。判断下来散热差的一部分在于进风的风力太小，另一部分还是水冷本身压不住。此外就是进风面已经满了灰尘，所以第一件事情就是清灰完了之后再烤FPU，发现4.6GHz温度还是上90，这就说明进风跟水冷性能还是比较差劲，是得真的换了。</p>
 <p>然后就是风扇和水冷的选择。为了彻底解决问题，风扇选用了4个台达AK-12B，12cm的，3个前面进风1个后面出风，水冷选择了TCOMAS LG700 Pro，和LX800 Pro的区别只有外观上的区别，省了100块。刚开机的时候很明显能感受到帝王引擎在轰鸣，所以调整了一下风扇转速配置，还是按照4个风扇跟CPU_FAN通过PWM控转速，PUMP_FAN通过DC控转速的方式，40度以下固定转速，40～70度比较缓的线性上升，70度以上陡峭线性上升，通过这样一套配置既保证散热性能，又保证日常使用的时候不会声音太大。</p>
-<p>在这个基础上，P-Core主频拉到5.1GHz，CPU温度能够控在80度以内，效果还是非常理想的。考虑到日常体验，笔者最终先调整到5.0GHz，这样日常风扇转起来也不会特别响。</p>
+<p>在这个基础上，P-Core拉到5.1GHz，CPU温度能够控在80度以内，效果还是非常理想的。考虑到日常体验，笔者最终先调整到5.0GHz，这样日常风扇转起来也不会特别响。</p>
 <p>内存的话，笔者还是遗留2条Kingston Fury Beast 32G DDR4，先前已经开了XMP 3600MHz了。考虑到主板不支持DDR5，并且先前开的Profile已经基本到达极限，所以笔者简单收紧了一点时序。Ring笔者也调大了2号，先前的大幅度降压（-0.08）也酌情调小一些，这样整体的性能和稳定性都提升上来了。</p>
 <p>总的来讲这次散热带来的性能提升效果还是比较显著的，后面再优化的话，估计只能买一套新电脑才能保障性价比了。</p>
 ]]></content>
@@ -86,8 +86,8 @@
       </categories>
       <tags>
         <tag>Agent</tag>
-        <tag>Skill</tag>
         <tag>AI</tag>
+        <tag>Skill</tag>
         <tag>知识库</tag>
         <tag>Harness Engineering</tag>
       </tags>
@@ -132,10 +132,10 @@
         <category>AI原生</category>
       </categories>
       <tags>
-        <tag>Agent</tag>
-        <tag>Skill</tag>
-        <tag>AI</tag>
         <tag>稳定性</tag>
+        <tag>Agent</tag>
+        <tag>AI</tag>
+        <tag>Skill</tag>
         <tag>SRE</tag>
       </tags>
   </entry>
@@ -196,8 +196,8 @@
       </categories>
       <tags>
         <tag>AI</tag>
-        <tag>Harness Engineering</tag>
         <tag>Vibe Coding</tag>
+        <tag>Harness Engineering</tag>
         <tag>后端开发</tag>
         <tag>编程</tag>
       </tags>
@@ -229,8 +229,8 @@
         <category>架构艺术</category>
       </categories>
       <tags>
-        <tag>Agent</tag>
         <tag>稳定性</tag>
+        <tag>Agent</tag>
         <tag>SRE</tag>
         <tag>架构</tag>
         <tag>Kubernetes</tag>
@@ -735,8 +735,8 @@
       <tags>
         <tag>Agent</tag>
         <tag>AI</tag>
-        <tag>LLM</tag>
         <tag>工具开发</tag>
+        <tag>LLM</tag>
         <tag>trae-agent</tag>
       </tags>
   </entry>
@@ -1088,8 +1088,8 @@
       <tags>
         <tag>UE4</tag>
         <tag>游戏测试</tag>
-        <tag>游戏策划</tag>
         <tag>游戏</tag>
+        <tag>游戏策划</tag>
         <tag>逸剑风云决</tag>
       </tags>
   </entry>
@@ -1844,9 +1844,9 @@
       <tags>
         <tag>效率工具</tag>
         <tag>shell</tag>
-        <tag>代码高亮</tag>
         <tag>JetBrains</tag>
         <tag>IDE</tag>
+        <tag>代码高亮</tag>
       </tags>
   </entry>
   <entry>
@@ -2209,8 +2209,8 @@
         <tag>后端开发</tag>
         <tag>Golang</tag>
         <tag>并发</tag>
-        <tag>channel</tag>
         <tag>多线程</tag>
+        <tag>channel</tag>
       </tags>
   </entry>
   <entry>
@@ -2604,8 +2604,8 @@
         <tag>变更风险</tag>
         <tag>DevOps</tag>
         <tag>持续集成</tag>
-        <tag>数据变更</tag>
         <tag>批量刷数</tag>
+        <tag>数据变更</tag>
       </tags>
   </entry>
   <entry>
@@ -2633,8 +2633,8 @@
         <tag>变更风险</tag>
         <tag>DevOps</tag>
         <tag>数据库</tag>
-        <tag>MySQL</tag>
         <tag>SQL</tag>
+        <tag>MySQL</tag>
       </tags>
   </entry>
   <entry>
@@ -2703,8 +2703,8 @@
       <tags>
         <tag>后端开发</tag>
         <tag>Golang</tag>
-        <tag>并发</tag>
         <tag>源码分析</tag>
+        <tag>并发</tag>
         <tag>singleflight</tag>
       </tags>
   </entry>
@@ -3105,8 +3105,8 @@
       <tags>
         <tag>稳定性</tag>
         <tag>压力测试</tag>
-        <tag>性能测试</tag>
         <tag>测试</tag>
+        <tag>性能测试</tag>
         <tag>Java</tag>
       </tags>
   </entry>
@@ -3669,9 +3669,9 @@
       </categories>
       <tags>
         <tag>自动化测试</tag>
-        <tag>UE4</tag>
         <tag>寻路</tag>
         <tag>recastnavigation</tag>
+        <tag>UE4</tag>
         <tag>游戏测试</tag>
       </tags>
   </entry>
@@ -4654,8 +4654,8 @@
       <tags>
         <tag>工具开发</tag>
         <tag>vue</tag>
-        <tag>nodejs</tag>
         <tag>electron</tag>
+        <tag>nodejs</tag>
         <tag>ipc</tag>
       </tags>
   </entry>
@@ -5782,8 +5782,8 @@
       </categories>
       <tags>
         <tag>python</tag>
-        <tag>UE4</tag>
         <tag>C++</tag>
+        <tag>UE4</tag>
         <tag>UE4插件</tag>
         <tag>UE4编辑器</tag>
       </tags>
@@ -6114,9 +6114,9 @@
       </categories>
       <tags>
         <tag>python</tag>
+        <tag>源码分析</tag>
         <tag>GIL</tag>
         <tag>并发</tag>
-        <tag>源码分析</tag>
         <tag>多线程</tag>
       </tags>
   </entry>
@@ -7310,8 +7310,8 @@
         <tag>测试开发</tag>
         <tag>业务</tag>
         <tag>质量保障</tag>
-        <tag>性能测试</tag>
         <tag>测试</tag>
+        <tag>性能测试</tag>
       </tags>
   </entry>
   <entry>
@@ -7424,10 +7424,10 @@
         <category>游戏开发</category>
       </categories>
       <tags>
-        <tag>UE4</tag>
-        <tag>C++</tag>
-        <tag>源码分析</tag>
         <tag>navmesh</tag>
+        <tag>C++</tag>
+        <tag>UE4</tag>
+        <tag>源码分析</tag>
         <tag>数学</tag>
       </tags>
   </entry>
@@ -7512,8 +7512,8 @@
       </categories>
       <tags>
         <tag>AI</tag>
-        <tag>UE4</tag>
         <tag>C++</tag>
+        <tag>UE4</tag>
         <tag>行为树</tag>
         <tag>低代码</tag>
       </tags>
@@ -7555,11 +7555,11 @@
         <category>游戏开发</category>
       </categories>
       <tags>
-        <tag>C++</tag>
         <tag>寻路</tag>
         <tag>RecastDemo</tag>
         <tag>navmesh</tag>
         <tag>recastnavigation</tag>
+        <tag>C++</tag>
       </tags>
   </entry>
   <entry>
@@ -7830,8 +7830,8 @@
         <category>游戏开发</category>
       </categories>
       <tags>
-        <tag>UE4</tag>
         <tag>C++</tag>
+        <tag>UE4</tag>
         <tag>渲染</tag>
         <tag>分布式构建</tag>
         <tag>系统设置</tag>
@@ -8066,8 +8066,8 @@
       </categories>
       <tags>
         <tag>工具开发</tag>
-        <tag>UE4</tag>
         <tag>C++</tag>
+        <tag>UE4</tag>
         <tag>UE4插件</tag>
         <tag>源码分析</tag>
       </tags>
@@ -8231,8 +8231,8 @@
       </categories>
       <tags>
         <tag>LLM</tag>
-        <tag>UE4</tag>
         <tag>C++</tag>
+        <tag>UE4</tag>
         <tag>UE4插件</tag>
         <tag>UnrealAutomator</tag>
       </tags>
@@ -8294,8 +8294,8 @@
         <category>极客日常</category>
       </categories>
       <tags>
-        <tag>UE4</tag>
         <tag>C++</tag>
+        <tag>UE4</tag>
         <tag>源码分析</tag>
         <tag>json</tag>
         <tag>游戏开发</tag>
@@ -8400,8 +8400,8 @@
         <category>游戏开发</category>
       </categories>
       <tags>
-        <tag>UE4</tag>
         <tag>C++</tag>
+        <tag>UE4</tag>
         <tag>UE4插件</tag>
         <tag>UnLua</tag>
         <tag>lua</tag>
@@ -8504,8 +8504,8 @@
       <tags>
         <tag>后端开发</tag>
         <tag>web开发</tag>
-        <tag>UE4</tag>
         <tag>C++</tag>
+        <tag>UE4</tag>
         <tag>UE4插件</tag>
       </tags>
   </entry>
@@ -8608,8 +8608,8 @@
       <tags>
         <tag>OOM</tag>
         <tag>内存泄漏</tag>
-        <tag>Java</tag>
         <tag>gc</tag>
+        <tag>Java</tag>
         <tag>JVM</tag>
       </tags>
   </entry>
@@ -8992,10 +8992,10 @@
         <category>DIY小记</category>
       </categories>
       <tags>
-        <tag>装机</tag>
         <tag>主板</tag>
         <tag>Z390</tag>
         <tag>技嘉</tag>
+        <tag>装机</tag>
         <tag>BIOS</tag>
       </tags>
   </entry>
@@ -9122,8 +9122,8 @@
         <tag>后端开发</tag>
         <tag>源码分析</tag>
         <tag>lua</tag>
-        <tag>lua C API</tag>
         <tag>skynet</tag>
+        <tag>lua C API</tag>
       </tags>
   </entry>
   <entry>
@@ -9744,9 +9744,9 @@
       <tags>
         <tag>游戏测试</tag>
         <tag>专项测试</tag>
+        <tag>测试</tag>
         <tag>Android</tag>
         <tag>性能测试</tag>
-        <tag>测试</tag>
       </tags>
   </entry>
   <entry>
@@ -10498,8 +10498,8 @@
       </categories>
       <tags>
         <tag>lua</tag>
-        <tag>性能测试</tag>
         <tag>测试</tag>
+        <tag>性能测试</tag>
         <tag>debug</tag>
         <tag>lfunctimer</tag>
       </tags>
@@ -10671,8 +10671,8 @@
         <tag>编程</tag>
         <tag>python</tag>
         <tag>教程</tag>
-        <tag>函数式编程</tag>
         <tag>函数</tag>
+        <tag>函数式编程</tag>
       </tags>
   </entry>
 </search>
