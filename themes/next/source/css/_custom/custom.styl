@@ -310,10 +310,20 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 // 表格配色 Solarized 化：主题硬编码的灰白斑马纹（#f9f9f9）、灰白 hover（#f5f5f5）
-// 换成米白 / 暖沙交替（与侧栏激活菜单同色系）；thead 下沿 3px 分隔线改主色，
-// 行背景挂在 tr 上，单元格半透明边框不会叠出双线
+// 换成米白 / 暖沙交替（与侧栏激活菜单同色系）；行背景挂在 tr 上，
+// 单元格半透明边框不会叠出双线。
+// thead 下沿线：曾用 2px 实色主色（主题原始 3px 灰白），在米白底上过重、突兀，
+// 与全站其余 1px 半透明细线不成体系；现收敛为 1px、主色 50% 浅调，
+// 比行线（0.25）深一档，保住表头的层级锚点又不抢视线。
+// 表头另加常驻底色：线收细后，表头与数据行的区分主要由「面」承担——
+// 取米白与暖沙之间的偏暖档（约 25% 混合，同 $code-inline-bg 的推导方式），
+// 比行内码底（#F6EFDC）深一档、比 hover 全档（#ECE7D5）浅，有一点对比度但不抢正文；
+// 实色，不用 rgba（叠米白会透白显灰，已定规范）
 .post-body table {
-  > thead > tr > th { border-bottom: 2px solid $custom-main-color; }
+  > thead > tr > th {
+    border-bottom: 1px solid alpha($custom-main-color, 0.5);
+    background-color: #F2EBD8;
+  }
 
   > tbody > tr:nth-of-type(odd) { background-color: lighten($custom-bg-color, 1%); }
 
