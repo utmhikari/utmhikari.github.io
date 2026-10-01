@@ -2050,7 +2050,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #be50ff;
+  background: #34a895;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3635,7 +3635,8 @@ h6 {
   border-color: rgba(101,122,129,0.25);
 }
 .post-body table > thead > tr > th {
-  border-bottom: 2px solid #657a81;
+  border-bottom: 1px solid rgba(101,122,129,0.5);
+  background-color: #f2ebd8;
 }
 .post-body table > tbody > tr:nth-of-type(odd) {
   background-color: #fdf6e3;
