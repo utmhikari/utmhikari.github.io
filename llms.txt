@@ -6,6 +6,7 @@
 
 ## AI原生
 
+- [【AI原生】构建自己专属的AI Native Harness](https://utmhikari.top/2026/11/01/ainative/ai_native_harness/): 工作和生活里，遇到问题先问AI，已经成了习惯，但它默认给出的回复，质量可能不符合预期，很多回答根本不是在说人话，可读性非常差，什么A3B4C5D6，还有一大堆简写，看起来跟汇编代码一样。从AI的角度可以强行解析，但人根本没法判断。在先前的文章里，笔者也聊过Agent和Skill工程化的一些思考，但是
 - [【AI原生】借助AI之力优化个人博客前端样式](https://utmhikari.top/2026/10/01/ainative/ai_blog_improvement/): 恰逢中秋十一假期，想到自己的个人博客已经很久没有做前端优化了，趁着这段时间决定借助AI Coding的力量，把博客的前端样式整体优化一下，调整到自己预期内的效果。不得不说现在即便是很廉价的模型，最终都能够达成这个目标，因此打算写这篇博客，记录一下自己优化的历程。
 先说结果，新的博客前端，主要优化了下
 - [【AI原生】优化Agent和Skill工程的一些技巧](https://utmhikari.top/2026/09/05/ainative/agent_skill_project/): 在先前的文章里，笔者聊了怎么用AI-Native的方式编写一个告警诊断Agent和Skill，那篇更多是单点视角，怎么把一个Agent做好的问题。这篇文章接续上篇的内容，从一个更加完备的工程角度，简单聊一下怎么把Agent和Skill跟自己日常做的工作做更深度的集成，让人退到工程后面去，而不是把AI
@@ -15,6 +16,75 @@
 在先前的文章里，笔者也聊到了用Vibe Coding写前端原型的经验，而这篇文章则聚焦后端侧，也是更加偏重于业务工程的研发场景
 - [【AI原生】用Vibe Coding写产品前端原型的一些经验](https://utmhikari.top/2026/06/06/ainative/vibe_coding_frontend_prototype/): AI Native是大势所趋，AI Coding的技能必不可少。鉴于此，笔者决定新开一个AI Native系列，记录自己后续在All-In-AI路程上的点滴，分享自己通过AI提升日常工作跟研发效率的思考和经验。
 先前的文章也讨论到，因为工作的原因，笔者已经开始在做ToB稳定性治理的事情，所以近期也一
+
+## 极客日常
+
+- [【极客日常】稳定性风险治理的通用SOP](https://utmhikari.top/2026/11/01/geekdaily/stability_risk_governance_sop/): 在稳定性风险治理工作中，风险来源比较分散，如果只靠团队每个人自顾自处理，很多潜藏的风险容易漏掉，处理进度也不好跟进。面向这类难题，从组织层面一般的解法是立横向专项，派专人牵头治理。那么具体治理的执行怎么做，其实是有一套通用的方法论SOP的。
+今天笔者就讲讲这个稳定性风险治理的通用SOP，简单来说，就
+- [【极客日常】初探ToB客户稳定性保障](https://utmhikari.top/2026/05/01/geekdaily/tob_customer_stability/): 近期因为工作调整的原因，笔者从以前面向内部研发团队的变更风险防控和稳定性建设，逐渐转向面向ToB客户的云服务稳定性保障。虽然本质上都是在做SRE稳定性相关的工作，但从服务对象、技术架构到运营方式，都有非常大的差异。今天这篇文章，就结合自己以前做变更风险防控和稳定性建设的实践经验，聊一下从云服务角度做
+- [【极客日常】快速上手复杂后端项目开发的经验](https://utmhikari.top/2026/01/17/geekdaily/project_work_quickstart/): 去年年底一段时间，笔者参与了组织内部智能化平台项目研发攻坚，虽然主攻平台工程部分，但多少也了解了下目前AIGC可以应用到的一些业务场景，以及技术实践、项目管理的一些事情。在先前的文章里头，有浅要描述下AIGC+Web类项目的角色分工和配合。那今天这篇文章，就浅聊一下如果你即将深入此局，适应一个复杂的
+- [【极客日常】智能化工程AgentFlow代码实现分析](https://utmhikari.top/2025/12/07/geekdaily/agentflow_code/): 近期笔者因为参与LLM增强项目攻坚，对LLM工程相关的技术也希望有一定的了解，因此希望借这个机会，读一些文章充电，看看目前LLM智能化工程的一些研究趋势。在阅读了几篇文章之后，最终读者选定AgentFlow这个项目做代码实现分析。由于笔者在算法方面的涉猎实在不深，所以本文只是抛砖引玉，阐述上有什么不
+- [【极客日常】用Eino+Ollama低成本研发LLM的Agent](https://utmhikari.top/2025/10/06/geekdaily/eino_ollama_llm/): 十一国庆正是充电的好时机，借着假期时间充裕，笔者又浅调研了一下本地LLM开发相关的工具链，看下如果是日常业余搞个人LLM的Agent项目，具体有哪些能力可用。工业界的话，因为知识保密性等各种原因，我们可能会用到兄弟部门的LLM模型或者相关Agent能力，以及市面上收费但企业内部免费的一些技术基建。但
+- [【极客日常】用Coze简单开发一个Agent](https://utmhikari.top/2025/08/10/geekdaily/develop_agent_by_coze/): 近来AI大模型发展迅猛，不论是工业界还是生活界都纷纷开始进军AI，了解基于LLM的问答Agent需要如何开发。为了跟风，笔者也粗浅了解了下问答Agent开发的一些基础知识，简单开发了一个主要关注Python问答的Agent，挂在了自己的微信公众号上。
+要开发一个问答Agent也很简单，重要的是得清楚
+- [【极客日常】后端任务动态注入执行策略的一种技术实现](https://utmhikari.top/2025/07/12/geekdaily/dynamic_job_impl/): 近期做项目时遇到一个场景，是需要在后端任务执行时动态注入策略。具体而言，笔者负责的后端服务，可以理解是会在线上服务发布时，对服务风险做实时扫描，那么这个扫描就需要根据当前线上服务发布上下文，匹配对应的策略。但这里扫出来的策略都是静态持久化的，前端也有产品化的配置，而有些业务则希望能够在任务执行时，动
+- [【极客日常】分享下OOM问题排查解决的实战经验](https://utmhikari.top/2025/07/06/geekdaily/oom_issue_solution/): 在AI助手时代，OOM的问题排查方法论已经非常烂大街，但在实际工作中，即便我们通过很多方式查到了OOM问题，但修复还是要我们自己手动修。OOM会导致服务不可用、系统不稳定等问题，会直接影响用户体验，所以从稳定性问题解决优先级来看，是属于比较高的。
+因此，今天笔者就简单从自身经验出发，聊一下OOM问题
+- [【极客日常】分享go开发中wire和interface配合的一些经验](https://utmhikari.top/2025/06/01/geekdaily/wire_and_interface/): 在先前一篇文章中，笔者给大家提到了go语言后端编程可以用wire依赖注入模块去简化单例服务的初始化，同时也可以解决服务单例之间复杂依赖的问题。但实事求是来讲，用wire也是有一些学习成本的，wire在帮助解决复杂依赖的问题同时，也会限定你去用一些特定的编程方式来满足wire的需要，尤其需要你inte
+- [【极客日常】浅聊基于MCP生态的LLM-Agent开发](https://utmhikari.top/2025/04/12/geekdaily/mcp_llm_agent/): 最近在AI大模型领域，MCP这个概念非常火，大大小小的公众号都开始对外炒作这个概念，宣教一种新的大模型Agent开发生态。因为工作原因，近期笔者也对MCP和LLM-Agent开发做了一些接触。因此今天这篇文章就浅聊下笔者对基于MCP的LLM-Agent开发方面，自己粗浅的一些理解。
+首先还是聊一下什
+- [【极客日常】聊聊技术人提升产品意识的经验](https://utmhikari.top/2025/02/21/geekdaily/geek_sense_of_product/): 技术人培养产品思维，这一点是技术人在职业成长中不可缺少的一部分。无论是做业务开发，还是做纯粹的基础架构、技术优化，有了产品意识，才能把自己的技术作品打磨地更好，能在更多工作场景派上用场。那么，今天就聊一下作为技术人，有什么方式可以提升产品意识。
+把这个问题丢给AI，概括一下答案是几大块：第一块是学习
+- [【极客日常】由面试官角度给校招生的大厂面试要点](https://utmhikari.top/2024/10/16/geekdaily/rookie_interview/): 又到了一年一度的校招季，今年由于团队同时招聘后端和智能化方向的同学，吸引了很多不同算法领域、后端领域以及甚至已经在大厂实习过的同学的简历，可谓是每年都非常优秀。至少比起笔者本人校招那个时候，是要优秀的很多，不是一点半点。
+作为一个面试官，笔者面对的是很多不同方向的同学的简历，有些方向说实在的笔者自己
+- [【极客日常】对低代码开发模式的一些思考和想法](https://utmhikari.top/2024/08/17/geekdaily/low_code_talk/): 低代码这个名词说起来已经有些年头了，广义上来讲可以说是达到这么一种效果，即尽量减少通过编写代码的方式来完成研发任务，甚至部署交付整个技术产品。那么低代码模式到底值不值得弄，有什么优势和缺陷，本篇文章笔者就来聊一聊自己对于低代码的一些思考跟想法。
+做技术的都知道，实际工作场合上，不能为了技术而技术。低
+- [【极客日常】Go语言学习干货——从零单排Golang系列合集](https://utmhikari.top/2024/08/11/geekdaily/gofromzero_collection/): 在后端开发领域，Golang已经成为非常流行的编程语言之一，并且生态也非常成熟。虽然在应用规模上离Java还有一段距离，但其中很多编程技巧跟思路还是值得学习的，一是没有什么太多的coding约束，二是实际工作中也有可能用的上。
+在近一两年，笔者的工作也逐渐从主python转为主go语言，对于Gola
+- [【极客日常】Golang一个的slice数据替换的bug排查](https://utmhikari.top/2024/07/20/geekdaily/golang_slice_bug/): 上周某天下班前，接到同事转来一个bug要排查，症状是代码重构之后某些业务效果不符合预期，由于代码重构人是笔者，于是blame到笔者这边。经过10min左右的排查和尝试后，解决了这个问题：既往逻辑没有改动，重构时候出笔误了。
+简单来讲，重构之前的代码大概是这个样子：
+- [【极客日常】读2023美团技术年货的一些笔记](https://utmhikari.top/2024/05/01/geekdaily/meituan_tech_notes/): 正直劳动节，翻了下2023年美团的技术年货，挑选了一些和变更风险防控和稳定性建设相关主题的文章做了下浅读。本文仅简单记一下阅读笔记。
+总共选读了3篇文章，分别是《基于AI+数据驱动的慢查询索引推荐》、《代码变更风险可视化系统建设与实践》，以及《AIOps在美团的探索与实践——事件管理篇》。
+- [【极客日常】提升发布风险检查准确率的一些思路](https://utmhikari.top/2024/03/03/geekdaily/release_check_optimization/): 在服务或者其它线上资源发布新版本的时候，我们都有必要为发布信息本身和上线的资源做风险检查，以确认发布内容不会对线上造成影响。通常来说，在检查能力铺垫时，一个主旨的思路是保证问题的召回率，即检查能力本身必须理论上可以拦截更多的风险，这样才能够基本限度保证发布过程的安全。但随着检查能力集合变得成熟，业务
+- [【极客日常】慢查询的风险治理思路](https://utmhikari.top/2024/01/07/testlife/slow_query_risk/): 在线上环境运维过程中，我们通常需要治理慢查询的风险。慢查询会引起DB性能问题，并且当线上环境流量较大的情况下，就会出现因大量慢查询堆积导致DB被打挂的情况。因此，本篇文章分享一下慢查询的风险治理思路。
+首先，我们需要知道什么情况下会出现慢查询。通常对于大表，未正确引用索引导致全表扫描，就会出现慢查询
+- [【极客日常】初体验rust语言](https://utmhikari.top/2023/05/01/geekdaily/rust_examples/): 作为一门“网红”语言，rust，已经在区块链、Web前端、游戏开发等领域凸显了作用。相对于golang、python、java、js跟cpp等其余主流语言，rust语言的编写和呈现方面都算是一个更为独立的体系。因此，本着对技术的好奇心，笔者也决定学习下rust语言，一是体验一下新一门编程语言的逻辑艺
+- [【极客日常】聊聊ChatGPT对于八股文程序员的冲击](https://utmhikari.top/2023/05/01/geekdaily/chatgpt_baguwen_shock/): 2023年ChatGPT系列的问世，可谓是对整个世界的人类造成了冲击。在此之前，人们最多以为AI能够做的事情，主要是下棋玩游戏，但是对话模型AI的到来，造成的效果，是AI具备了和人交流的能力，能够理解人类语言，通过其它AI工作流，自动整合资料，生成人类想要的内容。也就是说，AI可以从事人类的工作了。
+- [【极客日常】游戏测试开发干货——Python进阶与游戏自动化测试攻略](https://utmhikari.top/2022/11/24/geekdaily/python_and_game_autotest_notes/): 在互联网上，关于游戏测试（开发）领域的技术分享，实际是非常稀少。尤其针对游戏功能测试领域，很多文章的思想维度仍然停留在很久以前，关注的更多是测试用例设计以及质量管理这些更加偏向业务方面的内容。很多同学认为游戏业务测试缺乏技术含量，其实本质上是因为，很少同学愿意投入精力去研究这个领域的技术，以及研究这
+- [【极客日常】vue3中实现Array数组更新的方法](https://utmhikari.top/2022/06/17/geekdaily/vue3_array_update/): 近期由于工作原因，开始了解vue3的内容。vue3相对于vue2采用了组合式的描述，原来的写法是：
+1234567891011121314151617export default &#123; name: 'HelloWorld', data() &#123; return &#123; a: 1,
+- [【极客日常】通过motrix启动逻辑初探electron的项目结构](https://utmhikari.top/2022/06/05/geekdaily/electron_motrix_launcher/): 近期准备开始做electron相关的开发工作，因此借着这个机会就再去了解下electron。在很久以前的文章中有稍微玩过electron+react+antd的脚手架，但也只限于快速开发electron应用，并没有去剖析整个项目结构。因此这次，还是得深入一下。
+先前一段时间特别喜欢用开源的Motri
+- [【极客日常】一种解决redis源码编译时jemalloc报No such file or directory错误的方法](https://utmhikari.top/2021/10/19/geekdaily/redis_make_jemalloc_error/): 在用源码编译redis的过程中，可能会报jemalloc出错，提示No such file or directory的问题，导致构建不能继续。一种常见的，在网上流传的方法是[调整MALLOC参数为libc](https://stackoverflow.com/questions/47088171/e
+- [【极客日常】理解javascript/python中reduce操作的含义](https://utmhikari.top/2021/10/01/geekdaily/reduce_function/): 在学习javascript和python的过程中，我们通常会接触到map、filter、reduce之类的一等公民高阶函数。理解map和filter是相对简单的事情，但理解reduce的话还是需要一番推敲。正值十一假期，今天这篇文章就好好讲讲reduce这个东西
+我们首先以python为例，看一段r
+- [【极客日常】在Vue用echarts画带不同颜色点的散点图](https://utmhikari.top/2021/09/16/geekdaily/echarts_scatter_color/): 在vue技术栈下做图表需求，echarts是一个非常棒的选择，提供了非常多种多样的图标示例以及非常复杂强大的API。由于笔者近期工作内容中需要分析采样点的分布情况，因此自然而然接触到了echarts的3D散点图。在笔者的需求中，需要对不同点进行分类，并按特定的颜色显示出来。经过一番踩坑，了解到了ec
+- [【极客日常】2021新版本VSCode设置git-bash为终端的方法](https://utmhikari.top/2021/09/11/geekdaily/vscode_git-bash/): 截至2021.9，不知道哪天更新了vscode，发现默认的终端从以前的git-bash变成了powershell，笔者用的windows电脑，于是乎要解决这个问题，把powershell变回git-bash。
+
+打开settings，发现以前的`terminal.integrated.shell.w
+- [【极客日常】Go语言string、int、float、rune、byte等数据类型的转换方法](https://utmhikari.top/2021/06/06/geekdaily/go_basic_data_types/): golang的数据类型转换是困惑新gopher的一大问题之一。相对于python，golang的数据类型转换可要麻烦的多，而且还不走寻常路地诞生了些新的方法跟名词。因此本文讲解golang常见数据类型string、int、rune等数据类型相互之间的转换方法，给大伙儿避坑。
+在讲述方法之前，首先非常
+- [【极客日常】用vxe-table展示excel-diff的结果](https://utmhikari.top/2021/05/01/geekdaily/excel_diff_vxe-table/): excel-differ是游戏测试常用的测试工具。在有些业务场景下，excel-diff的结果可能需要通过web展示。Vue技术栈下的vxe-table表格组件能够支持大量数据的展示，因此可以用vxe-table展示excel-diff的结果。
+excel-diff的算法本身，先前的文章已有讲解，在
+- [【极客日常】UE4插件通过C++导出LLM数据的方法](https://utmhikari.top/2020/11/08/geekdaily/ue4_llm_dump_cpp/): 近期为了丰富UE4插件UnrealAutomator的基础功能，在ProfileService中增加了LLM数据获取的方法。LLM拥有抓取UE4底层模块内存使用情况的功能，各种Modules按照LLM的规范实现相应宏即可将内存使用数据实时更新到LLM系统中。如果从产品外部，是难以直接访问这些信息的。
+- [【极客日常】解决UE4中FJsonObject转USTRUCT的坑](https://utmhikari.top/2020/10/18/geekdaily/fjsonobject_to_ustruct/): 前些天在写UnrealAutomator的Web解析模块的时候，遇到了一些USTRUCT方面的问题，由于笔者以前并非UE4程序员，因此踩了一些坑，果断分享一下踩坑历程。
+首先聊一下USTRUCT的生成。USTRUCT是UE4的特性之一，从非C++/UE4程序员的角度来讲，USTRUCT、UPROPE
+- [【极客日常】Win10更改IDEA（Jetbrains全家桶）的插件和配置路径](https://utmhikari.top/2020/10/06/geekdaily/idea_change_config_path/): Jetbrains家的IDE，默认安装之后，配置和插件都存储在系统特定的文件夹中，如果是Windows系统的话，就会在用户文件夹存储。这样就滋生了一个问题：随着插件等安装的越来越多，系统盘也会占掉一些空间，这个时候就有了转移默认插件与配置路径的需求。今天就以IDEA为例讲述一下如何操作。
+- [【极客日常】在UE4插件中编写一个HTTP Web Server](https://utmhikari.top/2020/05/23/geekdaily/ue4_http_server/): 在某些游戏研发or测试的需求中，需要在Unreal增加一个插件或者模块，里面启动一个服务器作为SDK，然后外部通过直连或者adb forward可以连接到客户端中，获取客户端实时的场景、actor信息等等。UE4本身除了socket server支持之外，也支持简单的HTTP Web Server。
+- [【极客日常】在hugo博客中利用shortcode嵌入bilibili视频](https://utmhikari.top/2020/04/21/geekdaily/bilibili_in_hugo/): hugo是当前热门的个人博客框架之一，和hexo同样是markdown文件跟博客帖子一一对应。有些同学想利用hugo制作个人视频博客，但发现在hugo博客中不支持直接在markdown里输入iframe标签，从而没有办法将其它网站的视频（比如b站）嵌进来。这种情况下，我们可以采用hugo内置的sho
+- [【极客日常】再度上手start-fastapi](https://utmhikari.top/2020/02/26/geekdaily/start_fastapi_reborn/): 近期项目组准备做一个新的工具，因此自个儿做的start-fastapi框架正好能派上用场试试水。在起草需求搭建最初框架的时候也逐步发现原先的start-fastapi有一些不足的地方，因此做了一些针对性的优化。
+首先必须重新介绍一下start-fastapi，其本身是轻量级web框架fastapi的
+- [【极客日常】写一个基于vuetify的v-autocomplete的自定义组件](https://utmhikari.top/2020/02/16/geekdaily/v_autocomplete/): Vuetify是Vue的一套前端组件框架，基于Material Design设计，界面较为整洁。最近由于项目需要开始入手，但在写自定义v-autocomplete组件的时候却踩了许多坑。因此本文果断记录一下踩坑的过程。
+首先新上手vue的话肯定耳边都会萦绕着“双向绑定”一词，用的最多的属性就是v-m
+- [【极客日常】解决使用mongodb时同时update多条数据的问题](https://utmhikari.top/2020/01/12/geekdaily/mongo_multi_updatemany/): 在实际使用mongodb的场景中，我们经常遇到多个请求同时在某个collection里update多条document的需求。这个需求看似有许多种解法，但是具体哪种好也说不准。现在便让我们一探究竟吧~
+首先我们利用pymongo添加1000000条数据，name字段为hello：
+123456789
+- [【极客日常】electron+react+antd深色主题打造桌面应用](https://utmhikari.top/2019/10/20/geekdaily/electron_react/): 桌面应用的实现方式有很多，但谈到多操作系统平台兼容的话，就不得不提到electron。electron是前端开发的利好，做过web前端的同学只要稍微迁移下自己的项目，就能够将原本的web前端变成桌面应用。
+因此，本文以react为例，以antd为UI库支持，讲解基于react的electron应用该
+- [【极客日常】hexo+NexT博客自定义代码高亮主题配色CSS](https://utmhikari.top/2019/10/07/geekdaily/next_code_theme/): 用hexo+NexT搭建博客的同学或许会遇到一个问题：默认的代码配色只有Tomorrow Theme五种，如果想要自己的代码配色，应当如何自定义呢？
+其实也是可以的。在NexT的source/css/highlight/theme.styl中，我们就可以看到几种主题的具体配色：
+1234567891
+- [【极客日常】解决国内go1.13的go mod无法安装依赖的问题](https://utmhikari.top/2019/10/07/geekdaily/go113_proxy/): 在[从零单排Golang第一话](https://utmhikari.github.io/2019/07/20/gofromzero/01_first_code/)中讲到了Golang的基础开发环境配置，其中讲到了Go的依赖管理方面，提及了以后的趋势会采用官方的go mod进行管理。关于这一块，现在
 
 ## DIY小记
 
@@ -138,73 +208,6 @@ function对象的信息首先我们拿一个函数来试试手：
 - [【Python随笔】python轻量级消息队列库celery的应用](https://utmhikari.top/2020/11/29/pythonnotes/celery/): python语言，一般适用于快速实现业务需求的用途，在大型架构方面其应用范围并没有Java、Golang以及C++那么丰富，因此相对来讲还没有形成非常统一的技术体系。在某些需求中可能需要开发多个服务，服务之间需要实现异步通信，甚至是调用对方的函数。celery就是一个典型的例子，它提供了以将pyth
 - [【Python随笔】python的os.walk方法源码分析](https://utmhikari.top/2020/11/15/pythonnotes/python_os_walk/): 在日常python编程中，有很多遍历文件夹内文件的需求，而os.walk方法就是一个满足该需求的例子。不熟悉这个方法的同学，刚开始用os.walk的时候难免踩坑。因此本文采用源码分析的方式，讲述os.walk的机理，让大家对于这个方法有更加深入的理解。
 以python3为例，os.walk方法的源码
-
-## 极客日常
-
-- [【极客日常】初探ToB客户稳定性保障](https://utmhikari.top/2026/05/01/geekdaily/tob_customer_stability/): 近期因为工作调整的原因，笔者从以前面向内部研发团队的变更风险防控和稳定性建设，逐渐转向面向ToB客户的云服务稳定性保障。虽然本质上都是在做SRE稳定性相关的工作，但从服务对象、技术架构到运营方式，都有非常大的差异。今天这篇文章，就结合自己以前做变更风险防控和稳定性建设的实践经验，聊一下从云服务角度做
-- [【极客日常】快速上手复杂后端项目开发的经验](https://utmhikari.top/2026/01/17/geekdaily/project_work_quickstart/): 去年年底一段时间，笔者参与了组织内部智能化平台项目研发攻坚，虽然主攻平台工程部分，但多少也了解了下目前AIGC可以应用到的一些业务场景，以及技术实践、项目管理的一些事情。在先前的文章里头，有浅要描述下AIGC+Web类项目的角色分工和配合。那今天这篇文章，就浅聊一下如果你即将深入此局，适应一个复杂的
-- [【极客日常】智能化工程AgentFlow代码实现分析](https://utmhikari.top/2025/12/07/geekdaily/agentflow_code/): 近期笔者因为参与LLM增强项目攻坚，对LLM工程相关的技术也希望有一定的了解，因此希望借这个机会，读一些文章充电，看看目前LLM智能化工程的一些研究趋势。在阅读了几篇文章之后，最终读者选定AgentFlow这个项目做代码实现分析。由于笔者在算法方面的涉猎实在不深，所以本文只是抛砖引玉，阐述上有什么不
-- [【极客日常】用Eino+Ollama低成本研发LLM的Agent](https://utmhikari.top/2025/10/06/geekdaily/eino_ollama_llm/): 十一国庆正是充电的好时机，借着假期时间充裕，笔者又浅调研了一下本地LLM开发相关的工具链，看下如果是日常业余搞个人LLM的Agent项目，具体有哪些能力可用。工业界的话，因为知识保密性等各种原因，我们可能会用到兄弟部门的LLM模型或者相关Agent能力，以及市面上收费但企业内部免费的一些技术基建。但
-- [【极客日常】用Coze简单开发一个Agent](https://utmhikari.top/2025/08/10/geekdaily/develop_agent_by_coze/): 近来AI大模型发展迅猛，不论是工业界还是生活界都纷纷开始进军AI，了解基于LLM的问答Agent需要如何开发。为了跟风，笔者也粗浅了解了下问答Agent开发的一些基础知识，简单开发了一个主要关注Python问答的Agent，挂在了自己的微信公众号上。
-要开发一个问答Agent也很简单，重要的是得清楚
-- [【极客日常】后端任务动态注入执行策略的一种技术实现](https://utmhikari.top/2025/07/12/geekdaily/dynamic_job_impl/): 近期做项目时遇到一个场景，是需要在后端任务执行时动态注入策略。具体而言，笔者负责的后端服务，可以理解是会在线上服务发布时，对服务风险做实时扫描，那么这个扫描就需要根据当前线上服务发布上下文，匹配对应的策略。但这里扫出来的策略都是静态持久化的，前端也有产品化的配置，而有些业务则希望能够在任务执行时，动
-- [【极客日常】分享下OOM问题排查解决的实战经验](https://utmhikari.top/2025/07/06/geekdaily/oom_issue_solution/): 在AI助手时代，OOM的问题排查方法论已经非常烂大街，但在实际工作中，即便我们通过很多方式查到了OOM问题，但修复还是要我们自己手动修。OOM会导致服务不可用、系统不稳定等问题，会直接影响用户体验，所以从稳定性问题解决优先级来看，是属于比较高的。
-因此，今天笔者就简单从自身经验出发，聊一下OOM问题
-- [【极客日常】分享go开发中wire和interface配合的一些经验](https://utmhikari.top/2025/06/01/geekdaily/wire_and_interface/): 在先前一篇文章中，笔者给大家提到了go语言后端编程可以用wire依赖注入模块去简化单例服务的初始化，同时也可以解决服务单例之间复杂依赖的问题。但实事求是来讲，用wire也是有一些学习成本的，wire在帮助解决复杂依赖的问题同时，也会限定你去用一些特定的编程方式来满足wire的需要，尤其需要你inte
-- [【极客日常】浅聊基于MCP生态的LLM-Agent开发](https://utmhikari.top/2025/04/12/geekdaily/mcp_llm_agent/): 最近在AI大模型领域，MCP这个概念非常火，大大小小的公众号都开始对外炒作这个概念，宣教一种新的大模型Agent开发生态。因为工作原因，近期笔者也对MCP和LLM-Agent开发做了一些接触。因此今天这篇文章就浅聊下笔者对基于MCP的LLM-Agent开发方面，自己粗浅的一些理解。
-首先还是聊一下什
-- [【极客日常】聊聊技术人提升产品意识的经验](https://utmhikari.top/2025/02/21/geekdaily/geek_sense_of_product/): 技术人培养产品思维，这一点是技术人在职业成长中不可缺少的一部分。无论是做业务开发，还是做纯粹的基础架构、技术优化，有了产品意识，才能把自己的技术作品打磨地更好，能在更多工作场景派上用场。那么，今天就聊一下作为技术人，有什么方式可以提升产品意识。
-把这个问题丢给AI，概括一下答案是几大块：第一块是学习
-- [【极客日常】由面试官角度给校招生的大厂面试要点](https://utmhikari.top/2024/10/16/geekdaily/rookie_interview/): 又到了一年一度的校招季，今年由于团队同时招聘后端和智能化方向的同学，吸引了很多不同算法领域、后端领域以及甚至已经在大厂实习过的同学的简历，可谓是每年都非常优秀。至少比起笔者本人校招那个时候，是要优秀的很多，不是一点半点。
-作为一个面试官，笔者面对的是很多不同方向的同学的简历，有些方向说实在的笔者自己
-- [【极客日常】对低代码开发模式的一些思考和想法](https://utmhikari.top/2024/08/17/geekdaily/low_code_talk/): 低代码这个名词说起来已经有些年头了，广义上来讲可以说是达到这么一种效果，即尽量减少通过编写代码的方式来完成研发任务，甚至部署交付整个技术产品。那么低代码模式到底值不值得弄，有什么优势和缺陷，本篇文章笔者就来聊一聊自己对于低代码的一些思考跟想法。
-做技术的都知道，实际工作场合上，不能为了技术而技术。低
-- [【极客日常】Go语言学习干货——从零单排Golang系列合集](https://utmhikari.top/2024/08/11/geekdaily/gofromzero_collection/): 在后端开发领域，Golang已经成为非常流行的编程语言之一，并且生态也非常成熟。虽然在应用规模上离Java还有一段距离，但其中很多编程技巧跟思路还是值得学习的，一是没有什么太多的coding约束，二是实际工作中也有可能用的上。
-在近一两年，笔者的工作也逐渐从主python转为主go语言，对于Gola
-- [【极客日常】Golang一个的slice数据替换的bug排查](https://utmhikari.top/2024/07/20/geekdaily/golang_slice_bug/): 上周某天下班前，接到同事转来一个bug要排查，症状是代码重构之后某些业务效果不符合预期，由于代码重构人是笔者，于是blame到笔者这边。经过10min左右的排查和尝试后，解决了这个问题：既往逻辑没有改动，重构时候出笔误了。
-简单来讲，重构之前的代码大概是这个样子：
-- [【极客日常】读2023美团技术年货的一些笔记](https://utmhikari.top/2024/05/01/geekdaily/meituan_tech_notes/): 正直劳动节，翻了下2023年美团的技术年货，挑选了一些和变更风险防控和稳定性建设相关主题的文章做了下浅读。本文仅简单记一下阅读笔记。
-总共选读了3篇文章，分别是《基于AI+数据驱动的慢查询索引推荐》、《代码变更风险可视化系统建设与实践》，以及《AIOps在美团的探索与实践——事件管理篇》。
-- [【极客日常】提升发布风险检查准确率的一些思路](https://utmhikari.top/2024/03/03/geekdaily/release_check_optimization/): 在服务或者其它线上资源发布新版本的时候，我们都有必要为发布信息本身和上线的资源做风险检查，以确认发布内容不会对线上造成影响。通常来说，在检查能力铺垫时，一个主旨的思路是保证问题的召回率，即检查能力本身必须理论上可以拦截更多的风险，这样才能够基本限度保证发布过程的安全。但随着检查能力集合变得成熟，业务
-- [【极客日常】慢查询的风险治理思路](https://utmhikari.top/2024/01/07/testlife/slow_query_risk/): 在线上环境运维过程中，我们通常需要治理慢查询的风险。慢查询会引起DB性能问题，并且当线上环境流量较大的情况下，就会出现因大量慢查询堆积导致DB被打挂的情况。因此，本篇文章分享一下慢查询的风险治理思路。
-首先，我们需要知道什么情况下会出现慢查询。通常对于大表，未正确引用索引导致全表扫描，就会出现慢查询
-- [【极客日常】初体验rust语言](https://utmhikari.top/2023/05/01/geekdaily/rust_examples/): 作为一门“网红”语言，rust，已经在区块链、Web前端、游戏开发等领域凸显了作用。相对于golang、python、java、js跟cpp等其余主流语言，rust语言的编写和呈现方面都算是一个更为独立的体系。因此，本着对技术的好奇心，笔者也决定学习下rust语言，一是体验一下新一门编程语言的逻辑艺
-- [【极客日常】聊聊ChatGPT对于八股文程序员的冲击](https://utmhikari.top/2023/05/01/geekdaily/chatgpt_baguwen_shock/): 2023年ChatGPT系列的问世，可谓是对整个世界的人类造成了冲击。在此之前，人们最多以为AI能够做的事情，主要是下棋玩游戏，但是对话模型AI的到来，造成的效果，是AI具备了和人交流的能力，能够理解人类语言，通过其它AI工作流，自动整合资料，生成人类想要的内容。也就是说，AI可以从事人类的工作了。
-- [【极客日常】游戏测试开发干货——Python进阶与游戏自动化测试攻略](https://utmhikari.top/2022/11/24/geekdaily/python_and_game_autotest_notes/): 在互联网上，关于游戏测试（开发）领域的技术分享，实际是非常稀少。尤其针对游戏功能测试领域，很多文章的思想维度仍然停留在很久以前，关注的更多是测试用例设计以及质量管理这些更加偏向业务方面的内容。很多同学认为游戏业务测试缺乏技术含量，其实本质上是因为，很少同学愿意投入精力去研究这个领域的技术，以及研究这
-- [【极客日常】vue3中实现Array数组更新的方法](https://utmhikari.top/2022/06/17/geekdaily/vue3_array_update/): 近期由于工作原因，开始了解vue3的内容。vue3相对于vue2采用了组合式的描述，原来的写法是：
-1234567891011121314151617export default &#123; name: 'HelloWorld', data() &#123; return &#123; a: 1,
-- [【极客日常】通过motrix启动逻辑初探electron的项目结构](https://utmhikari.top/2022/06/05/geekdaily/electron_motrix_launcher/): 近期准备开始做electron相关的开发工作，因此借着这个机会就再去了解下electron。在很久以前的文章中有稍微玩过electron+react+antd的脚手架，但也只限于快速开发electron应用，并没有去剖析整个项目结构。因此这次，还是得深入一下。
-先前一段时间特别喜欢用开源的Motri
-- [【极客日常】一种解决redis源码编译时jemalloc报No such file or directory错误的方法](https://utmhikari.top/2021/10/19/geekdaily/redis_make_jemalloc_error/): 在用源码编译redis的过程中，可能会报jemalloc出错，提示No such file or directory的问题，导致构建不能继续。一种常见的，在网上流传的方法是[调整MALLOC参数为libc](https://stackoverflow.com/questions/47088171/e
-- [【极客日常】理解javascript/python中reduce操作的含义](https://utmhikari.top/2021/10/01/geekdaily/reduce_function/): 在学习javascript和python的过程中，我们通常会接触到map、filter、reduce之类的一等公民高阶函数。理解map和filter是相对简单的事情，但理解reduce的话还是需要一番推敲。正值十一假期，今天这篇文章就好好讲讲reduce这个东西
-我们首先以python为例，看一段r
-- [【极客日常】在Vue用echarts画带不同颜色点的散点图](https://utmhikari.top/2021/09/16/geekdaily/echarts_scatter_color/): 在vue技术栈下做图表需求，echarts是一个非常棒的选择，提供了非常多种多样的图标示例以及非常复杂强大的API。由于笔者近期工作内容中需要分析采样点的分布情况，因此自然而然接触到了echarts的3D散点图。在笔者的需求中，需要对不同点进行分类，并按特定的颜色显示出来。经过一番踩坑，了解到了ec
-- [【极客日常】2021新版本VSCode设置git-bash为终端的方法](https://utmhikari.top/2021/09/11/geekdaily/vscode_git-bash/): 截至2021.9，不知道哪天更新了vscode，发现默认的终端从以前的git-bash变成了powershell，笔者用的windows电脑，于是乎要解决这个问题，把powershell变回git-bash。
-
-打开settings，发现以前的`terminal.integrated.shell.w
-- [【极客日常】Go语言string、int、float、rune、byte等数据类型的转换方法](https://utmhikari.top/2021/06/06/geekdaily/go_basic_data_types/): golang的数据类型转换是困惑新gopher的一大问题之一。相对于python，golang的数据类型转换可要麻烦的多，而且还不走寻常路地诞生了些新的方法跟名词。因此本文讲解golang常见数据类型string、int、rune等数据类型相互之间的转换方法，给大伙儿避坑。
-在讲述方法之前，首先非常
-- [【极客日常】用vxe-table展示excel-diff的结果](https://utmhikari.top/2021/05/01/geekdaily/excel_diff_vxe-table/): excel-differ是游戏测试常用的测试工具。在有些业务场景下，excel-diff的结果可能需要通过web展示。Vue技术栈下的vxe-table表格组件能够支持大量数据的展示，因此可以用vxe-table展示excel-diff的结果。
-excel-diff的算法本身，先前的文章已有讲解，在
-- [【极客日常】UE4插件通过C++导出LLM数据的方法](https://utmhikari.top/2020/11/08/geekdaily/ue4_llm_dump_cpp/): 近期为了丰富UE4插件UnrealAutomator的基础功能，在ProfileService中增加了LLM数据获取的方法。LLM拥有抓取UE4底层模块内存使用情况的功能，各种Modules按照LLM的规范实现相应宏即可将内存使用数据实时更新到LLM系统中。如果从产品外部，是难以直接访问这些信息的。
-- [【极客日常】解决UE4中FJsonObject转USTRUCT的坑](https://utmhikari.top/2020/10/18/geekdaily/fjsonobject_to_ustruct/): 前些天在写UnrealAutomator的Web解析模块的时候，遇到了一些USTRUCT方面的问题，由于笔者以前并非UE4程序员，因此踩了一些坑，果断分享一下踩坑历程。
-首先聊一下USTRUCT的生成。USTRUCT是UE4的特性之一，从非C++/UE4程序员的角度来讲，USTRUCT、UPROPE
-- [【极客日常】Win10更改IDEA（Jetbrains全家桶）的插件和配置路径](https://utmhikari.top/2020/10/06/geekdaily/idea_change_config_path/): Jetbrains家的IDE，默认安装之后，配置和插件都存储在系统特定的文件夹中，如果是Windows系统的话，就会在用户文件夹存储。这样就滋生了一个问题：随着插件等安装的越来越多，系统盘也会占掉一些空间，这个时候就有了转移默认插件与配置路径的需求。今天就以IDEA为例讲述一下如何操作。
-- [【极客日常】在UE4插件中编写一个HTTP Web Server](https://utmhikari.top/2020/05/23/geekdaily/ue4_http_server/): 在某些游戏研发or测试的需求中，需要在Unreal增加一个插件或者模块，里面启动一个服务器作为SDK，然后外部通过直连或者adb forward可以连接到客户端中，获取客户端实时的场景、actor信息等等。UE4本身除了socket server支持之外，也支持简单的HTTP Web Server。
-- [【极客日常】在hugo博客中利用shortcode嵌入bilibili视频](https://utmhikari.top/2020/04/21/geekdaily/bilibili_in_hugo/): hugo是当前热门的个人博客框架之一，和hexo同样是markdown文件跟博客帖子一一对应。有些同学想利用hugo制作个人视频博客，但发现在hugo博客中不支持直接在markdown里输入iframe标签，从而没有办法将其它网站的视频（比如b站）嵌进来。这种情况下，我们可以采用hugo内置的sho
-- [【极客日常】再度上手start-fastapi](https://utmhikari.top/2020/02/26/geekdaily/start_fastapi_reborn/): 近期项目组准备做一个新的工具，因此自个儿做的start-fastapi框架正好能派上用场试试水。在起草需求搭建最初框架的时候也逐步发现原先的start-fastapi有一些不足的地方，因此做了一些针对性的优化。
-首先必须重新介绍一下start-fastapi，其本身是轻量级web框架fastapi的
-- [【极客日常】写一个基于vuetify的v-autocomplete的自定义组件](https://utmhikari.top/2020/02/16/geekdaily/v_autocomplete/): Vuetify是Vue的一套前端组件框架，基于Material Design设计，界面较为整洁。最近由于项目需要开始入手，但在写自定义v-autocomplete组件的时候却踩了许多坑。因此本文果断记录一下踩坑的过程。
-首先新上手vue的话肯定耳边都会萦绕着“双向绑定”一词，用的最多的属性就是v-m
-- [【极客日常】解决使用mongodb时同时update多条数据的问题](https://utmhikari.top/2020/01/12/geekdaily/mongo_multi_updatemany/): 在实际使用mongodb的场景中，我们经常遇到多个请求同时在某个collection里update多条document的需求。这个需求看似有许多种解法，但是具体哪种好也说不准。现在便让我们一探究竟吧~
-首先我们利用pymongo添加1000000条数据，name字段为hello：
-123456789
-- [【极客日常】electron+react+antd深色主题打造桌面应用](https://utmhikari.top/2019/10/20/geekdaily/electron_react/): 桌面应用的实现方式有很多，但谈到多操作系统平台兼容的话，就不得不提到electron。electron是前端开发的利好，做过web前端的同学只要稍微迁移下自己的项目，就能够将原本的web前端变成桌面应用。
-因此，本文以react为例，以antd为UI库支持，讲解基于react的electron应用该
-- [【极客日常】hexo+NexT博客自定义代码高亮主题配色CSS](https://utmhikari.top/2019/10/07/geekdaily/next_code_theme/): 用hexo+NexT搭建博客的同学或许会遇到一个问题：默认的代码配色只有Tomorrow Theme五种，如果想要自己的代码配色，应当如何自定义呢？
-其实也是可以的。在NexT的source/css/highlight/theme.styl中，我们就可以看到几种主题的具体配色：
-1234567891
-- [【极客日常】解决国内go1.13的go mod无法安装依赖的问题](https://utmhikari.top/2019/10/07/geekdaily/go113_proxy/): 在[从零单排Golang第一话](https://utmhikari.github.io/2019/07/20/gofromzero/01_first_code/)中讲到了Golang的基础开发环境配置，其中讲到了Go的依赖管理方面，提及了以后的趋势会采用官方的go mod进行管理。关于这一块，现在
 
 ## 测试人生
 
